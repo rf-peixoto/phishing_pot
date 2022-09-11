@@ -13,7 +13,7 @@ Phishing Pot is a collection of Phishing samples. Initially, we collected sample
 You can contribute samples to this repository. However, remember to anonymize the files, hiding information that could identify the address of your Honey Pot. All sensitive information should be replaced with ```phishing@pot```. You can use the command below to remove the original addresses of all files in a directory:
 
 ```
-sed -i 's/your@email.com/phishing@pot/' *
+sed -i 's/your@email.com/phishing@pot/' *.eml
 ```
 
 ## Donate
