@@ -1,0 +1,202 @@
+Received: from SA0PR19MB4572.namprd19.prod.outlook.com (::1) by
+ MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Mon, 22 Aug 2022 21:39:44
+ +0000
+Received: from GVX0EPF000013E4.SWEP280.PROD.OUTLOOK.COM (2603:10a6:144:1::24)
+ by SA0PR19MB4572.namprd19.prod.outlook.com (2603:10b6:806:b9::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5546.22; Mon, 22 Aug
+ 2022 21:39:43 +0000
+Received: from HE1EUR01FT054.eop-EUR01.prod.protection.outlook.com
+ (2a01:111:f400:7e1f::207) by GVX0EPF000013E4.outlook.office365.com
+ (2603:1026:900:2::3) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5525.10 via Frontend
+ Transport; Mon, 22 Aug 2022 21:39:42 +0000
+Authentication-Results: spf=none (sender IP is 84.34.166.151)
+ smtp.mailfrom=ilonasavola.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=ses.binance.com;
+Received-SPF: None (protection.outlook.com: ilonasavola.com does not designate
+ permitted sender hosts)
+Received: from smtp2.wp-cloud.fi (84.34.166.151) by
+ HE1EUR01FT054.mail.protection.outlook.com (10.152.1.61) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5546.15 via Frontend Transport; Mon, 22 Aug 2022 21:39:41 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:48D9ED7F8E6C684C899AAEED9CF3C2A1019DF0B1FE935A23738FDEBF3B1E764E;UpperCasedChecksum:46EDBBADCB56A90969382E01839D65AB6BDD2CB280C6CD4DD2E8693AE41360F0;SizeAsReceived:636;Count:10
+To: phishing@pot
+Subject: =?UTF-8?Q?[Bin=D0=B0n=D1=81=D0=B5]_lmmediate_verification_required_for_ro?=  =?UTF-8?Q?drigo-f-p@hotmail.com?=
+Date: Mon, 22 Aug 2022 21:39:41 +0000
+From: Binance <do-not-reply@ses.binance.com>
+Reply-To: do-not-reply@ses.binance.com
+Message-ID: <a6e2feecb5be84894fdbdba6447a7b10@ilonasavola-com.staging.hel2.wp-cloud.dev>
+Content-Type: multipart/alternative;
+	boundary="b1_a6e2feecb5be84894fdbdba6447a7b10"
+Content-Transfer-Encoding: 8bit
+Authentication-Results-Original: smtp2.wp-cloud.fi;	auth=pass
+ smtp.auth=outgoing@smtp.wp-cloud.fi smtp.mailfrom=wpcloud@ilonasavola.com
+X-IncomingHeaderCount: 10
+Return-Path: wpcloud@ilonasavola.com
+X-MS-Exchange-Organization-ExpirationStartTime: 22 Aug 2022 21:39:41.8650
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ f541f40e-7f6c-4219-4c54-08da8486d283
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ HE1EUR01FT054.eop-EUR01.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 8/22/2022 8:54:29 PM
+X-MS-Office365-Filtering-Correlation-Id: f541f40e-7f6c-4219-4c54-08da8486d283
+X-MS-TrafficTypeDiagnostic: SA0PR19MB4572:EE_
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 84.34.166.151
+X-SID-PRA: DO-NOT-REPLY@SES.BINANCE.COM
+X-SID-Result: NONE
+X-MS-Exchange-Organization-PCL: 2
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:5;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2022 21:39:41.8338
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f541f40e-7f6c-4219-4c54-08da8486d283
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ HE1EUR01FT054.eop-EUR01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR19MB4572
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.5353854
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.5546.019
+X-Microsoft-Antispam-Mailbox-Delivery:
+	abwl:0;wl:0;pcwl:0;kl:0;iwl:0;ijl:0;dwl:0;dkl:0;rwl:0;ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000285)(90000117)(91040095)(5061607266)(5061608174)(9050020)(9075021)(9082004)(9100338)(2008001134)(4810004)(4910033)(8810097)(9930004)(9610025)(9560006)(10180021)(9320005)(9245025);RF:JunkEmail;
+X-Message-Info:
+	qoGN4b5S4yqfI0GfbI+HIJGtaEdnvpnveZtvZJ/P7mH4SVZEoaP6+pWmfKuOGPCztJvtsHKP7TUlQllpJ5z3/5h8S4+JQ6GetQTS4wGVmjvI3BCADQtQldboNyI3GnoGELbgbY983w3oXctvbPGo2KZWUXpVS8qvPhCOOM7SM2TQRjC3NUx9JewWxoklDs8pfbImFHz9y/AH7548o2Exzw==
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0yO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?MlRnOHVZM1FDK3ZOLzNFc01wNG5ZUEtlQStRMURrdXNCdXpqVStUSTJ0TjF3?=
+ =?utf-8?B?aHF4OWIxMHBISDRGLzlnaVhOWXloODRpbllFWlA2aXUzNExaNEJYdUJuV1ZW?=
+ =?utf-8?B?M1BHK3BuUVYvdERnRXhjTzROWkdsT1lKMFQ4VjEyemcvVmNSc09UR0hHbWg4?=
+ =?utf-8?B?em1TV0NUMHNRaEYxazBtc0JibFpNdTBLOUxkck9hKzZrYnBvRFNBbFF3YnY4?=
+ =?utf-8?B?dUl4eXVHWHNKMHp4VHpJbW1pSlRoZUZsYi9Ib2d3VU9icGR3VDdmSkE1UGNo?=
+ =?utf-8?B?QTF5UWJSYjYrbDZMZXpyNDZFVi94ODdyb1lnRVF5QU4wbVgvVjNPTkROM2VU?=
+ =?utf-8?B?L2I4d2pmOUxVNDBGOWNTK0dHV3U5RGtyRXRiR3lndHdxeEs5ZjVvWTBDTFZi?=
+ =?utf-8?B?cDk3SGIvdWhsOVMyZ3BwbFJVeHI0ZnNicTdueHpaZ1Z2WitCYW10MEs2Ykhp?=
+ =?utf-8?B?U0xFWXErR29tMXZpaTBGZE45cWc5bUNDMzdsYXRPRzgxZ1FLdWdaSkxCblJl?=
+ =?utf-8?B?dTUrWXV2ZGJBZDAzQWU2ejA2MGs1ZWIycldpN2tCRGFPbWNVaDJPTlhSWHVM?=
+ =?utf-8?B?TEhpL0ViLzJqdmxhVGUwOFkxUmh4eFVuc2pvNFROVDM0Q0xqc1AvSG1hWVpP?=
+ =?utf-8?B?bHcyVW1EbjQ4eXdkdTZtbFU0c3NHMlRCdEZiNzB6YytZZ2hiU1AyVm8zeTY0?=
+ =?utf-8?B?dTJHUjZsa0NhdTE4eWFqTWlJbEFwNkJTak83amtuWk85cmRuRVNEak5qajlC?=
+ =?utf-8?B?R3Bkbyt1NzZUdWRaa2FFVThrWTNySDUxVEh3Sy9uc2V3SzViMlEybWQyRmlJ?=
+ =?utf-8?B?eXRVZ0QzR1hSSnc3OXVtZFNWSUQxR3NRQnhNM0NhNGMrbkpHZGlDQ0ZMODhV?=
+ =?utf-8?B?ZFJRMzRoSDBnZG5Id2FCbVVvUU81Y082cmdYNXBYcXBacTN5cjlQdEgyR0NK?=
+ =?utf-8?B?MUxsR1BSVzZIUWNlNDl2SythM1dSa1NrNzFJbE1wcjhpQVZ3OGhkOFdTVm5r?=
+ =?utf-8?B?U2cwS3lOZ1p6dmtjZVd4bU5XWERjak4veXcxcGZrejc0Qzc2YWpvWHk1K0JZ?=
+ =?utf-8?B?UzFLZFViNmNkc2NKTkQ0TDVEUWlCazdJWktmdGxMNmI3a0IvMDIxdGFBajZ4?=
+ =?utf-8?B?WDY2STAxcTJYSVRuRHlRWlpud3RLZ3VFTkZpcVBFajB1VmRhRmd0QXh0TFJa?=
+ =?utf-8?B?UGtYMWo4U3JIblVxLzR6K3Ivbmd6eGEzZ282TGdKSG1uVVBsVC9tYnUzdTMz?=
+ =?utf-8?B?YmU2TVNhZ0ZLL1dDYmNiME1lU2J2R3VCalZOd3VLeVpYT2NVME1yUkl0dHh5?=
+ =?utf-8?B?Zkl6N0dxeTJIb1JpbUpiaUw4QmlHdDZudjJjYm1RTGpiSmV2K0RDR0NuWG9Q?=
+ =?utf-8?B?M0Q2THVOejJIUkJaTXdidE9zUktLdXF6YUczT25YcDBPRVFYUHc3MWgyODgx?=
+ =?utf-8?B?b0JobFBHMUtJdkJZWVVhYUZzN1NQSnB6TnJXYW9wSERHaDBXWjZWM3Z3U08v?=
+ =?utf-8?B?ZHk0bnJPSGt3RkR3Y0FBamovTTVMc0E0ZXJhZlFaeW5BWDJEV2M2QnFGd214?=
+ =?utf-8?B?bXR6aEg5YzNCbU5IS0RsUjVlck45OGtMTHRZNHpwRDA2ZzdCVU5abC9BK093?=
+ =?utf-8?B?Y1VEQ21Dc3VJMGNQSEFsWXhpdEpuVVFhd2Q3VFpaYkhjbktVKzFTOE9oWXVO?=
+ =?utf-8?B?cVU4b1daV3RmdmZjR1dlYTBkQ1gvVHYxaFo5UlVTN29GeUdVb2FIOS9aby9M?=
+ =?utf-8?B?WU4xbTJSWFJ1QXBsbmdCeS9JR2FuMmRaMVF3N3JQdFQvQjBraktId3IxQ0FP?=
+ =?utf-8?B?aDdONXhZanV2NktXdnRtNFl2ZWJyVEZJL2lHOEZRSWs1ZFpMNlNJMFYrcDgr?=
+ =?utf-8?B?OXFzVXFTanRNVmxqYWczS3gxcUtINU4wU0owdGkxeWJibzI3M1gzOC9PYjEx?=
+ =?utf-8?B?L1pxaGxRdXlFQU14RlNWYVl1VHhDVTBFM2p5TXlsSXNrcTRwSjNvWUdXa3U5?=
+ =?utf-8?B?S09pWVdJY000Z0RnbjZNNitNSHNjQmw3K3ExV0tEM3p1SFlydEgvYm55U1Fj?=
+ =?utf-8?B?eEhzN1ExOFNFWGlEMGRwUUxrMHlmbmFYR09HL2RYREtPSUpZNzVhbzJOanRx?=
+ =?utf-8?B?byt6OWYremxwNFZKd2dwbllyYWRSbWRLeTZXUXBQVmtoZjh5YjJ2MlM0Wllw?=
+ =?utf-8?B?NFlqcnhBYjNiRklNakNBYjJuOWhycXlaN2NYZ0lBN1lLNldOcjcyZG4xTVVh?=
+ =?utf-8?B?VWhBZWlPZmw5QjJobitSbkJMUzEwTDNVVnpOQzlEcU4xbVU5N05sZFZkQkJh?=
+ =?utf-8?B?Wk5aUGZ6bXFUUllITWVIcmdoUFhGUTZFWWEzWnczVFdhQXIra1Z3R0xMamlP?=
+ =?utf-8?B?VWh5MUlHOGZ1YVk5WlhQV2NTQktUdTlHNmgyWkZPbldzTmg2ait5eW9aTERy?=
+ =?utf-8?B?MUI3NFd5OE4zZkg1UUYwZWVHZS8zUkNvSkJ3ZFVoSlpWQTNJVTc5NnVhOEVr?=
+ =?utf-8?B?UUFnSmRqWjRKQWk5V3BQOHk2VHQ2RytDUEptS1hyOXVLUXp0bTZVcGJNQVpJ?=
+ =?utf-8?B?UTdUeTFPSFJnTnpLWjMzYm9yL0svK2VabHYxVFMyQm1jb1hUemx2bVREL1BO?=
+ =?utf-8?B?WDJHNnYzdG9ZTVV4Z2R3WlhZNktMS1NEWHZOakg1S09lNGFCcHRiM1lQYlky?=
+ =?utf-8?B?dk55MmxBRWNzd3l5M3lhNG5HdFBlNitnQ3d0WjFQT2pqQWRKeFBRcWs5N0Np?=
+ =?utf-8?B?RlNMb1dBc256TGk3dzBRRE56ekIvRmJ0eFNoZVZzUDU4dlBkbDNRQXl0ZGky?=
+ =?utf-8?B?bGt0bFQ5clpvNnpGWFlRZ201dEtmcEQrVFdUc05lNk4ydmEzalIrUVk2bGpX?=
+ =?utf-8?B?Y1ZhVVQ4emVFTTBtTDg2THZTcjdINVVQUTlVQzUrancvdGl3WnpzVCtmMVU3?=
+ =?utf-8?B?WWV0dytvQ3lEeFhCdngrWmZ1RXJKb3dhSDRoVlUzRFBLU1RLcW51a0JTSWp6?=
+ =?utf-8?B?dW5WSUhmYmNQeEdwSmdFYXpDRVhZejNkckJtREN3d2dYNXkyODI2MmZWemlB?=
+ =?utf-8?Q?Y+ZbYpq0b8qBw6ijUZIyRpZfJP/+2nv0M=3D?=
+MIME-Version: 1.0
+
+--b1_a6e2feecb5be84894fdbdba6447a7b10
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+
+
+
+ 
+Immediate Verification Required
+Dear phishing@pot ,
+Thank you for using Binance.
+We were reviewing all account information and we noticed that your information has been expired.
+Your withdrawals are disabled until you update your informations.
+ 
+ 
+UPDATE INFORMATIONS
+ 
+
+ 
+Important Notice:If you don't update your information within 72 hours, your account will get disabled permanently!
+
+
+Вinаncе TeamThis is an automated message, please do not reply.
+
+
+
+
+ 
+© 2017 - 2022 Вinаncе All Rights Reserved
+ 
+
+
+
+--b1_a6e2feecb5be84894fdbdba6447a7b10
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><div id="x_x_x_x_x_geom_inter_1629551423359_23_4" class="x_x_x_x_x_x_warp" style="font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif; font-size: 14px; width: 100%; background: #fafafa; line-height: 22px; box-sizing: border-box;">
+<div id="x_x_x_x_geom_inter_1630194610204_87_2" style="width: 600px; max-width: 100%; background: #fff; border-radius: 6px; margin: 0 auto;"><img id="x_x_x_x_geom_inter_1630194610204_42_1" src="https://public.bnbstatic.com/image/email_template/emailBanner.png" width="100%" data-imagetype="External">
+<div id="x_x_x_x_geom_inter_1630194610205_8_4" class="x_x_x_x_x_x_contentText" style="padding: 0 20px 40px;">
+<div style="clear: both;">&nbsp;</div>
+<h3 id="x_x_x_x_geom_inter_1630194610204_76_3" style="font-weight: bold; font-size: 18px; line-height: 36px; margin: 16px 0; color: #1e2026;" align="center">Immediate Verification Required</h3>
+<p id="x_x_geom_inter_1640385750860_78_1" class="x_x_x_x_x_x_section" style="font-weight: normal; margin: 16px 0 0 0; color: #474d57;">Dear phishing@pot ,</p>
+<p class="x_x_x_x_x_x_section" style="font-weight: normal; margin: 16px 0 0 0; color: #474d57;">Thank you for using <strong>Binance</strong>.</p>
+<p id="x_x_x_x_geom_inter_1630194620186_98_12" class="x_x_x_x_x_x_section" style="font-weight: normal; margin: 16px 0 0 0; color: #474d57;">We were reviewing all account information and we noticed that your information has been expired.</p>
+<p class="x_x_x_x_x_x_section" style="font-weight: normal; margin: 16px 0 0 0; color: #474d57;">Your withdrawals are <strong>disabled</strong> until you update your informations.</p>
+<p class="x_x_x_x_x_x_section" style="font-weight: normal; margin: 16px 0 0 0; color: #474d57;">&nbsp;</p>
+&nbsp;
+<div align="center"><strong><span style="color: #000000;"><a style="padding: 10px 28px; background: #ebb44d; color: #000000; text-decoration: none;" href="https://zzdzw.com/" target="_blank" rel="noopener noreferrer noreferrer" data-auth="NotApplicable">UPDATE INFORMATIONS</a></span></strong></div>
+<div>&nbsp;</div>
+<div>
+<p class="x_x_x_x_x_x_section" style="font-weight: normal; margin: 16px 0 0 0; color: #474d57;">&nbsp;</p>
+<p class="x_x_x_x_x_x_section" style="font-weight: normal; margin: 16px 0 0 0; color: #474d57;"><span style="color: #000000;"><span style="color: #ff0000;"><strong>Important Notice</strong></span>:If you don't update your information within 72 hours, your account will get <strong><span style="color: #ff0000;">disabled</span> </strong>permanently!</span></p>
+</div>
+<div>
+<p style="font-weight: normal; margin: 0; font-size: 14px; line-height: 22px; color: #76808f; margin-top: 36px;">Вinаncе Team<br>This is an automated message, please do not reply.</p>
+</div>
+</div>
+</div>
+<div class="x_x_x_x_x_x_bottom" style="padding: 0 16px 40px; text-align: center;">
+<p class="x_x_x_x_x_x_bottom-log" style="font-weight: normal; margin: 0; font-size: 14px; line-height: 22px; color: #aeb4bc; text-align: center;">&nbsp;</p>
+<p class="x_x_x_x_x_x_bottom-log" style="font-weight: normal; margin: 0; font-size: 14px; line-height: 22px; color: #aeb4bc; text-align: center;">© 2017 - 2022 Вinаncе All Rights Reserved</p>
+<p class="x_x_x_x_x_x_bottom-log" style="font-weight: normal; margin: 0; font-size: 14px; line-height: 22px; color: #aeb4bc; text-align: center;">&nbsp;</p>
+</div>
+</div>
+
+
+
+--b1_a6e2feecb5be84894fdbdba6447a7b10--
