@@ -5,7 +5,7 @@
 [![forks - Phishing Pot](https://img.shields.io/github/forks/rf-peixoto/phishing_pot?style=social)](https://github.com/rf-peixoto/phishing_pot)
 
 
-Phishing Pot is a collection of phishing samples. Initially, we collected samples of emails in .eml files, later we will expand to other vectors.
+Phishing Pot is a collection of phishing samples. Initially, I collected samples of emails in .eml files, later I will expand to other vectors.
 
 
 ## Contribute
