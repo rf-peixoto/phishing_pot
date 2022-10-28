@@ -16,7 +16,7 @@ You can contribute samples to this repository. However, remember to anonymize th
 sed -i 's/your@email.com/phishing@pot/' *.eml
 ```
 
-If you prefer, you can also redirect phishing messages to ``` phish.me.again@gmail.com ``` .
+You can also redirect phishing messages to ``` phish.me.again@gmail.com ``` .
 
 ## Donate
 
