@@ -16,7 +16,7 @@ You can contribute samples to this repository, however, remember to anonymize th
 sed -i 's/your@email.com/phishing@pot/' *.eml
 ```
 
-Also, follow the filename convention. You can redirect phishing messages to ``` phish.me.again@gmail.com ``` so that they are indexed too..
+Also, follow the filename convention. You can redirect phishing messages to ``` phish.me.again@gmail.com ``` so that they are indexed too.
 
 ## Donate
 
