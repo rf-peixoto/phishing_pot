@@ -1,0 +1,678 @@
+Received: from CH2PR19MB4023.namprd19.prod.outlook.com (2603:10b6:610:9d::7)
+ by MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Fri, 17 Feb 2023
+ 05:57:17 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
+ b=cWbOeNQNrSl6CBOaq5TaBUMWjr9dD86R4K+Z91hKe3RaKS7zr2USdL/nNvr/Ma8wnWluz274iqTxXsk80xj5DmNBZjg7jE0DJPsN4CRvAw6sjpaVk/nsrBypCnThSpwUCUDuibEt1poThbSnh8SLVTdPrORxqjwXWVbjeVgr2x2PTxbFhgpJ6D/v8ZwYI4yMChlJsls9W8MFjw2+Um/vgOYSayW2iUd2nXGddwVeBhQ8YNL5pXL8+0PJQFWor1rJFu9cRNwP0N21PRI5O9b13DkDVMCyaewZR5OlO7j72iLdu32EScUUBJGe4QH/S2rs34ip9TQdSEz5ZHVm6el8Yg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qJa3o3haO0Vi7h43bpQKT+ulQwh9JxqBAEYtxOvwH1U=;
+ b=Z5djxZaprbbtSaBQsalGPmNWvMrAOfsagNIqx4F9nEbljYzvO3JeF7lqFUlJvNzD6lODJzRuIsikzXUFh/bt2vTlFbe42DGOp8EttqfG6r+OMgPOEny/8xEeauMpxrT9UyTmtQ8nd8cqNlbROMSYpocOJspWmkckAn1TCOw8uw/NyD8GWYypTRG2/d5Bx5DuDoN2X9fqBqXQBYomEA+VYYtLGxs5oQBpjYxX4OB7CbZeCGfxByKHZh+kegRzsGfONaqTvftnpHjwukPY7V4X1YvNjpuofmn1R2RKymi6k0jJi6/k2fRAUmFADE+qmDjj2L9hgGYjLl/oP/Dp+KXoHA==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 40.107.7.90) smtp.rcpttodomain=hotmail.com smtp.mailfrom=edhec.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=edhec.com;
+ dkim=pass (signature was verified) header.d=edhec.com; arc=pass (0 oda=1
+ ltdi=1 spf=[1,1,smtp.mailfrom=edhec.com] dkim=[1,1,header.d=edhec.com]
+ dmarc=[1,1,header.from=edhec.com])
+Received: from DM6PR02CA0083.namprd02.prod.outlook.com (2603:10b6:5:1f4::24)
+ by CH2PR19MB4023.namprd19.prod.outlook.com (2603:10b6:610:9d::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6086.23; Fri, 17 Feb
+ 2023 05:57:15 +0000
+Received: from DM6NAM11FT085.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:5:1f4:cafe::75) by DM6PR02CA0083.outlook.office365.com
+ (2603:10b6:5:1f4::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6111.13 via Frontend
+ Transport; Fri, 17 Feb 2023 05:57:15 +0000
+Authentication-Results: spf=pass (sender IP is 40.107.7.90)
+ smtp.mailfrom=edhec.com; dkim=pass (signature was verified)
+ header.d=edhec.com;dmarc=pass action=none header.from=edhec.com;compauth=pass
+ reason=100
+Received-SPF: Pass (protection.outlook.com: domain of edhec.com designates
+ 40.107.7.90 as permitted sender) receiver=protection.outlook.com;
+ client-ip=40.107.7.90; helo=EUR04-HE1-obe.outbound.protection.outlook.com;
+ pr=C
+Received: from EUR04-HE1-obe.outbound.protection.outlook.com (40.107.7.90) by
+ DM6NAM11FT085.mail.protection.outlook.com (10.13.172.236) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6111.13 via Frontend Transport; Fri, 17 Feb 2023 05:57:15 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:E46ADA00C5B38D51529809D63A172C6AD0C60325DDD1DFB782B22A21FFC44580;UpperCasedChecksum:B0FE9074B762C96E82C6449ECA8C12C4853E145B4F494B33B3C703B4AFA1F050;SizeAsReceived:8028;Count:37
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Bumh381CkIX+AQ4ffSJ8iLs+xDlNKqwQdb0w62hf2pOtijkYq+URwv4v0ZVw/JyNXf62n3ajzOX+5z/v/50dzfPoSN0JuIo3+BJ/TfFWlzzlEmu7FrRaBrCnGZVD0adcg6MlDEx9clioZiPTdi1qXM3BsLfnLIjo2aW0miL5XxEZnBsBcoO1drJ3OXeXsUfZGBTMWUL6isXsop6hrTC7SyRWzFFP8oHTuWUbrqbAuJj+aUuFGKxbwo/H/zVNGKV4QBRMB7dSf5lyRJDlndKwJEGDMp5YxeyOuT9noTqVjBHpRqY5aGe79up3mkoi1XVqGbJP/FPFsmXNg7X84x8oYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qJa3o3haO0Vi7h43bpQKT+ulQwh9JxqBAEYtxOvwH1U=;
+ b=XWT2OPsv5EuojdX/Kv9k04T6JL/lt6rquKxbjzmmMVj5c44UVVhrem4eFy64kUmx6YTwsXQ7hey9EJC/uhwb1O9sfsmNzAfsAGjNgQNoo8yEmGM748yijOMOFe/H7zLr4QonIWEKAdJnC3F4/ExBdla0g2EhOcZxxhmD2hmmUo71ba36dDjhHh7kZs1U3Gz7iLRHZb5TNvzRRLZljt0YncvOfE96KCrvwqmWW6/+/LEvZUrXX/gtNzfwAdPOmwXcRC4SqzuNlsLv8IZoHsBF5ZzEoeM5KTfB0Z0HpZ0k8m6O1ADp0hkD6nbLskEMDl2nuufmKzeMs0dnp4GLbjZr4g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=edhec.com; dmarc=pass action=none header.from=edhec.com;
+ dkim=pass header.d=edhec.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=edhec.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qJa3o3haO0Vi7h43bpQKT+ulQwh9JxqBAEYtxOvwH1U=;
+ b=pR5DZrqhtlFjww0Gmm/Q+low1hTXIcmOtpxxA/pfLIho4NLqlXAYgSBXxN3T5o5utyYUq8Df8FT6xN8SoFqwb5WceYY61MHQGrxEfzOfBWyyhqmLF3xSz0lBznpgDR4ojR3mjf677wnTFcS2vToutuWEYC5uLO3tXkFspLUCrVk=
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=edhec.com;
+Received: from PAXPR01MB8822.eurprd01.prod.exchangelabs.com
+ (2603:10a6:102:22c::12) by DB9PR01MB7483.eurprd01.prod.exchangelabs.com
+ (2603:10a6:10:217::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6111.13; Fri, 17 Feb
+ 2023 05:57:12 +0000
+Received: from PAXPR01MB8822.eurprd01.prod.exchangelabs.com
+ ([fe80::1794:2768:cf84:4fe7]) by PAXPR01MB8822.eurprd01.prod.exchangelabs.com
+ ([fe80::1794:2768:cf84:4fe7%4]) with mapi id 15.20.6086.026; Fri, 17 Feb 2023
+ 05:57:12 +0000
+From: Ledger <anya.rahmoune@edhec.com>
+Date: Fri, 17 Feb 2023 06:57:12 +0100
+Subject: Synchronization required (011729)
+Message-Id: <H0FYGD3F7JU4.8YIJS53U4I703@smtp.office365.com>
+To: phishing@pot
+Content-Type: multipart/alternative; boundary="=-JLLjvZzLrGrQaf7XEzkbtg=="
+X-ClientProxiedBy: AM4PR0902CA0003.eurprd09.prod.outlook.com
+ (2603:10a6:200:9b::13) To PAXPR01MB8822.eurprd01.prod.exchangelabs.com
+ (2603:10a6:102:22c::12)
+Return-Path: anya.rahmoune@edhec.com
+X-MS-TrafficTypeDiagnostic:
+ PAXPR01MB8822:EE_|DB9PR01MB7483:EE_|DM6NAM11FT085:EE_|CH2PR19MB4023:EE_
+X-MS-Office365-Filtering-Correlation-Id: 613eaf15-2ae0-41b7-68a5-08db10abd240
+X-PP-Secret: jjuyjhgg76gtt5.jggkj
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original:
+ 2TpV4zZ0ExqS670weK71EHYqTwXRfLFqVFz52c2B6ToSOVtiRCkYmWGlDcwxyIUmgDHcrjk7I2IapAybuo+1vXwGp/ZTs5UkjPAIQGeyHWh/ZDjwotBIu6HewLTWEOaOd6qK786xg2OmVScMBqTZUoZ/iRLY82VLCzwyAqgbwoEpobCa+ZGLBTfr3Z/Db3ay0xWgqgB51zVUGp/yCMQ7K5q+mCbzDa+IxQyNNcDclZNnXiiyXCuYhZOgz0O/7JXg3LntlBnmsiiRLKjTm4E6DUteLZZLkpeFCGFfPxEVBFT5YZ2ajPh5K96gF7bQ4Ua0VtX/rDwHtEOR0zy4I+cH0Dgwhkk8etY+QyNlk8+/a7vCH7souYhSGd6JoVAdYbwleLmBRJZKvIgYHwxRoydoOjyB+LGG5CreNX6wZiO1mzowkBKORtwEdZ3pJoBdpZmNThu4577TouX/txpYMh0SRhjc/phDqdB901+lP2DHRC9/GMpivJWsGa2m2kERsGKv5rrb8+sdZTUp6VUV5Bl4DZ38y19lffkEYIdcDhN/U0FIt/8cE9zvY+O7s3dvNk4gL2I09M6BeZBOOvEdmdT8QVB3GOVpTeLKNXgveOFxRuhF2DWoIO3kL5uTSMOn3yKhykPXUa2rsIxcXHddNbY3cXfAl2pHd6fZKogGnUCmRHn11xRcQV3wq+Yf6EyUEwJPpolIw6BKMaRzye7BR9vCxp//js5G8Flxl0UBH2Dr+Fk=
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR01MB8822.eurprd01.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230025)(396003)(39860400002)(346002)(136003)(376002)(366004)(451199018)(83380400001)(38100700002)(38350700002)(166002)(86362001)(7116003)(8936002)(2906002)(5660300002)(41320700001)(6506007)(33964004)(9686003)(6512007)(186003)(66574015)(316002)(26005)(786003)(66556008)(66476007)(8676002)(6916009)(66946007)(6486002)(52116002)(478600001)(41300700001)(33656002)(66899018)(74390400008)(1531001)(19625905003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0:
+ =?utf-8?B?ckpnRGRaV1JIamFVMzVkSWNIQis0dWJPWFl2dUlxSXFOL2ZkUVI0RHE4bG80?=
+ =?utf-8?B?eU10NUFLajB4cTFTeFpEWnlHY3UwaE9LQVpWazFqMjFYL2hqT0FtWjJ1L3V4?=
+ =?utf-8?B?SlZrNktyeHNmcFVHMEhITDMxaFBicXRZWXVZNmVZMm4wRjNsZVpSK1M2K3Fj?=
+ =?utf-8?B?ODZSeEZ2YVFaVjNrakh0aUdoL1V2aGgweUFuVFV2bUtsQjhPdzRZQXptTUor?=
+ =?utf-8?B?ZTNXc2hjVTdyME5vNVRoSW1TTnFueTU5WFhTei9xWEg0VUcrUVdWd3llTlhE?=
+ =?utf-8?B?SFlGUWx4dXVjRnRYT0JpUUFRc3dMNVNaRE9EcExmdGNkSFAvR3dOZFJ6TXYy?=
+ =?utf-8?B?cENrK1ZaaVBTUDNyZFFMS2J4N1BheUJHTGhVVFVZR3hKbWZTZ05qZjhuMEpi?=
+ =?utf-8?B?UlJKbTBuL3BHN29aSlBNZGhxL0toZ0NFQVdtdnhsUkZuQWNUSmEyS3N3aXdZ?=
+ =?utf-8?B?SlRnLzBwaWVScXlFVzFaanJxMStlNi9kOUMwWk5ZVnVJaEFocWQ4K1lCVGhJ?=
+ =?utf-8?B?MHlIaDMvYm9SN0d4WmN4ejVEbHZsa1Q4dEZ1Q29Lektyc0hYZzZxU0E5elhB?=
+ =?utf-8?B?a2ltVUwxQ3N1QWtROUhTQWZPK2lUUTNDVEllbGRMV1JUZFlCdzdaRUR2d3Rk?=
+ =?utf-8?B?SG9jZzZCekR2ZE0vNWxDanlMblhUWWJUWk9FVjlDdnptNkUyYldsVFJsdCtU?=
+ =?utf-8?B?bnpkRUl0dTI1WDBodnFteldkcDR2QkdUdytHbFlIWllsWFpqOVhHa211NHVW?=
+ =?utf-8?B?OVM1TlVhZEFPZU1MSEs2dlFRdVZQeTlncHRlcFJUckFBN0owZERsanlBanJC?=
+ =?utf-8?B?R0JVamFKdGVkRVU1YVFlaXhtUU5uSkIwaTVQM1AwSHE5bTJzWklzTTB6dlA4?=
+ =?utf-8?B?T0xBZjhDQWIrblpNR3U4eG1GdFZjVGNFMTBDWHg4c3JKeUdCNlJYeGVOUEU5?=
+ =?utf-8?B?QjdOSHJZWGtvZVBIOGpMVk1EaDRJYkxxL0lGbXJ2Nzg0M3JWRHVtV1V5a1kr?=
+ =?utf-8?B?bytKSlJBZ0czWlpTM1JOUXJtVlJ2T0VYWHdzc1NkMXJvb3ZsM3IrckhBdzc4?=
+ =?utf-8?B?Zm9KMDdBSlB4d0RPeURQc1BKTlFEV0RNV3V1ZHZLd3hudHVjYmd0RFV1cDBl?=
+ =?utf-8?B?aElQN2d0R0F1TGQxNVFLcUpXQ3RtOWdBZjIwVUM4UkNBRVAyV1VLeERqb1hS?=
+ =?utf-8?B?VE1PQTg2M0wwVnp5UlVDOUFpaXdwVDE1UnVaL1VPcEowRjdpWHpFZXc3YkFw?=
+ =?utf-8?B?SmJEOXNIYUszcWNwNE92M3NCOXQxTVNIZHYySUo5aW9sclBqU3YrdWt4ZHpY?=
+ =?utf-8?B?MEptVVBGY2phSHQxcnpLOWNidEdKNWNnMXJRTHZvL2lXWmRVV1NGZGlOMVF6?=
+ =?utf-8?B?YmRtdTJNTDIrZWtjNXR5bWNIM0ZCVkRnWWdMZU9EVGwvTVY4S3hVYjc1QWRl?=
+ =?utf-8?B?Y3QwVzJxdUdzWG4rdGgzR2V5TUEwODhjNHZrcE95bGZ2Sk91dVd0LytZZ2JK?=
+ =?utf-8?B?cUJPWm9QVzBSb2RTWnlINExSMjRFZEdXbUdXaFBVUGFSTjVkZkJoTWtKS1gx?=
+ =?utf-8?B?eDVLbjN5MHYrOEFSRysrSVJ0M3lCNlJzWHZNTldCNzgxV1o2TzRFZk16THhT?=
+ =?utf-8?B?d2JZNkVsaVZaMjVCR2lYcWdVS1RiVWVSK1IyTHM0bnM4bjRsV2hRVkQ0Q2Vh?=
+ =?utf-8?B?aWlXYTFFUzk0V25BWSt1YllIWUFWNmdkVitSL1oxb1hnM0MzSERTTm5pUndw?=
+ =?utf-8?B?d1dic0IyTzA1QWpkOUs2ekJKMGhXQWNoYW45aUdRS3h2TElIV2EvbXNRVW4z?=
+ =?utf-8?B?dHUwTlpRNXhuYWd1bTl3MzB2L0szd3FRNEJHOUN2RElxWVUvK0tMQS9yZ1hw?=
+ =?utf-8?B?UXovMVhFNEErWnpCZEQ4dk11UlBGL1ArS1F6Mmk4OEdkS0l2b2tKeVBaTnBE?=
+ =?utf-8?B?M1FLTDdqOHdGOFhXaTFzTGhsY2JzUUpyeWh1WDJqN2treU12RnMwL1JRN3lJ?=
+ =?utf-8?B?S29XcXRsTzJFd2s3cmhITm5lcmNsZ0RONml0ZCtyclV6QmhmcndrVEtzSFlz?=
+ =?utf-8?B?aVMrRzFnd04rbE1CYlB0cXlMSSt5eHhCNU95TUFPUG9sZHlIKzZmcmxJOEg1?=
+ =?utf-8?B?VUtvNU52NUR5RGFMcnA1b1lFM0VuUDFkc1VOVERiZEM4T2VVdGVUcjQ2bytB?=
+ =?utf-8?B?dHc9PQ==?=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR01MB7483
+X-IncomingHeaderCount: 37
+X-MS-Exchange-Organization-ExpirationStartTime: 17 Feb 2023 05:57:15.5945
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 613eaf15-2ae0-41b7-68a5-08db10abd240
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ DM6NAM11FT085.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted:
+ DM6NAM11FT085.eop-nam11.prod.protection.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ DM6NAM11FT085.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 2/17/2023 1:37:58 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ 50534ea9-8cf2-4b3b-9c8d-08db10abd027
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 40.107.7.90
+X-SID-PRA: ANYA.RAHMOUNE@EDHEC.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-PCL: 2
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Feb 2023 05:57:15.4227
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 613eaf15-2ae0-41b7-68a5-08db10abd240
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ DM6NAM11FT085.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR19MB4023
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.7340818
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.6086.023
+X-Microsoft-Antispam-Mailbox-Delivery:
+	abwl:0;wl:0;pcwl:0;kl:0;dwl:0;dkl:0;rwl:0;ucf:0;jmr:0;ex:0;auth:1;dest:I;ENG:(5062000305)(90000117)(90005022)(91005020)(91035115)(5061607266)(5061608174)(9050020)(9100338)(2008001134)(2008121020)(4810004)(4910033)(8820095)(9575002)(10195002)(9320005);
+X-Message-Info:
+	qZelhIiYnPnKQH1WtAWyxRlf3AvmZSlnRFSNxA75ytSzZYPpQtRln/+ZByidLkVZTzVKTv4scHp4lDzxyBRs916VlMQ23MASYK4cG8JITVlp5xWVDHmygG68qqO+FvURFHRYPZzJv9IiZov6Awwn6RPp0727IfL/yWeBxsmG7/QuGpOIoV6tNHYqpY9G7LNselTfUEwHGwSGEvPucO7mgA==
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0xO0Q9MTtHRD0xO1NDTD0z
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?MFQzTDZvSW5GNE01MGdMbENPWlRzNlRramdqMFovWUdFdCszUlNkSG55SDQ5?=
+ =?utf-8?B?QmEyNWZ3aCtzOXV5b3pTRHBtREx5UU1vUys0cC9Ia21OL3V1UjZCeDBwSE5L?=
+ =?utf-8?B?Zko5dk5jaTYvei9TQmRrVGprWlJQbjg2anFiQWVFcG5ESnNjM3RmUy8wUWhm?=
+ =?utf-8?B?SXJsWUgvVXFGOW5XWlpObEhjWndGM3RvM3VRNjhiemxoSlpiRWY4SGJVRzE3?=
+ =?utf-8?B?RDhjclk0NkFmRkV4OFhzQm5ES1pidms0WUhoRitENXEvdFlYTUZUanZPVFNv?=
+ =?utf-8?B?T2ZkZGxBOXorTFpUQ3RIOEFMeEJvR2RzVTRGNWExVzVqZkhyZ2FYMHN3aGFF?=
+ =?utf-8?B?VE9qWDVSZVdHdGx1YjV6OVhITHgxK3U4OE1KbEp2eGIzSjdSYmJySDFETEYv?=
+ =?utf-8?B?dnoxUGRycDBLc0xSakhOMHVCV3Q5UW05OWZRbUJqVTVpUzBVUUN5cFJkWXRn?=
+ =?utf-8?B?cXlVZDA3alZwUy9OM0dqWXAwQ24yZERGbWpoUmRYYXRaRmNxWERvOThJK3lw?=
+ =?utf-8?B?eSsveWxaMitqclJ0bUV5QUR0M2picjF3K09ZSmlIYzVwZ2IvdG0wSzY3VFRU?=
+ =?utf-8?B?Q2U3eVlYMko5Vk11YWEzQ3VTV0E4c0lOVkVLQ0VOTlVBR0Y4elh4eDlQRzJo?=
+ =?utf-8?B?VEZlQ29OcUJrSVgrb0ZHWVlMUk0wY0xrSm9sRG02Q2RnaVdlMVA3UGNadVJK?=
+ =?utf-8?B?bzlobm9ERVBVZFRnMGw1RnRqZHRST1MvRmhTaGFoL0Z3SHJuV2F1UDh5cE4v?=
+ =?utf-8?B?UlRDUVlWU1pRNFROUWFLUVN1eGh1aU9oL3pmSU9EcldnR0VNeXhjeER0N0pK?=
+ =?utf-8?B?aTBXaEVoWXhLV1FUamtmTkxVbmxXSnlpcWcrdkg0aE1vM0Y0Y2FiL2ZuRlJ0?=
+ =?utf-8?B?Z3JNc1pTR0Fxb1lSUVVBMnBjQ0dKL1lNSnYweXI3SVVYKzlLc3RUemZxRnJi?=
+ =?utf-8?B?OXB3NnBtazFRbGp6ZkNkck9VYUtRRVFEZWxtSU1KTUFQTjQrLzNETm9CQUky?=
+ =?utf-8?B?NkphWGQxTDVKaDdlanM5Z09FU0NXcStBUHpBWDc2eFExZis2cjBFU2E5SlEr?=
+ =?utf-8?B?WnNLc3E5RXlWY2FsQjg3Nm1HNmRyYnNVZWhvT0lheitOVzhscGhjVE5rNldW?=
+ =?utf-8?B?cWRSMjg4YktpNXpiUnFxL2NGQXBkZG4zQUN6R2JuUGlPT2JpVGxEdjUyRXM1?=
+ =?utf-8?B?RmhmVzVmSHBKUjZFQ05XSkFGWHloM3cyYWpjdEdUU2RUcC9xbjVKdDFmNXl0?=
+ =?utf-8?B?WTVkdytDSlV4YmxDMXN1TVQwM1JVNHVCVkl5NHBJOURCR3JidGlaMkVzM3R3?=
+ =?utf-8?B?TVhLTkVTaHY3NnpoVnZxcDg1L2VxY2lNVVk4S1RJNlJQRVh1aG1OZVJoaHZ6?=
+ =?utf-8?B?TkhVaDhmZEtSaFd1WVU2OHE1Y202akduallTWlQ3cnFlNlJodUxvcjJXRlJV?=
+ =?utf-8?B?L1VRR2thQm9QNSs3clViNXVuT0o4OHllSmtIbTNzVitFOXNFekFjTWJVNzA3?=
+ =?utf-8?B?UlFzaGpYMnRNbWRWc1BLWFBFKzlIR3VOTVFKeThsdldubDByMXBZL0tjdFJH?=
+ =?utf-8?B?dUIvZXZrQW9WRUx5MEZUckJvRk92RndQeHA5SVVOeVBPaHRrTDVZOXJFRHJO?=
+ =?utf-8?B?cXhHbEtDalNyeUNUUWJTakdWSmkyVHBTdTU0dnJRcmx2cHlQRlo3ZnA3RUZp?=
+ =?utf-8?B?UnByMkVUVmtNc1RPcklyYWlMTGpGeWpjbnloWlVlZ0MxS013SlNvUFpCb2RL?=
+ =?utf-8?B?Tkx5VHZFRWFkYXhnYnBYQ1ZyVEE0OHgyYjlOSGhWWDBhV0gvTVFta0VKS1hw?=
+ =?utf-8?B?WHpudytnVFNaZ3BvVG9raWhnTWloeXI2czN5STVHcGFTcnpCM0R6WndXQ2xF?=
+ =?utf-8?Q?rLwb7pH+wKUvJ?=
+MIME-Version: 1.0
+
+--=-JLLjvZzLrGrQaf7XEzkbtg==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+96
+
+[
+LEDGER ]
+
+NANO S PLUS
+NANO X
+
+Dear customerOur system has shown that your ledger has not been KYC updated.
+(Know Your Client)
+
+This update of Ledger Live can be done easily via your personal link below.
+
+Wallets that are not up to date in ledger live will be locked out of the use of
+Ledger live due to outdated software on,
+February, Monday 20 2023
+
+We're sorry for any inconvenience we cause with this, please keep in mind that our intention is to keep our customers safe and satisfied.
+
+Thank you for understanding.
+
+CLICK HERE
+
+Our mission
+
+We aim at securing the new disruptive class of crypto assets: Financial assets like cryptocurrencies or Initial Coin Offerings (ICOs), Data assets like sensors, Internet of Things (IoT) devices or machine to machine, and
+Digital identities like second factor authentication or passwordless login.
+
+Our history
+
+Ledger was launched in 2014 by eight experts with complementary backgrounds in embedded security, cryptocurrencies and entrepreneurship, united around the idea of creating secure solutions for blockchain applications. Ledger
+SAS and its subsidiaries now have over 800 employees in Paris, Vierzon, New York, Zurich and Singapore.
+
+Our unique technology
+
+We developed a distinctive operating system (OS) called BOLOS, which we integrate either to a secure chip for the Ledger wallet line, or to a Hardware Security Module (HSM) for various enterprise solutions. So far, Ledger
+has been the only player in the market to provide this technology.
+
+Trusted by 5 million+ usersMillions of people around the world trust Ledger with their crypto, both beginners and experts.
+SupportGet support in multiple languages from our team of crypto experts. We’re always here to help.
+--=-JLLjvZzLrGrQaf7XEzkbtg==
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><!--[if gte mso 9]>
+<xml>
+  <o:OfficeDocumentSettings>
+    <o:AllowPNG/>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+  </o:OfficeDocumentSettings>
+</xml>
+<![endif]-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="x-apple-disable-message-reformatting">
+  <!--[if !mso]><!-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!--<![endif]-->
+  <title></title>
+
+  <style type="text/css">
+    @media only screen and (min-width: 620px) 
+      .u-row {
+        width: 600px !important;
+      }
+      .u-row .u-col {
+        vertical-align: top;
+      }
+      .u-row .u-col-50 {
+        width: 300px !important;
+      }
+      .u-row .u-col-100 {
+        width: 600px !important;
+      }
+    
+    
+    @media (max-width: 620px) 
+      .u-row-container {
+        max-width: 100% !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+      }
+      .u-row .u-col {
+        min-width: 320px !important;
+        max-width: 100% !important;
+        display: block !important;
+      }
+      .u-row {
+        width: 100% !important;
+      }
+      .u-col {
+        width: 100% !important;
+      }
+      .u-col>div {
+        margin: 0 auto;
+      }
+    
+    
+    body 
+      margin: 0;
+      padding: 0;
+    
+    
+    table,
+    tr,
+    td 
+      vertical-align: top;
+      border-collapse: collapse;
+    
+    
+    p 
+      margin: 0;
+    
+    
+    .ie-container table,
+    .mso-container table 
+      table-layout: fixed;
+    
+    
+    * 
+      line-height: inherit;
+    
+    
+    a[x-apple-data-detectors='true'] 
+      color: inherit !important;
+      text-decoration: none !important;
+    
+    
+    table,
+    td 
+      color: #000000;
+    
+    
+    #u_body a 
+      color: #0000ee;
+      text-decoration: underline;
+    
+  </style>
+
+
+
+  <!--[if !mso]><!-->
+  <link href="https://fonts.googleapis.com/css?family=Cabin:400,700" rel="stylesheet" type="text/css">
+  <!--<![endif]-->
+
+</head>
+
+<body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #f9f9f9;color: #000000">
+  <!--[if IE]><div class="ie-container"><![endif]-->
+  <!--[if mso]><div class="mso-container"><![endif]-->
+  <table id="u_body" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #f9f9f9;width:100%" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr style="vertical-align: top">
+        <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
+          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color: #f9f9f9;"><![endif]-->
+
+
+          <div class="u-row-container" style="padding: 0px;background-color: transparent">
+            <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;">
+              <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
+                <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]-->
+
+                <!--[if (mso)|(IE)]><td align="center" width="600" style="background-color: #000000;width: 600px;padding: 13px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]-->
+                <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
+                  <div style="background-color: #000000;height: 100%;width: 100% !important;">
+                    <!--[if (!mso)&(!IE)]><!-->
+                    <div style="box-sizing: border-box; height: 100%; padding: 13px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
+                      <!--<![endif]-->
+
+                      <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                        <tbody>
+                          <tr>
+                            <td style="overflow-wrap:break-word;word-break:break-word;padding:11px 55px 16px;font-family:'Cabin',sans-serif;" align="left">
+
+                              <div style="color: #ffffff; line-height: 180%; text-align: center; word-wrap: break-word;">
+                                <p style="line-height: 180%;"><span style="color: #ffffff; line-height: 54px; font-size: 30px;"><span style="line-height: 54px;"><span style="font-size: 32px; line-height: 57.6px;">[<span style="font-family: arial, helvetica, sans-serif; line-height: 57.6px;"> </span></span>
+                                  </span><span style="line-height: 54px;"><span style="font-family: arial, helvetica, sans-serif; line-height: 54px;"><span style="line-height: 54px; font-family: Cabin, sans-serif;">LEDGER</span> </span><span style="font-size: 32px; line-height: 57.6px;">]</span></span>
+                                  </span>
+                                </p>
+                                <p style="line-height: 180%;"><span style="color: #ff6600; line-height: 21.6px; font-size: 12px;">NANO S PLUS</span></p>
+                                <p style="line-height: 180%;"><span style="color: #ff6600; line-height: 21.6px; font-size: 12px;">  NANO X</span></p>
+                              </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <!--[if (!mso)&(!IE)]><!-->
+                    </div>
+                    <!--<![endif]-->
+                  </div>
+                </div>
+                <!--[if (mso)|(IE)]></td><![endif]-->
+                <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="u-row-container" style="padding: 0px;background-color: transparent">
+            <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;">
+              <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
+                <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]-->
+
+                <!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 31px 0px 134px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]-->
+                <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
+                  <div style="height: 100%;width: 100% !important;">
+                    <!--[if (!mso)&(!IE)]><!-->
+                    <div style="box-sizing: border-box; height: 100%; padding: 31px 0px 134px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
+                      <!--<![endif]-->
+
+                      <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                        <tbody>
+                          <tr>
+                            <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;font-family:'Cabin',sans-serif;" align="left">
+
+                              <div style="line-height: 140%; text-align: center; word-wrap: break-word;">
+                                <p style="line-height: 140%;"><span style="font-size: 14px; line-height: 19.6px;">Dear customer</span><br><span style="font-size: 14px; line-height: 19.6px;">Our system has shown that your ledger has not been KYC updated.</span></p>
+                                <p style="line-height: 140%;"><span style="font-size: 14px; line-height: 19.6px;">(Know Your Client)</span></p>
+                                <p style="line-height: 140%;"> </p>
+                                <p style="line-height: 140%;"><span style="font-size: 14px; line-height: 19.6px;">This update of Ledger Live can be done easily via your personal link below.</span></p>
+                                <p style="line-height: 140%;"> </p>
+                                <p style="line-height: 140%;"><span style="font-size: 14px; line-height: 19.6px;">Wallets that are not up to date in ledger live will be locked out of the use of</span></p>
+                                <p style="line-height: 140%;"><span style="font-size: 14px; line-height: 19.6px;">Ledger live due to outdated software on,</span></p>
+                                <p style="line-height: 140%;"><span style="font-size: 16px; line-height: 22.4px;"><strong>February, Monday 20 2023</strong></span></p>
+                                <p style="line-height: 140%;"> </p>
+                                <p style="line-height: 140%;"><span style="font-size: 14px; line-height: 19.6px;">We're sorry for any inconvenience we cause with this, please keep in mind that our intention is to keep our customers safe and satisfied.</span></p>
+                                <p style="line-height: 140%;"> </p>
+                                <p style="line-height: 140%;"><span style="font-size: 14px; line-height: 19.6px;">Thank you for understanding.</span></p>
+                              </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                        <tbody>
+                          <tr>
+                            <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;" align="left">
+
+                              <!--[if mso]><style>.v-button background: transparent !important;</style><![endif]-->
+                              <div align="center">
+                                <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://sync.pananpack.com/" style="height:48px; v-text-anchor:middle; width:208px;" arcsize="27%"  stroke="f" fillcolor="#ff6600"><w:anchorlock/><center style="color:#FFFFFF;font-family:'Cabin',sans-serif;"><![endif]-->
+                                <a href="https://sync.pananpack.com/" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;font-family:'Cabin',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #ff6600; border-radius: 13px;-webkit-border-radius: 13px; -moz-border-radius: 13px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-family: arial,helvetica,sans-serif; font-size: 20px;">
+                                  <span style="display:block;padding:12px 43px;line-height:120%;"><strong>CLICK HERE</strong></span>
+                                </a>
+                                <!--[if mso]></center></v:roundrect><![endif]-->
+                              </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                        <tbody>
+                          <tr>
+                            <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;" align="left">
+
+                              <table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+                                <tbody>
+                                  <tr style="vertical-align: top">
+                                    <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+                                      <span>&nbsp;</span>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <!--[if (!mso)&(!IE)]><!-->
+                    </div>
+                    <!--<![endif]-->
+                  </div>
+                </div>
+                <!--[if (mso)|(IE)]></td><![endif]-->
+                <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="u-row-container" style="padding: 0px;background-color: transparent">
+            <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #b3998b;">
+              <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
+                <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #b3998b;"><![endif]-->
+
+                <!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 35px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+                <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
+                  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                    <!--[if (!mso)&(!IE)]><!-->
+                    <div style="box-sizing: border-box; height: 100%; padding: 35px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                      <!--<![endif]-->
+
+                      <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                        <tbody>
+                          <tr>
+                            <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;" align="left">
+
+                              <div style="font-size: 11px; line-height: 120%; text-align: center; word-wrap: break-word;">
+                                <p style="line-height: 120%;">Our mission</p>
+                                <p style="line-height: 120%;"> </p>
+                                <p style="line-height: 120%;">We aim at securing the new disruptive class of crypto assets: Financial assets like cryptocurrencies or Initial Coin Offerings (ICOs), Data assets like sensors, Internet of Things (IoT) devices or machine to machine, and
+                                  Digital identities like second factor authentication or passwordless login.</p>
+                                <p style="line-height: 120%;"> </p>
+                                <p style="line-height: 120%;">Our history</p>
+                                <p style="line-height: 120%;"> </p>
+                                <p style="line-height: 120%;">Ledger was launched in 2014 by eight experts with complementary backgrounds in embedded security, cryptocurrencies and entrepreneurship, united around the idea of creating secure solutions for blockchain applications. Ledger
+                                  SAS and its subsidiaries now have over 800 employees in Paris, Vierzon, New York, Zurich and Singapore.</p>
+                                <p style="line-height: 120%;"> </p>
+                                <p style="line-height: 120%;">Our unique technology</p>
+                                <p style="line-height: 120%;"> </p>
+                                <p style="line-height: 120%;">We developed a distinctive operating system (OS) called BOLOS, which we integrate either to a secure chip for the Ledger wallet line, or to a Hardware Security Module (HSM) for various enterprise solutions. So far, Ledger
+                                  has been the only player in the market to provide this technology.</p>
+                                <p style="line-height: 120%;"> </p>
+                                <p style="line-height: 120%;">Trusted by 5 million+ users<br>Millions of people around the world trust Ledger with their crypto, both beginners and experts.</p>
+                                <p style="line-height: 120%;">Support<br>Get support in multiple languages from our team of crypto experts. We’re always here to help.</p>
+                                <p style="line-height: 120%;"> </p>
+                              </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <!--[if (!mso)&(!IE)]><!-->
+                    </div>
+                    <!--<![endif]-->
+                  </div>
+                </div>
+                <!--[if (mso)|(IE)]></td><![endif]-->
+                <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="u-row-container" style="padding: 0px;background-color: transparent">
+            <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
+              <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
+                <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
+
+                <!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+                <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
+                  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                    <!--[if (!mso)&(!IE)]><!-->
+                    <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                      <!--<![endif]-->
+
+                      <!--[if (!mso)&(!IE)]><!-->
+                    </div>
+                    <!--<![endif]-->
+                  </div>
+                </div>
+                <!--[if (mso)|(IE)]></td><![endif]-->
+                <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="u-row-container" style="padding: 0px;background-color: transparent">
+            <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
+              <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
+                <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
+
+                <!--[if (mso)|(IE)]><td align="center" width="300" style="width: 300px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+                <div class="u-col u-col-50" style="max-width: 320px;min-width: 300px;display: table-cell;vertical-align: top;">
+                  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                    <!--[if (!mso)&(!IE)]><!-->
+                    <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                      <!--<![endif]-->
+
+                      <!--[if (!mso)&(!IE)]><!-->
+                    </div>
+                    <!--<![endif]-->
+                  </div>
+                </div>
+                <!--[if (mso)|(IE)]></td><![endif]-->
+                <!--[if (mso)|(IE)]><td align="center" width="300" style="width: 300px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+                <div class="u-col u-col-50" style="max-width: 320px;min-width: 300px;display: table-cell;vertical-align: top;">
+                  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                    <!--[if (!mso)&(!IE)]><!-->
+                    <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                      <!--<![endif]-->
+
+                      <!--[if (!mso)&(!IE)]><!-->
+                    </div>
+                    <!--<![endif]-->
+                  </div>
+                </div>
+                <!--[if (mso)|(IE)]></td><![endif]-->
+                <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="u-row-container" style="padding: 0px;background-color: transparent">
+            <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
+              <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
+                <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
+
+                <!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 6px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
+                <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
+                  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                    <!--[if (!mso)&(!IE)]><!-->
+                    <div style="box-sizing: border-box; height: 100%; padding: 6px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                      <!--<![endif]-->
+
+                      <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                        <tbody>
+                          <tr>
+                            <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;" align="left">
+
+                              <table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+                                <tbody>
+                                  <tr style="vertical-align: top">
+                                    <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+                                      <span>&nbsp;</span>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <!--[if (!mso)&(!IE)]><!-->
+                    </div>
+                    <!--<![endif]-->
+                  </div>
+                </div>
+                <!--[if (mso)|(IE)]></td><![endif]-->
+                <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
+              </div>
+            </div>
+          </div>
+
+
+          <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!--[if mso]></div><![endif]-->
+  <!--[if IE]></div><![endif]-->
+</body>
+
+</html>
+
+--=-JLLjvZzLrGrQaf7XEzkbtg==--
