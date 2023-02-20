@@ -1,0 +1,505 @@
+Received: from DM6PR19MB3979.namprd19.prod.outlook.com (2603:10b6:5:242::8) by
+ MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Sun, 19 Feb 2023 13:50:11
+ +0000
+ARC-Seal: i=3; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
+ b=bKUp4GiR2DAPGoZRhIN7WX+OEgg7d6aHngFI0fwqey2YX4Q7rqFMcIn89Ki8bHCpFEmgZ68UW4+a3Bi/6MdX1YAB4To1oH5zc0nvPEZdoksokeXrZGwd6hTJy0IJcr5Ncy4LFmmqhMlvCjdesKsAekisqkYWJb8U8tECSUtEe3mqkiNBT7UI/A6dXG+FTcHbbjC3BjqpuhruuC8HMjm1XrxlgPruqSbPMu2uvlrbFfeMNjPQjfkKqZMRYJ29RK+4OAA0VfnvkxLClXL4KQvgZS0XJPQ31HSaWbp63FtorgGIO8lfVVw2VtQINJF6K7ZUsLZ9TrcLd46ZQTvZcbHgYQ==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fWb/0LYsGs5Yzs0dRb959GcxcaPGfLS5ER+5u1RUbPg=;
+ b=Z1qM5Ja5TXq1UjD2um7aTukYgwMAezPs0cxCIHMG7f1wTwWLo9Zch0H0nR3y1eT01dSiaXoaSvS8OMICoSNKNttejHHQVmI1wHjSO1Imc8j4PNjv/rJXDt9zIRpmPhdNJ6xxnA34UP+emzI9Y7oXPr258k3TWpmHa1Gwi9n5mGwrmMzyk9eqwZTnA0sBdqFLJIqEXyb8vua8GTicTDbR53X9tKifxZAXZTDyxDT1KgbRYRigD/U3nt9mzfUemIABSprJETBQ8ch87SoWRwasBK8ZEsFBY5xvBrSF9REmysPJuY0d96rhrK7IeyC3Uah0EuQ0Uwt7QLHNu/YN1hZTng==
+ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=pass (sender ip is
+ 209.85.217.42) smtp.rcpttodomain=hotmail.com smtp.mailfrom=gmail.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=hotmail.com;
+ dkim=pass (signature was verified) header.d=hotmail.com; arc=pass (0 oda=1
+ ltdi=1 spf=[1,2,smtp.mailfrom=phishing@pot]
+ dkim=[1,2,header.i=@hotmail.com] dmarc=[1,2,header.from=hotmail.com])
+Received: from BN0PR04CA0080.namprd04.prod.outlook.com (2603:10b6:408:ea::25)
+ by DM6PR19MB3979.namprd19.prod.outlook.com (2603:10b6:5:242::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6086.24; Sun, 19 Feb
+ 2023 13:50:10 +0000
+Received: from BN7NAM10FT012.eop-nam10.prod.protection.outlook.com
+ (2603:10b6:408:ea:cafe::e9) by BN0PR04CA0080.outlook.office365.com
+ (2603:10b6:408:ea::25) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6111.18 via Frontend
+ Transport; Sun, 19 Feb 2023 13:50:10 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.217.42)
+ smtp.mailfrom=gmail.com; dkim=pass (signature was verified)
+ header.d=hotmail.com;dmarc=pass action=none
+ header.from=hotmail.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates
+ 209.85.217.42 as permitted sender) receiver=protection.outlook.com;
+ client-ip=209.85.217.42; helo=mail-vs1-f42.google.com; pr=C
+Received: from mail-vs1-f42.google.com (209.85.217.42) by
+ BN7NAM10FT012.mail.protection.outlook.com (10.13.156.114) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6111.19 via Frontend Transport; Sun, 19 Feb 2023 13:50:10 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:2C41EF808711224860FDC6634190ED60F3CFEDFADC568E68F10015B8940C3C67;UpperCasedChecksum:BEADB683D3B457870F8E67854E6D0B84C21D5561F23BEE7F816491C1283DE4C8;SizeAsReceived:11591;Count:57
+Received: by mail-vs1-f42.google.com with SMTP id c24so294772vse.1
+        for <phishing@pot>; Sun, 19 Feb 2023 05:50:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature:delivered-to:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fWb/0LYsGs5Yzs0dRb959GcxcaPGfLS5ER+5u1RUbPg=;
+        b=C+rgbwAdWsZvDH4RDl4pt/kEBBmJyP5G405p7QG+MKMgnjIFGPIx7W7LltI8FRw7XD
+         Xro3o9zsqzllX5jYYZnan24LMhWyA2sf2mz2cdAha8YgpPdmo501NBWgaX/3xv3WjvqL
+         fsGqBgh2O0qqYyaz411mCMs49KgXZODYRM1GRxZeUjxPl0O0AhUFRV3tsCGHJxizZBEK
+         CkuNoRxtVm4GpW1dp2IiyzpjJAphUT/OmO9xq1AShSSYIDInIjRxWBRgtgAguJRBtfSP
+         i1u9S3emmoSgM+JWVQIBW7ngcVYLUvl5XM6HsqOZ4GkhF/+4WcCIGefhaS0gEcYjRWYe
+         DlCw==
+X-Gm-Message-State: AO0yUKWtcSbOqi8x+kjFqt0zFV7sLkHhtOlXiT2C+qFjVdIZrd5WdHQK
+	rm4GF6dS0C6UpA+BN8nrYbBeAC9uyOikn+olWEcoSAvX/olIgpHzdA==
+X-Received: by 2002:a67:f498:0:b0:411:a9e6:ce6e with SMTP id o24-20020a67f498000000b00411a9e6ce6emr623594vsn.72.1676814610007;
+        Sun, 19 Feb 2023 05:50:10 -0800 (PST)
+X-Forwarded-To: phishing@pot
+X-Forwarded-For: phish.me.again@gmail.com phishing@pot
+Delivered-To: phish.me.again@gmail.com
+Received: by 2002:a59:5b11:0:b0:3a6:aea5:2823 with SMTP id p17csp1183101vqb;
+        Sun, 19 Feb 2023 05:50:08 -0800 (PST)
+X-Google-Smtp-Source: AK7set983cfIN1vLUFvxfQn9Hx3fxDmAcout46iFlL/X0dGvo88Tu9TUqjMHWlP6Q1pzK7ODtbwo
+X-Received: by 2002:a05:6a20:914a:b0:bf:3def:16cd with SMTP id x10-20020a056a20914a00b000bf3def16cdmr6527457pzc.59.1676814608653;
+        Sun, 19 Feb 2023 05:50:08 -0800 (PST)
+ARC-Seal: i=2; a=rsa-sha256; t=1676814608; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=u9mCYEcGT2qcaBtWb4EaJ8u6g99T/UMMTF/s5wkKcMbP31Cz9T9X0WnqD0+7Sr7YgM
+         dFZJiiO/ZZNFpVGdx8rZWXoYFhfw9fq6arzYzAE79czLNUqGda07OTfjsjtLbmmAE7GD
+         wTG9UnDLNDay4D5Niq7q5lAnbwj8V73RlMbjk2HrD69poxUvJezBTdGCyeWI26zufGng
+         RekFBW+PwTSFIpZwMza3VQCfJoIpMnWN5U75uyNjOm+ZkGXIQTnDjd/t+gWEw5lhbqu6
+         cb+APexFF3uEd88sYA3iEiGe9flPVgwjXDBraVd29SC2OQ4ZjnMb0wjRgFTDnXi7xhli
+         hPhA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature;
+        bh=fWb/0LYsGs5Yzs0dRb959GcxcaPGfLS5ER+5u1RUbPg=;
+        b=Unlzf9/UyqUdDx+nF69re4y2rUeAuXcCqd6aaOdOMiT1PQ/Ti4ddzJrlUsB6vWLEoa
+         rFbTpKlZIALI/c1rs0amWOSv9RO+ImxLLWru9X10ZapkgdUz/txEyKkJGz6+tNkqEZZY
+         pkAgxAuDT18Mvz1cOZpnXRCaBy7oHp6STB27o6lDwVDn/2faZPHEBpzb1CWiU6WrWQSV
+         FUyeGVnfb30T1fqgAqYaYwpaRjLpI+KKXgSXrCnlTlN/Erm57DNSEpcdmhT9aej5K505
+         zj2chYq88pIJ9Ru0Cm/IOVsQN47yBRkbIgWoaEeuy50sUrivEYT3ONY1prvZNwQlpfUL
+         jORQ==
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@hotmail.com header.s=selector1 header.b="H2z7Ii/g";
+       arc=pass (i=1);
+       spf=pass (google.com: domain of phishing@pot designates 2a01:111:f400:fe5a::822 as permitted sender) smtp.mailfrom=merciayanmact@hotmail.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=hotmail.com
+Return-Path: phish.me.again+caf_=phishing@pot=hotmail.com@gmail.com
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12olkn20822.outbound.protection.outlook.com. [2a01:111:f400:fe5a::822])
+        by mx.google.com with ESMTPS id u12-20020a63600c000000b004ded572f110si8680126pgb.870.2023.02.19.05.50.07
+        for <Phish.me.again@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 19 Feb 2023 05:50:08 -0800 (PST)
+Received-SPF: pass (google.com: domain of phishing@pot designates 2a01:111:f400:fe5a::822 as permitted sender) client-ip=2a01:111:f400:fe5a::822;
+Authentication-Results-Original: mx.google.com;       dkim=pass
+ header.i=@hotmail.com header.s=selector1 header.b="H2z7Ii/g";       arc=pass
+ (i=1);       spf=pass (google.com: domain of phishing@pot
+ designates 2a01:111:f400:fe5a::822 as permitted sender)
+ smtp.mailfrom=phishing@pot;       dmarc=pass (p=NONE sp=NONE
+ dis=NONE) header.from=hotmail.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=nbO/9k/KQy1RYkBb947MNvG7gJaJr+VO6fyb6COsKl6yY8AQ7a3cKm4RHZsElxdyhwaTHS29CeotJLid9AdaGRoEGaTuGlbdA+/sMtkLZENFG0q2JQXttTDQpbDOEy6rA4fjfRfpZFFXVOh8f5qlezhlQCIgx0rrc8DR+d4p3uqr1swzjgfD21vstfcvWLHpsY+uEcmFsFU4jHtxt0UvUI8zwFvbFNMOUkyoNGke2CGKkOYj2/N3Y/vfXS8OPDu7KsUATjzWCcZWA9WHVbDPs1WZkhByHyGuBgN7B/AyRydFKFUdjJZy6nl3aJGD+yF5ur/N1eYBbr8gOqOPbb0pLg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fWb/0LYsGs5Yzs0dRb959GcxcaPGfLS5ER+5u1RUbPg=;
+ b=UX9A1b5mdQfl9G7YI6ZUj233O94ZL/au0mBB/u64r9RJyxlJ/vAfELEvUXv55URTOUf1AzbO2/IfRBUpjmxcBvyJ7YHP6xEvEXNT12O5LlcGc3mmuT/euYCXOVTxO1/uGCFeWvHB9haGoU+711Qdu2UlH4cvT20nZ5locjxOxvW33b9G+ZEHVX4oa6/ct8B8K3Va9wbtg8eJrTr2k8v7OhI0nhI/LSbjaVZ46I5SEVClGXDrBjqHb/6q7Pek0/LYdPO9vv3QAylRAUxpVmlp01860Ozpu+KiLYZ3Kj1s+7U/MdOFSM43wt0+MjWTk4Xv80TAgF00r9Hop+RkplICiA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fWb/0LYsGs5Yzs0dRb959GcxcaPGfLS5ER+5u1RUbPg=;
+ b=H2z7Ii/gSDmoRITr4FxDHfzkEuVD3lM+BFrKzaAPYZg6Gbp8dj3y/vgPFDm15rDpoFgqxVzAeu9xNmjloHf/8AlMFVyM6h+Rrk9K5M7h0eXhd7cyAW8ps4aSr/BJLRkjC2z4gEVFyOxsKe2oLTcp/7+035bnhno7vCaexReFVHj2b4I0gNv6s4/fxj4EpYiU+SvZr9/HK9hbHvaAytFsQ0zSaxT/ms7WX02o0is9s5vWuxP17YBam8JoQe8xbunCWhqTrmE1iD7LLXTLNWxlFiSZGWyo6mLeTd9LBVJ5+3k9OXViuH4rI9jygFQhfly+GzBw1sjG5aIoWu9y9LxpZw==
+Received: from SA0PR04MB7370.namprd04.prod.outlook.com (2603:10b6:806:e5::23)
+ by DM6PR04MB4794.namprd04.prod.outlook.com (2603:10b6:5:29::26) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6111.18; Sun, 19 Feb
+ 2023 13:50:05 +0000
+Received: from SA0PR04MB7370.namprd04.prod.outlook.com
+ ([fe80::fc67:fd76:bf25:a3f7]) by SA0PR04MB7370.namprd04.prod.outlook.com
+ ([fe80::fc67:fd76:bf25:a3f7%6]) with mapi id 15.20.6111.018; Sun, 19 Feb 2023
+ 13:50:05 +0000
+From: phishing@pot <phishing@pot>
+To: "phish.me.again@gmail.com" <Phish.me.again@gmail.com>
+Subject: Fw: Amazing Sale! Get This Diet Product For a Huge Discount!
+Thread-Topic: Amazing Sale! Get This Diet Product For a Huge Discount!
+Thread-Index: AQHZQ2mUbNMywhpeYkuiFoajzXyDTa7WS0g4
+Date: Sun, 19 Feb 2023 13:50:04 +0000
+Message-ID:
+ <SA0PR04MB7370933BDFA2667C194AEEB1B3A79@SA0PR04MB7370.namprd04.prod.outlook.com>
+References:
+ <86521128-eff4-4a83-9f14-447590ef9608@HE1EUR04FT018.eop-eur04.prod.protection.outlook.com>
+In-Reply-To:
+ <86521128-eff4-4a83-9f14-447590ef9608@HE1EUR04FT018.eop-eur04.prod.protection.outlook.com>
+Accept-Language: pt-BR, en-US
+Content-Language: pt-BR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [cHyxU7/O+AZ1Y4obq7+B7qN0J+FGdn5V]
+x-ms-traffictypediagnostic:
+ SA0PR04MB7370:EE_|DM6PR04MB4794:EE_|BN7NAM10FT012:EE_|DM6PR19MB3979:EE_
+X-MS-Office365-Filtering-Correlation-Id: bbc5d823-8e24-4d9a-8331-08db128037ab
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original:
+ =?us-ascii?Q?aftrgcBQfZko1+79Yyr+dcQCtuZihO8dE8u1uLa7DKSYp9TkSB0Gzimdph4H?=
+ =?us-ascii?Q?N8x0oqBQ+/FVm307v3DXNZhWFmMaUVpxHwmoRiegyqJ2kdadHQy1qao0X6n+?=
+ =?us-ascii?Q?CywDOTLuiznwMK+/YU+UF8Ee3idAvcZQJBNqrR2yKY85P3JlzU6aKpuX0v1I?=
+ =?us-ascii?Q?n9IFk2Czg/X1dUP22xMf6q0Is5ZEtSskmd77lTqkY8gyLw6xB7weHAq5k2Ga?=
+ =?us-ascii?Q?2W7anoj5tNI0lFDm/H9/iySbbxVhQJrNjAgpMs6WIDB5D5dEbrIhGUcc0PL1?=
+ =?us-ascii?Q?j3TbVExD6cTXKKiu3Cg8OlHMcOQ7lM6j48BDxBPYAfmR4CdhbP2SS/UjgVct?=
+ =?us-ascii?Q?LxhRXbWI154T72TxhNdmXgweh3YrQ+K8JarvBqC8O7zW6lUrtEbr3KvrzRzB?=
+ =?us-ascii?Q?wFZVbhm4yaYfrCCDgZI1+81fhhb/bcHILLxo6vjKII7jt2eyMIRLI4s2K9bF?=
+ =?us-ascii?Q?2Ff81NUcP7Z3zgljtlFZqiEVAdcA38TfLntez9tj3NHpu5VfyisxT2OqCUSA?=
+ =?us-ascii?Q?v9+n89XpcqodBfOGt1dPSs2JBEOfrpMJX694Ox+uPvb7m2UQf8oNfXR0bXNr?=
+ =?us-ascii?Q?oE6sUp68Sem2QTFmcoiU8J7AVHSn6fyNM+loeGFgGAZp0A0zSNK2J/P4FWbH?=
+ =?us-ascii?Q?S42V89/Di/a8oVbYxuUAHaiW7mZYE8S18NzL56Hy8A9lxyn2g8pqgkQ8Ig0w?=
+ =?us-ascii?Q?kyFC5lg05123w4y4p5XEOatmNruS/BgGwtPisEIIc8nudHI6LdCEd38LQjGF?=
+ =?us-ascii?Q?7dTyEh3oYkeB1336SEFYFmYthMn5b2o8isYKW7qiWzsQjZBDQPkb5vRWkRKD?=
+ =?us-ascii?Q?jaGto2wPaDRvwURPoQU8SN5WVUi6VtP3a5BfehAGB5DfVsZsvnWCYl1Fqr5C?=
+ =?us-ascii?Q?ZFA/q52CuS5ctoGLCu4P1SK5yQtnP2pQIQI2KrJp4k80PhWYrCYibY5nDUzn?=
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0:
+ =?Windows-1252?Q?c5ML9cdNtY5yda1055P+SbFLoDQ0FUUNRxw4kxEBofH3PEnwQneBYwQs?=
+ =?Windows-1252?Q?IGCdAFhu3D6q6CTI8/kVBB+HU2GZRzsQmRRNEbw5+xGrnNtt/CuoW0Qm?=
+ =?Windows-1252?Q?MqbXqsAd2oDVEkik0XoTWyn8+JbmMQzBMyJZXDuKdbXxDg1BNr/mInNH?=
+ =?Windows-1252?Q?UDTj1ChqtL/pteOYBoDv6tNbY7Sc/aNc4D9tytQduxK9viSFk4TEjG2K?=
+ =?Windows-1252?Q?MEXbsk95eRmgnTeOPhMC2gx/gPiN6vQpdEXLpJI6bp1b8nufnyRqCb41?=
+ =?Windows-1252?Q?/yM8iYlu4PBLqGmAt9VCqc5QU1j0hRZjBmD/TKi/Vv6mLE1zPVNqy+6f?=
+ =?Windows-1252?Q?RmzSKmIwi1MynEVTweMQEXa58yKoGAfqTj+ucdhQ91ApfDz9qfujc2x3?=
+ =?Windows-1252?Q?5epmC1ILeSO/geq23NgONAa0FIpo/MHsPpTkbaurtSQ991fPoexHAZGW?=
+ =?Windows-1252?Q?F6bvCY9bXpi+jj8sZgub+t3famR2KyG1j3w5VAMnqFJDCyV2+ir/2pbB?=
+ =?Windows-1252?Q?CkXT+qSBYyBk0CB2o7uxkRln5FzZiwBSIspsv8MsT2u7EoceTtVJq5sE?=
+ =?Windows-1252?Q?6zZw/hFdg5ou3Lr75Fl7nDSKeVM6ZQTEOn44PObjpJgwa7lv+ZqDBm+S?=
+ =?Windows-1252?Q?D1FqPuPbFX2ERVLGQp8iERYs7IRVgqHOhNgUDz7NZByctHn6NURUSMNA?=
+ =?Windows-1252?Q?TSNeLU5c+ISr0tJjXjNUEevdbJ8L4IMH/wm6nCFbmqoKp9CY1hAf6zUa?=
+ =?Windows-1252?Q?PpawXBPJBWrpoDcLlT/NgmBuQoOLDISBPvmdzvSL/S0cHiRlpnmQsXpO?=
+ =?Windows-1252?Q?HiBhjb/vT/uZmFJ/iMNKt8WZuQOyncxmmR56wmwbJMqE7TA7Jc27fzk0?=
+ =?Windows-1252?Q?ByW8HxD1oZqVeGKiwKxb7G363XNL1cMrmM++utNMbWbGlJkayO9ux2Pu?=
+ =?Windows-1252?Q?mGoTJsc5h5ntKC9wsKnmc+CuWn3oAxreIOusl1+9Iv7XyDSnNditDbsZ?=
+ =?Windows-1252?Q?IiV8GdRihDcaHLbl8rWbM/wq+bQcfPJDUIZ4Xz6U1ri8sQF2bDzd7Zb+?=
+ =?Windows-1252?Q?g9SwYsSc/bIqrRLRAChmtuhTIYqLP6pUa9hals2dweNJQx8pHAa6Uhar?=
+ =?Windows-1252?Q?oOSpdEZQWb5Ec2hBx4QfiHOzoj4iN2bnOtvv2Sceb1OHtjpIhV8H/mPI?=
+ =?Windows-1252?Q?A1DiH51TY0OsWib+e7E/W+H/w0LAtxYfPH701LsTO5zQ3ZjU4ge00UnF?=
+ =?Windows-1252?Q?GD1bYLhDeTuZVP5zCs/foLYeJWLz/3bcuzawBlhYgloRYcPkJVbi2xmt?=
+ =?Windows-1252?Q?28DfVq0iPlmMJDCfh9JLpCeV37YD8XHnufydnXQ/a+fQ0U9hyvcLK18V?=
+ =?Windows-1252?Q?7StUkKJhI7AsVg=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_SA0PR04MB7370933BDFA2667C194AEEB1B3A79SA0PR04MB7370namp_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR04MB4794
+X-IncomingHeaderCount: 57
+X-MS-Exchange-Organization-ExpirationStartTime: 19 Feb 2023 13:50:10.2158
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ bbc5d823-8e24-4d9a-8331-08db128037ab
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ BN7NAM10FT012.eop-nam10.prod.protection.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ BN7NAM10FT012.eop-nam10.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 2/19/2023 1:38:28 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ 674259fc-e7b4-4ef7-62ae-08db12803495
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 209.85.217.42
+X-SID-PRA: MERCIAYANMACT@HOTMAIL.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-PCL: 2
+X-MS-Exchange-Organization-SCL: 6
+X-Microsoft-Antispam: BCL:0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2023 13:50:10.1845
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bbc5d823-8e24-4d9a-8331-08db128037ab
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ BN7NAM10FT012.eop-nam10.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR19MB3979
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.7427967
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.6086.023
+X-Microsoft-Antispam-Mailbox-Delivery:
+	abwl:0;wl:1;pcwl:1;kl:0;dwl:0;dkl:0;rwl:0;ucf:1;jmr:0;ex:0;auth:1;dest:C;OFR:CustomRules;ENG:(5062000305)(90000117)(90012020)(91020020)(91040095)(5061607266)(5061608174)(9050020)(9095020)(9100338)(2008001134)(4810004)(4910033)(8820095)(10010002)(10005027)(9610025)(9540006)(10160021)(9414026)(9310011)(9220031);
+X-Message-Info:
+	qZelhIiYnPnQ0mcVGGrahY0zznnxGzJNA28FeuI0Qdb/XZ8Wtzqtlbc2z78x7ZZTH7WZPL8L79HytW+pRn4kzw4FOq0aKkj0CLjDCiVSzRBTzjS9o7pOORuVCxAEhKLVA2s+FnxXtQ9maPbY41HnOSG6GLN7UIEvRLh8fCmeLv5ZDf1H5MoWRNlVQVtUgalY1qI8xcCsfENdsE98gMfZXw==
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0xO0Q9MTtHRD0xO1NDTD0tMQ==
+X-Microsoft-Antispam-Message-Info:
+	=?Windows-1252?Q?4yoK2mVTe340Lljy+a/fGvjpRef0SPBIlb+Avs4aarmGytQb+ROpU/Ub?=
+ =?Windows-1252?Q?T0padfj0XO7VEVjhmRH2EVKWfCiGV4Sv4dP4CtjRi0ZB6mi1MaE3evAZ?=
+ =?Windows-1252?Q?z31JTub8OgnY75SyRVV8vIXOYhcvHmWuaXStWaHiH1nV2QZXxRrpEuMI?=
+ =?Windows-1252?Q?If7DRtr2axqGZjL8OJ6p/MHpvPK3smTKTpfxaJLIt7GoV3Hdzhw4iQp4?=
+ =?Windows-1252?Q?co1uCuahJElBReBSdm3lk0PQ42z4VeGdXGRm5Z4U64EyrS6CrY2kErHI?=
+ =?Windows-1252?Q?9erLDteQWM5UXRpxaoEd4XMl2pyMzXnmJciVwlVwyxFTOCzI3w24fe1B?=
+ =?Windows-1252?Q?BTsCzMV4zYHFqq4srcwHE4x4I2I80nCs66lWVDxpifm1kqCBBuCEPxnF?=
+ =?Windows-1252?Q?4oqSmACRbMez83WOl4jK1of7gmL8n69EXWSrDIoL9e2po4mLN/uK8mKQ?=
+ =?Windows-1252?Q?yFhEsuge+xIt2fWwLPXKGGsTLwIItukc3v7eiVIPF+86YIXCt1aSMsBS?=
+ =?Windows-1252?Q?/McQEDSKvt+OPex749/3YtW1MkBks8ceNflPYp3pjUuXYRH++9aKKb5u?=
+ =?Windows-1252?Q?FIrZ/3NnwkEc7JnPKMJBxoyYiZEIpdyNESJTJ2y9Wg6ix2J9dScLXf9B?=
+ =?Windows-1252?Q?qmCTc4AjIE/AKhH/kN1aVW4LztBFS8EQfuMSsiRQVYbQOAokhQv2gr9W?=
+ =?Windows-1252?Q?FY4ScMQAnTCwKDKnixMtLneBoF71VvPnt/Sz4a/wxe69eTQD044zgU9b?=
+ =?Windows-1252?Q?HgCJI+eNyEfUdmoEI6v1GXM6UHjoLXkNfOGwvJNCQrWWoR9OZLJ0Rf2D?=
+ =?Windows-1252?Q?Zv6ZmxXGoL/qVrSEzOdA1/i+X0DUrItASjXNzFFvqErFuf7vtO9Nwk60?=
+ =?Windows-1252?Q?t0X3u7l7DKqSaAv2AlLeDTPsbXqONBgIlprU4I0TfHJFUviwc5NQ/2U2?=
+ =?Windows-1252?Q?Y+1pwT40TrxS6Sj5d8+AyiQyZ8kmQrisic4Mf5u5YilkuhQe8qlgwV/r?=
+ =?Windows-1252?Q?zH5mrCZcLns7RCySeJkrwqyvIYuiazC9cvaVLYrCXyCrtyONosjcuwCj?=
+ =?Windows-1252?Q?YlVvAMqlVzfn5LZ9aIPk9KN29UwnnueRJLaZp3VlPcr6N2/fWaMAMDlh?=
+ =?Windows-1252?Q?coF+UiF1XZE7C+8OrMY49i1OLGKBEY/cKHUfcQjzYEd9JK/ixHDDZDV1?=
+ =?Windows-1252?Q?oAFsBpz0S6XorfO16FZuQzdUyFvUTDfcsl2fKQvs0Wosz2ZkzzisxudW?=
+ =?Windows-1252?Q?0xv+aXzEjiJJDJ0JWvtsR0KLMEVD7azz1Mkn1ywu4SbTuIvbFFNpuL7t?=
+ =?Windows-1252?Q?9pO5FhJfEqK4eH4u9hmMWlyaIA3bCnwyqwNOXaZK/jAnqheWzVIx6Wcc?=
+ =?Windows-1252?Q?u2VBjEHy85KGnrqe7pkF78p7KCb9ggJyKcPhbjwMnzboVAa2StenIAtP?=
+ =?Windows-1252?Q?7T+AlwhCjb4cidAy9t7x8mOGMM4MqvW/+ndzmeRoaI59eNTXJXJvpiTh?=
+ =?Windows-1252?Q?UTzRqwVs3j6mnguxyyyDimMHpQcEJ9Az+ahv+QJZxoWg3rDfiH3x4MAO?=
+ =?Windows-1252?Q?WldcTjr6h9ouJ0oprq7G9/NSnpHwisRYZH435wPuHuNgEF7bn9GymGry?=
+ =?Windows-1252?Q?u+2S9L+vS1oMqdV2MwNw9hsLsC0w4SeIqAmzBTEQMGH31DPZe+FplNGU?=
+ =?Windows-1252?Q?GuFP+MGTF5R/usNR6+Ul/mfZBCjIBYpCyCoiJ2HJr2jllcCNNag5HIPP?=
+ =?Windows-1252?Q?axAzAb+AMC8ZIykNWAjrkhZSe6M1XR5jiaf+q5K8ouiA8y5Kyu0FboH4?=
+ =?Windows-1252?Q?lvomo7v/ugJDyul3nmtObCvFr0R8FMEL3tzEYsKIb+cmWqw0EkJjiyo4?=
+ =?Windows-1252?Q?njxpNGda7JIHIJcbP36/rV6R1CfzbaV3uI64Y5TwAR2K7pwf1gt5Z4Ni?=
+ =?Windows-1252?Q?krtesYlCZjBMF304JeMnHg1Hk5aVaDDR0HqPxZwxs/7r7ypkBBoU+9Ly?=
+ =?Windows-1252?Q?drLWtFd08uBIyDbaon6qgoWImC45GoJxN+3w1eo2Reb5KuEzk1lIsXOQ?=
+ =?Windows-1252?Q?fbAy+zKx79c4kPANZ6wO5JLzSJjUl80A6dTroYoZUZ81ZqhyWdUarIKr?=
+ =?Windows-1252?Q?Wl8dEXBRE4W3/tRuHLUiUBzkI4rtElsrWIo/sfifPMevsCywjxce9CqA?=
+ =?Windows-1252?Q?IeLdDQ0iLjmTHZp980iRyDvC56CBzTjfI46yWg/GU3p5q7lmaiXoDU53?=
+ =?Windows-1252?Q?r2NcCpc6/nwdmLRYaE+cbC+GjWIdZ46dSZC55ooZXreywm7U+fGIVqdK?=
+ =?Windows-1252?Q?NpxT5BCJIgcqGbb1IdSxeQkusbCn8ZEY8c5IPPM6JOnwdWsU20oTaFJy?=
+ =?Windows-1252?Q?XpgINTkzHj9zUV0WXda7SjWGa/wue9YTQMvgvpW55DNOoJ7YqOZM5LEw?=
+ =?Windows-1252?Q?i0hG1iryC13sDML1JDk/tac4GHUs8D9sA15aayFyRzRNT3HUl6USn+tN?=
+ =?Windows-1252?Q?l0H1bVZMga4kNM0IKTgbRlaIdlKPKn5aZbxHMnpNJ+Ix7GQqHCtv5Po0?=
+ =?Windows-1252?Q?2zuYpgq82JTiTTVLT/EwPRCEFj5LGW5WOf6Z3Eibz5dKpd0+xUOBLGLs?=
+ =?Windows-1252?Q?kdmLlkWDQwZONQGF+QOak1Ds?=
+MIME-Version: 1.0
+
+--_000_SA0PR04MB7370933BDFA2667C194AEEB1B3A79SA0PR04MB7370namp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+
+________________________________
+De: FIGUR Weight Loss <mbypeycfaobd@mbypeycfaobd.com>
+Enviado: s=E1bado, 18 de fevereiro de 2023 01:27
+Para: phishing@pot <merciayanmact@hotmail.com>
+Assunto: Amazing Sale! Get This Diet Product For a Huge Discount!
+
+
+If you can't see image below please, click here<http://hasanniven.site/THBO=
+MnI2M1lmZjdpTzVvblk2ZWtTSHhxUnBiTWpjRlp5eitDU1MwQnVGT0xSMEZ2ZVozRm1UZ3RkQnR=
+MdTBTditUbi9RYWd0K0FqcHUrSEZGVGN4RzN2ajRFZjU4NmxGK2VRV2RPTGtoQWh6Tm5JNldsNk=
+hGdTdWdVFxT2JrQ2MvWGdHSG1WMVRQZ0xzWmd3NmRHTTRRPT0_>
+
+[Dragons Den] <http://hasanniven.site/THBOMnI2M1lmZjdpTzVvblk2ZWtTSHhxUnBiT=
+WpjRlp5eitDU1MwQnVGT0xSMEZ2ZVozRm1UZ3RkQnRMdTBTditUbi9RYWd0K0FqcHUrSEZGVGN4=
+RzN2ajRFZjU4NmxGK2VRV2RPTGtoQWh6Tm5JNldsNkhGdTdWdVFxT2JrQ2MvWGdHSG1WMVRQZ0x=
+zWmd3NmRHTTRRPT0_>
+
+Miracle Weight Loss Pill That Naturally Burns Fat Nets Biggest Deal In Drag=
+ons' Den History!
+
+Never before had the judging panel on Dragons' Den unanimously decided to e=
+ach invest over a million pounds into a potential company.
+
+[figur]
+
+Clinical trials of FIGUR have uncovered that women who used FIGUR were able=
+ to lose an average of 1.5 stones in 1 month without any changes to their d=
+iet or require any intense workout.
+
+Give Yourself The Star Treatment
+
+These miracle weight loss pills will be delivered straight to your door and=
+ ready to be used immediately. Remember it=92s important that you use FIGUR=
+ daily to achieve the full fat-burning results.
+
+Currently, the FIGUR capsules are available at a special 'Dragons price'! T=
+he special promotion will end soon!
+
+GO TO FIGUR SPECIAL OFFER NOW > > ><http://hasanniven.site/THBOMnI2M1lmZjdp=
+TzVvblk2ZWtTSHhxUnBiTWpjRlp5eitDU1MwQnVGT0xSMEZ2ZVozRm1UZ3RkQnRMdTBTditUbi9=
+RYWd0K0FqcHUrSEZGVGN4RzN2ajRFZjU4NmxGK2VRV2RPTGtoQWh6Tm5JNldsNkhGdTdWdVFxT2=
+JrQ2MvWGdHSG1WMVRQZ0xzWmd3NmRHTTRRPT0_>
+
+If you no longer wish to receive these emails, you may unsubscribe by click=
+ing here<http://hasanniven.site/bjdWY1JYUnNXMi9MZG14TzE1eEJlazRyOEs3MTZKUTV=
+BcGVSRVZyRUNXSUFSSlBYTGU3RHdkVXN5NHRkZEx2ZWJoQkFzTUdCMUFROE5ieE5WQkJKQ3cvRm=
+hkZGJVRk0wNHhqQjl3czFtSWUvcUdIVlBwKzducG85VGZLYXA5bllSWnNpZTBMdG5QT3YxN3BLL=
+3hyVjB3PT0_> or by writing to 6130 W Flamingo Rd. Las Vegas, NV 89103
+
+
+
+--_000_SA0PR04MB7370933BDFA2667C194AEEB1B3A79SA0PR04MB7370namp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+</head>
+<body>
+<div></div>
+<br>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>De:</b> FIGUR Weight Loss &lt;m=
+bypeycfaobd@mbypeycfaobd.com&gt;<br>
+<b>Enviado:</b> s=E1bado, 18 de fevereiro de 2023 01:27<br>
+<b>Para:</b> phishing@pot &lt;merciayanmact@hotmail.com&gt;<br=
+>
+<b>Assunto:</b> Amazing Sale! Get This Diet Product For a Huge Discount!</f=
+ont>
+<div>&nbsp;</div>
+</div>
+<style>
+<!--
+div, table, thead, tbody, tr, td, img
+	{padding:0;
+	margin:0;
+	border:none;
+	border-spacing:0px;
+	border-collapse:collapse;
+	vertical-align:top}
+.x_wrapper
+	{padding-left:10px;
+	padding-right:10px}
+h1, h2, h3, h4, h5, h6, p, a
+	{margin:0;
+	padding:0;
+	padding-bottom:10px;
+	line-height:1.2;
+	font-family:Verdana,"Arial",sans-serif;
+	color:#fff}
+.x_logo
+	{width:100%}
+.x_intro
+	{font-size:24px;
+	font-weight:bold;
+	margin-top:40px;
+	max-width:90%}
+.x_white-text
+	{margin-bottom:10px;
+	max-width:90%}
+.x_feature-img
+	{max-width:80%}
+.x_cta
+	{display:inline-block;
+	min-width:280px;
+	background-color:#ec4403;
+	padding:18px 30px;
+	text-decoration:none;
+	color:#fff;
+	font-weight:bold;
+	border-radius:50px;
+	margin-top:20px;
+	margin-bottom:40px}
+.x_desc
+	{max-width:90%;
+	margin-top:10px;
+	font-size:14px}
+.x_desc span
+	{color:#ec4403;
+	font-weight:bold}
+.x_feature-2
+	{max-width:250px;
+	margin:20px 0px}
+-->
+</style>
+<div style=3D"background-color:#efefef; padding-top:30px">
+<table width=3D"100%">
+<tbody>
+<tr>
+<td class=3D"x_wrapper" width=3D"550" align=3D"center">
+<table class=3D"x_section x_header" cellpadding=3D"" cellspacing=3D"" align=
+=3D"center">
+<tbody>
+<tr>
+<td align=3D"center">
+<p style=3D"font-size:12px; color:#797979; max-width:550px; line-height:1.4=
+">If you can't see image below please,
+<a href=3D"http://hasanniven.site/THBOMnI2M1lmZjdpTzVvblk2ZWtTSHhxUnBiTWpjR=
+lp5eitDU1MwQnVGT0xSMEZ2ZVozRm1UZ3RkQnRMdTBTditUbi9RYWd0K0FqcHUrSEZGVGN4RzN2=
+ajRFZjU4NmxGK2VRV2RPTGtoQWh6Tm5JNldsNkhGdTdWdVFxT2JrQ2MvWGdHSG1WMVRQZ0xzWmd=
+3NmRHTTRRPT0_" style=3D"color:#666; text-decoration:underline">
+click here</a> </p>
+</td>
+</tr>
+<tr>
+<td width=3D"550" valign=3D"top" align=3D"center" bgcolor=3D"#000"><a href=
+=3D"http://hasanniven.site/THBOMnI2M1lmZjdpTzVvblk2ZWtTSHhxUnBiTWpjRlp5eitD=
+U1MwQnVGT0xSMEZ2ZVozRm1UZ3RkQnRMdTBTditUbi9RYWd0K0FqcHUrSEZGVGN4RzN2ajRFZjU=
+4NmxGK2VRV2RPTGtoQWh6Tm5JNldsNkhGdTdWdVFxT2JrQ2MvWGdHSG1WMVRQZ0xzWmd3NmRHTT=
+RRPT0_"><img border=3D"0" alt=3D"Dragons Den" class=3D"x_logo" src=3D"//ac-=
+landing-pages-user-uploads-production.s3.amazonaws.com/0000146007/894f3a12-=
+0f66-47e5-899d-cfc2629037d3.jpg">
+</a>
+<p class=3D"x_intro">Miracle Weight Loss Pill That Naturally Burns Fat Nets=
+ Biggest Deal In Dragons' Den History!</p>
+<p class=3D"x_white-text">Never before had the judging panel on Dragons' De=
+n unanimously decided to each invest over a million pounds into a potential=
+ company.</p>
+<img border=3D"0" alt=3D"figur" class=3D"x_feature-img" src=3D"//ac-landing=
+-pages-user-uploads-production.s3.amazonaws.com/0000146007/ee7d85f9-eb31-4a=
+af-a55a-f3edd0727a24.jpg">
+<p class=3D"x_desc">Clinical trials of FIGUR have uncovered that women who =
+used FIGUR were able to lose an average of 1.5 stones in 1 month without an=
+y changes to their diet or require any intense workout.
+</p>
+<h3>Give Yourself The Star Treatment</h3>
+<p class=3D"x_desc">These miracle weight loss pills will be delivered strai=
+ght to your door and ready to be used immediately. Remember it=92s importan=
+t that you use FIGUR daily to achieve the full fat-burning results.</p>
+<p class=3D"x_desc"><span>Currently, the FIGUR capsules are available at a =
+special 'Dragons price'!</span> The special promotion will end soon!
+</p>
+<a href=3D"http://hasanniven.site/THBOMnI2M1lmZjdpTzVvblk2ZWtTSHhxUnBiTWpjR=
+lp5eitDU1MwQnVGT0xSMEZ2ZVozRm1UZ3RkQnRMdTBTditUbi9RYWd0K0FqcHUrSEZGVGN4RzN2=
+ajRFZjU4NmxGK2VRV2RPTGtoQWh6Tm5JNldsNkhGdTdWdVFxT2JrQ2MvWGdHSG1WMVRQZ0xzWmd=
+3NmRHTTRRPT0_" class=3D"x_cta">GO TO
+ FIGUR SPECIAL OFFER NOW &gt; &gt; &gt;</a> </td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td height=3D"15" style=3D"line-height:15px"></td>
+</tr>
+<tr>
+<td align=3D"center">
+<p style=3D"font-size:12px; color:#797979; max-width:550px; line-height:1.4=
+">If you no longer wish to receive these emails, you may unsubscribe by
+<a href=3D"http://hasanniven.site/bjdWY1JYUnNXMi9MZG14TzE1eEJlazRyOEs3MTZKU=
+TVBcGVSRVZyRUNXSUFSSlBYTGU3RHdkVXN5NHRkZEx2ZWJoQkFzTUdCMUFROE5ieE5WQkJKQ3cv=
+RmhkZGJVRk0wNHhqQjl3czFtSWUvcUdIVlBwKzducG85VGZLYXA5bllSWnNpZTBMdG5QT3YxN3B=
+LL3hyVjB3PT0_" style=3D"color:#666; text-decoration:underline">
+clicking here</a> or by writing to 6130 W Flamingo Rd. Las Vegas, NV 89103 =
+</p>
+</td>
+</tr>
+<tr>
+<td align=3D" center"><img alt=3D"" width=3D"1px" height=3D"1px" style=3D"v=
+isibility:hidden" src=3D"http://hasanniven.site/UU1aMDlFSVRjR01MNmwxK1J4ZDV=
+jZkM1STg4c2JHTGI4ODBFNk5UajFCaW5xWnhoN1R6MjVBa0hLaCtYcWFzUmtoajcvcDhBdkRwWk=
+xBd2QwdmllTXlVRHh2UHBKbGNUOGZjZVl3eGNDMVUxNUt1OU9qK3RDTHBrNkhjaFdBeFA4OHRwU=
+WNGOG0xR2k1c2V5U1M0b0NnPT0_">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>
+
+--_000_SA0PR04MB7370933BDFA2667C194AEEB1B3A79SA0PR04MB7370namp_--

@@ -1,0 +1,809 @@
+Received: from PH0PR19MB7453.namprd19.prod.outlook.com (2603:10b6:510:28f::11)
+ by MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Sun, 19 Feb 2023
+ 15:34:33 +0000
+ARC-Seal: i=3; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
+ b=HCCplerWJK7a+fHz8R/Mntn8GspPM6pD7G9Is8Vcl5O4rGDS6WhEq0kAB18im9MeR6eCqLQPBm+kmIouZp/dQCTNHrEVAgqqaOR1PJe7ZS5ekFKaz+nbgxk05fm88q3i4bdL0eRZJGtnQctJaX2aqE6NJU3jGBz1RKYbqOpoObLCq8n0JUapLZoyF5pgF0csLg795BGN0eKk/gTRK3d62dSAM9ypv/j0ESRiuvQK/c4I/ywgUbzAO3toUkpZ7Xq2cbYg7wg673+agz99S+UsqNPEB1EQVGoReWkM79mWggVWuda1O+uhuB9E9UauEy/aWxUqQIH6mS6763cD0vuxlg==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=S8KoHs8zqb6tQYx/3uxfll6fq/l6WEagOMOnZ3IOu48=;
+ b=E5CFZu5p0wuMyCTJpVX3jdmXcVpp5nsEHlzLLhISlGAjI5Q2G5v42YKCNk139RpmtLp0Fn8XKHHhqIxHKJNxVlHyrPcQlIU4brASg+g2ajYa+tEPyEqOavHC2jAdoae/Spivz6DlaIjP866FvOX5StNW1G9duoyl4KfMbFQPvL6/6Yj5EHqlrfiqdskeweeClIaSp6+pZFKbV0kZ8DDakLlMBAgV5QSrki5kGwhjQTqH9t8n6n07XYbIdRLB8RfSNgPSp4zG1p5S06JVI8A48FzzKyXiH0V8FrX60OeiZr8DcmKgM6nbrx+fyzKTB7kblUChxxeZ+fYlFCXgtmD3gQ==
+ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=pass (sender ip is
+ 209.85.217.52) smtp.rcpttodomain=hotmail.com smtp.mailfrom=gmail.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=hotmail.com;
+ dkim=pass (signature was verified) header.d=hotmail.com; arc=pass (0 oda=1
+ ltdi=1 spf=[1,2,smtp.mailfrom=phishing@pot]
+ dkim=[1,2,header.i=@hotmail.com] dmarc=[1,2,header.from=hotmail.com])
+Received: from DB6PR0301CA0080.eurprd03.prod.outlook.com (2603:10a6:6:30::27)
+ by PH0PR19MB7453.namprd19.prod.outlook.com (2603:10b6:510:28f::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6086.24; Sun, 19 Feb
+ 2023 15:34:31 +0000
+Received: from DB3EUR04FT029.eop-eur04.prod.protection.outlook.com
+ (2603:10a6:6:30:cafe::55) by DB6PR0301CA0080.outlook.office365.com
+ (2603:10a6:6:30::27) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6111.18 via Frontend
+ Transport; Sun, 19 Feb 2023 15:34:31 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.217.52)
+ smtp.mailfrom=gmail.com; dkim=pass (signature was verified)
+ header.d=hotmail.com;dmarc=pass action=none
+ header.from=hotmail.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates
+ 209.85.217.52 as permitted sender) receiver=protection.outlook.com;
+ client-ip=209.85.217.52; helo=mail-vs1-f52.google.com; pr=C
+Received: from mail-vs1-f52.google.com (209.85.217.52) by
+ DB3EUR04FT029.mail.protection.outlook.com (10.152.24.67) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6111.18 via Frontend Transport; Sun, 19 Feb 2023 15:34:31 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:51C75B6FFC2328478BAC8BFE30C42C8BBEA7D18289921D6148CC3CEC2FAA2E14;UpperCasedChecksum:039ECB53BDF365231D4EEBA93C3163B82904B8EF504D1106B9666A65BB33EFA5;SizeAsReceived:11603;Count:57
+Received: by mail-vs1-f52.google.com with SMTP id x5so562607vsl.7
+        for <phishing@pot>; Sun, 19 Feb 2023 07:34:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature:delivered-to:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=S8KoHs8zqb6tQYx/3uxfll6fq/l6WEagOMOnZ3IOu48=;
+        b=yug+0TIPSNz3NNE3ZAldy2VNRCH8KG7mg3ZMQQOt/xy/KdfCAct+sUBqPiQaJ+hn77
+         8aEE4ItL5+CpbCpmMACxpFnsEFouGy46GEKhsRbvFnFzyEc1zSn5SZ2kRF22WICsQ92n
+         e/D2+97gCSXOmwMkT+gT+YKvqmi3J+Vx9yFeB01hxnX+oC2dQw73MgEn9cW77P/ecaRI
+         4R+wCWsXwEfLPe/4Kbc7Rn+ieLwYJgNo5u2/dom0gJOmkFCealqM84hXotG5C1ekGAea
+         qiDNiMNl6OLS0AUx9WHnRdJ6oNTdfzAfS8G98A0ZK13A1WRHsA/8dQ03ZsM+rM+sIUyW
+         39aw==
+X-Gm-Message-State: AO0yUKW1INtj6SbFpQrFybt2pyF+hYeG0rPyyLESXmsCH8eYO+exwnEp
+	6QmA+d4Kq7aYEs2QQh8WshU2mgEM3fFWGNmLC6YS41wvaUSxdUUV+g==
+X-Received: by 2002:a05:6102:124f:b0:417:ad60:96f8 with SMTP id p15-20020a056102124f00b00417ad6096f8mr136190vsg.74.1676820870664;
+        Sun, 19 Feb 2023 07:34:30 -0800 (PST)
+X-Forwarded-To: phishing@pot
+X-Forwarded-For: phish.me.again@gmail.com phishing@pot
+Delivered-To: phish.me.again@gmail.com
+Received: by 2002:a59:5b11:0:b0:3a6:aea5:2823 with SMTP id p17csp1235615vqb;
+        Sun, 19 Feb 2023 07:34:29 -0800 (PST)
+X-Google-Smtp-Source: AK7set+IZj7Btm+MLT8B2kUGhmGH1cDm4whPBit2KR/cz24qvesU99MXFqbfh6fVkGUQs4ky4rzW
+X-Received: by 2002:a05:6a20:42a7:b0:c2:adbc:3782 with SMTP id o39-20020a056a2042a700b000c2adbc3782mr7587364pzj.14.1676820869178;
+        Sun, 19 Feb 2023 07:34:29 -0800 (PST)
+ARC-Seal: i=2; a=rsa-sha256; t=1676820869; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=qm+CjwvcWPGzNF8jejV35UBm7MEQeuwo8XFhKq+k1FUdCkP1l+VhVDfpjSAigGsJ2y
+         KErkWq+Z1fTOj9afpJHfvl1JtCYfE2d4+XaYqtmtc8ofg01Eu3eDMc37djrc1tJ3vDHw
+         Pv7f+l0i+5e4k5yy493sF1udTKKPQhUBXr3XOsGUPOocQV5dQONLeiOWMBdgF1/6QcsY
+         HHXg1H4qYNpL465LJyKiviMkKG5Pt6i/3CH22Z9+Zg6lg0MiDYotxIHoZ4sVfPxxxC9D
+         wg9V5a5Ix0m+b0HBdzIL4o17Y7GisRw+XiwzEPiUwtxL5FjWLtP0f+U9tOR5m+pGMXle
+         uguw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature;
+        bh=S8KoHs8zqb6tQYx/3uxfll6fq/l6WEagOMOnZ3IOu48=;
+        b=JQ2p+BUbHTGW2aOAY/gI7t9tWSMziTIgTUVx8ZX/mI2h0Gu+V7uvC9n++0fhx38XJX
+         IQ3X1kkvuAEljsQiQn+s2J+bZJnlc/U3r2o4Mu3FSc7GCD6ctSBIOQgzSs2jWweBj9Hx
+         OMRDYjqnO/TfZNZLjH1Kd+Nm61D3fF2V3Glz9QbKxk+DucKK3O+7r3sEztFf7tXw11Tv
+         Qv9wGGlheoTNJGdjhqyMk3UOYuWQ5Z4DJwHz0SlyslSdCa4k87lNx6JMsP2pOkmUOxez
+         gRvFVRowstSM2rJH+ToeSNXC9DawdGia8x0J5c4c3p5WqHJB13P2FJpJG0d9Y5gfY753
+         50/Q==
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@hotmail.com header.s=selector1 header.b=GEkInv01;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of phishing@pot designates 2a01:111:f400:7eab::826 as permitted sender) smtp.mailfrom=merciayanmact@hotmail.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=hotmail.com
+Return-Path: phish.me.again+caf_=phishing@pot=hotmail.com@gmail.com
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11olkn20826.outbound.protection.outlook.com. [2a01:111:f400:7eab::826])
+        by mx.google.com with ESMTPS id 126-20020a630784000000b004fbb6560066si13305399pgh.57.2023.02.19.07.34.28
+        for <Phish.me.again@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 19 Feb 2023 07:34:29 -0800 (PST)
+Received-SPF: pass (google.com: domain of phishing@pot designates 2a01:111:f400:7eab::826 as permitted sender) client-ip=2a01:111:f400:7eab::826;
+Authentication-Results-Original: mx.google.com;       dkim=pass
+ header.i=@hotmail.com header.s=selector1 header.b=GEkInv01;       arc=pass
+ (i=1);       spf=pass (google.com: domain of phishing@pot
+ designates 2a01:111:f400:7eab::826 as permitted sender)
+ smtp.mailfrom=phishing@pot;       dmarc=pass (p=NONE sp=NONE
+ dis=NONE) header.from=hotmail.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=nu30WJxbXyuiRIcs0TyTO+lRV9hg+2pM1c8AirhaQ7BJWh7T/Nr+bQQVUBJh2Dc7pEr7XRUTmtRzs2q8lVjo0+ccplBdmXlx79MmrBKquAnsq1bFZPtwIeSCAm9klnqceSqziM7KJyXeIOT1HK35V0a0AW5LqbzXlEddlohy+oLuS9pOaC9JI/Vs6pmY+nLi+L7jyBtgN5C0Y5DRRC5OMwMbZiJ/OamzjL0PhLwPgWv8nunjQSZVTmPW3OZDWnjGnpjPRFL3+nFEx16bPQwi6aS/aHyMRWVeMPZ3g4/nHMIc31BFs6O22eg1avfYVkIdL+0vZHSMg/ZblhZLG49OXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=S8KoHs8zqb6tQYx/3uxfll6fq/l6WEagOMOnZ3IOu48=;
+ b=JalwdneLnRUs+h1D52kVcA+8EUZamCcCXWsXV+AHitMARRExnHkZxNZdrHfdcP4VlDbn8Kjkbwb5Elq3bcGHqaVniLk/VwJg7iR1AkoLZh3+Fg0pIRt/S9c+O8H+Z0SipjxYZMieFb91ONKN7Sd7zrgmmcfIYh7aqHVbUMXjQ7bqwiqzGoeq3JopkKGrNaDa2jj3FphLuQX9uztON1gAq0v1bVWa8dOMSJONuXgGw1T8AUtFZzkCs1PmAKj7eBWZhLSAAPuMYmUubcUcTmD58Liu+K8rHPRIvH29JFLsKhm3s6KPRVSpCgoUJr9vMQsOq5l7xFa8WvR+uAGF5mHYjw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=S8KoHs8zqb6tQYx/3uxfll6fq/l6WEagOMOnZ3IOu48=;
+ b=GEkInv01ZYRCwrz8ZqjkaG53FNgCXCJ8LlgeR5BLwSbZDPVcD92xp0+qcddJs2Nw4uD5Ao6smMDuP5hvC6DOOhrp9i042Rjidp2R4/kCMzXpQR9oLpPJkRhQvhgqY1GVKL1ttSFs+aqu1T1qt+xbK92y1Gjf2OJKGnmrXEEpIO9pyCi1CgQbvmo6tJl45Vq82LDqao6FQIiDlb1233eXG+VrytNHZkt2JbvOW1ABOukVbLgKRCEP5C5nPknbZlevfPAnb6UMC1nPnyMqJPJeDeJjaUQmSO12d1pwlfqJ2HJFU/AfrzGwjAQgWTS7YeE54NWYk02C/aQuDMFSmjuWAg==
+Received: from SA0PR04MB7370.namprd04.prod.outlook.com (2603:10b6:806:e5::23)
+ by CY4PR04MB1128.namprd04.prod.outlook.com (2603:10b6:903:b9::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6111.19; Sun, 19 Feb
+ 2023 15:34:25 +0000
+Received: from SA0PR04MB7370.namprd04.prod.outlook.com
+ ([fe80::fc67:fd76:bf25:a3f7]) by SA0PR04MB7370.namprd04.prod.outlook.com
+ ([fe80::fc67:fd76:bf25:a3f7%6]) with mapi id 15.20.6111.018; Sun, 19 Feb 2023
+ 15:34:25 +0000
+From: phishing@pot <phishing@pot>
+To: "phish.me.again@gmail.com" <Phish.me.again@gmail.com>
+Subject:
+ =?Windows-1252?B?Rnc6IK1SrWWtYa1srSCtV61lrWmtZ61orXStIK1MrW+tc61zrSCtUq1l?=
+ =?Windows-1252?B?rXOtda1srXStc60gLSCtRq1hrXOtdK1lrXKtLK0grUWtYa1zrWmtZa1y?=
+ =?Windows-1252?B?rSCtYa1urWStIK1DrWitZa1hrXCtZa1yrSGt?=
+Thread-Topic:
+ =?Windows-1252?B?rVKtZa1hrWytIK1XrWWtaa1nrWitdK0grUytb61zrXOtIK1SrWWtc611?=
+ =?Windows-1252?B?rWytdK1zrSAtIK1GrWGtc610rWWtcq0srSCtRa1hrXOtaa1lrXKtIK1h?=
+ =?Windows-1252?B?rW6tZK0grUOtaK1lrWGtcK1lrXKtIa0=?=
+Thread-Index: AQHZRHYiDJrPaCm1jEe0P3KKLtJlda7WZljC
+Date: Sun, 19 Feb 2023 15:34:25 +0000
+Message-ID:
+ <SA0PR04MB7370434912BA920580B96C50B3A79@SA0PR04MB7370.namprd04.prod.outlook.com>
+References: <B2.DD.54766.sQmJXhViaFvjAw@mtl-mtsp-mta04-out2  '>
+In-Reply-To: <B2.DD.54766.sQmJXhViaFvjAw@mtl-mtsp-mta04-out2  '>
+Accept-Language: pt-BR, en-US
+Content-Language: pt-BR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [uQVDZft7M79EyxHRLyy0yTkmQtJ2Js16]
+x-ms-traffictypediagnostic:
+ SA0PR04MB7370:EE_|CY4PR04MB1128:EE_|DB3EUR04FT029:EE_|PH0PR19MB7453:EE_
+X-MS-Office365-Filtering-Correlation-Id: 52c11752-ab42-41e1-3efb-08db128ecb68
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original:
+ OcomNJ0Dw87FvBExaDK4IAm6uKJtrLe7IO1CfJUzILAxGRPLITjjiJYmbdri5FTftf7zQsef8zVuMi3omq59IdSOSgKVVy7yfFQkwHwaY3QQjNgPpYvU/4AX59DhsTas5lmxWi9NZctGL3NMQ1y890BVwvu010HqvI3oOW4RMM2Nj419dc1QArRQtaI/fub9yvSewmMtWL5mtT7r1UYRmg+g1dxhxJ092F60QgBAi5C7VlfSzTwGpgCpZtLZZ6qCjLSIah33vkB82ZgV5J9P2VVoU9qcN4mMxLgH+WEV1uGrbWTlMk3YUKQQ3OAQcZYkmcBTzpaB3LluPqpZg5jNmPwykMtrqLtuj4CTk1NrKKARRoqqz33TYdvAIKnv0rOetbQJLCys9XRwjQrWjWUkdjFuuENw012qn7f3t1XpEhfxX167Kij6Z9xclakoESSJSH7nLb96mpcO0/KrnsqwnWd60bGFKP1jSwqFeeQU5AdLYXxjVGYGl0xtgavpiJn4FtN4+PW06rH1Q+FcnY+3B6ZRLJ2adPLlkqdRmLZu5HLB9aliFFUBH5Et9ZkT0okTKY9Aa3rDI7QtX0GVSTp046g1aSYxOa8iTeyFuVrmInJIadnriR8sfUQH/Kx4o/2A4rYAh/JSE7BtAi/CM8F0m2rNzyoDpr8oSTU09kxxJAmRL9e6czSvLcZZZmDB7DuGMZoEzm3AEGrsXR3OXOF890nfCOj/YQp0PcNOrrlLxs4=
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0:
+ =?Windows-1252?Q?Ar26C4IGdWLWkPjQ6j9h4u2QjS5NWXm4zWx9q9FuvHpf0H32D64RETHu?=
+ =?Windows-1252?Q?7c4lKze+c3BKdHddO66S8vlfE5wNaNYtonx2H1B/9y/I/ynWIWT78KKM?=
+ =?Windows-1252?Q?O8zzlXq7Ki9kdsqdMoKUQbbixduCnrcjvpz/OgiJi+ul82mqGASJRDo3?=
+ =?Windows-1252?Q?aN5U7MhvJ1AP+DdyUxNnaPWfzz784iLQedS4H/+CH0Ah6Rub8yaiqAHH?=
+ =?Windows-1252?Q?hUHYdnYrsIKw/BSeA7A04WaMgSz/Pex11MeO6oP2Wc/5hmvyC1xcflRU?=
+ =?Windows-1252?Q?4jjGNz+4+77jGe6KtrmvO5HsQbYYVx9kDeU8mQnriGr2ihh5GmkC18rA?=
+ =?Windows-1252?Q?dWPk7/CkC0+t2tkC++RcZynCQD5SmKytfiTciChR6eVhtQuI5lWgdHVm?=
+ =?Windows-1252?Q?yM7a1URMMY2IJ19vLqmLWPLT55NQeKTRDPOhZW7+5pa9yi2ysnuldrmO?=
+ =?Windows-1252?Q?WhOBhCbTK4bpa7ltHE5m6AWWZMtTVeui9AH2VhRgr3St+ePrJuUgZmVH?=
+ =?Windows-1252?Q?ZLp4sBv4mJAiOjcz66M44rX4z9aMaW445g9sLpXyzGYuSarpxQFECaE6?=
+ =?Windows-1252?Q?YGHABE3684Dcu1Mf4aqG+oJz9pzJeySGQ53E+NagpGjzjd5IuYaSJUsn?=
+ =?Windows-1252?Q?4qT6eYxCzTz1b8aD7nrXA4yiTvXyFU23Nz3Jg2GQ+08wBWiHwm4icQMX?=
+ =?Windows-1252?Q?O34RbXTYV5+0tXNDCABT8D+l5qGQoNDvOYE+WLRLCnYyQ0ToNVmtRiTU?=
+ =?Windows-1252?Q?cw61YKI/WUqDvsRgmHTtFBAgtoJsfxOz2bK5obl+EBmdlkGyl1mAacPt?=
+ =?Windows-1252?Q?3EO0Z0u6MIOLCfEYJL5vAT8vtfggT1sGe70pl0lgtHFtF69tQDoSm4Pg?=
+ =?Windows-1252?Q?p9j6nduSQkv3qAJbKeRTYuNcsKkIdF2zP9H1vIDUIvnqHchGlzPGptqY?=
+ =?Windows-1252?Q?cp7RURlbaXD6Tb3lr/HEEaERxW1EgI1c2ftY6mMYWUyDUFEC7BzkkQGM?=
+ =?Windows-1252?Q?hsJWPd9jXnSDDexrvnVtKzVHI5rmhJ3ao2EgAnWmxQGNDn7q7w/vE+R9?=
+ =?Windows-1252?Q?JCHgnvPrBFpABEEsaRzISzTZZcpcKqfcsy13UmTnBnSrIZsQY+d+bUCr?=
+ =?Windows-1252?Q?G4MJ9QII1Il1o78p0bYyAngWErlqaJ107Yqeu/DFJJtESV/D1+Fgdnid?=
+ =?Windows-1252?Q?gwNJxiCrAmTNL/XTQJwTMsNGjjlmc+A84+LrSiyQ5LsjNYXWXqWqexyp?=
+ =?Windows-1252?Q?rDqcZnqI+lC0a0ebW8m4Le2z8oS2Cif6/sxBBP6bjGQMy4rhoUlZki6x?=
+ =?Windows-1252?Q?FIAxXt7sFYJf6KbcbClw8OXtCuKXzCSdvHumGcLADJEJ/HehOTwY6DhU?=
+ =?Windows-1252?Q?0U4aj/sbQ5MRyQ=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_SA0PR04MB7370434912BA920580B96C50B3A79SA0PR04MB7370namp_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR04MB1128
+X-IncomingHeaderCount: 57
+X-MS-Exchange-Organization-ExpirationStartTime: 19 Feb 2023 15:34:31.0319
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 52c11752-ab42-41e1-3efb-08db128ecb68
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ DB3EUR04FT029.eop-eur04.prod.protection.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ DB3EUR04FT029.eop-eur04.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 2/19/2023 3:07:23 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ a46691a7-f547-4c99-f781-08db128ec818
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 209.85.217.52
+X-SID-PRA: MERCIAYANMACT@HOTMAIL.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-PCL: 2
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2023 15:34:31.0163
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 52c11752-ab42-41e1-3efb-08db128ecb68
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ DB3EUR04FT029.eop-eur04.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR19MB7453
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.2016650
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.6086.023
+X-Microsoft-Antispam-Mailbox-Delivery:
+	abwl:0;wl:1;pcwl:1;kl:0;dwl:0;dkl:0;rwl:0;ucf:1;jmr:0;ex:0;auth:1;dest:C;OFR:CustomRules;ENG:(5062000305)(90000117)(90012020)(91020020)(91040095)(5061607266)(5061608174)(9050020)(9095020)(9100338)(2008001134)(4810004)(4910033)(8820095)(9575002)(10195002)(9414026)(9310011)(9220031);
+X-Message-Info:
+	qZelhIiYnPlQXn9apyuV6FbxkhKO0j5/dJQhWcPm6Y1fNuy+sFERw6L9rNjgcwa9KPxH0PXJVpF9ngJvMYBBfs1fNnYq34CGmlWBYSrC52r//tmiY8xWbyebJr/CjwrKgKOQcOlvTjBqUlvUoqTXZFI5a9eOoKkaP2sywoB4kqeJe41Fm6S3iYosCCYDjtroAezshp30auxjl7tB+NLrLg==
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0xO0Q9MTtHRD0xO1NDTD0tMQ==
+X-Microsoft-Antispam-Message-Info:
+	=?Windows-1252?Q?MphiWs2aow23RwswY+GfSa/ZhNFU9/6BYQFB2jCcbAOXhxQ8Ob+/JF2V?=
+ =?Windows-1252?Q?LdPlDB8oMbUFSi3VMIulKwx/Xbj2YmgzauQiyt7bu+nKkYUcNUTjiLNa?=
+ =?Windows-1252?Q?GnWUarx3gV3qUad7GLkJKgOZvqbM6CZFoM/EHiaIu2zLSYKng/t2XZ+Q?=
+ =?Windows-1252?Q?/N7/7VAddlvJnmD2N9HgzIsBZhlnvnIrv0P1l/gaR0bR44eRhlxpPvgd?=
+ =?Windows-1252?Q?2CEQW4pg/hYGeFgupA8oNmLeizlPWG2Tk16Ma/c9pP9yXPnEmMNwfVBN?=
+ =?Windows-1252?Q?/4fwYYA0ufaGi9lMT/P4li7rDoopY7SANCZyEOajyq0pbVRFo2qTP3VK?=
+ =?Windows-1252?Q?UmQaZ+3fCw3eMXRTzV51D+pDq0u7g6rtXIoJvng24t2gr2f5cBdiST21?=
+ =?Windows-1252?Q?HSTVOOJD8OA/NOIlMolTfQ7FaghaY92qolicOY4txe1Ye2Pr+sjj9qxv?=
+ =?Windows-1252?Q?3B+Z7jHO2oRb6qFSrXqTQhS0yOmXh1JbR9w/4zwI0LJ9ZxQXCY/LgFll?=
+ =?Windows-1252?Q?/jZjW7zbo4tOH/HlWr09wFebjAxgI8C1uzo3psql4HmtYWFJ7Tky9mUh?=
+ =?Windows-1252?Q?D3ki7QbFKjWY53MP17/SYjpvlL2yqgSCLhIGR9LdX/O00/v6fhhU4w3H?=
+ =?Windows-1252?Q?HPoyuA6LPtlQx6Fpgm862s56LSBXENJmJIhA1VAk7yBDS/3xhVBePZBX?=
+ =?Windows-1252?Q?isyQ3cG+UY8i8FOWFNgpqVuStbZ84ppPr67VGAiSrpQSg90bbhmoOL8c?=
+ =?Windows-1252?Q?JdQo94ysjGrd0UidmPbymmbC3ufaJSI2BFTCUvxfqHgHRtJUQKmurb9c?=
+ =?Windows-1252?Q?arZGdAFe161J+IQNeblPQLOUhZRTyCY0Gd4clitAtYznj+jFPdTosj2o?=
+ =?Windows-1252?Q?Odr69IVaulMEnkXwFojJscgnX6YcgKY3A7Ypn3dNVrykrk5SzMVO3KBp?=
+ =?Windows-1252?Q?AS0hxtU0Mb91IFoTAjLuMDtHEE0UUbSmPtg7kWbZcfMRfMJp7Ziy6prm?=
+ =?Windows-1252?Q?A9bd8OnodMYM6NXIlMh8X2MwFh3XwX3FeBx9ATJBBTwb2LimBrLDC01C?=
+ =?Windows-1252?Q?1daCAMYOPmiVaRbK6CYHq5tboULoJ37zitz51w9E8LhoRwlGm3yaDjZA?=
+ =?Windows-1252?Q?v+80/zdzlv0xD9FL1DgFQA4nNBmDm2NsPmaEa3FqlrOjtZSFgtsCDjEZ?=
+ =?Windows-1252?Q?JvI7mqWhpmnmBcprGZGBjG2EjzdYvOskfQvdWaHy1P2HeU4ZmlMLNcyq?=
+ =?Windows-1252?Q?LjDf75dbj1OSZIxwfViqPL9Jgu2IdOHDJkzPsxmg0oBjdyM0WUdovaAO?=
+ =?Windows-1252?Q?3Io7sIFoGiGpOSQwSIy4Ho73ER0NBh6IhIf8fNRZ7naXkPLMODufK2IG?=
+ =?Windows-1252?Q?tDmKEZAx5C2n1THo44mXtpOUTWibPjhy8xuXyNT+rHbvAmd4fSvh8qgU?=
+ =?Windows-1252?Q?QLncccohwO2TiXra4uAFxvktmzA0dkUzklMctuYn9/iR6GnDd6k44/b9?=
+ =?Windows-1252?Q?gPXrTT/C0ZrEqZunoOEk3llAB47Yd+vWdfDKNY+7mYwEsKqq9EZnPbIX?=
+ =?Windows-1252?Q?O/+F0M2jadBKItHArfjIRUuSQGRPBwvC4KInpZNlM1lBGgctZT/vymLu?=
+ =?Windows-1252?Q?aHky5HgeDat2bkU323GuCn/6ggLTZYoQGhayBeRuBAWXYUzGvS5GBNzh?=
+ =?Windows-1252?Q?ITD7LNoAH6NQlK7mEFEz/9s3ZMmSbMTrQVSji4dtlSU9SeHva7Yn7l6K?=
+ =?Windows-1252?Q?r0dhBgZHr+GhwJjk1/lx3GvqKj1QJMIq+D84N+0z86Bl+jk6CDHWQtpy?=
+ =?Windows-1252?Q?xjfmhjughf03LlbMJQCsZXsm+K/+gA1OvBVKuMFcnlDfnRw/iu1hg5hu?=
+ =?Windows-1252?Q?ZIA4BuKevt0KSpUgnS2y3rgikoJWDixcYoRZQKn1S5PexP3AsNN31ORu?=
+ =?Windows-1252?Q?us9Vo5gRAMu6Yxyx3J5e/q29scPpsjGXVTLzYP0zLoI=3D?=
+MIME-Version: 1.0
+
+--_000_SA0PR04MB7370434912BA920580B96C50B3A79SA0PR04MB7370namp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+
+________________________________
+De: =AD=ADF=AD=ADi=AD=ADg=AD=ADu=AD=ADr=AD=AD =AD=ADW=AD=ADe=AD=ADi=AD=ADg=
+=AD=ADh=AD=ADt=AD=AD =AD=ADL=AD=ADo=AD=ADs=AD=ADs=AD=AD <vgxvi@pietroverago=
+uth.com>
+Enviado: domingo, 19 de fevereiro de 2023 12:20
+Para: phishing@pot <merciayanmact@hotmail.com>
+Cc: phishing@pot <merciayanmact@hotmail.com>
+Assunto: =ADR=ADe=ADa=ADl=AD =ADW=ADe=ADi=ADg=ADh=ADt=AD =ADL=ADo=ADs=ADs=
+=AD =ADR=ADe=ADs=ADu=ADl=ADt=ADs=AD - =ADF=ADa=ADs=ADt=ADe=ADr=AD,=AD =ADE=
+=ADa=ADs=ADi=ADe=ADr=AD =ADa=ADn=ADd=AD =ADC=ADh=ADe=ADa=ADp=ADe=ADr=AD!=AD
+
+[https://zupimages.net/up/23/07/3ujy.png]<http://vlink.cz/5ga09#VU1NTnVnUDR=
+ORkY1blVsaHFaSjNZTGZrYWIyZzNaQThsZFJYNHB5SE91blFGaDlBVzllaWNteThlRWtvQTN1MF=
+FMWFZ4VmdQTnJ4NGVrOGd6R0JLck5SY2ZtYjlOdkIxM2xyQXBrSHQ0TEswSjhxbUU2dDdPaC9tL=
+1J5ZjB5V2I1ZDdZU0RPNXI3VEs5YzNRR2VnUW9RPT0_>
+
+[https://zupimages.net/up/23/07/tko4.png]<http://vlink.cz/5ga09#WlF3RnhtMEs=
+xNThKSUViQW80dFU1SXBkMzRhcExBM1RDa2dneS9hU3B6bWRsQm5KbXVSditBaTZnRG4rMGdZTl=
+lOcnc3UW1WYkgxd0JrdCtDamdUSVZLT1hJRHBodk9ZZDNUR3BhSXNnUUFtN3I4S1M5bEFNNkRKa=
+mptZnZDU1dCMVQ4bitESUVjeWpYVkxzMGxxV25BPT0_>
+
+[http://vlink.cz/5ga09#Y0lmWG0rM0NrWWpwTjVpb2VZb1lucE9tUHNPZkloOXlsSTVXNUZj=
+U2ZSMWk2eVcwekVaUkJoN3o2cE1JaExNWVRiTWRIREZBVUl1U1FNeTF3NkZuek5yQXY1OXZoazV=
+QYzF0dVhyL0I0eG9FMXhkT1pEYUFTeE9qaUExbC9CMGowanVtVitrRkVhOTdvTGlFS2FIaE9BPT=
+0_]________________________________________________________________________=
+_____________________
+___________________________________________________________________________=
+___________________________________________________________________________=
+___________________________________________________________________________=
+___________________________________________________________________________=
+___________________________________________________________________
+Compte Microsoft
+Activit=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=
+=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=C3=83=
+=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=
+=83=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0s de c=
+onnexion inhabituelles
+Nous avons d=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=
+=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=
+=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=
+=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0=
+tect=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=
+=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=C3=83=83=
+=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=
+=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0 quelque =
+chose d'inhabituel =C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=
+=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6? propos d'une=
+ connexion r=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=
+=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=
+=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=
+=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0=
+cente au compte Microsoft da**5@hotmail.com<mailto:%20id:26708_108@%20hotma=
+il.com>.
+D=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=
+=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=C3=83=83=E2=
+=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=
+=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0tails de con=
+nexion
+Pays/r=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=
+=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=C3=83=
+=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=
+=83=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0gion :=
+ Colombie
+Adresse IP : 190.90.169.162
+Date : 17/02/2023 01:32 (GMT)
+Plateforme : Windows
+Navigateur : Chrome
+Veuillez acc=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=
+=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=
+=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=
+=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0=
+der =C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=
+=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6? votre page d'activit=C3=83=
+=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=
+=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=
+=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=
+=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0 r=C3=83=83=C6=92=
+=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=
+=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=
+=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=
+=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0cente et nous faire savoir =
+s'il s'agissait de vous ou non. Si ce n'=C3=83=83=C6=92=90=C3=83=83=E2=80=
+=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=
+=82=C2=A6?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=
+=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=
+=C2=A2=E2=82=AC=C3=82=C2=B0tait pas vous, nous vous aiderons =C3=83=83=C6=
+=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=
+=E2=80=9A=C3=83=82=C3=82=C2=A6? s=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=
+=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=
+=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=
+=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=
+=82=AC=C3=82=C2=B0curiser votre compte. Si c'=C3=83=83=C6=92=90=C3=83=83=E2=
+=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=
+=C3=82=C2=A6?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=
+=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=
+=83=C2=A2=E2=82=AC=C3=82=C2=B0tait vous, nous consid=C3=83=83=C6=92=90=C3=
+=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=
+=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=
+=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=
+=C6=92=90=C3=83=8B=E2=80 rerons une telle activit=C3=83=83=C6=92=90=C3=83=
+=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=
+=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=
+=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=
+=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0 comme fiable =C3=83=83=C6=92=90=C3=
+=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=
+=C3=83=82=C3=82=C2=A6? l'avenir.
+Passer en revue les activit=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=
+=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=
+=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=
+=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=
+=C3=82=C2=B0s r=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=
+=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=
+=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=
+=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=
+=B0centes<https://account.microsoft.com/activity>
+Pour ignorer ou apporter une modification lorsque vous recevez des notifica=
+tions de s=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=
+=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=C3=
+=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=
+=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0cur=
+it=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=
+=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=C3=83=83=E2=
+=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=
+=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0, cliquez ic=
+i<https://account.live.com/SecurityNotifications/Update>.
+Merci,
+L=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=
+=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92=90=C3=83=C2=A2=E2=
+=82=AC=C5=A1=C3=83=83=C6=92=C3=A2=80=98=C3=83=C2=A2=E2=82=AC=C5=A1?=C3=83=
+=83=C6=92=90=C3=83=85=E2=80=99=C3=83=83=C6=92=C3=A2=80=98=C3=83=C2=A2=E2=82=
+=AC=C5=A1?=C3=83=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C5=A1=C3=83=83=C6=92=90=
+=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=
+=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=
+=82=C2=A3?=C3=83=83=C6=92=90=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=
+=83=C6=92=90=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0quipe des comptes Microsoft
+
+--_000_SA0PR04MB7370434912BA920580B96C50B3A79SA0PR04MB7370namp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+</head>
+<body>
+<div></div>
+<br>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>De:</b> =AD=ADF=AD=ADi=AD=ADg=
+=AD=ADu=AD=ADr=AD=AD =AD=ADW=AD=ADe=AD=ADi=AD=ADg=AD=ADh=AD=ADt=AD=AD =AD=
+=ADL=AD=ADo=AD=ADs=AD=ADs=AD=AD &lt;vgxvi@pietroveragouth.com&gt;<br>
+<b>Enviado:</b> domingo, 19 de fevereiro de 2023 12:20<br>
+<b>Para:</b> phishing@pot &lt;merciayanmact@hotmail.com&gt;<br=
+>
+<b>Cc:</b> phishing@pot &lt;merciayanmact@hotmail.com&gt;<br>
+<b>Assunto:</b> =ADR=ADe=ADa=ADl=AD =ADW=ADe=ADi=ADg=ADh=ADt=AD =ADL=ADo=AD=
+s=ADs=AD =ADR=ADe=ADs=ADu=ADl=ADt=ADs=AD - =ADF=ADa=ADs=ADt=ADe=ADr=AD,=AD =
+=ADE=ADa=ADs=ADi=ADe=ADr=AD =ADa=ADn=ADd=AD =ADC=ADh=ADe=ADa=ADp=ADe=ADr=AD=
+!=AD</font>
+<div>&nbsp;</div>
+</div>
+<div>
+<center>
+<h3><font color=3D"#c27215" size=3D"5"></font></h3>
+<center><a href=3D"http://vlink.cz/5ga09#VU1NTnVnUDRORkY1blVsaHFaSjNZTGZrYW=
+IyZzNaQThsZFJYNHB5SE91blFGaDlBVzllaWNteThlRWtvQTN1MFFMWFZ4VmdQTnJ4NGVrOGd6R=
+0JLck5SY2ZtYjlOdkIxM2xyQXBrSHQ0TEswSjhxbUU2dDdPaC9tL1J5ZjB5V2I1ZDdZU0RPNXI3=
+VEs5YzNRR2VnUW9RPT0_"><img src=3D"https://zupimages.net/up/23/07/3ujy.png">=
+</a></center>
+<br>
+<center><a href=3D"http://vlink.cz/5ga09#WlF3RnhtMEsxNThKSUViQW80dFU1SXBkMz=
+RhcExBM1RDa2dneS9hU3B6bWRsQm5KbXVSditBaTZnRG4rMGdZTllOcnc3UW1WYkgxd0JrdCtDa=
+mdUSVZLT1hJRHBodk9ZZDNUR3BhSXNnUUFtN3I4S1M5bEFNNkRKamptZnZDU1dCMVQ4bitESUVj=
+eWpYVkxzMGxxV25BPT0_"><img src=3D"https://zupimages.net/up/23/07/tko4.png">=
+</a></center>
+<br>
+<img style=3D"display:none" src=3D"http://vlink.cz/5ga09#Y0lmWG0rM0NrWWpwTj=
+Vpb2VZb1lucE9tUHNPZkloOXlsSTVXNUZjU2ZSMWk2eVcwekVaUkJoN3o2cE1JaExNWVRiTWRIR=
+EZBVUl1U1FNeTF3NkZuek5yQXY1OXZoazVQYzF0dVhyL0I0eG9FMXhkT1pEYUFTeE9qaUExbC9C=
+MGowanVtVitrRkVhOTdvTGlFS2FIaE9BPT0_">
+<video>____________________________________________________________________=
+_________________________
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>_______________________________________________________________=
+___________________________________________________________________________=
+___________________________________________________________________________=
+___________________________________________________________________________=
+___________________________________________________________________________=
+____
+<table dir=3D"ltr">
+<tbody>
+<tr>
+<td id=3D"x_i1" style=3D"padding:0; font-family:'Segoe UI Semibold','Segoe =
+UI Bold','Segoe UI','Helvetica Neue Medium',Arial,sans-serif; font-size:17p=
+x; color:#707070">
+Compte Microsoft</td>
+</tr>
+<tr>
+<td id=3D"x_i2" style=3D"padding:0; font-family:'Segoe UI Light','Segoe UI'=
+,'Helvetica Neue Medium',Arial,sans-serif; font-size:41px; color:#2672ec">
+Activit=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=
+=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92&#144=
+;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=
+=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=AC=C3=82=
+=C2=B0s de connexion inhabituelles</td>
+</tr>
+<tr>
+<td id=3D"x_i3" style=3D"padding-top:25px; font-size:15pt; font-family:'Seg=
+oe UI',Tahoma,Verdana,Arial,sans-serif; font-size:14px; color:#2a2a2a">
+Nous avons d=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=
+=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=
+=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=
+=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=
+=AC=C3=82=C2=B0tect=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=
+=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=
+=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144=
+;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=
+=E2=82=AC=C3=82=C2=B0 quelque chose d'inhabituel =C3=83=83=C6=92&#144;=C3=
+=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=
+=9A=C3=83=82=C3=82=C2=A6?
+ propos d'une connexion r=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=
+=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=
+=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=
+=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=
+=C2=A2=E2=82=AC=C3=82=C2=B0cente au compte Microsoft
+<a dir=3D"ltr" id=3D"x_iAccount" class=3D"x_link" href=3D"mailto: id:26708_=
+108@ hotmail.com" style=3D"color:#2672ec; text-decoration:none">
+da**5@hotmail.com</a>.</td>
+</tr>
+<tr>
+<td id=3D"x_i4" style=3D"padding:0; padding-top:25px; font-family:'Segoe UI=
+ Bold','Segoe UI Semibold','Segoe UI','Helvetica Neue Medium',Arial,sans-se=
+rif; font-size:14px; font-weight:bold; color:#2a2a2a">
+D=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=
+=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92&#144;=C3=
+=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=
+=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=AC=C3=82=C2=
+=B0tails de connexion</td>
+</tr>
+<tr>
+<td id=3D"x_i5" style=3D"padding:0; padding-top:6px; font-family:'Segoe UI'=
+,Tahoma,Verdana,Arial,sans-serif; font-size:14px; color:#2a2a2a">
+Pays/r=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=
+=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92&#144=
+;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=
+=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=AC=C3=82=
+=C2=B0gion : Colombie</td>
+</tr>
+<tr>
+<td id=3D"x_i6" style=3D"padding:0; padding-top:6px; font-family:'Segoe UI'=
+,Tahoma,Verdana,Arial,sans-serif; font-size:14px; color:#2a2a2a">
+Adresse IP : 190.90.169.162</td>
+</tr>
+<tr>
+<td id=3D"x_i7" style=3D"padding:0; padding-top:6px; font-size:14px; color:=
+#2a2a2a">Date : 17/02/2023 01:32 (GMT)</td>
+</tr>
+<tr>
+<td id=3D"x_i8" style=3D"padding:0; font-family:'Segoe UI',Tahoma,Verdana,A=
+rial,sans-serif; font-size:14px; color:#2a2a2a">
+Plateforme : Windows</td>
+</tr>
+<tr>
+<td id=3D"x_i9" style=3D"padding:0; padding-top:6px; font-size:14px; color:=
+#2a2a2a">Navigateur : Chrome</td>
+</tr>
+<tr>
+<td id=3D"x_i10" style=3D"padding:0; padding-top:25px; font-family:'Segoe U=
+I',Tahoma,Verdana,Arial,sans-serif; font-size:14px; color:#2a2a2a">
+Veuillez acc=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=
+=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=
+=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=
+=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=
+=AC=C3=82=C2=B0der =C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=
+=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6? votre =
+page d'activit=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=
+=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=
+=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=
+=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=
+=AC=C3=82=C2=B0
+ r=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=
+=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92&#144;=C3=
+=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=
+=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=AC=C3=82=C2=
+=B0cente et nous faire savoir s'il s'agissait de vous ou non. Si ce n'=C3=
+=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#=
+144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92&#144;=C3=83=83=
+=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=
+=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0tai=
+t
+ pas vous, nous vous aiderons =C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=
+=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=
+=A6? s=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=
+=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92&#144=
+;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=
+=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=AC=C3=82=
+=C2=B0curiser votre compte. Si c'=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=
+=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=
+=C2=A6?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=
+=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=
+=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0tait
+ vous, nous consid=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=
+=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=
+=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=
+=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=8B=E2=80=
+ rerons une telle activit=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=
+=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=
+=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=
+=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=
+=C2=A2=E2=82=AC=C3=82=C2=B0 comme fiable =C3=83=83=C6=92&#144;=C3=83=83=E2=
+=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=
+=82=C3=82=C2=A6?
+ l'avenir.</td>
+</tr>
+<tr>
+<td style=3D"padding:0; padding-top:25px; font-family:'Segoe UI',Tahoma,Ver=
+dana,Arial,sans-serif; font-size:14px; color:#2a2a2a">
+<table name=3D"">
+<tbody>
+<tr>
+<td bgcolor=3D"#2672ec" style=3D"background-color:#2672ec; padding-top:5px;=
+ padding-right:20px; padding-bottom:5px; padding-left:20px; min-width:50px"=
+>
+<a id=3D"x_i11" href=3D"https://account.microsoft.com/activity" style=3D"fo=
+nt-family:'Segoe UI Semibold','Segoe UI Bold','Segoe UI','Helvetica Neue Me=
+dium',Arial,sans-serif; font-size:14px; text-align:center; text-decoration:=
+none; font-weight:600; letter-spacing:0.02em; color:#fff">Passer
+ en revue les activit=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=
+=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=
+=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144=
+;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=
+=E2=82=AC=C3=82=C2=B0s r=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=
+=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=
+=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#=
+144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=
+=A2=E2=82=AC=C3=82=C2=B0centes</a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id=3D"x_i12" style=3D"padding:0; padding-top:25px; font-family:'Segoe U=
+I',Tahoma,Verdana,Arial,sans-serif; font-size:14px; color:#2a2a2a">
+Pour ignorer ou apporter une modification lorsque vous recevez des notifica=
+tions de s=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=
+=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92&#=
+144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=
+=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=AC=C3=
+=82=C2=B0curit=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=
+=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=
+=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=
+=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=
+=AC=C3=82=C2=B0,
+<a id=3D"x_26708" class=3D"x_link" href=3D"https://account.live.com/Securit=
+yNotifications/Update" style=3D"color:#2672ec; text-decoration:none">
+cliquez ici</a>.</td>
+</tr>
+<tr>
+<td id=3D"x_i13" style=3D"padding:0; padding-top:25px; font-family:'Segoe U=
+I',Tahoma,Verdana,Arial,sans-serif; font-size:14px; color:#2a2a2a">
+Merci,</td>
+</tr>
+<tr>
+<td id=3D"x_i14" style=3D"padding:0; font-family:'Segoe UI',Tahoma,Verdana,=
+Arial,sans-serif; font-size:14px; color:#2a2a2a">
+L=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=
+=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=
+=C2=A2=E2=82=AC=C5=A1=C3=83=83=C6=92=C3=A2=80=98=C3=83=C2=A2=E2=82=AC=C5=A1=
+?=C3=83=83=C6=92&#144;=C3=83=85=E2=80=99=C3=83=83=C6=92=C3=A2=80=98=C3=83=
+=C2=A2=E2=82=AC=C5=A1?=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=AC=C5=A1=C3=
+=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#=
+144;=C3=83=83=E2=80=9A=C3=83=82=C3=82=C2=A6?=C3=83=83=C6=92&#144;=C3=83=83=
+=E2=80=9A=C3=83=82=C3=82=C2=A3?=C3=83=83=C6=92&#144;=C3=83=83=E2=80=9A=C3=
+=83=82=C3=82=C2=A2=C3=83=83=C6=92&#144;=C3=83=C2=A2=E2=82=AC=C3=82=C2=B0qui=
+pe des comptes Microsoft</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</video></center>
+</div>
+</body>
+</html>
+
+--_000_SA0PR04MB7370434912BA920580B96C50B3A79SA0PR04MB7370namp_--
