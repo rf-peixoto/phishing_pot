@@ -1,0 +1,955 @@
+Delivered-To: phish@pot
+Received: by 2002:a59:c8eb:0:b0:3a3:4c72:b7f7 with SMTP id e11csp1624961vqt;
+        Sun, 19 Feb 2023 13:29:32 -0800 (PST)
+X-Received: by 2002:a05:6e02:1a08:b0:313:e6ae:3490 with SMTP id s8-20020a056e021a0800b00313e6ae3490mr866085ild.14.1676841931443;
+        Sun, 19 Feb 2023 13:25:31 -0800 (PST)
+X-Google-Smtp-Source: AK7set+hTbzUCY/MYc7zhKPIg8c1Vs61UoaKKGuD+eGn+/lbygmZiw5h8D2F28bVxGhBqT8t7HZc
+X-Received: by 2002:a05:6e02:1a08:b0:313:e6ae:3490 with SMTP id s8-20020a056e021a0800b00313e6ae3490mr866046ild.14.1676841929480;
+        Sun, 19 Feb 2023 13:25:29 -0800 (PST)
+ARC-Seal: i=3; a=rsa-sha256; t=1676841929; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=qu1iX8yPzRntu47YM9fhjd7RucwJG4xFcNM2dm5w7lX3lvW6yDm0GWAjKkabymma65
+         Km1X3sDld1ol7qWv+JPO1O/rwZX/ahSlGIENGD32hZmHig08QN2JDk7Qj/3Jl/pI+B7u
+         pdobNqn6uLJFlyzzbtW+eUsUjUlwWlIozNspqnVcz0RuEC30jmh+N6I5IpRSAOcWDJAs
+         bRrDE+yMFeIIVkgFefLa6CO9+LTN5Uu9aZ2ejejGCX+BAXmfltqudZ7/9bwRCxY9GF4x
+         YWvvWL9HAHeYiUS+TskKDAvomwmOxAgMoMszMN4d5RchgV7c4w3e8f9TP6E2kq8zggmf
+         yhWQ==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=list-archive:list-help:list-post:list-id:mailing-list:precedence
+         :list-unsubscribe:feedback-id:mime-version:subject:message-id:to
+         :reply-to:from:date:sender:dkim-signature;
+        bh=pmDECz50CMaN/scxbVZF++BPjvmYUXO0lX/qPzJfIss=;
+        b=YDsqdr1BhbAoiIfxZJLpVuLLurhOdtrfksJWcT4beNRj1VsmndTpGVwdhsbJ1Rgy8a
+         61uWYkRxT9Ps8GKSTxwwSogjJkhd/zYVWQcz6M/c4Qmn6yUXd07N+ngBMaM9nmx6qhsO
+         YqgmZo9gLukbqcYhFsRWlZsF53ZnPaGTdrKWI/QSEl5RyU7KPEUu+/7XAMRaEPk7Tny8
+         K2Y5x0F56vnRNalsQnxvEOx6p6NsEg9m7mo8j2hRVK7d4ucQAit21yUe5VZyAjQwaaql
+         n7mOTvpOQHIASbmDWvEO7SnmZ9Ud/FpUfm1RLheauhwRc2gkKjJaAzfd1vnt4SACn1u+
+         89kg==
+ARC-Authentication-Results: i=3; mx.google.com;
+       dkim=pass header.i=@pwc.com header.s=google header.b="eO/iqr5F";
+       arc=pass (i=2 spf=pass spfdomain=amazonses.com dkim=pass dkdomain=amazonses.com);
+       spf=pass (google.com: domain of corporative@training designates 2607:f8b0:4864:20::d48 as permitted sender) smtp.mailfrom=corporative@training
+Return-Path: <corporative@training>
+Received: from mail-io1-xd48.google.com (mail-io1-xd48.google.com. [2607:f8b0:4864:20::d48])
+        by mx.google.com with ESMTPS id q3-20020a056e0215c300b0031551302f76si11239124ilu.121.2023.02.19.13.25.29
+        for <phish@pot>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 19 Feb 2023 13:25:29 -0800 (PST)
+Received-SPF: pass (google.com: domain of corporative@training designates 2607:f8b0:4864:20::d48 as permitted sender) client-ip=2607:f8b0:4864:20::d48;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@pwc.com header.s=google header.b="eO/iqr5F";
+       arc=pass (i=2 spf=pass spfdomain=amazonses.com dkim=pass dkdomain=amazonses.com);
+       spf=pass (google.com: domain of corporative@training designates 2607:f8b0:4864:20::d48 as permitted sender) smtp.mailfrom=corporative@training
+Received: by mail-io1-xd48.google.com with SMTP id h5-20020a5e8405000000b00733ef3dabe3sf986664ioj.14
+        for <phish@pot>; Sun, 19 Feb 2023 13:25:29 -0800 (PST)
+ARC-Seal: i=2; a=rsa-sha256; t=1676841929; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=0Rb21cdqNuOSeaFB7p5LpiVc7XwRnr+/xi08HA2ufFJnP5PIHQn1kuU4d1nDa60WqI
+         KL9O9Xe0DV5k+N9j4YD+PrRH9AQnDXOUy4jEJojut1TNap8S4OchFQiI3+trHp0Db3Td
+         0uaeu+H4DvywTFLqe4+qIDnWSGoIkEFXBznTrrVh59MiCbm18wPFSAyuLRxE6Voq8tU+
+         tofhEuC3ZreH0K6IAoLzrW1q1Z2NO47PL3Bz3SZDPDDc+P69CcYgZB1JcVY7RKZhbih+
+         3U68fh6AvXK7bzGpCOM7MZucpFoSNwFK0rFxVIVkC8DPNumgiZx/ufzi1kbUmAiXAln6
+         mmXg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=list-archive:list-help:list-post:list-id:mailing-list:precedence
+         :list-unsubscribe:feedback-id:mime-version:subject:message-id:to
+         :reply-to:from:date:sender:dkim-signature;
+        bh=pmDECz50CMaN/scxbVZF++BPjvmYUXO0lX/qPzJfIss=;
+        b=vaI5JLZqxdDjPRKTVDtRPSITZORiYYyFPvUD+6xlsAlkf3FvaYNv/ZQgEFi6ekrqGw
+         uTylNTRbLIEkhsB+pn7luyLJGIC3ZoFJ8uinQIn77ZxyFrALj3ZmI93H+usyE5c1Ybqv
+         c8G5+V52oHaghyz13Gn8C90pkTn523djjI3rjCOw3sAFtDOByRCIkSMCPY86syaSsNzp
+         bfTGZKQHt3bDDQ7tQY3ewehLOP3gvYOs6QB6kHZnzbEZgadQJzJJZC9FNirT5BjUVFVV
+         pG1cRCbt/QfghY/zbjZMREYhyktX0H2jVggQjbEQQHlVo0Iyfl4ronee/ZjLrxce4GHM
+         dW/A==
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=ItI148m+;
+       spf=pass (google.com: domain of 010001866b913296-7230937d-51ac-42e5-8cc0-1ea6ecabe07e-000000@amazonses.com designates 54.240.79.253 as permitted sender) smtp.mailfrom=010001866b913296-7230937d-51ac-42e5-8cc0-1ea6ecabe07e-000000@amazonses.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=pwc.com; s=google;
+        h=list-archive:list-help:list-post:list-id:mailing-list:precedence
+         :x-original-authentication-results:x-original-sender
+         :list-unsubscribe:feedback-id:mime-version:subject:message-id:to
+         :reply-to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pmDECz50CMaN/scxbVZF++BPjvmYUXO0lX/qPzJfIss=;
+        b=eO/iqr5FQr+rBKQPIm1MvNaz1lBLyGLMp7QmfX/GNRaLo0GuP7uJPzsA0llupX1BMB
+         oMFmQaf8Xxlqv3wsR39H6lZFhPP9Q3qatl6d+VvzEIAivLkBUhFEsNcybzFxkJIVen6h
+         0MFoahJ+u2wrLWBN7joMFLtqAb1+8AH6RabCUhKn4JlrZCGnXd/iEzRDQ0dMaj6728eb
+         ff84ZOGxUdv9ONTadTdLmSvXRtmJqTc7heE8P0WiK+GE2iE13/sINNw8yqc62d0kGkxl
+         gfHfEGARIji5o3GNT58l/yhuef3M1z6gb0UZyGixClD0eCKxFoWIzg0Reuef2yKjuema
+         WzDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=list-archive:list-help:list-post:x-spam-checked-in-group:list-id
+         :mailing-list:precedence:x-original-authentication-results
+         :x-original-sender:list-unsubscribe:feedback-id:mime-version:subject
+         :message-id:to:reply-to:from:date:x-gm-message-state:sender:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=pmDECz50CMaN/scxbVZF++BPjvmYUXO0lX/qPzJfIss=;
+        b=cZ67gIP+GOUiM0nAGmDP0iQChadWKrOML0O6u2QfdehOcf1uAhBduvVPnEEpadIPlb
+         OvMUOGEre28bUOP23sSQozzPDkuEdFw6LjGTYx1TuTUc88sBHAQWN1wVsKuam/fjCXsr
+         W2uZcMvFptw1pusmiTkEt1fjfQDzqHbLI6HH6rP8eISycagix+ujjqVGGmXMhqClxIwz
+         W8LWlCc1DpzVS1RzrY8FWhCTF00vIetZRJYM8vw2dpSapZunmlm1OpX0lrCP5h3TlYzx
+         xS9xsaGFvJ/Q8aQxibpgLuwKf7hos6i4cO7uCENRgz7xx9vT4p2sJ5RpZDkbme5zPrOa
+         I80g==
+Sender: phish@pot
+X-Gm-Message-State: AO0yUKV7PrV9z2pD66FSajDDXCw2PO/nUx8ZUJKbpFteQORnhL30aagD
+	jOaoi1FGXVuXWxvO8y32ws/zE+qvmhWIO/QRjhhCStB9c9RzL9C9cD9TfUKK861uk2qU5lZaRGm
+	4rVhtoRwwnclNruOEkaHE
+X-Received: by 2002:a05:6638:22b5:b0:3a7:e46f:ffc with SMTP id z21-20020a05663822b500b003a7e46f0ffcmr318889jas.0.1676841928958;
+        Sun, 19 Feb 2023 13:25:28 -0800 (PST)
+X-Received: by 2002:a05:6638:22b5:b0:3a7:e46f:ffc with SMTP id z21-20020a05663822b500b003a7e46f0ffcmr318857jas.0.1676841928544;
+        Sun, 19 Feb 2023 13:25:28 -0800 (PST)
+X-BeenThere: phish@pot
+Received: by 2002:a92:d9cf:0:b0:315:7b96:e09b with SMTP id n15-20020a92d9cf000000b003157b96e09bls476936ilq.3.-pod-prod-gmail;
+ Sun, 19 Feb 2023 13:25:28 -0800 (PST)
+X-Received: by 2002:a05:6e02:b42:b0:314:5aa:94b4 with SMTP id f2-20020a056e020b4200b0031405aa94b4mr1195827ilu.7.1676841927728;
+        Sun, 19 Feb 2023 13:25:27 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1676841927; cv=none;
+        d=google.com; s=arc-20160816;
+        b=hnWkkAbgSbz8pMGhkkfEflJpl9rQLvSp8N0dPWYtbUiu66N3nYhjt3JZkIKGOM8pn2
+         2qFYslgDCUwWgWTawf596cySDv+Gf5YybLeyE4CH75oQ0u7qN6kp3fsxbLujoilhyQzW
+         4SyU3X8qFmq9b2kvLTU46rsTAet/xpRrGsb6LJETJ0j1Mk/xZo3U5pQNmEFCkP1gclex
+         I4IpSQA3xr9vsAIvXxSQdxcHGio02M8eMj24YL+WWoR6uAeP6wGGS5VX2bo3X0i+rpML
+         CFEMb6Hc6pMr+tdaoa3+8Cl5wJeaknoGRsBDAQNknFDpC5SrSo+b61pO/eSktVjSQx4b
+         +7fA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=list-unsubscribe:feedback-id:mime-version:subject:message-id:to
+         :reply-to:from:date:dkim-signature;
+        bh=qdgVX59PS3UCyERAk1eL7eZihJoualFe42wcBdAWT2E=;
+        b=zr58XPg+S3gQu2qfTiwSCW1xcbA7cmyFvprmYiQSgQy7E0ct6j9R7j4p2P6XML8/Vf
+         3QX7nSOqlCy1GkGyPXnwVQsLawiOSN62RKIU50BG/p5ypFUF4WQHdwzcGUvo+MPEoe/R
+         wyohQs1nctFmJMMUfmlWmq0LZeT1t/FhrKcjSlUaKji8InVN3jfzMatkiZubY6JLB4nu
+         SHGtYn/nFdXtOp9HJyokyTBxB4TDMafniYqjYU2x/pWU3XE+W9/6z384l+fWeKxmXimb
+         7F9hCzk6S7avbhn1eXqM8JrtHxQPghaBJ43i2KhUhbJnPGyMXawWhMUMdrihNiYbVywR
+         b4xw==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=ItI148m+;
+       spf=pass (google.com: domain of 010001866b913296-7230937d-51ac-42e5-8cc0-1ea6ecabe07e-000000@amazonses.com designates 54.240.79.253 as permitted sender) smtp.mailfrom=010001866b913296-7230937d-51ac-42e5-8cc0-1ea6ecabe07e-000000@amazonses.com
+Received: from mx08-00096706.pphosted.com (mx08-00096706.pphosted.com. [91.207.212.192])
+        by mx.google.com with ESMTPS id w2-20020a056e021c8200b003110f4d398csi12060369ill.133.2023.02.19.13.25.26
+        for <phish@pot>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 19 Feb 2023 13:25:27 -0800 (PST)
+Received-SPF: pass (google.com: domain of 010001866b913296-7230937d-51ac-42e5-8cc0-1ea6ecabe07e-000000@amazonses.com designates 54.240.79.253 as permitted sender) client-ip=54.240.79.253;
+Received: from pps.filterd (m0240463.ppops.net [127.0.0.1])
+	by mx07-00096706.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31JAUYrj017511
+	for <phish@pot>; Sun, 19 Feb 2023 21:25:25 GMT
+Received: from a79-253.smtp-out.amazonses.com (a79-253.smtp-out.amazonses.com [54.240.79.253])
+	by mx07-00096706.pphosted.com (PPS) with ESMTPS id 3ntn7us9ex-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA256 bits=128 verify=NO)
+	for <phish@pot>; Sun, 19 Feb 2023 21:25:25 +0000
+Date: Sun, 19 Feb 2023 21:25:23 +0000
+From: MetaMask <integration@crowdskout.com>
+Reply-To: integration@crowdskout.com
+To: phish@pot
+Message-ID: <010001866b913296-7230937d-51ac-42e5-8cc0-1ea6ecabe07e-000000@email.amazonses.com>
+Subject: Your wallet is about to be suspended
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_2265378_1654556209.1676841923212"
+X-Campaign-ID: 6224940
+Feedback-ID: 1.us-east-1.lCJVkz6+3S71MtYe1CeGk/9v1Z83C325jnahyIHJIg0=:AmazonSES
+List-Unsubscribe: <mailto:googlegroups-manage+137990262218+unsubscribe@googlegroups.com>,
+ <https://groups.google.com/a/pwc.com/group/BR_CyberIntelOps/subscribe>
+X-Feedback-ID: 8360313:6224940:4374:iterable
+X-Message-ID: c1102b21ae5240839150878619e57ae5
+X-SES-Outgoing: 2023.02.19-54.240.79.253
+X-Proofpoint-GUID: jP2czFqif_NXTobXhLV87IHFJz3wMXie
+X-CLX-Response: 1TFkXBxwZGxEKWUQXaGNGW25gZW56BUARClhYF2FzXU8YR0J4Q1NDEQp4Thd sTFocfxxcaWFwbxEKeEsXYXNdTxhHQnhDU0MRCkNIFwcZGR4RCkNZFwceHh8RCkNJFxoEGhoaEQ pZTRdgX0RBEQpZSRcHGBoacRgSHgYHGRN3BgcbBh4SQhsfBgcbGhpCGBsGGRgGBxgaGnEbEBgSG
+ HcGGgYHGBoaBhoGGgYHGxoGGnEaEBp3BhoRClleF2hjeREKSUYXWl1JdU1HdUJFWV5PThEKSUcX eE9NEQpDThdAehhJUGxbQ0x1ZHJ+RUhyQmZ8Eh1jYmxgUBldZ3JDTxEKWFwXHwQaBBgSHwUbGgQ SGgQdBBsQGx4aHxoRCl5ZF0hhbkJNEQpNXBccHhEKTFoXbmRiWlBTEQpNThdpaBEKQk8XYH4cYm
+ BBWmtfGl8RCkNaFx8eBBgeGgQdEwQYHxkRCkJeFxsRCkJGF2dGQW5vRUwfGH9zEQpCRxdhYX4bR GhLbUF/axEKQkUXaHNnUkFNXU5PBV0RCkJOF2xMWhx/HFxpYXBvEQpCTBdhc11PGEdCeENTQxEK QmwXaXxaYkFJcltTfXkRCkJAF2IYf2RYblNncmxdEQpCWBdvEkNcWG1dU39fBREKWlgXGREKeUM
+ XYktkWH8dZlgSHBIRCllLFxkZGR4RClpLFxkZGR4RCnBnF2RMfloeTGBrGXtHEAcZGhEKcGgXYU xjWRJOYU8aEm4QBx0aEQpwaBdjRX96YRhdb2x8RxAHHRoRCnBoF2JsSRl+THNoYxpyEAcdGhEKc GgXaHkFBR5JcF1SYEYQBx0aEQpwaBdpSR9dQWkZRWFBGhAHHRoRCnBoF2xYSW1wTlhvQW1sEAcd
+ GhEKcGgXaxJfeEJkaxsSWnwQBx0aEQpwaBdjHGJ/Y3JgAV4YHxAHHRoRCnB9F2huU1p5b01QfFh dEBoRCnB9F2hNRkFoYEJbZAFOEAcdGhEKcH0XemFtT3BSS1NPW0YQGhEKcH0XZB5EZE4ffmh7YH IQGhEKcH8Xb0EZGW5sfGZ6UBoQGhEKcF8XZV5JZU5Dfm5cfgEQGhEKcH8XYkFaTlsfcHMSQ2gQH
+ hIRCnBfF3p/eRplY29hbQFaEAcdGhEKcH8XYl18HmRbY2tTW2sQGhEKcF8XbHpuG1MZT0tfeHgQ GhEKcH8XZ1BBck1pf2lPQ2cQGwQcEQpwXxdtSBNHBWJiSRIYTxAHGR0RCnBsF2xBRGFpWXtZf3A SEAcbGhIRCm1+FxoRClhNF0sRIA==
+X-Proofpoint-ORIG-GUID: jP2czFqif_NXTobXhLV87IHFJz3wMXie
+X-CLX-Shades: Junk
+X-Proofpoint-Processing-Postfiltering: True
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-19_14,2023-02-17_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=gmspam_spam policy=gmspam score=99 malwarescore=0 bulkscore=0
+ mlxscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0 phishscore=0
+ clxscore=-631 spamscore=0 impostorscore=0 suspectscore=0 mlxlogscore=22
+ unknownsenderscore=20 classifier=clx:Junk adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302190204 domainage_hfrom=3334
+ domainage_replyto=3334
+X-pwc-4672980531: 1
+X-Original-Sender: integration@crowdskout.com
+X-Original-Authentication-Results: mx.google.com;       dkim=pass
+ header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw
+ header.b=ItI148m+;       spf=pass (google.com: domain of 010001866b913296-7230937d-51ac-42e5-8cc0-1ea6ecabe07e-000000@amazonses.com
+ designates 54.240.79.253 as permitted sender) smtp.mailfrom=010001866b913296-7230937d-51ac-42e5-8cc0-1ea6ecabe07e-000000@amazonses.com
+Precedence: list
+Mailing-list: list phish@pot; contact BR_CyberIntelOps+owners@pwc.com
+List-ID: <BR_CyberIntelOps.pwc.com>
+X-Spam-Checked-In-Group: phish@pot
+X-Google-Group-Id: 137990262218
+List-Post: <https://groups.google.com/a/pwc.com/group/BR_CyberIntelOps/post>, <mailto:phish@pot>
+List-Help: <https://support.google.com/a/pwc.com/bin/topic.py?topic=25838>, <mailto:BR_CyberIntelOps+help@pwc.com>
+List-Archive: <https://groups.google.com/a/pwc.com/group/BR_CyberIntelOps/>
+
+------=_Part_2265378_1654556209.1676841923212
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Apply for KYC Verification=20
+
+
+
+
+
+
+
+
+Votre commande a bien =C3=A9t=C3=A9 prise en compte.
+Afficher cet email sur un navigateur=20
+<https://network.mymetas.info/kyc/app/index.php>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Your wallet is about to be suspended
+
+Apply for KYC Verification
+
+
+
+
+Dear User,
+
+
+
+We are writing to inform you that in order to continue using our wallet=20
+service, it is important to obtain KYC (Know Your Customer) verification. K=
+YC=20
+verification helps us to ensure that we are providing our services to=20
+legitimate customers.
+
+
+
+By completing KYC verification, you will be able to securely store, withdra=
+w,=20
+and transfer funds without any interruptions. It also helps us to protect y=
+ou=20
+against financial fraud and other security threats.
+
+We urge you to complete KYC verification as soon as possible to avoid=20
+suspension of your wallet.
+
+
+
+https://verification.metamask.io/KYC?id=3D000#64841111326=20
+<https://network.mymetas.info/kyc/app/index.php>
+
+
+
+Thank you for understanding. Sincerely
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <https://network.mymetas.info/kyc/app/index.php> =20
+<https://a47.verifycontract.info/kyc/app/index.php>=20
+
+
+=C2=A9 All rights reserved
+
+
+
+
+
+
+
+
+
+
+
+
+This email was sent to phish@pot=20
+<mailto:phish@pot>. Don't want to receive these emails anymo=
+re?=20
+Unsubscribe=20
+<https://links.iterable.com/e/encryptedUnsubscribe?_r=3D3e212efd173743f687f=
+2c6077ac89d05&_s=3Dc1102b21ae5240839150878619e57ae5&_t=3DkoxYW5tRO0wZk5J0i5=
+VR88kyPHD7otL90Iag6OvuKavwjWR3rO4N7k-Zdv5sLjzBhJIlFbQSoEZloIHnMy6WonA7o34OM=
+cSTxwROQZMzcT7NKGfHkDTGN-sPTRnaQQYJ>
+New Project,=20
+
+
+------=_Part_2265378_1654556209.1676841923212
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www=
+.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> <html xmlns=3D"http://www.w=
+3.org/1999/xhtml" style=3D"margin: 0; padding: 0; border: 0;"> <head> <meta=
+ content=3D"text/html; charset=3Dutf-8" http-equiv=3D"Content-Type"/> <meta=
+ content=3D"width=3Ddevice-width,initial-scale=3D1,minimum-scale=3D1,maximu=
+m-scale=3D1" name=3D"viewport"/> <title></title> <style type=3D"text/css">b=
+ody{width:100%!important;height:100%!important;margin:0;padding:0;line-heig=
+ht:1}html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote=
+,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,s=
+mall,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,f=
+orm,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,can=
+vas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ru=
+by,section,summary,time,mark,audio,video{margin:0;padding:0;border:0}articl=
+e,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{dis=
+play:block}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:be=
+fore,q:after{content:'';content:none}table,td{mso-table-lspace:0;mso-table-=
+rspace:0}.t{border-collapse:collapse;border-spacing:0}.td-img{font-size:0;l=
+ine-height:0}.table-layout{table-layout:fixed}@media only screen and (max-w=
+idth:580px),only screen and (max-device-width:580px){.desktop-only{display:=
+none!important;font-size:0!important;line-height:0!important;opacity:0!impo=
+rtant;height:0!important;mso-hide:all!important;mso-padding-alt:0!important=
+;mso-border-alt:0!important}.mobile-only{display:table-row!important}body{w=
+idth:auto!important}#conteneur{width:100%!important}.full{display:block!imp=
+ortant}.mobile-FW{width:100%!important;box-sizing:border-box}img,iframe{max=
+-width:100%!important;height:auto!important}.mobile-two-two{width:50%!impor=
+tant}.mobile-no-spacing{border-spacing:0}.products-table-img{max-width:90px=
+!important;height:90px!important}.mobile-no-pad{padding-top:0!important;pad=
+ding-right:0!important;padding-left:0!important}.mobile-padtop{padding-top:=
+10px!important}}</style> <!--[if gte mso 9]><style>li{text-indent:-1em}</st=
+yle><![endif]--><!--[if (gte mso 9)|(IE)]><style type=3D"text/css">table{ms=
+o-line-height-rule:exactly;mso-margin-bottom-alt:0;mso-margin-top-alt:0}</s=
+tyle><![endif]--> </head> <body id=3D"conteneur" style=3D"line-height: 1; m=
+argin: 0; padding: 0; border: 0; background-color: #fff; word-wrap: break-w=
+ord; word-break: break-word; overflow-wrap: break-word; width: 100%!importa=
+nt; height: 100%!important;"> <span style=3D"color:transparent;visibility:h=
+idden;display:none;opacity:0;height:0;width:0;font-size:0;">Apply for KYC V=
+erification </span> <img src=3D"https://links.iterable.com/e/eo?_t=3D3e212e=
+fd173743f687f2c6077ac89d05&amp;_m=3Dc1102b21ae5240839150878619e57ae5&amp;_e=
+=3DkoxYW5tRO0wZk5J0i5VR88kyPHD7otL90Iag6OvuKavwjWR3rO4N7k-Zdv5sLjzBhJIlFbQS=
+oEZloIHnMy6WonA7o34OMcSTxwROQZMzcT6Ys2vPKbw_cIy99OlBUyzuRxS74BDDy0maJgYA3ol=
+XLA%3D%3D" style=3D"border:0;width:1px;height:1px;border-width:0px!importan=
+t;display:none!important;line-height:0!important;" width=3D"1" height=3D"1"=
+/> <table cellpadding=3D"0" cellspacing=3D"0" style=3D"margin: 0; padding: =
+0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-colo=
+r: #fff;" width=3D"100%" bgcolor=3D"#fff"> <tbody style=3D"margin: 0; paddi=
+ng: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td al=
+ign=3D"center" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace:=
+ 0pt; mso-table-rspace: 0pt;"> <table align=3D"center" cellpadding=3D"0" ce=
+llspacing=3D"0" width=3D"100%" style=3D"margin: 0; padding: 0; border: 0; m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt;"> <tbody style=3D"margin: 0; p=
+adding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <t=
+d align=3D"left" valign=3D"top" style=3D"margin: 0; padding: 0; border: 0; =
+mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <div style=3D"margin: 0; pa=
+dding: 0; border: 0;"> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+str-cont t" width=3D"100%" style=3D"margin: 0; padding: 0; border: 0; mso-t=
+able-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-=
+spacing: 0;"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=
+=3D"margin: 0; padding: 0; border: 0;"> <td style=3D"margin: 0; padding: 0;=
+ border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <table cellpadd=
+ing=3D"0" cellspacing=3D"0" class=3D"t" width=3D"100%" style=3D"margin: 0; =
+padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border=
+-collapse: collapse; border-spacing: 0;"> <tbody style=3D"margin: 0; paddin=
+g: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td sty=
+le=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rs=
+pace: 0pt; background: #fff;" width=3D"10">&nbsp;</td> <td align=3D"center"=
+ style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-tabl=
+e-rspace: 0pt; background: #fff;" width=3D"100%"> <table align=3D"center" c=
+ellpadding=3D"0" cellspacing=3D"0" class=3D"mobile-FW t" width=3D"100%" sty=
+le=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rs=
+pace: 0pt; border-collapse: collapse; border-spacing: 0;"> <tbody style=3D"=
+margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; bor=
+der: 0;"> <td align=3D"center" style=3D"margin: 0; padding: 0; border: 0; m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt;"> <table align=3D"center" cell=
+padding=3D"0" cellspacing=3D"0" class=3D"mobile-FW responsive table-layout =
+t" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-ta=
+ble-rspace: 0pt; border-collapse: collapse; border-spacing: 0; table-layout=
+: fixed; background-color: #fff;" width=3D"560" bgcolor=3D"#fff"> <!--[if !=
+mso]><!--> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D=
+"margin: 0; padding: 0; border: 0;"> <!--<![endif]--><!--[if mso]><tr><![en=
+dif]--> <td class=3D"full mobile-FW " valign=3D"top" width=3D"100%" style=
+=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt;"> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"t" style=3D"=
+padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border=
+-collapse: collapse; border-spacing: 0; margin: 0 auto; text-align: left;" =
+width=3D"100%" align=3D"left"> <tbody style=3D"margin: 0; padding: 0; borde=
+r: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td align=3D"cente=
+r" style=3D"margin: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: =
+0pt; padding: 20px 20px 20px 20px;"><!--[if mso]><table class=3D"t" width=
+=3D"100%" cellpadding=3D"0" cellspacing=3D"0" align=3D"left"><![endif]--><!=
+--[if !mso]><!--> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"t" wi=
+dth=3D"100%" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0=
+pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0;"> =
+<!--<![endif]--> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr st=
+yle=3D"margin: 0; padding: 0; border: 0;"> <td align=3D"left" style=3D"marg=
+in: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;=
+"> <p style=3D"padding: 0; border: 0; color: #393939; font-size: 17px; font=
+-family: 'Arial'; font-style: inherit; font-weight: inherit; line-height: 2=
+0px; text-align: center; margin: 0; mso-line-height-rule: exactly;"><span s=
+tyle=3D"margin: 0; padding: 0; border: 0; font-size: 13px; color: #ffffff; =
+line-height: 20px; mso-line-height-rule: exactly;"><span style=3D"margin: 0=
+; padding: 0; border: 0; font-size: 13px; color: #ffffff; line-height: 20px=
+; mso-line-height-rule: exactly;"><span style=3D"margin: 0; padding: 0; bor=
+der: 0; line-height: 20px; font-size: 13px; mso-line-height-rule: exactly;"=
+>Votre commande a bien =C3=A9t=C3=A9 prise en compte.<br style=3D"font-size=
+:13px;color:#ffffff;line-height:20px;mso-line-height-rule:exactly;"/> <span=
+ style=3D"margin: 0; padding: 0; border: 0; color: #ffffff;"><a data-link-i=
+d=3D"PtMh4KZNRdK5LNOq1xtf9w" href=3D"https://links.iterable.com/u/click?_t=
+=3D3e212efd173743f687f2c6077ac89d05&_m=3Dc1102b21ae5240839150878619e57ae5&_=
+e=3DAejBylUAAGbhWV9Yao87CSZDPOoRfVfWZUJh_4epm28ZRo94W5koAo_UJipFPeqUmad3UTK=
+78e6u8zHdjJgn8Qsiy6PzQrtft-8rlCcY7a7hv2hg8ayr9RpnrGH5uaR962dYuoE2o7DIJwUcqR=
+BEd-FXGfPfUQgPwW145Pf1amuouomazvQGOt35f_slWa8uM69Kj9nxXhD0rJSJxY481U0iBIIcZ=
+1VP0h6T6kzHjqk%3D" rel=3D"noopener" style=3D"padding: 0; border: 0; font-st=
+yle: inherit; font-weight: inherit; line-height: 20px; text-align: left; ma=
+rgin: 0px; color: #ffffff; font-size: 13px; font-family: Arial; text-decora=
+tion: underline;" target=3D"_blank"><span style=3D"margin: 0; padding: 0; b=
+order: 0; color: #ffffff; text-decoration: underline;">Afficher cet email s=
+ur un navigateur</span></a></span></span></span></span></p> </td> </tr> </t=
+body> </table> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table> =
+</td> </tr> </tbody> </table> </td> <td style=3D"margin: 0; padding: 0; bor=
+der: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #fff;" wi=
+dth=3D"10">&nbsp;</td> </tr> </tbody> </table> </td> </tr> </tbody> </table=
+> </div> <div style=3D"margin: 0; padding: 0; border: 0;"> <table cellpaddi=
+ng=3D"0" cellspacing=3D"0" class=3D"str-cont t" width=3D"100%" style=3D"mar=
+gin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt=
+; border-collapse: collapse; border-spacing: 0;"> <tbody style=3D"margin: 0=
+; padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;">=
+ <td style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-=
+table-rspace: 0pt;"> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"t"=
+ width=3D"100%" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0;=
+"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin:=
+ 0; padding: 0; border: 0;"> <td style=3D"margin: 0; padding: 0; border: 0;=
+ mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #fff;" width=3D"=
+10">&nbsp;</td> <td align=3D"center" style=3D"margin: 0; padding: 0; border=
+: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #fff;" width=
+=3D"100%"> <table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" clas=
+s=3D"mobile-FW t" width=3D"100%" style=3D"margin: 0; padding: 0; border: 0;=
+ mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; b=
+order-spacing: 0;"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr=
+ style=3D"margin: 0; padding: 0; border: 0;"> <td align=3D"center" style=3D=
+"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace:=
+ 0pt;"> <table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"mobile-FW responsive table-layout t" style=3D"margin: 0; padding: 0; bo=
+rder: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: col=
+lapse; border-spacing: 0; table-layout: fixed; background-color: #fff;" wid=
+th=3D"560" bgcolor=3D"#fff"> <!--[if !mso]><!--> <tbody style=3D"margin: 0;=
+ padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> =
+<!--<![endif]--><!--[if mso]><tr><![endif]--> <td class=3D"full mobile-FW "=
+ style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-tabl=
+e-rspace: 0pt; background-color: #fff;" valign=3D"top" width=3D"100%" bgcol=
+or=3D"#fff"> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"t" style=
+=3D"padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; bo=
+rder-collapse: collapse; border-spacing: 0; margin: 0 auto; text-align: lef=
+t;" width=3D"100%" align=3D"left"> <tbody style=3D"margin: 0; padding: 0; b=
+order: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td align=3D"c=
+enter" style=3D"margin: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt; padding: 5px 5px 5px 5px;"> <table cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"t" style=3D"margin: 0; padding: 0; border: 0; mso-table-lsp=
+ace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing:=
+ 0;"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"marg=
+in: 0; padding: 0; border: 0;"> <td height=3D"20" style=3D"margin: 0; paddi=
+ng: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-size: =
+20px; line-height: 20px; mso-line-height-rule: exactly;">&nbsp;</td> </tr> =
+</tbody> </table> </td> </tr> </tbody> </table> </td> </tr> </tbody> </tabl=
+e> </td> </tr> </tbody> </table> </td> <td style=3D"margin: 0; padding: 0; =
+border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #fff;"=
+ width=3D"10">&nbsp;</td> </tr> </tbody> </table> </td> </tr> </tbody> </ta=
+ble> </div> <div style=3D"margin: 0; padding: 0; border: 0;"> <table cellpa=
+dding=3D"0" cellspacing=3D"0" class=3D"str-cont t" width=3D"100%" style=3D"=
+margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: =
+0pt; border-collapse: collapse; border-spacing: 0;"> <tbody style=3D"margin=
+: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0=
+;"> <td style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt;"> <table cellpadding=3D"0" cellspacing=3D"0" class=3D=
+"t" width=3D"100%" style=3D"margin: 0; padding: 0; border: 0; mso-table-lsp=
+ace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing:=
+ 0;"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"marg=
+in: 0; padding: 0; border: 0;"> <td style=3D"margin: 0; padding: 0; border:=
+ 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #f5f5f5;" wid=
+th=3D"10">&nbsp;</td> <td align=3D"center" style=3D"margin: 0; padding: 0; =
+border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #f5f5f=
+5;" width=3D"100%"> <table align=3D"center" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"mobile-FW t" width=3D"100%" style=3D"margin: 0; padding: 0;=
+ border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: =
+collapse; border-spacing: 0;"> <tbody style=3D"margin: 0; padding: 0; borde=
+r: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td align=3D"cente=
+r" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-ta=
+ble-rspace: 0pt;"> <table align=3D"center" cellpadding=3D"0" cellspacing=3D=
+"0" class=3D"mobile-FW responsive table-layout t" style=3D"margin: 0; paddi=
+ng: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-coll=
+apse: collapse; border-spacing: 0; table-layout: fixed; background-color: #=
+f5f5f5;" width=3D"560" bgcolor=3D"#f5f5f5"> <!--[if !mso]><!--> <tbody styl=
+e=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0=
+; border: 0;"> <!--<![endif]--><!--[if mso]><tr><![endif]--> <td class=3D"f=
+ull mobile-FW " style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt; background-color: #fff;" valign=3D"top" width=
+=3D"100%" bgcolor=3D"#fff"> <table cellpadding=3D"0" cellspacing=3D"0" clas=
+s=3D"t" style=3D"padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rs=
+pace: 0pt; border-collapse: collapse; border-spacing: 0; margin: 0 auto; te=
+xt-align: left;" width=3D"100%" align=3D"left"> <tbody style=3D"margin: 0; =
+padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <=
+td align=3D"center" style=3D"margin: 0; border: 0; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt; padding: 0px 30px 20px 30px;"> <table cellpadding=3D"=
+0" cellspacing=3D"0" class=3D"t" width=3D"100%" style=3D"margin: 0; padding=
+: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collap=
+se: collapse; border-spacing: 0;"> <tbody style=3D"margin: 0; padding: 0; b=
+order: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td align=3D"c=
+enter" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; ms=
+o-table-rspace: 0pt;"> <table align=3D"center" cellpadding=3D"0" cellspacin=
+g=3D"0" class=3D"t" style=3D"margin: 0; padding: 0; border: 0; mso-table-ls=
+pace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spacing=
+: 0;"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"mar=
+gin: 0; padding: 0; border: 0;"> <td align=3D"center" class=3D"td-img" styl=
+e=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rsp=
+ace: 0pt; font-size: 0px; line-height: 0px;"><img alt=3D"" height=3D"30" sr=
+c=3D"http://img.sarbacane.com/63ab7cfdf1fc1a03ffa67b0e/templates/eRWc5LPsQc=
+KmNcwUpFdBfA/bded7189d484b714539d4ca7e9d3a9d46cff6d89.png" style=3D"margin:=
+ 0; padding: 0; border: 0; display: block;" width=3D"165"/></td> </tr> </tb=
+ody> </table> </td> </tr> </tbody> </table> <table cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"t" style=3D"margin: 0; padding: 0; border: 0; mso-tabl=
+e-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spa=
+cing: 0;"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D=
+"margin: 0; padding: 0; border: 0;"> <td height=3D"20" style=3D"margin: 0; =
+padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-s=
+ize: 20px; line-height: 20px; mso-line-height-rule: exactly;">&nbsp;</td> <=
+/tr> </tbody> </table> <!--[if mso]><table class=3D"t" width=3D"100%" cellp=
+adding=3D"0" cellspacing=3D"0" align=3D"left"><![endif]--><!--[if !mso]><!-=
+-> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"t" width=3D"100%" st=
+yle=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-r=
+space: 0pt; border-collapse: collapse; border-spacing: 0;"> <!--<![endif]--=
+> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: =
+0; padding: 0; border: 0;"> <td align=3D"left" style=3D"margin: 0; padding:=
+ 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <p style=3D"=
+padding: 0; border: 0; color: #393939; font-size: 17px; font-family: 'Arial=
+'; font-style: inherit; font-weight: inherit; line-height: 40px; text-align=
+: center; margin: 0; mso-line-height-rule: exactly;"><strong style=3D"margi=
+n: 0; padding: 0; border: 0;"><span style=3D"margin: 0; padding: 0; border:=
+ 0; font-size: 24px; line-height: 40px; mso-line-height-rule: exactly;">You=
+r wallet is about to be suspended</span></strong></p> <p style=3D"padding: =
+0; border: 0; color: #393939; font-size: 17px; font-family: 'Arial'; font-s=
+tyle: inherit; font-weight: inherit; line-height: 40px; text-align: center;=
+ margin: 0; mso-line-height-rule: exactly;"><span style=3D"margin: 0; paddi=
+ng: 0; border: 0; line-height: 40px; font-size: 24px; mso-line-height-rule:=
+ exactly;"><strong style=3D"margin: 0; padding: 0; border: 0; line-height: =
+40px; font-size: 24px; mso-line-height-rule: exactly;"><span style=3D"margi=
+n: 0; padding: 0; border: 0; line-height: 40px; font-size: 24px; mso-line-h=
+eight-rule: exactly;">Apply for KYC Verification</span></strong></span></p>=
+ </td> </tr> </tbody> </table> <table border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" class=3D"t" width=3D"100%" style=3D"margin: 0; padding: 0; bord=
+er: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: colla=
+pse; border-spacing: 0;"> <tbody style=3D"margin: 0; padding: 0; border: 0;=
+"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td style=3D"margin: 0;=
+ padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; paddi=
+ng-top: 10px; padding-bottom: 10px; mso-line-height-rule: exactly;"> <table=
+ border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"t" width=3D"100%=
+" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-tab=
+le-rspace: 0pt; border-collapse: collapse; border-spacing: 0;"> <tbody styl=
+e=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0=
+; border: 0;"> <td style=3D"margin: 0; padding: 0; border: 0; mso-line-heig=
+ht-rule: exactly; border-top: 1px solid #f1611a; border-collapse: collapse;=
+ mso-table-lspace: 0pt; mso-table-rspace: 0pt; -ms-text-size-adjust: 100%; =
+-webkit-text-size-adjust: 100%;">&nbsp;</td> </tr> </tbody> </table> </td> =
+</tr> </tbody> </table> <!--[if mso]><table class=3D"t" width=3D"100%" cell=
+padding=3D"0" cellspacing=3D"0" align=3D"left"><![endif]--><!--[if !mso]><!=
+--> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"t" width=3D"100%" s=
+tyle=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-=
+rspace: 0pt; border-collapse: collapse; border-spacing: 0;"> <!--<![endif]-=
+-> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin:=
+ 0; padding: 0; border: 0;"> <td align=3D"left" style=3D"margin: 0; padding=
+: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <p style=3D=
+"padding: 0; border: 0; color: #393939; font-size: 17px; font-family: 'Aria=
+l'; font-style: inherit; font-weight: inherit; line-height: 26px; text-alig=
+n: left; margin: 0; mso-line-height-rule: exactly;"><span style=3D"margin: =
+0; padding: 0; border: 0; font-size: 16px; line-height: 26px; mso-line-heig=
+ht-rule: exactly;">Dear User,</span></p> <p style=3D"padding: 0; border: 0;=
+ color: #393939; font-size: 17px; font-family: 'Arial'; font-style: inherit=
+; font-weight: inherit; line-height: 26px; text-align: left; margin: 0; mso=
+-line-height-rule: exactly;">&nbsp;</p> <p style=3D"padding: 0; border: 0; =
+color: #393939; font-size: 17px; font-family: 'Arial'; font-style: inherit;=
+ font-weight: inherit; line-height: 26px; text-align: left; margin: 0; mso-=
+line-height-rule: exactly;"><span style=3D"margin: 0; padding: 0; border: 0=
+; font-size: 16px; line-height: 26px; mso-line-height-rule: exactly;">We ar=
+e writing to inform you that in order to continue using our wallet service,=
+ it is important to obtain KYC (Know Your Customer) verification. KYC verif=
+ication helps us to ensure that we are providing our services to legitimate=
+ customers.</span></p> <p style=3D"padding: 0; border: 0; color: #393939; f=
+ont-size: 17px; font-family: 'Arial'; font-style: inherit; font-weight: inh=
+erit; line-height: 26px; text-align: left; margin: 0; mso-line-height-rule:=
+ exactly;">&nbsp;</p> <p style=3D"padding: 0; border: 0; color: #393939; fo=
+nt-size: 17px; font-family: 'Arial'; font-style: inherit; font-weight: inhe=
+rit; line-height: 26px; text-align: left; margin: 0; mso-line-height-rule: =
+exactly;"><span style=3D"margin: 0; padding: 0; border: 0; font-size: 16px;=
+ line-height: 26px; mso-line-height-rule: exactly;">By completing KYC verif=
+ication, you will be able to securely store, withdraw, and transfer funds w=
+ithout any interruptions. It also helps us to protect you against financial=
+ fraud and other security threats. </span></p> <p style=3D"padding: 0; bord=
+er: 0; color: #393939; font-size: 17px; font-family: 'Arial'; font-style: i=
+nherit; font-weight: inherit; line-height: 26px; text-align: left; margin: =
+0; mso-line-height-rule: exactly;"><span style=3D"margin: 0; padding: 0; bo=
+rder: 0; font-size: 16px; line-height: 26px; mso-line-height-rule: exactly;=
+">We urge you to complete KYC verification as soon as possible to avoid sus=
+pension of your wallet.</span></p> <p style=3D"padding: 0; border: 0; color=
+: #393939; font-size: 17px; font-family: 'Arial'; font-style: inherit; font=
+-weight: inherit; line-height: 26px; text-align: left; margin: 0; mso-line-=
+height-rule: exactly;">&nbsp;</p> <p style=3D"padding: 0; border: 0; color:=
+ #393939; font-size: 17px; font-family: 'Arial'; font-style: inherit; font-=
+weight: inherit; line-height: 26px; text-align: left; margin: 0; mso-line-h=
+eight-rule: exactly;"><span style=3D"margin: 0; padding: 0; border: 0; text=
+-decoration: underline; font-size: 17px; line-height: 26px; mso-line-height=
+-rule: exactly;"><a data-link-id=3D"WAJ9lHG9QauaYH-VaBFRog" href=3D"https:/=
+/links.iterable.com/u/click?_t=3D3e212efd173743f687f2c6077ac89d05&_m=3Dc110=
+2b21ae5240839150878619e57ae5&_e=3DAejBylUAAGbhWV9Yao87CSZDPOoRfVfWZUJh_4epm=
+28ZRo94W5koAo_UJipFPeqUmad3UTK78e6u8zHdjJgn8X--TgJ7IJXFhHV5AX7cYlMPjSEZFsB9=
+BJCP8Sh9k-0nb4Rxc-tKFeGt8oC-otaSin1fdJ9flCfWRviq9Rx58kRnWmOPQ01X97XV3r_W-Kc=
+raI-qOHQVaXFEqYkr4ZcZkFGrrK8HfEgQLCEJtl2oMjk%3D" rel=3D"noopener" style=3D"=
+padding: 0; border: 0; font-style: inherit; font-weight: inherit; line-heig=
+ht: 26px; text-align: left; margin: 0px; color: #ffffff; font-size: 17px; f=
+ont-family: Arial; text-decoration: underline;" target=3D"_blank"><span sty=
+le=3D"margin: 0; padding: 0; border: 0; color: #1200ff; text-decoration: in=
+herit;"><span style=3D"margin: 0; padding: 0; border: 0; font-size: 16px; f=
+ont-weight: inherit; line-height: 26px; text-decoration: inherit; color: #1=
+200ff; mso-line-height-rule: exactly;">https://verification.</span><span st=
+yle=3D"margin: 0; padding: 0; border: 0; font-size: 16px; font-weight: inhe=
+rit; line-height: 26px; text-decoration: inherit; color: #1200ff; mso-line-=
+height-rule: exactly;">metamask.io/KYC?id=3D000#64841111326</span></span></=
+a></span></p> <p style=3D"padding: 0; border: 0; color: #393939; font-size:=
+ 17px; font-family: 'Arial'; font-style: inherit; font-weight: inherit; lin=
+e-height: 26px; text-align: left; margin: 0; mso-line-height-rule: exactly;=
+">&nbsp;</p> <p style=3D"padding: 0; border: 0; color: #393939; font-size: =
+17px; font-family: 'Arial'; font-style: inherit; font-weight: inherit; line=
+-height: 26px; text-align: left; margin: 0; mso-line-height-rule: exactly;"=
+><span style=3D"margin: 0; padding: 0; border: 0; font-size: 15px; line-hei=
+ght: 26px; mso-line-height-rule: exactly;"><em style=3D"margin: 0; padding:=
+ 0; border: 0; font-size: 15px; line-height: 26px; mso-line-height-rule: ex=
+actly;"><span style=3D"margin: 0; padding: 0; border: 0; line-height: 26px;=
+ font-size: 15px; mso-line-height-rule: exactly;">Thank you for understandi=
+ng. Sincerely</span></em></span></p> </td> </tr> </tbody> </table> <table c=
+ellpadding=3D"0" cellspacing=3D"0" class=3D"t" style=3D"margin: 0; padding:=
+ 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collaps=
+e: collapse; border-spacing: 0;"> <tbody style=3D"margin: 0; padding: 0; bo=
+rder: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td height=3D"2=
+0" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-ta=
+ble-rspace: 0pt; font-size: 20px; line-height: 20px; mso-line-height-rule: =
+exactly;">&nbsp;</td> </tr> </tbody> </table> </td> </tr> </tbody> </table>=
+ </td> </tr> </tbody> </table> </td> </tr> </tbody> </table> </td> <td styl=
+e=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rsp=
+ace: 0pt; background: #f5f5f5;" width=3D"10">&nbsp;</td> </tr> </tbody> </t=
+able> </td> </tr> </tbody> </table> </div> <div style=3D"margin: 0; padding=
+: 0; border: 0;"> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"str-c=
+ont t" width=3D"100%" style=3D"margin: 0; padding: 0; border: 0; mso-table-=
+lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spaci=
+ng: 0;"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"m=
+argin: 0; padding: 0; border: 0;"> <td style=3D"margin: 0; padding: 0; bord=
+er: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <table cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"t" width=3D"100%" style=3D"margin: 0; pad=
+ding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-co=
+llapse: collapse; border-spacing: 0;"> <tbody style=3D"margin: 0; padding: =
+0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td style=
+=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt; background: #f5f5f5;" width=3D"10">&nbsp;</td> <td align=3D"center=
+" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-tab=
+le-rspace: 0pt; background: #f5f5f5;" width=3D"100%"> <table align=3D"cente=
+r" cellpadding=3D"0" cellspacing=3D"0" class=3D"mobile-FW t" width=3D"100%"=
+ style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-tabl=
+e-rspace: 0pt; border-collapse: collapse; border-spacing: 0;"> <tbody style=
+=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0;=
+ border: 0;"> <td align=3D"center" style=3D"margin: 0; padding: 0; border: =
+0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <table align=3D"center" =
+cellpadding=3D"0" cellspacing=3D"0" class=3D"mobile-FW responsive table-lay=
+out t" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; ms=
+o-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0; table-la=
+yout: fixed; background-color: #f5f5f5;" width=3D"560" bgcolor=3D"#f5f5f5">=
+ <!--[if !mso]><!--> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <t=
+r style=3D"margin: 0; padding: 0; border: 0;"> <!--<![endif]--><!--[if mso]=
+><tr><![endif]--> <td class=3D"full mobile-FW " style=3D"margin: 0; padding=
+: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-co=
+lor: #f5f5f5;" valign=3D"top" width=3D"100%" bgcolor=3D"#f5f5f5"> <table ce=
+llpadding=3D"0" cellspacing=3D"0" class=3D"t" style=3D"padding: 0; border: =
+0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse;=
+ border-spacing: 0; margin: 0 auto; text-align: left;" width=3D"100%" align=
+=3D"left"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D=
+"margin: 0; padding: 0; border: 0;"> <td align=3D"center" style=3D"margin: =
+0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0px 0p=
+x 0px 0px;"> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"t" width=
+=3D"100%" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt;=
+ mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0;"> <tb=
+ody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; pa=
+dding: 0; border: 0;"> <td align=3D"center" style=3D"margin: 0; padding: 0;=
+ border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <table align=3D=
+"center" cellpadding=3D"0" cellspacing=3D"0" class=3D"t" style=3D"margin: 0=
+; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; bord=
+er-collapse: collapse; border-spacing: 0;"> <tbody style=3D"margin: 0; padd=
+ing: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td a=
+lign=3D"center" class=3D"td-img" style=3D"margin: 0; padding: 0; border: 0;=
+ mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-size: 0px; line-height:=
+ 0px;"><img alt=3D"" class=3D"mobile-FW" height=3D"15" src=3D"http://img.sa=
+rbacane.com/63ab7cfdf1fc1a03ffa67b0e/templates/eRWc5LPsQcKmNcwUpFdBfA/76d3c=
+4010b9dd8043e4f1ebaa79e210bbd853a57.png" style=3D"margin: 0; padding: 0; bo=
+rder: 0; display: block;" width=3D"560"/></td> </tr> </tbody> </table> </td=
+> </tr> </tbody> </table> <table cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"t" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; ms=
+o-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0;"> <tbody=
+ style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; paddi=
+ng: 0; border: 0;"> <td height=3D"20" style=3D"margin: 0; padding: 0; borde=
+r: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-size: 20px; line-h=
+eight: 20px; mso-line-height-rule: exactly;">&nbsp;</td> </tr> </tbody> </t=
+able> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table> </td> </t=
+r> </tbody> </table> </td> <td style=3D"margin: 0; padding: 0; border: 0; m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt; background: #f5f5f5;" width=3D=
+"10">&nbsp;</td> </tr> </tbody> </table> </td> </tr> </tbody> </table> </di=
+v> <div style=3D"margin: 0; padding: 0; border: 0;"> <table cellpadding=3D"=
+0" cellspacing=3D"0" class=3D"str-cont t" width=3D"100%" style=3D"margin: 0=
+; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; bord=
+er-collapse: collapse; border-spacing: 0;"> <tbody style=3D"margin: 0; padd=
+ing: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td s=
+tyle=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-=
+rspace: 0pt;"> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"t" width=
+=3D"100%" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt;=
+ mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0;"> <tb=
+ody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; pa=
+dding: 0; border: 0;"> <td style=3D"margin: 0; padding: 0; border: 0; mso-t=
+able-lspace: 0pt; mso-table-rspace: 0pt; background: #f5f5f5;" width=3D"10"=
+>&nbsp;</td> <td align=3D"center" style=3D"margin: 0; padding: 0; border: 0=
+; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #f5f5f5;" width=
+=3D"100%"> <table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" clas=
+s=3D"mobile-FW t" width=3D"100%" style=3D"margin: 0; padding: 0; border: 0;=
+ mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; b=
+order-spacing: 0;"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr=
+ style=3D"margin: 0; padding: 0; border: 0;"> <td align=3D"center" style=3D=
+"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace:=
+ 0pt;"> <table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"mobile-FW responsive table-layout t" style=3D"margin: 0; padding: 0; bo=
+rder: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: col=
+lapse; border-spacing: 0; table-layout: fixed; background-color: #f5f5f5;" =
+width=3D"560" bgcolor=3D"#f5f5f5"> <!--[if !mso]><!--> <tbody style=3D"marg=
+in: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border:=
+ 0;"> <!--<![endif]--><!--[if mso]><tr><![endif]--> <td class=3D"full mobil=
+e-FW " valign=3D"top" width=3D"100%" style=3D"margin: 0; padding: 0; border=
+: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <table cellpadding=3D"=
+0" cellspacing=3D"0" class=3D"t" style=3D"padding: 0; border: 0; mso-table-=
+lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spaci=
+ng: 0; margin: 0 auto; text-align: left;" width=3D"100%" align=3D"left"> <t=
+body style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; p=
+adding: 0; border: 0;"> <td align=3D"center" style=3D"margin: 0; border: 0;=
+ mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0px 30px 0px 30px;"=
+> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"t" width=
+=3D"100%" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt;=
+ mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0;"> <tb=
+ody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; pa=
+dding: 0; border: 0;"> <td style=3D"margin: 0; padding: 0; border: 0; mso-t=
+able-lspace: 0pt; mso-table-rspace: 0pt; padding-top: 10px; padding-bottom:=
+ 10px; mso-line-height-rule: exactly;"> <table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" class=3D"t" width=3D"100%" style=3D"margin: 0; padding=
+: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collap=
+se: collapse; border-spacing: 0;"> <tbody style=3D"margin: 0; padding: 0; b=
+order: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td style=3D"m=
+argin: 0; padding: 0; border: 0; mso-line-height-rule: exactly; border-top:=
+ 1px dashed #b3b3b3; border-collapse: collapse; mso-table-lspace: 0pt; mso-=
+table-rspace: 0pt; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 10=
+0%;">&nbsp;</td> </tr> </tbody> </table> </td> </tr> </tbody> </table> </td=
+> </tr> </tbody> </table> </td> </tr> </tbody> </table> </td> </tr> </tbody=
+> </table> </td> <td style=3D"margin: 0; padding: 0; border: 0; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt; background: #f5f5f5;" width=3D"10">&nbsp=
+;</td> </tr> </tbody> </table> </td> </tr> </tbody> </table> </div> <div st=
+yle=3D"margin: 0; padding: 0; border: 0;"> <table cellpadding=3D"0" cellspa=
+cing=3D"0" class=3D"str-cont t" width=3D"100%" style=3D"margin: 0; padding:=
+ 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collaps=
+e: collapse; border-spacing: 0;"> <tbody style=3D"margin: 0; padding: 0; bo=
+rder: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td style=3D"ma=
+rgin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0p=
+t;"> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"t" width=3D"100%" =
+style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table=
+-rspace: 0pt; border-collapse: collapse; border-spacing: 0;"> <tbody style=
+=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0;=
+ border: 0;"> <td style=3D"margin: 0; padding: 0; border: 0; mso-table-lspa=
+ce: 0pt; mso-table-rspace: 0pt; background: #f5f5f5;" width=3D"10">&nbsp;</=
+td> <td align=3D"center" style=3D"margin: 0; padding: 0; border: 0; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt; background: #f5f5f5;" width=3D"100%"=
+> <table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=3D"mobi=
+le-FW t" width=3D"100%" style=3D"margin: 0; padding: 0; border: 0; mso-tabl=
+e-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spa=
+cing: 0;"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D=
+"margin: 0; padding: 0; border: 0;"> <td align=3D"center" style=3D"margin: =
+0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <=
+table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=3D"mobile-=
+FW responsive table-layout t" style=3D"margin: 0; padding: 0; border: 0; ms=
+o-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; bord=
+er-spacing: 0; table-layout: fixed; background-color: #f5f5f5;" width=3D"56=
+0" bgcolor=3D"#f5f5f5"> <!--[if !mso]><!--> <tbody style=3D"margin: 0; padd=
+ing: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <!--<=
+![endif]--><!--[if mso]><tr><![endif]--> <td valign=3D"middle" width=3D"31.=
+33%" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-=
+table-rspace: 0pt;"> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"t"=
+ style=3D"padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0=
+pt; border-collapse: collapse; border-spacing: 0; margin: 0 auto; text-alig=
+n: left;" width=3D"100%" align=3D"left"> <tbody style=3D"margin: 0; padding=
+: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td alig=
+n=3D"center" style=3D"margin: 0; border: 0; mso-table-lspace: 0pt; mso-tabl=
+e-rspace: 0pt; padding: 20px 20px 20px 20px;"> <table cellpadding=3D"0" cel=
+lspacing=3D"0" class=3D"t" width=3D"100%" style=3D"margin: 0; padding: 0; b=
+order: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: co=
+llapse; border-spacing: 0;"> <tbody style=3D"margin: 0; padding: 0; border:=
+ 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td align=3D"left" s=
+tyle=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-=
+rspace: 0pt;"> <table align=3D"left" cellpadding=3D"0" cellspacing=3D"0" cl=
+ass=3D"t" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt;=
+ mso-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0;"> <tb=
+ody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; pa=
+dding: 0; border: 0;"> <td align=3D"left" style=3D"margin: 0; padding: 0; b=
+order: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"><a href=3D"https:/=
+/links.iterable.com/u/click?_t=3D3e212efd173743f687f2c6077ac89d05&_m=3Dc110=
+2b21ae5240839150878619e57ae5&_e=3DAejBylUAAGbhWV9Yao87CSZDPOoRfVfWZUJh_4epm=
+28ZRo94W5koAo_UJipFPeqUmad3UTK78e6u8zHdjJgn8a_qEjQxCfGoGcoS6-VuuRluPCtBXdi2=
+YyGhEzKPpFcqupPU_XMnqLf7HftHpr2mbhUWpp2MsEfq75xhLM6sz6nAfIKASUlyee6IySyEzow=
+jYYMsXTRu7eHouSbZjHDzRmdGqzL4Dgp4ll7thJnXVIk%3D" style=3D"margin: 0; paddin=
+g: 0; border: 0; text-decoration: none!important;" target=3D"_blank" title=
+=3D"Twitter"><img alt=3D"Twitter" src=3D"http://img.sarbacane.com/63ab7cfdf=
+1fc1a03ffa67b0e/templates/eRWc5LPsQcKmNcwUpFdBfA/c50aaf2746dfa9ae04df9c8dbe=
+0a7dcd3596384d.png" title=3D"Twitter" width=3D"35" style=3D"margin: 0; padd=
+ing: 0; border: 0;"/></a><a href=3D"https://links.iterable.com/u/click?_t=
+=3D3e212efd173743f687f2c6077ac89d05&_m=3Dc1102b21ae5240839150878619e57ae5&_=
+e=3DAejBylUAAGbhWV9Yao87CZI-D42U-jgQgBruvj6jA_oCNbOpKdZy-_ZHLdl6da34JgBOLTv=
+AiK9CIyn85DNcSgxFfUcafhHoFpX2fJ3RYW1W3ROM2ILFsYgfERR7YaIut6Z0rpqDucpp6d5Q6D=
+RbuuveT8SVAYfRqPMCSSUeb6HNLN6XTD4U4h9n3Ab46LfM-EHdgOlj0sYthkKcoJXy3pwb_FH4Z=
+PLaOsKVMUZauNk%3D" style=3D"margin: 0; padding: 0; border: 0; text-decorati=
+on: none!important;" target=3D"_blank" title=3D"GitHub"> <img alt=3D"GitHub=
+" src=3D"http://img.sarbacane.com/63ab7cfdf1fc1a03ffa67b0e/templates/eRWc5L=
+PsQcKmNcwUpFdBfA/317ec339913b4a1cd93cab73ae9eb8cef6c0070f.png" title=3D"Git=
+Hub" width=3D"35" style=3D"margin: 0; padding: 0; border: 0;"/></a></td> </=
+tr> </tbody> </table> </td> </tr> </tbody> </table> </td> </tr> </tbody> </=
+table> </td> <td valign=3D"middle" width=3D"54.33%" style=3D"margin: 0; pad=
+ding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <table =
+cellpadding=3D"0" cellspacing=3D"0" class=3D"t" style=3D"padding: 0; border=
+: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collaps=
+e; border-spacing: 0; margin: 0 auto; text-align: left;" width=3D"100%" ali=
+gn=3D"left"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=
+=3D"margin: 0; padding: 0; border: 0;"> <td align=3D"center" style=3D"margi=
+n: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 20p=
+x 0px 20px 20px;"><!--[if mso]><table class=3D"t" width=3D"100%" cellpaddin=
+g=3D"0" cellspacing=3D"0" align=3D"left"><![endif]--><!--[if !mso]><!--> <t=
+able cellpadding=3D"0" cellspacing=3D"0" class=3D"t" width=3D"100%" style=
+=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt; border-collapse: collapse; border-spacing: 0;"> <!--<![endif]--> <=
+tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; =
+padding: 0; border: 0;"> <td align=3D"left" style=3D"margin: 0; padding: 0;=
+ border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <p style=3D"pad=
+ding: 0; border: 0; color: #393939; font-size: 17px; font-family: 'Arial'; =
+font-style: inherit; font-weight: inherit; line-height: 26px; text-align: r=
+ight; margin: 0; mso-line-height-rule: exactly;">=C2=A9 All rights reserved=
+<br/> &nbsp;<br/> &nbsp;</p> </td> </tr> </tbody> </table> </td> </tr> </tb=
+ody> </table> </td> <td valign=3D"middle" width=3D"14.33%" style=3D"margin:=
+ 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> =
+<table cellpadding=3D"0" cellspacing=3D"0" class=3D"t" style=3D"padding: 0;=
+ border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: =
+collapse; border-spacing: 0; margin: 0 auto; text-align: left;" width=3D"10=
+0%" align=3D"left"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr=
+ style=3D"margin: 0; padding: 0; border: 0;"> <td align=3D"center" style=3D=
+"margin: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; paddin=
+g: 20px 20px 20px 5px;"> <table cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"t" width=3D"100%" style=3D"margin: 0; padding: 0; border: 0; mso-table-=
+lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spaci=
+ng: 0;"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"m=
+argin: 0; padding: 0; border: 0;"> <td align=3D"center" style=3D"margin: 0;=
+ padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <ta=
+ble align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=3D"t" style=
+=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt; border-collapse: collapse; border-spacing: 0;"> <tbody style=3D"ma=
+rgin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; borde=
+r: 0;"> <td align=3D"center" class=3D"td-img" style=3D"margin: 0; padding: =
+0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-size: 0px;=
+ line-height: 0px;"><img alt=3D"" height=3D"24" src=3D"http://img.sarbacane=
+.com/63ab7cfdf1fc1a03ffa67b0e/templates/eRWc5LPsQcKmNcwUpFdBfA/ad0d61769970=
+917c7cc7a2795fd94588f5e15938.png" style=3D"margin: 0; padding: 0; border: 0=
+; display: block;" width=3D"24"/></td> </tr> </tbody> </table> </td> </tr> =
+</tbody> </table> </td> </tr> </tbody> </table> </td> </tr> </tbody> </tabl=
+e> </td> </tr> </tbody> </table> </td> <td style=3D"margin: 0; padding: 0; =
+border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #f5f5f=
+5;" width=3D"10">&nbsp;</td> </tr> </tbody> </table> </td> </tr> </tbody> <=
+/table> </div> <div style=3D"margin: 0; padding: 0; border: 0;"> <table cel=
+lpadding=3D"0" cellspacing=3D"0" class=3D"str-cont t" width=3D"100%" style=
+=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt; border-collapse: collapse; border-spacing: 0;"> <tbody style=3D"ma=
+rgin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0; borde=
+r: 0;"> <td style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0p=
+t; mso-table-rspace: 0pt;"> <table cellpadding=3D"0" cellspacing=3D"0" clas=
+s=3D"t" width=3D"100%" style=3D"margin: 0; padding: 0; border: 0; mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; border-spac=
+ing: 0;"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"=
+margin: 0; padding: 0; border: 0;"> <td style=3D"margin: 0; padding: 0; bor=
+der: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #f5f5f5;"=
+ width=3D"10">&nbsp;</td> <td align=3D"center" style=3D"margin: 0; padding:=
+ 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #f=
+5f5f5;" width=3D"100%"> <table align=3D"center" cellpadding=3D"0" cellspaci=
+ng=3D"0" class=3D"mobile-FW t" width=3D"100%" style=3D"margin: 0; padding: =
+0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse=
+: collapse; border-spacing: 0;"> <tbody style=3D"margin: 0; padding: 0; bor=
+der: 0;"> <tr style=3D"margin: 0; padding: 0; border: 0;"> <td align=3D"cen=
+ter" style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-=
+table-rspace: 0pt;"> <table align=3D"center" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"mobile-FW responsive table-layout t" style=3D"margin: 0; pa=
+dding: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-c=
+ollapse: collapse; border-spacing: 0; table-layout: fixed; background-color=
+: #f5f5f5;" width=3D"560" bgcolor=3D"#f5f5f5"> <!--[if !mso]><!--> <tbody s=
+tyle=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; padding=
+: 0; border: 0;"> <!--<![endif]--><!--[if mso]><tr><![endif]--> <td class=
+=3D"full mobile-FW " valign=3D"top" width=3D"100%" style=3D"margin: 0; padd=
+ing: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <table c=
+ellpadding=3D"0" cellspacing=3D"0" class=3D"t" style=3D"padding: 0; border:=
+ 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse=
+; border-spacing: 0; margin: 0 auto; text-align: left;" width=3D"100%" alig=
+n=3D"left"> <tbody style=3D"margin: 0; padding: 0; border: 0;"> <tr style=
+=3D"margin: 0; padding: 0; border: 0;"> <td align=3D"center" style=3D"margi=
+n: 0; border: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 20p=
+x 20px 20px 20px;"> <table cellpadding=3D"0" cellspacing=3D"0" class=3D"t" =
+style=3D"margin: 0; padding: 0; border: 0; mso-table-lspace: 0pt; mso-table=
+-rspace: 0pt; border-collapse: collapse; border-spacing: 0;"> <tbody style=
+=3D"margin: 0; padding: 0; border: 0;"> <tr style=3D"margin: 0; padding: 0;=
+ border: 0;"> <td height=3D"20" style=3D"margin: 0; padding: 0; border: 0; =
+mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-size: 20px; line-height:=
+ 20px; mso-line-height-rule: exactly;">&nbsp;</td> </tr> </tbody> </table> =
+</td> </tr> </tbody> </table> </td> </tr> </tbody> </table> </td> </tr> </t=
+body> </table> </td> <td style=3D"margin: 0; padding: 0; border: 0; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt; background: #f5f5f5;" width=3D"10">&=
+nbsp;</td> </tr> </tbody> </table> </td> </tr> </tbody> </table> </div> </t=
+d> </tr> </tbody> </table> </td> </tr> </tbody> </table> <table align=3D"ce=
+nter" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"> <tbody> <tr> <td va=
+lign=3D"top"><span style=3D"font-family:Arial;font-size:12px;line-height:20=
+px;color:#8E8E8E;">This email was sent to <a href=3D"mailto:br_cyberintelop=
+s@pwc.com" target=3D"_blank">phish@pot</a>. Don't want to re=
+ceive these emails anymore? <a href=3D"https://links.iterable.com/e/encrypt=
+edUnsubscribe?_r=3D3e212efd173743f687f2c6077ac89d05&_s=3Dc1102b21ae52408391=
+50878619e57ae5&_t=3DkoxYW5tRO0wZk5J0i5VR88kyPHD7otL90Iag6OvuKavwjWR3rO4N7k-=
+Zdv5sLjzBhJIlFbQSoEZloIHnMy6WonA7o34OMcSTxwROQZMzcT7NKGfHkDTGN-sPTRnaQQYJ" =
+name=3D"unsubscribe" target=3D"_blank"><span style=3D"color:#8E8E8E;text-de=
+coration:underline;color:#8e8e8e">Unsubscribe</span></a></span></td> </tr> =
+<tr> <td valign=3D"top"><span style=3D"font-family:Arial;font-size:12px;lin=
+e-height:12px;color:#8E8E8E;">New Project, </span></td> </tr> </tbody> </ta=
+ble> </body> </html>
+
+
+------=_Part_2265378_1654556209.1676841923212--
