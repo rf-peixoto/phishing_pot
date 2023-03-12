@@ -4,6 +4,9 @@
 [![stars - Phishing Pot](https://img.shields.io/github/stars/rf-peixoto/phishing_pot?style=social)](https://github.com/rf-peixoto/phishing_pot)
 [![forks - Phishing Pot](https://img.shields.io/github/forks/rf-peixoto/phishing_pot?style=social)](https://github.com/rf-peixoto/phishing_pot)
 
+## ⚠️ This project needs your help. Please consider donating a symbolic amount to one of the addresses at the end of the description!
+
+
 
 Phishing Pot is a collection of phishing samples. Initially I collected samples of emails in .eml files, later I will expand to other vectors.
 
@@ -19,6 +22,8 @@ sed -i 's/your@email.com/phishing@pot/' *.eml
 Also, follow the filename convention. You can redirect phishing messages to ``` phish.me.again@gmail.com ``` so that they are indexed too.
 
 ## Donate
+
+Brazilian users can send a PIX to the project's email address listed above.
 
 ```
 Bitcoin   [BTC]     33AuPJ7Fg3MDX78vpKZB9xSnp3i1y4Dd7T
