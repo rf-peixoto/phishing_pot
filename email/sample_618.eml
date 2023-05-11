@@ -1,0 +1,1024 @@
+Received: from MN0PR19MB6113.namprd19.prod.outlook.com (2603:10b6:208:380::9)
+ by MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Mon, 1 May 2023
+ 06:41:32 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
+ b=cJY3jcjlgEnqVQQckssvAiMMIpusv4ouVoBTH7mfCDAodNBPlcKeZpV2wgTpGLbik5P6MTrZhDDD1b422+oDBGgrpyslp5Y7wessQF6idjbPLXfjYjT5sfDwq3OBGSDaQibSl8WgNMP/tlRLokSK3dRxxolhfYteVOyQTOxEOy+OUD8U/kLsoMDjukNffCEzwaffMWjYU3WO7laaw4fFdybEJ/KeUcS5ph2cBUNjFY8Xzx17S7vwDr5KNSD0xuBkzhI6Pw0G4bkGS2YUNYRw6ssYbZpL6L7W7AnhqbokaGO1ScVo8dD53CW3po7v6e0eltXdakidCiPTzBO+e0Z6MA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8mCOkH4yDX/HVExNmia7BUfeEdGcEEO1qAn5kqT+3us=;
+ b=lA/aNEk7m1HDuhhmzVGfMS0YFzWD60umwpmc0azxpffgTDYbR6TE/IUMX/fHjrrfeG6kHqTT8bsblXGE0EzqAeFrSNsHP/1weqB5v1pzFqddYWzC6t9vanHjs99lTV8NqQorb+7fKupbwpUMLSlxD0lI1zL9YXQNbbYuZMVarzArFZgndeio4Bdkr43dppWv3cvdoH8KBpumFZEiz0eo5HY/MwKrMZfSHR3PnF6/mkxybnwF3iO48LsKQvtUuYCyuqfUctTxvrV5bvLsyK8NRIiCHzJKOQlotNS4mD0VAf6uDtOmVfqbj674LNm2qkn/8sND225kRSL9eU/W5c253Q==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 40.107.105.59) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=crous-montpellier.fr; dmarc=bestguesspass action=none
+ header.from=crous-montpellier.fr; dkim=pass (signature was verified)
+ header.d=crous34.onmicrosoft.com; arc=pass (0 oda=1 ltdi=1
+ spf=[1,1,smtp.mailfrom=crous-montpellier.fr]
+ dkim=[1,1,header.d=crous-montpellier.fr]
+ dmarc=[1,1,header.from=crous-montpellier.fr])
+Received: from BN9PR03CA0655.namprd03.prod.outlook.com (2603:10b6:408:13b::30)
+ by MN0PR19MB6113.namprd19.prod.outlook.com (2603:10b6:208:380::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6363.19; Mon, 1 May
+ 2023 06:41:31 +0000
+Received: from BN8NAM11FT099.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:408:13b:cafe::a1) by BN9PR03CA0655.outlook.office365.com
+ (2603:10b6:408:13b::30) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6340.30 via Frontend
+ Transport; Mon, 1 May 2023 06:41:31 +0000
+Authentication-Results: spf=pass (sender IP is 40.107.105.59)
+ smtp.mailfrom=crous-montpellier.fr; dkim=pass (signature was verified)
+ header.d=crous34.onmicrosoft.com;dmarc=bestguesspass action=none
+ header.from=crous-montpellier.fr;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of crous-montpellier.fr
+ designates 40.107.105.59 as permitted sender)
+ receiver=protection.outlook.com; client-ip=40.107.105.59;
+ helo=EUR03-AM7-obe.outbound.protection.outlook.com; pr=C
+Received: from EUR03-AM7-obe.outbound.protection.outlook.com (40.107.105.59)
+ by BN8NAM11FT099.mail.protection.outlook.com (10.13.177.197) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6363.19 via Frontend Transport; Mon, 1 May 2023 06:41:30 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:29F359919F6174BC4B5E70320722F5BB2B1497205B71F49C1A5BADBD9197ECDC;UpperCasedChecksum:C6780FC570968176D36B3D5E95C10AE3DD4137FA39D25C37AB5EFE8899D37597;SizeAsReceived:8311;Count:38
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=AfjpwljMaq1gzqH+MhZoswv0oGS1t4QhTMuYjKewL+N9hki5JkUGQUs8a454eMh9t5qPpZd5rn3c3HiLgICm8Th+3y1jXu7M2+u6J8N0V2wvF0xUTq7KgN59w1XbuSj8YEuMIO8TBBMQ9+9ZcKNESWhVuGdExp/d5LfSnojZCk/l92iypYd1wDukNgGwzUh+pNIeF20jrB9TN+sPzQvN4oNwUHU0T8RVtn7rpndxgdtr3d3EiqCml4L55MCXTydUmXzC2bf/idkr+1QwZmmG5KomKOzYRN8C63v/1vb92sl9IELI+KxWD2ZSPwtbs8HBDxgsMW3jbyU8swQlwO+IGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8mCOkH4yDX/HVExNmia7BUfeEdGcEEO1qAn5kqT+3us=;
+ b=LAOQ9XMCRcfgmkBnvZBYlQ5JKjggBi40XyXeEMaX+174UjioYKSzR756S61x/mwHtGOm/FLGBeEeXt9IjnG9UhS3UfWoD+xRmK5lYzPIn3PGzmH89f12THMz1jIrC4TWN65rrm4rC2t0+wJejmDDoGjZNOIBSpxN2+yi5qY9CKei/rKNOmzYcSQFDvzfU0j/mhmMZZzXIayJwh4GO1LrGmxAa7gvTfgCwAKJQMmR/UEynuYQ/ux4L6CoAtYH6EvA7wEF3lnY//Fbz7JQeZyrhmtNrMcg2j2280L7PxvwNMKpdDfiUhOeLjytt2typgJ/NXaQmSL9CbkbT+w7YCITog==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=crous-montpellier.fr; dmarc=pass action=none
+ header.from=crous-montpellier.fr; dkim=pass header.d=crous-montpellier.fr;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=crous34.onmicrosoft.com; s=selector2-crous34-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8mCOkH4yDX/HVExNmia7BUfeEdGcEEO1qAn5kqT+3us=;
+ b=DXwDTOpe2tz4vmLTlppHwFn41Z9rDVZZ91QzjhHLTXHj58zqKqDR0GLmwIJz6Wc0x09gsx0piWq53hJdG5EswHYediqCYm+gxgAHzjRkKT+2Ai/J6bbf9WoYIBZvp9OJ+5sAbUSk+6Sc13kwVS3JbYEF3mQ9zTBvgqEx3XnfHgU=
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=crous-montpellier.fr;
+Received: from AS8P191MB1559.EURP191.PROD.OUTLOOK.COM (2603:10a6:20b:2ee::12)
+ by AM7P191MB0677.EURP191.PROD.OUTLOOK.COM (2603:10a6:20b:13d::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6340.30; Mon, 1 May
+ 2023 06:41:29 +0000
+Received: from AS8P191MB1559.EURP191.PROD.OUTLOOK.COM
+ ([fe80::cdf7:cdbd:4366:4074]) by AS8P191MB1559.EURP191.PROD.OUTLOOK.COM
+ ([fe80::cdf7:cdbd:4366:4074%6]) with mapi id 15.20.6340.025; Mon, 1 May 2023
+ 06:41:29 +0000
+Date: Mon, 1 May 2023 13:41:24 +0700
+To: phishing@pot
+From: =?UTF-8?B?U3VwcG9ydCBh4aW0Y291bnQgdGVhbQ==?= <noreply@crous-montpellier.fr>
+Subject: Your new user agreement. Mon 01 May 2023
+Message-ID:
+ <AS8P191MB15597F54F4759D662821F1D1956E9@AS8P191MB1559.EURP191.PROD.OUTLOOK.COM>
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-ClientProxiedBy: SJ0PR03CA0290.namprd03.prod.outlook.com
+ (2603:10b6:a03:39e::25) To AS8P191MB1559.EURP191.PROD.OUTLOOK.COM
+ (2603:10a6:20b:2ee::12)
+Return-Path: reply.no@crous-montpellier.fr
+X-Microsoft-Original-Message-ID:
+X-MS-TrafficTypeDiagnostic:
+ AS8P191MB1559:EE_|AM7P191MB0677:EE_|BN8NAM11FT099:EE_|MN0PR19MB6113:EE_|MN0PR19MB6312:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8e96ac1c-6b7a-4842-5a05-08db4a0f190f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original:
+ 1HzANKwyYTqY0OVAjN0g7k4FhB16axTlEMnihqQCMsmHxqlrV2Vr/5Q+GE44N7rkiBoY1spVqpZGiEZlgNS3v1MWW6lktNtcdae3Z432Mv2d8eAS2ZLlo+CL1EXQu+AekMsCiEQy4bWNZZi8wIOPSfvfMl5YjjHmJXWYTct/k/N++eEWXqk+RkQGZNJ9JNwYj9vACno7KQGIrCjHBDvLRJMA9cEs1N+RUFTXO9CSxs753Kpwd8xHA1y+r1g6aCN1ybWumf+XqNq9RLn33OQUHKm3GZ0YO/Jpd6YogFFsUTPfPRKoJ19Ts9TgkcxtxorEH2xWmwlA/WIsRlNjoy+h0m5s0mRI3sOt1JOqSQD24L3zZRIbM9jEED60AJfhJ1v6bNnYFlX+8UOhX0819e+RywX7cuLEfMHf2MA1zwybwX8WAnDO4YYr3hhVGz/s0AOrlNdjKo4AFQ9lANehw1lbGfbIRUOYLydMTNzcjsX4/CAlznzFTIJ7K7HWdccfTEzqlKud2km+PP6L+X/9voGzOe4UIz470mjXEzQNuvQ1F62fJqcIQcC4tiaSQxejBukO0pWnmKoIY3Q+dtCaVEf2tnzlEwWj/+U/8tU/Xv5jWIl38Fiz+S2e44w5VqaUzQA49EsUZMUF6NKOhDE0vEyZ5KneNw0EqQURBFmdfW/HEMY9NACrtx5vwvyWDPPyxorYqNAvIiX1+vsL8okCsoQyN7Ru8QitxfajvKGZ0XAw/DstTtR6J9QjyVPVzmJCm7D7
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8P191MB1559.EURP191.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(396003)(366004)(376002)(346002)(136003)(39850400004)(47690400004)(451199021)(1690799014)(66899021)(33656002)(85182001)(85202003)(38350700002)(38100700002)(5660300002)(52536014)(4744005)(2906002)(786003)(8936002)(8676002)(166002)(55016003)(316002)(66946007)(66476007)(66556008)(76236004)(41300700001)(6916009)(83380400001)(186003)(52230400001)(6506007)(26005)(9686003)(478600001)(52116002)(45080400002)(7696005)(6666004)(41320700001)(569114001)(28870500002)(30990500010)(1531001)(42500500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0:
+ =?utf-8?B?VU5pc3FkSU5Jd245R2o5clNHM2c4WU1VWWhySEl1YTYxZ0xQZFR4OFk5d1lB?=
+ =?utf-8?B?Q1RSbk9lVEhlb2VhQmsyWnh1NkFlN3FtWUgrOUNadjlBSjlVTGREdmdJNTBE?=
+ =?utf-8?B?YWxvYjF6eXphWVNxUEZBRHZ3Wk5EbVNvQXg1Sm42SHk3QnVNbGxBUzdMYlZG?=
+ =?utf-8?B?S1dFSGR1dHU5Qkg0Q0l2WXBvenpsS0YvYzZycyt0ZlJvZ0IvZnJadldPWFdH?=
+ =?utf-8?B?RW9URW5tK2I4VVkwdXJRVytkaDQ1Ymczd1YyZWpUQWtXaDFEOGdVakJpRDFS?=
+ =?utf-8?B?SUJTYkFWUlFQNjA0TExkSjJiWWMwWkNpVXlQKzZBeDNGcTFiWUE5SXZWN2Ni?=
+ =?utf-8?B?SXFoSEV2djJsNjd3cW05cjcwOUFTSmRVL2FlbEdnNXBMU3p2YS9XT3RReEpj?=
+ =?utf-8?B?MFgwR2xjLzkvVExjSGN6VVYrc1IvNVlLdXRKaEcxRGpCTHBVVE1QNEZHQU41?=
+ =?utf-8?B?YklzY21ZUWJsNVgvMFAyN1ZUUnE5aGFYK1MvZDZVNENmRVIwb3lDU0dXeTIv?=
+ =?utf-8?B?Tk9aRDRvQlh4TDlpcWxJZnN5bVM2SVZpK2JrWGhjL0FUdCtFMVBoTGlWZ0Fu?=
+ =?utf-8?B?eFQ4bkZzTU9CdHZJM3pWdTRGQm01dUFqbzl1Z2NOYm1KQm53UkZyOHpWUTNl?=
+ =?utf-8?B?RkhsdTMyWE9pRDdvR1lVT24wL1lhbkJmeEZKcjgycEpieVpPOWlrdUZUS3I0?=
+ =?utf-8?B?dFRQeGVBcFJ3R2wvSUREeFdub3JLL0pzVWtOWi9yMW1hMXU2ZUJva0RZNWRM?=
+ =?utf-8?B?RDJBd0NvYm14MjVEYitVOHJDZkgwTGtURk9EajRuM1JYa2FpekdKVFhJNXFN?=
+ =?utf-8?B?ZXFhV0luL0krMWhZd1dKMXlZb0t6MFFRSXA0UVZJSURhamxNQUNkdTQrc2RK?=
+ =?utf-8?B?NU1GeG5ybUoyZldiRWoxM014T1ZyZHJrSXNIOUlZOE5FWW1vcnJBUGh1UUhR?=
+ =?utf-8?B?em02SUo4ME5Eb1NxbUdGd3VlRUFBL1NWNVp0WG5MRTJZY1Z5c25UUCtrTmF5?=
+ =?utf-8?B?eW1NQjJzZGlNSGZ5eHAwQzcwMU1iUlVrekt3NWdDMVdkb29UZGRiM0RnbnJr?=
+ =?utf-8?B?d1BqRkhNM1BZWWtucEZWQ0VLamptY21rTWhLSjFyemx0L2djOUZhb0dDbmgz?=
+ =?utf-8?B?Zy95N0hxRmFMMGtld29sWFBSeFRWWjRZaUVteWE0S1JZT1AxeFcvcFR2NUZB?=
+ =?utf-8?B?ODN1OERLNUNnUTlWSXVjN0xGUEhua1lySTBGYWg2cWJ1cCt6aGx4UlhCK2dM?=
+ =?utf-8?B?QzBhdWUrT1lHUEJVM1l5MkVyRnlINldSeDhWbXQxTldZallkcFVoMkpKc0NY?=
+ =?utf-8?B?ZnZ0c2U3WFBkYkRDUnpaakxwZmVaeUdmcU04NDJBTXFqdG9hYXFTejBuWEU5?=
+ =?utf-8?B?UnFMVEtlZ1ZoMTczc09KQm5oT2Y5UVVQWUppRDQ4YVFSQWl1R2xXYlh4dlFJ?=
+ =?utf-8?B?Q0p2eWIvOFZod1g1c3NWVGw3SHFtRnBMS2RmR1U3YjZNTldrN2s2Z0FPbE5t?=
+ =?utf-8?B?d0xoY2NHeTdQWUlUL1JmUlZUMGR1bzBvMlhDNEdIY3F4Z3VUd1lSNWZuOUpI?=
+ =?utf-8?B?QU9NeE1QUU11WUdjU0pLdTZhMmFvY0xURXVQTGVWaUFvWlVUelVES3JsSHFl?=
+ =?utf-8?B?RGp2a3BWb3RyVGNmZkdnTnh3M1VNY3p3VkVWU2pVak5jWTFkOGVBV1NmcGNy?=
+ =?utf-8?B?aVJGMWk4V1RLbHNWYnU4T0szaU1TQk00cXUwdkJNd1M4anowR2FBSVhGSmNM?=
+ =?utf-8?B?UTM5SVd3czBpeGZGWXZscitGVFZvc3ZxZmlEajFyYlFibFBKeU1weFQ3VzZq?=
+ =?utf-8?B?MkxKQ1d1RXB5aW9YNWdMTzRUdUFhM2NWalNqbVJjTm94dXBJQ2xOWjRhdit3?=
+ =?utf-8?B?cGVLazNyNVFzOWl2WGlndDFQajZmRlU4eDFMWTJleFIrMm1EKy9mMHhHWTFv?=
+ =?utf-8?B?enY2UU1MUTNxT01idG0vOVVjNUQ2aVVWcWpVM1JLbUdCVkVxYUJBanIyd1Vl?=
+ =?utf-8?B?c0o3T2tBREg1ZkdEWUU0R1d1YjNRcGVHZk45OW9YaU8yRkdtTklTQ3k2VHlF?=
+ =?utf-8?B?ZmQ5Zi9sUEZKeUFVN1RFbVEybWFpWEc2YWxvMUc2c2pxWCsxTExjOUhHQm5x?=
+ =?utf-8?B?dzJlOSs5MC9XWVVMYlNwM2lHYkVNdGkrdUhIcFQ0QVR2TnVRVVc1ckJia2RE?=
+ =?utf-8?B?TUE9PQ==?=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7P191MB0677
+X-IncomingHeaderCount: 38
+X-MS-Exchange-Organization-ExpirationStartTime: 01 May 2023 06:41:30.8458
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 8e96ac1c-6b7a-4842-5a05-08db4a0f190f
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ BN8NAM11FT099.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted:
+ BN8NAM11FT099.eop-nam11.prod.protection.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ BN8NAM11FT099.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 5/1/2023 5:36:44 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ 062cbb2c-f7a1-4e00-261c-08db4a0f180d
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 40.107.105.59
+X-SID-PRA: NOREPLY@CROUS-MONTPELLIER.FR
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 May 2023 06:41:30.7052
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8e96ac1c-6b7a-4842-5a05-08db4a0f190f
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ BN8NAM11FT099.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR19MB6113
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.3996994
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.6363.019
+X-Microsoft-Antispam-Mailbox-Delivery:
+	abwl:0;wl:0;pcwl:0;kl:0;dwl:0;dkl:0;rwl:0;ucf:0;jmr:0;ex:0;auth:1;dest:I;ENG:(5062000305)(90000117)(90005022)(91005020)(91035115)(9050020)(9100338)(2008001134)(2008121020)(4810010)(4910033)(8820095)(9575002)(10195002)(9320005);
+X-Message-Info:
+	qZelhIiYnPkx84CNH6AeQs2r1mfbx475RiI5K0+Xb2fvrntBfTJ10N2zNIvcvtf7VgXmo/rIiDTiX9S4qaHZB/x7vGYi+20jHvRBv5kS27O7FHDEwY9E9qYduSWKdNrvkUqpBmNZ7QnWK2BUjHrUIA==
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0xO1NDTD0z
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?UEwzSTJsa0Y1YXNMaUtuQjhoOTB2SnM4ZUZIK1NkN3Fhc0NuaEVyMDd2ZUhj?=
+ =?utf-8?B?cDhhK1d3Q2dzcHNKMGE5cHkxV0hJNUlRUVloeGthbTdQMkRLS0NjZ0U3QnNr?=
+ =?utf-8?B?R3pGQ0MvVW9MR2VaSjdGRERwTHN1OS9ySUt0bjZIL0t5TnlQd0YyTytEOTEx?=
+ =?utf-8?B?KzJlUVFXcWlHNlJZMjRhaU0weUh2ZVV4UDJlQkE0MUJwMXlWVjhlNmdUS1hV?=
+ =?utf-8?B?TjFMZzhpLzlubjZsMlI2L1JYRmJvYTRUWDJJVGQvYkI2MHhndHBBZUIvYjFB?=
+ =?utf-8?B?RDdlZk1oOGsvaDlVNnU2WUdQdG5tK1dvaU4raDJaVWVqTWp4VVJRNFdLZ29R?=
+ =?utf-8?B?ZlFhajV1cE4yQ05XMUZaMGJoLzhiNkExeU5hdkxZcy84YnV6V2pHSkROSTAx?=
+ =?utf-8?B?Y2ppZXRZbHlHYVpocVlOaG1INnQzcWtpN3hBYytqY0lGVkFaakVDWkdaOUl5?=
+ =?utf-8?B?aGZsVHFXbGVMdy9keE1GNVZYTjZaWm5seEN6UUNsVlpKNXJVcEREWGlJRlJ6?=
+ =?utf-8?B?MXlYSXZTZGNNMXVTKzNzNnU2U0lObEJaclNIWFgrbVg5TXdhY1RESm50dE9E?=
+ =?utf-8?B?dGx2SDU2c2tBU05hM3YvczF6TFlmdmdyQ2xyV0VPWnl6OXVkL095MURxRWx2?=
+ =?utf-8?B?cWV3VFZ3WlFRUmhlZitjRUVwWHRFWnhJNG54K3hwejdsaW93cXhOUzJQUWcw?=
+ =?utf-8?B?SjAyRU9BNHNTR0M1Vm1PbTdIMVdyaVZNT2I5MzR1ZzNBKzBnc2NaTElKSTVK?=
+ =?utf-8?B?ZWZqbDF4UlZpaG1JYUdMT0VpM1pHYWtzYjEvS1JoczR0RXlNbEVIREVaODRW?=
+ =?utf-8?B?eGV2ZUVQdktLdHllV2J3QjdpMXh5bUMzTlRXa0ZEbmcydTVJN1U0SXF1SmIz?=
+ =?utf-8?B?TThvaDg2WDUweVdqckVoS25NSGJQZmJJa2NIQzNVT0pqUHBxMVAwcHRuTERq?=
+ =?utf-8?B?OVl3alU1eEx2OE5hcUw5UmhNRk9lTm5sU3MvSUFSaGZxZUpaZjVoY0YwYXh5?=
+ =?utf-8?B?MEp5TThKc1NndDE4WHJSTEJGcWxnWUNCQVN6SFVCd2VISnNneW9OVE5nRUds?=
+ =?utf-8?B?aHhlKytweUREUjRpQWFSMThLbGpoUFZrbzF6UHZaWGEvVkxHYnBNa2lGa0V0?=
+ =?utf-8?B?YXpoTVlmMWZmVnNoZldLUXpKSmp4aUZaZEgwSU9BaXNqZzNMQ3VqZXNEaW91?=
+ =?utf-8?B?MUI5S3FKTFF5eml1dTR4L3dlZXZtQ05iNTk4T2g1d0NkQTQ2Z3o4RHBnM3hB?=
+ =?utf-8?B?Z3FiaGphMDFvdmdhWktsbUZteURBUjNyczJ3YTd4dmV0REtQOTJsSDBqQmxS?=
+ =?utf-8?B?blpiV3ZJSXVHeE5RNk5HdXI5dEkxZEIrdWJGMnZ3LzA1SUswMDkvdEttT3Q3?=
+ =?utf-8?B?UzREdUplMTFDNmx2T0FybGViN0crdEs0Njgzc3dNSmF3YzduN1hOMHNGczY2?=
+ =?utf-8?B?ankzYS80Q1JmQWVDckNlbko2TmtuT1YweWhSaW9VeU0vRkxPNHhveGtPYzZN?=
+ =?utf-8?B?UXZ1QVd2U25pOXlWQmJNb2YxQ1dmK3dXTUc4OWVXUGpFdlJIclRieWJPUUV1?=
+ =?utf-8?B?Tjg3eENpM1RnK2hmTGkzODFEUE0rNS9rcTl4Zmo5K2FsZFM1KytJVC9nSWFC?=
+ =?utf-8?B?ZUdyeURDVGVJRW5JdGY2RUVQNEJ2QzJiVzRMRG5aL3BydEVUUDVSSWpueVh6?=
+ =?utf-8?B?dVVwVGFRa0JCTDNMWW9rbit0a0l1ZzVsczNHeWMwekN4VFQ0dCtPM2hMVmNS?=
+ =?utf-8?B?M2o1bGlmMjNBQjZvTHd1UXU4ZURJYkM4bjdyZWZ2TVdoalJmNTdaWTRjS3JW?=
+ =?utf-8?B?QUVaZlNsVENyRVIvWG5qeXg4eUpTeENNU0dlMkxEOUlhVjlobGo2K1ZudXVX?=
+ =?utf-8?B?OW5ZcGtucVlRM1hZZUlKcVJlcW9mU3RuV1QrYmwrcSt6RXhEMFpMOUZvWnVV?=
+ =?utf-8?B?WUxmK1F6R0JHejN5cndyNUVITEErd0lCT0c4TlI3REg5a0pjemxNZ1Y0R3dw?=
+ =?utf-8?Q?XKXS/KDEJuQctVgVRJc/7hfXyC/klw=3D?=
+MIME-Version: 1.0
+
+<html xmlns=3D"&lt;a href=3D'https://www.w3.org/1999/xhtml"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">=20
+  <style type=3D"text/css">
+body {
+    background-color: #ffffff;
+	margin:0;
+	font:12px/16px Arial, sans-serif;=09
+}
+
+a {
+	text-decoration:none;
+	color:#006699;
+	font:14px/16px Arial, sans-serif;
+}
+
+a img {
+	border:0;
+}
+
+h2 {
+	font-size:20px;
+	line-height:24px;
+	margin:0;
+	padding:0;
+	font-weight:normal;=09
+	color:#000 !important;
+}
+
+h3 {
+	font-size: 18px;
+	color:#cc6600;
+	margin:15px 0 0 0;
+	font-weight: normal;
+}
+
+h4 {
+	font-size:14px;=09
+	margin:0;
+	font-weight:normal;
+}
+
+p {
+	margin:1px 0 8px 0;
+	font:12px/16px Arial, sans-serif;=09
+}
+
+table {
+	border-collapse:collapse;
+}
+
+td {
+	vertical-align: top;
+	font-size: 13px;
+	line-height: 18px;
+	font-family: Arial, sans-serif
+}
+
+/* container */
+#container {
+	width:500px;
+	color:#333;
+	margin:0 auto;
+}
+
+/* content tables */
+#main, #header, #customerSuggestions, #summary, #orderDetails, #itemDetails=
+,
+#selfService, #closing, #marketingContent, #legalCopy, #multOrder, #warrant=
+y, #criticalInfo, #orderDetailsHeader {
+	width:500px;
+}
+
+
+body #warranty p {
+    width:100%;
+}
+
+/* main */
+#main .customerSuggestions {
+	background-color:#efefef;
+	padding:8px 20px 8px 20px;
+}
+
+#main .customerSuggestions a {
+	text-decoration:underline;
+	color:#006699;
+}
+
+#main .customerSuggestions span {
+	color:#cc6600;
+	font-weight:bold;
+}
+
+#main .customerSuggestionsCallOut {
+	padding: 0px 0px 0px 50px;
+}
+
+#multOrder {
+    background-color: #ffffff;
+    border-color: #f6f7f8;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 2px;
+    border-top: 2px solid #f6f7f8;
+    border-bottom: 2px solid #f6f7f8;
+    border-right: 2px solid #f6f7f8;
+    border-left: 2px solid #f6f7f8;
+}
+
+/* header */
+#header {
+	border-bottom:1px solid #eaeaea;
+    padding-top:10px;
+    padding-left:0px;
+    padding-right:0px;
+    padding-bottom:10px;
+}
+
+/* orderDetailsHeader */
+#orderDetailsHeader {
+    border-bottom:1px solid #eaeaea;
+    padding-left:0px;
+    padding-right:0px;
+}
+
+#logo {
+}
+
+#title {
+    text-align: right;
+}
+
+#title p{
+	font-size:20px;
+	font-family: "arial", "sans-serif";
+}
+
+#amazonLogo{
+	width:100px;
+    height:24px;
+}
+
+/* Greeting Summary */
+#greetingSummary {
+	width:100%;
+    padding:0 0 0 0;
+    font-size:14px;
+}
+
+#greetingSummary .greeting{
+	font-size:18px;
+    line-height:30px;
+    color:#2672ec;
+}
+
+#greetingSummary a{
+    font-size:12px;
+}
+
+/* critical info */
+#criticalInfo {
+	border-top:3px solid #cbcfd4;
+	width: 95%;=20
+}
+
+#criticalInfo td {
+    font-size: 14px;
+}
+
+#criticalInfo .detailsContent {
+	background-color:#efefef;
+}
+
+#criticalInfo .label {
+	color:#666;=09
+}
+
+#criticalInfo p {
+	font:14px Arial, sans-serif;
+}
+
+#criticalInfo span {
+	font-size:14px;
+	color:#666;
+}
+
+#criticalInfo a {
+	text-decoration:none;
+	color:#006699;
+	font:14px Arial, sans-serif;
+}
+
+#criticalInfo .hbaicon {
+    padding:4px;
+    vertical-align:text-top;
+}
+
+#criticalInfo .hbainfo {
+    text-align:left;
+    padding-left:5px;
+    padding-right:0px;
+}
+
+#criticalInfo .hbamessage {
+    font:13px Arial, sans-serif;
+    color:#000000;
+    text-decoration:none;
+    line-height:125%;
+}
+
+#criticalInfo .hbahref {
+    font:12px Arial, sans-serif;
+    color:#006699;
+    text-decoration:none;
+    line-height:150%;
+}
+
+#criticalInfo .alexa-shopping-content {
+	background-color: rgb(256, 256, 256);
+	padding:0 0 0 0;
+}
+
+#criticalInfo .footer {
+	background-color: rgb(256, 256, 256);
+    padding: 10px 0px 0px 0px;
+}
+
+#criticalInfoBulk .footer p {
+    font: 11px/ 16px Arial, sans-serif;
+    color: rgb(51, 51, 51);
+}
+
+.deferred-payments-separator {
+    border: 1px solid #cbcfd4;
+}
+
+/* buttons */
+.button {
+	text-decoration:none !important;
+	display:block;
+	height:26px;
+	display:inline-block;
+	margin:0 0 2px 0;
+}
+
+.button.small {
+	height:20px;
+}
+
+.button .expandable {
+	float:left;
+	overflow:hidden;
+}
+
+.button .text {
+	color:#000f68;
+	font-size:12px;
+	position:relative;
+	z-index:10;
+	top:-22px;
+	left:-12px;
+	text-align:center;
+}
+
+.button.secondary .text {
+	left:0;
+}
+
+.button.small .text {
+	top:-20px;
+	left:0;
+	font-size:11px;
+}
+
+/* supporting details */
+#supportingDetails {
+	font-size:11px;
+	color:#666;
+	line-height:14px;
+	margin:10px 20px;
+}
+
+#supportingDetails {
+	margin:0 18px 0 18px;	=09
+}
+
+/* order details */
+#orderDetails h3 {
+	border-bottom:1px solid #ccc;
+	margin:0 0 3px 0;
+	padding:0 0 3px 0;
+}
+
+#orderDetails .frame {
+	padding:16px 20px 6px 20px;
+}
+
+#orderDetails .orderDate {
+	color:#666666;
+	font-size:12px;
+}
+
+#orderDetails span {
+	font-size:12px;
+	color:#666;
+}
+
+#orderDetails p {
+	margin:2px 0 9px 0;=09
+}
+
+/* item details */
+#itemDetails {
+	width: 95%;
+}
+
+#itemDetails .photo {
+	width:150px;
+	text-align:center;
+	padding:16px 0 10px 0;
+}
+
+#itemDetails .photo .play img {
+	margin:3px 0 0 0;=09
+}
+
+#itemDetails .name {
+	color:#666;
+	padding:10px 0 10px 10px;
+}
+
+#itemDetails ul {
+	margin:0;
+	padding:0;
+}
+
+#itemDetails ul li {
+	list-style-type:none;
+	line-height:14px;
+	padding:0 0 4px 0;
+}
+
+#itemDetails ul li a {
+	font-size:14px;
+}
+
+#itemDetails .name p {
+	margin:0;
+	padding:10px 0 0 0;
+	font-size:12px;
+	line-height:16px;
+}
+
+#itemDetails .name p a {
+	text-decoration:none;
+    color:#006699;
+}
+
+#itemDetails .name .share {
+	margin:3px 0 15px 0;=09
+}
+
+#itemDetails .name .share a {
+	margin: 4px 5px 0 0;
+	font-size:0;
+}
+
+#itemDetails .name .supportingDetails,=20
+#itemDetails .name .supportingDetails a {
+	margin:8px 0 0 0;
+	font-size:12px;
+}
+
+#itemDetails .price {
+	width:110px;
+	text-align:right;
+	font-size:14px;
+	padding:10px 10px 0 10px;
+	white-space:nowrap;
+}
+
+#itemDetails .price a {
+	text-decoration:none;
+    color:#006699;
+}
+
+#itemDetails .divider {
+	border-top:1px solid #eaeaea;
+	padding:0 0 16px 0;
+}
+
+#itemDetails .name table {
+        border-collapse: separate;
+}
+
+#itemDetails .nameSpace table {
+        border-collapse: separate;
+}
+
+#shippingWeight {
+	width:95%;
+}
+
+#shippingWeight td {
+	text-align:right;
+	line-height:18px;
+	padding:0 10px 0 0;=20
+}
+
+#shippingWeight .divider {
+	border-top:1px solid #eaeaea;
+	padding:0 0 16px 0;
+}
+
+#shippingWeight .shipmentWeightValue {
+	width:120px;
+}
+
+/* cost breakdown */
+#costBreakdown {
+	width:50%;
+}
+
+#costBreakdown td {
+    text-align:right;
+    line-height:18px;
+    padding:0 10px 0 0;
+}
+
+#costBreakdown td td {
+    padding-right: unset !important;
+}
+
+#costBreakdown .divider {
+	border-top:1px solid #eaeaea;
+	padding:0 0 16px 0;
+}
+
+#costBreakdown .end {
+	padding:0 0 16px 0;
+}
+
+#costBreakdown .price {=09
+	font-size:12px;
+	white-space: nowrap;
+	/*width:120px;*/
+}
+
+#costBreakdown .text {
+	font-size:12px;
+	text-align:left;
+	white-space: nowrap;
+	/*width:120px;*/
+}
+
+#costBreakdown .total {
+	font-size:14px;
+	text-align:left;
+	font-weight:bold;
+    white-space: nowrap;
+}
+
+#costBreakdown #costBreakdownRight {
+	width:100%;
+	text-align:right;
+	line-height:18px;
+	padding:0 10px 0 0;=09
+}
+
+#costBreakdown #costBreakdownLeft {
+	width:100%;
+	text-align:right;
+	line-height:18px;
+	padding:0 10px 0 0;=09
+}
+
+/* additional shipments */
+#additionalShipments {
+	font-size:11px;
+}
+
+#additionalShipments h3 {
+	margin:10px 0 0 0;=09
+}
+
+#additionalShipments p {
+	margin:10px 20px 0px 20px;
+}
+
+#additionalShipments .orderDate {
+	color:#666666;
+	font-size:12px;
+}
+
+#additionalShipments .details {
+	padding:10px 20px 10px 20px;
+}
+
+#additionalShipments .details .label {
+	color:#666666;
+	font-weight:bold;=09
+}
+
+#additionalShipments .details .edd, #additionalShipments .details .quantity=
+ {
+	font-weight:bold;=09
+}
+
+/* self service */
+#selfService .divider {
+	border-top:1px solid #ccc;
+	padding:0 0 16px 0;
+}
+
+/* closing */
+#closing {
+	padding:10px 20px 10px 0;
+	border-collapse:none;
+	border-bottom:1px solid #eaeaea;
+}
+
+#closing p {
+	margin:0;=09
+	font-size:14px;
+	padding-bottom:5px;
+}
+
+#closing .signature {
+	font-size:14px;
+	font-weight:bold;
+}
+
+#closing td {
+    padding-left: 20px;
+}
+
+/* marketing content */
+#marketingContent {
+	border-bottom:1px solid #eaeaea;
+	border-collapse:collapse;
+	padding:0;
+}
+
+#marketingContent td.recs {
+	padding:10px 0;
+}
+
+#marketingContent td.right {
+	padding:10px 15px 10px 0;
+}
+
+#marketingContent td.left {
+	padding:10px 0 10px 15px;
+}
+
+#middleCenterMC {
+	text-align:center;
+}
+
+#middleCenterMC img {
+	width:85%;
+}
+
+/* legal copy */
+#legalCopy {
+	padding-top:9px;
+	margin:0 0 0 0;
+}
+
+#legalCopy p {
+	font-size:10px;
+	color:#666;
+	line-height:16px;
+    padding:0 0 0px 0px;
+	font:10px;
+}
+
+#legalCopy a {
+	font-size:10px;
+	font:10px;
+}
+
+/* reg fee */
+#regFee td {
+	colspan: "2";
+	border-top:1px solid #ccc;
+}
+
+.buttonComponent {
+    border-collapse: separate;
+    text-decoration: none !important;
+    line-height: 47px;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: #CBA957;
+    border-width: 1px;
+    background: #F0C354 linear-gradient(#F7DEA2, #F0C354) repeat scroll 0% =
+0%;
+    background-color: #ffa723;
+    white-space: nowrap;
+    min-width: 222px;
+    min-height: 47px;
+}
+
+.secondaryButtonComponent {
+    border-collapse: separate;
+    text-decoration: none !important;
+    line-height: 47px;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: #cbcfd4;
+    border-width: 1px;
+    background-color: #F0F2F2;
+    white-space: nowrap;
+    min-width: 222px;
+    min-height: 47px;
+}
+
+.buttonComponentLink {
+    color: rgb(27, 27, 27) !important;
+    font: 16px/ 18px Arial, sans-serif !important;
+    display: table-cell;
+    margin: auto 0;
+    vertical-align: middle;
+
+    min-width: 222px;
+    height: 47px;
+}
+
+
+</style>=20
+  <style type=3D"text/css">
+/* Styling for Amabot top banner content */
+#topAmabotBannerWrapper {
+    padding: 0 0 0 0 !important;
+}
+
+#topAmabotBannerContentTable {
+    border-top:3px solid rgb(256, 256, 256);
+    width: 100%;
+    background-color:#efefef;
+}
+
+#topAmabotBannerContentTable td {
+     vertical-align: middle;
+     width: 100%;
+ }
+
+#topAmabotBannerContentTable #topAmabotBannerLeftImage {
+    width: 0%;
+    padding: 9px 8px 9px 15px;
+}
+
+#topAmabotBannerContentTable #topAmabotBannerTextArea {
+    padding: 9px 0 9px 0;
+    width: 100%;
+}
+
+#topAmabotBannerContentTable #topAmabotBannerHeader {
+    font: bold 14px Arial, sans-serif;
+    padding-bottom: 2px;
+    color: #333;
+}
+
+#topAmabotBannerContentTable #topAmabotBannerBodyPrefix {
+    font: 14px Arial, sans-serif;
+    padding-bottom: 2px;
+    color: #333;
+}
+
+#topAmabotBannerContentTable #topAmabotBannerHeaderClickable {
+    font: bold 14px Arial, sans-serif;
+    padding-bottom: 2px;
+    color: #069;
+}
+
+#topAmabotBannerContentTable #topAmabotBannerBody {
+    font: 14px Georgia, serif;
+    line-height: 1.2;
+    color: #333;
+}
+
+#topAmabotBannerContentTable #topAmabotBannerBodyEmphasized {
+    font: 14px Georgia, serif;
+    line-height: 1.2;
+    font-style: italic;
+    color: #333;
+}
+
+/* To fix the blue href links in gmail clients */
+.noColorAndTextDecoration a {
+    color:#000 !important;
+    text-decoration:none !important;
+}
+</style>=20
+  <title></title>=20
+ </head>=20
+ <body><img width=3D"1" height=3D"1" src=3D"https://www.amazon.com/gp/r.htm=
+l?C=3D1GDZONJ9HF37K&amp;K=3D1W6BUU5JL5PF6&amp;M=3Durn:rtn:msg:2023032517241=
+303e49798bb46480996c09a199d70p0na&amp;R=3D1KVZ2IGY18RWT&amp;T=3DO&amp;U=3Dh=
+ttps%3A%2F%2Fimages-na.ssl-images-amazon.com%2Fimages%2FG%2F01%2Fnav%2Ftran=
+sp.gif&amp;H=3DTIBESWSIKWH7HWHWHPJZZ2DRVA8A&amp;ref_=3Dpe_386300_440135490_=
+opens">=20
+  <table id=3D"container" dir=3D"ltr">=20
+   <tbody>
+    <tr>=20
+     <td class=3D"frame"><span id=3D"
+                =09
+					"></span><br><br><br>
+      <table id=3D"main">=20
+       <tbody>
+        <tr>=20
+         <td id=3D"header">=20
+          <table cellspacing=3D"0" cellpadding=3D"0">=20
+           <tbody>
+            <tr>=20
+             <td width=3D"250" id=3D"logo"> <a href=3D"https://www.amazon.c=
+om/gp/r.html?C=3D1GDZONJ9HF37K&amp;K=3D1W6BUU5JL5PF6&amp;M=3Durn:rtn:msg:20=
+23032517241303e49798bb46480996c09a199d70p0na&amp;R=3D3VDTCS9ZBPPX0&amp;T=3D=
+C&amp;U=3Dhttps%3A%2F%2Fwww.amazon.com%2Fref%3Dpe_386300_440135490_TE_simp_=
+&amp;H=3DMPKCPT0IX5JUXSRQAY3OAAKEUGUA&amp;ref_=3Dpe_386300_440135490_TE_sim=
+p_" title=3D"Visit Amazon.com"><img id=3D"amazonLogo" alt=3D"Amazon" src=3D=
+"http://image.email2.office.com/lib/fe8f1372766502797c/m/1/Microsoft_Logo.p=
+ng"></a> </td> =20
+             <td width=3D"250" id=3D"title" valign=3D"top" align=3D"right" =
+padding-left=3D"10"> <p><font size=3D"4"> Microsoft User Agreement</font></=
+p> </td>=20
+            </tr>=20
+           </tbody>
+          </table> </td>=20
+        </tr>=20
+        <tr>=20
+         <td id=3D"greetingSummary"> <p> </p>
+          <div class=3D"greeting">
+           Hello phishing@pot,
+          </div><br> We periodically update our User Agreement and Privacy =
+Policy to help ensure our users understand their rights and responsibilitie=
+s<br>At your earliest convenience, please accept the new User Agreement. Yo=
+u'll need to accept the new terms to continue using our services.<p></p> </=
+td>=20
+        </tr>=20
+        <tr>=20
+         <td style=3D"padding:5px 0 0 0;" id=3D"greetingSummary"> <span sty=
+le=3D"font-size:14px;">To verify the agreement, please click on the link be=
+low.</span><br> </td>=20
+        </tr>=20
+      =20
+       <table width=3D"280" cellpadding=3D"0" cellspacing=3D"0" bgcolor=3D"=
+#FFFFFF"><br><br>
+<tr>
+<table align=3D"center">
+<td align=3D"center" width=3D"300" height=3D"50" bgcolor=3D"#2672ec" style=
+=3D"-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px=
+; color: #303942; display: block;">
+
+
+<a href=3D"https://pixelfy.me/useragreement?trackingid=3DpHRG3bX6y89oqM&amp=
+;signature=3Dnewsletter" style=3D"color: #ffff; font-size:16px; font-weight=
+: bold; font-family: Arial, sans-serif; text-decoration: none; line-height:=
+50px; width:100%; display:inline-block">&nbsp;&nbsp;VERIFY&nbsp;&nbsp;</a>
+
+</td>
+<table>
+</tr>
+</table>
+       <br>
+                   </tbody>
+                  </table> </td>=20
+                </tr>=20
+               </tbody>
+              </table>=20
+              <table cellspacing=3D"0" cellpadding=3D"0">
+               <tbody>
+                <tr>
+                 <td style=3D"padding: 0 0 0 0;"> <img align=3D"left" heigh=
+t=3D"1" src=3D"http://g-ec2.images-amazon.com/images/G/01/x-locale/cs/te/Ma=
+gicPixel._V319790361_.png" width=3D"200"> </td>
+                </tr>
+               </tbody>
+              </table> </td>=20
+            </tr>=20
+            <tr>=20
+             <td colspan=3D"2" class=3D"footer"> <p style=3D"font: 11px/ 16=
+px Arial, sans-serif; color: rgb(51, 51, 51);"> </p> </td>=20
+            </tr>=20
+           </tbody>
+          </table> </td> =20
+        </tr> =20
+       </tbody>
+      </table> </td>=20
+    </tr>=20
+   </tbody>
+  </table>=20
+  <table id=3D"container" dir=3D"ltr">=20
+   <tbody>
+    <tr>=20
+     <td id=3D"closing"> <p style=3D"font: 16px/ 16px Arial, sans-serif !im=
+portant;"> Thanks, <br><br> <span class=3D"signature">Microsoft account tea=
+m</span> </p> </td>=20
+    </tr> =20
+   </tbody>
+  </table> =20
+ <img width=3D"1" height=3D"1" src=3D"https://www.amazon.com/gp/r.html?C=3D=
+1GDZONJ9HF37K&amp;K=3D1W6BUU5JL5PF6&amp;M=3Durn:rtn:msg:2023032517241303e49=
+798bb46480996c09a199d70p0na&amp;R=3D1ADQ26GFX3KY5&amp;T=3DE&amp;U=3Dhttps%3=
+A%2F%2Fimages-na.ssl-images-amazon.com%2Fimages%2FG%2F01%2Fnav%2Ftransp.gif=
+&amp;H=3DIASL7V9FLRAR7L15KAQEMMNTLMOA&amp;ref_=3Dpe_386300_440135490_open">=
+</body>
+</html>
