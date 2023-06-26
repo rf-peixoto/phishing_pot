@@ -1,0 +1,647 @@
+Received: from MW3PR19MB4266.namprd19.prod.outlook.com (::1) by
+ MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Fri, 2 Jun 2023 18:45:53
+ +0000
+ARC-Seal: i=3; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
+ b=JPPV4I5+HCKyGzXGcxJuskTAWD1tAWEKCWMGbMgoM5dlvVTzb54Oc3ZG9bodtlaYq1Gcn7D0Jo+zne4+1YE1ZPNEcA4D9L2CEEjtXOrPjUfr+XSw0ku9cFEHn0qU4rTD4UXkZ+R4aMClYqedwtqXTASrhBID9auvShk5GQ2jHEublDmaj+gkH0DKOl1839tK8zACjFcbW+ElLTG8p4kTBlN/LXWCGHqBDE0kIxBrrt04eiOBLBx5qgFkJEyp2yd+mVpkJb3WwO01LDkEYXZTEGWwsFG/ZKbsFoV8vL2Qm+IBmR+Len2HMcR0WPQcKxtXBSLS/YIy75w5wpV6QFwh0A==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TxePEO3afs/R2AQyj7fK//tt58ncuyMo5rjsv7UERkg=;
+ b=LiCnCuCz9aTC/VT2SAPM4d3Pe/0K3gjjKX5Ohz/IBM8z/uJOZzPjg8lbdiAj4hDXJxJao40B/18DymAK8zn23n3l8z2SX6O9Lff2wOXbqdVq3R7UZnvOpCTLS1kWkpPFfm6QXbCmhGxVhMXbswydADuqszW1H85X5LUK9ySbJKWvug0w5RyLyhp8ZuCcDDArb9Uz7clNHfyQbeMh8lZyHIcZSY38aDusheIyEa+h6LeFKUd+B2Zfhy1ZycwsI2Ij6k7VeLR0/tKt/mEYdlekI+SIaA6UtSu2NmklUED+aTfibClDI3ntjh+3PxvKGz4osekg8CD/e/E63wLNf6ew/Q==
+ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=pass (sender ip is
+ 209.85.217.48) smtp.rcpttodomain=hotmail.com smtp.mailfrom=gmail.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=hotmail.com;
+ dkim=pass (signature was verified) header.d=hotmail.com; arc=pass (0 oda=1
+ ltdi=1 spf=[1,2,smtp.mailfrom=phishing@pot]
+ dkim=[1,2,header.i=@hotmail.com] dmarc=[1,2,header.from=hotmail.com])
+Received: from AS9PR06CA0280.eurprd06.prod.outlook.com (2603:10a6:20b:45a::17)
+ by MW3PR19MB4266.namprd19.prod.outlook.com (2603:10b6:303:4d::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6477.9; Fri, 2 Jun
+ 2023 18:45:51 +0000
+Received: from AM7EUR03FT012.eop-EUR03.prod.protection.outlook.com
+ (2603:10a6:20b:45a:cafe::89) by AS9PR06CA0280.outlook.office365.com
+ (2603:10a6:20b:45a::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.24 via Frontend
+ Transport; Fri, 2 Jun 2023 18:45:49 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.217.48)
+ smtp.mailfrom=gmail.com; dkim=pass (signature was verified)
+ header.d=hotmail.com;dmarc=pass action=none
+ header.from=hotmail.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates
+ 209.85.217.48 as permitted sender) receiver=protection.outlook.com;
+ client-ip=209.85.217.48; helo=mail-vs1-f48.google.com; pr=C
+Received: from mail-vs1-f48.google.com (209.85.217.48) by
+ AM7EUR03FT012.mail.protection.outlook.com (100.127.141.26) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6455.23 via Frontend Transport; Fri, 2 Jun 2023 18:45:49 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:5EB51B8A86E0016E2CE53BD92FFABCDF0A4361D9C2B40090FA3CD51C0C97E051;UpperCasedChecksum:BA9AC688FBC3A593AE65C93891A79F798908BB0C8990CF35AA7692E2D5AC4A49;SizeAsReceived:12041;Count:57
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-437e2e0a5c7so741945137.0
+        for <phishing@pot>; Fri, 02 Jun 2023 11:45:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685731549; x=1688323549;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature:delivered-to:x-forwarded-for:x-forwarded-to
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TxePEO3afs/R2AQyj7fK//tt58ncuyMo5rjsv7UERkg=;
+        b=NmyjkeE74E0KyEVnrEvZZ93UI4MG5jYAsa2zlVaedVps/ZhtzJiyyAmCD3cJwvYOOl
+         BNjE7MKMTH2qocasoie9DAh+jWq1Ec0j0M4MvzOuGAzjYleLt5LwaTiPcL8YuFtX3j2C
+         z3wLnikA1J18jiRhcgcroEmsddeOUL3zDxBY5/0wsbKLN1d+DH5JKx4XgKCaHSkRdEiD
+         hrKgZn2ResT7rrpMRaSWhh7RMUU+VPfFTHf530XRldyMP+7nqBDmgfUg0q+Kw/6QgTda
+         3ADUVxqFaJVkMJxWLbv2C+ZaX+dY5YOWchxN2PuFHbFRA1YyOByRy33ZznVQf4J8itjX
+         nTog==
+X-Gm-Message-State: AC+VfDyv5Vnn3OicJdCItAKe9n6lzRC8ZgodI3fyeM01cdeONjbv6ivP
+	FCYcfnXw2UnnrzhWTYvfql7kxCfyOzhhlLF45M1YjL2p7wbXcdYkCQ==
+X-Received: by 2002:a67:b70e:0:b0:434:7405:5267 with SMTP id h14-20020a67b70e000000b0043474055267mr6513822vsf.0.1685731549552;
+        Fri, 02 Jun 2023 11:45:49 -0700 (PDT)
+X-Forwarded-To: phishing@pot
+X-Forwarded-For: phish.me.again@gmail.com phishing@pot
+Delivered-To: phish.me.again@gmail.com
+Received: by 2002:a59:a6e5:0:b0:3da:32ca:a03a with SMTP id j5csp1180299vqo;
+        Fri, 2 Jun 2023 11:45:47 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ7iWMWofamZGOHRVKTNpaDF0z19UBsp8nGdE8AgogogVPYu+D9sUMdSXPQGMW85s0baTbRS
+X-Received: by 2002:a17:90a:1951:b0:256:3e05:29e6 with SMTP id 17-20020a17090a195100b002563e0529e6mr637651pjh.22.1685731546965;
+        Fri, 02 Jun 2023 11:45:46 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1685731546; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=fZwrU4vdrgtcJJmfEUiCI6K0CQHKKtOeetcua0n3rFQtOJGY+rEk20ZBayHt/YMQP7
+         LTtMxMbMuKpvsLc8Cto0R1KuqmPdSOaoYP1kZaGb9hRB2Yqk0Q8+Q08R63jr8WRv3Igo
+         uKoylpb8AnFzUhCVWx9cRPMJ1G3U3cUbCHJo2yI840pEWBcWYBmsY7gQv6O/UoLkHrp2
+         EXwwGEC370n+c6TA0XPb8xoiRkj8yCQQslQIFdj8Mpq3mx/hNojP+7QL08+717lBbqDN
+         UXkOxYUgi4ay47H2vk5Bg1d/LY/Y/kl3bpzPnB20H+G9OXoxxzudpngq93liPOPOmDdE
+         K0Kg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature;
+        bh=TxePEO3afs/R2AQyj7fK//tt58ncuyMo5rjsv7UERkg=;
+        b=O275cWx4rjlcTAAbQNvARmZQTPf2ligeMD6LRS2RxXn28dZtot4Dgqu0rqQNyu+5eK
+         tWa7v0Y08XsakKBdil0WuPmgfhu1bEQ01CAZMOoslhRftdiz4ZbrN0tWvQsrr2n/Ss7M
+         1VbrDQdfGc9jUw0YLOS+7JEWb/puRxl6ANZU9CCCZvhx1I/MO07aveBHSD2iLrMrNdBk
+         8ALiVeYGcsZMuf+6ppFr+40qeToVSd7ouCV1ETiigoSOLSrnfuXNVgsNc2DBQ58LhnB7
+         dp5YJr7gg2LXm/dAMdQdHegub6v4zFdy5lovla0aWvFfgM68NPcuhp6wpN9kYQEYpVh7
+         TsxQ==
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@hotmail.com header.s=selector1 header.b=PfGY+7co;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of phishing@pot designates 2a01:111:f400:7ea9::81e as permitted sender) smtp.mailfrom=merciayanmact@hotmail.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=hotmail.com
+Return-Path: phish.me.again+caf_=phishing@pot=hotmail.com@gmail.com
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02olkn2081e.outbound.protection.outlook.com. [2a01:111:f400:7ea9::81e])
+        by mx.google.com with ESMTPS id me14-20020a17090b17ce00b00246bd5445d7si1480892pjb.104.2023.06.02.11.45.46
+        for <Phish.me.again@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Jun 2023 11:45:46 -0700 (PDT)
+Received-SPF: pass (google.com: domain of phishing@pot designates 2a01:111:f400:7ea9::81e as permitted sender) client-ip=2a01:111:f400:7ea9::81e;
+Authentication-Results-Original: mx.google.com;       dkim=pass
+ header.i=@hotmail.com header.s=selector1 header.b=PfGY+7co;       arc=pass
+ (i=1);       spf=pass (google.com: domain of phishing@pot
+ designates 2a01:111:f400:7ea9::81e as permitted sender)
+ smtp.mailfrom=phishing@pot;       dmarc=pass (p=NONE sp=NONE
+ dis=NONE) header.from=hotmail.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ID00eKMGe5LE9NoffpPlg/uq49adwBspGFkwhX6rYPDWGqWqxW1qSK144LlKnSBRRILQKO6V47iUWDIWtqnlDxETOYrobrb9o6AW5z2/nOiqWNQCNBoQe+f/mm4Eu8kly40JG3gJ4iYqXrvgCt5I0EalKUgiP1HbpiapxY49OV39e0gQfVUr6uEeHXT8VHragpiGim91r2xTfBbYJvhwty3jQ7CjPwEceFhk4mV0buv9Q6Al7ylA4xbthPxG4gNc6sKWZBN3d49J52FPqEysM4w3xli8T7+PAKRk5Pin5VXSG4gDhywwfy1CXlvqTD29qDElvBdV5zoo2bWGtnTINg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TxePEO3afs/R2AQyj7fK//tt58ncuyMo5rjsv7UERkg=;
+ b=fxAbAmnGtp5qQfGwuggb+/2fZlFDG/iuuO2sKhxjEjYYKNYyWyFTKCSv4W7yIeF84DZ1mTY/kzAGIS6JBTdjgWwzAykPNongpLX0twBWGEeoZbMQxgungDbT155IrfV6yYRq3jBzbB3DF1j0nMAVkGiCrDhIlBhcszMJP7e8voHDGt7irJyFnZQ1CKs3QEcYer4errXHkvunua0+O8K4I9suK8DMi6VgRIYImwccIATkIsjYhMzLJqSwFc4TAd1l4ZAAkRUuYhq+wxQ3VeOuk53rQlIbEByKr7Nu5pUHe8ces36lzEhf0U4DoAlWGWiZQJX8OLWvelKVViYXm7Hfkg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TxePEO3afs/R2AQyj7fK//tt58ncuyMo5rjsv7UERkg=;
+ b=PfGY+7coyotgrRuyb82ZNCDGhiicGETXCi4tdIGIyvKhopT9BDQO1W9VGUlqoUEnAcMM3JFclCuzOQ5O4KvU5aeVoeFuUZPXSkJuFg4GKa4drVNrpyJ5c1JneSzr5G8/PWpzFaDKDVjM3YA6n5n7dJLojjed+qo5wxZ3P6Fx+FNyxR20XwFMHtzectScX7cHt9i6gyY44IHkUkPCdaQe1VC0zUu5hq0MkZ6vKib7rrsZJQAS8aJmngJVCIYjKQEN6J+Bo9Z2nBZ9T4gP1bqgOyFdnEX1S536b5+K556ro7/UJphw4KJ1KuE6zMaGig713XekGhltaUpmT7nUvHsffg==
+Received: from SA0PR04MB7370.namprd04.prod.outlook.com (2603:10b6:806:e5::23)
+ by PH0PR04MB8356.namprd04.prod.outlook.com (2603:10b6:510:db::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.23; Fri, 2 Jun
+ 2023 18:45:45 +0000
+Received: from SA0PR04MB7370.namprd04.prod.outlook.com
+ ([fe80::db92:cf33:b50:9f7c]) by SA0PR04MB7370.namprd04.prod.outlook.com
+ ([fe80::db92:cf33:b50:9f7c%3]) with mapi id 15.20.6455.020; Fri, 2 Jun 2023
+ 18:45:44 +0000
+From: phishing@pot <phishing@pot>
+To: "phish.me.again@gmail.com" <Phish.me.again@gmail.com>
+Subject: Fw: Someone tried to Iog in To Your Account, User lD : merciayanmact
+Thread-Topic: Someone tried to Iog in To Your Account, User lD : merciayanmact
+Thread-Index: AQHZkofgWYTjaQClZUK6wFNY7j79Ha9338cm
+Date: Fri, 2 Jun 2023 18:45:44 +0000
+Message-ID:
+ <SA0PR04MB7370E7C80938D69FD70966C7B34EA@SA0PR04MB7370.namprd04.prod.outlook.com>
+References:
+ <6497d7d2-9ea8-4167-982b-cf52951d5e47@DB8EUR06FT057.eop-eur06.prod.protection.outlook.com>
+In-Reply-To:
+ <6497d7d2-9ea8-4167-982b-cf52951d5e47@DB8EUR06FT057.eop-eur06.prod.protection.outlook.com>
+Accept-Language: pt-BR, en-US
+Content-Language: pt-BR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [3gPX/b3T/ED709YUnrG9OjkZz4ovp4vO]
+x-ms-traffictypediagnostic:
+ SA0PR04MB7370:EE_|PH0PR04MB8356:EE_|AM7EUR03FT012:EE_|MW3PR19MB4266:EE_|MN0PR19MB6312:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8dc26e71-a76c-4321-e560-08db639995e8
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original:
+ =?us-ascii?Q?urdoCWcVKDb2o599dj+k5KHdltuN7A76h4RodJVXSlT6OubpcAGA7yJCeZ2D?=
+ =?us-ascii?Q?6gAzyVYk+WqhW3IK6CDA+7priQfejtzJ/iuw8ya6mE4BKuZZFGCMTwigptO4?=
+ =?us-ascii?Q?H8XqeZVkdMByzsREkwCYaJrv4r0Btb18PaXPNqkUGkTmF6q9FMS1WVlIgPB+?=
+ =?us-ascii?Q?n8LMSO2fIdH+4Peh7jlEbey3VJhQQFkIsemRzNdUjrLEMhs1YwG/3pyfTQ5K?=
+ =?us-ascii?Q?lWGd7+4sYff3Coit9Mtvl7+UQnuLpMZ9l9GAce5yc1pI/iAYZ1KQFYyOdMBO?=
+ =?us-ascii?Q?n4jNJonbhsNyd+piuMxuh9LuAv8NQhELu5EsJHg2oYj6Y0xAanL4x+GBo03X?=
+ =?us-ascii?Q?m3RNL22tT2mUTW0EPuhZO1yTvTsoIctsAetGtNh4l0qVO8EF5LQ7EsbEClmv?=
+ =?us-ascii?Q?kBwHTvYTfloUV97PKwswl4j5/RySYB6/syilrsfUTaAfbhnelu8IxYMGJ3cl?=
+ =?us-ascii?Q?Jhice9gplXHcicy6EYJAVTTrTFOiDdCp1uIMQuLGpMAlu0gNbOV16Ys3ujiU?=
+ =?us-ascii?Q?7HDySx2Xb/1aMKU84Xa5whu/mBO4BP/2KjUN+ZEgSOlgyaHtlJnt4StUfbG3?=
+ =?us-ascii?Q?WI4c1r41coZT5DKTFXejwhiXj+Vkliuk/QLD742enaZH8+CKUyoCnhscYUkV?=
+ =?us-ascii?Q?r5J9jEJNoe3BbVPza4ldol2xuO3w1G9pn9XZwfYCJNnQvau943S/xwqG2FiW?=
+ =?us-ascii?Q?6A18LihpoM/qO08Y/uP4y3KiKQ9rfhPIaqe/PaIZG2EBtwxxkyjocSqMup7E?=
+ =?us-ascii?Q?U9m/8ISQ+hNthD3eWlFB5J8p/vlvKLsqsORPox9u5EP8P6pO6eqVOO8t9OcR?=
+ =?us-ascii?Q?l6Msd3P+4G+h4IvK2RopmCDWRdwEyh3hYcRZdR2QpBpAI3TWUJMx77K8ZSDb?=
+ =?us-ascii?Q?sHV9eJ3xGQ1SaMpVyAURZuzch0kxuUt7Mur6WIk6X3vWBbfpKeNWX1RUr5So?=
+ =?us-ascii?Q?7g8Lk0DebJ9IAzPNPKovip/izCtUISH6mTJ1WJ2mqDFtmb545qyhysKvIaa1?=
+ =?us-ascii?Q?qv4onyIZJpQdrsvGKz29TrcjONGz8x/JZGKTun9LPwhNSgvPeEx1AdRW+Tj1?=
+ =?us-ascii?Q?t0iwKpGXI3GYKRuqcbQMppU9Q8D/i1lvNZ5Y6B8d14id6qLu7LS/mf+yuhO0?=
+ =?us-ascii?Q?POFLKKaua9HULbOV+LDBKeTiKFDRAsk/Hg=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0:
+ =?us-ascii?Q?e6JC1X9nCFRtFKBp9B4LyivEH7lcAX/fS+OvD9xedlGm5cSetB8f16RVMbUR?=
+ =?us-ascii?Q?3il7rBUh3TFbbOoDB+n/d12LkxuNyh5Dpa14v2FfrnJTWgbBXoPmPCKNf0rX?=
+ =?us-ascii?Q?hmZtgew90T4BQPOiQTQhOseSLLQBxgGfuxpN/CkDMcryrQf9RkzoCBBfH0QZ?=
+ =?us-ascii?Q?V3Ik/9kzmD9hU+o+e1QCfcWAGoHIElKL71LraOFLaQ954Iqv6PTfRbs1ScLl?=
+ =?us-ascii?Q?I0eH2y0jCyGD1bzOvQOfZh0LbYCdJHhmZKu2sKElZr8FVcUAuYTRnm8qeCnJ?=
+ =?us-ascii?Q?cYOQT/KGicFyAoZHqYYM2hiY8+kKlgQRvIM8ZvTn0zLAE+KLGKZ4fUJZ0Tox?=
+ =?us-ascii?Q?0us8UbA0BR+GB87bICNaB8Egx1ACJk5NCfe0C20oMDxw6ZzUa1cPVXntc2vH?=
+ =?us-ascii?Q?JAc1QWVuJpCDgc/yWWZ5fCkr30Cq5QTj+t2Oy+Wph6yIFnMSZfWdB2xM7Maf?=
+ =?us-ascii?Q?Ak3Pvhxgm43rZWTNvkPf8z/fZw2dassmzzxtaRCsTOtC/frLBwXi89OywLPN?=
+ =?us-ascii?Q?hmo63J6PEhxO5+orrIABrUHJRoIffCEva6/CF6XrdvMhMY1C76FQbHUUpJNA?=
+ =?us-ascii?Q?TNNmlCNuxdJMTmaze+SoS3GwyEv3jhcnUmLL9vdT64EMP4cdPy5QZctowFoN?=
+ =?us-ascii?Q?TxdQTzofibB0O/HuvbOV6m4CompWvIViDWHPZlcaRAgwpO4g6iy9Gu3vIjzO?=
+ =?us-ascii?Q?bakDiARbiSmxMLxpYfRVPyuDgU7GSSwQypGMA/TGbd5lnj5pXUWmi1de3TDh?=
+ =?us-ascii?Q?v3M3eXu8BLPx90KtmgSbHSVkFt8A2IuqCVOTnD+jObV6dhSrVo/106nDu+CH?=
+ =?us-ascii?Q?NMK+pAGtWsRjPFqeQaqBbAQ00Pk7JkEeYolgZiwhAtktBwJ5D0N4BkX9b2O5?=
+ =?us-ascii?Q?fX0dQdoKDeclN9mu+cHvSBGjJb31hY5e/bq9G/B9E+aP2GOlWz4rmKNEIv57?=
+ =?us-ascii?Q?CkKSNSLSsM4UIGaS6KzUIy2YZt3GF4ZYZBsvQVFS5Q5PbFcEmbjQPAc+xKUf?=
+ =?us-ascii?Q?CR4Q09eJ2FMuG+tNv88Pw7d0gqdaz0FT83ao7ny5edZ6fePPuH/VaUksWqN4?=
+ =?us-ascii?Q?aPwUBDAbdQc1Wvugp2FfU1ywdFHmp9bISiOokICSNhuYah39rPuT/cyOgonQ?=
+ =?us-ascii?Q?hk9IG2Dk45g8uqpQRIE4+4gtQiUmDAJkRq3E20Q+T62JS9/bgDs4+ZqY5H38?=
+ =?us-ascii?Q?QnJAJqOTMSzGwiEY0gI9LlvVuBY3bb1S2g21Yw=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_SA0PR04MB7370E7C80938D69FD70966C7B34EASA0PR04MB7370namp_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR04MB8356
+X-IncomingHeaderCount: 57
+X-MS-Exchange-Organization-ExpirationStartTime: 02 Jun 2023 18:45:49.9271
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 8dc26e71-a76c-4321-e560-08db639995e8
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ AM7EUR03FT012.eop-EUR03.prod.protection.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ AM7EUR03FT012.eop-EUR03.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 6/2/2023 6:44:59 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ 33b434a0-9333-40aa-1375-08db639992c3
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 209.85.217.48
+X-SID-PRA: MERCIAYANMACT@HOTMAIL.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-PCL: 3
+X-MS-Exchange-Organization-SCL: 9
+X-Microsoft-Antispam: BCL:0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2023 18:45:49.9115
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8dc26e71-a76c-4321-e560-08db639995e8
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ AM7EUR03FT012.eop-EUR03.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR19MB4266
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.2567230
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.6455.015
+X-Microsoft-Antispam-Mailbox-Delivery:
+	abwl:0;wl:1;pcwl:1;kl:0;dwl:0;dkl:0;rwl:0;ucf:1;jmr:0;ex:0;auth:1;dest:C;OFR:CustomRules;ENG:(5062000305)(90000117)(90012020)(91020020)(91040095)(9050020)(9095020)(9100338)(944500132)(2008001134)(4810010)(4910033)(8820095)(10010002)(9610025)(9560006)(10180021)(9414026)(9310011)(9220031);
+X-Message-Info:
+	qZelhIiYnPlkDPWh90sMCiI3BhyO+cDckKs4nxjMR2P2ZAPY+F4CF+Ail7C9+PSf5ejVp8VNmi3Qpc+QEQxzNwM/bFwlrFjrrDwnNlSvJ0OmRmATyRBR3V8E75Ymif7evVqk5FqZyn+/BsFCbNX1a+fXttLQ5DT9hB0F+jYkp2s1Fbad3GeyaoHRZgIuTb+jKJhxf0T1ZLY=
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0xO1NDTD0tMQ==
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?BRjB57Wz92qc/E2h6JinpgieXJqc6UyFGBcT8PKw7D88Puu7jucTViIZPNI+?=
+ =?us-ascii?Q?1oJupOfqnUuvEMZIpr5ILGM5TaNCsVSYNqnqCaMkNCXn4PGEFTHIsA2B+3lj?=
+ =?us-ascii?Q?N29n3Vo0nxbBGfavjIwnYM/foIlV9AM1mmzB/7iTp6c862S9A7P4z+11wSsg?=
+ =?us-ascii?Q?cNATgmId/agFzYmwxkilbaezfjepmnvbBECSlJM/OYJaHTnCKzlgybDN+IRd?=
+ =?us-ascii?Q?qAeb39AhHnyUniL4cXwZOqducu9UJ2c5X3PwEaGRLJxNyLXozDcbb5IGKDi4?=
+ =?us-ascii?Q?lUYAt7Z7xgjgbpejSc4UJCCUIYg3c5Wv5E1B9xFUpWeN4Co9bAM6ZT3xwYJv?=
+ =?us-ascii?Q?CJl/UTsL4qQje41zEBKXthuD1UUlT2FJh2uUllISfK5mekTdIW823iYAF7ZU?=
+ =?us-ascii?Q?haro2BHY/wT+YcGUn+eUyniBQA3j+SXyptbyPUsdRfcwi51jHWACTD7pQqZB?=
+ =?us-ascii?Q?rXjOXcyKFRVr9MJC1L6PeOcMdp350KQWQarl7r6PKhF4FINIJ7QRNgXLAm5K?=
+ =?us-ascii?Q?nACQxFqdIRNDzcSUsNf85yiu/DDiDEuyngbxLgmuZFF9iJL+bb4Wr0LCaBUi?=
+ =?us-ascii?Q?PjW1KA/T3SUy3Puiaj6W+0HlZLWhrndH7QrDXSRh5ewEk91jRrTgzZZNEaL7?=
+ =?us-ascii?Q?ylhv82W/OwUxT1mJRNDNjgThG8pcgTtUUSXt2MvieMyAwVZxtofzupP1Fpsh?=
+ =?us-ascii?Q?pIyg4nlRvBizA8u2GnwFcU/h1TISaZbWgfc5I55lzvoOTCFY81KzGabFefAj?=
+ =?us-ascii?Q?YgzLqkdPELBRuEA57hy9HrhuSxyAaWE5a+ePwwuTsz9cW+CUk390ZVtqtM7e?=
+ =?us-ascii?Q?0iQwTSbPzWCDCler7vZ0unPFuCedUTc89K6GrWUGPG8mTNC66JMRYgKHT3HA?=
+ =?us-ascii?Q?k1Mt11JNnKQqlqGCZZ6P6S6tKHUwISFYXaSEPLU1jCrjIo3FEJ78eXgPep0w?=
+ =?us-ascii?Q?on4Nme/QCWfZCbP5uA2JEz7Qqtf+K/Ma6TMQjuBZ16alXfgqvvShxuUw5ohF?=
+ =?us-ascii?Q?L2cRD098tji1sd0glLZUFL6pG8sR3DF/QdgjztJG5IzbNpEzQw255Og4aR1a?=
+ =?us-ascii?Q?OwZSlvmdtxzK4Rv/uU4xK67eaumAI4CqUxglW0lRDHxUDdD88TseJckNM1I2?=
+ =?us-ascii?Q?CA9mJVj/safTa88f/4B7e/XvY5RJLsfCeTrlinZlA3znB5AEPElmQ34dVkQ6?=
+ =?us-ascii?Q?n5cqs1T2xwteZ0wjbtX2z6rPjz+kT9gUpZ6jqRR7SfltEgKYyEFzvWzBAdlf?=
+ =?us-ascii?Q?3Lhe+NNegl6Vbcg+M/cf/8E1H4joyadatxOKfGFL5RIg5OCgmDxzP35h7Lhe?=
+ =?us-ascii?Q?oyp88EbToWJ5ZOoVLVIYZK2N33bU3ALU7R6ImIoq9Ip5y/dXAtUqfPD6S0LC?=
+ =?us-ascii?Q?0WqMPj87nHMiS2kTu3cz59s6xTzQ/4lz3bg5+AWygJ5S0Cj1TjvMfcmbpQu5?=
+ =?us-ascii?Q?WsZkfPF+gglpfKtXiJGmutzvJbPpkvxCQPRVqNBNoRi7td9bs9loejFguiH4?=
+ =?us-ascii?Q?DB/VG/zp2eNlUO+SnWnOW7/abjxZ9xO8OLVIK9JDn4T6Ne0AVsbWxY+QceFy?=
+ =?us-ascii?Q?uyfLX/4+eEdD91JmjPmG1/3LRkmfq10j5bilq8JDy1SnKKKIGc5QrM9UL2fA?=
+ =?us-ascii?Q?0Lj7SfL2FPs2m0IMj1QZj6Hevse2xEx5DJahipJSzH8fNxR2OMlNPzuEOceT?=
+ =?us-ascii?Q?AxYqrar0YULDmnyD+RJCKldh04lGqUuD8JwAx7YeYiRqB9adz4uLlD3HGD7j?=
+ =?us-ascii?Q?soA4rSPvbTn4DLtj3YZfO9Lj2WL8XZXcXqvZRaOcj1yY8skFvxvX21OJe2rN?=
+ =?us-ascii?Q?8vwoenDkXidKGXskxslB3PQb1qQU0cIebXC08ZJf+hWJxoYjd/MFpO41/iVD?=
+ =?us-ascii?Q?nK570ofb1EYX8qOF/A+eVqYWLZePvXY2yciPg/0t3f92L+7fad79ea35FahS?=
+ =?us-ascii?Q?CJfRmy7uuCXL+hdKvrmydN4gXdhS1sK1AlKGm2sil28XWohkBcDVtC+/5gKv?=
+ =?us-ascii?Q?3kLDFNcGUn13G/BWnylPXrPbwNXsD2HIWcevxr0RkPbVr96S+ewLs70zfd42?=
+ =?us-ascii?Q?GJ3Q1jyAY9EqdNCbLHEvhWb1HN7JL6ksiP7YQhsMlFPtqlry0cc=3D?=
+MIME-Version: 1.0
+
+--_000_SA0PR04MB7370E7C80938D69FD70966C7B34EASA0PR04MB7370namp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+
+________________________________
+De: Facebook
+Enviado: segunda-feira, 29 de maio de 2023 20:47
+Para: phishing@pot <merciayanmact@hotmail.com>
+Assunto: Someone tried to Iog in To Your Account, User lD : merciayanmact
+
+Hi merciayanmact, Someone tried to log in to your account!
+[https://static.xx.fbcdn.net/rsrc.php/v3/yP/r/nblMrq1jYuK.png]<https://www.=
+facebook.com/n/?JohnCrestaniInternetJetset%2F&aref=3D1576263858332789&mediu=
+m=3Demail&mid=3D5999a3dc321a3G5af410968a6bG5999a87592475G3b4&n_m=3Dmerciaya=
+nmact@hotmail.com>             Facebook<https://www.facebook.com/n/?JohnCre=
+staniInternetJetset%2F&aref=3D1576263858332789&medium=3Demail&mid=3D5999a3d=
+c321a3G5af410968a6bG5999a87592475G3b4&n_m=3Dphishing@pot>
+Hi merciayanmact,
+[https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/36935697_1669044346555351_69=
+56134474325164032_n.jpg?_nc_cat=3D107&_nc_ohc=3Dx-8XVuMChS0AQk89xEwYTsvJFPn=
+51YGT1oShoPCg-dHpnnPxJxT9H9fqA&nc_ipfwd=3D1&_nc_ad=3Dz-m&_nc_cid=3D0&nc_zor=
+=3D9&_nc_ht=3Dscontent.xx&oh=3D2ab1a7ec32a4fc821d417e21859dd455&oe=3D5E6B50=
+09]<https://www.facebook.com/n/?anamulhoquejamh&aref=3D1576263858332789&med=
+ium=3Demail&mid=3D5999a3dc321a3G5af410968a6bG5999a87592475G3b4&n_m=3Dmercia=
+yanmact@hotmail.com>
+A user just logged into your Facebook account from a new device Samsung S21=
+. We are sending you this email to verify it's really you.
+<mailto:recognized-sec@hotmail.com?subject=3DSend+Statement%20merciayanmact=
+@hotmail.com>
+Report the user
+<mailto:recognized-sec@hotmail.com?subject=3DYes+me%20merciayanmact@hotmail=
+.com>
+Yes, me
+Thanks,
+The Facebook Team
+This message was sent to phishing@pot<mailto:<recognized-sec@h=
+otmail.com>>. If you don't want to receive these emails from Facebook in th=
+e future, please unsubscribe<mailto:<recognized-sec@hotmail.com>?=3Dbject=
+=3DUnsubscribe+me!>.
+Facebook, Inc., Attention: Community Support, 1 Facebook Way, Menlo Park, C=
+A 94025
+To help keep your account secure, please don't forward this email. Learn mo=
+re.<https://www.facebook.com/email_forward_notice/?mid=3D5999a3dc321a3G5af4=
+10968a6bG5999a87592475G3b4>
+;
+[https://www.facebook.com/email_open_log_pic.php?mid=3D5999a3dc321a3G5af410=
+968a6bG5999a87592475G3b4]
+
+
+--_000_SA0PR04MB7370E7C80938D69FD70966C7B34EASA0PR04MB7370namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+</head>
+<body>
+<div></div>
+<br>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>De:</b> Facebook<br>
+<b>Enviado:</b> segunda-feira, 29 de maio de 2023 20:47<br>
+<b>Para:</b> phishing@pot &lt;merciayanmact@hotmail.com&gt;<br=
+>
+<b>Assunto:</b> Someone tried to Iog in To Your Account, User lD : merciaya=
+nmact</font>
+<div>&nbsp;</div>
+</div>
+<style>
+<!--
+.x_d_mb_show
+	{display:none}
+.x_d_mb_show_center
+	{display:table;
+	margin:auto}
+.x_d_mb_flex
+	{display:flex}
+.x_mb_text h1, .x_mb_text h2, .x_mb_text h3, .x_mb_text h4, .x_mb_text h5, =
+.x_mb_text h6
+	{line-height:normal}
+.x_mb_work_text h1
+	{font-size:18px;
+	line-height:normal;
+	margin-top:4px}
+.x_mb_work_text h2, .x_mb_work_text h3
+	{font-size:16px;
+	line-height:normal;
+	margin-top:4px}
+.x_mb_work_text h4, .x_mb_work_text h5, .x_mb_work_text h6
+	{font-size:14px;
+	line-height:normal}
+.x_mb_work_text a
+	{color:#1270e9}
+.x_mb_work_text p
+	{margin-top:4px}
+-->
+</style>
+<div dir=3D"ltr" style=3D"margin:0; padding:0; background-color:#ffffff">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=3D"center" id=
+=3D"x_email_table" style=3D"border-collapse:collapse">
+<tbody>
+<tr>
+<td id=3D"x_email_content" style=3D"font-family:Helvetica Neue,Helvetica,Lu=
+cida Grande,tahoma,verdana,arial,sans-serif; background:#ffffff">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:collapse">
+<tbody>
+<tr style=3D"">
+<td height=3D"20" colspan=3D"3" style=3D"line-height:20px"></td>
+</tr>
+<tr>
+<td height=3D"1" colspan=3D"3" style=3D"line-height:1px"><span style=3D"col=
+or:#FFFFFF; font-size:1px">Hi merciayanmact, Someone tried to log in to you=
+r account!
+</span></td>
+</tr>
+<tr>
+<td width=3D"15" style=3D"display:block; width:15px"></td>
+<td style=3D"">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:collapse">
+<tbody>
+<tr style=3D"">
+<td height=3D"15" colspan=3D"3" style=3D"line-height:15px"></td>
+</tr>
+<tr>
+<td width=3D"32" align=3D"left" valign=3D"middle" style=3D"height:32; line-=
+height:0px"><a href=3D"https://www.facebook.com/n/?JohnCrestaniInternetJets=
+et%2F&amp;aref=3D1576263858332789&amp;medium=3Demail&amp;mid=3D5999a3dc321a=
+3G5af410968a6bG5999a87592475G3b4&amp;n_m=3Dphishing@pot" style=
+=3D"color:#3b5998; text-decoration:none"><img width=3D"32" height=3D"32" st=
+yle=3D"border:0" src=3D"https://static.xx.fbcdn.net/rsrc.php/v3/yP/r/nblMrq=
+1jYuK.png"></a></td>
+<td width=3D"15" style=3D"display:block; width:15px"></td>
+<td width=3D"100%" style=3D""><a href=3D"https://www.facebook.com/n/?JohnCr=
+estaniInternetJetset%2F&amp;aref=3D1576263858332789&amp;medium=3Demail&amp;=
+mid=3D5999a3dc321a3G5af410968a6bG5999a87592475G3b4&amp;n_m=3Dmerciayanmact@=
+hotmail.com" style=3D"color:#3b5998; text-decoration:none; font-family:Helv=
+etica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif; font-si=
+ze:19px; line-height:32px">Facebook</a></td>
+</tr>
+<tr style=3D"border-bottom:solid 1px #e5e5e5">
+<td height=3D"15" colspan=3D"3" style=3D"line-height:15px"></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td width=3D"15" style=3D"display:block; width:15px"></td>
+</tr>
+<tr>
+<td width=3D"15" style=3D"display:block; width:15px"></td>
+<td style=3D"">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:collapse">
+<tbody>
+<tr style=3D"">
+<td height=3D"28" style=3D"line-height:28px"></td>
+</tr>
+<tr>
+<td style=3D""><span class=3D"x_mb_text" style=3D"font-family:Helvetica Neu=
+e,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif; font-size:16px; =
+line-height:21px; font-weight:bold; color:#141823">Hi merciayanmact,</span>=
+</td>
+</tr>
+<tr style=3D"">
+<td height=3D"28" style=3D"line-height:28px"></td>
+</tr>
+<tr>
+<td style=3D"">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"border-col=
+lapse:collapse; width:100%">
+<tbody>
+<tr>
+<td style=3D"font-size:11px; font-family:LucidaGrande,tahoma,verdana,arial,=
+sans-serif">
+</td>
+<td style=3D"font-size:11px; font-family:LucidaGrande,tahoma,verdana,arial,=
+sans-serif; padding-bottom:10px">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"border-col=
+lapse:collapse">
+<tbody>
+<tr>
+<td valign=3D"top" style=3D"padding-right:10px; font-size:0px"><a href=3D"h=
+ttps://www.facebook.com/n/?anamulhoquejamh&amp;aref=3D1576263858332789&amp;=
+medium=3Demail&amp;mid=3D5999a3dc321a3G5af410968a6bG5999a87592475G3b4&amp;n=
+_m=3Dphishing@pot" style=3D"color:#3b5998; text-decoration:non=
+e"><img style=3D"border:0" src=3D"https://scontent.xx.fbcdn.net/v/t1.0-1/p5=
+0x50/36935697_1669044346555351_6956134474325164032_n.jpg?_nc_cat=3D107&amp;=
+_nc_ohc=3Dx-8XVuMChS0AQk89xEwYTsvJFPn51YGT1oShoPCg-dHpnnPxJxT9H9fqA&amp;nc_=
+ipfwd=3D1&amp;_nc_ad=3Dz-m&amp;_nc_cid=3D0&amp;nc_zor=3D9&amp;_nc_ht=3Dscon=
+tent.xx&amp;oh=3D2ab1a7ec32a4fc821d417e21859dd455&amp;oe=3D5E6B5009"></a></=
+td>
+<td valign=3D"top" style=3D"width:100%"><span style=3D"font-size:13px"><spa=
+n style=3D"font-size:16px; line-height:26px; font-family:Helvetica Neue,Hel=
+vetica,Lucida Grande,tahoma,verdana,arial,sans-serif">
+<center>A user just logged into your Facebook account from a new device Sam=
+sung S21. We are sending you this email to verify it's really you.
+</center>
+</span></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr style=3D"">
+<td height=3D"28" style=3D"line-height:28px"></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td width=3D"15" style=3D"display:block; width:15px"></td>
+</tr>
+<tr>
+<td width=3D"15" style=3D"display:block; width:15px"></td>
+<td style=3D"">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:collapse">
+<tbody>
+<tr style=3D"">
+<td height=3D"2" colspan=3D"3" style=3D"line-height:2px"></td>
+</tr>
+<tr>
+<td class=3D"x_mb_blk" style=3D"">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:collapse">
+<tbody>
+<tr>
+<td style=3D"border-collapse:collapse; border-radius:2px; text-align:center=
+; display:block; border:solid 1px #344c80; background:#4c649b; padding:7px =
+16px 11px 16px">
+<a href=3D"mailto:recognized-sec@hotmail.com?subject=3DSend+Statement merci=
+ayanmact@hotmail.com" style=3D"color:#3b5998; text-decoration:none; display=
+:block">
+<center><font size=3D"3"><span style=3D"font-family:Helvetica Neue,Helvetic=
+a,Lucida Grande,tahoma,verdana,arial,sans-serif; white-space:nowrap; font-w=
+eight:bold; vertical-align:middle; color:#ffffff; font-size:14px; line-heig=
+ht:14px">Report the user</span></font></center>
+</a></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td width=3D"10" class=3D"x_mb_hide" style=3D"display:block; width:10px"></=
+td>
+<td class=3D"x_mb_blk" style=3D"">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:collapse">
+<tbody>
+<tr>
+<td style=3D"border-collapse:collapse; border-radius:2px; text-align:center=
+; display:block; border:solid 1px #c9ccd1; background:#f6f7f8; padding:7px =
+16px 11px 16px">
+<a href=3D"mailto:recognized-sec@hotmail.com?subject=3DYes+me merciayanmact=
+@hotmail.com" style=3D"color:#3b5998; text-decoration:none; display:block">
+<center><font size=3D"3"><span style=3D"font-family:Helvetica Neue,Helvetic=
+a,Lucida Grande,tahoma,verdana,arial,sans-serif; white-space:nowrap; font-w=
+eight:bold; vertical-align:middle; color:#525252; font-size:14px; line-heig=
+ht:14px">Yes, me</span></font></center>
+</a></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td width=3D"100%" class=3D"x_mb_hide" style=3D""></td>
+</tr>
+<tr style=3D"">
+<td height=3D"32" colspan=3D"3" style=3D"line-height:32px"></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td width=3D"15" style=3D"display:block; width:15px"></td>
+</tr>
+<tr>
+<td width=3D"15" style=3D"display:block; width:15px"></td>
+<td style=3D"">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:collapse">
+<tbody>
+<tr>
+<td style=3D""><span class=3D"x_mb_text" style=3D"font-family:Helvetica Neu=
+e,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif; font-size:16px; =
+line-height:21px; color:#141823">Thanks,
+<br>
+The Facebook Team</span></td>
+</tr>
+<tr style=3D"">
+<td height=3D"14" style=3D"line-height:14px"></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td width=3D"15" style=3D"display:block; width:15px"></td>
+</tr>
+<tr>
+<td width=3D"15" style=3D"display:block; width:15px"></td>
+<td style=3D"">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" alig=
+n=3D"left" style=3D"border-collapse:collapse">
+<tbody>
+<tr style=3D"border-top:solid 1px #e5e5e5">
+<td height=3D"19" style=3D"line-height:19px"></td>
+</tr>
+<tr>
+<td style=3D"font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verd=
+ana,arial,sans-serif; font-size:11px; color:#aaaaaa; line-height:16px">
+This message was sent to <a href=3D"mailto:&lt;recognized-sec@hotmail.com&g=
+t;" style=3D"color:#3b5998; text-decoration:none">
+phishing@pot</a>. If you don't want to receive these emails fr=
+om Facebook in the future, please
+<a href=3D"mailto:&lt;recognized-sec@hotmail.com&gt;?=3Dbject=3DUnsubscribe=
++me!" style=3D"color:#3b5998; text-decoration:none">
+unsubscribe</a>.<br>
+Facebook, Inc., Attention: Community Support, 1 Facebook Way, Menlo Park, C=
+A 94025</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td width=3D"15" style=3D"display:block; width:15px"></td>
+</tr>
+<tr>
+<td width=3D"15" style=3D"display:block; width:15px"></td>
+<td style=3D"">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"border-collapse:collapse">
+<tbody>
+<tr>
+<td style=3D"font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verd=
+ana,arial,sans-serif; font-size:11px; color:#aaaaaa; line-height:16px">
+<span style=3D"font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,ve=
+rdana,arial,sans-serif; font-size:11px; color:#aaaaaa; line-height:16px">To=
+ help keep your account secure, please don't forward this email.
+<a href=3D"https://www.facebook.com/email_forward_notice/?mid=3D5999a3dc321=
+a3G5af410968a6bG5999a87592475G3b4" style=3D"color:#3b5998; text-decoration:=
+none">
+Learn more.</a></span></td>
+</tr>
+</tbody>
+</table>
+</td>
+<td width=3D"15" style=3D"display:block; width:15px">; </td>
+</tr>
+<tr style=3D"">
+<td height=3D"20" colspan=3D"3" style=3D"line-height:20px"></td>
+</tr>
+</tbody>
+</table>
+<span style=3D""><img style=3D"border:0; width:1px; height:1px" src=3D"http=
+s://www.facebook.com/email_open_log_pic.php?mid=3D5999a3dc321a3G5af410968a6=
+bG5999a87592475G3b4"></span></td>
+</tr>
+<img alt=3D"" width=3D"1px" height=3D"1px" style=3D"visibility:hidden" src=
+=3D"http://thebandalisty.com/track/o33057xUZTj18708448zpBn3104326yRU33636FE=
+vx176">
+</tbody>
+</table>
+</div>
+</body>
+</html>
+
+--_000_SA0PR04MB7370E7C80938D69FD70966C7B34EASA0PR04MB7370namp_--
