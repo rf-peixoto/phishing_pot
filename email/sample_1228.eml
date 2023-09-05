@@ -1,0 +1,639 @@
+Received: from DS7PR19MB4472.namprd19.prod.outlook.com (2603:10b6:5:2cc::9) by
+ MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Tue, 5 Sep 2023 01:25:37
+ +0000
+ARC-Seal: i=3; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
+ b=DbhbyU7PXMwc+wknnsxr8sM508zdqKYOm6WjdNRiR0asDgfFPycgmBe8yIx3/b0wuB5IMSy+Z8llkwVXU4JOhHVQIqLUPKrTOXzmfECE5A3r7yf5mjeSRjLwHIDpKz0qRnFiE+V9tvmfwj7r0qF2R+1CZhwJA5YtaATZaewt8K6Iq1npBQ9Iy3MZU3mdg3n5uED8ULKR0WEh3PbHN855ut+htLZfKhoXZ5giC8OQdkx0NwxpWTN1wts3CchclxR8JRfqDGGRonABfL7hqUFsEp/UIsEUbRgeN6vON47thLLgvBUC08W6JOjgZi1Tz3fVmILFbRU1YPBcvcObb+1JnA==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kcPfNVWwbxg6ZZ5+ZERH79K+0G93ihMsi5ep9dsWXe8=;
+ b=YlUP0B6tjzH44WkMQrb27+tzhi2bvWFEOb/+HyzwJix3Esx2dNI1JGHsSCLoQ1UUegrF1ivtQStWxJ6j0fQVLxMwLX6/VY5+uPGDCNjNSZgOEkmA8WTVKgif2c/qp7sQtqBOLgNE6R9ZT5/BLUwcNK5Biaudo9frqL6ZiJWdA9N3eL2VUiPRAtiIW9vGDO7J8MpsL38Z2hl9TTNu1U03Uz3GGsZr3TF1r3K2eNBeTjIRhMll7Kc2iRW6rtdCCG1cEybQhyMnxi4J9O/0lp7rGgnxtzyxp9Dpf2t2e45Rt2F6VijSYOKF3ZJOd8VPVOLGtefspCZv0VhPTtou3HF6iw==
+ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=pass (sender ip is
+ 209.85.222.48) smtp.rcpttodomain=hotmail.com smtp.mailfrom=gmail.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=hotmail.com;
+ dkim=pass (signature was verified) header.d=hotmail.com; arc=pass (0 oda=1
+ ltdi=1 spf=[1,2,smtp.mailfrom=phishing@pot]
+ dkim=[1,2,header.i=@hotmail.com] dmarc=[1,2,header.from=hotmail.com])
+Received: from FR0P281CA0199.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:ad::7) by
+ DS7PR19MB4472.namprd19.prod.outlook.com (2603:10b6:5:2cc::9) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6745.32; Tue, 5 Sep 2023 01:25:35 +0000
+Received: from VI1EUR04FT049.eop-eur04.prod.protection.outlook.com
+ (2603:10a6:d10:ad:cafe::bf) by FR0P281CA0199.outlook.office365.com
+ (2603:10a6:d10:ad::7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.25 via Frontend
+ Transport; Tue, 5 Sep 2023 01:25:35 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.222.48)
+ smtp.mailfrom=gmail.com; dkim=pass (signature was verified)
+ header.d=hotmail.com;dmarc=pass action=none
+ header.from=hotmail.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates
+ 209.85.222.48 as permitted sender) receiver=protection.outlook.com;
+ client-ip=209.85.222.48; helo=mail-ua1-f48.google.com; pr=C
+Received: from mail-ua1-f48.google.com (209.85.222.48) by
+ VI1EUR04FT049.mail.protection.outlook.com (10.152.28.177) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6768.17 via Frontend Transport; Tue, 5 Sep 2023 01:25:35 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:957B7BDD183C6512A79719AC179578367BC1DF07971A790DC2B30A565F4C384F;UpperCasedChecksum:A13DA7D5F7AA78EA4B7DF2507721B2F942A5F041E5916421A9138624E32C210D;SizeAsReceived:11154;Count:57
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-7a25071d633so663896241.0
+        for <phishing@pot>; Mon, 04 Sep 2023 18:25:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693877134; x=1694481934;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature:delivered-to:x-forwarded-for:x-forwarded-to
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kcPfNVWwbxg6ZZ5+ZERH79K+0G93ihMsi5ep9dsWXe8=;
+        b=OlcgtH2lsDoqabTBDmPJDqVIrCZ2bcZcMj4UwMQsN+7uI4qJTTV/cPUjWgYQMldgj7
+         xuY6rEFP0+RqY6FYa+PR3xbtshS3XMKrID/yVrArJP9KOpZ74Y1V66DbPvMaccXdpWE5
+         RpTRf4SPF2ZBlSiChlCpND4b63Teb3KpdUqG2BKTogByx5HMSVXnb891e6+NwzbLxEzF
+         tCJhQbo7I+p4AqvqZg0u8VPVEWRIzPhKNqK5FSyswL5A7Z6lwozObbfD3tn9fRL97xzN
+         BqXPg/3qxHrX6QHy28x7+qH3U4hW/FMkp81fBL+qKYVnw4XJ93LEW+jW+bOW3BH0KDZS
+         KdGw==
+X-Gm-Message-State: AOJu0YyVPhBpZp2C46bP/jHQx4UfLyZY7UrSoHElJGi3vrD4RzJpYo7O
+	kG5pawRm1gPdyDE7qlWpV/B6sPmWunCMxpZw9Jph3JfIjfM4Gcgq4g==
+X-Received: by 2002:a67:fd0f:0:b0:44e:99c9:418 with SMTP id f15-20020a67fd0f000000b0044e99c90418mr10674105vsr.4.1693877134093;
+        Mon, 04 Sep 2023 18:25:34 -0700 (PDT)
+X-Forwarded-To: phishing@pot
+X-Forwarded-For: phish.me.again@gmail.com phishing@pot
+Delivered-To: phish.me.again@gmail.com
+Received: by 2002:a59:c94d:0:b0:3fe:f445:57e1 with SMTP id k13csp1118617vqt;
+        Mon, 4 Sep 2023 18:25:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFWz3FOKxGjGN3Uxhf87Fjs0ZuS1SZapSvi9MJ+Bj6xJBWQP2YMVC/HffnhBs+Ub5kAcJaE
+X-Received: by 2002:a17:907:7847:b0:99d:101b:8403 with SMTP id lb7-20020a170907784700b0099d101b8403mr8157779ejc.36.1693877132530;
+        Mon, 04 Sep 2023 18:25:32 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1693877132; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=Ka2aLtBF+t91NQCDrcinl9UqIYxsduEBlxnUdV1N0ecUlftEkK2AahXH1spSeooLLz
+         mNuqZ3VuZ09OJ2z8+ypG5iWoNCu5KjVE0TWm2DTKxPXNF/eeAgH6rCpSPo6NU4pcanyI
+         eZpEf4tHPPzgDU2TwOAZivV1BO7RqHEzcZgWMFRslTcnoJZ4i71Njjslo2U+SsHFi+w6
+         fAb21W+rEn4gwRGI4/y5a6Va6RMKQvqhKEAwyXedco+qpgzS7eT5GlDch/vLnJEOx+ow
+         pE4yP9pKAYiwD/7Y0Jf7PrSAn4Oenk6vQZPkM8wFaxuguXqkRDW1uEA4hnzsmDWuDHPs
+         NFsQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature;
+        bh=kcPfNVWwbxg6ZZ5+ZERH79K+0G93ihMsi5ep9dsWXe8=;
+        fh=UETxh7Fu2EGjYUB1TKqvJnbisEPhC7fobl4HgFgZ4OQ=;
+        b=dWiPliLHSumkxgPwJ5qNKma0JLZlh+J+txWpjVEi0atpWLJBEQZqeH7T8zfXkLvmfV
+         iZOc+eaTZ4gcWdGUGVBSV5Q1enEinndi9bBE2DH52BTxLDmTtrs7Rq529+j4ZiyFb4nR
+         5sBXXkPQllFYJdnTGki+1S2ewY/KInQwxiRXECRC5DU7E3PNdPBnfrvsEYH0oCLHQ6zd
+         Q7hkiPJDMkeloEJe0GJ3NkSc4fdkq6LmQMY0TI3owHsHzYbiJFypBxWrA7prkaOMyNZA
+         1AiPzkXWuedwbVf2Jasg8+SzcGsKiC0iDZuxsyyNI1jNhvtD5aBbf1cb+/Ccg5Q6VHqI
+         K/ZQ==
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@hotmail.com header.s=selector1 header.b=iNVIzEIN;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of phishing@pot designates 2a01:111:f400:fe5a::819 as permitted sender) smtp.mailfrom=merciayanmact@hotmail.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=hotmail.com
+Return-Path: phish.me.again+caf_=phishing@pot=hotmail.com@gmail.com
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12olkn20819.outbound.protection.outlook.com. [2a01:111:f400:fe5a::819])
+        by mx.google.com with ESMTPS id rh28-20020a17090720fc00b00987a0569370si7121551ejb.703.2023.09.04.18.25.31
+        for <Phish.me.again@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 04 Sep 2023 18:25:32 -0700 (PDT)
+Received-SPF: pass (google.com: domain of phishing@pot designates 2a01:111:f400:fe5a::819 as permitted sender) client-ip=2a01:111:f400:fe5a::819;
+Authentication-Results-Original: mx.google.com;       dkim=pass
+ header.i=@hotmail.com header.s=selector1 header.b=iNVIzEIN;       arc=pass
+ (i=1);       spf=pass (google.com: domain of phishing@pot
+ designates 2a01:111:f400:fe5a::819 as permitted sender)
+ smtp.mailfrom=phishing@pot;       dmarc=pass (p=NONE sp=NONE
+ dis=NONE) header.from=hotmail.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=SVfQuSC8tl2wrujSzK0hxCnkC9ZMccq5GtlAUd+XFCM1u5TOvhNERAVXP6iNlYRKf+pFjjMnFMkJ/M0N476BDmG7W1Jp0nhF7qeS/LiZ8m4QxeEr3SfzjSLqlnLuJGRaQnu8o4MR3mTEZyRUNlmtga0mSKUQKVZk/QM0pVEcJ2dyh9ixnmmWSPYmLTllDaKJ24PNrMBD77ti8VLBRsXxdzvCdjKJgrB8MvtHKXzy1hFOtn7MvIWUtPXWsgeOz/cYeWcLJXsbxan2KhsIYGHYkmgOSIAly6G6KswedytLcm1kzk9uQA+GTwS9pYvRYXjfhWcA/ha7vcQ64ygXW699Dw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kcPfNVWwbxg6ZZ5+ZERH79K+0G93ihMsi5ep9dsWXe8=;
+ b=O6YRlsZIyLCcgBlnR88s+LZvyXFzMDua1h1n4Q1jqQw/UZjb0r6hsg/lR9NFUbeR9GRSobUg73AbSXbYnfpK1sY0PWQhQ7vmwqN6i3zovrypsPQms/6R9bs4tZnocnv+FhAAVDG433dXWTqxCArsY/yMGG/c9X1GrX6YIv1/O4ri6XPhKbE4epcCGPlYbOEiNv5kmwYIHrocZNa3MOcragTlTIC1FW6YeKh8IWggNyT+sD1G1NUt9qOVtk+naTm0Cro6kouGX0hkan/TPEjcHduUSLSFQMTHggnoYvS/Yk0l192gzmU0FKv3x+0XCdZlZG1ukyHGoiAvctktruU4PQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=kcPfNVWwbxg6ZZ5+ZERH79K+0G93ihMsi5ep9dsWXe8=;
+ b=iNVIzEIN/1Wmyq90K2BY6coLWWU7529D5QZ7CbM9HvIcq2muZraqNvO21gJg8uVNb4iVumVqZ9sL4n7s5hWgF96B8Cnh4Fl0qlhmJvenjadAepbbDXdj44stihgJ502Opjxk4viYjD5FOLzeNOizwLHV3fTVpGJFP4J9NHtBYWWYgSCcNQmRXnlgqy2qG1fFL9IsTwyBwDPhMCuLme0OlFa/FTFEbEokOEXuPVXerET5BGM3KCv8egmdKO9vEzXByHlGbBQYNZco6N/eSIDg0mUvKPAAl8KpbzylQgFGz/Cm1C+hFYvKBAhkvoKvVu+PDNoJUUCXPbmbqEaTQKjppw==
+Received: from IA0PR02MB9779.namprd02.prod.outlook.com (2603:10b6:208:48b::12)
+ by CH3PR02MB9478.namprd02.prod.outlook.com (2603:10b6:610:122::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.32; Tue, 5 Sep
+ 2023 01:25:29 +0000
+Received: from IA0PR02MB9779.namprd02.prod.outlook.com
+ ([fe80::f44d:dc0d:8247:8ee4]) by IA0PR02MB9779.namprd02.prod.outlook.com
+ ([fe80::f44d:dc0d:8247:8ee4%4]) with mapi id 15.20.6699.034; Tue, 5 Sep 2023
+ 01:25:29 +0000
+From: phishing@pot <phishing@pot>
+To: "phish.me.again@gmail.com" <Phish.me.again@gmail.com>
+Subject: Fw: Best Ways to EARN! No HI_LO or gaming
+Thread-Topic: Best Ways to EARN! No HI_LO or gaming
+Thread-Index: AQHZ34QZV1q+IpZ5H0WHbN+ckkBBaLALcKes
+Date: Tue, 5 Sep 2023 01:25:29 +0000
+Message-ID:
+ <IA0PR02MB97794101435573BAA2200F9BB3E8A@IA0PR02MB9779.namprd02.prod.outlook.com>
+References:
+ <4ae4ded3-21e5-45ed-b0b6-72b1fe9c1728@DB3EUR04FT019.eop-eur04.prod.protection.outlook.com>
+In-Reply-To:
+ <4ae4ded3-21e5-45ed-b0b6-72b1fe9c1728@DB3EUR04FT019.eop-eur04.prod.protection.outlook.com>
+Accept-Language: pt-BR, en-US
+Content-Language: pt-BR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [RLfulY+pqtC+I3r/c/bI/3P9+Gwy9aMS]
+x-ms-traffictypediagnostic:
+ IA0PR02MB9779:EE_|CH3PR02MB9478:EE_|VI1EUR04FT049:EE_|DS7PR19MB4472:EE_|MN0PR19MB6312:EE_
+X-MS-Office365-Filtering-Correlation-Id: 63e55719-c5ad-42d5-331d-08dbadaf0116
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original:
+ ZKoTQSZKckcZiMHfmxgwqUC5vG/klhh7Te5ES9/gqqp3VoKfK9XBQP6jCFtv4W2uErawYRzPxWuONRcY6dhcwJO6DH9l1CXK81zpM1PBz1c1f5B9VeHh+wh2/GxayIQJ2+BMxh+ctSeGjuVTUeCwtfEH5LteC1s5vx40/hvJA1NcbJK3EPmSSsWHZot7xCGEtox/ZfAu2wntr4GPyhJyYJ60ES+nbms36WaF/TgWSWGhwWxG6oURUxcJ/IeDzTp/g8yM9bHypFc8leF4I3ZnAhuML47BMnFt0SsX5wFCm2bqo0VNb4cr9ZaPjCLSEQEzYH2LP4JircEw/bPoSslXGY580uskBCdF2vwJoh0Y/cwaQStjfZc49fdYj5BRO+DY6J8mKUNTgNt7TO1AaXuKMp8jJ4JWot3Lj8u1SKI7hTDmQxl4BQdv+o3uZxU73zFtR1ME3FcgK1uBBHucbxs8bPth1vJod+BCo/1spiwEWFFutAS0mbnyrIfVBB505MVOpat8TvnSvpxyBPZ0oArFcLwEc9fwlvm05y6n/UDmta7aQukIv5eD/ugI8GT94mnDJriHMsgpLIgHTXeA9xtAEJg87UYYS4rBqwfJ1/VABfdKWszLHc/Spu05BjPUNkYv
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0:
+ =?us-ascii?Q?E8EaZWKlUERbhX44BiW+i8IRe0cAVmDaWmJlQzRYfcSkycDI+18PWb+d/No6?=
+ =?us-ascii?Q?I/Hb+GGYZ7VlRmQJPkNE4tsn0W6mfJDkeY/8QF1ULLsnq1gbUVxjBRgS6UJQ?=
+ =?us-ascii?Q?VPBwh4ea7HxYSNCwuAm9Pq4S/4ouO9WSYTO1esxrqXeaLMAkOfUCSJZb9/zn?=
+ =?us-ascii?Q?i7LcXXt6C6q41yg0gxnPlkPKU6CAgqb5xpap+lKSOUxSYUW5zBawnnyMiZd3?=
+ =?us-ascii?Q?xatqFehVEGAUJPriRdbrWhSQFxyvj7ZXOepGXezLDrMVjglaVnOGTc0q3B0a?=
+ =?us-ascii?Q?ZG0eJq2K4tQuaqw9/D/Vr4GzgXJLR/T6MkmSbhNsJutHmOinxdCSkXlKtgqs?=
+ =?us-ascii?Q?ycidaOdjTMSg5QIJDKfy9eWbb9vr5IZi9pNGNW5XSyhyTmNdKDss8lIkUwN8?=
+ =?us-ascii?Q?/2uZle6KiGEcLF6PwMmP71hAIs5ivTubROXxz8k9Hjq6SPKJduMJLff80GBl?=
+ =?us-ascii?Q?In1fCHt0QrYtzW1cW0aCC0bMXeqKmB6ZpU/JdYZ6DRA1ra8xnENSU7Ti9qrH?=
+ =?us-ascii?Q?hYHbnf7wmWulrH3J3bvLHceGx3HhjCF1rBj9hQYEUnyEjkO9/4lMyJeVdhkO?=
+ =?us-ascii?Q?8t0uTU+zQsmaZRRT6Ah2O97+tqfnm4sfGHP7CvznDNhRXwN4iNejGsELkYXN?=
+ =?us-ascii?Q?wMDeRXD6SxgeVmcNyuibbEvYPY8jBO1h7yjKqUCDkOPY1+0hrODf0Pf6PmLp?=
+ =?us-ascii?Q?9/2dOztMV8a7GjNANlbSNUzAjoAiVNsBJav7+W68nFPBz6me9cAwg7ybq58q?=
+ =?us-ascii?Q?1mSTETEM7WWCsI7BTyATEW4fO6oAGnqiy7c+4EDXUcJGlQewA1PwWif2E2mo?=
+ =?us-ascii?Q?W4JaIaf5LZtLRjIMGGOXobCG6lRcfJdpF93VVsz1gCK/P6bM3yczV71zQ+tX?=
+ =?us-ascii?Q?IeK5b0nU1FK4ZGsOahKQyrkCAFZn/9xiAIsu9U/EI4rL6Umwe/p2U/NXh4E3?=
+ =?us-ascii?Q?sASOfMugmL2gu+JiPIXsxD1jSGSZLwemwYfaWcxbRyHhI2TVaAaj65hhY7Gs?=
+ =?us-ascii?Q?OExkk0JoB72ujjfLAJi9WW31mwpeClJZb147kqEmtxPstPLM8PhPSmmFDwqO?=
+ =?us-ascii?Q?TKqbjNX9mJGqFjpPGSifFbNv3MVZ1vwjppqphSo3fLeQnolQka9RkOqCcGnD?=
+ =?us-ascii?Q?eZ4DWrwS571/8T0Te7wzdIwHMVTgERmRgBI6QNy3gYbs0P+d5aBpjR3ZcqSX?=
+ =?us-ascii?Q?B4vhpwT8kOHa+zyOkiHL2rf7sTjtKP9ed2g+UQ=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_IA0PR02MB97794101435573BAA2200F9BB3E8AIA0PR02MB9779namp_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR02MB9478
+X-IncomingHeaderCount: 57
+X-MS-Exchange-Organization-ExpirationStartTime: 05 Sep 2023 01:25:35.2171
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 63e55719-c5ad-42d5-331d-08dbadaf0116
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ VI1EUR04FT049.eop-eur04.prod.protection.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ VI1EUR04FT049.eop-eur04.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 9/5/2023 1:03:13 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ e65beb52-1d9a-4700-6fb3-08dbadaefdc5
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 209.85.222.48
+X-SID-PRA: MERCIAYANMACT@HOTMAIL.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-PCL: 2
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2023 01:25:35.1858
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 63e55719-c5ad-42d5-331d-08dbadaf0116
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ VI1EUR04FT049.eop-eur04.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR19MB4472
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.0686241
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.6745.026
+X-Microsoft-Antispam-Mailbox-Delivery:
+	wl:1;pcwl:1;ucf:1;jmr:0;ex:0;auth:1;dest:C;OFR:CustomRules;ENG:(5062000305)(920221119095)(90000117)(920221120095)(90012020)(91020020)(91040095)(9050020)(9095020)(9100341)(944500132)(2008001134)(4810010)(4910033)(9575002)(10195002)(9414026)(9310011)(9220031)(120001);
+X-Message-Info:
+	qZelhIiYnPlA3rmnZ2nhMVfYERCF5K0aqVaNVC/Jzqah3ChPuZvRPmzg8HJTfdoia02nChrgYT39IYFrrayOMduDymNzjwS7lxM419QzACBo4uLchLOeGtTZRfxBAnV224YJEYGDKQ38L9Hwiv1ltDD1eay2bOeWTvdQoviO/Nlpu2mLQMvTtteqYFwU928mHN6N7vDeI+uFWUYb3pO5/w==
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0xO0Q9MTtHRD0xO1NDTD0tMQ==
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?G662gYI+MHwqFFCFZ+qMjPw75qXQ9OPTEHwak9IGk0uAITHOmwNRbVt3+qSH?=
+ =?us-ascii?Q?yuH00RGbheNK+AM6UaQQSbWrJvhfa0xgffsifKzo21cX4jqC1225CKaY7feh?=
+ =?us-ascii?Q?7bDEl4uHhDYwSdT9EKQEMoUKPh53zo/CnUyULilDS9BWJHOk4efRkJHrthu3?=
+ =?us-ascii?Q?npdCA1rOnosD4SHFYPH1urgVLELk9DTrugbKWkOjWqS0PJdNozpnLuv08Azm?=
+ =?us-ascii?Q?ZM5PBQSvvy2WHWRNNbzWHMrAQdgyJIMvXz0uhz15sHP14pHeNtbhEKP9OyuY?=
+ =?us-ascii?Q?zow/ikRxJ8lFV7JuG2cAUbAy4d81iqyOxLxiveljtiDY7UqMNx4vNO+uYk7T?=
+ =?us-ascii?Q?lZefoh5pkiHs9loDPqLvOtetBl5nFIr17P8sEidmkwIEDNC0J+eRBWugsFC2?=
+ =?us-ascii?Q?QpdvwOFuWD09vd8R7h862/fElD/lGiGjdJvIgSd6qpmwfPehhMQG3qj3aEmQ?=
+ =?us-ascii?Q?C19p5CudZLsPJYJC3Mru7sqfhsG7vVUxUtzqKyQI4EtTescYGVwHvI6D96/b?=
+ =?us-ascii?Q?373ImCus3fR71yVcvY76ikbScKYGVbSN8KR6bjLMYLMsrBAobICNixXxdTER?=
+ =?us-ascii?Q?rQWeUMmnSidhgKoB9RojmNHZPgnJBNorkRrrGHUWodqKZMC38cOo/1z/ISPm?=
+ =?us-ascii?Q?3t9oNcf15uTk+VffcoC3nS5VJZxm/Qxi8bIFV7cQ4oUA3QtUSadyhziJizYa?=
+ =?us-ascii?Q?/KkWiwAr5AnlYZ48Rw844PnofcgAwqDnjOEb8XMic6YNxySGopkkbkzB0FMe?=
+ =?us-ascii?Q?fQLpkHVBZqgnnATNeLxODtTV+0FWgk8BaT/DxkXaf9BFKm1fzPf3ggAUi8ue?=
+ =?us-ascii?Q?vuxL7eF6LJjLPyoZUE4FoWaJSAIKzK4UAC5H0aT46PpkQZRJ+d5sPB62eRLU?=
+ =?us-ascii?Q?XOMwvQnsG7CF8FlUaXi451bWYFNcb2oftNstETc+EmAIz0Br7mqHssCxIbW9?=
+ =?us-ascii?Q?rQXhkyyjXSU4BTgsyrk+czOx5lpb1NRqnR8p+Fvmu+dTicb8jkoVPHob92ww?=
+ =?us-ascii?Q?828zQHjioPp+1NlpA1rvv9v07Ei/WTpX1pKvmiUTm+s93VeoHOTOmZahXPki?=
+ =?us-ascii?Q?7uUACNJMW/Gn76KjMmP+w8rJPVLKczM4SZd4lLiu2J0ciZDdvNkUyLTx1EDW?=
+ =?us-ascii?Q?hPA0R8jSxpzKi95yRvra80o7Co2jRqC8V07v0Pe/+eQvKOctLSSVwv/B/AvO?=
+ =?us-ascii?Q?hx9woneta8VSTi8wbrVg3wX5oz4OQoL/d0BTKx/iBoVlR7A59rGg6fxhJpIj?=
+ =?us-ascii?Q?nFE+7CS7ZHf2fLTHzADJnZMWnZ+zZoiLQfCVZjWJ+nmaa8INZ5qjutD6xLmB?=
+ =?us-ascii?Q?aissFpjgCzHA0C5E/aemXPnu+S0zHeg9c2ImpvqXxRKflUnfgFbOVX3mlD0a?=
+ =?us-ascii?Q?Ymj7HQgFhcYJ4p11QGIdo0VQ3lcKV10Vbg00VqCPI+p8KPHLQ00DfpK9Btz/?=
+ =?us-ascii?Q?E1BHYwRHYmdd8LIJdnQt+j3ebt+s5uqZryzWyyrBucv3HCRuQK9NCdI4ZNjW?=
+ =?us-ascii?Q?UBVq/VsnOH/kmSJYUTn+C5Ay+RzB8/0mLAaUXGYsQA3oVnEGEVMhTQRoidOe?=
+ =?us-ascii?Q?z8z/3zpFPoFwPwzk6p2VhvswcFrlG4SSrh3S9TafXjHkDKPZkQjXUXzlsZwh?=
+ =?us-ascii?Q?mQ=3D=3D?=
+MIME-Version: 1.0
+
+--_000_IA0PR02MB97794101435573BAA2200F9BB3E8AIA0PR02MB9779namp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+
+________________________________
+De: Freebitcoin Earning Guide
+Enviado: segunda-feira, 4 de setembro de 2023 20:03
+Para: phishing@pot <merciayanmact@hotmail.com>
+Assunto: Best Ways to EARN! No HI_LO or gaming
+
+Freebitco.in<http://freebitco.in/?r=3D52019727&tag=3Dmed1> is a Bitcoin Fau=
+cet and gaming site. While the main focus is on wagers and games of chance =
+there are plenty of ways to earn free BTC as well.
+
+if you don't have an account yet, sign up now HERE<http://freebitco.in/?r=
+=3D52019727&tag=3Dmed1>
+and you will receive a certain sharing amount based on total referral activ=
+ity.
+
+1) Best Ways to EARN! No HI_LO or gaming:
+
+--> WATCH THIS VIDEO<https://www.veed.io/embed/6ecc6d09-0420-430f-9adb-3e46=
+309f41ac> <---  (explain everything in below)
+
+
+  *   Free Rolls. You can roll the faucet once every hour on  Freebitco.in<=
+http://freebitco.in/?r=3D52019727&tag=3Dmed1>. The amount you win depends o=
+n how active you are on the site and whether you have deposited any BTC int=
+o your account. The exact payout you get is based on the number you roll. 0=
+-9885 earns you the base payout anything above that puts you into a higher =
+bracket. Hitting 1000, will give you the jackpot which also varies dependin=
+g on the account. For reference mine is currently at 0.00858931 BTC, not to=
+o shabby.
+
+  *   Wheel of Fortune. The second way to earn is by playing the wheel of f=
+ortune game and spinning the wheel to earn BTC or other prizes. There are a=
+ couple of ways to play this game. (1) Subscribing to   Freebitco.in<http:/=
+/freebitco.in/?r=3D52019727&tag=3Dmed1>   promotional emails and clicking t=
+he free spin link at the bottom. (2) As you play games and roll the faucet =
+you earn reward points, these can be traded for free wheel of fortune spins=
+. (3) Become a premium member by purchasing and holding the FUN token for 4=
+ free spins daily plus many other benefits.
+
+  *   Earning Interest. The easiest way to earn BTC is simply to deposit fu=
+nds and earn interest daily. The minimum to earn interest is 0.0003 BTC whi=
+ch currently is around $8. You'll earn 4.08% APY<https://freebitco.in/?r=3D=
+52019727&utm_source=3Dyoutube&utm_medium=3Dtext&utm_campaign=3Dfree_bit> on=
+ whatever you deposit, this is paid out on a daily basis at a random time. =
+The exact amount you earn will depend on your balance when the amount is pa=
+id out for the day. This is especially important for those gaming or wageri=
+ng on the site.
+
+  *   Referrals. Freebitco.in<http://freebitco.in/?r=3D52019727&tag=3Dmed1>=
+ is a very popular site but still growing at a quick clip. Part of the reas=
+on for this is the very health referral system they have in place. You earn=
+ 50% of all the free rolls your referrals make. Plus 0.4% of every wager or=
+ game they play, this can add up very quickly as money is won and lost and =
+won again. You'll also earn 25% of the interest that your referrals earn. T=
+argeting people who want to deposit, play games, and earn interest is key.
+
+2) Earning With the MUltiply Game:
+
+if you want THE BEST strategy for Freebitcoin Faucet HI/LO Multiply
+
+--> WATCH THIS VIDEO<https://www.veed.io/embed/08059e85-ba9a-432f-bf25-7fe0=
+49addca0> <--
+
+
+
+
+
+
+Disclaimer: While this game is provably fair it is wagering and you can los=
+e all your funds. There is no method that will give you any long term advan=
+tage in games of chance like this one. In the long run, the chances still f=
+avor the house.
+
+First, make sure that you have a sizable amount in your account. I would re=
+commend at least 30,000 Satoshi. Start with a very small betting amount and=
+ leave the win ratio at 2:1. Alternate between HI and LO changing your patt=
+ern every so often. For example, you can go one HI and one LO and later swi=
+tch to two or three HIs and two or three LOs. If you want to be truly rando=
+m you can always use a random number generator in another tab. I would not =
+just play HI or just play LO because the game seems to have periods with lo=
+ng streaks and that won't work well with this method.
+
+When you win just continue with the pattern as normal. If you lose double o=
+r quadruple the bet depending on the size on your bankroll. Larger bankroll=
+s can afford to play with riskier multiples. After you have won go back to =
+the original small bet and start the cycle over again. The large bets will =
+make up for any losses you may incur as long as you don't go on a losing st=
+reak that takes out your entire bankroll.
+
+Sometimes as you are playing you'll be offered an amount as a "free bank ro=
+ll," I would advise against taking this offer. The bank roll isn't really f=
+ree as you must match it from your own funds and you must wager it over man=
+y times to receive it back. I would also stay away from the auto betting fe=
+ature unless you have a large bankroll and are competing for most money wag=
+ered in a day.
+
+
+
+                                              To unsubscribe, Click Here<ht=
+tps://www.clonscript.com/o-gnsr-n05-4aaed16913c5562a16f7229a7c583c94>.
+
+
+
+--_000_IA0PR02MB97794101435573BAA2200F9BB3E8AIA0PR02MB9779namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+</head>
+<body>
+<div></div>
+<br>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>De:</b> Freebitcoin Earning Gui=
+de<br>
+<b>Enviado:</b> segunda-feira, 4 de setembro de 2023 20:03<br>
+<b>Para:</b> phishing@pot &lt;merciayanmact@hotmail.com&gt;<br=
+>
+<b>Assunto:</b> Best Ways to EARN! No HI_LO or gaming</font>
+<div>&nbsp;</div>
+</div>
+<div>
+<div dir=3D"ltr"><a class=3D"x_gmail-XqQF9c" href=3D"http://freebitco.in/?r=
+=3D52019727&amp;tag=3Dmed1" target=3D"_blank" style=3D"box-sizing:border-bo=
+x; color:inherit; text-decoration-line:none; font-family:&quot;Open Sans&qu=
+ot;,sans-serif; font-size:16px; font-variant-ligatures:none"><span class=3D=
+"x_gmail-C9DxTc" style=3D"box-sizing:border-box; color:rgb(0,0,255); text-d=
+ecoration-line:underline">Freebitco.in</span></a><span class=3D"x_gmail-C9D=
+xTc" style=3D"box-sizing:border-box; color:rgb(33,33,33); font-family:&quot=
+;Open Sans&quot;,sans-serif; font-size:16px; font-variant-ligatures:none">&=
+nbsp;is
+ a Bitcoin Faucet and gaming site. While the main focus is on wagers and ga=
+mes of chance there are plenty of ways to earn free BTC as well.</span>
+<div><font color=3D"#212121" face=3D"Open Sans, sans-serif"><span style=3D"=
+font-size:16px; font-variant-ligatures:none"><br>
+</span></font>
+<div><span style=3D"font-variant-ligatures:none; background-color:rgb(238,2=
+38,238)"><font color=3D"#ff0000"><span style=3D"font-family:&quot;Open Sans=
+&quot;,sans-serif; font-size:16px">if you don't have an account&nbsp;yet, s=
+ign up now
+</span><b style=3D""><font size=3D"4" face=3D"arial black, sans-serif" styl=
+e=3D""><a href=3D"http://freebitco.in/?r=3D52019727&amp;tag=3Dmed1" style=
+=3D"">HERE</a></font></b><br>
+</font></span>
+<div><font face=3D"Open Sans, sans-serif" color=3D"#ff0000"><span style=3D"=
+font-size:16px; font-variant-ligatures:none; background-color:rgb(238,238,2=
+38)">and you will receive a certain sharing amount based on total referral =
+activity.</span></font></div>
+<div><font color=3D"#212121" face=3D"Open Sans, sans-serif"><span style=3D"=
+font-size:16px; font-variant-ligatures:none"><br>
+</span></font>
+<div><font size=3D"4" color=3D"#000000" style=3D""><u style=3D""><b style=
+=3D"">1) Best Ways to EARN! No HI_LO or gaming:</b></u></font></div>
+<div><font color=3D"#3d85c6" size=3D"4" style=3D""><b><u><br>
+</u></b></font></div>
+<div>--&gt;&nbsp;<a href=3D"https://www.veed.io/embed/6ecc6d09-0420-430f-9a=
+db-3e46309f41ac"><b><font color=3D"#0000ff" size=3D"4" face=3D"arial black,=
+ sans-serif">WATCH THIS VIDEO</font></b></a>&nbsp;&lt;---&nbsp;&nbsp;<b><fo=
+nt size=3D"4" color=3D"#a64d79">(explain&nbsp;everything in below)</font></=
+b></div>
+<div><br>
+</div>
+<div><span class=3D"x_gmail-C9DxTc" style=3D"box-sizing:border-box; font-va=
+riant-ligatures:none">
+<ul class=3D"x_gmail-n8H08c x_gmail-UVNKR" style=3D"font-family:sans-serif;=
+ list-style-type:square; box-sizing:border-box; padding:0px; margin:0px; fo=
+nt-variant-ligatures:normal">
+<li dir=3D"ltr" class=3D"x_gmail-zfr3Q x_gmail-TYR86d x_eD0Rn" style=3D"fon=
+t-size:12pt; color:rgb(33,33,33); box-sizing:border-box; font-variant-ligat=
+ures:none; margin:0px 0px 0px 15pt; outline:none; text-decoration:inherit; =
+font-style:inherit; font-family:&quot;Open Sans&quot;,sans-serif; line-heig=
+ht:0; padding-top:0px">
+<p dir=3D"ltr" role=3D"presentation" class=3D"x_gmail-zfr3Q x_gmail-CDt4Ke"=
+ style=3D"box-sizing:border-box; margin:0px 0px 0px 0pt; outline:none; text=
+-decoration:inherit; font-size:12pt; font-style:inherit; line-height:1.75; =
+padding-top:0px; padding-bottom:0px; padding-left:0pt; text-indent:0pt">
+<span class=3D"x_gmail-C9DxTc" style=3D"box-sizing:border-box; font-family:=
+&quot;Open Sans&quot;,Arial; font-weight:700">Free Rolls</span><span class=
+=3D"x_gmail-C9DxTc" style=3D"box-sizing:border-box">. You can roll the fauc=
+et once every hour on&nbsp;</span><span class=3D"x_gmail-C9DxTc" style=3D"b=
+ox-sizing:border-box">
+<a href=3D"http://freebitco.in/?r=3D52019727&amp;tag=3Dmed1">Freebitco.in</=
+a>. The amount you win depends on how active you are on the site and whethe=
+r you have deposited any BTC into your account. The exact payout you get is=
+ based on the number you roll. 0-9885 earns
+ you the base payout anything above that puts you into a higher bracket. Hi=
+tting 1000, will give you the jackpot which also varies depending on the ac=
+count. For reference mine is currently at 0.00858931 BTC, not too shabby.</=
+span></p>
+</li><li dir=3D"ltr" class=3D"x_gmail-zfr3Q x_gmail-TYR86d x_eD0Rn" style=
+=3D"font-size:12pt; color:rgb(33,33,33); box-sizing:border-box; font-varian=
+t-ligatures:none; margin:6px 0px 0px 15pt; outline:none; text-decoration:in=
+herit; font-style:inherit; font-family:&quot;Open Sans&quot;,sans-serif; li=
+ne-height:0">
+<p dir=3D"ltr" role=3D"presentation" class=3D"x_gmail-zfr3Q x_gmail-CDt4Ke"=
+ style=3D"box-sizing:border-box; margin:0px 0px 0px 0pt; outline:none; text=
+-decoration:inherit; font-size:12pt; font-style:inherit; line-height:1.75; =
+padding-top:0px; padding-bottom:0px; padding-left:0pt; text-indent:0pt">
+<span class=3D"x_gmail-C9DxTc" style=3D"box-sizing:border-box; font-family:=
+&quot;Open Sans&quot;,Arial; font-weight:700">Wheel of Fortune</span><span =
+class=3D"x_gmail-C9DxTc" style=3D"box-sizing:border-box">. The second way t=
+o earn is by playing the wheel of fortune game and
+ spinning the wheel to earn BTC or other prizes. There are a couple of ways=
+ to play this game. (1) Subscribing to&nbsp;&nbsp;
+<a href=3D"http://freebitco.in/?r=3D52019727&amp;tag=3Dmed1">Freebitco.in</=
+a>&nbsp; &nbsp;promotional emails and clicking the free spin link at the bo=
+ttom. (2) As you play games and roll the faucet you earn reward points, the=
+se can be traded for free wheel of fortune spins. (3)
+ Become a premium member by purchasing and holding the FUN token for 4 free=
+ spins daily plus many other benefits.</span></p>
+</li><li dir=3D"ltr" class=3D"x_gmail-zfr3Q x_gmail-TYR86d x_eD0Rn" style=
+=3D"box-sizing:border-box; font-variant-ligatures:none; margin:6px 0px 0px =
+15pt; outline:none; text-decoration:inherit; font-style:inherit; font-famil=
+y:&quot;Open Sans&quot;,sans-serif; line-height:0">
+<p dir=3D"ltr" role=3D"presentation" class=3D"x_gmail-zfr3Q x_gmail-CDt4Ke"=
+ style=3D"box-sizing:border-box; margin:0px 0px 0px 0pt; outline:none; text=
+-decoration:inherit; font-style:inherit; line-height:1.75; padding-top:0px;=
+ padding-bottom:0px; padding-left:0pt; text-indent:0pt">
+<span class=3D"x_gmail-C9DxTc" style=3D"font-size:12pt; color:rgb(33,33,33)=
+; box-sizing:border-box; font-family:&quot;Open Sans&quot;,Arial; font-weig=
+ht:700">Earning Interest</span><span class=3D"x_gmail-C9DxTc" style=3D"font=
+-size:12pt; color:rgb(33,33,33); box-sizing:border-box">.
+ The easiest way to earn BTC is simply to deposit funds and earn interest d=
+aily. The minimum to earn interest is 0.0003 BTC which currently is around =
+$8. You'll earn&nbsp;</span><a class=3D"x_gmail-XqQF9c" href=3D"https://fre=
+ebitco.in/?r=3D52019727&amp;utm_source=3Dyoutube&amp;utm_medium=3Dtext&amp;=
+utm_campaign=3Dfree_bit" target=3D"_blank" style=3D"box-sizing:border-box; =
+text-decoration-line:none"><span class=3D"x_gmail-C9DxTc" style=3D"box-sizi=
+ng:border-box; text-decoration-line:underline"><font size=3D"4" color=3D"#0=
+000ff" style=3D"">4.08%
+ APY</font></span></a><span class=3D"x_gmail-C9DxTc" style=3D"font-size:12p=
+t; color:rgb(33,33,33); box-sizing:border-box">&nbsp;on whatever you deposi=
+t, this is paid out on a daily basis at a random time. The exact amount you=
+ earn will depend on your balance when the
+ amount is paid out for the day. This is especially important for those gam=
+ing or wagering on the site.</span></p>
+</li><li dir=3D"ltr" class=3D"x_gmail-zfr3Q x_gmail-TYR86d x_eD0Rn" style=
+=3D"font-size:12pt; color:rgb(33,33,33); box-sizing:border-box; font-varian=
+t-ligatures:none; margin:6px 0px 0px 15pt; outline:none; text-decoration:in=
+herit; font-style:inherit; font-family:&quot;Open Sans&quot;,sans-serif; li=
+ne-height:0; padding-bottom:0px">
+<p dir=3D"ltr" role=3D"presentation" class=3D"x_gmail-zfr3Q x_gmail-CDt4Ke"=
+ style=3D"box-sizing:border-box; margin:0px 0px 0px 0pt; outline:none; text=
+-decoration:inherit; font-size:12pt; font-style:inherit; line-height:1.75; =
+padding-top:0px; padding-bottom:0px; padding-left:0pt; text-indent:0pt">
+<span class=3D"x_gmail-C9DxTc" style=3D"box-sizing:border-box; font-family:=
+&quot;Open Sans&quot;,Arial; font-weight:700">Referrals</span><span class=
+=3D"x_gmail-C9DxTc" style=3D"box-sizing:border-box">.
+<a href=3D"http://freebitco.in/?r=3D52019727&amp;tag=3Dmed1">Freebitco.in</=
+a> is a very popular site but still growing at a quick clip. Part of the re=
+ason for this is the very health referral system they have in place. You ea=
+rn 50% of all the free rolls your referrals
+ make. Plus 0.4% of every wager or game they play, this can add up very qui=
+ckly as money is won and lost and won again. You'll also earn 25% of the in=
+terest that your referrals earn. Targeting people who want to deposit, play=
+ games, and earn interest is key.</span></p>
+</li></ul>
+<div style=3D"font-family:&quot;Open Sans&quot;,sans-serif"><font color=3D"=
+#212121"><span style=3D"font-size:16px"><br>
+</span></font></div>
+<div style=3D"font-family:&quot;Open Sans&quot;,sans-serif"><b style=3D""><=
+font color=3D"#000000" size=3D"4"><u>2) Earning With the MUltiply Game:</u>=
+</font></b></div>
+<div style=3D"font-family:&quot;Open Sans&quot;,sans-serif"><b style=3D""><=
+font color=3D"#000000" size=3D"4"><u><br>
+</u></font></b></div>
+<div style=3D""><font color=3D"#212121" style=3D"font-family:&quot;Open San=
+s&quot;,sans-serif; font-size:16px">if you want THE BEST strategy for Freeb=
+itcoin Faucet HI/LO Multiply&nbsp;</font></div>
+<div style=3D""><font color=3D"#212121" style=3D"font-family:&quot;Open San=
+s&quot;,sans-serif; font-size:16px"><br>
+</font></div>
+<div style=3D""><font face=3D"arial black, sans-serif" style=3D""><b style=
+=3D""><font size=3D"1" color=3D"#000000" style=3D"">--&gt;</font><font colo=
+r=3D"#0000ff">&nbsp;</font><a href=3D"https://www.veed.io/embed/08059e85-ba=
+9a-432f-bf25-7fe049addca0" style=3D"color:rgb(0,0,255)">WATCH
+ THIS VIDEO</a><font color=3D"#0000ff">&nbsp;</font><font size=3D"1" color=
+=3D"#000000" style=3D"">&lt;--</font></b></font><br>
+</div>
+<div style=3D""><font color=3D"#0000ff" face=3D"arial black, sans-serif" st=
+yle=3D""><b style=3D""><br>
+</b></font></div>
+<div style=3D""><font color=3D"#0000ff" face=3D"arial black, sans-serif" st=
+yle=3D""><b style=3D""><br>
+</b></font></div>
+<div style=3D""><font color=3D"#0000ff" face=3D"arial black, sans-serif" st=
+yle=3D""><b style=3D""><br>
+</b></font></div>
+<div style=3D""><font color=3D"#0000ff" face=3D"arial black, sans-serif" st=
+yle=3D""><b style=3D""><br>
+</b></font></div>
+<div style=3D""><font color=3D"#0000ff" face=3D"arial black, sans-serif" st=
+yle=3D""><b style=3D""><br>
+</b></font></div>
+<div style=3D"">
+<p dir=3D"ltr" class=3D"x_gmail-zfr3Q x_gmail-CDt4Ke" style=3D"box-sizing:b=
+order-box; margin:0px; outline:none; text-decoration-line:inherit; color:rg=
+b(33,33,33); font-family:&quot;Open Sans&quot;,sans-serif; line-height:1.75=
+; padding-top:0px">
+<font size=3D"1"><span class=3D"x_gmail-C9DxTc" style=3D"box-sizing:border-=
+box; font-family:&quot;Open Sans&quot;,Arial; font-weight:700">Disclaimer</=
+span><span class=3D"x_gmail-C9DxTc" style=3D"box-sizing:border-box">:&nbsp;=
+</span><span class=3D"x_gmail-C9DxTc" style=3D"box-sizing:border-box; font-=
+style:italic">While
+ this game is provably fair it is wagering and you can lose all your funds.=
+ There is no method that will give you any long term advantage in games of =
+chance like this one. In the long run, the chances still favor the house.</=
+span></font></p>
+<p dir=3D"ltr" class=3D"x_gmail-zfr3Q x_gmail-CDt4Ke" style=3D"box-sizing:b=
+order-box; margin:0px; outline:none; text-decoration-line:inherit; color:rg=
+b(33,33,33); font-family:&quot;Open Sans&quot;,sans-serif; line-height:1.75=
+; padding-top:0px">
+<span style=3D"font-size:x-small; text-decoration-line:inherit">First, make=
+ sure that you have a sizable amount in your account. I would recommend at =
+least 30,000 Satoshi. Start with a very small betting amount and leave the =
+win ratio at 2:1. Alternate between
+ HI and LO changing your pattern every so often. For example, you can go on=
+e HI and one LO and later switch to two or three HIs and two or three LOs. =
+If you want to be truly random you can always use a random number generator=
+ in another tab. I would not just
+ play HI or just play LO because the game seems to have periods with long s=
+treaks and that won't work well with this method.</span></p>
+<p dir=3D"ltr" class=3D"x_gmail-zfr3Q x_gmail-CDt4Ke" style=3D"box-sizing:b=
+order-box; margin:0px; outline:none; text-decoration-line:inherit; color:rg=
+b(33,33,33); font-family:&quot;Open Sans&quot;,sans-serif; line-height:1.75=
+; padding-top:0px">
+<span style=3D"font-size:x-small; text-decoration-line:inherit">When you wi=
+n just continue with the pattern as normal. If you lose double or quadruple=
+ the bet depending on the size on your bankroll. Larger bankrolls can affor=
+d to play with riskier multiples.
+ After you have won go back to the original small bet and start the cycle o=
+ver again. The large bets will make up for any losses you may incur as long=
+ as you don't go on a losing streak that takes out your entire bankroll.&nb=
+sp;</span></p>
+<p dir=3D"ltr" class=3D"x_gmail-zfr3Q x_gmail-CDt4Ke" style=3D"box-sizing:b=
+order-box; margin:0px; outline:none; text-decoration-line:inherit; color:rg=
+b(33,33,33); font-family:&quot;Open Sans&quot;,sans-serif; line-height:1.75=
+; padding-top:0px">
+<span style=3D"text-decoration-line:inherit; font-size:x-small">Sometimes a=
+s you are playing you'll be offered an amount as a &quot;free bank roll,&qu=
+ot; I would advise against taking this offer. The bank roll isn't really fr=
+ee as you must match it from your own funds
+ and you must wager it over many times to receive it back. I would also sta=
+y away from the auto betting feature unless you have a large bankroll and a=
+re competing
+</span>for most<span style=3D"text-decoration-line:inherit; font-size:x-sma=
+ll"> money wagered in a day.</span></p>
+</div>
+<div style=3D""><br>
+</div>
+<div style=3D""><br>
+</div>
+<div style=3D"font-family:&quot;Open Sans&quot;,sans-serif">
+<div><br>
+</div>
+<div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; =
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp=
+; &nbsp; &nbsp; To unsubscribe,&nbsp;<font color=3D"#0000ff"><a href=3D"htt=
+ps://www.clonscript.com/o-gnsr-n05-4aaed16913c5562a16f7229a7c583c94"><b>Cli=
+ck Here</b></a>.</font></div>
+<div><font color=3D"#0000ff"><br>
+</font></div>
+<div>
+<div class=3D"x_gmail-CjVfdc" style=3D"box-sizing:border-box; display:inlin=
+e-block; max-width:100%">
+<span class=3D"x_gmail-C9DxTc" style=3D"box-sizing:border-box"><br>
+</span></div>
+</div>
+</div>
+</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+--_000_IA0PR02MB97794101435573BAA2200F9BB3E8AIA0PR02MB9779namp_--

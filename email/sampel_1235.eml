@@ -1,0 +1,883 @@
+Received: from LV2PR19MB6032.namprd19.prod.outlook.com (::1) by
+ MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Sun, 3 Sep 2023 00:55:31
+ +0000
+ARC-Seal: i=3; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
+ b=aWsD125qZkKbZj0ggaCXnTwP7uceBMIB/aIsiE9ybHNhF8otZlQAEaPLQnVJDgUGug4bkDnYuEoUPRVH5gOZRjHxirXjG6QnQO7K2DeHQ3tOEV0voNwfMJHhkClIvVR4PUFahB4PR6onX0RKXyYZFtB4GNBJQtzr2jEBwV6Tbfs1EeWpBAZ5E+z5SISgS/32/KxMweSxqP6kG+igsU+SaZdrYq9OmxLcD1zMUJtAHuZPklpBM+st9AerQnJp5sWVU2PMzNd9lAuWtzWey0m7Z6c4GIFg53b5SBJIXuZ8XEISV7Hm6vsOeanfQC8HeVtsdR+8ustbd41CK5HzNvBd2Q==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rUqDQf4CycI/H15VHx7NslLY9r7/zAxBM8UkjCRK5Pc=;
+ b=aGDMLZjPWg48pVE6nOd8rZh7+r4jOY8PlLqG5JoudLgAQfX5kqs4eSktXu2XDyZcnuNk7TvS1pefArYaezOibJPFj3ijYj9aZfCDrSfK+n4697+XmCsXGxpwfNEPN0MWO/dQqLYRG+zPuo80VrGrBDVfDMAKXH/vgHMBI+i9Cxdr2qlP4yJnYLyk9xpapxKpbkolYQCDK+zWkPDucL+mCXCl2KEMAsxnZ1Jhhid5FSGDBx4BQpytrx1NltGX2PmetNUpzeSwcvEOGOw5nqXlqSbp3iXqefzbZlOEo1uJ2wGbYr1WdBaU647wrmCLG/GSs5MyevgJk5PAhgPCbUnF0Q==
+ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=pass (sender ip is
+ 209.85.222.173) smtp.rcpttodomain=hotmail.com smtp.mailfrom=gmail.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=hotmail.com;
+ dkim=pass (signature was verified) header.d=hotmail.com; arc=pass (0 oda=1
+ ltdi=1 spf=[1,2,smtp.mailfrom=phishing@pot]
+ dkim=[1,2,header.i=@hotmail.com] dmarc=[1,2,header.from=hotmail.com])
+Received: from BYAPR07CA0045.namprd07.prod.outlook.com (2603:10b6:a03:60::22)
+ by LV2PR19MB6032.namprd19.prod.outlook.com (2603:10b6:408:17f::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.27; Sun, 3 Sep
+ 2023 00:55:29 +0000
+Received: from DM6NAM10FT078.eop-nam10.prod.protection.outlook.com
+ (2603:10b6:a03:60:cafe::b7) by BYAPR07CA0045.outlook.office365.com
+ (2603:10b6:a03:60::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.29 via Frontend
+ Transport; Sun, 3 Sep 2023 00:55:29 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.222.173)
+ smtp.mailfrom=gmail.com; dkim=pass (signature was verified)
+ header.d=hotmail.com;dmarc=pass action=none
+ header.from=hotmail.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates
+ 209.85.222.173 as permitted sender) receiver=protection.outlook.com;
+ client-ip=209.85.222.173; helo=mail-qk1-f173.google.com; pr=C
+Received: from mail-qk1-f173.google.com (209.85.222.173) by
+ DM6NAM10FT078.mail.protection.outlook.com (10.13.152.135) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6768.22 via Frontend Transport; Sun, 3 Sep 2023 00:55:29 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:BD3AA27F4F66F2CACC2749FE6451F8D148063C2A13C883E97EBF521F466DE95B;UpperCasedChecksum:FA09B3C07A7D7207FB6804E31CC8004CE5082A7F4C70036D0219EB74062B4203;SizeAsReceived:11502;Count:59
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-770627a7316so23660985a.0
+        for <phishing@pot>; Sat, 02 Sep 2023 17:55:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693702529; x=1694307329;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:importance:thread-index:thread-topic
+         :subject:to:from:dkim-signature:delivered-to:x-forwarded-for
+         :x-forwarded-to:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rUqDQf4CycI/H15VHx7NslLY9r7/zAxBM8UkjCRK5Pc=;
+        b=PhUW11UJLIyWOggqS/nrj01w3I5+wHxkmGdZ804HnePqJOlHRGqRNDt/9m8c75zsPQ
+         ReHK/64v6hXsb5A7XurQ2wc5wrKg2j/QtQR7y52DhcswmuxY0Z8NEw5ekk6G9+jmgQcU
+         Qsxc4dm7g3X7Z6wVU3pxcZlvpqXji2KzmkRvJixScRGJqIrFMIAhjytC5m+P8eACjKnF
+         AyZ0oeBVtblVJedCd+w9ETtClQpVexcHl+FC3ncaFup0v+CJkCcnHpg2z4l1T9p/+s4V
+         FY+xfeqjuDuk9Igv8R4IOpF6kUs1jnXXpmFMELSBlMF24VmmiZPp+cmgilDaaQHQow7t
+         U7sA==
+X-Gm-Message-State: AOJu0YzwLlDwQ+eSf2/eHkcFxSa3+eSVkspnaLIgCPSe0XIpwbvEAgrq
+	jPxOc+sHNoepBzknM27ujwoC5+ecNGZcsdZ66pXUOn4v0RpE+9K77A==
+X-Received: by 2002:a05:620a:199d:b0:76e:fd91:5f6f with SMTP id bm29-20020a05620a199d00b0076efd915f6fmr7381467qkb.37.1693702528826;
+        Sat, 02 Sep 2023 17:55:28 -0700 (PDT)
+X-Forwarded-To: phishing@pot
+X-Forwarded-For: phish.me.again@gmail.com phishing@pot
+Delivered-To: phish.me.again@gmail.com
+Received: by 2002:a59:b96f:0:b0:3f7:5ee5:1e91 with SMTP id w15csp426752vqx;
+        Sat, 2 Sep 2023 17:55:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEfi0h95m4x32elYyPoTQlEXxp+VP3Zz+MJLaySWe69oAAspCXbd1V8Z5xkGs3a5KYIFrW+
+X-Received: by 2002:a05:6830:148a:b0:6bd:b40:8912 with SMTP id s10-20020a056830148a00b006bd0b408912mr6481596otq.35.1693702526678;
+        Sat, 02 Sep 2023 17:55:26 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1693702526; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=eJDkuLlksWIwlcyJbyRXrpAJ0cqs/JrjHNGvDIce46S88eLZqUTdrtNvFdUhwymZfU
+         bwm2PUdGR20VBBOAh/5+2dTLJlcrs3a7X22XQPNalTfxNkBFdtx36VX8cogC2zK5MUtV
+         RZdRgLK78BqEG7Hm4wolgQE3Hu7WfmbWrawneauCB8W4HxwUJXt2zZY96cLbOFK54YK5
+         U2YE6aA8v5Y61oX0MzzxMgWG72aP57HfhKIC6PMhoPOCYJwcbYjS7NTSkthyQeDZbkS5
+         Zd4u5j2GTq6wQ0oKEt/RzjtkGTPE+J8QZ18kJjd1MwL5XKxa6NidTazdvt7OQlFkmlP2
+         7WBg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:importance:thread-index:thread-topic
+         :subject:to:from:dkim-signature;
+        bh=rUqDQf4CycI/H15VHx7NslLY9r7/zAxBM8UkjCRK5Pc=;
+        fh=UETxh7Fu2EGjYUB1TKqvJnbisEPhC7fobl4HgFgZ4OQ=;
+        b=pBx0itD9RiNCvjk3ghso99XnvEHWV3SGsV+VHkH2Dw8Lf18pttsQ6G3m9dR6Zqz0X5
+         d2vWfUPC7x5TgVKwuVxkHDkv2yRAZabe/cTncxd2U/+6AzaakbNud2IG5JIQbZi+js2S
+         iK+svJS9V/DA/2RsYhqfqwWs6cAM0Npdp6Jl103V77kVZtG0lIBfBvz4tzGzX1YFrVen
+         kHrrn8n5TIpxC5g3S2FroPJvUY7NGxZp/dP3pVDfa5+cMKYjS9EaYjEH5i2x4icCwovt
+         3FjsUEnObtN5jfTBGr9zGhNpFg7ERUMqqH1Irs1Rg+UYj6kIGodqr97wRGGzXf6xu0HL
+         lkUw==
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@hotmail.com header.s=selector1 header.b=Xvr9WiJs;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of phishing@pot designates 2a01:111:f400:7eab::826 as permitted sender) smtp.mailfrom=merciayanmact@hotmail.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=hotmail.com
+Return-Path: phish.me.again+caf_=phishing@pot=hotmail.com@gmail.com
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11olkn20826.outbound.protection.outlook.com. [2a01:111:f400:7eab::826])
+        by mx.google.com with ESMTPS id s19-20020a056a00195300b0068a2c03fb92si5211279pfk.397.2023.09.02.17.55.26
+        for <Phish.me.again@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 02 Sep 2023 17:55:26 -0700 (PDT)
+Received-SPF: pass (google.com: domain of phishing@pot designates 2a01:111:f400:7eab::826 as permitted sender) client-ip=2a01:111:f400:7eab::826;
+Authentication-Results-Original: mx.google.com;       dkim=pass
+ header.i=@hotmail.com header.s=selector1 header.b=Xvr9WiJs;       arc=pass
+ (i=1);       spf=pass (google.com: domain of phishing@pot
+ designates 2a01:111:f400:7eab::826 as permitted sender)
+ smtp.mailfrom=phishing@pot;       dmarc=pass (p=NONE sp=NONE
+ dis=NONE) header.from=hotmail.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=YtMdSGDC/IoLtLyRMgt5He0FzatLUEdSzWiJOcP/xY0Sr4jI+IJCAlEQbRuTNITENkq8XKQJ6Vgm27TGBn7b+W3MO/+o0RBPN5QjZkC/lLrHQvtzdwLpPEOV8wckZhP5CHnL6I4+SKybQSaLwhjqyGpqN8uf6Yh7jwzvURKkLGiwAVedOQDghwoadoWo7VIN0QMIUWI+KJO3DFUt3hi7Qv/hpd5TkZDAZRtbdYtv3jtmP+fC672HPod6t215QvyDPQ+bdj9g4/5R1PdzEYCLDeFOYutdflvWBGypq39t9s2UZP0BnDZSqw6+1UFIh885UdQikcw7dQ8lt5puE7otOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rUqDQf4CycI/H15VHx7NslLY9r7/zAxBM8UkjCRK5Pc=;
+ b=JTrSrH+HvgyjGQf/ujAGROOSoAzPBvPUxxj9hxKJq8uwmhSPlORCh4I2FsHmg3NnzVLE8E2j4YPauQ2pdIcNAtmK0eVdtf5T7Z7GthUieY4VZlHu6jNdc7E3v0Gk1S3U7zTeQ9fb6Rl0dh8US1iQ7GoXKuKux9wd0opuhM8JuY+cUfeyxDIFOyaVG1rJ01ayvSoxn0uyubLSxaVtO3mIQCUcIPqVZGwAovXfWtxPcNyHDEXUFXCN9opawUxyHxppa4jYwFUQ1sUn2nvyIBqNh3rM03xywEk/B3p88YSakT7lCKrYdx5HgCoiaVhk0bAHv8aRkyUfVk5pqCyXHqS/bQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rUqDQf4CycI/H15VHx7NslLY9r7/zAxBM8UkjCRK5Pc=;
+ b=Xvr9WiJsUFd8RV1PGGBWRFIKMs2j31UaEdQh6sYEgtaP5aJlrhrOXorPQcyWDQb+CLRYaM2TiPWmTCNSiwGU6mYPfEUSkLTcFLq7QuaYbOp4yubWhFqiPoHSJQ9JddnwKWsTAPiIZvqR1mDCfAC9wrMzrz151vnUC1sHn50/YmhmEXJESbf9aHArktiT80hdER3pnqiJI5rEFl1mmCDzPDu+tfBJOiH/pNgIUrxgcgpgmt6I7ldnAU+kUTI01wajOiNACbmbGY7Kj7lzs681mhp46P/7qmqfEkhPERYPNuy20BGz6nUjdwUUErUuQtDhR1G42q8/Z3jmih3NH14OXw==
+Received: from IA0PR02MB9779.namprd02.prod.outlook.com (2603:10b6:208:48b::12)
+ by IA1PR02MB9160.namprd02.prod.outlook.com (2603:10b6:208:42b::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.28; Sun, 3 Sep
+ 2023 00:55:25 +0000
+Received: from IA0PR02MB9779.namprd02.prod.outlook.com
+ ([fe80::f44d:dc0d:8247:8ee4]) by IA0PR02MB9779.namprd02.prod.outlook.com
+ ([fe80::f44d:dc0d:8247:8ee4%4]) with mapi id 15.20.6699.034; Sun, 3 Sep 2023
+ 00:55:25 +0000
+From: phishing@pot <phishing@pot>
+To: "phish.me.again@gmail.com" <Phish.me.again@gmail.com>
+Subject: Fw: The 6 Best Ways To Easily Make Money on Swagbucks (paid out over
+ $923 million until now)
+Thread-Topic: The 6 Best Ways To Easily Make Money on Swagbucks (paid out over
+ $923 million until now)
+Thread-Index: AQHZ2JrjE9HEhCT/kUCgq1M47CeBu7AIUWsn
+Date: Sun, 3 Sep 2023 00:55:25 +0000
+Message-ID:
+ <IA0PR02MB9779C7DFA73BA7954BB37E77B3EAA@IA0PR02MB9779.namprd02.prod.outlook.com>
+References:
+ <e4a4691f-8ec2-4a89-8668-c570cee1acf3@MW2NAM10FT092.eop-nam10.prod.protection.outlook.com>
+In-Reply-To:
+ <e4a4691f-8ec2-4a89-8668-c570cee1acf3@MW2NAM10FT092.eop-nam10.prod.protection.outlook.com>
+Accept-Language: pt-BR, en-US
+Content-Language: pt-BR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [QsPbwloDpO7V59ieQsgdR4/OmtfFjUuR]
+x-ms-traffictypediagnostic:
+ IA0PR02MB9779:EE_|IA1PR02MB9160:EE_|DM6NAM10FT078:EE_|LV2PR19MB6032:EE_|MN0PR19MB6312:EE_
+X-MS-Office365-Filtering-Correlation-Id: cb1dffb5-6e34-499d-82ec-08dbac1877c5
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original:
+ aFIGY/k4VnbybZdps2L42/UTvYBG7+JD2sA7V4BB1VkbnDxwhmsfztp4C95Qe1eJBH6UTGMl7dtupUY5DD44FG89Uh8OTAMEl+TaimIcBCdDuaVERpi+BZnQR2Bd+graTLOv+GrC8PFf6LrgFS+tadJVV9qaYBvwlEHHBpOitHmmneBQxQxgq/QWYm5VbtjeGUHSZZjqcObVi80lDAJHSqd6yFkoLHbIFp4tE/elkmghakx9a6AR85gqaIpp+e4ceCeDwU0EyErU5qNWbIbopqbcO19OA5qVD4id6SkI0xQAAaMl9NR9biZThX6Lh4mZ+yOsTFHUxQclYm3nsViTFat/rMpLas9vSVUVbVzGeRPA4o106dBJ4soej1UyLQLITJD7rJVlgbnKkSv351flvax3DyxGmOr9buZjg4QrAizoR62YWWKT/pyOvjjKFQFR4W+jMj/q+8yDXK9H2csCWYNVA76Hi5KTNt20U8+KvwJ3lTzFff4tmBqVR5tz1w8qbRiCx9f7JiEbf0X2OAg79WbNb7nRueivTCJ2WSGH3M40Vc5nY0qYYFcqaof09aPJsZwY4+ZuMWE2rlxSkbHF0KQ+yU9ACrhamKthU/u//Y1pV0m93HTmDswkQEr6s59lwI2jP3jHilOoRR0hpJoYNzgyqvzzELmc7Cl9WB/7nQc=
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0:
+ =?Windows-1252?Q?zUdhnGAolgVSJmYTmnGgt42Q/m3DF0HpXK1PBWQDxEmmkSGTVz6TG3S6?=
+ =?Windows-1252?Q?5IjvPlD5NvHBDGxKAruYxKHSFIhjUGym1Dfeq+UyHQTX3qOfYhWntk44?=
+ =?Windows-1252?Q?x6baUwFx/83NJNcXsowpRi9OrvIt0zgPXA8WzmV7nzK/40mFmn0tJhy4?=
+ =?Windows-1252?Q?a1nw7cs3NfkWV6k0XxM42buvjXAUU75F1mamfoCPhe4i1DTogXzVSDHB?=
+ =?Windows-1252?Q?08gVTiDWL18PI5Lvr+3VHxaBPqAVxINyuZkwTdfDT3+BeMeead7jA75z?=
+ =?Windows-1252?Q?yyAbiLgHCb4D/8JCKFORlWfwf6SKUJ3GKqYQm3s2Jrja/TEizi1B+0nA?=
+ =?Windows-1252?Q?LQAJO1+Z0XAhbEG+Y5Z7noyzf9glxR0VrUHgzRx5t9t35TYCYGgBoJ4N?=
+ =?Windows-1252?Q?MmlU+C492q6qel9PYBU8yXVDR18lhMxGnusHePlKMrYk0vRT4yyANZ5s?=
+ =?Windows-1252?Q?GwuRHMQicpBaOLec91rTDLwhF8AF3OfunyFQPnbtS/KowL58sc0YYjeI?=
+ =?Windows-1252?Q?Kf3xMKiSVpQ+GVnILbTZSPepGpDVPdzFo9Nlm1pH7+pgOyEKY9Rj8nht?=
+ =?Windows-1252?Q?2QuleYx4okr90QqadRa86eTSfykrD4PKZCkE0Jw91GCJ5nOxeXeSE6iS?=
+ =?Windows-1252?Q?8+B8KM1WM59Zt/ezNDky1s0kK0Bdq1LzXRnaacI2E0gJdS+2yDHX7ErH?=
+ =?Windows-1252?Q?aD5TUW1En50KFSfXnU/2E9v47T4FjMeIp9ErXByOJGjQOclmctEc7Stl?=
+ =?Windows-1252?Q?yazxkNOBPmV2lNET4R6aspOuC87reXx0sndTinIV99Ulj6L/bqeEPP3F?=
+ =?Windows-1252?Q?6n98IgjnpxW4+DHRx8S7wgAywIZ6gRBbOuYu0QG0Y+MQg2Mx5pIdQF+B?=
+ =?Windows-1252?Q?WFyV4CSgTc+0u42xpJctApU5kPRuVPZf9ULWIA8IrJ81m7he/ydPkdV2?=
+ =?Windows-1252?Q?whxLBUlsCP3JQYWAtmPFzSo3PH3S6dNVKlRrwwJcgjLy+TJFQoL/TsQA?=
+ =?Windows-1252?Q?CIN+rNIsZUMnFvgRe0GBpV94p4nhrtFwh0v/+mOvwT68BmisrLrjBsiB?=
+ =?Windows-1252?Q?3CN8nXWKs+oNBZ2MDYdpEsuSE1L/Lt7KSe2lOvwNemjSeG7TU6+HeyjG?=
+ =?Windows-1252?Q?LqnHCfMwA3iVD08HkxwvD6S6Jq+1arkeVIP9tAv0+kH8kG6S+9MDuJbu?=
+ =?Windows-1252?Q?TWVpf5nuIHCRpgEJ1QzNHZFd536oYWjZ/ezXCM05VbQtR4LiKj/7Wybi?=
+ =?Windows-1252?Q?M4CEif/PxCe7HC9KIq8uowJ6jkVrh4OwCn6vjYe3FCdG33Gw4dKQ75fA?=
+ =?Windows-1252?Q?kcBeCA=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_IA0PR02MB9779C7DFA73BA7954BB37E77B3EAAIA0PR02MB9779namp_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR02MB9160
+X-IncomingHeaderCount: 59
+X-MS-Exchange-Organization-ExpirationStartTime: 03 Sep 2023 00:55:29.1682
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ cb1dffb5-6e34-499d-82ec-08dbac1877c5
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ DM6NAM10FT078.eop-nam10.prod.protection.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ DM6NAM10FT078.eop-nam10.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 9/3/2023 12:01:17 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ 8a7a54a9-c5b5-445d-8667-08dbac18756d
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 209.85.222.173
+X-SID-PRA: MERCIAYANMACT@HOTMAIL.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-PCL: 2
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2023 00:55:29.1213
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cb1dffb5-6e34-499d-82ec-08dbac1877c5
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ DM6NAM10FT078.eop-nam10.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR19MB6032
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.7864270
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.6745.026
+Importance: high
+X-Priority: 1
+X-Microsoft-Antispam-Mailbox-Delivery:
+	wl:1;pcwl:1;ucf:1;jmr:0;ex:0;auth:1;dest:C;OFR:CustomRules;ENG:(5062000305)(920221119095)(90000117)(920221120095)(90012020)(91020020)(91040095)(9050020)(9095020)(9100341)(944500132)(2008001134)(4810010)(4910033)(9610028)(9560006)(10180021)(9414026)(9310011)(9220031)(120001);
+X-Message-Info:
+	qZelhIiYnPm46+RaX/rd+aSlJVUGgkKauDA3F9OljycWtozx+Bh0CWH2inHO4bOyFbUgtltZ81KdXxX5A3xQAqRkpPfebgFOBPqnbb8D+qp5YuV4rnksi41P/xEEubvCBOTNVWjWHLTvYIsJpO742dHWI5P+HZ3cryMW8MHEUhki+myOfGLuEh4JTQyA5ZlD1a/xJGxhzQlDwnTNPm0uIA==
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0yO1NDTD0tMQ==
+X-Microsoft-Antispam-Message-Info:
+	=?Windows-1252?Q?CI7BkN2L5bTmZmpWlj9F7/bbPEcB34jgckIHPwgh1UTAzvA5zu18ibnM?=
+ =?Windows-1252?Q?GvodI8KIQJqgqDnetYsy7a2PbIhF9pszUrVSNEs4Vrhk6nM0RMaxAxDI?=
+ =?Windows-1252?Q?NzYbMllwYe2lqadUN3aw6UdXGZE3hplJebVC1JAEif/vBC1gpK1bn+wl?=
+ =?Windows-1252?Q?EC2vxEndGS0EFn+2VZN0rqGQ4lnQjZ7bfzV3Iz45ZBaMaVnuU3EImARS?=
+ =?Windows-1252?Q?CNVfhOVetw64pIaJ8HKY7zJwNSheSNdcYqzoXz8f1bBUtuW9+LVilPWP?=
+ =?Windows-1252?Q?MT5zdwXb42ycg13A1qPaMK1Cx/8H0XQQFDgLndUrN/CRPR5rx+hXOpty?=
+ =?Windows-1252?Q?tSOcTO2kYPCdR4t/XI0nUPm4GM1KYlvefHebqRU63Sf6CAugt+irQCZ8?=
+ =?Windows-1252?Q?BKdie0EvX9tUyTVBLWvQPRa/EfP8qTRaOszh7RncS/mpz9QMYIYSE/RT?=
+ =?Windows-1252?Q?zRf87/rCoPwIsAUl5jAsfx5rxAkjBTZr8oOUYO8+KhZsO0VdEmd2wkhC?=
+ =?Windows-1252?Q?9+3VY2PRj8pnZ4x+xFEXEg/jDZGPx8gj+brHVScg6CCUDyPtBY0oWBZA?=
+ =?Windows-1252?Q?pDln47qxtctvSUBcJxufSKTRrEZqAIb54t7Ct9tkdETxHJO8wb9mtGq6?=
+ =?Windows-1252?Q?P+37+T7W2V06zXgM29mJH5J51Nrm4JJJKv9j+IQg987YTnWuXVCIpr9m?=
+ =?Windows-1252?Q?z2VshkjEWVofoLxEuPjy5XQiUPeU5KI8VoDdBebCfZmClAmmOm4pavjS?=
+ =?Windows-1252?Q?fzwkDGjvGMrqXWLNl1gwY25qIUxEpesdl2hIxFbMG25MiuCY79+qY9w7?=
+ =?Windows-1252?Q?B3wYgwzQTbZ8dDkMeocrHdJ5MCzdTin2uKu9mTc7KDm9d02Qx8W6E+nb?=
+ =?Windows-1252?Q?Jp2BuEC0AF3LNuokChWmqu6K1fbGaLJkkDYz46PlaA9TmtZK49ysg0kk?=
+ =?Windows-1252?Q?JdSYm+U5BIwz6duScrZEP6rGaQz+PGxcmxH4sXbDyGIc9Po5i/kbYz6D?=
+ =?Windows-1252?Q?PhWdE+KYlOHVi+r6QuRc0BUuH4nUxGvBS4oZ2IpsivQtj1XTqoGP1z1o?=
+ =?Windows-1252?Q?YAiIxP/ZxMy7nHd/W6g21iH6YY9wZG9nEuEUt3HvRQHhLKzedd/X8f96?=
+ =?Windows-1252?Q?VfWTIovXc+cDTDq0nGpz/qmyKOcVqBxq9DLqgUzhbuqth2p6cEI8gOX7?=
+ =?Windows-1252?Q?9Tqed39EKqz1IlHYsD89fg5zoyY9aWIovmZDhVZFZhOiwhYy9CTX/tI6?=
+ =?Windows-1252?Q?4B+u0OMRVu2d+PHuDfr51N2qA7iRLcsP8ynmcwmwYOI/TBHrRV6vBKxW?=
+ =?Windows-1252?Q?aaJ3wzzDCSICxoSreBCcX1VT9sSwgtl4yhuzHVIbGo1MGV4WmGg8qzEs?=
+ =?Windows-1252?Q?znSXEXW3MG0AWneI7cHBK1FspM8kny314ybFUb2JI2MRe1rl1STX7YGz?=
+ =?Windows-1252?Q?bWkftQNmtPZTqiew1Oes63itQmxAgoMy330HdFA4wqTAmm+ZsEwlgG89?=
+ =?Windows-1252?Q?Ktmqh127y8bkybTJqLqktwoO0aasSJVR+Zdqs19hDteFn0MYGybLhiLI?=
+ =?Windows-1252?Q?ymEAwG3P58tXoBs9ZcAnhemRap+B8NTQMmeQBwhLG4LpkLyYExeeEeR8?=
+ =?Windows-1252?Q?MD/PWv4fM1NySWpriY61YOsoyhKIj44D/rgB50kC6RBwFmCp+kbVN5y0?=
+ =?Windows-1252?Q?KEAfOs2CyE9WF+R+RwgWq9WFgktsRHvqiLF8TSzW08TxFbFTPDBp8bS6?=
+ =?Windows-1252?Q?4P8jfIuua8P73zp+trE4bGwKw10RM3D9mhG/cw5IhRsGP87rb78/feRd?=
+ =?Windows-1252?Q?nU2EOG7pCoYZD9II9g6HHAoYZqnOpibtPYMD8mKAQ0Esuliusg8ZrnQF?=
+ =?Windows-1252?Q?oVjuQN5Vg4bI0EPeSr2o3Um6Wwy2WatTzvhY2zP3r0pQByc9wE/TJ2Jn?=
+ =?Windows-1252?Q?MHUyu8Uvl3sdT4z2Y+Ht8EdgInVJ24BgOVwsDx/pXl59MFSgzxD6dQxg?=
+ =?Windows-1252?Q?ZMjsodYifehnx/ac3AV8qPTT+Pv02gjDIbDJeTHYRBMlpwiIc8gOqU78?=
+ =?Windows-1252?Q?oRmbRrkwxkIfvAvPmb+H3XZEW7amOdX1yh38/EhJ5+2ZlJ/IR8NLyv7S?=
+ =?Windows-1252?Q?XZ0QIAUH/QNP4xIBE5Yn4bDvn0KAIuLntRjTBB2mEs7mi8i6rkL6YJ6j?=
+ =?Windows-1252?Q?31Xx7T+lVng=3D?=
+MIME-Version: 1.0
+
+--_000_IA0PR02MB9779C7DFA73BA7954BB37E77B3EAAIA0PR02MB9779namp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+
+________________________________
+De: *****Swagbucks*****
+Enviado: domingo, 27 de agosto de 2023 00:59
+Para: phishing@pot <merciayanmact@hotmail.com>
+Assunto: The 6 Best Ways To Easily Make Money on Swagbucks (paid out over $=
+923 million until now)
+
+Hello,
+
+Please if you have not signed up yet on Swagbucks it is better to sign up h=
+ere<https://www.swagbucks.com/p/register?rb=3D147927097&rp=3D1> before star=
+ting the 6 Best Ways To Easily Make Money on Swagbucks, just to better unde=
+rstand all the methods and options on the Swagbucks website.
+
+Here is a quick overview of Swagbucks<https://www.swagbucks.com/p/register?=
+rb=3D147927097&rp=3D1> and reward sites in general if you are unfamiliar.
+You can make money online by participating in a number of activities on the=
+se websites. Online purchasing, completing surveys, watching videos, playin=
+g games, and signing up for offers are a few typical methods.
+
+With Swagbucks, you are rewarded with points known as SBs. Then, you can ei=
+ther use your SBs to obtain cash through PayPal or exchange them for gift c=
+ards to retailers like Amazon. Each SB is valued at around one cent.
+
+While there are many other rewards sites like Swagbucks, few compare in ter=
+ms of size, popularity, and reputation. In fact, Swagbucks has now paid out=
+ over $923 million<https://www.swagbucks.com/p/register?rb=3D147927097&rp=
+=3D1> in rewards to its members since it was launched in 2008.
+
+Here are the strategies that, in my opinion, work best if you want to earn =
+SBs fast.
+
+#1. Shopping Online
+Another simple way to earn SBs is to shop online, especially for purchases =
+you were already planning to make.
+
+Although these deals are uncommon, cash-back rates can reach up to 20%; at =
+big stores, rates normally range between 2% and 10%.
+
+If you receive 5% cash back on average on $500 in purchases each month, you=
+ will have earned $25 in gift cards or $300 in gift cards over the course o=
+f a year.
+
+To increase your Swagbucks earnings in this manner, you must:
+
+  *   Buy only what you would have bought anyhow to avoid blowing your mone=
+y trying to rack up points.
+
+  *   Look at the merchants that Swagbucks is promoting because you=92ll fr=
+equently find offers with discounts of over 10% there.
+
+
+#2. Sign-Up Bonuses
+For earning SBs fast, signing up for different services comes in at a very =
+close second place, just behind money makers.
+
+For example, current offers allow you to earn SBs by signing up for Chime (=
+a free online bank account), Rocket Money (a budget tracker with other mone=
+y-saving tools), and Acorns (a micro-investing app).
+
+Signing up for various services is second only to money producers in terms =
+of how quickly one may earn SBs.
+These sign-up bonuses are primarily for financial services.
+
+For instance, current promotions let you earn SBs by signing up for Acorns,=
+ Rocket Money, and Chime (a free online bank account with other money-savin=
+g features) (a micro-investing app).
+
+The advantage is that you typically don=92t have to pay anything upfront, u=
+nlike with money makers.
+
+#3. Money Makers
+By far, using so-called money makers is the fastest way to accumulate SBs.
+
+With a money maker, you can truly make money by making an upfront purchase.=
+ Subscription services generate the majority of revenue.
+
+As an example, you can sign up for Hulu/Disney+ for $12.99 through Swagbuck=
+s, and that deal could allow you to earn 1,800 SBs (valued at $18).
+
+#4. Surveys Worth 200+ SBs
+The best part of taking surveys is that they typically pay right away.
+
+The preceding methods could result in a delay of a few days or weeks before=
+ your SBs are credited to your Swagbucks account.
+
+But with surveys, you can log in today, take surveys, and see the points in=
+ your account shortly thereafter. The drawback is that taking surveys won=
+=92t get you rich.
+
+First and foremost, it=92s important to understand that not all surveys are=
+ created equally.
+
+The surveys worth more than 200 SBs are the best, according to my research.
+
+These opportunities are scarce. But it=92s best to stick to these if you wa=
+nt to earn more money from surveys than the minimum wage.
+
+To find the highest paying surveys, just pop into the =93Answer=94 section =
+of Swagbucks and look for the surveys that pay the most in the least amount=
+ of time.
+
+#5. Referrals
+With Swagbucks=92 robust referral program, you may accrue points over the s=
+hort- and long-term.
+
+When your friends sign up and make 300 SBs in their first 30 days, you=92ll=
+ receive 300 SBs.
+
+The best thing is that for as long as your friends are members, you will al=
+so receive 10% of their SBs.
+
+Be sure to encourage your friends to download the browser extension <https:=
+//www.swagbucks.com/lp-savings-button?cmp=3D695&cxid=3Dswagbuttonref&rb=3D1=
+14269874&extRefCmp=3D1&extRb=3D114269874&lang=3Dfr> as well. By doing this,=
+ you get an additional 100 SBs, increasing your total earned via signups to=
+ 400 SBs.
+
+#6. In-Store Deals
+A more recent Swagbucks feature is in-store discounts. And based on the ava=
+ilable deals, they provide some fantastic opportunities to make money off o=
+f regular purchases.
+
+Like the online money makers mentioned previously in the post, there are ev=
+en a few money-making opportunities where you can really earn more SBs than=
+ the item costs (or very close to it).
+
+To find the best offers, head over to the =93In-Store Deals=94 section and =
+sort by cash-back amount. This gives you a list of the offers with the most=
+ potential. From there, try to find an item you were planning to purchase.
+
+You must then upload your receipt to Swagbucks from there (this is where th=
+e Swagbucks app, which is available for both Android and iOS devices, comes=
+ in handy).
+
+signing up<https://www.swagbucks.com/p/register?rb=3D147927097&rp=3D1> now =
+and Start earning money easy and safe with Swagbucks<https://www.swagbucks.=
+com/p/register?rb=3D147927097&rp=3D1>.
+
+                                     If you'd prefer not to receive future =
+emails, Unsubscribe Here<https://bit.ly/3OKKeaI>.
+                                            339 Garden Oaks Blvd #67916, Ho=
+uston, TX 77020
+
+--_000_IA0PR02MB9779C7DFA73BA7954BB37E77B3EAAIA0PR02MB9779namp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+</head>
+<body>
+<div></div>
+<br>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>De:</b> *****Swagbucks*****<br>
+<b>Enviado:</b> domingo, 27 de agosto de 2023 00:59<br>
+<b>Para:</b> phishing@pot &lt;merciayanmact@hotmail.com&gt;<br=
+>
+<b>Assunto:</b> The 6 Best Ways To Easily Make Money on Swagbucks (paid out=
+ over $923 million until now)</font>
+<div>&nbsp;</div>
+</div>
+<div>
+<div dir=3D"ltr"><span style=3D"color:rgb(0,0,0); font-family:Calibri,Arial=
+,Helvetica,sans-serif; font-size:16px; margin:0px"><span style=3D"font-size=
+:11pt; font-family:source-serif-pro,Georgia,Cambria,&quot;Times New Roman&q=
+uot;,Times,serif; margin:0px; letter-spacing:-0.06px; color:rgb(36,36,36)">=
+Hello,</span></span><span style=3D"color:rgb(0,0,0); font-family:Calibri,Ar=
+ial,Helvetica,sans-serif; font-size:16px"></span>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; font-family:source-serif-pro,Georgia,Cambria=
+,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06p=
+x; color:rgb(36,36,36)"><br aria-hidden=3D"true">
+</span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; font-family:source-serif-pro,Georgia,Cambria=
+,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06p=
+x; color:rgb(36,36,36)">Please if you have not signed up yet on&nbsp;</span=
+><span style=3D"font-size:10pt; font-family:source-serif-pro,Georgia,Cambri=
+a,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06=
+px; color:rgb(36,36,36)"><b>Swagbucks</b></span><span style=3D"font-size:11=
+pt; font-family:source-serif-pro,Georgia,Cambria,&quot;Times New Roman&quot=
+;,Times,serif; margin:0px; letter-spacing:-0.06px; color:rgb(36,36,36)">&nb=
+sp;it
+ is better to&nbsp;<a href=3D"https://www.swagbucks.com/p/register?rb=3D147=
+927097&amp;rp=3D1" rel=3D"noopener noreferrer" title=3D"https://www.swagbuc=
+ks.com/p/register?rb=3D147927097&amp;rp=3D1" id=3D"x_m_-9029084936280588455=
+m_4829129312335911603m_8939208334263855724m_3678734819309245084m_-915394062=
+8079370113m_-8127600598268260782m_-2725724787703871421gmail-OWAfd6a396c-0db=
+d-f8be-56bd-e18693739ca1" target=3D"_blank" style=3D"margin:0px"><span styl=
+e=3D"font-size:11pt; margin:0px"><b>sign
+ up here</b></span></a>&nbsp;before starting&nbsp;</span><span style=3D"fon=
+t-size:11pt; font-family:source-serif-pro,Georgia,Cambria,&quot;Times New R=
+oman&quot;,Times,serif; margin:0px; letter-spacing:-0.06px; color:rgb(36,36=
+,36); background-color:rgb(255,255,128)">the</span><span style=3D"font-size=
+:11pt; font-family:source-serif-pro,Georgia,Cambria,&quot;Times New Roman&q=
+uot;,Times,serif; margin:0px; letter-spacing:-0.06px; color:rgb(36,36,36)">=
+<span style=3D"font-variant-ligatures:no-contextual; font-family:&quot;Goog=
+le Sans&quot;,Roboto,RobotoDraft,Helvetica,Arial,sans-serif; margin:0px; le=
+tter-spacing:normal; color:rgb(31,31,31); background-color:rgb(255,255,128)=
+">&nbsp;6
+ Best Ways To Easily Make Money on Swagbucks</span><span style=3D"font-vari=
+ant-ligatures:no-contextual; font-family:&quot;Google Sans&quot;,Roboto,Rob=
+otoDraft,Helvetica,Arial,sans-serif; margin:0px; letter-spacing:normal; col=
+or:rgb(31,31,31)">, just to better understand
+ all the methods and options on the Swagbucks website.</span></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; font-family:source-serif-pro,Georgia,Cambria=
+,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06p=
+x; color:rgb(36,36,36)"><span style=3D"font-variant-ligatures:no-contextual=
+; font-family:&quot;Google Sans&quot;,Roboto,RobotoDraft,Helvetica,Arial,sa=
+ns-serif; margin:0px; letter-spacing:normal; color:rgb(31,31,31)"><br aria-=
+hidden=3D"true">
+</span></span></div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif; font-size:15p=
+x; margin:0px; color:rgb(36,36,36)">
+</div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; font-family:source-serif-pro,Georgia,Cambria=
+,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06p=
+x; color:rgb(36,36,36)">Here is a quick overview of</span><span style=3D"fo=
+nt-size:20px; font-family:source-serif-pro,Georgia,Cambria,&quot;Times New =
+Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06px; color:rgb(36,3=
+6,36)"><span style=3D"font-size:11pt; margin:0px">&nbsp;</span></span><span=
+ style=3D"text-decoration-line:underline; font-family:source-serif-pro,Geor=
+gia,Cambria,&quot;Times New Roman&quot;,Times,serif; font-size:20px; letter=
+-spacing:-0.06px; font-weight:700"><a href=3D"https://www.swagbucks.com/p/r=
+egister?rb=3D147927097&amp;rp=3D1" rel=3D"noopener noreferrer" title=3D"htt=
+ps://www.swagbucks.com/p/register?rb=3D147927097&amp;rp=3D1" id=3D"x_m_-902=
+9084936280588455m_4829129312335911603m_8939208334263855724m_367873481930924=
+5084m_-9153940628079370113m_-8127600598268260782m_-2725724787703871421gmail=
+-OWAecc4283d-f5c9-9486-d108-630a5c95350c" target=3D"_blank" style=3D"margin=
+:0px"><span style=3D"font-size:11pt; margin:0px">Swagbucks</span></a></span=
+><span style=3D"font-size:20px; font-family:source-serif-pro,Georgia,Cambri=
+a,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06=
+px; color:rgb(36,36,36)"><span style=3D"font-size:11pt; margin:0px">&nbsp;<=
+/span></span><span style=3D"font-size:11pt; font-family:source-serif-pro,Ge=
+orgia,Cambria,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-s=
+pacing:-0.06px; color:rgb(36,36,36)">and
+ reward sites in general if you are unfamiliar.</span></div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif; font-size:15p=
+x; margin:0px; color:rgb(36,36,36)">
+</div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:20px; font-family:source-serif-pro,Georgia,Cambria=
+,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06p=
+x; color:rgb(36,36,36)"><span style=3D"font-size:11pt; margin:0px">You can =
+make money online by participating in a number
+ of activities on these websites. Online purchasing, completing surveys, wa=
+tching videos, playing games,&nbsp;and signing up for offers are a few typi=
+cal methods.</span></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:20px; font-family:source-serif-pro,Georgia,Cambria=
+,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06p=
+x; color:rgb(36,36,36)"><span style=3D"font-size:11pt; margin:0px"><br aria=
+-hidden=3D"true">
+</span></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:20px; font-family:source-serif-pro,Georgia,Cambria=
+,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06p=
+x; color:rgb(36,36,36)"><span style=3D"font-size:11pt; margin:0px"><span st=
+yle=3D"margin:0px">With Swagbucks, you are rewarded
+ with points known as SBs. Then, you can either use your SBs to obtain cash=
+ through PayPal or exchange them for gift cards to retailers like Amazon. E=
+ach SB is valued at around one cent.</span><br aria-hidden=3D"true">
+</span></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:20px; font-family:source-serif-pro,Georgia,Cambria=
+,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06p=
+x; color:rgb(36,36,36)"><span style=3D"font-size:11pt; margin:0px"><span st=
+yle=3D"margin:0px"><br aria-hidden=3D"true">
+</span></span></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:20px; font-family:source-serif-pro,Georgia,Cambria=
+,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06p=
+x; color:rgb(36,36,36)"><span style=3D"font-size:11pt; margin:0px"><span st=
+yle=3D"margin:0px"><span style=3D"margin:0px">While
+ there are many other rewards sites like Swagbucks, few compare in terms of=
+ size, popularity, and reputation. In fact, Swagbucks has now</span><span s=
+tyle=3D"font-size:20px; margin:0px"><span style=3D"font-size:11pt; margin:0=
+px">&nbsp;</span></span><span style=3D"margin:0px; text-decoration-line:und=
+erline"><a href=3D"https://www.swagbucks.com/p/register?rb=3D147927097&amp;=
+rp=3D1" rel=3D"noopener noreferrer" title=3D"https://www.swagbucks.com/p/re=
+gister?rb=3D147927097&amp;rp=3D1" id=3D"x_m_-9029084936280588455m_482912931=
+2335911603m_8939208334263855724m_3678734819309245084m_-9153940628079370113m=
+_-8127600598268260782m_-2725724787703871421gmail-OWAf9ea92b2-0068-3256-cd51=
+-05deacb669b5" target=3D"_blank" style=3D"margin:0px"><span style=3D"font-s=
+ize:12pt; margin:0px"><b>paid
+ out over $923 million</b></span></a></span><span style=3D"font-size:20px; =
+margin:0px"><span style=3D"font-size:11pt; margin:0px">&nbsp;</span></span>=
+<span style=3D"margin:0px">in rewards to its members since it was launched =
+in 2008.</span><br aria-hidden=3D"true">
+</span></span></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<br aria-hidden=3D"true">
+</div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; font-family:source-serif-pro,Georgia,Cambria=
+,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06p=
+x; color:rgb(36,36,36)">Here are the strategies that, in my opinion, work b=
+est if you want to earn SBs fast.</span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; font-family:source-serif-pro,Georgia,Cambria=
+,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06p=
+x; color:rgb(36,36,36)"><br aria-hidden=3D"true">
+</span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; margin:0px; letter-spacing:-0.016em"><b>#1. =
+Shopping Online</b></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; margin:0px; letter-spacing:-0.016em"><span s=
+tyle=3D"margin:0px">Another simple way to earn SBs is to shop online, espec=
+ially for purchases you were already planning to make.
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">Although these deals are uncommon, cash-back rate=
+s can reach up to 20%; at big stores, rates normally range between 2% and 1=
+0%.</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">If you receive 5% cash back on average on $500 in=
+ purchases each month, you will have earned $25 in gift cards or $300 in gi=
+ft cards over the course of a year.</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">To increase your Swagbucks earnings in this manne=
+r, you must:</div>
+<div style=3D"margin:0px">
+<ul>
+<li style=3D"margin-left:15px"><span style=3D"margin:0px">Buy only what you=
+ would have bought anyhow to avoid blowing your money trying to rack up poi=
+nts.<br aria-hidden=3D"true">
+</span></li></ul>
+</div>
+</span></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<ul>
+<li style=3D"margin-left:15px; font-size:11pt"><span style=3D"margin:0px; l=
+etter-spacing:-0.016em"><span style=3D"margin:0px">Look at the merchants th=
+at Swagbucks is promoting because you=92ll frequently find offers with disc=
+ounts of over 10% there.</span></span>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+</li></ul>
+<div style=3D"margin:0px"><span style=3D"font-size:11pt; margin:0px"><b>#2.=
+ Sign-Up Bonuses</b></span></div>
+<div style=3D"margin:0px"><span style=3D"font-size:11pt; margin:0px"><span =
+style=3D"margin:0px">For earning SBs fast, signing up for different service=
+s comes in at a very close second place, just behind money makers.
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">For example, current offers allow you to earn SBs=
+ by signing up for Chime (a free online bank account), Rocket Money (a budg=
+et tracker with other money-saving tools), and Acorns (a micro-investing ap=
+p).</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">Signing up for various services is second only to=
+ money producers in terms of how quickly one may earn SBs.</div>
+<div style=3D"margin:0px">These sign-up bonuses are primarily for financial=
+ services.</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">For instance, current promotions let you earn SBs=
+ by signing up for Acorns, Rocket Money, and Chime (a free online bank acco=
+unt with other money-saving features) (a micro-investing app).</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+The advantage is that you typically don=92t have to pay anything upfront, u=
+nlike with money makers.<br aria-hidden=3D"true">
+</span></span></div>
+<div style=3D"margin:0px"><span style=3D"font-size:11pt; margin:0px"><span =
+style=3D"margin:0px"><br aria-hidden=3D"true">
+</span></span></div>
+<div style=3D"margin:0px"><span style=3D"font-weight:600; font-size:11pt; f=
+ont-family:sohne,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; mar=
+gin:0px; letter-spacing:-0.016em; color:rgb(36,36,36)">#3. Money Makers</sp=
+an><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">By far, using so-called money makers is the faste=
+st way to accumulate SBs.
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">With a money maker, you can truly make money by m=
+aking an upfront purchase. Subscription services generate the majority of r=
+evenue.</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+As an example, you can sign up for Hulu/Disney+ for $12.99 through Swagbuck=
+s, and that deal could allow you to earn 1,800 SBs (valued at $18).<br aria=
+-hidden=3D"true">
+</div>
+<div style=3D"margin:0px"><br>
+</div>
+</div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-weight:600; font-size:11pt; font-family:sohne,&quot;Hel=
+vetica Neue&quot;,Helvetica,Arial,sans-serif; margin:0px; letter-spacing:-0=
+.016em">#4. Surveys Worth 200+ SBs</span><br aria-hidden=3D"true">
+</div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; font-family:sohne,&quot;Helvetica Neue&quot;=
+,Helvetica,Arial,sans-serif; margin:0px; letter-spacing:-0.016em">The best =
+part of taking surveys is that they typically pay right away.
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">The preceding methods could result in a delay of =
+a few days or weeks before your SBs are credited to your Swagbucks account.=
+</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">But with surveys, you can log in today, take surv=
+eys, and see the points in your account shortly thereafter. The drawback is=
+ that taking surveys won=92t get you rich.</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">First and foremost, it=92s important to understan=
+d that not all surveys are created equally.</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">The surveys worth more than 200 SBs are the best,=
+ according to my research.</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">These opportunities are scarce. But it=92s best t=
+o stick to these if you want to earn more money from surveys than the minim=
+um wage.</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+To find the highest paying surveys, just pop into the =93Answer=94 section =
+of Swagbucks and look for the surveys that pay the most in the least amount=
+ of time.<br aria-hidden=3D"true">
+</span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-weight:600; font-size:11pt; font-family:sohne,&quot;Hel=
+vetica Neue&quot;,Helvetica,Arial,sans-serif; margin:0px; letter-spacing:-0=
+.016em; color:rgb(36,36,36)"><br aria-hidden=3D"true">
+</span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-weight:600; font-size:11pt; font-family:sohne,&quot;Hel=
+vetica Neue&quot;,Helvetica,Arial,sans-serif; margin:0px; letter-spacing:-0=
+.016em; color:rgb(36,36,36)">#5. Referrals</span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; font-family:sohne,&quot;Helvetica Neue&quot;=
+,Helvetica,Arial,sans-serif; margin:0px; letter-spacing:-0.016em; color:rgb=
+(36,36,36)">With Swagbucks=92 robust referral program, you may accrue point=
+s over the short- and long-term.
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">When your friends sign up and make 300 SBs in the=
+ir first 30 days, you=92ll receive 300 SBs.</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">The best thing is that for as long as your friend=
+s are members, you will also receive 10% of their SBs.</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+Be sure to encourage your friends to&nbsp;<a href=3D"https://www.swagbucks.=
+com/lp-savings-button?cmp=3D695&amp;cxid=3Dswagbuttonref&amp;rb=3D114269874=
+&amp;extRefCmp=3D1&amp;extRb=3D114269874&amp;lang=3Dfr" rel=3D"noopener nor=
+eferrer" title=3D"https://www.swagbucks.com/lp-savings-button?cmp=3D695&amp=
+;cxid=3Dswagbuttonref&amp;rb=3D114269874&amp;extRefCmp=3D1&amp;extRb=3D1142=
+69874&amp;lang=3Dfr" id=3D"x_m_-9029084936280588455m_4829129312335911603m_8=
+939208334263855724m_3678734819309245084m_-9153940628079370113m_-81276005982=
+68260782m_-2725724787703871421gmail-OWA10b88036-0732-5cc5-3515-71807c7dd2ea=
+" target=3D"_blank" style=3D"margin:0px"><span style=3D"font-size:12pt; mar=
+gin:0px"><b>download
+ the browser extension</b></span>&nbsp;</a>as well. By doing this, you get =
+an additional 100 SBs, increasing your total earned via signups to 400 SBs.=
+<br aria-hidden=3D"true">
+</span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; margin:0px; letter-spacing:-0.016em"><br ari=
+a-hidden=3D"true">
+</span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; margin:0px; letter-spacing:-0.016em"><b>#6. =
+In-Store Deals</b></span><br aria-hidden=3D"true">
+</div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; margin:0px; letter-spacing:-0.016em"><span s=
+tyle=3D"margin:0px">A more recent Swagbucks feature is in-store discounts. =
+And based on the available deals, they provide some fantastic opportunities=
+ to make money off of regular purchases.
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">Like the online money makers mentioned previously=
+ in the post, there are even a few money-making opportunities where you can=
+ really earn more SBs than the item costs (or very close to it).</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+<div style=3D"margin:0px">To find the best offers, head over to the =93In-S=
+tore Deals=94 section and sort by cash-back amount. This gives you a list o=
+f the offers with the most potential. From there, try to find an item you w=
+ere planning to purchase.</div>
+<div style=3D"margin:0px"><br aria-hidden=3D"true">
+</div>
+You must then upload your receipt to Swagbucks from there (this is where th=
+e Swagbucks app, which is available for both Android and iOS devices, comes=
+ in handy).</span></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; margin:0px; letter-spacing:-0.016em"><span s=
+tyle=3D"margin:0px"><br>
+</span></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; margin:0px; letter-spacing:-0.016em"><span s=
+tyle=3D"margin:0px"><span style=3D"letter-spacing:-0.234667px; margin:0px">=
+<em style=3D"text-decoration-line:underline; font-family:source-serif-pro,G=
+eorgia,Cambria,&quot;Times New Roman&quot;,Times,serif; font-size:20px; let=
+ter-spacing:-0.06px"><a href=3D"https://www.swagbucks.com/p/register?rb=3D1=
+47927097&amp;rp=3D1" rel=3D"noopener noreferrer" title=3D"https://wwwswagbu=
+cks.com/p/register?rb=3D147927097&amp;rp=3D1" id=3D"x_m_-902908493628058845=
+5m_4829129312335911603m_8939208334263855724m_3678734819309245084m_-91539406=
+28079370113m_-2725724787703871421gmail-OWAf2aaf473-9f4f-b1dc-b6f7-2d4cc3d43=
+157" target=3D"_blank" style=3D"margin:0px"><span style=3D"font-size:12pt">=
+signing
+ up</span></a></em>&nbsp;now&nbsp;and&nbsp;<span style=3D"font-weight:bold;=
+ font-family:arial,sans-serif; font-size:14px; letter-spacing:normal; color=
+:rgb(95,99,104)">Start earning</span><span style=3D"font-size:14px; font-fa=
+mily:arial,sans-serif; margin:0px; letter-spacing:normal; color:rgb(77,81,8=
+6)"><span style=3D"margin:0px">&nbsp;</span>money
+ easy and safe with</span>&nbsp;<span style=3D"text-decoration-line:underli=
+ne; font-family:source-serif-pro,Georgia,Cambria,&quot;Times New Roman&quot=
+;,Times,serif; font-size:20px; letter-spacing:-0.06px; font-weight:700"><sp=
+an style=3D"font-size:10pt; margin:0px"><a href=3D"https://www.swagbucks.co=
+m/p/register?rb=3D147927097&amp;rp=3D1" rel=3D"noopener noreferrer" title=
+=3D"https://www.swagbucks.com/p/register?rb=3D147927097&amp;rp=3D1" id=3D"x=
+_m_-9029084936280588455m_4829129312335911603m_8939208334263855724m_36787348=
+19309245084m_-9153940628079370113m_-2725724787703871421gmail-OWA82c61061-a3=
+18-e097-6cef-9b274caf4349" target=3D"_blank" style=3D"margin:0px"><span sty=
+le=3D"font-size:9pt">Swagbucks</span></a></span></span></span><span style=
+=3D"letter-spacing:-0.234667px; margin:0px"><span style=3D"text-decoration-=
+line:underline; font-family:source-serif-pro,Georgia,Cambria,&quot;Times Ne=
+w Roman&quot;,Times,serif; letter-spacing:-0.06px; font-weight:700">.</span=
+></span></span></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; margin:0px; letter-spacing:-0.016em"><span s=
+tyle=3D"margin:0px"><span style=3D"letter-spacing:-0.234667px; margin:0px">=
+<span style=3D"text-decoration-line:underline; font-family:source-serif-pro=
+,Georgia,Cambria,&quot;Times New Roman&quot;,Times,serif; letter-spacing:-0=
+.06px; font-weight:700"><br>
+</span></span></span></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; margin:0px; letter-spacing:-0.016em"><span s=
+tyle=3D"margin:0px"><span style=3D"letter-spacing:-0.234667px; margin:0px">=
+<span style=3D"font-family:source-serif-pro,Georgia,Cambria,&quot;Times New=
+ Roman&quot;,Times,serif; margin:0px; letter-spacing:-0.06px">&nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbs=
+p; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;If you'd prefer not to r=
+eceive future emails,&nbsp;</span><span style=3D"font-size:10pt; font-famil=
+y:source-serif-pro,Georgia,Cambria,&quot;Times New Roman&quot;,Times,serif;=
+ margin:0px; letter-spacing:-0.06px; color:rgb(12,100,192)"><b><a href=3D"h=
+ttps://bit.ly/3OKKeaI" rel=3D"noopener noreferrer" title=3D"https://fv4503.=
+ezepo.net/unsubscribe/32/2022/1/21c1e8e5b7e2af01990fa8a32fbbc21b/" id=3D"x_=
+m_-9029084936280588455m_4829129312335911603m_-2725724787703871421gmail-OWA5=
+4390ceb-f0e2-9b53-b8cb-2ff0d1172be7" target=3D"_blank" style=3D"margin:0px"=
+>Unsubscribe
+ Here</a></b></span><span style=3D"font-family:source-serif-pro,Georgia,Cam=
+bria,&quot;Times New Roman&quot;,Times,serif; margin:0px; letter-spacing:-0=
+.06px">.</span><span style=3D"text-decoration-line:underline; font-family:s=
+ource-serif-pro,Georgia,Cambria,&quot;Times New Roman&quot;,Times,serif; le=
+tter-spacing:-0.06px; font-weight:700"><br>
+</span></span></span></span></div>
+<div style=3D"color:rgb(0,0,0); font-family:Calibri,Arial,Helvetica,sans-se=
+rif; font-size:16px; margin:0px">
+<span style=3D"font-size:11pt; margin:0px; letter-spacing:-0.016em"><span s=
+tyle=3D"margin:0px"><span style=3D"letter-spacing:-0.234667px; margin:0px">=
+<span style=3D"font-family:source-serif-pro,Georgia,Cambria,&quot;Times New=
+ Roman&quot;,Times,serif; font-size:16px; letter-spacing:-0.06px">&nbsp;
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbs=
+p; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 33=
+9 Garden Oaks Blvd #67916, Houston, TX 77020</span></span></span></span></d=
+iv>
+</div>
+</div>
+</body>
+</html>
+
+--_000_IA0PR02MB9779C7DFA73BA7954BB37E77B3EAAIA0PR02MB9779namp_--
