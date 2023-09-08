@@ -1,414 +1,753 @@
-Received: from MN2PR19MB3742.namprd19.prod.outlook.com (2603:10b6:208:1e4::20)
- by MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Mon, 22 May 2023
- 22:00:29 +0000
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
- b=V+KKBw+ZbGjShzQ3CZkeNcEdaM1F5LSmm6rH3QPGYeHNUd4/lFKqbn8zQoJMxpFcHJj2vOERlvfwuBcety7rw9u7BhLGN4RvQ4D720gQkOT8Jrt+8bLx0RmoW/KNAMn5qsC5CClK5eEcb80ZIK99a2qyxKEr3nIU2r4z5Ij0JasACfbA/sfwyCf8JqZnx+mIjrZIbPPs8sx/MZiWsBoxEk3exmji4zF2LDwOrNMYOLySt/VqFIRhcH6W2NtST4/0seY82UhbwnRD94WqQqT/6Rszbg47FDp0ynVkL8tbOVY9RzHzEV3jZGxQOGOap5TUBWaHUigpuIuAxwHNzKR00g==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=v3oWaLFFUlC5G6s/K5dJ1maCg+VM/inGF3Y7UPW5uWM=;
- b=DgsAor/UJXgY9TqUH+Fb3iPYseE3fomfOY/8cH4w2BWFy0pkYVS2aYdY4NzDd/22x8nhQuontTD8SJMXiKNDev1epo6QAPW098SgpJV+XvKHtapy1lxe1T+ZeZO2xptH1ua9fsAP1Irxr92WbLcHcR5aR5CCqGu9xpC2hHuhwLG11e0VGZhwbBwheCO6Q+7djitOm6RFoVR4myZNiWWJ/zD9abVJ4a48x69/2FYo7XbvfwKNP7p9WM7mhLnxPD1f5n3ye4IbiMoOoqmpPdI3XDWBc7xbcDRBZMUokD1S2SbdvOCjNYblQ8UtlcyKIXHjVEjZemUdFvR7rHnvadxS6g==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 40.107.220.98) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=superportorg.com.br; dmarc=bestguesspass action=none
- header.from=superportorg.com.br; dkim=none (message not signed); arc=pass (0
- oda=1 ltdi=1 spf=[1,1,smtp.mailfrom=superportorg.com.br]
- dkim=[1,1,header.d=superportorg.com.br]
- dmarc=[1,1,header.from=superportorg.com.br])
-Received: from DB6PR07CA0049.eurprd07.prod.outlook.com (2603:10a6:6:2a::11) by
- MN2PR19MB3742.namprd19.prod.outlook.com (2603:10b6:208:1e4::20) with
- Microsoft SMTP Server (version=TLS1_2,
+Received: from DS0PR19MB7537.namprd19.prod.outlook.com (::1) by
+ MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Mon, 22 May 2023 10:57:19
+ +0000
+Received: from AM5PR1001CA0060.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:206:15::37) by DS0PR19MB7537.namprd19.prod.outlook.com
+ (2603:10b6:8:149::15) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.13; Mon, 22 May
- 2023 22:00:28 +0000
-Received: from DB8EUR05FT028.eop-eur05.prod.protection.outlook.com
- (2603:10a6:6:2a:cafe::b4) by DB6PR07CA0049.outlook.office365.com
- (2603:10a6:6:2a::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.14 via Frontend
- Transport; Mon, 22 May 2023 22:00:28 +0000
-Authentication-Results: spf=pass (sender IP is 40.107.220.98)
- smtp.mailfrom=superportorg.com.br; dkim=none (message not signed)
- header.d=none;dmarc=bestguesspass action=none
- header.from=superportorg.com.br;compauth=pass reason=109
-Received-SPF: Pass (protection.outlook.com: domain of superportorg.com.br
- designates 40.107.220.98 as permitted sender)
- receiver=protection.outlook.com; client-ip=40.107.220.98;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com; pr=C
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (40.107.220.98)
- by DB8EUR05FT028.mail.protection.outlook.com (10.233.238.130) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6433.14 via Frontend Transport; Mon, 22 May 2023 22:00:27 +0000
+ 2023 10:57:17 +0000
+Received: from VI1EUR05FT045.eop-eur05.prod.protection.outlook.com
+ (2603:10a6:206:15:cafe::73) by AM5PR1001CA0060.outlook.office365.com
+ (2603:10a6:206:15::37) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6411.28 via Frontend
+ Transport; Mon, 22 May 2023 10:57:16 +0000
+Authentication-Results: spf=softfail (sender IP is 143.42.60.47)
+ smtp.mailfrom=bradesco.com.br; dkim=fail (no key for signature)
+ header.d=thoseconversation.com;dmarc=fail action=none
+ header.from=bradesco.com.br;
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ bradesco.com.br discourages use of 143.42.60.47 as permitted sender)
+Received: from thoseconversation.com (143.42.60.47) by
+ VI1EUR05FT045.mail.protection.outlook.com (10.233.243.187) with Microsoft
+ SMTP Server id 15.20.6433.13 via Frontend Transport; Mon, 22 May 2023
+ 10:57:16 +0000
 X-IncomingTopHeaderMarker:
- OriginalChecksum:354F0537842A6274D10FE69D24F24FCA6EA13CA4E5DED6942A2B6E2A849DDE34;UpperCasedChecksum:17471BED20E0BEC21FA8D23AAC5F168F33596E52380FEE05F3BC2C25B69B7847;SizeAsReceived:8333;Count:35
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Ug5ITcRJA+A+gJY/hWnMc+XJRG+SRuooZ/hhtPj60cMYmMdNqKfmJlit7wXiBt+hEXgnKcYcB7+8h2+avsdPCz6lfN7LJnd+zLJjXgz9rm0HaL8PYCULUHh6F1tyLuSiQ6Pt9NGLi1/Qjlyy9NTf/AoMizKCuXQwr5lhI9YbXI1EojzIhOnRp7sAh5EzUY3U0/8jCrQg0YBeN5Ji5ZpR3iLBfC1wxKLD4AbZREeBQF69pZrK3w9x+hC8+UTfpr82RmnSMnTJyjY9DFnxNM3pg+x8eRruw96VS0KYX0xMNsivN32bOn98FsevEB1Ati0UfHbJy3ynPlsvQcsMf8uX+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=v3oWaLFFUlC5G6s/K5dJ1maCg+VM/inGF3Y7UPW5uWM=;
- b=ObO089F7wvhRRw58YVQB612l2SsfQvxZpL0Blf0nJAEpLXwGpciHdfXMn/0cI7ZoL1YZz4xe/TqY9oEry64DgtB0EcpLbXrCjq/o8OE52iRIOwMp/xnbhB3StFOw2oo2BaIPBEdqOXKsMGHhYin0ZSiBi+c6ai6Y9dNT5x/iogdiNnPOfZX6g7ap0bHB8TmDWG6Mxt8SR94BBiAmP8FmB7+XTR/yX8su6ieLaOBVN2qnM7JLuIel65IqHVYIFCXKnQ+9x6giXFL8GhkFfTu7Dj+K8nROh+s4mC+i25zuG6iEIk6+0l52cvErTIRswqiGn9TmTRBfNcFBynqWbZHzMw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=superportorg.com.br; dmarc=pass action=none
- header.from=superportorg.com.br; dkim=pass header.d=superportorg.com.br;
- arc=none
-Authentication-Results-Original: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=superportorg.com.br;
-Received: from CO1P222MB0001.NAMP222.PROD.OUTLOOK.COM (2603:10b6:303:152::16)
- by CO1P222MB0114.NAMP222.PROD.OUTLOOK.COM (2603:10b6:303:155::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6411.28; Mon, 22 May
- 2023 22:00:26 +0000
-Received: from CO1P222MB0001.NAMP222.PROD.OUTLOOK.COM
- ([fe80::6818:24ab:d8df:1e32]) by CO1P222MB0001.NAMP222.PROD.OUTLOOK.COM
- ([fe80::6818:24ab:d8df:1e32%7]) with mapi id 15.20.6411.028; Mon, 22 May 2023
- 22:00:26 +0000
-Content-Type: multipart/alternative;
- boundary="--_NmP-00e90dae1160d1bb-Part_1"
-From: =?UTF-8?Q?Pr=E2=80=8E=E2=80=8Ei=E2=80=8Em=E2=80=8E?=
- =?UTF-8?Q?e=E2=80=8E?= <res0lvm41lsecuritybrimz-x935@superportorg.com.br>
+ OriginalChecksum:FFEC76AB766440459F034ADC2024BB5F2374D822011F3B15F0005ABEE4C68070;UpperCasedChecksum:16BC5770630C57AD4408BABA663B152E418190F556199331EDDE509F337B5D1C;SizeAsReceived:1071;Count:9
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=thoseconversation.com; q=dns/txt; s=default;
+ bh=c2ecWxiS2zRRoobeuIvMhQMMEnUQtSpNzueHwulXdkw=;
+ h=from:subject:to:mime-version:content-type:content-transfer-encoding;
+ b=JdIUQnGlXETDv3K0Ld+B4KLov5kdWNmBpuLAaJc1lMxwjkmQuK9vmOqlfoKYj9AbcVqVyO5E1
+ FnAb4Q2MVFi9onKnJd+Zfs6JYz2U/Yb3+wUHd+geJZYQvBG2Fe8JIMGctamMI85TBaOX+SBC8kU
+ dPt9GG0UaHML0mj57+NCIkn5WHHFkjQuE9Xer2x9COGtOmKqTFsO7W6lTBpUQPKVuB2WejMYj/R
+ /81RxYYcuxhZrmnz2Rfe7L/qkgpxZAJM6N5ZWwjL+K1VDzo32xkdiI52+XIhmenZUmerChpsm+G
+ T2fE3QOE9IiZkccdVu4vITgQKrNumzPJkkZZYn0e+Uqw==
+Content-Type: text/html; charset=utf-8
+From: Bradesco <naoresponder@bradesco.com.br>
 To: phishing@pot
-Subject: =?UTF-8?Q?New_=E2=80=8EMe=E2=80=8E=E2=80=8Em?=
- =?UTF-8?Q?=E2=80=8Ebe=E2=80=8E=E2=80=8Er=E2=80=8E?=
- =?UTF-8?Q?=E2=80=8Eship_Statement_=3A_Your_?=
- =?UTF-8?Q?=E2=80=8E=E2=80=8E=E2=80=8EP=E2=80=8E?=
- =?UTF-8?Q?=E2=80=8E=E2=80=8Eri=E2=80=8Em=E2=80=8E?=
- =?UTF-8?Q?=E2=80=8E=E2=80=8E=E2=80=8Ee_benefits_ar?=
- =?UTF-8?Q?e_on_hold_due_to_a_billing_issue=2E_May_?=
- =?UTF-8?Q?22=2C_2023_TRX=231312-779196?=
-Message-ID: <bdc51839-0af7-0cba-261c-39dc16a28537@superportorg.com.br>
-Date: Mon, 22 May 2023 22:00:19 +0000
-X-ClientProxiedBy: SI1PR02CA0006.apcprd02.prod.outlook.com
- (2603:1096:4:1f7::11) To CO1P222MB0001.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:303:152::16)
-Return-Path: res0lvm41lsecuritybrimz-x935@superportorg.com.br
-X-MS-TrafficTypeDiagnostic:
- CO1P222MB0001:EE_|CO1P222MB0114:EE_|DB8EUR05FT028:EE_|MN2PR19MB3742:EE_|MN0PR19MB6312:EE_
-X-MS-Office365-Filtering-Correlation-Id: e416afe9-86a6-4652-7805-08db5b0ff40c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original:
- K/otBP1PNRU3Z0B+fdZlB1jMuuRP314DYVIAPMjb6CtrToUN40D85bBDQZiA58E/3+O/LtC1ibFO11lckSJvVc92voaQpHz2VkvZiw3W4iAO3t+bx13JjCIE3k9bEI4cldvkHY1FX7lzPMjUV73/ZiFB485heoU20vkWhh8BzmoWyhsmM6UFx/DHjjN3KzHfWyXdrc2edxDDgNv75e2Fe05I04k7ois/Fz6WGgsRGkZX9hlRnvVPifhFFDBO3aoFi6NWimfNh2NThrx1hkm5Zc3YzP126h9sSOa4SYEG33v63LFnM901aD2k0vhu+tywbbV4w4xcjHccTQ0PYj5QicKQ5XfnZng1nJ7qDOZFB2xXtwmE0ujcBpMJqDuw0fqZVxaJpBzWqKfIp7A8Ma+Gm+xeiCZdqZGF94wI6ceYSLG9laCu7RATbWgyROgRUQ2/O0qAmkGVdcPsgj4QFlzV+JmDQJagGSaSuFg2SpXgxpQKA0SrxA1G1Ojl4aSN5gLfwEIIpyAwSOqCsraH8Oy1+K2Iwf8D3iwhq6lhn45cQc3hxf93oPVNVGAJlKzUp4xy/7bvbwAR3NHMiRXk5FA+WTbkq3Wj3F3yS1MaJsNelYoS0u6Z2Q1SwTkZhAXtTX5XLfYsA5tm6iv6NnKnFytbB+VBoELz+VA2KS/FVm6YyteT0dlKYf8tKfHGmtMsuBJu
-X-Forefront-Antispam-Report-Untrusted:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1P222MB0001.NAMP222.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(39860400002)(346002)(376002)(366004)(396003)(34096005)(136003)(448600002)(702800001)(1690799014)(451199021)(5660300002)(8936002)(86362001)(26005)(6512007)(6506007)(55236004)(41320700001)(2906002)(83380400001)(66574015)(2616005)(36756003)(186003)(6916009)(66556008)(66476007)(66946007)(45080400002)(786003)(31686004)(166002)(38350700002)(38100700002)(31696002)(6486002)(33964004)(586005)(41300700001)(38610400001)(6666004)(52116002)(66899021)(39450500005)(45980500001)(1531001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-Original-0:
- =?utf-8?B?NFdHV05OejFNMmVIYnhWK1pZMENTZmQyM0NxL0JLa2pvUVZjUFVDazFhMXBN?=
- =?utf-8?B?OC93L1pXWVRTMUJqbkZ3Q3d2VVJEQUJRcjNRU0N5R2w4ZUl0YkExTHBEVzV1?=
- =?utf-8?B?SCthZjZhaVpwLy8wMGhvdGthWnV4RGs0UWhjNVJ2RUtrNTNUQ3hGNVJFZUFE?=
- =?utf-8?B?dm54ZFltK0pQU0dkeHZlZEI5dHNDc055eGYvdXRUZmlHTGRpS3JESEdFN1Iw?=
- =?utf-8?B?a2pmbFAzZXB0dlAySGVSSjlFTU0rVlVDSm9Sb0NxbTQxK05QdktHaTJhalUz?=
- =?utf-8?B?UjZTaklQeWJ4cE15OVVVVndSNXRvakNhSUNZM1A5YUtqOGxicGdCYkZPUDAz?=
- =?utf-8?B?RWd0VnNSUnpzNUdpL2NXZVlvUVZDdmt5azIxRnBHcUxqb3dIRkxEQW1DWUlk?=
- =?utf-8?B?eHZKeUVIOWgvVUhtMWJCV0F2TytyWmxiUnUwTjFyZGNTQ2dZMWlCYSt2TjJl?=
- =?utf-8?B?WlN3dlQxajdaVThYQ1JRdGw1RkVTY05FeEZEbzNqOXBmbkdhUnRaUFFvQ0VK?=
- =?utf-8?B?VnhwaVhwQkxvcXJhUVJIZTRQUWtCeW0yMUxaSm0wM25Ga0tIa0VKY251UVRi?=
- =?utf-8?B?UXp6RzBsSG1mbzA0eTFQNHRka1NBdlBXZTZmNUdnS2ZSMXZreXlKbERzVXJP?=
- =?utf-8?B?WjU1cVJBR0pXMTlOcWgyMEFlcGpieFZMaVFSZkNzRmJ4T0lZUkZ4aVQxSytW?=
- =?utf-8?B?TldtMVZ0Rmk2ZnE0dVJSUUd5OE5DWGZUVUFQYzVGYytwTHlEWjBPSEVCTXB4?=
- =?utf-8?B?SERPVnJUSUFwR0JaSm1GQUZkaHBnaytrVzZYUEg2aVRxd09lelB3bGhXTnEw?=
- =?utf-8?B?RmpkczVxajMzUVNqckdPemVSNXNpNWlKTXU1aWhGWXA5TGlkTTBLWnhWeTA2?=
- =?utf-8?B?cUpqL1pXVzV5MmNJVEJXUWZGNzdkejUxbm1EckwrTU1PcWMxSDJmbjNjbTVo?=
- =?utf-8?B?ZjNIOXpqVi92ODQrQWd6dERlN0loeUFmMXg4SU9JSHEwcURXMFR6UWE3QWlK?=
- =?utf-8?B?cWtsNUozMHc1TXFvUlJwaGdKUC9UUjNHL0FmbisyYnRzcEIvRkk0aEVNRm9m?=
- =?utf-8?B?M01HR0x6SW1sWkRlVHRUeEFLbVZiTS9SRWFzazJnSitIYytrQnFMQkJTUi80?=
- =?utf-8?B?RXdSdGlYQmd1dmdiZVlKdVlYU1Rsd1R5VnEwZEFZN0x2dGxXalhwb1dZdHhK?=
- =?utf-8?B?MVVJaVNKRzB2Ym5mQVQraW5mVXVaRUNhQS81TGN1RmN0bEdIQTFKOVZ2MTNV?=
- =?utf-8?B?UGVYWXBGcVVXeEJNcmpVcVZCVFVOeEtWTXFlM05JajJlVWlvR0pnamNvS3hT?=
- =?utf-8?B?TURVbzFtc1JzbUlJRUZnRVZKZm5oV3R1alV5Y1VpOWFXRmVNWTIrM01YTGdN?=
- =?utf-8?B?dVpjejR5MEtBYXpMdjJzTmNoYkpGR1dmb1lNVlJDVnlGdFd4WWt4N0t4bTVM?=
- =?utf-8?B?UWJ0dXVJSUhEMHNOT3E2MFUxbnQzcTZBaVBsaVFiOTNtcWU3NzlrckJWMURX?=
- =?utf-8?B?Q3E5ZFFlaUlIdnZMYTZ0Z3ZheXNpdzlidFVmL2hMa296OHZlcHhkbWtJanc0?=
- =?utf-8?B?SHFBWks0T2dETkxISEJ5dkNYVUFzK0RmQldSaFhuNG5VRnJ1WmxQdUFEdjk4?=
- =?utf-8?B?UlhBSUE3OWFnUzJjNnBpUW5sS0JYTEFUYjl2OFl2OFBxeHdtbmE5bE52THk2?=
- =?utf-8?B?SjJGYkVyVFFibVhDQ2VBbE1vQ3RQalJtL05mQndaQzM2cHZEV3pzRm1rQ1Br?=
- =?utf-8?B?bHBINFp1cTY1cjJnWTFraUdhUnJpTy93N1UxWDFuUGl4U05BMmtyb1JLK1U0?=
- =?utf-8?B?UVplaEk4R2NKUkxMNkNzbFVWZzlmQUhsVEtaZDQ5WHEyUlZITWVlbVRPTEM1?=
- =?utf-8?B?RWw3R1N2OTRUYVh4SHJ5MjI2a0gvN2JuWHQ3M1g3WmlGcXpidmY3cDl2MFRN?=
- =?utf-8?B?T0JBTEFFaXgwWk5KTy9hUXRwdUVrMVplR2pYWTRQeUxFSGpOSnhCWUl0N1Z2?=
- =?utf-8?B?ZTFIK0Y2ZG9sRXRTcktzaVM2a3F3Mm5CNzJvdmpINk1lU1JzRUFhQk9sZVBZ?=
- =?utf-8?B?cnpYcEM0TW5neit1RDZHZnZ0dGM4cjk2V0ZXcFlUQTBPeG8yMTdCa1BNQmhB?=
- =?utf-8?B?R21LWXRPdkxXdHJUY0Y2dDdOL3NmM0dxTjFiNERWSHZVR3VyNXlsMm00R2k3?=
- =?utf-8?B?VVdqVThWREZCOHQydzExaXhuYytRYTVraGl4Z04yalNmaHNxTFhscC9qSFRR?=
- =?utf-8?B?b09WamNWM29VUHh2dEJYdDZxUnNBPT0=?=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1P222MB0114
-X-IncomingHeaderCount: 35
-X-MS-Exchange-Organization-ExpirationStartTime: 22 May 2023 22:00:28.0152
+Subject: Rodrigo F P, =?UTF-8?Q?voc=C3=AA_alcan=C3=A7ou_o_cart=C3=A3o_Bl?=
+ =?UTF-8?Q?ack=2C_mas_h=C3=A1_algo_que_voc=C3=AA_n?= =?UTF-8?Q?=C3=A3o?=
+ pode perder! Bem-vindo ao Bradesco Prime
+Message-ID: <0e840846-15d7-0c6b-070f-5294f54e1e26@bradesco.com.br>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 22 May 2023 10:57:16 +0000
+X-IncomingHeaderCount: 9
+Return-Path: naoresponder@bradesco.com.br
+X-MS-Exchange-Organization-ExpirationStartTime: 22 May 2023 10:57:16.4684
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
 X-MS-Exchange-Organization-Network-Message-Id:
- e416afe9-86a6-4652-7805-08db5b0ff40c
+ 8adef5d8-2e2e-478c-499b-08db5ab34e70
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- DB8EUR05FT028.eop-eur05.prod.protection.outlook.com
-X-MS-Exchange-Transport-CrossTenantHeadersPromoted:
- DB8EUR05FT028.eop-eur05.prod.protection.outlook.com
 X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic:
+ VI1EUR05FT045:EE_|DS0PR19MB7537:EE_|MN0PR19MB6312:EE_
 X-MS-Exchange-Organization-AuthSource:
- DB8EUR05FT028.eop-eur05.prod.protection.outlook.com
+ VI1EUR05FT045.eop-eur05.prod.protection.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 5/22/2023 9:57:35 PM
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
- ea07279c-db1e-4b8f-51dd-08db5b0ff320
+X-MS-UserLastLogonTime: 5/22/2023 10:56:14 AM
+X-MS-Office365-Filtering-Correlation-Id: 8adef5d8-2e2e-478c-499b-08db5ab34e70
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 40.107.220.98
-X-SID-PRA: RES0LVM41LSECURITYBRIMZ-X935@SUPERPORTORG.COM.BR
-X-SID-Result: PASS
+X-Sender-IP: 143.42.60.47
+X-SID-PRA: NAORESPONDER@BRADESCO.COM.BR
+X-SID-Result: FAIL
 X-MS-Exchange-Organization-PCL: 2
-X-MS-Exchange-Organization-SCL: 1
-X-Microsoft-Antispam: BCL:0;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2023 22:00:27.8589
+X-MS-Exchange-Organization-SCL: 9
+X-Microsoft-Antispam: BCL:6;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 May 2023 10:57:16.4059
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e416afe9-86a6-4652-7805-08db5b0ff40c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8adef5d8-2e2e-478c-499b-08db5ab34e70
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-AuthSource:
- DB8EUR05FT028.eop-eur05.prod.protection.outlook.com
+ VI1EUR05FT045.eop-eur05.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
  00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR19MB3742
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.6806299
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR19MB7537
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.6690485
 X-MS-Exchange-Processed-By-BccFoldering: 15.20.6433.007
 X-Microsoft-Antispam-Mailbox-Delivery:
-	abwl:0;wl:0;pcwl:0;kl:0;dwl:0;dkl:0;rwl:0;ucf:0;jmr:0;ex:0;auth:1;dest:I;ENG:(5062000305)(90000117)(90005022)(91005020)(91035115)(9050020)(9100338)(944500092)(2008001134)(2008121020)(4810010)(4910033)(8820095)(9575002)(10195002)(9320005);
+	abwl:0;wl:1;pcwl:1;kl:0;dwl:0;dkl:0;rwl:0;ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000305)(90000117)(91040095)(9050020)(9075021)(9100338)(944500092)(2008001134)(4810010)(4910033)(8820095)(10005027)(9710001)(9610025)(9520007)(10115022)(9432268)(9320005)(9245025);RF:JunkEmail;
 X-Message-Info:
-	qZelhIiYnPlgo3oeAkqKQlLaSBYXrPILOTrP/ss/pLq3x85sS6gfq2hwmPmP1JbFAI+wC5XmBIsJvLIz9dSFqQu7WAVwj6ihXvyuD1R5j5Zh6t7cPSmjSjEFF+QVEG3E08AXuXLs6SAvBVAyZ3gWR0qMMjSsKr7meuE8yct9MiTuSio/ZHwUCFQ3K6FvtOp0hKHIPHUrai0=
-X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0yO1NDTD0z
+	6hMotsjLow8tCacANDFIPxVFK5IWbneQPktA3UJ1JLJwnUydPoANjOt+wQMlBI2pHW1XnK+pTMbB2YJMMJr3WMrRv+Dcvw3j/Z8DZuC/Up07daH9dyEA6umqVHr9pR8lm7DgfnbOeDMcYhGiNT7AfVgFoWy7Q9Lw9uIj21Hy9Lx9JNmcvfErr6XizaIoZ5rBpg2IM77meq9UF1lbplu8SQ==
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0yO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?T3hYY3VCM1phclc0bDEwTGRZemZKckxraDVWZ2kySVNiU2gvcmJXV2lQemU3?=
- =?utf-8?B?NkptOFlwdjdrMHhlYmhTcnVMN3l0b3JzK2oxSjBXNXJUZWkranFsZWJ2OWVE?=
- =?utf-8?B?d3pRc2xwSmdES3U1TVlKSEpDdlh4YWF0c3lLbmNnZU1OVXEwOWJ2dTZ2RHVa?=
- =?utf-8?B?ZlU0bXErWVAvVk1QRnlGUEFWRjdlNlVBbFphRldEYkRhTkxpUlE3Y0FOSnVR?=
- =?utf-8?B?VTdzWngyL1VweEZoNlY4c3hGM3U3QnY2MVpiQzFQa0tnajRTZ3hvakIvK2dP?=
- =?utf-8?B?aUZEMTg1dEVKM2dTNVBvUUlPdC9SVlp1cGY2RnYzWnQrMzlCSy96azdCVDNF?=
- =?utf-8?B?cHJVZ1VRMGpWbkFxczNpNTFvQmp2ME95cy9Dak5XbXg4RnRYeHlFZzhyMGZS?=
- =?utf-8?B?TGpFVjEreldEZUllVUc2dVc0YWhWU3czUDZEYTdGZVlBMTBnUnVXV3dMSWoy?=
- =?utf-8?B?NmV5ZGV6UWRVM2lTVTVNbHFjTlprYjNXaEZZdGd1ZVZRT2xjOGpGRWNpUHhD?=
- =?utf-8?B?N2s5a0VKRWwxdlUvRWtmZXNmY3grUFRQRFE2UFU1MVQrci9PWUFSVXFDN29V?=
- =?utf-8?B?aU9wMzZZcmgrb2hrbEpYMjE3TnpFUGY1OHZERmp2ZXVmKzMvcTg3T3RxUHBG?=
- =?utf-8?B?ZVM3alZ3ZC9RMkl4TjMvWER5cTk5Z0dvem1kQXA3VGNuZHk1MVFwWWlHcnI3?=
- =?utf-8?B?akdnUTd6dmRnOTVVU08zTW1Oa24zNm50YlMwYXhacWRySGZZVzNmcThydDl0?=
- =?utf-8?B?RFp5K0d3NUpnVW42azJISEJ6STNkVnkvN3NROHJJWGNVTk15RURsWXZsb3U5?=
- =?utf-8?B?UElHV0hvL2JUOEtoVlpiRDJDejdpTE9tOStzaHpFb01ZSTZGRk0xUnVxQ3Bu?=
- =?utf-8?B?aVlIVmZzM2Q3MGhwb0VpQmJ0TW8xUUY5ZVFMZldzRlI3d20yTmpNMnpJM3pU?=
- =?utf-8?B?SnJ2TTZ4U3JqZUdwemw5SG9FUml5OTR3Ykx2S2NYemY3N2orclVpNkFYSDZu?=
- =?utf-8?B?KzFHeVJtSisrNkFiRUU5M3BvaVNTUE05dUNmNzVKeS81eC81Ym5KMXZIWFVI?=
- =?utf-8?B?ckFLcnBLaGFhZ1JwYjdlcHUxTkI0VDFtQWRqaXZYUi9UQzlCZHRxVzBsc25V?=
- =?utf-8?B?cXZWQTdXWEw3Ykw3c054VzFWZTBDblM5aGFXWG13TlpXRVF6Tmt6NFR2bGRM?=
- =?utf-8?B?YXJaTGRqbHJhQXJTMXYzR09RKzhzZjY2WFkzS2MyMjJSemtKUEFnOFl2S2Fk?=
- =?utf-8?B?RlhEQ2ltQms0eDlVTzhnU3BRTTJzdmhBazRYUGFjUFhSdUxkek90Umw5NWRM?=
- =?utf-8?B?dVhiYmtQcnd1MVFURWsyQU9QdENhcGJBNm13c0pZUGRIWWs3VndtbGhrS1Fu?=
- =?utf-8?B?dGk3YjYwaGh2V25QT3cxbGRaUVE1Sjl3TXpKRXhnTG5EUU1YeTB3V3oxNUpw?=
- =?utf-8?B?SnBEZ2RLVUZCUUsxMWZIR1N0UEZqazJ1clI0eCtkZ0czTjdiMEtlSVVpUTdW?=
- =?utf-8?B?RlRzdnZ5UmtNUXhvUGcvNXE1ZXBpYkFZWjBsNU1XWEFBMWgvbXQ2OXB2S0pJ?=
- =?utf-8?B?MXMvalZTUExSdDRSa1VuNnIvNW12c21NSld3QWNNT2hidEt3MlovYk1xVUdZ?=
- =?utf-8?B?Wk1VVzBlOThhR3RhOXhZa3NaOE9tb2FUdG9zZ3ZBL094cExJR25pTDBCOVB6?=
- =?utf-8?B?Sk54NFJEL05JSFBZeDlrdXdpb2tRekZvWFcxb3h1dm1rTDlZZ1ovMWpHTjhO?=
- =?utf-8?B?dCt5U1p5QTUwdW5DUUlNUlRFRFQwZWdSclhXcVVwalVUL1FtU3RpMzlQeFhQ?=
- =?utf-8?Q?dc5Acdo9W43+W9eTSiOOeoyXBmpPUAVt30//U=3D?=
+	=?utf-8?B?YWxpS2djRkR1c3FobG9uWHc1a0sybk9rSlMvb2Y0TzE1azRnOEI1S3grTUJQ?=
+ =?utf-8?B?RFNTb2YydEl3WG41YzV6cDF4dVRlWnpDOXNHQWNyOWRMUittcEwzMVpuTVRL?=
+ =?utf-8?B?d3pwVW12UHpxTEhURVpISFpsaVU0RGsyT1pFUElyVS9MRlhxcDNWcmRXNmR1?=
+ =?utf-8?B?My9XZEd1Zm5IZlBIck93anBPWmhQOU9aeUVhREdQWHdYUkplVElGMGJ0ZlVS?=
+ =?utf-8?B?TWRaT2Q1b3R1NHdIUlBtT0txTUQzNzVmK0tCRVNRQTE0SEdCOGxnakY2NC9H?=
+ =?utf-8?B?K1ZrTW9kSHUzUGM0cVRqRUNOekJhazZCOHVkcU1WUHN0ZmhPaWNuYW11TTVk?=
+ =?utf-8?B?dVBKa0VPMFh4OS8xamI5cHdLdUdQS254SlMybStHZXZyanhVRjdOZXExYmFB?=
+ =?utf-8?B?b1NxaFd4bWRic1NOeFl6ekczWHR0aTFiV1VrL2FMYkVCdzZEWEcrKzRGSHB4?=
+ =?utf-8?B?eWhVK3BKU1Zra01sMmVaTjBjdXg0Q08wVUdtRzU2NGFIdVZmRlpGazY1bThM?=
+ =?utf-8?B?NENPcjRjWTBpV2pWaENDSGVoOWEzS2h2bUI2cnlBV2t0WGNleHdhQkx3KzVp?=
+ =?utf-8?B?cFUrWW5Jak9IQ1dySFM1V2ZUV3FNa2pPK1d2VzBrc1drYS84cVhNVk8wWEhV?=
+ =?utf-8?B?TTFEei9NcGhzSnkrZjJWMUdWRitZMi96UkZMbUJ5Sm96RjREWGdaSStDRm9Q?=
+ =?utf-8?B?THdlNFhNSk5zdlR3MzMvdjlXeG5EZG90Tk5kZy9KZlllTHRESUhtVG9yS2Fu?=
+ =?utf-8?B?cHdoVVVPWGI0WEU3THBGVlZLWSs1d2I3VWQ3VXdsVVlYZ2xKT1lzcEI2RnNh?=
+ =?utf-8?B?bVVhdzBMSzRWMXNUOWQ1bjlhSnlITmZDSTlCanJoa1luNUdlM3FBTUlvMGZm?=
+ =?utf-8?B?NDNWaXdpV3l5UXBHaVUydm9wb2xsZUtlMzlESklHTXpoVzhNSkptbUJZNHA3?=
+ =?utf-8?B?bGNWcnhJOWY4YnUyaG5ROTBIVVNIU3orUmd1TGhGcEJNWmZWMHNtVlZIcFZ0?=
+ =?utf-8?B?TlZSR0xDTHJ6T1YzaHljUnFoSkVpbDBRb2QxdEQ5UlhQSC8xNGVlQityNFha?=
+ =?utf-8?B?S216SEdrVkcxSTI2S1Y5RlpQbDdzRmg5ZzN2Z2FrbEtCTFBoTldpYmhrWG16?=
+ =?utf-8?B?c0Nnci9ydVdKQXlEQlZ6Um02MVBvcklVUWhLSTN5bE5vRDNoMlM1RGFBemNQ?=
+ =?utf-8?B?Q0E5WEhXY2hTWUdyekJ5WUFoaEZwY29FSmFsYzNwL1c3T3dSVE8zWHExSXFt?=
+ =?utf-8?B?UmtWbUxna3ZkeEFUN2dWSVphN1NuZTJnOU5iNmtvOHVINVlMMXdLeDJWWFZD?=
+ =?utf-8?B?Y3JRZmVHY0gzd1FaUm1LRDBGWit6YVltNitQOEtvZGZnL3I2UWk1UWwyQjlt?=
+ =?utf-8?B?aG1uYnBCRUVHUTVSUGdBVkxpM3RLOTNHY20vaC9PRFNsQzcrSThidTZhSGlk?=
+ =?utf-8?B?THVqNnNzQkZ3bFhwZS8wcUJGTTgzY1JYT0xCdUNWZEowaU5samlqRVlBU3VP?=
+ =?utf-8?B?Z1VPTGVKRU5YQURaNGp5WnRXMWdJNUNPVkJkUWpRUUFubzBXcm93RE84dlMw?=
+ =?utf-8?B?UDJyQ1g1NDY4dG0xUm03SVVmR21tNGRRMndLaStEVHljRU1XUXFWTEM1K3Fo?=
+ =?utf-8?B?ZjNUWEZYd1Zub1ROWXZheERSdjFRWWh4V0xFNTFyT1B1L3JlWDBDalNUZWU5?=
+ =?utf-8?B?NHBPSDdqSkFZUlgxMmJMZk5VT0gvYzVqK2t4YWRvRkpJb2Q4NzU2Zlp4b0w2?=
+ =?utf-8?B?NnRUNHpCc2lUQm8wakQ5YytUekY5Y0lMZHplMGhqUEEwN0RCRzZBenZqMTds?=
+ =?utf-8?B?VktIc1R1QjlyV1BEc1p1cHVwVENqNlhzcDVIVitYSzhJUFBhWkk2SUJwcVBL?=
+ =?utf-8?B?bDVhTTZLNXJ6VDFNRnNtSGRrUmU0L1JrRTdUL0NENmJUVXpmK0RBN2tkZVNh?=
+ =?utf-8?B?SlFocEhDbEI0YmQ1OUltTVZlM2VscGdnalVMRGFEaGpWajVVbkRSUUxXSmsz?=
+ =?utf-8?B?UUo3Sndwc2RWZEc3Q3JYQVE3L0RlZEZOUUwvZVhSR0JNY3h3RUcvclBaRkk5?=
+ =?utf-8?B?WFdZdUp5MkVBM0ZwZnRuRGJyc1FpL1pEY2VUYy9iOFRjZUtpTEFWQ0pTYnc3?=
+ =?utf-8?B?bDFpUWdzN252Nkxwb2ZrT3NtOG8yaVFoS21KZ1k3K2xOSndoTVJ6T09HYm5Z?=
+ =?utf-8?B?MDF1TnNNNHhKd0c1MHU0UGZTYXpZeGNjMm5HSjNXdjVXYmV2bHVTVk9jRXY4?=
+ =?utf-8?B?VFpDZWFoSGVreXFyYWlBV3QwazhhZWl0QTNIMkVrWlluamlKMUpzclE5eFhu?=
+ =?utf-8?B?VjA0SFNjNXNzVVVQY256eHV0TTlmTXpEOTRYb0VSWXVZZFFnUVRVZTd3aXBm?=
+ =?utf-8?B?REdqZERnZGVxcm9ZS3hVRzdDVDY2WE9QaElTVi9pTFZEdDdQZlpvTkdqTlpo?=
+ =?utf-8?B?QTlKeE1SY2hCV3Z4Sm9IUWtqS3B4QzQrVG9iSHlSNW5tcHMrOUpVdmN0WnRk?=
+ =?utf-8?B?b1FwMEFBQWgyZHBjcHZsZ2VkdVBWOUczbmFSemk4OGFwUTduRmpHSm1PU2Zt?=
+ =?utf-8?B?empDaVFETllqcUZNa3U5TXNobWhiZ3NGRU12TWNrREV4L0RucWcyV2pPUUpG?=
+ =?utf-8?B?aktiaFp4bmlQZzNDeEhoRHRzaWF4U01wblNzR3dqWURTM3pOalJqUGdBN0ls?=
+ =?utf-8?B?WHJMaHhKVTQ2NHNFMzgzVXkxZGgrbFk0VkpPK0NNNDd6WHdXbzI1Wnhhc1Fz?=
+ =?utf-8?B?aUhMM3lGdzhXOG8yQ1ZWK2s4WGVaTWRpVmw2eUJzei90U0dqcnlHaEkzdG0w?=
+ =?utf-8?B?WkU2a0lrOXNMV3d4cm1MOXVFbjJjV2RNbjMveUtSaXlhNE56RkRiZFU0Qm1P?=
+ =?utf-8?B?UGpOVjBPRVVVMmtmeUpFRnJ0RkttZVpVcEt1K2tiMVFDVTBidVNaNnA2b3Az?=
+ =?utf-8?B?Q1o3WEVSWjl2L205SjFhOGxkcENKUllBR2xkMjVhZmZYZlhSbXFlSS9PdFRY?=
+ =?utf-8?B?eis2ZXdkRGZGZU9zb05ka3VDQnJhYWgvclJKa2pOckdqK1VtN3RsalJEWWJO?=
+ =?utf-8?B?QnpsQmJSTVBPSHdvM3FpNk5zQXR0a0VERjV3SW5waytiZmZTQjdVMHZCOHo2?=
+ =?utf-8?B?akRQTWlRL2lpK1Z1RWl6OEVMM2VRWWovK1BuMEZKZ0VIZkxhRWZUck16T1BJ?=
+ =?utf-8?B?Yyt4NTFEczlvZXV3NHJQTFRLSXJPQVVaMmN5c0FRQlpDZ01CUkJ3NDNHa0da?=
+ =?utf-8?B?N1R5cWtyWVNZMk92bk1vT1luVTRmWU9PTG4yNGx6MVNNZEZocGxjdFJQTnVz?=
+ =?utf-8?B?TTRlVjV6QUNKZjFYWVdXS05OWjE1L1ljd3p5ZkI0MERpeUdlV1lUWXk5MEth?=
+ =?utf-8?Q?h4T2hdUyvmtOIMkHyE8Zl?=
 MIME-Version: 1.0
 
-----_NmP-00e90dae1160d1bb-Part_1
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+<html class=3D"army-swim"><head class=3D"write-seed">
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><m=
+eta name=3D"viewport" content=3D"width=3Ddevice-width" class=3D"say-draw">=
+=0A=
+=0A=
+	<title class=3D"well-ring">Comunicado</title>=0A=
+=0A=
+	<style type=3D"text/css" class=3D"happy-proper">* {=0A=
+=0A=
+  margin: 0;=0A=
+=0A=
+  padding: 0;=0A=
+=0A=
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;=
+=0A=
+=0A=
+  box-sizing: border-box;=0A=
+=0A=
+  font-size: 14px;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+img {=0A=
+=0A=
+  max-width: 100%;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+body {=0A=
+=0A=
+  -webkit-font-smoothing: antialiased;=0A=
+=0A=
+  -webkit-text-size-adjust: none;=0A=
+=0A=
+  width: 100% !important;=0A=
+=0A=
+  height: 100%;=0A=
+=0A=
+  line-height: 1.6;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+table td {=0A=
+=0A=
+  vertical-align: top;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+body {=0A=
+=0A=
+  background-color: #f6f6f6;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.body-wrap {=0A=
+=0A=
+  background-color: #f6f6f6;=0A=
+=0A=
+  width: 100%;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.container {=0A=
+=0A=
+  display: block !important;=0A=
+=0A=
+  max-width: 600px !important;=0A=
+=0A=
+  margin: 0 auto !important;=0A=
+=0A=
+  clear: both !important;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.content {=0A=
+=0A=
+  max-width: 600px;=0A=
+=0A=
+  margin: 0 auto;=0A=
+=0A=
+  display: block;=0A=
+=0A=
+  padding: 20px;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.main {=0A=
+=0A=
+  background: #fff;=0A=
+=0A=
+  border: 1px solid #e9e9e9;=0A=
+=0A=
+  border-radius: 3px;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.content-wrap {=0A=
+=0A=
+  padding: 20px;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.content-block {=0A=
+=0A=
+  padding: 0 0 20px;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.header {=0A=
+=0A=
+  width: 100%;=0A=
+=0A=
+  margin-bottom: 20px;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.footer {=0A=
+=0A=
+  width: 100%;=0A=
+=0A=
+  clear: both;=0A=
+=0A=
+  color: #999;=0A=
+=0A=
+  padding: 20px;=0A=
+=0A=
+}=0A=
+=0A=
+.footer a {=0A=
+=0A=
+  color: #999;=0A=
+=0A=
+}=0A=
+=0A=
+.footer p, .footer a, .footer unsubscribe, .footer td {=0A=
+=0A=
+  font-size: 12px;=0A=
+=0A=
+}=0A=
+=0A=
+.column-left {=0A=
+=0A=
+  float: left;=0A=
+=0A=
+  width: 50%;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.column-right {=0A=
+=0A=
+  float: left;=0A=
+=0A=
+  width: 50%;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+h1, h2, h3 {=0A=
+=0A=
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-se=
+rif;=0A=
+=0A=
+  color: #000;=0A=
+=0A=
+  margin: 40px 0 0;=0A=
+=0A=
+  line-height: 1.2;=0A=
+=0A=
+  font-weight: 400;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+h1 {=0A=
+=0A=
+  font-size: 32px;=0A=
+=0A=
+  font-weight: 500;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+h2 {=0A=
+=0A=
+  font-size: 24px;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+h3 {=0A=
+=0A=
+  font-size: 18px;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+h4 {=0A=
+=0A=
+  font-size: 14px;=0A=
+=0A=
+  font-weight: 600;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+p, ul, ol {=0A=
+=0A=
+  margin-bottom: 10px;=0A=
+=0A=
+  font-weight: normal;=0A=
+=0A=
+}=0A=
+=0A=
+p li, ul li, ol li {=0A=
+=0A=
+  margin-left: 5px;=0A=
+=0A=
+  list-style-position: inside;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+a {=0A=
+=0A=
+  color: #348eda;=0A=
+=0A=
+  text-decoration: underline;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.btn-primary {=0A=
+=0A=
+  text-decoration: none;=0A=
+=0A=
+  color: #FFF;=0A=
+=0A=
+  background-color: #ee022b;=0A=
+=0A=
+  border: solid #ee022b;=0A=
+=0A=
+  border-width: 10px 20px;=0A=
+=0A=
+  line-height: 2;=0A=
+=0A=
+  font-weight: bold;=0A=
+=0A=
+  text-align: center;=0A=
+=0A=
+  cursor: pointer;=0A=
+=0A=
+  display: inline-block;=0A=
+=0A=
+  border-radius: 5px;=0A=
+=0A=
+  text-transform: capitalize;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.last {=0A=
+=0A=
+  margin-bottom: 0;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.first {=0A=
+=0A=
+  margin-top: 0;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.padding {=0A=
+=0A=
+  padding: 10px 0;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.aligncenter {=0A=
+=0A=
+  text-align: center;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.alignright {=0A=
+=0A=
+  text-align: right;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.alignleft {=0A=
+=0A=
+  text-align: left;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.clear {=0A=
+=0A=
+  clear: both;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+.alert {=0A=
+=0A=
+  font-size: 16px;=0A=
+=0A=
+  color: #fff;=0A=
+=0A=
+  font-weight: 500;=0A=
+=0A=
+  padding: 20px;=0A=
+=0A=
+  text-align: center;=0A=
+=0A=
+  border-radius: 3px 3px 0 0;=0A=
+=0A=
+}=0A=
+=0A=
+.alert a {=0A=
+=0A=
+  color: #fff;=0A=
+=0A=
+  text-decoration: none;=0A=
+=0A=
+  font-weight: 500;=0A=
+=0A=
+  font-size: 16px;=0A=
+=0A=
+}=0A=
+=0A=
+.alert.alert-warning {=0A=
+=0A=
+  background: #ff9f00;=0A=
+=0A=
+}=0A=
+=0A=
+.alert.alert-bad {=0A=
+=0A=
+  background: #d0021b;=0A=
+=0A=
+}=0A=
+=0A=
+.alert.alert-good {=0A=
+=0A=
+  background: #68b90f;=0A=
+=0A=
+}=0A=
+=0A=
+=0A=
+=0A=
+@media only screen and (max-width: 640px) {=0A=
+=0A=
+  h1, h2, h3, h4 {=0A=
+=0A=
+    font-weight: 600 !important;=0A=
+=0A=
+    margin: 20px 0 5px !important;=0A=
+=0A=
+  }=0A=
+=0A=
+=0A=
+=0A=
+  h1 {=0A=
+=0A=
+    font-size: 22px !important;=0A=
+=0A=
+  }=0A=
+=0A=
+=0A=
+=0A=
+  h2 {=0A=
+=0A=
+    font-size: 18px !important;=0A=
+=0A=
+  }=0A=
+=0A=
+=0A=
+=0A=
+  h3 {=0A=
+=0A=
+    font-size: 16px !important;=0A=
+=0A=
+  }=0A=
+=0A=
+=0A=
+=0A=
+  .container {=0A=
+=0A=
+    width: 100% !important;=0A=
+=0A=
+  }=0A=
+=0A=
+=0A=
+=0A=
+  .content, .content-wrapper {=0A=
+=0A=
+    padding: 10px !important;=0A=
+=0A=
+  }=0A=
+=0A=
+=0A=
+=0A=
+  .invoice {=0A=
+=0A=
+    width: 100% !important;=0A=
+=0A=
+  }=0A=
+=0A=
+}=0A=
+=0A=
+	</style>=0A=
+=0A=
+<meta name=3D"keywords" content=3D"think, rough, tail, source, ability"></h=
+ead>=0A=
+=0A=
+<body class=3D"yellow-four">=0A=
+=0A=
+<table class=3D"body-wrap">=0A=
+=0A=
+	<tbody class=3D"name-triangle">=0A=
+=0A=
+		<tr class=3D"swung-bank">=0A=
+=0A=
+			<td class=3D"rear-throat"><span></span>&nbsp;</td>=0A=
+=0A=
+			<td class=3D"container" width=3D"600">=0A=
+=0A=
+			<div class=3D"content">=0A=
+=0A=
+			<table cellpadding=3D"0" cellspacing=3D"0" class=3D"main" width=3D"100%"=
+>=0A=
+=0A=
+				<tbody class=3D"left-taken">=0A=
+=0A=
+					<tr class=3D"rocket-ear">=0A=
+=0A=
+						<td class=3D"content-wrap">=0A=
+=0A=
+						<table cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" class=3D"bl=
+ue-printed">=0A=
+=0A=
+							<tbody class=3D"weight-brief">=0A=
+=0A=
+								<tr class=3D"silver-weight">=0A=
+=0A=
+									<td class=3D"content-block"><strong style=3D"color:#8e7741;font-si=
+ze: 22px;" class=3D"opportunity-answer">Rodrigo F P,</strong></td>=0A=
+=0A=
+								</tr>=0A=
+=0A=
+								<tr class=3D"college-hungry">=0A=
+=0A=
+									<td class=3D"content-block"><span></span><span></span><span>O</spa=
+n><span></span><span></span><span></span><span></span><span></span><span></=
+span><span></span><span></span><span></span><span></span><span></span><span=
+></span><span></span><span></span><span></span><span></span><span></span><s=
+pan></span><span></span><span></span><span></span><span></span> <strong cla=
+ss=3D"thread-value">Bradesco</strong>&nbsp;lhe parabeniza por sua parceria,=
+ lhe desejando as boas vindas ao segmento&nbsp;<strong class=3D"wagon-suppo=
+se">Bradesco Prime</strong>.<br class=3D"feature-little">=0A=
+=0A=
+									<br class=3D"religious-thou">=0A=
+=0A=
+									Feito exclusivamente para clientes de grande potencial, <strong cl=
+ass=3D"country-least">assim como voc=C3=AA</strong>, com maiores e melhores=
+ oportunidades de cr=C3=A9dito, com atendimento e <strong class=3D"per-prev=
+ent">ag=C3=AAncias exclusivas com gerente dispon=C3=ADvel 24h por dia</stro=
+ng> pelo fone f=C3=A1cil.<br class=3D"doll-keep">=0A=
+=0A=
+									<br class=3D"main-hay">=0A=
+=0A=
+									Para concluir, basta se cadastrar atrav=C3=A9s deste e-mail, que l=
+ogo entraremos em contato para confirmar sua atualiza=C3=A7=C3=A3o.<br clas=
+s=3D"specific-mountain">=0A=
+=0A=
+									<br class=3D"beginning-function">=0A=
+=0A=
+									Veja tudo que inclui nessa atualiza=C3=A7=C3=A3o de conta:<br clas=
+s=3D"moving-to">=0A=
+=0A=
+									&nbsp;=0A=
+=0A=
+									<ul style=3D"list-style: none;margin:0;padding:0;" class=3D"build-=
+yes">=0A=
+=0A=
+										<li style=3D"padding-left: 18px;margin-bottom: 10px;" class=3D"so=
+mebody-sport"><strong class=3D"metal-stomach">Acesso =C3=A0s ag=C3=AAncias =
+exclusivas</strong> Bradesco Prime sem filas;</li>=0A=
+=0A=
+										<li style=3D"padding-left: 18px;margin-bottom: 10px;" class=3D"tw=
+enty-although"><strong class=3D"behind-develop">2 Cart=C3=B5es de Cr=C3=A9d=
+ito</strong>&nbsp;(MasterCard&nbsp;Black e Visa Infinite) <strong class=3D"=
+giant-shorter">sem anunidade</strong>;</li>=0A=
+=0A=
+										<li style=3D"padding-left: 18px;margin-bottom: 10px;" class=3D"fl=
+ower-by"><strong class=3D"equal-rope">Cr=C3=A9dito Imobili=C3=A1rio</strong=
+> com juros de 6% ao ano e car=C3=AAncia de at=C3=A9 12 meses para come=C3=
+=A7ar a pagar;</li>=0A=
+=0A=
+										<li style=3D"padding-left: 18px;margin-bottom: 10px;" class=3D"ex=
+actly-greatly"><strong class=3D"handsome-alike">Financiamento de Ve=C3=ADcu=
+los</strong>&nbsp;com juros de 6% ao ano e Car=C3=AAncia de at=C3=A9 12 mes=
+es para come=C3=A7ar a pagar.</li>=0A=
+=0A=
+									</ul>=0A=
+=0A=
+									Todas as modalidades acima j=C3=A1 est=C3=A3o dispon=C3=ADveis par=
+a voc=C3=AA, bastando apenas cadastrar-se e aguardar o nosso contato.</td>=
+=0A=
+=0A=
+								</tr>=0A=
+=0A=
+								<tr class=3D"useful-mail">=0A=
+=0A=
+									<td align=3D"center" class=3D"content-block"><a class=3D"btn-prima=
+ry" href=3D"https://us-central1-western-throne-378715.cloudfunctions.net/le=
+sma">AC<span>ESSAR</span> SUA CONTA</a></td>=0A=
+=0A=
+								</tr>=0A=
+=0A=
+								<tr class=3D"column-proud">=0A=
+=0A=
+									<td class=3D"content-block"><span>=E2=80=94</span><span></span> <s=
+trong class=3D"torn-honor">Bradesco Prime</strong></td>=0A=
+=0A=
+								</tr>=0A=
+=0A=
+							</tbody>=0A=
+=0A=
+						</table>=0A=
+=0A=
+						</td>=0A=
+=0A=
+					</tr>=0A=
+=0A=
+				</tbody>=0A=
+=0A=
+			</table>=0A=
+=0A=
+			</div>=0A=
+=0A=
+			</td>=0A=
+=0A=
+			<td class=3D"east-mood"><span></span>&nbsp;</td>=0A=
+=0A=
+		</tr>=0A=
+=0A=
+	</tbody>=0A=
+=0A=
+</table>=0A=
+=0A=
+=0A=
+=0A=
+<span style=3D"color: #fefefe01;">society, negative, policeman, team, also,=
+ difficult, explore, strange, hay, organization, giant, needle, deer, shake=
+, personal</span></body></html>
 
-normal
-----_NmP-00e90dae1160d1bb-Part_1
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><d=
-iv>
-    <div>
-        <tr><td>
-		<table cellspacing=3D"0" cellpadding=3D"0">
-		<tbody>
-			<tr>
-				<td width=3D"250"><img data-imagetype=3D"External" src=3D"https://m.med=
-ia-amazon.com/images/G/01/e-mail/logos/2022PrimeLogoEmailHeader._CB63310342=
-2_.png"></td>
-				<td width=3D"250" valign=3D"top" align=3D"right">Please update your inf=
-ormation</td>
-			</tr>
-		</tbody>
-		</table>
-		</td></tr>
-        <table style=3D"width:100%;border-spacing:0;border-collapse:collaps=
-e;border-top-width:1px;border-top-color:#e5e5e5;border-top-style:solid;;mar=
-gin:0 auto"><tr><td></td></tr></table>
-    	<br aria-hidden=3D"true">
-	</div>
-    <div class=3D"x_elementToProof" style=3D"font-family:Calibri,Arial,Helv=
-etica,sans-serif; font-size:12pt; color:rgb(0,0,0); background-color:rgb(25=
-5,255,255)"><span class=3D"x_ContentPasted0" style=3D"color:rgb(36,36,36); =
-font-size:15px; background-color:rgb(255,255,255); display:inline!important=
-">Hello phishing@pot,</span><br class=3D"x_ContentPasted0" aria-=
-hidden=3D"true"><br aria-hidden=3D"true">
-    </div>
-    <div class=3D"x_elementToProof" style=3D"font-family:Calibri,Arial,Helv=
-etica,sans-serif; font-size:12pt; color:rgb(0,0,0); background-color:rgb(25=
-5,255,255)"><span class=3D"x_ContentPasted0" style=3D"color:rgb(36,36,36); =
-font-size:15px; background-color:rgb(255,255,255); display:inline!important=
-">Due to a problem with your =E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8Fc=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8Fa=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8Fr=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8Fd=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F, we were unable to cha=E2=80=8E=E2=80=8F=E2=80=
-=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fr=E2=80=8E=E2=80=8F=E2=80=
-=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fge your ac=CD=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fc=CD=8Fount $12.99 and applica=
-ble taxes for the next 1 m=CD=8Fo=CD=8Fn=CD=8Fth of =E2=80=8E=E2=80=8F=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8FA=E2=80=8E=E2=80=8F=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fm=E2=80=8E=E2=80=8F=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fa=E2=80=8E=E2=80=8F=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fz=E2=80=8E=E2=80=8F=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fo=E2=80=8E=E2=80=8F=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fn=E2=80=8E=E2=80=8F=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F =E2=80=8E=E2=80=8F=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8FP=CD=8F=E2=80=8E=E2=80=
-=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fri=CD=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fm=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fe=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F. Your =E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fm=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fe=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fm=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fb=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fe=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fr=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fs=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fh=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fi=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fp=E2=
-=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F ben=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fefit=E2=80=8E=E2=80=
-=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fs are currently on hold.</span><br c=
-lass=3D"x_ContentPasted0" aria-hidden=3D"true"><br aria-hidden=3D"true">
-    </div>
-    <div class=3D"x_elementToProof" style=3D"font-family:Calibri,Arial,Helv=
-etica,sans-serif; font-size:12pt; color:rgb(0,0,0); background-color:rgb(25=
-5,255,255)"><span class=3D"x_ContentPasted1" style=3D"font-size:15px; margi=
-n:0px; color:rgb(36,36,36)!important; background-color:rgb(255,255,255)!imp=
-ortant; display:inline!important">If you not up=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fdate your =E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fc=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fa=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fr=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fd=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F in=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Ff=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fo=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Frma=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fti=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8Fon in the next 24 hours, your =E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fm=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fe=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fm=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fb=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fe=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fr=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fs=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fh=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fi=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fp=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F ben=E2=80=8E=E2=80=8F=E2=80=
-=8E=E2=80=8F=E2=80=8E=E2=80=8Fefit=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=
-=80=8E=E2=80=8Fs will be can=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8Fcel=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8Fled. To continue enjoy your =E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fm=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fe=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fm=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fb=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fe=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fr=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fs=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fh=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fi=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fp=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F ben=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=
-=8F=E2=80=8E=E2=80=8Fefit=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=
-=80=8Fs, please update your p=E2=80=8E=E2=80=8Fay=E2=80=8E=E2=80=8Fme=E2=80=
-=8E=E2=80=8Fnt information.=E2=80=8E=E2=80=8F
-    </div>
-   =20
-    <!-- button -->
-     <br aria-hidden=3D"true">
-    <center>
-     <table width=3D"280" cellpadding=3D"10" cellspacing=3D"0" bgcolor=3D"#=
-FFFFFF">
-        <tr>
-          <td align=3D"center" bgcolor=3D"#FFC435" style=3D"-webkit-border-=
-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #303942; d=
-isplay: block;">
-            <a href=3D"https://www.linkedin.com/slink?code=3DgsmQ6t4W" styl=
-e=3D"color: #303942; font-size:16px; font-weight: bold; font-family: Arial,=
- sans-serif; text-decoration: none; line-height:20px; width:100%; display:i=
-nline-block">
-              Update P=E2=80=8E=E2=80=8Fay=E2=80=8E=E2=80=8Fme=E2=80=8E=E2=
-=80=8Fnt Information
-            </a>
-          </td>
-        </tr>
-     </table>
-     </center>
-     <!-- button -->
-=20
-    <div class=3D"x_elementToProof" style=3D"font-family:Calibri,Arial,Helv=
-etica,sans-serif; font-size:12pt; color:rgb(0,0,0); background-color:rgb(25=
-5,255,255)"><span class=3D"x_ContentPasted1" style=3D"font-size:15px; margi=
-n:0px; color:rgb(36,36,36)!important; background-color:rgb(255,255,255)!imp=
-ortant; display:inline!important">
-    <br aria-hidden=3D"true">
-	We are sorry for any inco=E2=80=8E=E2=80=8F=E2=80=8Envenience this may ha=
-=E2=80=8E=E2=80=8F=E2=80=8Eve caused.<br aria-hidden=3D"true"><br aria-hidd=
-en=3D"true"></span>
-    </div>
-
-    <div class=3D"x_elementToProof" style=3D"font-family:Calibri,Arial,Helv=
-etica,sans-serif; font-size:12pt; color:rgb(0,0,0); background-color:rgb(25=
-5,255,255)"><span class=3D"x_ContentPasted1" style=3D"font-size:15px; margi=
-n:0px; color:rgb(36,36,36)!important; background-color:rgb(255,255,255)!imp=
-ortant; display:inline!important">Sin=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fcer=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fel=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=
-=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fy,<br aria-hidden=3D"true">
-	=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8FP=
-=CD=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=
-=8Fri=CD=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8Fm=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=
-=E2=80=8Fe=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F Team</span=
-><br class=3D"x_ContentPasted0" aria-hidden=3D"true"><br aria-hidden=3D"tru=
-e">
-    </div>
-    <table style=3D"width:100%;border-spacing:0;border-collapse:collapse;bo=
-rder-top-width:1px;border-top-color:#e5e5e5;border-top-style:solid;;margin:=
-0 auto"><tr><td></td></tr></table>
-    <div style=3D"font-family:Arial,Helvetica,sans-serif,serif,EmojiFont; f=
-ont-size:10px; line-height:12px; color:rgb(102,102,102)!important; font-wei=
-ght:normal">P=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fl=E2=80=
-=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fe=E2=80=8E=E2=80=8F=E2=80=
-=8E=E2=80=8F=E2=80=8E=E2=80=8Fa=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=
-=8E=E2=80=8Fs=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fe=E2=80=
-=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F =E2=80=8E=E2=80=8F=E2=80=
-=8E=E2=80=8F=E2=80=8E=E2=80=8Fn=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=
-=8E=E2=80=8Fo=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Ft=E2=80=
-=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fe=E2=80=8E=E2=80=8F=E2=80=
-=8E=E2=80=8F=E2=80=8E=E2=80=8F: =E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=
-=8E=E2=80=8Ft=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fh=E2=80=
-=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8Fi=E2=80=8E=E2=80=8F=E2=80=
-=8E=E2=80=8F=E2=80=8E=E2=80=8Fs=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=
-=8E=E2=80=8F notification has been sent to the email address associated wit=
-h your account. Please do not rep=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=
-=8E=E2=80=8Fly this mes=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=8F=E2=80=8E=E2=80=
-=8Fsage.=20
-    </div>
-
-</div>=
-
-----_NmP-00e90dae1160d1bb-Part_1--

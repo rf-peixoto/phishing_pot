@@ -1,328 +1,530 @@
-Received: from LV2PR19MB5695.namprd19.prod.outlook.com (2603:10b6:408:14c::20)
- by MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Sun, 3 Sep 2023
- 00:52:58 +0000
-ARC-Seal: i=3; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
- b=jnPatmXPEWEUX3gOM0N2RSZZxMgwBhHyj8+XzVdtxeAGNDhCuE/3aK4sUPyvxiUWtTwu2yjJK/ICsU9FEmoRBh8e+LbfpHhSoDGW/yUhuROxZWM1jFrue4vmax6j3nj0Hcom9EgKwjnXGih1ufjM81FybMIyt6Cfki41fTrDW5y5CajPTN5W93gIIbQokaZnitqKZVe6o+Pa/dCvUEmq84VnosayNLTGXeRLsHPxwnPOhNZxlRFhl0YOWkMaS4LBR2hrZDVW4R9DgB3QlmfpokKZKXcgKbt+O5tLfeqjhI+Bm5ymAOrXaU0SzqmiqqRcbFn3OnRIU6NhgfVJkZL2/A==
-ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QBagXL1aMQjLa6buXeTdPsK5Yd5Xxi9f4EjArz4aUUI=;
- b=FKPVi0O90FihI8bhug5ZotP2UxHtepQpn8rK8HRQ3DrZtu5JwVYElKSEycHiJOeLszN0zjcfW+m/f3Vu8vH+KKdJ4Zs29G0C8q3IKksx+WuHlt5Gm4g3d4Ch8bJiPVP4/iDyLnoOcBW4EJeZ5wCYVvzAo3PYIjekpdoE2RuzopdyksKGYeZ/yEunD7b6rv9VOH8aYXIH0yjvlCbB4uYS1KsoHckZlWXbNua0ev2WRMdrsJNFwXMGzvNf6+bWoQ68nyZjmqGZIMuI5CuoDlkgvaDUr3i+JOcYS9Zdr3NKbMBz6g8c3wduEBQbPJl+TPoXOuqyNxxtld7MwosDC2P5ug==
-ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=pass (sender ip is
- 209.85.222.49) smtp.rcpttodomain=hotmail.com smtp.mailfrom=gmail.com;
- dmarc=pass (p=none sp=none pct=100) action=none header.from=hotmail.com;
- dkim=pass (signature was verified) header.d=hotmail.com; arc=pass (0 oda=1
- ltdi=1 spf=[1,2,smtp.mailfrom=phishing@pot]
- dkim=[1,2,header.i=@hotmail.com] dmarc=[1,2,header.from=hotmail.com])
-Received: from DUZPR01CA0294.eurprd01.prod.exchangelabs.com
- (2603:10a6:10:4b7::13) by LV2PR19MB5695.namprd19.prod.outlook.com
- (2603:10b6:408:14c::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.34; Sun, 3 Sep
- 2023 00:52:57 +0000
-Received: from DB8EUR05FT034.eop-eur05.prod.protection.outlook.com
- (2603:10a6:10:4b7:cafe::ae) by DUZPR01CA0294.outlook.office365.com
- (2603:10a6:10:4b7::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.29 via Frontend
- Transport; Sun, 3 Sep 2023 00:52:56 +0000
-Authentication-Results: spf=pass (sender IP is 209.85.222.49)
- smtp.mailfrom=gmail.com; dkim=pass (signature was verified)
- header.d=hotmail.com;dmarc=pass action=none
- header.from=hotmail.com;compauth=pass reason=100
-Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates
- 209.85.222.49 as permitted sender) receiver=protection.outlook.com;
- client-ip=209.85.222.49; helo=mail-ua1-f49.google.com; pr=C
-Received: from mail-ua1-f49.google.com (209.85.222.49) by
- DB8EUR05FT034.mail.protection.outlook.com (10.233.238.100) with Microsoft
+Received: from PH7PR19MB5752.namprd19.prod.outlook.com (::1) by
+ MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Mon, 4 Sep 2023 13:53:11
+ +0000
+Received: from AM6PR0502CA0053.eurprd05.prod.outlook.com
+ (2603:10a6:20b:56::30) by PH7PR19MB5752.namprd19.prod.outlook.com
+ (2603:10b6:510:1d3::11) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.30; Mon, 4 Sep
+ 2023 13:53:09 +0000
+Received: from AM6EUR05FT046.eop-eur05.prod.protection.outlook.com
+ (2603:10a6:20b:56:cafe::17) by AM6PR0502CA0053.outlook.office365.com
+ (2603:10a6:20b:56::30) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.32 via Frontend
+ Transport; Mon, 4 Sep 2023 13:53:09 +0000
+Authentication-Results: spf=pass (sender IP is 162.240.47.54)
+ smtp.mailfrom=beliterary.com; dkim=pass (signature was verified)
+ header.d=beliterary.com;dmarc=bestguesspass action=none
+ header.from=beliterary.com;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of beliterary.com
+ designates 162.240.47.54 as permitted sender)
+ receiver=protection.outlook.com; client-ip=162.240.47.54;
+ helo=server.dansonsolutions.org; pr=C
+Received: from server.dansonsolutions.org (162.240.47.54) by
+ AM6EUR05FT046.mail.protection.outlook.com (10.233.241.175) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6768.22 via Frontend Transport; Sun, 3 Sep 2023 00:52:56 +0000
+ 15.20.6768.24 via Frontend Transport; Mon, 4 Sep 2023 13:53:09 +0000
 X-IncomingTopHeaderMarker:
- OriginalChecksum:2B05CA0550401BCC3EF6C65D36F05FCE562215302AC972AB59A64CB682D84D98;UpperCasedChecksum:092D98D6EA6DF4721EBF9D21A19D69107DFADAFACB63859D9D5EC6E740E2798F;SizeAsReceived:11427;Count:57
-Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-78f1210e27fso140225241.1
-        for <phishing@pot>; Sat, 02 Sep 2023 17:52:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693702376; x=1694307176;
-        h=mime-version:content-language:accept-language:in-reply-to
-         :references:message-id:date:thread-index:thread-topic:subject:to
-         :from:dkim-signature:delivered-to:x-forwarded-for:x-forwarded-to
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QBagXL1aMQjLa6buXeTdPsK5Yd5Xxi9f4EjArz4aUUI=;
-        b=X5I3hABYOKu7/abHDliJbZEztrBM2ZpcB+wqeU4rX2I4mYqw8bMmbL5fP4tjiBhLH0
-         Pw0Ghz59oy5q7XC27rhg/vc+oHUlCuFPSnbcqXI8RiWF/EPPvt81GuCp4kcLShd1AM2f
-         tNE5nCLs7YIf3k5ksh6XenKg8cxZD5EDcBXyhCAZV4hR+ARxEFyVmYB/Kfpm4GgBd3/t
-         ctSI0iEhPNYu90dwCqHUE4myGz1u6p2ckQ36WyqPSZvOtvYYvHhf4TwNGj8g9xJl5AnN
-         HRGOzYCj3uRG8AlFHwCHMyH6lbOsh+GETzqz9/X2tS/rmjv/sG3M5P59Taur1n12uZgZ
-         di+A==
-X-Gm-Message-State: AOJu0YxKMCVvLk878ZG2Mz1nGn0p5yvyV38mJPyNhZI75K6qQ2dG/Q5l
-	rI1/I/MYCg23pouWLZQ0Gtsov2MFcwwUmFJKofDY51ljoKl8m/v8Sw==
-X-Received: by 2002:a1f:cb82:0:b0:48f:d8c5:2601 with SMTP id b124-20020a1fcb82000000b0048fd8c52601mr5229824vkg.7.1693702376026;
-        Sat, 02 Sep 2023 17:52:56 -0700 (PDT)
-X-Forwarded-To: phishing@pot
-X-Forwarded-For: phish.me.again@gmail.com phishing@pot
-Delivered-To: phish.me.again@gmail.com
-Received: by 2002:a59:b96f:0:b0:3f7:5ee5:1e91 with SMTP id w15csp426125vqx;
-        Sat, 2 Sep 2023 17:52:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGOzIMaZ5LU/rWtHpJCOtnKTXtmp9AxVPRP6EOnJMER5lD4Oa1GSMcjsj+nh7pQA4z6uK1f
-X-Received: by 2002:a05:6a20:8e1b:b0:133:d17d:193a with SMTP id y27-20020a056a208e1b00b00133d17d193amr8919871pzj.59.1693702374550;
-        Sat, 02 Sep 2023 17:52:54 -0700 (PDT)
-ARC-Seal: i=2; a=rsa-sha256; t=1693702374; cv=pass;
-        d=google.com; s=arc-20160816;
-        b=ERsBBj+MxjcXObYMnmUXFVygXKNWe8m4H+ET7j+Cx3vHDwZrg/aD54f0lN5+Q2mk2M
-         qrbycDA1hpEXkYydPgDEpJ9uvv3CakGiZSnnJFsyb1zzzDg7zBSRtRT7al3ma28WLEEX
-         xhKbS0oGN1J5MV79wkXqUFzmNkkwJtoVLJ+yhBYBdknj7S4EE7skqOKhYz6TFfw5IEp1
-         pCu99bLz7hUb9lqVDXVEexXcMfgpsrdd3dncWqe31U2CFCBWRymz/baatDXAOJoESLwJ
-         V5m1PnQrcPG0n7BdLJHaiWzRu9/45vsKCpBvhgzCwS474FrX6L55KNsdg2a3UgNzLCrz
-         mdgg==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
-        h=mime-version:content-language:accept-language:in-reply-to
-         :references:message-id:date:thread-index:thread-topic:subject:to
-         :from:dkim-signature;
-        bh=QBagXL1aMQjLa6buXeTdPsK5Yd5Xxi9f4EjArz4aUUI=;
-        fh=UETxh7Fu2EGjYUB1TKqvJnbisEPhC7fobl4HgFgZ4OQ=;
-        b=XwgfT4hUZRWnvBRXs7rIeWDwxbW/ciqiNJ/xLayGA9mMXmMCI9BF1csKzNiPw2V6wO
-         mu+Pbj+BrUY7QlLhiNyjmWPslPkMgMNHxP+URcYCFbo+PrCmwEfmOQd1QYwTgKSAbE58
-         A5uUal942vDwepZ5JODOftYo8t3FIg2e2nFCElJacQIDoo9BT8FdONbiYKXzot+b2EOL
-         ftI9Yz1BJifrD1hzde3j7xAWfyi1/Rr9xm34N7nm4sp/9KJN2s/6L8I2mEA08Ijyo7jr
-         qUfAUojPIFEz+i6jr5OS2cQAlmHPhRu0Uyb4+5jHUlnekRDxDB6lnri28N0K3640HFOS
-         p3cw==
-ARC-Authentication-Results: i=2; mx.google.com;
-       dkim=pass header.i=@hotmail.com header.s=selector1 header.b=IowEjHsQ;
-       arc=pass (i=1);
-       spf=pass (google.com: domain of phishing@pot designates 2a01:111:f400:fe5b::830 as permitted sender) smtp.mailfrom=merciayanmact@hotmail.com;
-       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=hotmail.com
-Return-Path: phish.me.again+caf_=phishing@pot=hotmail.com@gmail.com
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12olkn20830.outbound.protection.outlook.com. [2a01:111:f400:fe5b::830])
-        by mx.google.com with ESMTPS id bs65-20020a632844000000b00565ecd01394si5335509pgb.10.2023.09.02.17.52.53
-        for <Phish.me.again@gmail.com>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 02 Sep 2023 17:52:54 -0700 (PDT)
-Received-SPF: pass (google.com: domain of phishing@pot designates 2a01:111:f400:fe5b::830 as permitted sender) client-ip=2a01:111:f400:fe5b::830;
-Authentication-Results-Original: mx.google.com;       dkim=pass
- header.i=@hotmail.com header.s=selector1 header.b=IowEjHsQ;       arc=pass
- (i=1);       spf=pass (google.com: domain of phishing@pot
- designates 2a01:111:f400:fe5b::830 as permitted sender)
- smtp.mailfrom=phishing@pot;       dmarc=pass (p=NONE sp=NONE
- dis=NONE) header.from=hotmail.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mYS2gxm/Vga1MDu1UIRMMwcLUTZ4xZe/9H7W3+FnpI1ilMGeIMVinY9Y9/tg/bej9VF3t4641pVlGkWIgT5onHzLTcS7yH7Di92nszsevcdSI8coi1kKzAr5XaRXN7f9EdLv4m6XhyZS0dTt59V/g1wTdpUWjIiBlyWlNQukdtgw37gv9kQfgHwmHoPa5wxw13Si0k+ZYw4B13TIfVjJj7NrF+c53f20N6bwJHu96swdElj8x0K2AmQnPFtkU/1p6Xz+neHGXHaK35CeOofr60U7GSr1SD10uS11E48wMuF2GikCu12mxTeH1OU983oytU6DlD5ZdiguS0brj/Yzpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QBagXL1aMQjLa6buXeTdPsK5Yd5Xxi9f4EjArz4aUUI=;
- b=FHTMB8e0IbPV6cOwG7R+Pjr1S8E5QOqs8CV2pQZGYRTqUtkd9/wle9bRzYz4UYYDmFC29jFi2K7yTCIKvTvBkwlDcCCPX11dJYSM+kUVma2KBKOFyo8Ue5rssVigrr7gS3pvpMEajn+fTPcVGL6WxWxQSSv82qXqCl3x0tpFQ1f9ayHgihJLw6vMSCUomrYunQdgWQUR49iRrGkSPBTr2KUibhuMf5CAKj8RYMoU3T4uXsVa4WzjEbyUvFb6L4O6sWndcMTrm1c5rruoTh5g1MZ0TPUEG8wR6CwDGoZ+q2/zJNvVUrp0faSmyoo+Z28y6wlZp6xGBM5eCix9J62VCA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QBagXL1aMQjLa6buXeTdPsK5Yd5Xxi9f4EjArz4aUUI=;
- b=IowEjHsQblKu/VYjspdAzlrK3cJvqmVNAVQ5MPX4fkLSs7mv6NH6+LE+2drAILuwaVewZV+l+/z4Uv4uwxSkrT8bdOrFghOPagbf6XBmOessCG0Lrc4MxDt2/UquRiWPixadVjew2K0nrZKgvsosGy0miFnid8ILOe6tBWv9E/eO1aLWk7oZiWDhKb6Cp/PcsBXCKl0dsvsTQCVY05298VfhH24rEUkKQCI+J3XsasYFpHjnxD7lct45qMqcUEeOj3abFwSnmk2tTz/RhRS7XUpB3d+2LDyn6H6j9qbxhMB8lT+gmtOwTx/sdkxIPrfQDuVTSxJ325DZ6ANdvwVN+g==
-Received: from IA0PR02MB9779.namprd02.prod.outlook.com (2603:10b6:208:48b::12)
- by SJ0PR02MB8628.namprd02.prod.outlook.com (2603:10b6:a03:3fd::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.28; Sun, 3 Sep
- 2023 00:52:45 +0000
-Received: from IA0PR02MB9779.namprd02.prod.outlook.com
- ([fe80::f44d:dc0d:8247:8ee4]) by IA0PR02MB9779.namprd02.prod.outlook.com
- ([fe80::f44d:dc0d:8247:8ee4%4]) with mapi id 15.20.6699.034; Sun, 3 Sep 2023
- 00:52:44 +0000
-From: phishing@pot <phishing@pot>
-To: "phish.me.again@gmail.com" <Phish.me.again@gmail.com>
-Subject: Fw: $200 in free bitcoins every hour! Multiply bitcoins 4,750x!
- Jackpots up to 1 bitcoin!
-Thread-Topic: $200 in free bitcoins every hour! Multiply bitcoins 4,750x!
- Jackpots up to 1 bitcoin!
-Thread-Index: AQHZ3Na+cDgh2EkpZEKXtkfra0v5NbAISDRB
-Date: Sun, 3 Sep 2023 00:52:44 +0000
-Message-ID:
- <IA0PR02MB97797C1D0C9B14507366A4C6B3EAA@IA0PR02MB9779.namprd02.prod.outlook.com>
-References:
- <8c496ab3-3bae-4b39-8ecd-5947403cc985@DB5EUR02FT017.eop-EUR02.prod.protection.outlook.com>
-In-Reply-To:
- <8c496ab3-3bae-4b39-8ecd-5947403cc985@DB5EUR02FT017.eop-EUR02.prod.protection.outlook.com>
-Accept-Language: pt-BR, en-US
-Content-Language: pt-BR
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn: [mKIfoN5u7y09b77P9aLEn3o2BLRg/SVj]
-x-ms-traffictypediagnostic:
- IA0PR02MB9779:EE_|SJ0PR02MB8628:EE_|DB8EUR05FT034:EE_|LV2PR19MB5695:EE_|MN0PR19MB6312:EE_
-X-MS-Office365-Filtering-Correlation-Id: 286a9a45-e8b2-4ffc-2a7e-08dbac181cc7
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original:
- Qm7TrEbo3JMHISxTf1AiFoGjzZTCC281rCdyCnHFzeoqpgaQHjyRxJTce0foDSwMvRoPTIYoM3eM5j0HmM9Jo4kjDWgudD5r1+sXOjnqrqyhljijTeH0GHX0SxPbhyIvyO1vif8PM44adCOPEJtdBp38axqMmIwJYqzRXILjTaZcsfxPXlUEp04PRKzNqOR65DEIZjHXig0sZEDw1z3c81LV030vd9M7HtwJC4G3YThg+77BohliOigTTe9+L3nUTKNxHWlX3KhT/PSmftgUvqC18tNlovXGk5YZRZIQ9wvkcqrrqTyIHrMYZqKtrkb8Hip6bjbMoKDiIWKjc1n6xs3KNFN1KtciJs3omd2hnMDw6ksqLkD4rsmqFKeLlywsAOSEP53dHvJ+CKMuJeOnSI2r16q1rXSapBz1ovvmvbEshMz7X3OL5EvlzWE2sQDWVlNm2xm7OL1xSAEh3zHlPWLdu3ylcYGGbqQEvp4sPanGlT2tr6iicFgwM6wi1rVJ5ArbBq894i8mVp4NzfJ9VuMSyFXeOMLZKkT7wn33nuQ/x/VWNgRM7viQuhV/JfLyQUesSiJ5t7/X4wRDqdaD2GtHErqe1f1/pDbVVKup5ELHkaTo1Hqb7a/9LAd6rN9B5nTUS292v0Xhs9gMLk7xUOSZGnMaLziHCZHir+h+VGw=
-X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-Original-0:
- =?Windows-1252?Q?ic5mrZTgEVnE9wPOltfYcCvtiwDezSuxbhHr4esXceH2mZFbSiNnpjKH?=
- =?Windows-1252?Q?7RKQFrrSToTzIM1DgXlye1KcD57DyDP9cVMU3DAI1Sy6TX9mB7W+Htjt?=
- =?Windows-1252?Q?hAPnvbUENKudFlJhpX4jeDO2imBNi5ujIletCYxq2Ct8tv2wtZEwk90u?=
- =?Windows-1252?Q?ynqf04i1MGDEiWiQgi6msJUFAK4rM6EChas5lcLSgNysd4ULLPCCTma1?=
- =?Windows-1252?Q?sc8rSCh47Ym19JLfRQi5UW2AqP37sTQVx0S5iAydLvEgwmSnmE9klN6A?=
- =?Windows-1252?Q?shglEhPP+N96OIibG3nasXGje0HAYleBNQCGrEfwK+y5qH51sE8WftKb?=
- =?Windows-1252?Q?ePEeA6s1qCK8Bwq1/QpGfW8N3I4tQxTEIH2oDIQ4atKFhkXVrgw9AuuY?=
- =?Windows-1252?Q?HTiC8/qa9w4KAtpw8fQHB6aZoXwiISJR+QYAgXRW4+Mop5xCOMX5duXw?=
- =?Windows-1252?Q?JuOkIVADNeCKipmavX6QZZAZhwXk4uq/SXQfKeIiygsEViCDN//hLrbe?=
- =?Windows-1252?Q?Exp7EV7bEk/wEvrSECeDc6w8KDby/I1spOOeqHfyqDGqBea+bOo7vMiP?=
- =?Windows-1252?Q?7XDQNi72Jm1Bvg01h/SWOlcQtIj+vWfXuNjLOW+dAbArkOxWcvYDp5Hq?=
- =?Windows-1252?Q?rqv3oHMPefaQQyVFFcKw3LPXWZp0r7px41B3zlyfIVLAgyNTbSbM1R9M?=
- =?Windows-1252?Q?qXqWJ4MGkhYB0wMMj9/u23FW7WWBhC/F2/cvD/USjeReL20X5gUcE40k?=
- =?Windows-1252?Q?ExGHRIKYXsIj6useGFgDzV7FLxlE5nNTmtDtb7VtVvmh+GKrbwVHe4KQ?=
- =?Windows-1252?Q?7U3eFcqcV96SuDRvcucjN6QnvWBWTRmed0BBgfkWllE535EJPBfD8Aps?=
- =?Windows-1252?Q?HgPtGkcx4pExBvX4mVD4GVME3y0l3jpM/tT4iccS46jhaJt4ImMwwhAN?=
- =?Windows-1252?Q?9C4IqjJD3YDaTjvNE5ABz3OLOrT8cWAv3ivax6H0DZrSTRNKEb3T2xul?=
- =?Windows-1252?Q?PUeTJkIy3fq3D3Ium2h8yBhIn9mM5sDXgTvRxc9ZQR3dVFLFBezo7u8X?=
- =?Windows-1252?Q?qcsLXoM3Yp1PiwiYEvwAWjDFq7Zor33yEbTtTM/Uw7c+GrQHmiMutuGU?=
- =?Windows-1252?Q?oiU3goJeIu3VSrglxdH6YM8sdUg2b/EMcpEAhxb19MFrBsUaJ/fD84Lp?=
- =?Windows-1252?Q?TiiQAnklgW/4w6/mXoUfzO9BbojUmurlBr7SXlGXBXS5Ts3ROO7nD9M2?=
- =?Windows-1252?Q?QVHQzNdvIWoj3ujrXVoVFFn+k1sNP5Y03F/w5/VggAOYfXK/1bAz5W7G?=
- =?Windows-1252?Q?uYfCug=3D=3D?=
+ OriginalChecksum:EBBE4B7C6DAEDA2DE266DD8D6475E4DF11D9B5333CE320D64D7636D4D203E75E;UpperCasedChecksum:71D5C4E922F311C776005865A0D531BC72EA0835712B017BD96C4C210276C147;SizeAsReceived:2117;Count:21
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=beliterary.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+	MIME-Version:Message-ID:Subject:From:To:Date:Sender:Reply-To:Cc:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=TulCkPwn/VGLb06Ho0hYH7pWEbwYCBLd9F5EFqkqe0w=; b=ZFP4OObR3ykpmtNGonLk9xEh8l
+	hnMIiKErk7e9Gd8zqiCa6X+99S1NAVOAWxx4BctDtJHiVq1vyuj2U85FtwG4ko5W5LsDY2MsTQzdR
+	mVM98CIfNGb7sdyv4hzXlZ86nC3SQ80xGuUoXqx5EnjrvMru7ikYXGe60BHP/XPja9Vta3nCVVAIW
+	jwIfAC7XXhI1r+bcBW84Nld5re/hZQS32Xr/uCCf0nx7vRo9EgBDVPWdsc2lgwbQ9/vwLvsqCYoc6
+	MPSStEeJSRcQVXJE6QrIdL5fPA3Zq7P1+5/e2+uaGjovPBvzP6kwRmrMbhYDhjnoZRgWpsbIKknfE
+	gCckhQhQ==;
+Received: from [185.174.101.55] (port=64906 helo=WIN-R4BNMS0KP2)
+	by server.dansonsolutions.org with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96)
+	(envelope-from <clients@beliterary.com>)
+	id 1qdA0q-0006pO-02
+	for phishing@pot;
+	Mon, 04 Sep 2023 07:53:08 -0600
+Date: Mon, 4 Sep 2023 13:53:07 +0000
+To: phishing@pot
+From: RippleNet <clients@beliterary.com>
+Subject: Discover The Power Of XRP Staking
+Message-ID: <LKqWCR6TUkOcH9sF07ab0mfooZEFRCMnUTUi7q40@WIN-R4BNMS0KP2>
+X-Mailer: PHPMailer 6.1.7 (https://github.com/PHPMailer/PHPMailer)
 Content-Type: multipart/alternative;
-	boundary="_000_IA0PR02MB97797C1D0C9B14507366A4C6B3EAAIA0PR02MB9779namp_"
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB8628
-X-IncomingHeaderCount: 57
-X-MS-Exchange-Organization-ExpirationStartTime: 03 Sep 2023 00:52:56.5064
+ boundary="b1_LKqWCR6TUkOcH9sF07ab0mfooZEFRCMnUTUi7q40"
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - server.dansonsolutions.org
+X-AntiAbuse: Original Domain - hotmail.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - beliterary.com
+X-Get-Message-Sender-Via: server.dansonsolutions.org: authenticated_id: clients@beliterary.com
+X-Authenticated-Sender: server.dansonsolutions.org: clients@beliterary.com
+X-Source:
+X-Source-Args:
+X-Source-Dir:
+X-IncomingHeaderCount: 21
+Return-Path: clients@beliterary.com
+X-MS-Exchange-Organization-ExpirationStartTime: 04 Sep 2023 13:53:09.4421
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
 X-MS-Exchange-Organization-Network-Message-Id:
- 286a9a45-e8b2-4ffc-2a7e-08dbac181cc7
+ fc6a6d95-4548-4036-0634-08dbad4e45e0
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- DB8EUR05FT034.eop-eur05.prod.protection.outlook.com
 X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic:
+ AM6EUR05FT046:EE_|PH7PR19MB5752:EE_|MN0PR19MB6312:EE_
 X-MS-Exchange-Organization-AuthSource:
- DB8EUR05FT034.eop-eur05.prod.protection.outlook.com
+ AM6EUR05FT046.eop-eur05.prod.protection.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 9/3/2023 12:01:17 AM
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
- 5656d7ca-60eb-436d-9031-08dbac1815da
+X-MS-UserLastLogonTime: 9/4/2023 1:51:50 PM
+X-MS-Office365-Filtering-Correlation-Id: fc6a6d95-4548-4036-0634-08dbad4e45e0
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 209.85.222.49
-X-SID-PRA: MERCIAYANMACT@HOTMAIL.COM
+X-Sender-IP: 162.240.47.54
+X-SID-PRA: CLIENTS@BELITERARY.COM
 X-SID-Result: PASS
 X-MS-Exchange-Organization-PCL: 2
-X-MS-Exchange-Organization-SCL: 1
+X-MS-Exchange-Organization-SCL: 7
 X-Microsoft-Antispam: BCL:0;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2023 00:52:56.4751
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2023 13:53:09.2858
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 286a9a45-e8b2-4ffc-2a7e-08dbac181cc7
+X-MS-Exchange-CrossTenant-Network-Message-Id: fc6a6d95-4548-4036-0634-08dbad4e45e0
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-AuthSource:
- DB8EUR05FT034.eop-eur05.prod.protection.outlook.com
+ AM6EUR05FT046.eop-eur05.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
  00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR19MB5695
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.5529244
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR19MB5752
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.4310686
 X-MS-Exchange-Processed-By-BccFoldering: 15.20.6745.026
 X-Microsoft-Antispam-Mailbox-Delivery:
-	wl:1;pcwl:1;ucf:1;jmr:0;ex:0;auth:1;dest:C;OFR:CustomRules;ENG:(5062000305)(920221119095)(90000117)(920221120095)(90012020)(91020020)(91040095)(9050020)(9095020)(9100341)(944500132)(2008001134)(4810010)(4910033)(9575002)(10195002)(9414026)(9310011)(9220031)(120001);
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000305)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001134)(2008121020)(4810010)(4910033)(9610028)(9525003)(10145022)(9320005)(9245025)(120001);RF:JunkEmail;
 X-Message-Info:
-	qZelhIiYnPmZdqFlUByAq9u7laar5lirhGIGakIU8SX9uJu/RgfCpxuCwB/bKBjtd1LYAXZA/1ZHEjeZfB39Km78+9iGPh4JDgv7vVPeQQoVvybvW4RHCf4gZfD2L9DDrJZkuu559rXTTO4EiVheD+qicrLKHH7qJ+V5Waf8vx2Tm6DoA/K3TDEhFpzU4BnqNZ6cX6rYeYOm4elCZbPcxA==
-X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0yO1NDTD0tMQ==
+	6hMotsjLow/8H3rPvhaM7AYe+dOqYSaT4qwV9Pe8WLiVu/1ITiR5LJbhOuyv47ABB6TnMW5RMzppqd01CxIFApwKY/h2bAU2WqxkDO1bw6THdpROiG9UsFFvJ80bYGLvWzY0KWy3HjsQu8scL7+ve2wYAuuNKvmTSV/pVs6t9/pvVh5WZN/AMuVpcgX7htNoWgTYfgb1mjNvUeHfoUHpag==
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0yO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?Windows-1252?Q?79GjP526Ik0Mm4NfB70iW33pkpe+047mNq17HUK2XoJLCPWwvkBC41aV?=
- =?Windows-1252?Q?87j1/ZFxVOQ3CTZTBseQBIFD9iIXvcbu4N5lWx+C4Q4KxWEoC9u42Ok3?=
- =?Windows-1252?Q?q2EofHU6A5tlPzdwQLwxNXzPw72WwWdBkmkmLu+ALyAD8Dui17YFySGV?=
- =?Windows-1252?Q?4vKtNNYzosDv2sN4I6XnM+9te7JGTbbb7Z6Du9iC1ZKipVe34kEjSsk0?=
- =?Windows-1252?Q?Dlc0/iwzrHIrY33MBoMWlsYN2tpQrkYp91w2z/p7n+qOSnZEYGq5STwi?=
- =?Windows-1252?Q?11NDFNfJndYRPFioTQZzmfc7MAZWDizEAzKxctfpXCZYDJqYUUl1kjwm?=
- =?Windows-1252?Q?OPGYww7Q+En+0YS5grfkGi9BAj7rSY70v4bAqW/+wcEEfissHqK5QQVq?=
- =?Windows-1252?Q?nqSsYuin/vdC9y7xEBU3AjqSO4Qm9UN12HNgCKmmXhtpeIPPIhBH5AHu?=
- =?Windows-1252?Q?KnpDjsikMAavoLx2Pi1Wlyo4QOOdJIN9WNjWq442n+MBeQnhhq5rFhII?=
- =?Windows-1252?Q?hHcXsvdlG37LPGZU437IFLn9X35SCXshp1B6cA6wME3LzEba7EwCQ7Iw?=
- =?Windows-1252?Q?v54wFQE+blV7zsZeb5jqnXmPG2OM7fZgjxjDdN2g3KpdLYoS8L5HfY0K?=
- =?Windows-1252?Q?U+wl4wrSVucVy2hGOvhNR5eJHupC9a68L8h2EcyaFu/ZkSIGXSejjlXo?=
- =?Windows-1252?Q?hFL4SPByyaSvoz1QzCfSIHIBYP6wTSKYoKSF5dl2Wzu3OiW1ylonvsWO?=
- =?Windows-1252?Q?fJKWQ6dkjLMMinqTdznM0qhgFS6y0C0p4dma9JBqXeBPeaDKwiN1ECbA?=
- =?Windows-1252?Q?zqgzfpGfnpJv50Nx2jRcokvSYTYXL5X41NnLP94Ai47Bfyf+rJ6KAxcm?=
- =?Windows-1252?Q?V5xY/HPZli1Wzlt9uhGuO7WvtteYr7CTISXefTr41HBaBonxIlmhajs3?=
- =?Windows-1252?Q?rrpPcygU3MLELVshSkz+jKLoYnUZStGBH7u82FpsJNKELAY8lfxAtI6N?=
- =?Windows-1252?Q?L7hEIbKkUJJw8cM8fQIuu80FmCGsuuqcmr6Siu+crNZJ2z0S1QUYkXon?=
- =?Windows-1252?Q?u+zjmd9zwMQw6Ka700kQ5h2QvK+tysRyB6IRJN2F9Fdo1/4d9zwIw8f8?=
- =?Windows-1252?Q?0QjjkYOKWr4eraUn2ihxKfPBRtYgEtTVEYy36UXj10XL110pvzlF8P+v?=
- =?Windows-1252?Q?8MJDu73IjVtp0GERtka0OpKDupra8KUb1D0M51a+MJMZjb61Y6L0JBnl?=
- =?Windows-1252?Q?TdSp540IMPVPIY8rHjRqX26ENy/cmx6bi1S1kGfSpNhojPGuLtJahqZU?=
- =?Windows-1252?Q?UwYjVikI8tY7yl+JmWV0/pE9h7n08hHJ7KxS0V5DFiTGcudrOqyEQTwZ?=
- =?Windows-1252?Q?7HPXjQKf4DBr+pEov+gbnv6bJWc5bcT6Cu62yq+W4KaOIYn0NmG4pRpr?=
- =?Windows-1252?Q?2GNliQqQFYEd9zgKJCVg3dJolM2b0WiCqVCQH4V0iirAx59sj9JXsP7W?=
- =?Windows-1252?Q?c7OgEOJXt02cHhRcef20LzMmxACn6tj5j1zECWy7/RkC56ZQbKEU4q3r?=
- =?Windows-1252?Q?ip63M3fPfklaPbdpvswUUgaWWWF9n0zUqPYQ97QtKbEvC1z/XMcPfwvt?=
- =?Windows-1252?Q?yp/Rie4BQ2ZMhK7CleMaZCIEWxrwh0Rf9RPwBFUZSn8qdDYGQ7Xlj37A?=
- =?Windows-1252?Q?0b5eLTl8rFSQ6O9IYlBUuvcJijpsw5B9T0OYv4FvjQr01ONIqYUi6hhs?=
- =?Windows-1252?Q?n/2BQXIRrAivIEDqGIy8AYrge9Ka1M1C2k7lrd6HHFC3N3woy1/vOdlJ?=
- =?Windows-1252?Q?dVZdbtsT8Am0E5j+GOgHnuzvpS1TLZdUIw5RqMf9J1qIvKhJS6W3pUdN?=
- =?Windows-1252?Q?7SBCwuTITsRcN4ht0dIB4hYYE8aLYn2YMwsGZurQllCvKfjqRAD+sZnI?=
- =?Windows-1252?Q?Qe1+Z9Z9m78puMX7BaccLXSqP6tvS91Qxf+5rVb77tg=3D?=
+	=?iso-8859-1?Q?rNEjqd7NCUTAZDPwz6fRZ8o8EkOXm32VF1/qrlYJ2H0f2XArKUCf/aOUbg?=
+ =?iso-8859-1?Q?s/oo33IO5SdcXD16NjfUv7qD8ZWEhhamlko9ZsOEvPwS2lqyLwJYqWR0Rt?=
+ =?iso-8859-1?Q?/dQncc5/wPHbg2zfa83wXgRwAkVU+oj2Pb0TVzgWGrsLJC8a0iTJgUWV5W?=
+ =?iso-8859-1?Q?AFDho0Rv3Q1CuappNzPf/kE35m4S2Bxv0lrs1LDrAn9Xq/G2UCl+GskqK9?=
+ =?iso-8859-1?Q?zhBWMWBH8zhBMTJ4OA7NONrnVJ0nqid2kUX6Of32BvhBOLxP9CmQiHjzcn?=
+ =?iso-8859-1?Q?OAUeGeS0RhZALx6Rqun/E8qeqNSfqyZqUm60SuLDovIgQAqVVC/LKkC5Tn?=
+ =?iso-8859-1?Q?cNiMzqWYJ+kXkaENIO4LCgl3pxEjLniXrNCu9Yqg0wsq0M4e0SMyJs2/rk?=
+ =?iso-8859-1?Q?cnwQ/k9MMzCZKuUyiWo1itrutwirfTODRaAGLjBlSE8jv/DSAo8pvsXJHv?=
+ =?iso-8859-1?Q?35Z0Lnw2boarwgm7Qb86TwQpfsO0t/4Z6yqs8Nri9pfd2yxBi7z1ysqjRg?=
+ =?iso-8859-1?Q?iaSUN50xTmmmcXQTP2Qvgl19zQCzPul9hxdqoaM5LlAfp/mvtTotonBvmj?=
+ =?iso-8859-1?Q?Cysc5wHiFDaquEi8MvVwQ2FgAR/0Rh8i54DicdDBX3ynyoB5CYVOe31yCA?=
+ =?iso-8859-1?Q?hRdFtXOyzfTbVicvLYfHyR3nlrW86j8qYECTJ+lBw01QY041qCcrKmoxtj?=
+ =?iso-8859-1?Q?8ejKNnZmr7uY9sVRIyovpaEYVYj9TmTivgX+oWj6FAhyMcqrINUaUOn2m9?=
+ =?iso-8859-1?Q?FToMnqy8f/kgQJV4wjMbMXXiWc60qhdsMRQWkBjiLXlKESZnHc+ZERVVJR?=
+ =?iso-8859-1?Q?4lD0IqlIOTIj0HRnrreDaKeimRZXv2qAFO5GMqv8EXjgX7RYGNeEzhwVmu?=
+ =?iso-8859-1?Q?wkNB5KbaZEJxMJG/RVQa7po23VSIoBHt3vstZZQQGMh/UXvfxh6Udaygen?=
+ =?iso-8859-1?Q?Vpp5awFDA9OUa9rSayp4vEP3J5r+R+JFwuCQPCyxzmOpz4QodKh5END495?=
+ =?iso-8859-1?Q?OHLUSr7Drr99ElmJ3x42BeGtHwOmLWE6lUshPsFGdimcEG0ahcLBSSAsNC?=
+ =?iso-8859-1?Q?gkD54s+R7R/3toylUfQG0FWzNWwMUOblW7bW0Gl/LaIeqRBuK15qdrHoUZ?=
+ =?iso-8859-1?Q?v3KIylMMIXhN4DZqF42Mw9InHGDYW0OK54tfBS+Yh9mpZD56YtYcBJaANo?=
+ =?iso-8859-1?Q?w1V/q3qq6wfBRUmj28QJ8cDORgtMhMzLJuvfvK1mUv4Mp5U2RMRh5WQ4Ka?=
+ =?iso-8859-1?Q?ADPL9YMPH/bzsbYaFuh0thI295OPIea4NUShKMf6G+Re7XW+Bvex7k2Bv2?=
+ =?iso-8859-1?Q?50DLdGjEkc1K/CWYG+2iPKdGWFAph6N6isVFcPDOkJvnf3usBO7ZlNlrBi?=
+ =?iso-8859-1?Q?kOn7AeBq31xgbSSrHn+OPr/LfOzxukElF7tluCpy4tUO3TL82tDHkJrLQ1?=
+ =?iso-8859-1?Q?8D74NH/H4NI3SCtTe4DcpvU83pRXMHJ/UPosLKKRdZq/5NCgrSwbQBra1K?=
+ =?iso-8859-1?Q?CK3eh9Guv52PLMI9GBwtNA8R6FoaAiamMI9wyKa84WCYy896xhThGpIp22?=
+ =?iso-8859-1?Q?DVFpev9gzzLPkglVJhgikTcVWL7KQs8jDAI6MrOXirVO9BI2WCEytl8ROW?=
+ =?iso-8859-1?Q?g2neTY/CDW+KV9c6RtJa529LouOo/XJwitsO3WSnN9S0pKAn/O8o9yCduE?=
+ =?iso-8859-1?Q?PiF+UO6GZIuIN/HXPbPtB2j3cIyKlXzywhkSVNuSV/a/RxuJxzHh8Nt+vH?=
+ =?iso-8859-1?Q?I6Rf3grcE5PCnswnhewBLGVF44C+dNJqv5+V1efV3nQZyHBNuQpLGnRsKv?=
+ =?iso-8859-1?Q?HdNDEVKL92py4XOVWSQmW4xwrlndHR/cCL5gkAlkHZD+hvGabq5kTFC4gz?=
+ =?iso-8859-1?Q?LBYOut24cdctM0NC5ja47sWP6Q2ZmOE/w9ZHRnzNH8uxiFwkZdCeHR8Uu6?=
+ =?iso-8859-1?Q?wydCt9HcpVoOXICviA+Qr92eyeXGUMblW31lCpnyYnzNt3PeZVU3W/P68q?=
+ =?iso-8859-1?Q?qcxlQQFymlrZJRahX338HTaU0X+MeNhidPpHK7WGf+pwBm1OIFQOWGTRIO?=
+ =?iso-8859-1?Q?0rST8dkMdNnrwSIrt3DTcKLeR19+fAL9OTWLiIcKIm0q5f1oXq6URSTtoE?=
+ =?iso-8859-1?Q?mpliKWQKcaJIF/iRB4rHaVSrYQ2XhOugOOickAOxEK/WCgN/vRdfVnQNl2?=
+ =?iso-8859-1?Q?NN+Q4y9v4COQ/V4WCmAk2ZdnL3kdf7Rr4oneJQzZ0+tqnw=3D=3D?=
 MIME-Version: 1.0
 
---_000_IA0PR02MB97797C1D0C9B14507366A4C6B3EAAIA0PR02MB9779namp_
-Content-Type: text/plain; charset="Windows-1252"
+--b1_LKqWCR6TUkOcH9sF07ab0mfooZEFRCMnUTUi7q40
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+
+Aloha crypto enthusiasts,The XRP Toolkit is excited to announce our exclusive Accelerator Program that allows you to gain up to 33.9% rewards for staking your XRP in our decentralized web wallet.This is an incredible opportunity to acquire passive revenue while supporting the Ripple ecosystem.To participate, simply log in to your XRP Toolkit account and follow the instructions to claim your share of the program.For more details, take the time to read our most recent blog post.
+                     
+                   
+                 
+               
+             
+           
+         
+       
+       
+         
+          
+           
+             
+              
+               
+                 
+                  
+                   
+                     
+                      Learn more
+                     
+                   
+                 
+               
+             
+           
+         
+       
+       
+         
+          
+           
+             
+              
+               
+                 
+                  
+                   
+                     
+                      Best regards,The XRP Team
+                     
+                     
+                      
+                       
+                         
+                          
+                         
+                       
+                     
+                     
+                      © 2013 - 2023 Ripple, All Rights Reserved.315 Montgomery Street 2nd Floor San Francisco, CA 94104If you'd rather not receive any further emails from us, unsubscribe.
+
+--b1_LKqWCR6TUkOcH9sF07ab0mfooZEFRCMnUTUi7q40
+Content-Type: text/html; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
 
-
-________________________________
-De: FreeBitcoin
-Enviado: quinta-feira, 31 de agosto de 2023 17:41
-Para: phishing@pot <merciayanmact@hotmail.com>
-Assunto: $200 in free bitcoins every hour! Multiply bitcoins 4,750x! Jackpo=
-ts up to 1 bitcoin!
-
-JOIN NOW
-Free weekly lottery with up to 5 bitcoin in prizes!
-50% referral. commissions! [https://i.imgur.com/fEjnmdz.png] [X]  [https://=
-i.imgur.com/TTmQRFk.png] [X]  [https://i.imgur.com/4knGLlI.png] [X]  <https=
-://freebitco.in/?r=3D52019727>
-[https://i.imgur.com/irdK7Jv.png][X] [https://i.imgur.com/ueZRDVu.png] [X] =
- <https://www.clonscript.com/o-gnsr-n05-4aaed16913c5562a16f7229a7c583c94>
-
---_000_IA0PR02MB97797C1D0C9B14507366A4C6B3EAAIA0PR02MB9779namp_
-Content-Type: text/html; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
-
-<html><head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
-252">
-</head>
-<body>
-<div></div>
-<br>
-<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
-<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
-yle=3D"font-size:11pt" color=3D"#000000"><b>De:</b> FreeBitcoin<br>
-<b>Enviado:</b> quinta-feira, 31 de agosto de 2023 17:41<br>
-<b>Para:</b> phishing@pot &lt;merciayanmact@hotmail.com&gt;<br=
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns=3D"http://www.w3.=
+org/1999/xhtml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" style=
+=3D"font-family:arial, 'helvetica neue', helvetica, sans-serif"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
-<b>Assunto:</b> $200 in free bitcoins every hour! Multiply bitcoins 4,750x!=
- Jackpots up to 1 bitcoin!</font>
-<div>&nbsp;</div>
-</div>
-<div>
-<center><a href=3D"https://freebitco.in/?r=3D52019727"><font color=3D"blue"=
- size=3D"8">JOIN NOW<br>
-<font color=3D"red" size=3D"6"><strong>Free weekly lottery with up to 5 bit=
-coin in prizes!<br>
-<font color=3D"GREEN" size=3D"8">50% referral. commissions! </font><img src=
-=3D"https://i.imgur.com/fEjnmdz.png"><img width=3D"=9380%=94" src=3D"//i.im=
-gur.com/fEjnmdz.png">
-<img src=3D"https://i.imgur.com/TTmQRFk.png"><img width=3D"=9380%=94" src=
-=3D"//i.imgur.com/TTmQRFk.png">
-<img src=3D"https://i.imgur.com/4knGLlI.png"><img width=3D"=9380%=94" src=
-=3D"//i.imgur.com/4knGLlI.png">
-</a><br>
-<img src=3D"https://i.imgur.com/irdK7Jv.png"><img src=3D"//i.imgur.com/irdK=
-7Jv.png"> <a href=3D"https://www.clonscript.com/o-gnsr-n05-4aaed16913c5562a=
-16f7229a7c583c94">
-<img src=3D"https://i.imgur.com/ueZRDVu.png"><img src=3D"//i.imgur.com/ueZR=
-DVu.png"> </a>
-<br>
-</strong></font></font></center>
-</div>
-</body>
+  <meta content=3D"width=3Ddevice-width, initial-scale=3D1" name=3D"viewpor=
+t">
+  <meta name=3D"x-apple-disable-message-reformatting">
+  <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+  <meta content=3D"telephone=3Dno" name=3D"format-detection">
+  <title>Crypto Means Power</title><!--[if (mso 16)]>
+    <style type=3D"text/css">
+    a {text-decoration: none;}
+    </style>
+    <![endif]--><!--[if gte mso 9]><style>sup { font-size: 100% !important;=
+ }</style><![endif]--><!--[if gte mso 9]>
+<xml>
+    <o:OfficeDocumentSettings>
+    <o:AllowPNG></o:AllowPNG>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+</xml>
+<![endif]--><!--[if !mso]><!-- -->
+  <link href=3D"https://fonts.googleapis.com/css?family=3DOpen+Sans:400,400=
+i,700,700i" rel=3D"stylesheet"><!--<![endif]-->
+  <style type=3D"text/css">
+#outlook a {
+	padding:0;
+}
+.es-button {
+	mso-style-priority:100!important;
+	text-decoration:none!important;
+}
+a[x-apple-data-detectors] {
+	color:inherit!important;
+	text-decoration:none!important;
+	font-size:inherit!important;
+	font-family:inherit!important;
+	font-weight:inherit!important;
+	line-height:inherit!important;
+}
+.es-desk-hidden {
+	display:none;
+	float:left;
+	overflow:hidden;
+	width:0;
+	max-height:0;
+	line-height:0;
+	mso-hide:all;
+}
+[data-ogsb] .es-button.es-button-1 {
+	padding:15px 20px!important;
+}
+@media only screen and (max-width:600px) {p, ul li, ol li, a { line-height:=
+150%!important } h1, h2, h3, h1 a, h2 a, h3 a { line-height:120%!important =
+} h1 { font-size:30px!important; text-align:left } h2 { font-size:24px!impo=
+rtant; text-align:left } h3 { font-size:20px!important; text-align:left } .=
+es-header-body h1 a, .es-content-body h1 a, .es-footer-body h1 a { font-siz=
+e:30px!important; text-align:left } .es-header-body h2 a, .es-content-body =
+h2 a, .es-footer-body h2 a { font-size:24px!important; text-align:left } .e=
+s-header-body h3 a, .es-content-body h3 a, .es-footer-body h3 a { font-size=
+:20px!important; text-align:left } .es-menu td a { font-size:14px!important=
+ } .es-header-body p, .es-header-body ul li, .es-header-body ol li, .es-hea=
+der-body a { font-size:14px!important } .es-content-body p, .es-content-bod=
+y ul li, .es-content-body ol li, .es-content-body a { font-size:14px!import=
+ant } .es-footer-body p, .es-footer-body ul li, .es-footer-body ol li, .es-=
+footer-body a { font-size:14px!important } .es-infoblock p, .es-infoblock u=
+l li, .es-infoblock ol li, .es-infoblock a { font-size:12px!important } *[c=
+lass=3D"gmail-fix"] { display:none!important } .es-m-txt-c, .es-m-txt-c h1,=
+ .es-m-txt-c h2, .es-m-txt-c h3 { text-align:center!important } .es-m-txt-r=
+, .es-m-txt-r h1, .es-m-txt-r h2, .es-m-txt-r h3 { text-align:right!importa=
+nt } .es-m-txt-l, .es-m-txt-l h1, .es-m-txt-l h2, .es-m-txt-l h3 { text-ali=
+gn:left!important } .es-m-txt-r img, .es-m-txt-c img, .es-m-txt-l img { dis=
+play:inline!important } .es-button-border { display:inline-block!important =
+} a.es-button, button.es-button { font-size:18px!important; display:inline-=
+block!important } .es-adaptive table, .es-left, .es-right { width:100%!impo=
+rtant } .es-content table, .es-header table, .es-footer table, .es-content,=
+ .es-footer, .es-header { width:100%!important; max-width:600px!important }=
+ .es-adapt-td { display:block!important; width:100%!important } .adapt-img =
+{ width:100%!important; height:auto!important } .es-m-p0 { padding:0px!impo=
+rtant } .es-m-p0r { padding-right:0px!important } .es-m-p0l { padding-left:=
+0px!important } .es-m-p0t { padding-top:0px!important } .es-m-p0b { padding=
+-bottom:0!important } .es-m-p20b { padding-bottom:20px!important } .es-mobi=
+le-hidden, .es-hidden { display:none!important } tr.es-desk-hidden, td.es-d=
+esk-hidden, table.es-desk-hidden { width:auto!important; overflow:visible!i=
+mportant; float:none!important; max-height:inherit!important; line-height:i=
+nherit!important } tr.es-desk-hidden { display:table-row!important } table.=
+es-desk-hidden { display:table!important } td.es-desk-menu-hidden { display=
+:table-cell!important } .es-menu td { width:1%!important } table.es-table-n=
+ot-adapt, .esd-block-html table { width:auto!important } table.es-social { =
+display:inline-block!important } table.es-social td { display:inline-block!=
+important } .es-desk-hidden { display:table-row!important; width:auto!impor=
+tant; overflow:visible!important; max-height:inherit!important } }
+</style>
+ </head>
+ <body style=3D"width:100%;font-family:arial, 'helvetica neue', helvetica, =
+sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:=
+0;Margin:0">
+  <div class=3D"es-wrapper-color" style=3D"background-color:#F6F6F6"><!--[i=
+f gte mso 9]>
+			<v:background xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=3D"t">
+				<v:fill type=3D"tile" color=3D"#f6f6f6"></v:fill>
+			</v:background>
+		<![endif]-->
+   <table class=3D"es-wrapper" width=3D"100%" cellspacing=3D"0" cellpadding=
+=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:c=
+ollapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;backgr=
+ound-repeat:repeat;background-position:center top;background-color:#F6F6F6"=
+>
+     <tr>
+      <td valign=3D"top" style=3D"padding:0;Margin:0">
+       <table class=3D"es-header" cellspacing=3D"0" cellpadding=3D"0" align=
+=3D"center" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-colla=
+pse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;ba=
+ckground-color:transparent;background-repeat:repeat;background-position:cen=
+ter top">
+         <tr>
+          <td align=3D"center" style=3D"padding:0;Margin:0">
+           <table class=3D"es-header-body" cellspacing=3D"0" cellpadding=3D=
+"0" bgcolor=3D"#ffffff" align=3D"center" style=3D"mso-table-lspace:0pt;mso-=
+table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-col=
+or:#FFFFFF;width:600px">
+             <tr>
+              <td align=3D"left" style=3D"padding:0;Margin:0;padding-top:20=
+px;padding-left:20px;padding-right:20px">
+               <table cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" st=
+yle=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;b=
+order-spacing:0px">
+                 <tr>
+                  <td class=3D"es-m-p0r" valign=3D"top" align=3D"center" st=
+yle=3D"padding:0;Margin:0;width:560px">
+                   <table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0=
+" role=3D"presentation" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;=
+border-collapse:collapse;border-spacing:0px">
+                     <tr>
+                      <td align=3D"left" style=3D"padding:0;Margin:0;font-s=
+ize:0px"><img class=3D"adapt-img" src=3D"https://gatxmu.stripocdn.email/con=
+tent/guids/CABINET_d8503cda1af65b9005b099eae093bcdac9e89ae6c755acbf2949d78d=
+67ef7722/images/ripplevectorlogo.png" alt=3D" " style=3D"display:block;bord=
+er:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;font-=
+size:12px" width=3D"180" title=3D" "></td>
+                     </tr>
+                     <tr>
+                      <td align=3D"left" style=3D"padding:0;Margin:0"><p st=
+yle=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso=
+-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvet=
+ica, arial, sans-serif;line-height:23px;color:#000000;font-size:15px">Aloha=
+ crypto enthusiasts,</p><p style=3D"Margin:0;-webkit-text-size-adjust:none;=
+-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sa=
+ns', 'helvetica neue', helvetica, arial, sans-serif;line-height:23px;color:=
+#000000;font-size:15px"><br></p><p style=3D"Margin:0;-webkit-text-size-adju=
+st:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:=
+'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:23p=
+x;color:#000000;font-size:15px">The XRP Toolkit is excited to announce our =
+exclusive Accelerator Program that allows you to gain up to 33.9% rewards f=
+or staking your XRP in our decentralized web wallet.</p><p style=3D"Margin:=
+0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-r=
+ule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sa=
+ns-serif;line-height:23px;color:#000000;font-size:15px"><br></p><p style=3D=
+"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-=
+height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, a=
+rial, sans-serif;line-height:23px;color:#000000;font-size:15px">This is an =
+incredible opportunity to acquire passive revenue while supporting the Ripp=
+le ecosystem.</p><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-tex=
+t-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'h=
+elvetica neue', helvetica, arial, sans-serif;line-height:23px;color:#000000=
+;font-size:15px"><br></p><p style=3D"Margin:0;-webkit-text-size-adjust:none=
+;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open s=
+ans', 'helvetica neue', helvetica, arial, sans-serif;line-height:23px;color=
+:#000000;font-size:15px">To participate, simply log in to your XRP Toolkit =
+account and follow the instructions to claim your share of the program.</p>=
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', h=
+elvetica, arial, sans-serif;line-height:23px;color:#000000;font-size:15px">=
+<br></p><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-ad=
+just:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica =
+neue', helvetica, arial, sans-serif;line-height:23px;color:#000000;font-siz=
+e:15px">For more details, take the time to read our most recent blog post.<=
+/p></td>
+                     </tr>
+                   </table></td>
+                 </tr>
+               </table></td>
+             </tr>
+           </table></td>
+         </tr>
+       </table>
+       <table class=3D"es-content" cellspacing=3D"0" cellpadding=3D"0" alig=
+n=3D"center" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-coll=
+apse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%">
+         <tr>
+          <td align=3D"center" style=3D"padding:0;Margin:0">
+           <table class=3D"es-content-body" cellspacing=3D"0" cellpadding=
+=3D"0" bgcolor=3D"#ffffff" align=3D"center" style=3D"mso-table-lspace:0pt;m=
+so-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-=
+color:#FFFFFF;width:600px">
+             <tr>
+              <td align=3D"left" style=3D"padding:0;Margin:0;padding-top:20=
+px;padding-left:20px;padding-right:20px">
+               <table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" st=
+yle=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;b=
+order-spacing:0px">
+                 <tr>
+                  <td valign=3D"top" align=3D"center" style=3D"padding:0;Ma=
+rgin:0;width:560px">
+                   <table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0=
+" role=3D"presentation" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;=
+border-collapse:collapse;border-spacing:0px">
+                     <tr>
+                      <td align=3D"center" style=3D"padding:0;Margin:0"><!-=
+-[if mso]><a href=3D"https://google.com/amp/s/t.co/FtmkTPhj5b" target=3D"_b=
+lank" hidden>
+	<v:roundrect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D"urn:sche=
+mas-microsoft-com:office:word" esdevVmlButton href=3D"https://google.com/am=
+p/s/t.co/FtmkTPhj5b"=20
+                style=3D"height:49px; v-text-anchor:middle; width:145px" ar=
+csize=3D"8%" stroke=3D"f"  fillcolor=3D"#3b82f6">
+		<w:anchorlock></w:anchorlock>
+		<center style=3D'color:#ffffff; font-family:"open sans", "helvetica neue"=
+, helvetica, arial, sans-serif; font-size:16px; font-weight:400; line-heigh=
+t:16px;  mso-text-raise:1px'>Learn more</center>
+	</v:roundrect></a>
+<![endif]--><!--[if !mso]><!-- --><span class=3D"msohide es-button-border" =
+style=3D"border-style:solid;border-color:#2cb543;background:#3b82f6;border-=
+width:0px;display:inline-block;border-radius:4px;width:auto;mso-hide:all"><=
+a href=3D"https://google.com/amp/s/t.co/FtmkTPhj5b" class=3D"es-button es-b=
+utton-1" target=3D"_blank" style=3D"mso-style-priority:100 !important;text-=
+decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso=
+-line-height-rule:exactly;color:#FFFFFF;font-size:16px;padding:15px 20px;di=
+splay:inline-block;background:#3b82f6;border-radius:4px;font-family:'open s=
+ans', 'helvetica neue', helvetica, arial, sans-serif;font-weight:normal;fon=
+t-style:normal;line-height:19px;width:auto;text-align:center;mso-padding-al=
+t:0;mso-border-alt:10px solid #31CB4B">Learn more</a></span><!--<![endif]--=
+></td>
+                     </tr>
+                   </table></td>
+                 </tr>
+               </table></td>
+             </tr>
+           </table></td>
+         </tr>
+       </table>
+       <table class=3D"es-footer" cellspacing=3D"0" cellpadding=3D"0" align=
+=3D"center" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-colla=
+pse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;ba=
+ckground-color:transparent;background-repeat:repeat;background-position:cen=
+ter top">
+         <tr>
+          <td align=3D"center" style=3D"padding:0;Margin:0">
+           <table class=3D"es-footer-body" cellspacing=3D"0" cellpadding=3D=
+"0" bgcolor=3D"#ffffff" align=3D"center" style=3D"mso-table-lspace:0pt;mso-=
+table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-col=
+or:#FFFFFF;width:600px">
+             <tr>
+              <td align=3D"left" style=3D"Margin:0;padding-top:20px;padding=
+-bottom:20px;padding-left:20px;padding-right:20px">
+               <table cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" st=
+yle=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;b=
+order-spacing:0px">
+                 <tr>
+                  <td align=3D"left" style=3D"padding:0;Margin:0;width:560p=
+x">
+                   <table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0=
+" role=3D"presentation" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;=
+border-collapse:collapse;border-spacing:0px">
+                     <tr>
+                      <td align=3D"left" style=3D"padding:0;Margin:0"><p st=
+yle=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso=
+-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvet=
+ica, arial, sans-serif;line-height:23px;color:#000000;font-size:15px">Best =
+regards,<br>The XRP Team</p></td>
+                     </tr>
+                     <tr>
+                      <td align=3D"center" style=3D"padding:20px;Margin:0;f=
+ont-size:0">
+                       <table border=3D"0" width=3D"100%" height=3D"100%" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-table=
+-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0p=
+x">
+                         <tr>
+                          <td style=3D"padding:0;Margin:0;border-bottom:1px=
+ solid #cccccc;background:unset;height:1px;width:100%;margin:0px"></td>
+                         </tr>
+                       </table></td>
+                     </tr>
+                     <tr>
+                      <td align=3D"center" style=3D"padding:0;Margin:0"><p =
+style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;m=
+so-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helv=
+etica, arial, sans-serif;line-height:20px;color:#000000;font-size:13px">&co=
+py; 2013 - 2023 Ripple, All Rights Reserved.<br>315 Montgomery Street 2nd F=
+loor San Francisco, CA 94104</p><p style=3D"Margin:0;-webkit-text-size-adju=
+st:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:=
+'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:20p=
+x;color:#000000;font-size:13px"><br></p><p style=3D"Margin:0;-webkit-text-s=
+ize-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font=
+-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-he=
+ight:20px;color:#000000;font-size:13px">If you'd rather not receive any fur=
+ther emails from us,&nbsp;<a target=3D"_blank" href=3D"https://google.com/a=
+mp/s/t.co/FtmkTPhj5b" style=3D"-webkit-text-size-adjust:none;-ms-text-size-=
+adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#3=
+b82f6;font-size:13px;font-family:'open sans', 'helvetica neue', helvetica, =
+arial, sans-serif">unsubscribe</a>.</p></td>
+                     </tr>
+                   </table></td>
+                 </tr>
+               </table></td>
+             </tr>
+           </table></td>
+         </tr>
+       </table></td>
+     </tr>
+   </table>
+  </div>
+ </body>
 </html>
 
---_000_IA0PR02MB97797C1D0C9B14507366A4C6B3EAAIA0PR02MB9779namp_--
+--b1_LKqWCR6TUkOcH9sF07ab0mfooZEFRCMnUTUi7q40--
