@@ -1,0 +1,736 @@
+Received: from SN7PR19MB7501.namprd19.prod.outlook.com (2603:10b6:806:340::14)
+ by MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Mon, 11 Sep 2023
+ 11:03:38 +0000
+ARC-Seal: i=3; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
+ b=g+HPIBUXed7fqADAq1KH2kzE43QXjCuC24qxzbM4ePcLLZrUwMMNlXVC6GQOXoFc226nxRbo3aIdGaiCBkBrwQpeYHBNMjq0P7TY1kEjzAT+QApezpebN4xn47ade2mJgT4St9/4HK2aCXFfF/li6RQ6E/NLztWh926s+YOejbE5oUb61TlMTHkC+hY6CxSvMruCemRMnHmN6AS26jFsHhTy7+wFN8n+E4ADRJbXOzoOeWje+swZi7LM9PB+piTyHMTw7Q4f8A/BcXgv0t9es7UYfUiwV2xLjGPCC35VFvcreYo3kQ4k/Dq4S1h2yNMFmBpq+pxi3l7nqN0VRtlKzg==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JobWj4i4yV3NQjfe9AauqkGH4UwqcYXm8cQRGp0WwrE=;
+ b=TM+955GRqca3A3gr1oUXhfM44hsT77o+kCVES9SHhO47pcPZmf8h/XHARuKFFnEEV70jNd540ALXwlT+vVoRMNeZlJNn3hezf35YLfIp98opyInMq8D4LeQtzSMKhwSkhS87mJbAZgDCwjzJBacUhm/8BrRpWUzsFIFMXVsETJ3/kCxCeMe/aPv1I9q36cZ8Y/Cu9VxjbcAA89q8io77SXF6xH1pBr6vZOr4L9WiMKP5s5bQaEnvA/EpkAfoW//8kAYSvBl4g49xRUqbHqdk5vtlbus5Fqo3Ns1+t7cJKFfacoy5Qj6Fc6wD0+56ytTROEgKVQ46gj31aDqxt/RwGg==
+ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=pass (sender ip is
+ 209.85.222.53) smtp.rcpttodomain=hotmail.com smtp.mailfrom=gmail.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=hotmail.com;
+ dkim=pass (signature was verified) header.d=hotmail.com; arc=pass (0 oda=1
+ ltdi=1 spf=[1,2,smtp.mailfrom=phishing@pot]
+ dkim=[1,2,header.i=@hotmail.com] dmarc=[1,2,header.from=hotmail.com])
+Received: from AM6P193CA0039.EURP193.PROD.OUTLOOK.COM (2603:10a6:209:8e::16)
+ by SN7PR19MB7501.namprd19.prod.outlook.com (2603:10b6:806:340::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.34; Mon, 11 Sep
+ 2023 11:03:36 +0000
+Received: from AM6EUR05FT017.eop-eur05.prod.protection.outlook.com
+ (2603:10a6:209:8e:cafe::c6) by AM6P193CA0039.outlook.office365.com
+ (2603:10a6:209:8e::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.35 via Frontend
+ Transport; Mon, 11 Sep 2023 11:03:35 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.222.53)
+ smtp.mailfrom=gmail.com; dkim=pass (signature was verified)
+ header.d=hotmail.com;dmarc=pass action=none
+ header.from=hotmail.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates
+ 209.85.222.53 as permitted sender) receiver=protection.outlook.com;
+ client-ip=209.85.222.53; helo=mail-ua1-f53.google.com; pr=C
+Received: from mail-ua1-f53.google.com (209.85.222.53) by
+ AM6EUR05FT017.mail.protection.outlook.com (10.233.241.53) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6792.17 via Frontend Transport; Mon, 11 Sep 2023 11:03:35 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:B138AC269E54A74A16F0B63532D01AC54AD961D5E6F74F383BF8F0C4D3D2D12D;UpperCasedChecksum:CFFB7D6BAA6EA4E1C6D6399E55B3E527A1D44AF672DDE166294D252961993BE8;SizeAsReceived:11797;Count:58
+Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-7a5170c78e6so1395213241.2
+        for <phishing@pot>; Mon, 11 Sep 2023 04:03:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1694430215; x=1695035015;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature:delivered-to:x-forwarded-for:x-forwarded-to
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JobWj4i4yV3NQjfe9AauqkGH4UwqcYXm8cQRGp0WwrE=;
+        b=KwqIWuuJ5IeP742REMkfmZBNZdzDyJ+0gsj8kpXAx3267UAurc6iN4XqJxtWrQNG9n
+         SDowIombRmUQ6CPk/BPfnlX+DK7elwpZMgBbeoIE5g0sBxK5cFSY99dop4irYoHoblxF
+         u8jD0okanvMqUwvNQRy0jimdUbr0UDDDoR5oIzPezhxTmLwqPjcZAtvGNh93dZXk8+l0
+         p9Ms5O/XnBHVLk1zc8N/+355XwZtfOkmQwQ73P4Fl0xDxtHT90DIiAF6KU5PEqBJP1DV
+         FQO1GLg1nyiYXP5pLN8mF1C6TyZVMEmGOyfLQbhqZB9lkbx6kNbMb/U2Ov6f325mTzzl
+         ytxg==
+X-Gm-Message-State: AOJu0YwlofV/cdxmqLaPUPfZquaewWBtOwkzfTyUtqFQQOeR6Z9XK4ZO
+	Fv9h7/DKW0XRZm1P2Ed5d3IUNeTItGEj0vscDOyj2/DTxcDfVbJ0pQ==
+X-Received: by 2002:a1f:db01:0:b0:48f:8891:2967 with SMTP id s1-20020a1fdb01000000b0048f88912967mr7351251vkg.0.1694430215294;
+        Mon, 11 Sep 2023 04:03:35 -0700 (PDT)
+X-Forwarded-To: phishing@pot
+X-Forwarded-For: phish.me.again@gmail.com phishing@pot
+Delivered-To: phish.me.again@gmail.com
+Received: by 2002:a59:c186:0:b0:3fe:f445:57e1 with SMTP id j6csp2184610vqn;
+        Mon, 11 Sep 2023 04:03:33 -0700 (PDT)
+X-Received: by 2002:a17:906:1d:b0:9a1:b67e:415 with SMTP id 29-20020a170906001d00b009a1b67e0415mr7864602eja.73.1694429973317;
+        Mon, 11 Sep 2023 03:59:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEzZ85Ltdfiu4v7nGtb+/tAoXGirH6d7v6w1/tFbK+BYmSJl9+fcwvW5PMoUW+PqHiu/CEW
+X-Received: by 2002:a17:906:1d:b0:9a1:b67e:415 with SMTP id 29-20020a170906001d00b009a1b67e0415mr7864565eja.73.1694429972028;
+        Mon, 11 Sep 2023 03:59:32 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1694429972; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=UjUXAhHjq1FaJCzXxYC1vLLygsf9ygJK7HoF1a9g45hQQnC4lXy+88bdpkl3GXr0Q2
+         dS9ML/X5wPTtt5IrsUJJ5UwkogQxwM7CIbk7I3bX5hz9Y9cq8urf8zaehnOF3XPYD1Ss
+         k/JeiQ5MTxjvWC7rpjVepQgmxvjuRBqBaUNm0LaAya+KNniOEOMmNGbhlhmeo84DE/aE
+         SJnyx/t46EhQtqj5b1e7Lp63o3rKpgQu3gsc4U4yCHmu+GNnWL7X/8QaqDc7LwAMAEcv
+         b/CVg2Sk0hISOaYBfedFt4Lv5GJOI7FWqMLgLo7iDt5klj6xSop4jTbty8iyIFSL8pTC
+         peKA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature;
+        bh=JobWj4i4yV3NQjfe9AauqkGH4UwqcYXm8cQRGp0WwrE=;
+        fh=UETxh7Fu2EGjYUB1TKqvJnbisEPhC7fobl4HgFgZ4OQ=;
+        b=NoMClmb2hdBADBrQiqxQ79KDnuTYrPeOoXP2Lflmdb1WEEI0QZsUO5/77+jyp1fCl0
+         oaAKKU37Kc2xJpefYZlJpAe+FKy3pql3o0QVYjQwM9yzEDrvwScrI6i3aYKUx1G6S37G
+         xm/gr0SXdLMFUX/TnNdC9eFRzAhbrwhymzpd/cq7Tx/CYgs+Cr2W7aHcYR5U0yRqmrlx
+         cHW69sCpYB2EbS9K2vEfgll6JmQV3n58hHiO+Npgn337POpw/aghmbyN73kcBub+iX5Y
+         tM5SFtIKph4vdduh68QgQv/XDR6bMwTSQqC+eOiyc54zCpuPhhr/HMbHDu+iGKZMxJ8Z
+         LSmg==
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@hotmail.com header.s=selector1 header.b=H9n+e6B9;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of phishing@pot designates 2a01:111:f400:fe5b::82a as permitted sender) smtp.mailfrom=merciayanmact@hotmail.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=hotmail.com
+Return-Path: phish.me.again+caf_=phishing@pot=hotmail.com@gmail.com
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12olkn2082a.outbound.protection.outlook.com. [2a01:111:f400:fe5b::82a])
+        by mx.google.com with ESMTPS id q22-20020a1709060e5600b009a1c2fcdce2si7399182eji.154.2023.09.11.03.59.31
+        for <Phish.me.again@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Sep 2023 03:59:32 -0700 (PDT)
+Received-SPF: pass (google.com: domain of phishing@pot designates 2a01:111:f400:fe5b::82a as permitted sender) client-ip=2a01:111:f400:fe5b::82a;
+Authentication-Results-Original: mx.google.com;       dkim=pass
+ header.i=@hotmail.com header.s=selector1 header.b=H9n+e6B9;       arc=pass
+ (i=1);       spf=pass (google.com: domain of phishing@pot
+ designates 2a01:111:f400:fe5b::82a as permitted sender)
+ smtp.mailfrom=phishing@pot;       dmarc=pass (p=NONE sp=NONE
+ dis=NONE) header.from=hotmail.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=BmBBccJvmd7GH4+bGwDCLOO/z4f6qLE54QSZBkDF6T4RuNXyqD2qAi6iuzm6LG/8nUXQwxzlLx1q2dKrZwfG3JJR+gAEeK5BpSmd0oPQlJyjUbtkHMg5POypKlraMszctqmU0mjdBS89CAHeMuDnlSG3vENE5VZ7Md2ucUA043Ruwqhq0Yt1yvNNrEkUMibDANgLm30nOu25T2/XHkRopqhXz/hBSVcZSCX5ZLc1xMHjn4YdUGNMa4L8isBcKSxuxLHFv0OMgOijO7JJZwRbe2gC1j0XAvlRdUWdgvkQBk9RoH6Ziu1bFrNoIL5tNcSFW1VSEUnMGD3AeJ5n/RWaEQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JobWj4i4yV3NQjfe9AauqkGH4UwqcYXm8cQRGp0WwrE=;
+ b=TV8ocFdCaK1oDnH/XK/NdfzvgOUJMqhgfd5t83zV3IBfEZQb6vCCu2wfB7xoH0QdOmWH6SSylvyeWjAYeqODVH5fgDsBku2F9NXVr5FBw7M2mijNYQUPaWhbWIa2RZFlJp0MffLtWZVVa9GllgHgNxhnlnWw+5Z6ZNYFZvYbyEcMbfqehb1TYOZ8yS4EpLjHwmK8o4B6VrM77oFezHOs0eMyV/TgaNpEBMQFwf9EfLot7FaOoVEyhj+mAekrS5w7JRloSX8SQKrhPqHENU69uo7gwA3pEks1oDf3EsD9nH0NkpliqupTfQQ16r8fQERhTjl0s1KisEy5gH38S387Hg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JobWj4i4yV3NQjfe9AauqkGH4UwqcYXm8cQRGp0WwrE=;
+ b=H9n+e6B9laIvKRY27NK8hTadFm+5L6FEjbS7EvS5Ya0a1rWBs8UOS8TPLgIQKYj9fviwnfFpYW/0QWKF57P0+eiIYRXrMC/PUkUF57br9Zw/rvyJ7SzO6W/Jy2ImPWE683BXhxlP2030kEqRGrJn1/e7uE5xnZEMvMZamf8KjfuaRro2axROMOidjThjg0a+f6HxP8ZnlBY4QorHokidWfxaNq0AF9aqZ99sTvJLb7G/nkw/R7TgfjPuXnxLsQZlVGTxwgJ4fGrgZQG4IqNpaYBrGet4LgUITEAb3eUTPgOe+/JHCkwX7S+5EmiOp3aMbWiXYPhbeD4j+fervT0lqw==
+Received: from IA0PR02MB9779.namprd02.prod.outlook.com (2603:10b6:208:48b::12)
+ by BL3PR02MB8018.namprd02.prod.outlook.com (2603:10b6:208:359::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.34; Mon, 11 Sep
+ 2023 10:59:30 +0000
+Received: from IA0PR02MB9779.namprd02.prod.outlook.com
+ ([fe80::f44d:dc0d:8247:8ee4]) by IA0PR02MB9779.namprd02.prod.outlook.com
+ ([fe80::f44d:dc0d:8247:8ee4%4]) with mapi id 15.20.6768.029; Mon, 11 Sep 2023
+ 10:59:30 +0000
+From: phishing@pot <phishing@pot>
+To: "phish.me.again@gmail.com" <Phish.me.again@gmail.com>
+Subject:
+ =?windows-1254?Q?Fw:_You_have_been_added_as_a_guest_to_Fatih_Sultan_Mehme?=
+ =?windows-1254?Q?t_Vak=FDf_=DCniversitesi_in_Microsoft_Teams?=
+Thread-Topic:
+ =?windows-1254?Q?You_have_been_added_as_a_guest_to_Fatih_Sultan_Mehmet_Va?=
+ =?windows-1254?Q?k=FDf_=DCniversitesi_in_Microsoft_Teams?=
+Thread-Index: AQHZ5Hxstn7MVxJDb0+qGtqLPtKcHrAVdRIL
+Date: Mon, 11 Sep 2023 10:59:30 +0000
+Message-ID:
+ <IA0PR02MB9779E9474B97EC3C83AE3960B3F2A@IA0PR02MB9779.namprd02.prod.outlook.com>
+References:
+ <7aa92705-0b50-430e-bf63-c42d5ce6beac@VI1EUR06FT059.eop-eur06.prod.protection.outlook.com>
+In-Reply-To:
+ <7aa92705-0b50-430e-bf63-c42d5ce6beac@VI1EUR06FT059.eop-eur06.prod.protection.outlook.com>
+Accept-Language: pt-BR, en-US
+Content-Language: pt-BR
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [B6l9Gek50KgijKmrSbHYiwdSu8l37kXc]
+x-ms-traffictypediagnostic:
+ IA0PR02MB9779:EE_|BL3PR02MB8018:EE_|AM6EUR05FT017:EE_|SN7PR19MB7501:EE_|MN0PR19MB6312:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9d61aff8-9ac1-4881-ccf2-08dbb2b6bebe
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original:
+ niVXtFZS96fgKUQWp4czVRAGJj7/N/d48Xty0CjvciZBRCqs2b3jqVemLgY+nmoJCmlUAexj6bbHeF8shNb3DX2W+CnMQyfdg/cbkG0pYwHdh04jlZVo3AXAUaxdQ3KgTjsXj8NrDrI0WYjI03CSoQfsV4rQQR54LWyHhj25LkcIyQx6vEYjYjxON6+Pf0c3dErFLvEvV+y9kFB52/a5dH1UHswfcwPljSd8C0Di/QCrP+yL6EjLwMtlwZcK4wDcRYmPmMMf1H0qmV1BDpsAhcQvy2lJiaZhvq9ix35+BAL5459u9sCZAB5EX9r9HdClIWuL2WEPb8L6xJSmqvkIOX+IqFjray0XYFsLCzx0fvWKS2Q98KSHKugH6oCPzBTzbmTolvJPK1ttPYzujQG/Uyh3rHFH4vOGTrPYQ5CIlEPPErm8yhysvdYIB0ZZwaa6lQy5ahTPezU+DjJoiTY9ZbnPxLFO3NvYJet3ZIFXOR44FV0THeFoMfDhXtbpjCA1T91vaFtg/yp5srXaJNomd9ctOFtfe0oCS0yLTI5f1h+u9KwV1K3t8XxmFP4tTFrsJ7+9FymHTKPnsfJp8yk3HDQrjyye03LUOyYIc05jwNITrMbWf4sunZzWlnRyZAqSrf25Zs23WrgTAzz4HaRgG8ZUSIwQ6xUXjhP2a9EQ3JRCeQY5S1S5dI+arjH2AVmdVgnfLXpRxZScI/yfKR5IK0qR3LMW6JF0Z3QK/VsZ7iQ=
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0:
+ =?windows-1254?Q?eCurWRDRaeHBHdy5FHhQUXwemlrffjQouIf7dKVSOYo+ah/+NC28jgLx?=
+ =?windows-1254?Q?MObGl2gXZpJZ50DU4pYN5uiosgKHIXGwNwZsdZIwnw0UL2bO6Bwwj+io?=
+ =?windows-1254?Q?lJ5ZoSIbnmh9D2qa2zjexc/kU1XY9DBjbSE9SSdBMH588u2eJ/h6d7Cu?=
+ =?windows-1254?Q?xUrkhiywO0Z6CA1oUt31o5ZcBVTzWLU1ELe4VzcVut8WL3LjGACmVd2t?=
+ =?windows-1254?Q?VBKtTM/IPvw4QC1oSX3SEELdXVc+1TELZnceckay6gOeGP6ClmjphoxP?=
+ =?windows-1254?Q?bO/J/jjy3xSnKFrL6ndfTR/gnUCl6R5S8l/eKj2Rd7nzIByW1VHvTv0e?=
+ =?windows-1254?Q?rRCRu2BPwsabWnv0WsCXWIyHY01rO3Gsd3F0cbiHxcnwnKlbN/YnwzUO?=
+ =?windows-1254?Q?t4lNMSgmB6OhSzNfFWfunC4gjBwXe2CyZ6u8wMuyyHZhmx8WXpQ1koHf?=
+ =?windows-1254?Q?zZ/G8pY5tdljaNfKfxuJPb0+vfSDVazzuGVDXe+9MbFsFGQJA8wkbfsL?=
+ =?windows-1254?Q?76Wp/umgYDI26kgs04bUEtPQo115kCrekudNeGzyJ2EqIMoiRiItpliy?=
+ =?windows-1254?Q?5TgwLPHMS2XO5rcQS/0/5jOEZH5vUPqgjvUSPCYdYdSYEt5TyVT5CWE9?=
+ =?windows-1254?Q?h2YeiHAxuN6aLRYRp5HnF0BjiOEgFpsblgSEy2pkVY9p4ceBTmED9ITs?=
+ =?windows-1254?Q?SZPA/645oCifDv6XW3bUZ5qC53u8UOU3aPyvw4jmtHalR7vbTqpq7dFu?=
+ =?windows-1254?Q?gnRwKJzuA2SmfkB78uoZzW9SJHpn+X7R4411UhbQeIn9voW7sQBKfSJR?=
+ =?windows-1254?Q?LMpYaoYfbJGljLDAomd8JM+OG44xAAS24uTDWp4Zhjp4Wd+pH9q4oOC5?=
+ =?windows-1254?Q?QrbNOc0fS9y/Uu9NRz0eC1naw/Q/AEEmjpmK1ydxl3de7OUr2QXEFC/N?=
+ =?windows-1254?Q?cE8zGtqP+eSIwPwc1sNbCX5r2CTRnyleTDiuOvDcYoVupuI36UrGUdj2?=
+ =?windows-1254?Q?TtW7EmImZe4ZEsLXi+nNB3VO8EYMehCYI51T3HuDOqBFiA9RUqeebLKT?=
+ =?windows-1254?Q?3d+jyFyZ/Cow00O+zFDYmO6ASBASlbxG+g7OXnh1AlDxrSW8J/ZvjrBi?=
+ =?windows-1254?Q?pPxvhcWW1LKnav7JGOz9QKi1WRnt9qYRRb5d+aqgS97kq0m1+OPflU8k?=
+ =?windows-1254?Q?zgpCYpPg3f4IugdZjgxWWgbRToOhAdUgt/AcuISmpAw6FJIjGboonAbe?=
+ =?windows-1254?Q?aMiqJWfznjcyD2XdiobtQyn+wK0jfb7PdRD8NVZeLuqJfAyk1nklhEin?=
+ =?windows-1254?Q?0kTAHA=3D=3D?=
+Content-Type: multipart/related;
+	boundary="_004_IA0PR02MB9779E9474B97EC3C83AE3960B3F2AIA0PR02MB9779namp_";
+	type="multipart/alternative"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR02MB8018
+X-IncomingHeaderCount: 58
+X-MS-Exchange-Organization-ExpirationStartTime: 11 Sep 2023 11:03:35.7024
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 9d61aff8-9ac1-4881-ccf2-08dbb2b6bebe
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ AM6EUR05FT017.eop-eur05.prod.protection.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ AM6EUR05FT017.eop-eur05.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 9/11/2023 10:18:11 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ 16b034a4-2a42-4c6f-bb4c-08dbb2b62c5e
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 209.85.222.53
+X-SID-PRA: MERCIAYANMACT@HOTMAIL.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-PCL: 2
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2023 11:03:35.6868
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9d61aff8-9ac1-4881-ccf2-08dbb2b6bebe
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ AM6EUR05FT017.eop-eur05.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR19MB7501
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.6823259
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.6768.024
+X-Microsoft-Antispam-Mailbox-Delivery:
+	wl:1;pcwl:1;ucf:1;jmr:0;ex:0;auth:1;dest:C;OFR:CustomRules;ENG:(5062000305)(920221119095)(90000117)(920221120095)(90012020)(91020020)(91040095)(9050020)(9095020)(9100341)(944500132)(2008001134)(4810010)(4910033)(9575002)(10195002)(9414026)(9310011)(9220031)(120001);
+X-Message-Info:
+	qZelhIiYnPlllP9sjU4n74rdyL0GiSwHf/xSS8e8ouq9xpSfk9karguCalkeMcrsRohYWyye4DTTuNg+cIyqycZOe6U7WdV+QuP/ULJmL4Kj4TshWX4Bli/8jXKD8b3n3WMTZJSmZszHkkk06g6FYVmUECLnp+zOvA2vVnZTs0UU52rMs8I58hfBV0s1+9I4+XyMT1PhqHDKcpg2OFxjMw==
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0xO0Q9MTtHRD0xO1NDTD0tMQ==
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?UFRsZ3BVeEtUd25CL2VaZ2ZwbEhCWXI5a3VpUFV6T2hCQVNRYjh2M1ovbTB0?=
+ =?utf-8?B?L1I4NEdBVjVBMit0bGhGYVhTUWxLQ1FUUDFnU3h2dUxtQzFCYmlzMlZNR1dr?=
+ =?utf-8?B?L002TnNiT1dBWmxWNlA0dCtvb3o1dEdXYlNEQ2VNQjkydmd4aGNBNHpOd3ZC?=
+ =?utf-8?B?RmI1ejZtL2hLVWZXdW5FWVFpeUhOTVZ4WnFnRTJ0M0liNUlBS01RZUFOZHZS?=
+ =?utf-8?B?OHV6Kzd2TitOR2N0d24yVXZXa3VCVmVvZVdwZEtZQWllakd5TWhhNlB0YjQv?=
+ =?utf-8?B?bFg5cHVaYnhHZWZKb2N4ZEMzUXo0dFUwTE94SjhCMWg1ZHN6dDVpL2l2bmc4?=
+ =?utf-8?B?eDZnR0NDdENOOWxYL0RQWUdkb053dFY4eS9jZm1tVVRjc1hvLzgvVVJnZE1Y?=
+ =?utf-8?B?MmQzdnZwU1hyTVVqTVBCUDBmSVZibHMwRTRpT1pNQnZVbWRGS2s3MFQzaWFR?=
+ =?utf-8?B?NkQ2V1VMSWlueFYrcHNNSVR4Rk9NbWcwSFhJU3Vmci9yQmc0WThJWCtSamdm?=
+ =?utf-8?B?SUxIa2UrUzdYbE1RZS9IOTlSR1ZQMG9hOVRQd01kMG9MVDFZeXlKVDZ3YXN5?=
+ =?utf-8?B?SEtMRUNKVEFDbjIvdGtTbW9td2hnTTc4Ri94SDBXWkhqSGFqakFGZzdYNlps?=
+ =?utf-8?B?U2paWmNJYzlkWXAvNXJsMTB1bFV5MjlDSlR4dzRTb3gyTzVYSnNBbS9xQnh5?=
+ =?utf-8?B?OWwvaEFmOVF2OWJzV1JCZnZJRTEra1k2dXRSZ2hkYy9XclZEZ2RQZ01XUzNo?=
+ =?utf-8?B?SDg0ZDdSeU9QZTVOa1Zla3l0RUttM2RMc2dvaTZFbkxsVXVhbjJyeWJkVHJj?=
+ =?utf-8?B?cHFUNXhHaFdRemN6Mms5RytBVlRTS2tNd1RVR2lsRDVsZHhTc2ZyOFJhcFgv?=
+ =?utf-8?B?V0NvTEp3eS9LNWVGUWJLTGVjWWxSb3cxYlVjVzkrT3ZveUQxV0RBQlhNKzFR?=
+ =?utf-8?B?Y3JZVG5QNGgxQWN1cFdvRnR5d0d4RHhlb1lJT3U1QkhRSHcrdDVrOGVkQUZ1?=
+ =?utf-8?B?bURMakljc0JVVHVxVUkxZlNIRjRMTEdVQ1drSVJaSXdKUGJNWjR5NXJpQUNW?=
+ =?utf-8?B?OURORXFPVy9iMUFCUWwxdXdKWlYzSjc0aFJtbWZjQko2a1Flc1ZwdE5IbGVj?=
+ =?utf-8?B?Mm9RckJxV0xkODhxWnMzbisyamdib3VmN0dIMW45blIyTGdWTVNoZUowdFBP?=
+ =?utf-8?B?K1BjTFJLWXEwS3J2dW4yWXB0RHdTNEJJcGRvb0cvQXBlaUFyTjhsejdiR3RQ?=
+ =?utf-8?B?SFdaNFRDM2pqRnhqUXdRMm1xb0hwVVFOSFI2d1NEd1dsUXFEQkhFbEVHYVFW?=
+ =?utf-8?B?TjdTWVF6aHFtazVqMXVrd1JlZkRTbHdBYmVIeG9yRVU2OEVrL3RLZHlTR2lR?=
+ =?utf-8?B?d1lOdE5VWHdKMGp3RGg3Q3F5NzdDSEVGSnRpcWI5VldBZEtBSXJyWXcyN3Ry?=
+ =?utf-8?B?UHozVTR0Wkk5Mlc3S0FTMS9zRVh5RHpNM1EwbGxFczllMS9kWS82ZGozTFZR?=
+ =?utf-8?B?aFFzVVZIOHRMNmhFcmFaSitHb2J6ZFB4Mkc4MDBETi93K0xieWZ4OFJGT0h4?=
+ =?utf-8?B?ZXJjU2FQV3JpbjZRTWRlUktmMU9wTlBLWk5nZjh4REQxZUhnbjFpTnFYQ0U1?=
+ =?utf-8?B?R0k2aFBQamdaQTRCK2lMNHZnamk4OFA5cWx4b2hRSER5aUVFM2hFbzcxb1Zl?=
+ =?utf-8?B?QlhDR09wYldEdnpmaEM1SGEwR2Uwd0VEZ0lOVVo5RjU3M2dkR0JkN3JpK0Vz?=
+ =?utf-8?B?azlqOVRUUjQrQnVKWGpoV0JlZHZaRmkwKzRJckYzb3JYeDIwQk5vUmR0TlRW?=
+ =?utf-8?B?aXZLbTZEZFFFcHVETms1SVdPSjJOVm0vZEYrMjQzZVc4aEFYNGxYVGtGYWNh?=
+ =?utf-8?B?bDlRTzlNQjhnSWtWaXFwT29IQTJuRklDY283dUhmK0xzRmM0YWVIOFFxUHlt?=
+ =?utf-8?B?SmxhR3M2SUlBZjRTaEczNWwvZE5iWWpHWVcwZlJHQitpV2R5SG5RYVU5U2Jn?=
+ =?utf-8?B?b2VJaXhhY0x2enBMODhvbk1OS2kxRE15TFJzTHI5UVhJQ0lFSzYxSHRvMjBL?=
+ =?utf-8?B?d3VoMGxLdCtjOWpIK2lCVkcwelpMRkNoMXdocjBBVjhmeFlXWVRJZlFlSlNC?=
+ =?utf-8?B?bHFPSXNBOWhWV3NFdW8rZnRUR1dGcThLWUhCTUZtZTZGUmN3dmN5dnVud3Yw?=
+ =?utf-8?B?WEJ6S3U5UGhtVk5NL1NjYndnMFplbVA5eHBmTS9MSVB2UzhrcUFoTnlBbjRK?=
+ =?utf-8?B?N29EVnltdzFlM2FvZDU3SkIrVDdnSTZnWWpHYXMyZXF6L2I5K0E5K2NXWEQ3?=
+ =?utf-8?B?OWEzQ2pMM1I4WG1rTUlHTWVsMzZvV2RTckd4K0pjZExkMGVGclU3dlpyQ0tN?=
+ =?utf-8?B?L0dpNWl0NURCaXhCRkprVVlmSTUyTU0rZTZMTnpOSkhOYXVwdUdBZDBXSEln?=
+ =?utf-8?B?cGRxQ2FmOUtSdWphOXdZMlVEUjdXa3R6VU1zVnVMUGdURFd3dTc4UXh0aTZQ?=
+ =?utf-8?B?Zyt4MDZPVEJWSUZZMkFBTko3RXpLM29jSVh3MDhjOTRnPT0=?=
+MIME-Version: 1.0
+
+--_004_IA0PR02MB9779E9474B97EC3C83AE3960B3F2AIA0PR02MB9779namp_
+Content-Type: multipart/alternative;
+	boundary="_000_IA0PR02MB9779E9474B97EC3C83AE3960B3F2AIA0PR02MB9779namp_"
+
+--_000_IA0PR02MB9779E9474B97EC3C83AE3960B3F2AIA0PR02MB9779namp_
+Content-Type: text/plain; charset="windows-1254"
+Content-Transfer-Encoding: quoted-printable
+
+
+________________________________
+De: Microsoft Teams <noreply@emeaemail.teams.microsoft.com>
+Enviado: segunda-feira, 11 de setembro de 2023 03:51
+Para: phishing@pot <merciayanmact@hotmail.com>
+Assunto: You have been added as a guest to Fatih Sultan Mehmet Vak=FDf =DCn=
+iversitesi in Microsoft Teams
+
+Microsoft Teams
+Yavuz Selim added you as a guest to Fatih Sultan Mehmet Vak=FDf =DCniversit=
+esi!
+[????I'm Available For Live Sex Chat ????]
+????I'm Available For Live Sex Chat ????
+?? ??Contact Me >> insta-club.netlify.app
+Open Microsoft Teams<https://login.microsoftonline.com/redeem?rd=3Dhttps%3a=
+%2f%2finvitations.microsoft.com%2fredeem%2f%3ftenant%3d096a1e6f-2b37-4a0a-b=
+126-93e0c6a331ac%26user%3da3b7d7dd-ba1e-4292-83d1-da7e42b0eedf%26ticket%3dx=
+%25252bS71A9vvYy6U1JimGqtaimbHNgbR3fqnX5d5krYD9E%25253d%26ver%3d2.0>
+[Bring your team together]
+Bring your team together
+
+Create an open, collaborative workspace for your team. Use channels to orga=
+nize conversations by topic, area, or anything else.
+
+[Chat 1:1 with groups]
+Chat 1:1 and with groups
+
+Outside of open team conversations, chat privately and share files and note=
+s with anyone in your organization.
+
+[Make video calls and schedule online meetings]
+Make video calls and schedule online meetings
+
+Have impromptu or scheduled meetings in any channel. Or just call someone=
+=85
+
+[Team files, notes, and apps in one place]
+Team files, notes, and apps in one place
+
+Your team's tools are organized and integrated in Microsoft Teams with the =
+power of Office 365.
+
+Open Microsoft Teams<https://login.microsoftonline.com/redeem?rd=3Dhttps%3a=
+%2f%2finvitations.microsoft.com%2fredeem%2f%3ftenant%3d096a1e6f-2b37-4a0a-b=
+126-93e0c6a331ac%26user%3da3b7d7dd-ba1e-4292-83d1-da7e42b0eedf%26ticket%3dx=
+%25252bS71A9vvYy6U1JimGqtaimbHNgbR3fqnX5d5krYD9E%25253d%26ver%3d2.0>
+
+Get it now! Take it with you wherever you go.
+[Microsoft Teams - Windows]       Windows       [Microsoft Teams - iOS]    =
+       iOS
+[Microsoft Teams - Windows]       Mac   [Microsoft Teams - Android]       A=
+ndroid
+Go to downloads page<https://aka.ms/downloadteams>
+
+=A9 2023 Microsoft Corporation
+One Microsoft Way, Redmond, WA 98052-7329
+Privacy policy<http://go.microsoft.com/fwlink/p/?LinkID=3D512132>
+[https://urlshortener-emea.teams.microsoft.com/8DBB293E4001D60-2-0]
+
+--_000_IA0PR02MB9779E9474B97EC3C83AE3960B3F2AIA0PR02MB9779namp_
+Content-Type: text/html; charset="windows-1254"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dwindows-1=
+254">
+</head>
+<body>
+<div></div>
+<br>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>De:</b> Microsoft Teams &lt;nor=
+eply@emeaemail.teams.microsoft.com&gt;<br>
+<b>Enviado:</b> segunda-feira, 11 de setembro de 2023 03:51<br>
+<b>Para:</b> phishing@pot &lt;merciayanmact@hotmail.com&gt;<br=
+>
+<b>Assunto:</b> You have been added as a guest to Fatih Sultan Mehmet Vak=
+=FDf =DCniversitesi in Microsoft Teams</font>
+<div>&nbsp;</div>
+</div>
+<div style=3D"margin:0; padding:10px">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%">
+<tbody>
+<tr>
+<td align=3D"center">
+<table border=3D"0" bgcolor=3D"#EEF1F5" cellspacing=3D"0" cellpadding=3D"0"=
+ width=3D"604">
+<tbody>
+<tr>
+<td align=3D"center" style=3D"border-top:4px solid #5558AF; padding:20px 0 =
+0; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-size:24px;=
+ color:#5558af">
+Microsoft Teams </td>
+</tr>
+<tr>
+<td align=3D"center" style=3D"padding:20px">
+<h3 style=3D"color:#16233A; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sa=
+ns-serif; font-weight:600; margin:0">
+Yavuz Selim added you as a guest to Fatih Sultan Mehmet Vak=FDf =DCniversit=
+esi!</h3>
+</td>
+</tr>
+<tr>
+<td align=3D"center" style=3D"padding:0 162px">
+<table border=3D"0" bgcolor=3D"#FFFFFF" cellspacing=3D"0" cellpadding=3D"0"=
+ width=3D"280">
+<tbody>
+<tr>
+<td width=3D"10"></td>
+<td align=3D"center" width=3D"260" style=3D"padding:20px 0"><img alt=3D"&#1=
+28139;&#128139;I'm Available For Live Sex Chat &#127814;&#127814;" height=
+=3D"64" width=3D"64" data-outlook-trace=3D"F:1|T:1" src=3D"cid:228494862E73=
+4E00A036A09BC8041C71">
+</td>
+<td width=3D"10"></td>
+</tr>
+<tr>
+<td width=3D"10"></td>
+<td align=3D"center" width=3D"260" style=3D"max-width:260px; padding-bottom=
+:10px; overflow:hidden">
+<h3 style=3D"color:#16233A; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sa=
+ns-serif; font-weight:600; margin:0">
+&#128139;&#128139;I'm Available For Live Sex Chat &#127814;&#127814;</h3>
+</td>
+<td width=3D"10"></td>
+</tr>
+<tr>
+<td width=3D"10"></td>
+<td align=3D"center" width=3D"260" style=3D"border-top:1px solid #E2E7EC; c=
+olor:#535C6D; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font=
+-size:14px; line-height:20px; padding:10px 0 20px; max-width:260px; max-hei=
+ght:60px; overflow:hidden">
+&#128152; &#128073;Contact Me &gt;&gt; insta-club.netlify.app </td>
+<td width=3D"10"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table bgcolor=3D"#EEF1F5" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ width=3D"604">
+<tbody>
+<tr>
+<td align=3D"center" style=3D"padding:5px 162px 40px">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"280">
+<tbody>
+<tr>
+<td align=3D"center" bgcolor=3D"#5558AF" width=3D"280" style=3D"border:2px =
+solid #5558AF; padding:10px 0px">
+<a href=3D"https://login.microsoftonline.com/redeem?rd=3Dhttps%3a%2f%2finvi=
+tations.microsoft.com%2fredeem%2f%3ftenant%3d096a1e6f-2b37-4a0a-b126-93e0c6=
+a331ac%26user%3da3b7d7dd-ba1e-4292-83d1-da7e42b0eedf%26ticket%3dx%25252bS71=
+A9vvYy6U1JimGqtaimbHNgbR3fqnX5d5krYD9E%25253d%26ver%3d2.0" target=3D"_blank=
+" style=3D"font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-si=
+ze:14px; color:#FFF; text-decoration:none">Open
+ Microsoft Teams</a> </td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table bgcolor=3D"#EEF1F5" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ width=3D"604">
+<tbody>
+<tr>
+<td align=3D"center" valign=3D"top" bgcolor=3D"#E2E7EC" height=3D"380" widt=
+h=3D"300" style=3D"border-right:4px solid #EEF1F5; border-bottom:4px solid =
+#EEF1F5; padding:10px 30px 40px; font-size:12px; line-height:20px">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0">
+<tbody>
+<tr>
+<td align=3D"center" valign=3D"middle" width=3D"220" height=3D"220"><img al=
+t=3D"Bring your team together" width=3D"220" src=3D"https://statics.teams.s=
+kype.com/icons/img_teams_channels.png">
+</td>
+</tr>
+</tbody>
+</table>
+<h4 style=3D"color:#16233A; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sa=
+ns-serif; font-size:14px; line-height:20px; margin:0">
+Bring your team together</h4>
+<p style=3D"color:#535C6D; font-family:'Segoe UI',Tahoma,Geneva,Verdana,san=
+s-serif; font-size:14px">
+Create an open, collaborative workspace for your team. Use channels to orga=
+nize conversations by topic, area, or anything else.</p>
+</td>
+<td align=3D"center" valign=3D"top" bgcolor=3D"#E2E7EC" height=3D"380" widt=
+h=3D"300" style=3D"border-bottom:4px solid #EEF1F5; padding:10px 28px 40px;=
+ font-size:12px; line-height:20px">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0">
+<tbody>
+<tr>
+<td align=3D"center" valign=3D"middle" width=3D"220" height=3D"220"><img al=
+t=3D"Chat 1:1 with groups" width=3D"220" src=3D"https://statics.teams.skype=
+.com/icons/img_chat.png">
+</td>
+</tr>
+</tbody>
+</table>
+<h4 style=3D"color:#16233A; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sa=
+ns-serif; font-size:14px; line-height:20px; margin:0">
+Chat 1:1 and with groups</h4>
+<p style=3D"color:#535C6D; font-family:'Segoe UI',Tahoma,Geneva,Verdana,san=
+s-serif; font-size:14px">
+Outside of open team conversations, chat privately and share files and note=
+s with anyone in your organization.</p>
+</td>
+</tr>
+<tr>
+<td align=3D"center" valign=3D"top" bgcolor=3D"#E2E7EC" height=3D"380" widt=
+h=3D"300" style=3D"border-right:4px solid #EEF1F5; padding:10px 32px 40px; =
+font-size:12px; line-height:20px">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0">
+<tbody>
+<tr>
+<td align=3D"center" valign=3D"middle" width=3D"220" height=3D"220"><img al=
+t=3D"Make video calls and schedule online meetings" width=3D"220" src=3D"ht=
+tps://statics.teams.skype.com/icons/img_videocalling.png">
+</td>
+</tr>
+</tbody>
+</table>
+<h4 style=3D"color:#16233A; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sa=
+ns-serif; font-size:14px; line-height:20px; margin:0">
+Make video calls and schedule online meetings</h4>
+<p style=3D"color:#535C6D; font-family:'Segoe UI',Tahoma,Geneva,Verdana,san=
+s-serif; font-size:14px">
+Have impromptu or scheduled meetings in any channel. Or just call someone=
+=85</p>
+</td>
+<td align=3D"center" valign=3D"top" bgcolor=3D"#E2E7EC" height=3D"380" widt=
+h=3D"300" style=3D"padding:10px 32px 40px; font-size:12px; line-height:20px=
+">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0">
+<tbody>
+<tr>
+<td align=3D"center" valign=3D"middle" width=3D"220" height=3D"220"><img al=
+t=3D"Team files, notes, and apps in one place" width=3D"220" src=3D"https:/=
+/statics.teams.skype.com/icons/img_tabs.png">
+</td>
+</tr>
+</tbody>
+</table>
+<h4 style=3D"color:#16233A; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sa=
+ns-serif; font-size:14px; line-height:20px; margin:0">
+Team files, notes, and apps in one place</h4>
+<p style=3D"color:#535C6D; font-family:'Segoe UI',Tahoma,Geneva,Verdana,san=
+s-serif; font-size:14px">
+Your team's tools are organized and integrated in Microsoft Teams with the =
+power of Office 365.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table bgcolor=3D"#EEF1F5" cellspacing=3D"0" cellpadding=3D"0" border=3D"0"=
+ width=3D"604">
+<tbody>
+<tr>
+<td align=3D"center" style=3D"padding:30px 162px">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"280">
+<tbody>
+<tr>
+<td align=3D"center" bgcolor=3D"#5558AF" width=3D"280" style=3D"border:2px =
+solid #5558AF; padding:10px 0px">
+<a href=3D"https://login.microsoftonline.com/redeem?rd=3Dhttps%3a%2f%2finvi=
+tations.microsoft.com%2fredeem%2f%3ftenant%3d096a1e6f-2b37-4a0a-b126-93e0c6=
+a331ac%26user%3da3b7d7dd-ba1e-4292-83d1-da7e42b0eedf%26ticket%3dx%25252bS71=
+A9vvYy6U1JimGqtaimbHNgbR3fqnX5d5krYD9E%25253d%26ver%3d2.0" target=3D"_blank=
+" style=3D"font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-si=
+ze:14px; color:#FFF; text-decoration:none">Open
+ Microsoft Teams</a> </td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table bgcolor=3D"#EEF1F5" cellspacing=3D"0" cellpadding=3D"0" border=3D"0"=
+ width=3D"604">
+<tbody>
+<tr>
+<td height=3D"2" width=3D"30"></td>
+<td height=3D"2" style=3D"border-top:2px solid #E2E7EC">&nbsp;</td>
+<td height=3D"2" width=3D"30"></td>
+</tr>
+</tbody>
+</table>
+<table bgcolor=3D"#EEF1F5" cellspacing=3D"0" cellpadding=3D"0" border=3D"0"=
+ width=3D"604">
+<tbody>
+<tr>
+<td colspan=3D"6" align=3D"center" style=3D"padding:0 0 30px">
+<h3 style=3D"color:#16233A; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sa=
+ns-serif; font-weight:normal; margin:0">
+Get it now! Take it with you wherever you go.</h3>
+</td>
+</tr>
+<tr>
+<td width=3D"150"></td>
+<td align=3D"right" width=3D"56" style=3D"padding:3px 0"><img alt=3D"Micros=
+oft Teams - Windows" height=3D"16" width=3D"16" src=3D"https://statics.team=
+s.microsoft.com/evergreen-assets/icons/icn_windows.png">
+</td>
+<td width=3D"96" style=3D"border-right:2px solid #E2E7EC; color:#535C6D; fo=
+nt-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-size:12px">
+&nbsp;&nbsp;Windows </td>
+<td align=3D"right" width=3D"36" style=3D"padding:3px 0"><img alt=3D"Micros=
+oft Teams - iOS" height=3D"16" width=3D"16" src=3D"https://statics.teams.sk=
+ype.com/icons/icn_apple.png">
+</td>
+<td width=3D"116" style=3D"color:#535C6D; font-family:'Segoe UI',Tahoma,Gen=
+eva,Verdana,sans-serif; font-size:12px">
+&nbsp;&nbsp;iOS </td>
+<td width=3D"150"></td>
+</tr>
+<tr>
+<td width=3D"150"></td>
+<td align=3D"right" width=3D"56" style=3D"padding:3px 0"><img alt=3D"Micros=
+oft Teams - Windows" height=3D"16" width=3D"16" src=3D"https://statics.team=
+s.skype.com/icons/icn_apple.png">
+</td>
+<td width=3D"96" style=3D"border-right:2px solid #E2E7EC; color:#535C6D; fo=
+nt-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-size:12px">
+&nbsp;&nbsp;Mac </td>
+<td align=3D"right" width=3D"36" style=3D"padding:3px 0"><img alt=3D"Micros=
+oft Teams - Android" height=3D"16" width=3D"16" src=3D"https://statics.team=
+s.skype.com/icons/icn_android.png">
+</td>
+<td width=3D"116" style=3D"color:#535C6D; font-family:'Segoe UI',Tahoma,Gen=
+eva,Verdana,sans-serif; font-size:12px">
+&nbsp;&nbsp;Android </td>
+<td width=3D"150"></td>
+</tr>
+</tbody>
+</table>
+<table bgcolor=3D"#EEF1F5" cellspacing=3D"0" cellpadding=3D"0" border=3D"0"=
+ width=3D"604">
+<tbody>
+<tr>
+<td colspan=3D"6" align=3D"center" style=3D"padding:20px 202px 24px">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"200">
+<tbody>
+<tr>
+<td align=3D"center" style=3D"border:2px solid #5558AF; padding:6px 0 8px">=
+<a href=3D"https://aka.ms/downloadteams" target=3D"_blank" style=3D"font-fa=
+mily:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-size:14px; color:#55=
+58AF; text-decoration:none">Go to downloads
+ page</a> </td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table bgcolor=3D"#EEF1F5" cellspacing=3D"0" cellpadding=3D"0" border=3D"0"=
+ width=3D"604">
+<tbody>
+<tr>
+<td height=3D"2" width=3D"30"></td>
+<td height=3D"2" style=3D"border-top:2px solid #E2E7EC">&nbsp;</td>
+<td height=3D"2" width=3D"30"></td>
+</tr>
+</tbody>
+</table>
+<table bgcolor=3D"#EEF1F5" cellspacing=3D"0" cellpadding=3D"0" border=3D"0"=
+ width=3D"604">
+<tbody>
+<tr>
+<td colspan=3D"4" align=3D"center" style=3D"color:#535C6D; font-family:'Seg=
+oe UI',Tahoma,Geneva,Verdana,sans-serif; font-size:12px; padding:0 0 40px; =
+line-height:18px">
+=A9 2023 Microsoft Corporation <br>
+One Microsoft Way, Redmond, WA 98052-7329 <br>
+<a href=3D"http://go.microsoft.com/fwlink/p/?LinkID=3D512132" target=3D"_bl=
+ank">Privacy policy</a>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><img style=3D"display:none" src=3D"https://urlshortener-emea.teams.micr=
+osoft.com/8DBB293E4001D60-2-0"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>
+
+--_000_IA0PR02MB9779E9474B97EC3C83AE3960B3F2AIA0PR02MB9779namp_--
+
+--_004_IA0PR02MB9779E9474B97EC3C83AE3960B3F2AIA0PR02MB9779namp_
+Content-Type: image/jpeg; name="ATT00001.jpg"
+Content-Description: ATT00001.jpg
+Content-Disposition: inline; filename="ATT00001.jpg"; size=2322;
+	creation-date="Mon, 11 Sep 2023 06:51:43 GMT";
+	modification-date="Mon, 11 Sep 2023 10:59:23 GMT"
+Content-ID: <228494862E734E00A036A09BC8041C71>
+Content-Transfer-Encoding: base64
+
+/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
+AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEB
+AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCABAAEADASIA
+AhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA
+AAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3
+ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWm
+p6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEA
+AwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSEx
+BhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElK
+U1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3
+uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD8Zrq7
+uvtNx/pNx/r5v+W0n/PRv9qoPtd3/wA/Nx/3+k/+KpLr/j5uP+u8v/oxqgr/AD6cpXfvS3fV9/8A
+gL7j/uYo0qXsqX7qn/Dh9iP8q8ix9ru/+fm4/wC/0n/xVH2u7/5+bj/v9J/8VVeilzS/ml97/rov
+uNPZUv8An1T/APAI/wCRY+13f/Pzcf8Af6T/AOKo+13f/Pzcf9/pP/iqr0Uc0v5pfe/66L7g9lS/
+59U//AI/5Fj7Xd/8/Nx/3+k/+Ko+13X/AD83H/f6T/4qq9FLml3f3v8Arog9lS/59U//AACP+RPd
+f8fNx/13l/8ARjVBU91/x83H/XeX/wBGNUFD3fq/zCj/AAqX/XuH/pKCivR/g98L/E3xt+K3w5+E
+Hg2D7R4o+JnjXw34I0RSjvFDf+I9VtdLivLvZzHYWAuWvtQnYrHbWNvcXErpFE7r+i3/AAUm/Zy/
+Zx8B6V8MPjP+x3pt/bfBG+8T/FT9nXxt9q1zV/Ejr8bPgX4rvNPvPFVxqer6lqUlrb/FzwPqHh/x
+1oOlWckGn29jHeSWljYo7W0fqYbKMXissx+a03SWHy+VFVITlJV6yqVIU6k8PBRaqRwrrYd4r3ou
+lDEUppSi5uH51n/inwzw54hcFeG2PhmU8945oZpVwGKw2GpVcoyueAweLxuBw2fYuWIp1cvr8R0s
+rzynw4lhq9LMcTkWZ4V1aFeGHhifyior9avDen/srfA79g/9m343fET9kbwl+0D8RPjN8U/j94V1
+rWvFPxZ+NvgZdO0n4aXXgz+w4bPTvh5420TSJGeLxLcRTyPp0czC3iaSWV2Yj83Piz4s8E+OPHut
++J/h38LdH+DHhDUV0waV8ONA8S+LfF+leH2s9JsbG/e28Q+ONU1nxPfnVtRtrvWpxqOo3AtbjUJb
+OyENhBbQRmPytZfRw86mPwdXEYjD4PFPBUY476xRoY7CQxlGdWpVwVLBtqlVpqpGliqsozmklJKb
+jPBXiPU43zXPsLgeCeK8tyPI874t4dXF+a4jg5ZHm2ccG8S4nhXNcLl2By7izMeKoKpmOAzCpg8R
+mfDmXYarhMHOpVq0albC0a/nFFFFeUfpZPdf8fNx/wBd5f8A0Y1QVPdf8fNx/wBd5f8A0Y1QU3u/
+V/mZ0f4VL/r3D/0lH62f8EurXwJ8GoP2hf26vi8viu38Dfs7+BIfAHge48EDR08bXPxq+Pv2zwDo
+F54GbxJ/xIbjX/Bfg248YeKJPt6TQaU66Xqs8UghiguPfPgeP2Nf2hv2Zf2o/wBiP9m+3/abb4ge
+JPDsn7UPwlsfj7e/CzVbCb4p/AjSrq81vQfAifD6w029TxZ8Q/hpd+ItEul1KG5tZ7DR4pI7mylt
+WS9/DxPGnjGPwhL8Pk8WeJU8BT+IY/F0/ghNd1RfCE3iuHT30iHxPL4aF0NGk8QxaVI+mR609kdS
+TT3eyW5FsxiLfCXjHxd4A8Rab4v8CeKfEfgrxZosk8uj+KPCWt6n4b8RaTLc2s9jcyabrej3VnqV
+jJcWV1c2c72tzE0trcT28haKaRG+rwHElLA0MvwKwFKrgadDHUcy54QeKxEs1c6OYVMNWbtQk8DH
+B4ejdStPB06zs2lH+ZeNPo+5lxhnnHPGsuNs1y3jHMc54OzTgJYPFYmlw1kVHw0jg824Gy/iDKox
+9pnNClxjU4nzrN/Z1aHtsFxVmGWUounFzr/snb/tK/EH9nP/AIJffsYXfgLRvhZrEviz44ftXW+p
+r8TvhD8OPixFbx6PefDaS0OjQ/ELw34hj0OSRtRuBey6Utq9+qWqXbTLaWwj/IH4kfEDXPin448R
+fEDxJaeG7HXPE96l/qNp4Q8L6D4K8NwTJbQWgXSfC3hew0vQNGtzFbxs1tplhbQNM0s7IZZZHbL1
+Dxl4w1bw9o/hHVfFXiTU/Cnh2/1fVfD/AIY1DXNUvPD2hap4ga2fXtS0fRbm6k03TL/W3srNtXvL
+K2guNSa0tmvZJjBEU5uvNzXOcRmUMJh/a4hYLCYLLcNSwtSo5UoVsFl9HB1K0KafJF1ZwqVFZcyV
+Vptu7f6F4Z+E2ReH+J4ozz+zckq8WcU8X8f5/mPEeCy+FDMsTlfGHG+a8VYHKcZjJRWJxEcsw2Mw
+GBnzS9lOpl8KlKEYKEYlFFFeKfrhPdf8fNx/13l/9GNUFT3X/Hzcf9d5f/RjVBTb1fq/z/4KM6P8
+Kl/17h/6SgooopX/AK/r1X3mgUUUUX/r+vVfeAUUUUX/AK/r1X3gf//Z
+
+--_004_IA0PR02MB9779E9474B97EC3C83AE3960B3F2AIA0PR02MB9779namp_--
