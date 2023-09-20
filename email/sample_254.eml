@@ -1,956 +1,357 @@
-Received: from SN4PR19MB5454.namprd19.prod.outlook.com (::1) by
- MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Fri, 20 Jan 2023 18:38:29
- +0000
-Received: from BN8PR07CA0027.namprd07.prod.outlook.com (2603:10b6:408:ac::40)
- by SN4PR19MB5454.namprd19.prod.outlook.com (2603:10b6:806:20d::7) with
+Delivered-To: phish.me.again@gmail.com
+Received: by 2002:a05:612c:711:b0:381:73ac:3a65 with SMTP id ft17csp1638170vqb;
+        Mon, 16 Jan 2023 09:08:29 -0800 (PST)
+X-Received: by 2002:a17:907:c11:b0:844:79b1:ab36 with SMTP id ga17-20020a1709070c1100b0084479b1ab36mr17986802ejc.25.1673888668846;
+        Mon, 16 Jan 2023 09:04:28 -0800 (PST)
+X-Google-Smtp-Source: AMrXdXvxEdSU9YuVCNyTMUdKoiehF9pJSOQsFVieSwGIrKMreVgjWrL3hXp22qd38eVMLvR1EG/C
+X-Received: by 2002:a17:907:c11:b0:844:79b1:ab36 with SMTP id ga17-20020a1709070c1100b0084479b1ab36mr17986633ejc.25.1673888667066;
+        Mon, 16 Jan 2023 09:04:27 -0800 (PST)
+ARC-Seal: i=2; a=rsa-sha256; t=1673888667; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=WuL4Oc9dqb/mkhnHdVqJbjkpUsVvbuntklOeb0qU+Dq0/kLssmdHi5DPfZ+5cbTIX+
+         5UJehOzYfFCUtFz9oqVWcmx9vfIbCpHTuVGrwrnB2jijwVj+opx8FzYKsBBMRlRk5mre
+         Ze0MuX7nKoOkM8H8EzLAPUXiiMthQPJGeQjQrrxgTeDcIS48grcgRUXdrGv6KFjOuSBU
+         P3fwBdrHqhFYpnt1APaoqqlYXqj3PwRSYwRtAYW/68ArmXG8/9LHI2sL8EfbfoN50i3W
+         Q9wgB2D/jnxnMLNCTc9ZrmzrjjgOBvVVYGXKmT1d4sDYlfL+qgyMwcQB4zPaIQz2I10n
+         I/Ig==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:msip_labels:content-language:accept-language
+         :in-reply-to:references:message-id:date:thread-index:thread-topic
+         :subject:to:from:dkim-signature;
+        bh=Tqy6A9eDHOifWDHUJziGN2p5XJ0+xes/XBzjOezIWWs=;
+        b=P4LNarLoCOHbk0T0HuaAGraFHPqjxFvdHpWuJ7btThDpHEKCUHj+8krH7m8R5qv62Y
+         YR0KSunsNu+C9hp+FJvoABykZISEI3M4VKSoUfmhDBsdvF0lj+OvPmagGDZ5i+NZII4X
+         CtvoAE3NzL5WoAHheE7aBnG/jhwf/GYoaoVYJ/Arc6M3+0b1/BwMJmvOMUk/eMXLI/qu
+         4NylEICOcI9aOGODV5H2jNgJXseo1AJjRVpUns+T+wR06H0hiUIGo1JvhAypbtmVHiWP
+         y3Lj1u84XcsBdQCXxYcZcVwU+RRm6GtBmFXRqLFcdo+t8vMSkAD+PiA0TtqN4CgtRba1
+         BCXQ==
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@hotmail.com header.s=selector1 header.b=t1hEh9+i;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of phishing@pot designates 40.92.43.72 as permitted sender) smtp.mailfrom=phishing@pot;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=hotmail.com
+Return-Path: <phishing@pot>
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02olkn2072.outbound.protection.outlook.com. [40.92.43.72])
+        by mx.google.com with ESMTPS id ae1-20020a17090725c100b007c4f78e610asi28855792ejc.442.2023.01.16.09.04.26
+        for <phish.me.again@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 Jan 2023 09:04:27 -0800 (PST)
+Received-SPF: pass (google.com: domain of phishing@pot designates 40.92.43.72 as permitted sender) client-ip=40.92.43.72;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@hotmail.com header.s=selector1 header.b=t1hEh9+i;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of phishing@pot designates 40.92.43.72 as permitted sender) smtp.mailfrom=phishing@pot;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=hotmail.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LuumLKn/N4fcCRTpqMyum1JVi3fQQPx4b18SKoaA3BNKit2D569JWUaBdPVBKzAC+01tZJVGKEv65gs7cAVUlxD7pLxBX3pxeOmL4ZheZnlw5Tege5JUtnk52luoMajNOIF94z5uvtkLB2rNQpi3jM0c171Q/DORZE5RrtTWQt6MCeEjUcexjRgrAnAEO1yLOh5XMfArENfFtjTY+eyq/uEpoZ0l+1Vt+xLKNlxeXch9CDjpnTgDBltE2U/2l2DN/MZVFDl7rY+lpTKA4765XnF3owszhTgCcUewDYQrs6gK0IbXL/CTtmS35yaoWMMVeIkXjlDZ58CfPPCXkb7cog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Tqy6A9eDHOifWDHUJziGN2p5XJ0+xes/XBzjOezIWWs=;
+ b=BRyI6Mzk+E4ePpw4fRapG4Yii0Cm6we9hzjpDrQXgVoaILa9NntvkmZBOqLXWdrmLQWlUnmpyo7EMMGO3BHKCMhJyoEHKyOBP9c1h+dvBcRccanhLxqZe/W7SAsxtgwrE93n1bjINpvSmmgorYqvOieQBW6lTl3h52GC8Mz3pXHPBQhSrSaPhWSRlWp0zwIrfMjRycODjwa1nNxRVeXGcYfgXin8Ymfl4a5nNmEsHCFfj7Prcjum67OVFXPuXkWBUBieHNZ7yZp9hHtdt/ZiAsN7NmFqsVCP/WUREq1zAfIUmfco7MBAAQGz0WvDqur0M6V+U9XEgHMYOQn6dFZRSw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Tqy6A9eDHOifWDHUJziGN2p5XJ0+xes/XBzjOezIWWs=;
+ b=t1hEh9+i/OHWnL+udizYw+/2S502VWiS+293/L2VUA6Lr1kxyAkfD34Kw+QJve18NT7hvfEhwQmb2QFWsab7Kc+iuEvSLa292lOxmeb70Ao6A0vCmWeqdKaMQldR7SpY3o6lt1/vOQKP77dmzRrZft1E/RpjFb82D8hKfVHMQs0GR3Gm5xKOY4XF7PJzCM/dLMYGPDzcpieq62ewSplQdjRThuDX/7vNp4XzWM1l091Y1CY5GXX8MyVlGW+dgNjqEOGNEJYNbp7vUJl0exlAuqIBArtNcrSDeTP9AVCSM0dmt4LB0K/ctZhZMat3cVnBiYaMO1IiywJ6kdEIbT7iYQ==
+Received: from SA0PR04MB7370.namprd04.prod.outlook.com (2603:10b6:806:e5::23)
+ by MWHPR04MB0398.namprd04.prod.outlook.com (2603:10b6:300:72::13) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.27; Fri, 20 Jan
- 2023 18:38:27 +0000
-Received: from BN7NAM10FT011.eop-nam10.prod.protection.outlook.com
- (2603:10b6:408:ac:cafe::27) by BN8PR07CA0027.outlook.office365.com
- (2603:10b6:408:ac::40) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.27 via Frontend
- Transport; Fri, 20 Jan 2023 18:38:27 +0000
-Authentication-Results: spf=pass (sender IP is 161.38.198.160)
- smtp.mailfrom=y.kajabimail.net; dkim=pass (signature was verified)
- header.d=y.kajabimail.net;dmarc=pass action=none
- header.from=y.kajabimail.net;compauth=pass reason=100
-Received-SPF: Pass (protection.outlook.com: domain of y.kajabimail.net
- designates 161.38.198.160 as permitted sender)
- receiver=protection.outlook.com; client-ip=161.38.198.160;
- helo=mail198-160.static.kajabi-mail.net; pr=C
-Received: from mail198-160.static.kajabi-mail.net (161.38.198.160) by
- BN7NAM10FT011.mail.protection.outlook.com (10.13.156.250) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6023.16 via Frontend Transport; Fri, 20 Jan 2023 18:38:24 +0000
-X-IncomingTopHeaderMarker:
- OriginalChecksum:5279AF33E8C5961FDF3D7F70B1A82B82BC2A7B7B5AA52FCB450E2393784DEAF4;UpperCasedChecksum:4C0C751BC41F9FE474A868BB0DB2A4141C1D7AC6F94D5817FCA1BB3B10C3031C;SizeAsReceived:1672;Count:16
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=y.kajabimail.net; q=dns/txt;
- s=mx; t=1674239903; x=1674247103; h=Message-Id: Reply-To: To: To: From:
- From: Subject: Subject: Content-Type: Mime-Version: Date: Sender:
- Sender; bh=CAl0snHlg90qBb/M6QW2Dynj3gqZFlyFVHKqAvbLiA8=; b=Drk48eYWDyyxL2Xry6qgsqehOqxTCD/TAqEiRk7V4aszBa1dRrs1BytHQmwRpjAiIf3JXy7f
- DN8R3G+S6oZq6dvp/KNhj09FnXzEBMIQMlXMrrAxj32zjTvte1UOktSqfSwMVWcuI6oa0Xns
- EtvIV0e/2jV6Owo3NI26wSx/QQw=
-X-Mailgun-Sending-Ip: 161.38.198.160
-X-Mailgun-Sid: WyJkMDJkNCIsInJvZHJpZ28tZi1wQGhvdG1haWwuY29tIiwiNjJjMzYiXQ==
-Received: from <unknown> (<unknown> []) by d180b768018d with HTTP id
- 63cadf986efe398695af5275; Fri, 20 Jan 2023 18:38:16 GMT
-Sender: et-k-help@y.kajabimail.net
-Date: Fri, 20 Jan 2023 18:38:16 +0000
-Content-Type: multipart/alternative; boundary="e686db652614e36d747989ebd665ad15d281d96cfd233edc4198b8c16eb0"
-Subject: =?UTF-8?q?Your_Cry=D1=80to_is_restrict=D0=B5d_at_the_moment!?=
-From: =?utf-8?b?zpxldNCw0JzQsNGVayBIZWxwJ3MgRmlyc3QgU2l0ZQ==?=
- <et-k-help@y.kajabimail.net>
-To: phishing@pot
-X-Mailgun-Tag: Site ID#2147637931
-X-Mailgun-Track: true
-Reply-To: gundermanshohjahon89@hotmail.com
-X-Mailgun-Variables: {"app_name": "kajabi-storefronts-production",
- "email_delivery_id": "11082406839", "email_id": "2148633629",
- "email_message_type": "email_sequence_email", "email_resource_id":
- "2148633629", "email_sequence_id": "2147818925", "email_type":
- "EmailSequenceEmail", "message_sender_domain": "y.kajabimail.net",
- "recipient_id": "2343377209", "site_id": "2147637931"}
-Message-Id: <20230120183816.12c930216183de43@y.kajabimail.net>
-X-IncomingHeaderCount: 16
-Return-Path: bounce+b3aee8.62c36-phishing@pot=hotmail.com@y.kajabimail.net
-X-MS-Exchange-Organization-ExpirationStartTime: 20 Jan 2023 18:38:27.3164
- (UTC)
-X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
-X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
-X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id:
- da9f6c4c-d8a5-4169-1e71-08dafb158527
-X-EOPAttributedMessage: 0
-X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
-X-MS-Exchange-Organization-MessageDirectionality: Incoming
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN7NAM10FT011:EE_|SN4PR19MB5454:EE_
-X-MS-Exchange-Organization-AuthSource:
- BN7NAM10FT011.eop-nam10.prod.protection.outlook.com
-X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 1/20/2023 6:37:42 PM
-X-MS-Office365-Filtering-Correlation-Id: da9f6c4c-d8a5-4169-1e71-08dafb158527
-X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 161.38.198.160
-X-SID-PRA: ET-K-HELP@Y.KAJABIMAIL.NET
-X-SID-Result: PASS
-X-MS-Exchange-Organization-PCL: 2
-X-MS-Exchange-Organization-SCL: 1
-X-Microsoft-Antispam: BCL:0;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jan 2023 18:38:24.5510
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: da9f6c4c-d8a5-4169-1e71-08dafb158527
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource:
- BN7NAM10FT011.eop-nam10.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
- 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN4PR19MB5454
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:05.4087516
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.6002.013
-X-Microsoft-Antispam-Mailbox-Delivery:
-	abwl:0;wl:0;pcwl:0;kl:0;dwl:0;dkl:0;rwl:0;ucf:0;jmr:0;ex:0;auth:1;dest:I;ENG:(5062000305)(90000117)(90005022)(91005020)(91035115)(5061607266)(5061608174)(9050020)(9100338)(2008001134)(2008121020)(4810004)(4910033)(8820095)(9575002)(10195002)(9320005);
-X-Message-Info:
-	qZelhIiYnPl/dSw7aXjVTILeWtoPbtW0wtbxN3deWbxmrjm0PKtDX5aNrapVivFioyaceIdjLCBZjXcSH6IukWqASQnyRRfeBPE82UmvXPz+CCpR3u8Di39Kdxeqwj2R9a3USvUZS0GHchy+bp0OE3oQHZHj/EQq5SojcDZV0OTmivHqwmSHCCXwxgUejwShFAZYW5Lli2rK3GZEPwAHCw==
-X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0yO1NDTD0z
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?VktrYTVrazdZR2NPMFJiSlY1aXNpUDNYbG1FMjdEQkZZUDROWmRqZHNJR0Rm?=
- =?utf-8?B?TU9ZRExnbGNZQmFnOCtLN3pYTWJEcWlNQU5PdDhQb1pIbEhWcXRYWkRRVXkv?=
- =?utf-8?B?RmFSWHFralVxVGlYNkxyNWVqRDZmc2llaTFXbkIwMnF5Q1Z4UVFhL3U5dVpZ?=
- =?utf-8?B?YldSSFVJVUdDZmJHZlhPZ0ltUi9pRDc0UndjYUJIWEZodk9QNVB1UVh2S05I?=
- =?utf-8?B?RlJ1ckxWeFltRXZSYjNqSzIwWWt5WWh1d2l1alJZMVBoVmN0RGo4eGhTNnhy?=
- =?utf-8?B?b3orWjcwZjIxcE53LzZ2b3ZZUDlYTkpNdTdqQmNlVmtRbzRJVWNvbHJqYzNH?=
- =?utf-8?B?U0FINkhwbkJ6ckFSRlpILzJIUUlDUWVBR2pFZ1k1a3lXRVliY3BmVTh6QVZp?=
- =?utf-8?B?bW5DUUt2disyelB4Ly9vSVB1UXVsNG9kYUxyUUR3UEsxSnREc3VhUnhPb1Bn?=
- =?utf-8?B?cHVqQnlSczJqa055bEg4SktTdG1lUlhOb2l3enc0OUZlMTAzQlNtbFFYYWNn?=
- =?utf-8?B?enk2NW8vWlgzYXZWZ2paNWxZL0wxMEpjNVRURFZYZXI5TmRDWFQzcm5ld3h0?=
- =?utf-8?B?aFN2cUpQTTZLUTZxZHE1MjN2cVRrL0U3M3RQUFUzTXlKQWJiN1YxYUlBTUFG?=
- =?utf-8?B?V2ZoWjB6Qm5MUDNLT2xEMUNha2tkb1kzcEZCN0FjL1p4MGtuQUIwQ0hkZDFF?=
- =?utf-8?B?dXorU21zVzNQUEM0ZGphN2pBenFWZlB6RlVFb3lvUVA2U214UEY2Y3VORHJN?=
- =?utf-8?B?NENQUmlJOVJFdjV5alBCWkVmQ3FJdE92NHlRaEJ6MkhHMDRqWE1zZ0QvcWZK?=
- =?utf-8?B?elRnMTRscHVDRlRMbUNpM2UrUVc5elRZdy9RbmZlVTNtUmR3elpJM1k2TG1D?=
- =?utf-8?B?UmQ4enJ2akIzbmNHelgwL3dMcVF6M3pxMVhSNnYrUlVxY2JjWTJwellkWWZR?=
- =?utf-8?B?czhMVkRidUZCVFlablE0YnZ0WFBLWFNYQnJzSTVpQnA0UmRYaG43cEM2NVZl?=
- =?utf-8?B?My9KVmg3Z1drK0Y2OS9kMlE1TzQ1QndrNEFwRlUyTDF6bjN2VUt0Qm0xSUdQ?=
- =?utf-8?B?QUhML0VsUXNwdlB6MTdCWHdNMzljM2tDUUw2L2pjQWFrREJrRGdoaUpKKzEr?=
- =?utf-8?B?QmN5NU5sU1N1UUUxZ2w1QzhzSVRtcEZRR2pMWG9mY2RWanVJSlRXT2JyanVO?=
- =?utf-8?B?MkEybFdaTCtYdHRzK0xqdWNNaHY5QWZOQVFldTBRT1YzRzBMU3cxcW94M0kr?=
- =?utf-8?B?WEJOM21XNHNuQ1hweU9acnQ4QjhmK01GbS83MDVLMnZ3bG8ycWM0NFRLam04?=
- =?utf-8?B?RXgrb3Q1aTlhblZ6NURGRnhtcUFaV25rWHlBM0FGS1lkYW1Ub2gwd0NmTi9W?=
- =?utf-8?B?VHdtSXpON2pIWU0reW1yMGFoUzVLZUVSTXJNQ0U4MnIwRHpCUC9yMjRjMUhw?=
- =?utf-8?B?TjFzZU1zRWhVUEwzeUprR2tjd1krRk9SbG5LbjlaZFR0UTJBU0tMMW81ZTZt?=
- =?utf-8?B?NUZHK1NxTTZ0UVZKczdGNzJQa1Vuc2Z0WUxrWHpMK2lmTGVGNnZCQVR3U3hH?=
- =?utf-8?B?VlBUbWgrRDQ0NE5jMVV2VFJCZEV1enRYbmN3ZXBPOFFMd2ZSeTRLcVd4azJB?=
- =?utf-8?B?Z0YyTE0rZENBS0pUMnpOd2dJb3V1VG1PZFhXM0dsSnB6TkYxZElHM2FGd3Fk?=
- =?utf-8?B?ek9ycVhSTWVMdnZUTGt6eVR3VXd3K3FHbktQRWloL1pJUVZRaTNIL1puTTVj?=
- =?utf-8?B?RnI5VmkvVW5ZbmZDNUFkRFZiNnJEbDVuRVhBWVoyb3A0cEVIS0V4MS9HVmZW?=
- =?utf-8?B?ckVsRXA3TUFVcUxSaVpURFloSjJNS1k2cnZLdzNvdUhWT0c3ZTIvZEh0Nm9V?=
- =?utf-8?B?SlZISUZKWlZUTWpDYlZvZDRrcnhLdnVPVGE4ekt2M3N3SGx3WDU1Z05Qbk55?=
- =?utf-8?B?b1cxckQ1QU1oZHNaNlBsSnJqdnZKZmF5SnVNdWVXTmdsc1JtTG1KMVRZUmp3?=
- =?utf-8?B?bVFQdXMyWW53NzFMZVZRMnlpWVppdVhwRUNPaGFXb1ZjcXQxNmxCVDFReFBy?=
- =?utf-8?B?M2ZpK1ZlTHZpVE1XaTJlcWpwSnJBQUluSm45WmxpaTQreXlOclM0WHNPcnlK?=
- =?utf-8?B?c2V3cXhwOVVTME15VG92dEI3YmZsa0Fjbkw3NjVDRm8wcEI0QWgwNjhLNGxr?=
- =?utf-8?B?QWpBa2JmWWg1a2pVUHVldE0zK3E3RzVrZTRndE0xS0tWUnR3bUtwdFlqQVhL?=
- =?utf-8?Q?RYmLMQ6AWTMXrXU/uA1uuknCoMoLC/qKonDlmiluM4=3D?=
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5986.23; Mon, 16 Jan
+ 2023 17:04:25 +0000
+Received: from SA0PR04MB7370.namprd04.prod.outlook.com
+ ([fe80::6be0:2de4:9316:c0fb]) by SA0PR04MB7370.namprd04.prod.outlook.com
+ ([fe80::6be0:2de4:9316:c0fb%9]) with mapi id 15.20.5986.023; Mon, 16 Jan 2023
+ 17:04:24 +0000
+From: phishing@pot <phishing@pot>
+To: "phish.me.again@gmail.com" <phish.me.again@gmail.com>
+Subject: =?iso-8859-1?Q?ENC:_Voc=EA_tem_342,854_Mil_Pontos_resgate_agora?=
+Thread-Topic: =?iso-8859-1?Q?Voc=EA_tem_342,854_Mil_Pontos_resgate_agora?=
+Thread-Index: AQHZILXjHuQluTAV40+M4+h6kcc2hK6hV7wb
+Date: Mon, 16 Jan 2023 17:04:24 +0000
+Message-ID:
+ <SA0PR04MB73703432AD9430DA34CBE966B3C19@SA0PR04MB7370.namprd04.prod.outlook.com>
+References:
+ <20230105032839.4D3083F7C1@r5.22ryx321bzcupbdnl3rtpu2fjc.jx.internal.cloudapp.net>
+In-Reply-To:
+ <20230105032839.4D3083F7C1@r5.22ryx321bzcupbdnl3rtpu2fjc.jx.internal.cloudapp.net>
+Accept-Language: pt-BR, en-US
+Content-Language: pt-BR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [xQjQ9gI7kIqqlGLV+olPYXT1lhNTzJ/S]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA0PR04MB7370:EE_|MWHPR04MB0398:EE_
+x-ms-office365-filtering-correlation-id: 96bb8488-29f0-4ef0-7f33-08daf7e3b866
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ 7Y4z8o4BgyU/gplF3uJZFmIr1aNUrb3kpXtGGP0JlvNfN78adN1oxHetzb2UnNITq1QovgnJXCFFVsgyDe0S0p+HWuHCWKFN48bfn8SIrNBc809WhEXzM1evkCNGJewMR4uJDSweOUgErDdX+8uvB3TYRgEP1Wx/A1ubuaTTQcOG+euSwfojn9ve9cG97On798p1n3g+NJAVw5tkDaO21idEvUpF3IDHOOfDdd0H2Pottk2iocDbgd/W6Ua59ndPhfFVz0bLNNc37n5C6uSctY/JJj7VE4yfc1LJfP6KBGCxUFKV8YiCrrVgp7gayWN417NNN8NOiotgUHh5J+8Vh3WqbjmzRuPDzrPprBDXdnGjz4tDJsyFWCOjh3zlUuqbox9ZzdXqvXqBOPH9GfLM4Rcal7Sj8PJLno0JrsUeiEl/6kqnisvUdFFxQtv3sHiDz2uKxubMrzF46NcD6HI3wB9VMQEZr0a8PUgf7hip6uToG9whqAtmZBn9VbS07IXML6uOHe+ouEh6dOzoZqN2q6Cz9JvuOsIPIRjBEcsoqJ4Omj4g8dVpanr3LaMgoXQeguXPYzhdI14mlku0IjmoWYJ635kUPwKreYyoQcGkEVh8tVwmYj/7gEiXh8qUp5603UxWU71G8D8rVmrOHkXeV+ORzrkiuTxKUJxe+Kuyu4k=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?v3Xr4/Zzi3BtEGTSWEO5CCCNgT6mLGtTDeUuxLa3CCyTCZCX42Vp7QLnId?=
+ =?iso-8859-1?Q?VFtLPzT1406mGFsAzA82YblbYUps8INvEHT9QYWUYMou+y/idbH/e9GKQq?=
+ =?iso-8859-1?Q?sv4z1O3vS8OCv202kTyZQXZ0rNtvUFGZGOF0mzstIDUKN95ReBIR+Fk7yT?=
+ =?iso-8859-1?Q?n0s6mLcSECOEit1RSmK0uPsJnn2+HJNIXOtHIfIg1QcqKYPwvG1QcnCFIl?=
+ =?iso-8859-1?Q?/EeuueAk2k6my9koexTlhEUng7juofcHqrzV28+eg2w3cHKxuFmS8NMb6J?=
+ =?iso-8859-1?Q?5RTHPHXH0pW+2d7Z3fpR+yYbZsRbbdW5gykaGkCQoO783Llx6ieo2xJQaj?=
+ =?iso-8859-1?Q?NNjvRs2j7lSqKkzopke5oW6wrTLNDsI/WlORkXAZZ8LE4O5hElRQLi9e5e?=
+ =?iso-8859-1?Q?EZDnNaidq3AyeJb5LG2RVgD7AOWjLmxEwmzuNCQGRqzSDmXWozrqH83y+T?=
+ =?iso-8859-1?Q?AADEFR0cpS3cwIc5Gp64mSHD4PGwiVtCCaoI4gdbMiBTbGBAp4kanLndTB?=
+ =?iso-8859-1?Q?gQpPpVjboD1mKhvaCoVgbqkcAHGkKgHY3URc/UmCTiDZ8zbE0an4Q8YN4A?=
+ =?iso-8859-1?Q?d8FYoOW2Db/kqsNwGW7c525gNUyrCfUYEnxRtCRlR36xU22rpv9y3Er1QL?=
+ =?iso-8859-1?Q?+ncxdss5QsXy9emhuuLBLXAfYdBrtMLYLwdYQoFTtbIvA1eyvZLNsO051G?=
+ =?iso-8859-1?Q?Ztwpx1rf7Sygj0PA7zgpVUig61Gzd3NLI+A1ORVituMB3Bji3DPshfjg2c?=
+ =?iso-8859-1?Q?Qvz2XRJD8LTB3azkZV6CraXlpo10varYcyhYTCK6o6NC4qG5objWNXCr39?=
+ =?iso-8859-1?Q?rlOtSJICDj8s8bTDQ5sEhC65lUC84Y+rUuFwBd2efK1OfDKA8kB8CpoCox?=
+ =?iso-8859-1?Q?DGqKFDMkWZ9SBA4xjodGBgzrtWGqRcgS26rrJj+ZBPyPfKPX0XmhyMsv+Q?=
+ =?iso-8859-1?Q?cqVeT2zG1kARYOG/tb+XCdaKThkpsGBdSxhgz7xqbWuUpVGYab+af0CCDe?=
+ =?iso-8859-1?Q?EOFUWZq+GAa8LFkMn3E7pOARsuOiApW9juGdMKXloavzR4g4tKYK1rtqU1?=
+ =?iso-8859-1?Q?SF5sqAJU8oQjzx+aOpr11PHSa3qDFAQwAovW5TqY7GH9BFwLeZGtLAIui5?=
+ =?iso-8859-1?Q?W7x2PmVeihKmySOWJo5MvMoEeLGyQZCwYxChFA0mk8At6eMDIyK0hxvceA?=
+ =?iso-8859-1?Q?3rYrlDrKL1eDTISZ29mGgEYJ9QpHyNHfETHjGyzWv7NLqxT+vAi/M16LmR?=
+ =?iso-8859-1?Q?CMczHCQWWpA7t4td061h4fc3NQM4BYLBhIiJQbmazJSkt/hJOa08tc+tBl?=
+ =?iso-8859-1?Q?MC2+I3VEO60btj7j7ST41I9F5A=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_SA0PR04MB73703432AD9430DA34CBE966B3C19SA0PR04MB7370namp_"
 MIME-Version: 1.0
+X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-edb50.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA0PR04MB7370.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 96bb8488-29f0-4ef0-7f33-08daf7e3b866
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jan 2023 17:04:24.9395
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR04MB0398
 
---e686db652614e36d747989ebd665ad15d281d96cfd233edc4198b8c16eb0
-Content-Type: text/plain; charset="utf-8"
+--_000_SA0PR04MB73703432AD9430DA34CBE966B3C19SA0PR04MB7370namp_
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 
-For you to experience the forfeiture of your crypto
-assets. =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=
-=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
-=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=
-=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C
-body, table, td { font-family: Arial, Helvetica, sans-serif
-!important; } h1, h2, h3, h4, h5, h6 { font-family: Arial,
-Helvetica, sans-serif !important; mso-line-height-rule: exactly;
-line-height: 96% !important; }
 
-View in Web Browser=20
-( https://email.y.kajabimail.net/c/eJxlkU2P2yAQhn-NfamIgMEYDhyy3e6q6q2rNlUu=
-FoZxzMaxXUza5t-XeLOrfkggMYzm431ePNkwNBGX6RwdNsEbzoSSAJLrEtfkgt_POL4la8WU5lW=
-JhslacNCaQmnnuRntCc3RPts2kCVNEbs4jWkhc5z82aUwjbeGfw_pjVIMNEWltIZOMeEFVC1F4J=
-3qBG_FrSxdZjQfrs-n20ZrUC4hve0modbAysH0Kc1LAduCP-SDiRxJj8O8OV1eNty46XRN5Hu37=
-eu752m337He7n51-8evi_22H9w4dHb3efn0M8Bj9f7L9rAt4J4Q5bj0QtvKOdnVzkrViixAQUXz=
-l5NU1V55zwt4cMHnEq8rxitZE0mtJMKDJ22tBVGtrkD7ztVWFFwuxzA3bgju2KRo3TGMh1yc4hn=
-LEy6LPWC2YvQYGz9l4aO5bF60XClsRkw3Th6H8APj5cqEMaq4oFLBq5uvrVaa_xi8hmU02bAYDh=
-PpyFwI2k9pnZCJlck8ZdrvPt4XHP7gHdGFOeCYVh9AANQ1p7oMhlMOlHHKFCgmN4w7DZQzmWOPA=
-nL7_1R4I7kD-Rs6Q9PP )
+________________________________
+De: ITAUCARD <info@itaucard.com.br>
+Enviado: quinta-feira, 5 de janeiro de 2023 00:28
+Para: phishing@pot <phishing@pot>
+Assunto: Voc=EA tem 342,854 Mil Pontos resgate agora
+
+[logo]
+N=C3O DEIXE DE RESGATAR SEUS PONTOS.
+Ol=E1,cliente
+Voc=EA tem pontos acumulados em seu CPF, que est=E3o disponiveis para resga=
+te que est=E3o bem pr=F3ximos de expirar, Voc=EA cliente ITA=DA, tem pontos=
+ em dobro. Acesse agora e Resgate seus pontos Smiles Ita=FA.
+Pontos acumulados       A RESGATAR
+342,854 Mil Pontos      Aproveite e troque seus pontos por milhas a=E9reas,=
+ produtos nos sites de nossos parceiros ou descontos de at=E9 25% na fatura=
+ do seu cart=E3o de Cr=E9dito ITA=DA.
+Pontos expiram em: 09/01/2023
+CLIENTES ITA=DACARD GANHAM PONTOS EM DOBRO.
+RESGATAR AGORA<http://ec2-3-138-125-44.us-east-2.compute.amazonaws.com/csde=
+v3/hjngg67/?hash=3DbWVyY2lheWFubWFjdEBob3RtYWlsLmNvbQ0K>
+*Ap=F3s efetuar o resgate,aguarde o prazo de at=E9 24 horas, Acompanhe seu =
+extrato.
+[alt_text]
+
+=A9 2023 Ita=FA Unibanco Holding S.A. CNPJ: 60.872.504/0001-23
+Pra=E7a Alfredo Egydio de Souza Aranha, 100, Torre Olavo Setubal, Parque Ja=
+baquara - CEP 04344-902 - S=E3o Paulo - Brasil
 
 
--->
-
--->
--->       -->
-
--->
--->
-
--->
-
--->
--->          -->
--->      Hi phishing@pot
-
-W=D0=B5 =D0=B0r=D0=B5 cont=D0=B0cting you with =D0=B0n import=D0=B0nt =D0=
-=B0nnounc=D0=B5m=D0=B5nt - du=D0=B5 to th=D0=B5
-incr=D0=B5=D0=B0s=D0=B5d us=D0=B0g=D0=B5 of our pl=D0=B0tform. Unfortun=D0=
-=B0t=D0=B5ly, this h=D0=B0s pos=D0=B5d
-som=D0=B5 issu=D0=B5s conc=D0=B5rning upgr=D0=B0ding w=D0=B0ll=D0=B5ts. To =
-=D0=B5nsur=D0=B5 th=D0=B5 continu=D0=B5d
-=D0=B0cc=D0=B5ssibility of your funds, pl=D0=B5=D0=B0s=D0=B5 m=D0=B0nu=D0=
-=B0lly t=D0=B0k=D0=B5 =D0=B0 f=D0=B5w mom=D0=B5nts
-to upd=D0=B0t=D0=B5 your w=D0=B0ll=D0=B5ts b=D0=B5for=D0=B5 J=D0=B0nu=D0=B0=
-ry 22th.
-
-What might transpire if I fail to Upgrade my wallet?
-
-You need to upgrade your wallet to avoid losing all your digital
-currency funds.
-
--->
--->
-
--->
-
--->
--->          -->
--->  Update My Wallet=20
-( https://email.y.kajabimail.net/c/eJx1UEtuwyAUPI3ZVI74BcOCRaW2Utc5gIXNc0IT=
-gwukkm9f7DpRP6rEgmEe82YGRuMubYQUrrGH1llNCZeCMUEVgpVM8H4FfycbSaSiewSaiIZTphR=
-myExT680I-mzeTOfqlEOEIQafUz3FYK99dsFvgj-XnDQxw9B1BpQSRllFGaa9VHsuFS8TuNu-5X=
-kC_bxcD5ujFaDk8t2bYI1iBF30KecpVeyxoi_lmDmH42hiOJtdH8byUjxFdwz1UE8Vx6eQF6mFQ=
-yOkZI5QYnsLsbWhMF7Pu69k65iHvHmycHEfEOdlPyFYUo6FZLfmblKr819lrhBF_b-RrA8l2cPr=
-U0XZt2wRejc58HnNzDhjTUOxQk5TXKojFBPJJBE7QntVqiSiYAucFfk_KawWtGfiE1_1qSY )  =
-   Update My
-Wallet ( https://email.y.kajabimail.net/c/eJx1UEtuwyAUPI3ZVI74BcOCRaW2Utc5g=
-IXNc0ITgwukkm9f7DpRP6rEgmEe82YGRuMubYQUrrGH1llNCZeCMUEVgpVM8H4FfycbSaSiewSa=
-iIZTphRmyExT680I-mzeTOfqlEOEIQafUz3FYK99dsFvgj-XnDQxw9B1BpQSRllFGaa9VHsuFS8=
-TuNu-5XkC_bxcD5ujFaDk8t2bYI1iBF30KecpVeyxoi_lmDmH42hiOJtdH8byUjxFdwz1UE8Vx6=
-eQF6mFQyOkZI5QYnsLsbWhMF7Pu69k65iHvHmycHEfEOdlPyFYUo6FZLfmblKr819lrhBF_b-Rr=
-A8l2cPrU0XZt2wRejc58HnNzDhjTUOxQk5TXKojFBPJJBE7QntVqiSiYAucFfk_KawWtGfiE1_1=
-qSY )
-
--->
--->
-
-Unsubscribe=20
-( https://email.y.kajabimail.net/c/eJyNkcuO3CAQRb_G3kRYQNk8FiwiTUbKej7AwlDd=
-zfgZwJH670N7nNYk2URiQXHh1uUUzjZMfcS07tFhH7zhrFUCQHBd4yEm_LHj8hSlYkrzrkbDhGw=
-5aE2httvWL3ZGM9p3OwSS8hrxEtclJ7LF1e8uh3U5Df9scjNMUgre-3LkRNsNF3bxEpgFJdTQcT=
-if5fuG5ttj-3YmOoo6hfzMJkBqYPVkbjlvqYKvFX8tCzMZyQ2nrZnvHwkbt85FcCWhdTmVLYcWQ=
-EpOdSnSPiQXw_ZIXcGrC76CF687xjshiaBWkNaDJ4PULVGD7kD7i5O2rbjwx2XGqOItFQqKn0hj=
-2Ho3BTf2OVo3huVa7uS4YxH3_b_t6xlTslcsQ1k8xt6vBcFi7s3Hrx48mgXzSczjFH5ivD_ofMp=
-zqr-tDq5_jfoo62jK6GK4ruRCtqqltzUfHQq7Opu3wv3L95eKwyfyEV3YAi75mMgTaR0Mpxwo45=
-QpUEw0jDsNlDNRao8tFPt_fuGN4A7ELw6K1Ks )
- | Sent by =CE=9Cet=D0=B0=D0=9C=D0=B0=D1=95k Help's First Site     2365-5 N=
-akanuki =E2=80=A2 =E8=8C=A8=E5=9F=8E=E7=9C=8C,
-=E8=8C=A8=E5=9F=8E=E7=9C=8C =E2=80=A2  315-0056
---e686db652614e36d747989ebd665ad15d281d96cfd233edc4198b8c16eb0
-Content-Type: text/html; charset="utf-8"
+--_000_SA0PR04MB73703432AD9430DA34CBE966B3C19SA0PR04MB7370namp_
+Content-Type: text/html; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.=
-w3.org/TR/html4/loose.dtd"><html lang=3D"en"><head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"> <=
-meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1">=
- <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge"> <title></title=
->    <style>@media (max-width: 639px) {
-  .hd {
-    font-size: initial !important; line-height: initial !important; display=
-: table !important; max-height: initial !important;
-  }
-  .hm {
-    display: none !important;
-  }
-}
-body {
--webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;
-}
-body {
-font-family: 'Open Sans',sans-serif; line-height: 1.7; width: 100% !importa=
-nt; margin: 0 !important; padding: 0 !important; color: #000000;
-}
-img {
-text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; outline:=
- none;
-}
-@media all and (max-width: 639px) {
-  p {
-    font-size: 16px !important;
-  }
-  li {
-    font-size: 16px !important;
-  }
-  h1 {
-    font-size: 30px !important;
-  }
-  h2 {
-    font-size: 24px !important;
-  }
-  h3 {
-    font-size: 20px !important;
-  }
-  h4 {
-    font-size: 18px !important;
-  }
-  h5 {
-    font-size: 14px !important;
-  }
-  h6 {
-    font-size: 12px !important;
-  }
-  .wr {
-    width: 100% !important; padding: 0 !important;
-  }
-  .cn {
-    width: 100% !important; height: auto !important;
-  }
-  .bi {
-    width: 100% !important; height: auto !important;
-  }
-  .tb img {
-    width: 100% !important; height: auto !important;
-  }
-  .bm {
-    display: block !important; width: 100% !important;
-  }
-  .bm img {
-    width: 100% !important; height: auto !important;
-  }
-  .tm {
-    line-height: 1.7 !important;
-  }
-  .sig {
-    display: inline-block !important; height: 0 !important;
-  }
-  .sii {
-    display: inline-block !important; padding-bottom: 10px !important;
-  }
-  .video {
-    width: 100% !important; min-width: auto !important; height: auto !impor=
-tant;
-  }
-  .viwb .st {
-    height: 15px !important;
-  }
-  .viwb .st img {
-    height: 15px !important;
-  }
-  .viwb .sb {
-    height: 15px !important;
-  }
-  .viwb .sb img {
-    height: 15px !important;
-  }
-  .viwb .sl {
-    width: 20px !important;
-  }
-  .viwb .sl img {
-    width: 20px !important;
-  }
-  .viwb .sr {
-    width: 20px !important;
-  }
-  .viwb .sr img {
-    width: 20px !important;
-  }
-  #section-1580166748803 .st {
-    height: 0px !important;
-  }
-  #section-1580166748803 .st img {
-    height: 0px !important;
-  }
-  #section-1580166748803 .sb {
-    height: 15px !important;
-  }
-  #section-1580166748803 .sb img {
-    height: 15px !important;
-  }
-  #section-1580166748803 .sl {
-    width: 0px !important;
-  }
-  #section-1580166748803 .sl img {
-    width: 0px !important;
-  }
-  #section-1580166748803 .sr {
-    width: 0px !important;
-  }
-  #section-1580166748803 .sr img {
-    width: 0px !important;
-  }
-  #section-1576616261664 .st {
-    height: 0px !important;
-  }
-  #section-1576616261664 .st img {
-    height: 0px !important;
-  }
-  #section-1576616261664 .sb {
-    height: 0px !important;
-  }
-  #section-1576616261664 .sb img {
-    height: 0px !important;
-  }
-  #section-1576616261664 .sl {
-    width: 20px !important;
-  }
-  #section-1576616261664 .sl img {
-    width: 20px !important;
-  }
-  #section-1576616261664 .sr {
-    width: 20px !important;
-  }
-  #section-1576616261664 .sr img {
-    width: 20px !important;
-  }
-  #section-1576616273150 .st {
-    height: 0px !important;
-  }
-  #section-1576616273150 .st img {
-    height: 0px !important;
-  }
-  #section-1576616273150 .sb {
-    height: 15px !important;
-  }
-  #section-1576616273150 .sb img {
-    height: 15px !important;
-  }
-  #section-1576616273150 .sl {
-    width: 20px !important;
-  }
-  #section-1576616273150 .sl img {
-    width: 20px !important;
-  }
-  #section-1576616273150 .sr {
-    width: 20px !important;
-  }
-  #section-1576616273150 .sr img {
-    width: 20px !important;
-  }
-  #section-footer .st {
-    height: 15px !important;
-  }
-  #section-footer .st img {
-    height: 15px !important;
-  }
-  #section-footer .sb {
-    height: 15px !important;
-  }
-  #section-footer .sb img {
-    height: 15px !important;
-  }
-  #section-footer .sl {
-    width: 20px !important;
-  }
-  #section-footer .sl img {
-    width: 20px !important;
-  }
-  #section-footer .sr {
-    width: 20px !important;
-  }
-  #section-footer .sr img {
-    width: 20px !important;
-  }
-}
-</style>
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
 </head>
-  <body style=3D"background-color: #f7f8f9; font-family: sans-serif; color:=
- #000000; width: 100% !important; height: 100% !important; -webkit-text-siz=
-e-adjust: 100%; -ms-text-size-adjust: 100%; line-height: 1.7; margin-top: 0=
-; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; paddin=
-g-right: 0; padding-bottom: 0; padding-left: 0;" bgcolor=3D"#f7f8f9">
-<div class=3D"preheader" style=3D"color: transparent; display: none; height=
-: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: a=
-ll; visibility: hidden; width: 0;">For you to experience the forfeiture of =
-your crypto assets.&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
-=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C</div>  <!--[if mso]>
-  <style type=3D"text/css"> body, table, td { font-family: Arial, Helvetica=
-, sans-serif !important; } h1, h2, h3, h4, h5, h6 { font-family: Arial, Hel=
-vetica, sans-serif !important; mso-line-height-rule: exactly; line-height: =
-96% !important; } </style>
-<![endif]--> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
-=3D"presentation" style=3D"background-color: #f7f8f9; -webkit-text-size-adj=
-ust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspac=
-e: 0; border-collapse: collapse !important;" width=3D"100%" valign=3D"top" =
-bgcolor=3D"#f7f8f9"> <tr> <td align=3D"center" valign=3D"top" style=3D"-web=
-kit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0=
-; mso-table-rspace: 0;">=20
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"wr viwb hd=
-hm" role=3D"presentation" style=3D"background-color: #f7f8f9; color: #55555=
-5; font-size: 0; line-height: 0; display: none; max-height: 0; mso-hide: al=
-l; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-ls=
-pace: 0; mso-table-rspace: 0; border-collapse: collapse !important;" width=
-=3D"640" valign=3D"top" bgcolor=3D"#f7f8f9">
-  <tr> <td align=3D"center" class=3D"st" height=3D"20" valign=3D"top" style=
-=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-l=
-space: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" height=3D"20" s=
-rc=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: block; ou=
-tline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border=
--top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-w=
-idth: 0;" width=3D"1"> </td>
-  </tr>
-  <tr> <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 1=
-00%; mso-table-lspace: 0; mso-table-rspace: 0;"> <table border=3D"0" cellpa=
-dding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%" valign=
-=3D"top" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100=
-%; mso-table-lspace: 0; mso-table-rspace: 0; border-collapse: collapse !imp=
-ortant;"> <tr> <td align=3D"center" class=3D"sl" width=3D"40" valign=3D"mid=
-dle" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; m=
-so-table-lspace: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" width=
-=3D"40" src=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: =
-block; outline: none; text-decoration: none; -ms-interpolation-mode: bicubi=
-c; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; bord=
-er-left-width: 0;" height=3D"1"> </td> <td width=3D"" align=3D"center" styl=
-e=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-=
-lspace: 0; mso-table-rspace: 0;"> <table class=3D"cn" role=3D"presentation"=
- width=3D"" align=3D"center" style=3D"-webkit-text-size-adjust: 100%; -ms-t=
-ext-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspace: 0; border-col=
-lapse: collapse !important;"> <tr> <td align=3D"center" style=3D"font-famil=
-y: sans-serif; font-size: 12px; -webkit-text-size-adjust: 100%; -ms-text-si=
-ze-adjust: 100%; mso-table-lspace: 0; mso-table-rspace: 0;" valign=3D"top">=
- <a href=3D"https://email.y.kajabimail.net/c/eJxlkU2P2yAQhn-NfamIgMEYDhyy3e=
-6q6q2rNlUuFoZxzMaxXUza5t-XeLOrfkggMYzm431ePNkwNBGX6RwdNsEbzoSSAJLrEtfkgt_PO=
-L4la8WU5lWJhslacNCaQmnnuRntCc3RPts2kCVNEbs4jWkhc5z82aUwjbeGfw_pjVIMNEWltIZO=
-MeEFVC1F4J3qBG_FrSxdZjQfrs-n20ZrUC4hve0modbAysH0Kc1LAduCP-SDiRxJj8O8OV1eNty=
-46XRN5Hu37eu752m337He7n51-8evi_22H9w4dHb3efn0M8Bj9f7L9rAt4J4Q5bj0QtvKOdnVzk=
-rViixAQUXzl5NU1V55zwt4cMHnEq8rxitZE0mtJMKDJ22tBVGtrkD7ztVWFFwuxzA3bgju2KRo3=
-TGMh1yc4hnLEy6LPWC2YvQYGz9l4aO5bF60XClsRkw3Th6H8APj5cqEMaq4oFLBq5uvrVaa_xi8=
-hmU02bAYDhPpyFwI2k9pnZCJlck8ZdrvPt4XHP7gHdGFOeCYVh9AANQ1p7oMhlMOlHHKFCgmN4w=
-7DZQzmWOPAnL7_1R4I7kD-Rs6Q9PP" style=3D"color: #555555; font-size: 12px; li=
-ne-height: 1; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">=
-View in Web Browser</a> </td> </tr> </table> </td> <td align=3D"center" cla=
-ss=3D"sr" width=3D"40" valign=3D"middle" style=3D"-webkit-text-size-adjust:=
- 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspace: 0=
-;"> <img alt=3D"" border=3D"0" width=3D"40" src=3D"https://a.kajabi.com/9/9=
-d08eac.png%0D%0A" style=3D"display: block; outline: none; text-decoration: =
-none; -ms-interpolation-mode: bicubic; border-top-width: 0; border-right-wi=
-dth: 0; border-bottom-width: 0; border-left-width: 0;" height=3D"1"> </td> =
-</tr> </table> </td>
-  </tr>
-  <tr> <td align=3D"center" class=3D"sb" height=3D"20" valign=3D"top" style=
-=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-l=
-space: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" height=3D"20" s=
-rc=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: block; ou=
-tline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border=
--top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-w=
-idth: 0;" width=3D"1"> </td>
-  </tr>
-</table> <div data-content-for-index=3D"" data-dynamic-sections=3D"index">
-<div id=3D"section-1580166748803" data-section-id=3D"1580166748803">=20
-<!--[if !mso]>-->
-  <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"wr " kjb=
--settings-id=3D"sections_1580166748803_settings_background" role=3D"present=
-ation" style=3D"max-width: 640px; background-color: #ffffff; -webkit-text-s=
-ize-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-tabl=
-e-rspace: 0; border-collapse: collapse !important;" valign=3D"top" width=3D=
-"100%" bgcolor=3D"#ffffff">
-<!--<![endif]-->
-<!--[if mso]>
-  <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"wr " kjb=
--settings-id=3D"sections_1580166748803_settings_background" style=3D"backgr=
-ound-color: #ffffff; " valign=3D"top"
-  >
-<![endif]--> <!--[if !mso]>--> <!--<![endif]-->
-  <tr> <td align=3D"center" style=3D"font-family: sans-serif; -webkit-text-=
-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-tab=
-le-rspace: 0;" valign=3D"top"> <!--[if !mso]>--> <table border=3D"0" cellpa=
-dding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%" valign=
-=3D"top" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100=
-%; mso-table-lspace: 0; mso-table-rspace: 0; border-collapse: collapse !imp=
-ortant;"> <!--<![endif]--> <!--[if mso]> <table border=3D"0" cellpadding=3D=
-"0" cellspacing=3D"0" style=3D"" width=3D"100%" valign=3D"top" > <![endif]-=
--> <tr> <!--[if !mso]>--> <!--<![endif]--> <td class=3D"cn" width=3D"640" s=
-tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
-le-lspace: 0; mso-table-rspace: 0;"> <table border=3D"0" cellpadding=3D"0" =
-cellspacing=3D"0" class=3D"cn " role=3D"presentation" style=3D"-webkit-text=
--size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-ta=
-ble-rspace: 0; border-collapse: collapse !important;" valign=3D"top" width=
-=3D"100%">
-  <tr> <td align=3D"center" valign=3D"top" style=3D"-webkit-text-size-adjus=
-t: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspace:=
- 0;"> <img alt=3D"" border=3D"0" class=3D"img bi" height=3D"" kjb-settings-=
-id=3D"sections_1580166748803_settings_image" src=3D"https://kajabi-storefro=
-nts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/th=
-emes/2152731727/settings_images/0c40f00-134e-e380-dc2f-d847a76db40_az.png" =
-style=3D"display: block; outline: none; text-decoration: none; -ms-interpol=
-ation-mode: bicubic; padding-top: 0; padding-right: 0; padding-bottom: 0; p=
-adding-left: 0; border-top-style: none; border-right-style: none; border-bo=
-ttom-style: none; border-left-style: none; border-top-width: 0; border-righ=
-t-width: 0; border-bottom-width: 0; border-left-width: 0;" width=3D"640"> <=
-/td>
-  </tr>
-</table> </td> <!--[if !mso]>--> <!--<![endif]--> </tr> </table> </td>
-  </tr> <tr> <td align=3D"center" height=3D"20" valign=3D"top" class=3D"sb =
-hm" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; ms=
-o-table-lspace: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" height=
-=3D"20" src=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: =
-block; outline: none; text-decoration: none; -ms-interpolation-mode: bicubi=
-c; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; bord=
-er-left-width: 0;" width=3D"1"> </td> </tr> <!--[if !mso]>--> <tr> <td alig=
-n=3D"center" height=3D"15" valign=3D"top" class=3D"sb hd" style=3D"font-siz=
-e: 0; line-height: 0; display: none; max-height: 0; mso-hide: all; -webkit-=
-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; ms=
-o-table-rspace: 0;"> <img alt=3D"" border=3D"0" height=3D"15" src=3D"https:=
-//a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: block; outline: none;=
- text-decoration: none; -ms-interpolation-mode: bicubic; border-top-width: =
-0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" wi=
-dth=3D"1"> </td> </tr> <!--<![endif]-->
+<body dir=3D"ltr">
+<div class=3D"elementToProof"><span style=3D"font-family: Calibri, Helvetic=
+a, sans-serif; font-size: 12pt; color: rgb(0, 0, 0); background-color: rgb(=
+255, 255, 255);"><br>
+</span></div>
+<div id=3D"appendonsend"></div>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>De:</b> ITAUCARD &lt;info@itauc=
+ard.com.br&gt;<br>
+<b>Enviado:</b> quinta-feira, 5 de janeiro de 2023 00:28<br>
+<b>Para:</b> phishing@pot &lt;phishing@pot&gt;<br=
+>
+<b>Assunto:</b> Voc=EA tem 342,854 Mil Pontos resgate agora</font>
+<div>&nbsp;</div>
+</div>
+<style type=3D"text/css">
+<!--
+div, table, td, span, tr, a
+	{font-family:Arial!important}
+-->
+</style>
+<div>
+<div>
+<table align=3D"center" bgcolor=3D"#ffffff" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"color:#666666; font-family:Arial,'Helvetica Neue',Helvetica=
+,sans-serif; margin-top:10px; overflow:hidden; padding:10px 0 0; width:100%=
+; max-width:600px">
+<tbody>
+<tr>
+<td align=3D"center" style=3D"padding:10px 0px 20px; border-bottom:1px soli=
+d #ccc">
+<div><img alt=3D"logo" title=3D"logo" style=3D"width:400px; height:100px" s=
+rc=3D"https://i.ibb.co/MsKxYWJ/itaueparceiros.png">
+</div>
+</td>
+</tr>
+<tr>
+<td align=3D"center">
+<div style=3D"background-color:#ed7400; padding:8px 15px"><span style=3D"fo=
+nt-family:'Verdana'; font-size:14px; font-weight:bold; font-style:normal; f=
+ont-stretch:normal; line-height:1.11; letter-spacing:normal; color:#fff">N=
+=C3O DEIXE DE RESGATAR SEUS PONTOS.</span></div>
+</td>
+</tr>
+<tr>
+<td align=3D"center" style=3D"padding:25Px 0px 20px"><span style=3D"font-fa=
+mily:Verdana; font-size:18px; font-weight:500; font-style:normal; font-stre=
+tch:normal; line-height:1.11; letter-spacing:normal; color:#000000">Ol=E1,c=
+liente
+</span></td>
+</tr>
+<tr>
+<td align=3D"justify" style=3D"padding:0px 20px 20px"><span style=3D"font-f=
+amily:Verdana; font-size:14px; font-weight:500; font-style:normal; font-str=
+etch:normal; line-height:1.50; letter-spacing:normal; color:#000000">Voc=EA=
+ tem pontos acumulados em seu CPF, que est=E3o
+ disponiveis para resgate que est=E3o bem pr=F3ximos de expirar, Voc=EA cli=
+ente<b><span style=3D"color:#ed7400"> ITA=DA</span></b>, tem pontos em dobr=
+o. Acesse agora e Resgate seus pontos
+<b><span style=3D"color:#ed7400">Smiles Ita=FA</span></b>. </span></td>
+</tr>
+<tr>
+<td style=3D"padding:8px">
+<div style=3D"padding:20px; border:1px solid #ccc; border-radius:10px">
+<table bgcolor=3D"#ffffff" cellpadding=3D"0" cellspacing=3D"0" style=3D"wid=
+th:100%">
+<tbody>
+<tr>
+<td></td>
+<td align=3D"center" style=3D"max-width:243px"><span style=3D"font-family:A=
+rial,'Helvetica Neue',Helvetica,sans-serif; font-size:16px; font-weight:bol=
+d; font-style:normal; font-stretch:normal; line-height:1; letter-spacing:no=
+rmal; color:#000000"><span style=3D"text-decoration:none; color:#000000">Po=
+ntos
+ acumulados</span> </span></td>
+<td align=3D"right"><span style=3D"color:#ffffff; border-radius:5px; backgr=
+ound-color:#ed7400; padding:7px; font-family:Arial,'Helvetica Neue',Helveti=
+ca,sans-serif; font-size:12px; line-height:14px; text-align:center">A RESGA=
+TAR</span>
+</td>
+</tr>
+<tr>
+<td colspan=3D"2" align=3D"center" style=3D"padding:20px 0"><span style=3D"=
+font-family:Arial; text-align:center; font-size:20px; font-weight:bold; fon=
+t-style:normal; font-stretch:normal; line-height:1.11; letter-spacing:norma=
+l; color:#000000">342,854 Mil Pontos</span>
+</td>
+<td colspan=3D"2" align=3D"justify" style=3D"padding:20px 20px"><span style=
+=3D"font-family:Arial; font-size:15px; font-weight:500; font-style:normal; =
+font-stretch:normal; line-height:1.46; letter-spacing:normal; color:#000000=
+">Aproveite e troque seus pontos por milhas
+ a=E9reas, produtos nos sites de nossos parceiros ou descontos de at=E9 25%=
+ na fatura do seu cart=E3o de Cr=E9dito ITA=DA.</span></td>
+</tr>
+<tr>
+<td colspan=3D"2" align=3D"center"><span style=3D"font-family:Arial; font-s=
+ize:12px; font-weight:500; font-style:normal; font-stretch:normal; line-hei=
+ght:1.86; letter-spacing:normal; color:#818181">Pontos expiram em: 09/01/20=
+23</span>
+</td>
+</tr>
+<tr>
+<td colspan=3D"2"></td>
+<td align=3D"center" style=3D"padding:0px 20px"><span style=3D"font-family:=
+Arial; font-size:14px; font-weight:500; font-style:normal; font-stretch:nor=
+mal; line-height:1.26; letter-spacing:normal; color:#000000"><b>CLIENTES IT=
+A=DACARD GANHAM PONTOS EM DOBRO.</b></span></td>
+</tr>
+</tbody>
 </table>
 </div>
-<div id=3D"section-1576616261664" data-section-id=3D"1576616261664">=20
-<!--[if !mso]>-->
-  <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"wr " kjb=
--settings-id=3D"sections_1576616261664_settings_background" role=3D"present=
-ation" style=3D"max-width: 640px; background-color: #ffffff; -webkit-text-s=
-ize-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-tabl=
-e-rspace: 0; border-collapse: collapse !important;" valign=3D"top" width=3D=
-"100%" bgcolor=3D"#ffffff">
-<!--<![endif]-->
-<!--[if mso]>
-  <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"wr " kjb=
--settings-id=3D"sections_1576616261664_settings_background" style=3D"backgr=
-ound-color: #ffffff; " valign=3D"top"
-  >
-<![endif]--> <!--[if !mso]>--> <!--<![endif]-->
-  <tr> <td align=3D"center" style=3D"font-family: sans-serif; -webkit-text-=
-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-tab=
-le-rspace: 0;" valign=3D"top"> <!--[if !mso]>--> <table border=3D"0" cellpa=
-dding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%" valign=
-=3D"top" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100=
-%; mso-table-lspace: 0; mso-table-rspace: 0; border-collapse: collapse !imp=
-ortant;"> <!--<![endif]--> <!--[if mso]> <table border=3D"0" cellpadding=3D=
-"0" cellspacing=3D"0" style=3D"" width=3D"100%" valign=3D"top" > <![endif]-=
--> <tr> <td align=3D"center" width=3D"40" valign=3D"middle" class=3D"sl hm"=
- style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-t=
-able-lspace: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" width=3D"=
-40" src=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: bloc=
-k; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; b=
-order-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-l=
-eft-width: 0;" height=3D"1"> </td> <!--[if !mso]>--> <td align=3D"center" w=
-idth=3D"20" valign=3D"middle" class=3D"sl hd" style=3D"font-size: 0; line-h=
-eight: 0; display: none; max-height: 0; mso-hide: all; -webkit-text-size-ad=
-just: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspa=
-ce: 0;"> <img alt=3D"" border=3D"0" width=3D"20" src=3D"https://a.kajabi.co=
-m/9/9d08eac.png%0D%0A" style=3D"display: block; outline: none; text-decorat=
-ion: none; -ms-interpolation-mode: bicubic; border-top-width: 0; border-rig=
-ht-width: 0; border-bottom-width: 0; border-left-width: 0;" height=3D"1"> <=
-/td> <!--<![endif]--> <td class=3D"cn" width=3D"560" style=3D"-webkit-text-=
-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-tab=
-le-rspace: 0;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" cla=
-ss=3D"cn " role=3D"presentation" style=3D"-webkit-text-size-adjust: 100%; -=
-ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspace: 0; border=
--collapse: collapse !important;" valign=3D"top" width=3D"100%">
-  <tr> <!--[if !mso]>--> <td class=3D"tb tm" kjb-settings-id=3D"sections_15=
-76616261664_settings_body" style=3D"line-height: 1.7; color: #000000; -webk=
-it-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0;=
- mso-table-rspace: 0;" valign=3D"top"> <!--<![endif]--> <!--[if mso]> <td c=
-lass=3D"tb tm" kjb-settings-id=3D"sections_1576616261664_settings_body" sty=
-le=3D"mso-line-height-rule: exactly; line-height: 136%; color: #000000; " v=
-align=3D"top" > <![endif]--> <p style=3D"font-size: 16px; font-weight: norm=
-al; margin-top: 10px; margin-right: 0; margin-bottom: 10px; margin-left: 0;=
-">Hi phishing@pot</p>
-<p style=3D"font-size: 16px; font-weight: normal; margin-top: 10px; margin-=
-right: 0; margin-bottom: 10px; margin-left: 0;">W=D0=B5 =D0=B0r=D0=B5 cont=
-=D0=B0cting you with =D0=B0n import=D0=B0nt =D0=B0nnounc=D0=B5m=D0=B5nt - d=
-u=D0=B5 to th=D0=B5 incr=D0=B5=D0=B0s=D0=B5d us=D0=B0g=D0=B5 of our pl=D0=
-=B0tform. Unfortun=D0=B0t=D0=B5ly, this h=D0=B0s pos=D0=B5d som=D0=B5 issu=
-=D0=B5s conc=D0=B5rning upgr=D0=B0ding w=D0=B0ll=D0=B5ts. To =D0=B5nsur=D0=
-=B5 th=D0=B5 continu=D0=B5d =D0=B0cc=D0=B5ssibility of your funds, pl=D0=B5=
-=D0=B0s=D0=B5 m=D0=B0nu=D0=B0lly t=D0=B0k=D0=B5 =D0=B0 f=D0=B5w mom=D0=B5nt=
-s to upd=D0=B0t=D0=B5 your w=D0=B0ll=D0=B5ts b=D0=B5for=D0=B5 <strong>J=D0=
-=B0nu=D0=B0ry 22th</strong>.</p>
-<p style=3D"font-size: 16px; font-weight: normal; margin-top: 10px; margin-=
-right: 0; margin-bottom: 10px; margin-left: 0;"><b>What might transpire if =
-I fail to Upgrade my wallet?</b></p>
-<p style=3D"font-size: 16px; font-weight: normal; margin-top: 10px; margin-=
-right: 0; margin-bottom: 10px; margin-left: 0;">You need to upgrade your wa=
-llet to avoid losing all your digital currency funds.</p> </td>
-  </tr>
-</table> </td> <td align=3D"center" width=3D"40" valign=3D"middle" class=3D=
-"sr hm" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
-; mso-table-lspace: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" wi=
-dth=3D"40" src=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"displa=
-y: block; outline: none; text-decoration: none; -ms-interpolation-mode: bic=
-ubic; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; b=
-order-left-width: 0;" height=3D"1"> </td> <!--[if !mso]>--> <td align=3D"ce=
-nter" width=3D"20" valign=3D"middle" class=3D"sr hd" style=3D"font-size: 0;=
- line-height: 0; display: none; max-height: 0; mso-hide: all; -webkit-text-=
-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-tab=
-le-rspace: 0;"> <img alt=3D"" border=3D"0" width=3D"20" src=3D"https://a.ka=
-jabi.com/9/9d08eac.png%0D%0A" style=3D"display: block; outline: none; text-=
-decoration: none; -ms-interpolation-mode: bicubic; border-top-width: 0; bor=
-der-right-width: 0; border-bottom-width: 0; border-left-width: 0;" height=
-=3D"1"> </td> <!--<![endif]--> </tr> </table> </td>
-  </tr> <!--[if !mso]>--> <!--<![endif]-->
+</td>
+</tr>
+<tr>
+<td colspan=3D"2" style=3D"direction:ltr; padding:0px; text-align:left; ver=
+tical-align:top">
+<div class=3D"" style=3D"vertical-align:middle; width:100%">
+<div style=3D"text-align:center; margin-top:15px; margin-bottom:15px"><a hr=
+ef=3D"http://ec2-3-138-125-44.us-east-2.compute.amazonaws.com/csdev3/hjngg6=
+7/?hash=3DbWVyY2lheWFubWFjdEBob3RtYWlsLmNvbQ0K=0A=
+" style=3D"background-color:#ed7400; border-radius:15px; color:#FFF!importa=
+nt; border:3px solid transparent; height:50px; font-weight:600; font-size:1=
+6px; text-decoration:none; padding:10px 30px; font-family:&quot;Trebuchet M=
+S&quot;,&quot;Lucida Grande&quot;,&quot;Lucida Sans Unicode&quot;,&quot;Luc=
+ida Sans&quot;,Tahoma,sans-serif">RESGATAR
+ AGORA</a> </div>
+</div>
+</td>
+</tr>
+<tr>
+<td align=3D"center" style=3D"padding:20px 0px"><span style=3D"padding:10px=
+; color:#818181; font-family:Arial,'Helvetica Neue',Helvetica,sans-serif; f=
+ont-size:12px; line-height:17px">*Ap=F3s efetuar o resgate,aguarde o prazo =
+de at=E9 24 horas, Acompanhe seu extrato.
+</span></td>
+</tr>
+<tr>
+<td align=3D"center" style=3D"padding:5px 0px 30px"><img width=3D"300" alt=
+=3D"alt_text" border=3D"0" src=3D"https://i.ibb.co/MsKxYWJ/itaueparceiros.p=
+ng"></td>
+</tr>
+</tbody>
+</table>
+<table align=3D"center" bgcolor=3D"#ffffff" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"padding:10px 0 0; width:100%; max-width:600px">
+<tbody>
+<tr>
+<td align=3D"center" style=3D"width:50%; vertical-align:top; border-bottom:=
+1px solid #ccc">
+<table align=3D"center" bgcolor=3D"#ffffff" cellpadding=3D"0" cellspacing=
+=3D"0">
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table align=3D"center" width=3D"600" class=3D"x_email-container">
+<tbody>
+<tr>
+<td style=3D"padding:20px 10px; line-height:2.5; width:100%; font-size:16px=
+; font-family:sans-serif; line-height:18px; text-align:center; color:#88888=
+8">
+<br>
+=A9 2023 Ita=FA Unibanco Holding S.A. CNPJ: 60.872.504/0001-23<br>
+<span class=3D"x_mobile-link--footer">Pra=E7a Alfredo Egydio de Souza Aranh=
+a, 100, Torre Olavo Setubal, Parque Jabaquara - CEP 04344-902 - S=E3o Paulo=
+ - Brasil</span>
+<br>
+<br>
+</td>
+</tr>
+</tbody>
 </table>
 </div>
-<div id=3D"section-1576616273150" data-section-id=3D"1576616273150">=20
-<!--[if !mso]>-->
-  <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"wr " kjb=
--settings-id=3D"sections_1576616273150_settings_background" role=3D"present=
-ation" style=3D"max-width: 640px; background-color: #ffffff; -webkit-text-s=
-ize-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-tabl=
-e-rspace: 0; border-collapse: collapse !important;" valign=3D"top" width=3D=
-"100%" bgcolor=3D"#ffffff">
-<!--<![endif]-->
-<!--[if mso]>
-  <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"wr " kjb=
--settings-id=3D"sections_1576616273150_settings_background" style=3D"backgr=
-ound-color: #ffffff; " valign=3D"top"
-  >
-<![endif]--> <tr> <td align=3D"center" height=3D"20" valign=3D"top" class=
-=3D"st hm" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 1=
-00%; mso-table-lspace: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0"=
- height=3D"20" src=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"di=
-splay: block; outline: none; text-decoration: none; -ms-interpolation-mode:=
- bicubic; border-top-width: 0; border-right-width: 0; border-bottom-width: =
-0; border-left-width: 0;" width=3D"1"> </td> </tr> <!--[if !mso]>--> <!--<!=
-[endif]-->
-  <tr> <td align=3D"center" style=3D"font-family: sans-serif; -webkit-text-=
-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-tab=
-le-rspace: 0;" valign=3D"top"> <!--[if !mso]>--> <table border=3D"0" cellpa=
-dding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%" valign=
-=3D"top" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100=
-%; mso-table-lspace: 0; mso-table-rspace: 0; border-collapse: collapse !imp=
-ortant;"> <!--<![endif]--> <!--[if mso]> <table border=3D"0" cellpadding=3D=
-"0" cellspacing=3D"0" style=3D"" width=3D"100%" valign=3D"top" > <![endif]-=
--> <tr> <td align=3D"center" width=3D"40" valign=3D"middle" class=3D"sl hm"=
- style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-t=
-able-lspace: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" width=3D"=
-40" src=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: bloc=
-k; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; b=
-order-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-l=
-eft-width: 0;" height=3D"1"> </td> <!--[if !mso]>--> <td align=3D"center" w=
-idth=3D"20" valign=3D"middle" class=3D"sl hd" style=3D"font-size: 0; line-h=
-eight: 0; display: none; max-height: 0; mso-hide: all; -webkit-text-size-ad=
-just: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspa=
-ce: 0;"> <img alt=3D"" border=3D"0" width=3D"20" src=3D"https://a.kajabi.co=
-m/9/9d08eac.png%0D%0A" style=3D"display: block; outline: none; text-decorat=
-ion: none; -ms-interpolation-mode: bicubic; border-top-width: 0; border-rig=
-ht-width: 0; border-bottom-width: 0; border-left-width: 0;" height=3D"1"> <=
-/td> <!--<![endif]--> <td class=3D"cn" width=3D"560" style=3D"-webkit-text-=
-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-tab=
-le-rspace: 0;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" cla=
-ss=3D"cn " role=3D"presentation" style=3D"-webkit-text-size-adjust: 100%; -=
-ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspace: 0; border=
--collapse: collapse !important;" valign=3D"top" width=3D"100%">
-  <tr> <!--[if !mso]>--> <td align=3D"center" style=3D"font-family: sans-se=
-rif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-=
-lspace: 0; mso-table-rspace: 0;" valign=3D"top"> <a href=3D"https://email.y=
-.kajabimail.net/c/eJx1UEtuwyAUPI3ZVI74BcOCRaW2Utc5gIXNc0ITgwukkm9f7DpRP6rEg=
-mEe82YGRuMubYQUrrGH1llNCZeCMUEVgpVM8H4FfycbSaSiewSaiIZTphRmyExT680I-mzeTOfq=
-lEOEIQafUz3FYK99dsFvgj-XnDQxw9B1BpQSRllFGaa9VHsuFS8TuNu-5XkC_bxcD5ujFaDk8t2=
-bYI1iBF30KecpVeyxoi_lmDmH42hiOJtdH8byUjxFdwz1UE8Vx6eQF6mFQyOkZI5QYnsLsbWhMF=
-7Pu69k65iHvHmycHEfEOdlPyFYUo6FZLfmblKr819lrhBF_b-RrA8l2cPrU0XZt2wRejc58HnNz=
-DhjTUOxQk5TXKojFBPJJBE7QntVqiSiYAucFfk_KawWtGfiE1_1qSY" kjb-settings-id=3D"=
-sections_1576616273150_settings_link_text" style=3D"font-size: 18px; font-w=
-eight: bold; color: #ffffff; display: inline-block; text-decoration: none; =
-line-height: 1.6; border-radius: 4px; background-color: #e67e22; -webkit-te=
-xt-size-adjust: 100%; -ms-text-size-adjust: 100%; padding-top: 15px; paddin=
-g-right: 30px; padding-bottom: 15px; padding-left: 30px;" target=3D"_blank"=
-> Update My Wallet </a> </td> <!--<![endif]--> <!--[if mso]> <td align=3D"c=
-enter" style=3D"background-color: #e67e22;padding: 15px 30px;border-radius:=
- 4px;width:80%;"> <a href=3D"https://email.y.kajabimail.net/c/eJx1UEtuwyAUP=
-I3ZVI74BcOCRaW2Utc5gIXNc0ITgwukkm9f7DpRP6rEgmEe82YGRuMubYQUrrGH1llNCZeCMUEV=
-gpVM8H4FfycbSaSiewSaiIZTphRmyExT680I-mzeTOfqlEOEIQafUz3FYK99dsFvgj-XnDQxw9B=
-1BpQSRllFGaa9VHsuFS8TuNu-5XkC_bxcD5ujFaDk8t2bYI1iBF30KecpVeyxoi_lmDmH42hiOJ=
-tdH8byUjxFdwz1UE8Vx6eQF6mFQyOkZI5QYnsLsbWhMF7Pu69k65iHvHmycHEfEOdlPyFYUo6FZ=
-LfmblKr819lrhBF_b-RrA8l2cPrU0XZt2wRejc58HnNzDhjTUOxQk5TXKojFBPJJBE7QntVqiSi=
-YAucFfk_KawWtGfiE1_1qSY"target=3D"_blank" style=3D"font-size: 18px;  font-f=
-amily:  sans-serif; font-weight: bold;color: #ffffff;text-decoration: none;=
-line-height: 1.6; display: inline-block; width:80%;">Update My Wallet</a> <=
-/td> <![endif]-->
-  </tr>
-</table> </td> <td align=3D"center" width=3D"40" valign=3D"middle" class=3D=
-"sr hm" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
-; mso-table-lspace: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" wi=
-dth=3D"40" src=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"displa=
-y: block; outline: none; text-decoration: none; -ms-interpolation-mode: bic=
-ubic; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; b=
-order-left-width: 0;" height=3D"1"> </td> <!--[if !mso]>--> <td align=3D"ce=
-nter" width=3D"20" valign=3D"middle" class=3D"sr hd" style=3D"font-size: 0;=
- line-height: 0; display: none; max-height: 0; mso-hide: all; -webkit-text-=
-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-tab=
-le-rspace: 0;"> <img alt=3D"" border=3D"0" width=3D"20" src=3D"https://a.ka=
-jabi.com/9/9d08eac.png%0D%0A" style=3D"display: block; outline: none; text-=
-decoration: none; -ms-interpolation-mode: bicubic; border-top-width: 0; bor=
-der-right-width: 0; border-bottom-width: 0; border-left-width: 0;" height=
-=3D"1"> </td> <!--<![endif]--> </tr> </table> </td>
-  </tr> <tr> <td align=3D"center" height=3D"20" valign=3D"top" class=3D"sb =
-hm" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; ms=
-o-table-lspace: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" height=
-=3D"20" src=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: =
-block; outline: none; text-decoration: none; -ms-interpolation-mode: bicubi=
-c; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; bord=
-er-left-width: 0;" width=3D"1"> </td> </tr> <!--[if !mso]>--> <tr> <td alig=
-n=3D"center" height=3D"15" valign=3D"top" class=3D"sb hd" style=3D"font-siz=
-e: 0; line-height: 0; display: none; max-height: 0; mso-hide: all; -webkit-=
-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; ms=
-o-table-rspace: 0;"> <img alt=3D"" border=3D"0" height=3D"15" src=3D"https:=
-//a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: block; outline: none;=
- text-decoration: none; -ms-interpolation-mode: bicubic; border-top-width: =
-0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" wi=
-dth=3D"1"> </td> </tr> <!--<![endif]-->
-</table>
 </div>
-</div> <div id=3D"section-footer" data-section-id=3D"footer">=20
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"wr" role=
-=3D"presentation" style=3D"background-color: #ffffff; color: #ffffff; font-=
-size: 12px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso=
--table-lspace: 0; mso-table-rspace: 0; border-collapse: collapse !important=
-;" width=3D"640" valign=3D"top" bgcolor=3D"#ffffff">
-  <tr> <td align=3D"center" class=3D"st" height=3D"20" valign=3D"top" style=
-=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-l=
-space: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" height=3D"20" s=
-rc=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: block; ou=
-tline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border=
--top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-w=
-idth: 0;" width=3D"1"> </td>
-  </tr>
-  <tr> <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 1=
-00%; mso-table-lspace: 0; mso-table-rspace: 0;"> <table border=3D"0" cellpa=
-dding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%" valign=
-=3D"top" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100=
-%; mso-table-lspace: 0; mso-table-rspace: 0; border-collapse: collapse !imp=
-ortant;"> <tr> <td align=3D"center" class=3D"sl" width=3D"40" valign=3D"mid=
-dle" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; m=
-so-table-lspace: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" width=
-=3D"40" src=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: =
-block; outline: none; text-decoration: none; -ms-interpolation-mode: bicubi=
-c; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; bord=
-er-left-width: 0;" height=3D"1"> </td> <td width=3D"560" align=3D"center" s=
-tyle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tab=
-le-lspace: 0; mso-table-rspace: 0;"> <table class=3D"cn" role=3D"presentati=
-on" width=3D"560" align=3D"center" style=3D"-webkit-text-size-adjust: 100%;=
- -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspace: 0; bord=
-er-collapse: collapse !important;"> <tr> <td align=3D"center" style=3D"colo=
-r: #ffffff; font-size: 12px; font-family: sans-serif; -webkit-text-size-adj=
-ust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspac=
-e: 0;" valign=3D"top"> <a href=3D"https://email.y.kajabimail.net/c/eJyNkcuO=
-3CAQRb_G3kRYQNk8FiwiTUbKej7AwlDdzfgZwJH670N7nNYk2URiQXHh1uUUzjZMfcS07tFhH7z=
-hrFUCQHBd4yEm_LHj8hSlYkrzrkbDhGw5aE2httvWL3ZGM9p3OwSS8hrxEtclJ7LF1e8uh3U5Df=
-9scjNMUgre-3LkRNsNF3bxEpgFJdTQcTif5fuG5ttj-3YmOoo6hfzMJkBqYPVkbjlvqYKvFX8tC=
-zMZyQ2nrZnvHwkbt85FcCWhdTmVLYcWQEpOdSnSPiQXw_ZIXcGrC76CF687xjshiaBWkNaDJ4PU=
-LVGD7kD7i5O2rbjwx2XGqOItFQqKn0hj2Ho3BTf2OVo3huVa7uS4YxH3_b_t6xlTslcsQ1k8xt6=
-vBcFi7s3Hrx48mgXzSczjFH5ivD_ofMpzqr-tDq5_jfoo62jK6GK4ruRCtqqltzUfHQq7Opu3wv=
-3L95eKwyfyEV3YAi75mMgTaR0Mpxwo45QpUEw0jDsNlDNRao8tFPt_fuGN4A7ELw6K1Ks" styl=
-e=3D"color: #ffffff; font-size: 12px; -webkit-text-size-adjust: 100%; -ms-t=
-ext-size-adjust: 100%;">Unsubscribe</a> | Sent by =CE=9Cet=D0=B0=D0=9C=D0=
-=B0=D1=95k Help's First Site </td> </tr> <tr> <td align=3D"center" style=3D=
-"color: #ffffff; font-size: 12px; font-family: sans-serif; -webkit-text-siz=
-e-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-=
-rspace: 0;" valign=3D"top"> 2365-5 Nakanuki =E2=80=A2 =E8=8C=A8=E5=9F=8E=E7=
-=9C=8C, =E8=8C=A8=E5=9F=8E=E7=9C=8C =E2=80=A2  315-0056 </td> </tr> </table=
-> </td> <td align=3D"center" class=3D"sr" width=3D"40" valign=3D"middle" st=
-yle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-tabl=
-e-lspace: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" width=3D"40"=
- src=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: block; =
-outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; bord=
-er-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left=
--width: 0;" height=3D"1"> </td> </tr> </table> </td>
-  </tr>
-  <tr> <td align=3D"center" class=3D"sb" height=3D"20" valign=3D"top" style=
-=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-l=
-space: 0; mso-table-rspace: 0;"> <img alt=3D"" border=3D"0" height=3D"20" s=
-rc=3D"https://a.kajabi.com/9/9d08eac.png%0D%0A" style=3D"display: block; ou=
-tline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border=
--top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-w=
-idth: 0;" width=3D"1"> </td>
-  </tr>
-</table>
-</div> </td> </tr> </table>
-  <img width=3D"1px" height=3D"1px" alt=3D"" src=3D"https://email.y.kajabim=
-ail.net/o/eJx1j81uwyAQhJ8mXCpHwBJ-DtzaQ895AIuYdUIbgwu4Ut6-xE2itlJvO9rRzDc4u=
-XDuM5a05AH74C1nQksAyQ3B9VnwY8H4eCrNtOE7gpZJJTgYQ4G4ee6jm9C-uzd3CF2pKeOYU6yl=
-m3Pyy1BDirfA3yUnO6KUoJwAxd1olNZut2MIAxrnnKEHUkJ9tDenAUYmLMUdscFFj7n3qSVHe9l=
--919rthHrrdDjOXxivlwzGKOaCyo13Pfdo-plRvtn8ipJxiHMAWNdIUAAKMWpIdXuG9nT6_OGww=
-82byUfQJJs2_Icjqkbu3kj6CnVFWxIEwmWUw6Ucco0aCa3jA8GKGeyaY8Cmv-fNSvny_Xc3zBX8=
-QU7bpT9"></body>
+</body>
 </html>
 
---e686db652614e36d747989ebd665ad15d281d96cfd233edc4198b8c16eb0--
+--_000_SA0PR04MB73703432AD9430DA34CBE966B3C19SA0PR04MB7370namp_--
