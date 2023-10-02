@@ -1,0 +1,765 @@
+Received: from MN2PR19MB3983.namprd19.prod.outlook.com (2603:10b6:208:1e0::21)
+ by MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Fri, 29 Sep 2023
+ 20:51:38 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
+ b=dq7fGkPh5pLmsSqpowbJ7DNIacqmX/CzN2vbqh2TvSj+jD85mrhpF0Jzb80TVNjbmrFPzAgeGcEKvIISC4k0eKd666yCVwnnAzbs8YaTAa2ZkhQPQE3pj4jH4nxgrhc0aX35gKs6qU+ZLw+4jbbO/eKZe6/7lg3xhyRLIejkw/GQgq7rVRPtag+BiXultA24OdLKMQsAAgPwluyoD4FcJU/ijNKO53w5GC/529xXCSJnUuJDX3YrKperjSR4ZJ68HLN7yS8vCU2YunUU8obapjATyd4D0H1hX+eazc8c3svbDUCpI57ohcwcc0Yk10fuZCzBYKKRqhXa1++goP30FA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dK19w/IimQfwpUI0y8gVqNaO8Eji2uhg+WlicOoPQDA=;
+ b=ZmDJ70UyfQyTXw68bJ2DyNa7aunqKkIoDDGrwsAM7BBSmwjxOAYB2rlFxL9YDxBKyaSJApLFx95yZuzg9RJKf3pHP5XaUFsAhzlRrMuqvWJaoj3AcJO+9Whq76fUhLmXR492AOdRWWZk5UMnLY8leQNZmSU27rdYufud+8V6cuJU/mMxQ4GfPoCafD9g988NEFuTMKahicPitZXicWN8nn63VF9KS73NWnI9xY1KeqD6X3DDPp37wEltkVZjbNFk31ZW9Jhxn1tgdF2HUQO4IJRkcovswwiXLwcP/knKS2YhuKRJTRLCtsMEprXNhU0YPQbnUC7rx6LGSEJSBb2f5g==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 40.107.255.66) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=brandkeyconcept.com; dmarc=bestguesspass action=none
+ header.from=brandkeyconcept.com; dkim=pass (signature was verified)
+ header.d=mlz665.onmicrosoft.com; arc=pass (0 oda=1 ltdi=1
+ spf=[1,1,smtp.mailfrom=brandkeyconcept.com]
+ dkim=[1,1,header.d=brandkeyconcept.com]
+ dmarc=[1,1,header.from=brandkeyconcept.com])
+Received: from BN8PR07CA0029.namprd07.prod.outlook.com (2603:10b6:408:ac::42)
+ by MN2PR19MB3983.namprd19.prod.outlook.com (2603:10b6:208:1e0::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6838.27; Fri, 29 Sep
+ 2023 20:51:37 +0000
+Received: from BN1NAM02FT022.eop-nam02.prod.protection.outlook.com
+ (2603:10b6:408:ac:cafe::d5) by BN8PR07CA0029.outlook.office365.com
+ (2603:10b6:408:ac::42) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6838.26 via Frontend
+ Transport; Fri, 29 Sep 2023 20:51:36 +0000
+Authentication-Results: spf=pass (sender IP is 40.107.255.66)
+ smtp.mailfrom=brandkeyconcept.com; dkim=pass (signature was verified)
+ header.d=mlz665.onmicrosoft.com;dmarc=bestguesspass action=none
+ header.from=brandkeyconcept.com;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of brandkeyconcept.com
+ designates 40.107.255.66 as permitted sender)
+ receiver=protection.outlook.com; client-ip=40.107.255.66;
+ helo=APC01-PSA-obe.outbound.protection.outlook.com; pr=C
+Received: from APC01-PSA-obe.outbound.protection.outlook.com (40.107.255.66)
+ by BN1NAM02FT022.mail.protection.outlook.com (10.13.2.136) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6863.15 via Frontend Transport; Fri, 29 Sep 2023 20:51:36 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:10838B463D34EFB68655227A09CF82D82BB9DBEED6A1ABE217B07C15F0A67F63;UpperCasedChecksum:36BD537E1A029ECE176E0FF228F40D053EB72D05EF8C94514A9FB93320CE1DD4;SizeAsReceived:8330;Count:36
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=jHoWA/n0RSl5YIr3bz284mQnbAyzxmJZ+y4F+45gnK4PbKd6WsO5VtcigZj6u8XtQj94fn0oxxaxCrXR8PrsTwQxbttiVdqbxVuerGu2LAqvryIbD09NJQQ5hXLSgth8f5GXpqgHA8nPmbsIZg71qWASWzFIYEkeZ5CjVO9QieX6mKgxIqgvgQQ7SYb9IzZtyZE9VV04BtvFYGlkYP7U2ljfH6PjgUmMLdaQKk0AoHTZWl1FUw2fO7f8BShVJoLIPdY7Wp/p3NG/IiIgbeGkKJ2X5CVccIlhRkQPDywzbAfyVl/mu23eT0TvWaUlFGzfwPSRLSv99bBVbkAVaPcoMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dK19w/IimQfwpUI0y8gVqNaO8Eji2uhg+WlicOoPQDA=;
+ b=YXpc4YXLxUTfBczv27/gKvXNcZFnG6eup+7pEhYvbhyMiO7ZG9pj5XADnZ9qf/MhvfSeDixIYyAzc7sAms5zXet/FHn1uUBPth3CErTIE7hbyRQXqovWm3TxcsaoozHzSpL4J1+M14YZSqPBy38PlHQrsEYRoPT9nFxqBgo6Owfa5xinBuPf+gOUI1SiEfCpOgXJA9tKyxb9QJBgKit0Yj5l79v35VFzgN44PK536jgu1xDM3kMemcDBm9LxAPhsZQVGOtQJ+8Qo/FjjjsnZ4COnN5NYEqJgetfEugkE+5LzR07oX06cTiqhi+2cCGc+DQMB8uDOVg8sz1hWdHlEOg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=brandkeyconcept.com; dmarc=pass action=none
+ header.from=brandkeyconcept.com; dkim=pass header.d=brandkeyconcept.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mlz665.onmicrosoft.com; s=selector1-mlz665-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dK19w/IimQfwpUI0y8gVqNaO8Eji2uhg+WlicOoPQDA=;
+ b=iGLfxqx05ryf8uUqhba2j7LI1v/38GtfaDIoJeBUlH2LbstNGvA3SR5IEM43COB+ZIxXMZNfsqNy+eyhv4yLFpGM2+SFJ3jVVappMGMSYtaF+p9UzJhT1667wh4GCpITTupqlV9xqLYR2VO7Zd7wlqhBR0A7odtpf+L8BWnrlAE=
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=brandkeyconcept.com;
+Received: from KL1PR0601MB5752.apcprd06.prod.outlook.com
+ (2603:1096:820:b2::11) by TY0PR06MB5332.apcprd06.prod.outlook.com
+ (2603:1096:400:215::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6838.28; Fri, 29 Sep
+ 2023 20:51:31 +0000
+Received: from KL1PR0601MB5752.apcprd06.prod.outlook.com
+ ([fe80::30e9:2cd4:38bb:609b]) by KL1PR0601MB5752.apcprd06.prod.outlook.com
+ ([fe80::30e9:2cd4:38bb:609b%5]) with mapi id 15.20.6838.024; Fri, 29 Sep 2023
+ 20:51:31 +0000
+From: "Eco Savings  by Elon Musk" <hanniechouteau@brandkeyconcept.com>
+Subject: Exclusive Peek: Tomorrow's Energy Tech Today
+To: "phishing@pot" <phishing@pot>
+Content-Type: multipart/alternative; boundary="SUGjx0yX9rMl8xfNXgj0Kuq=_3JUX2WLe1"
+Date: Fri, 29 Sep 2023 13:51:30 -0700
+X-ClientProxiedBy: SN6PR04CA0101.namprd04.prod.outlook.com
+ (2603:10b6:805:f2::42) To KL1PR0601MB5752.apcprd06.prod.outlook.com
+ (2603:1096:820:b2::11)
+Return-Path: hanniechouteau@brandkeyconcept.com
+Message-ID:
+ <KL1PR0601MB57524E1ED1494C626B0D20CDC8C0A@KL1PR0601MB5752.apcprd06.prod.outlook.com>
+X-MS-TrafficTypeDiagnostic:
+ KL1PR0601MB5752:EE_|TY0PR06MB5332:EE_|BN1NAM02FT022:EE_|MN2PR19MB3983:EE_|MN0PR19MB6312:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9507478f-bf58-4645-40e6-08dbc12ddf65
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original:
+ qKzS1D5XTmQ3tjcfsq0/dCgo9RZnB+DRozKvHPxy0WbjjXzqyR0Uo/XkCnHAZ13ZRnnMvE3WvbWPRe7llZmSq13GsYKajLbw0zxZjHF3AY7Yw0/2/sWytKal9TLNr0zYjgLwtbj9Cdt0rjgVelSye5GTKuVQMcVeqLFkiFCf7LAF1smXPi1uNeER7IsGtYbp1Tsvm02Df3irOQGttaYmHyqZ7pCzvuIevUibgMqSCJxpzt6IGVKsKX5Zwuf+BUJHbDuyBzvGMxavBXVqLOH10mcs1WfbM4QzY1KK+oDHWdnEish0XcQEFFjQ7f2/qEcUSEUTaSOQCAd56BZcY9/MzOpqy54ikV7DX1IJXhUNx9nB1NuwIKIbaEaRz3NaOgkGuFfsIoNIhOAzzpX5biI7NZCOVDdCO9IwpK7vYK/H3EaDXxAC3DhxPygK+NoC+37uSg4shjblLhrW/+eyBLTFykHCVfzW5+Hl3R1XbJx5QucknVx9t8QFcJndb4ghKfuhmQwZEC6UXo0pZ5eWgDMgo6avhLjp68mFj0hklYs7VeKYyn2UeihvDuBb+1H5vAzppSdqTja3ZM0Wmghjn7+AQ3aw4FD5g+sp4YoT5ll5hILrU8ATZlB3Hi9jp+8n/02xhtJGHuU/gsTlbkH9Oe+AYMUxirfEV23qiAUoWWQgciE=
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR0601MB5752.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(396003)(39860400002)(366004)(376002)(136003)(230922051799003)(64100799003)(1800799009)(1690799017)(451199024)(186009)(16799955002)(166002)(76236004)(55016003)(19627405001)(66899024)(478600001)(316002)(45080400002)(12747405002)(786003)(6916009)(66946007)(66556008)(66476007)(41300700001)(86362001)(33656002)(41320700001)(38350700002)(38100700002)(9686003)(33964004)(40265005)(7696005)(6506007)(9240055009)(44144004)(52116002)(66574015)(26005)(2906002)(8936002)(8676002)(83380400001)(52536014)(5660300002)(5006899006)(1406899027)(26410700009)(38453001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0:
+ =?utf-8?B?VTN5NFNJaDdUR2ZlRlQ5SlY5bzdxeEdHaTFkYXh1OWFTblNDNWxFOWdIRGZt?=
+ =?utf-8?B?dWJqZnBFQWZSb25YcTJMdFlwVlZyR082R0NsRGM5bVVMQ05DZC9VZFk2dG5T?=
+ =?utf-8?B?NlVJcHlWVWc2eW9OM1p1Rlp3SWtKNVVmZ2M1QldwN01Mc1pQUnE1MzNEMzdN?=
+ =?utf-8?B?TkJlN0VEYStwZExUU3J2bkxMTnVmWEZBQ2xJTkRlR20yRjBZTVUyQlQ4Yzl2?=
+ =?utf-8?B?VVR3UFQ0c0RaaVp6RkVkTUZsaG4vNUlPVTJPQlU3bDAzZm1KZFJQK0thdnJi?=
+ =?utf-8?B?eXVSZGdrUGc2VVE1WithSS9kZDZidGZFUmQ4NS8rdzF6QUdNRmR4RWhLVklt?=
+ =?utf-8?B?c2RGNko4QUNYcWFKRyt5YW9qd0Iza1FqMjh6TXMrbkIvQVlLblNUTWRZem1l?=
+ =?utf-8?B?UjRsa1J3S2ZZNlFmWWZSZ1ZDeHJPS1hOUjBmZjdqWWowdlJNU2EzcmhFTkhS?=
+ =?utf-8?B?K2hSTGk0eURQdC93b3A5WWVsbWJzTlNNRGs4M3orcEVjZGVWaFNMZk4ydDMv?=
+ =?utf-8?B?QTk5UGJ5a0Jhc2dvZW5jdGV1bi9QYmtJTGxtZGdSM1VsZlh0bzE2aUg1RXk2?=
+ =?utf-8?B?N1dlcklqaHQ0aHI0YmllaXVjdHpkelc1d0lZcWJ4LzkwM1lnWk1rWnB3aCtP?=
+ =?utf-8?B?NEhla2J2MzFVY3BReW9jWjZzMy8zRFlWUitOTWpEaldSY24zblh2MGZxMEdN?=
+ =?utf-8?B?Z3JuOE81OHY3SHdnTVdlSnlESmFQMHltRzdSWDVlQnNjMDFKUkNIK3FBZzV3?=
+ =?utf-8?B?ZUtyb3RKdUh0YmIwYldKa0ZRb2hXN3JjSFlOZ3c3RkdZY3d6aDIzZWFVbStQ?=
+ =?utf-8?B?MDdWeDJuRVArdDJEeElXLzlrQllXcFk5WkQyWUZXempIajNhZlJjcmhEOWZh?=
+ =?utf-8?B?NUxOYzhMM1VQN2psbTNnMFdwNnJJWFFDS0paZnVRaVF1bHBqWTB2cVRWb215?=
+ =?utf-8?B?RENnbXE1SDdmWTk0WkNWY3BZUkxwK21LbGYrN2NsWlAyK24ybENKWjJyWDVI?=
+ =?utf-8?B?OFZ4NFZyNENMOFBXWGlYKzlmZy9hSmFQUnBzaHNzK0s1TFgveWplQTlIY0Jz?=
+ =?utf-8?B?cHNUWDNHMThOQXpnaUh4WlFLbkhtTTd2RTN2Ti8rUE84bHpTajd3WVlEamgx?=
+ =?utf-8?B?eVM5WmNhOU9qZzh5UWFGMDkyWFBOSngrWjRjTHlVMVQ2SllQMTRKbmNpcWNF?=
+ =?utf-8?B?d1VqMDZ1Sm1EZDVoWWhPOUlLbG85UVp6VVU3NE4wRmo1d2tKUGpKa2lrVjlK?=
+ =?utf-8?B?RVVpZnhhS1hUaUZxcG5WYmFGUVlNZldwWkRNN1cvdmJNaFdLSDdmRXZoQlEv?=
+ =?utf-8?B?M1BWWGN5azVqbGsxV200STBnK25lQWNDSThZTlIzYjNwand2L1JrbFdYSFhs?=
+ =?utf-8?B?QjU1eHAycDU1bGs3Wi93RUM4dXVqWG1BdG05YTNvYnFTSEZDUGo0dGg2Y2Jt?=
+ =?utf-8?B?Z0s5T3VtclFQQmFxMkQxeDVDQ0VLemlUaEtWOEdyUkxrV2FNVXVTeFFKN0xI?=
+ =?utf-8?B?VkZxeHErODQxbWFsWTRZdm1TSkkrOHNsWno4TmtMZkJTYzNBSlJUU0l5NFk5?=
+ =?utf-8?B?MWhiN2VJazcrMWorQ0JqTEZROFJXMFppUi94anlpcFZ6ODNBQXlCQXlNWk9t?=
+ =?utf-8?B?QmI4Q25BOTFZdG1ESUl5Q01UdEp2SzZlSnJWSjNjRkFUQnhZR0wxV1A2ZlA5?=
+ =?utf-8?B?cjRMVGpkVGxpMnVYdjQrQWlRUVdDRGVDWTlmbkJ6eG1JWFIzSGpUZWxUK0Rr?=
+ =?utf-8?B?OXpBYndGcmFtbFVxam1lSUwxTlFtTXVtVGduTFdwMVNqTWJ1cTBHT3hXcVpx?=
+ =?utf-8?B?NFpBYmptZm55RnpBYjUxWGNWZ1NlZElvRTZGY2Z1THRWY1FCYjhQWERQTk1x?=
+ =?utf-8?B?ODdXUTZKdjM1cG92UWVHUytMaTBZU0h6U1NDKzJGSGp5R3VSblJhTTdmczJT?=
+ =?utf-8?B?Q3VGR0VudU1KM2VWVzg2NmZLajkwSUZXc1M5UGNWSHRwckx2aWtGTVRuMWh3?=
+ =?utf-8?B?TktQS0hMVXdGZHNUZTJVc2VVZUZCYUdESzN3amJadjhXY3ltSUV4TnAxYXFZ?=
+ =?utf-8?B?cWJmZHBXRndZcFJjSERXNlFScExGMDI5ZUFmTERHK0NtYkVBTHZPbGlhaXN5?=
+ =?utf-8?B?aXovT09OeGJGViswR2JoREowY1ZpWGZLcDF1K1ZuREFxbkJmeDhaWGpnb0Rw?=
+ =?utf-8?Q?wxln4dvtt0XeZuyAj+07xjI=3D?=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5332
+X-IncomingHeaderCount: 36
+X-MS-Exchange-Organization-ExpirationStartTime: 29 Sep 2023 20:51:36.8701
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 9507478f-bf58-4645-40e6-08dbc12ddf65
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ BN1NAM02FT022.eop-nam02.prod.protection.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted:
+ BN1NAM02FT022.eop-nam02.prod.protection.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ BN1NAM02FT022.eop-nam02.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 9/29/2023 8:48:41 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ 33175375-749c-4b27-8792-08dbc12ddbb3
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 40.107.255.66
+X-SID-PRA: HANNIECHOUTEAU@BRANDKEYCONCEPT.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-PCL: 2
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2023 20:51:36.6357
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9507478f-bf58-4645-40e6-08dbc12ddf65
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ BN1NAM02FT022.eop-nam02.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR19MB3983
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.5667946
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.6813.014
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:I;ENG:(5062000305)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001134)(2008121020)(4810010)(4910033)(9575002)(10195002)(9320005)(120001);
+X-Message-Info:
+	qZelhIiYnPlgo3oeAkqKQntEmt91r+HGI0unNbniayI6hGxY4eSGq6GnYHZJI4GkLjz+T5v/PnSLuxTXjSxkk7ESNt9J8QpPqkND6B+DcFXvFAhAe5K/AbwGCjajAmWvjfgmgeO000I75uZIQl2CBH1hhruVzbvamfh4GrW3nZotAEqE8oQDO3yETLqA2YF6B7JOgzA38sI=
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0yO1NDTD0z
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?cUpGTVhOVHhvK2p0ZEtDcnV2TUpZOG0vcWR4dkxIWGhxWnExYU9CNm12cGIx?=
+ =?utf-8?B?OE5PQmROYS9wRGtDWnJ3RG16eGRzeDJZYW5KQk4xSXUzKzYxZDZQQzhpeS9a?=
+ =?utf-8?B?ZVpVcUVZU1p1RlVwZ3ZyTHcwSkVlWWlvZ2UrbURaUUpoVUtzZVBIV0I0VFEy?=
+ =?utf-8?B?T3F4TVhhajVGK1phaU1HWVB4dU5iaytONHRSWTh1bnRFbHZXM2ZweG9MaHZP?=
+ =?utf-8?B?bkc4M0RZQjRQU1pqaFFmS21zMXJlRFkzQy8xNkprUGZZK2huUUdGdlFXajVN?=
+ =?utf-8?B?MmswN0RCLzMxeVlOUUIzVE1lWjZJVlBVNkJSdm9yYlZBQUVrNml4dXBIN3la?=
+ =?utf-8?B?WUpkMWc0WFoyLzJrZVBYUTVaT2hvOWkyRGp0NEQwYnVJYUNSdW0zNWVKemJT?=
+ =?utf-8?B?YUZUS2NmQkVZeVdpaUxXcWpORk55VlNwMW8vdEEvZms0WEY1KzBiL013ZDBl?=
+ =?utf-8?B?WVBhNjZxcVp2eS9sUlJyZmxodVh3R3c1TmhWdmVxdkxzUXJjQ2RHWTZIK053?=
+ =?utf-8?B?aXBTdi9HSGx2ZlV2aERzOXFuQUxVZ2RXN0FUUUM3TzdscTB0KzA3d0lHOU45?=
+ =?utf-8?B?bGEzMkZvYjZES2VZK3JWNVJxcWxFdkY5TnBpMFJqRUtpTkppdlRqRWdXVzYz?=
+ =?utf-8?B?LzR5OUQzZGdZdEUyRUtWNERzQno1M2ovcUh4OVBQNVBFUmdXbFN1YXg2WGFF?=
+ =?utf-8?B?N3ZkdTdXckVOb2RTdWQyaHFJcnhETUNFVFRJdUVYVmp5eVFoUWdYTUs1UDFp?=
+ =?utf-8?B?YmpyZW1ORUNqaHN6dU1rdktSZ0FaUFdVK2Z5d0N1NFFXWlJxd0NYQXA4bTJ4?=
+ =?utf-8?B?ZkNtaTUzSGovS1VrREZJT0o1eDE1ZG8xakdVQWlHVWlvMFZsSTRKdjhLdVpD?=
+ =?utf-8?B?azIrNEsyTXdYamF5L3JnaDh5aStML1FZWXBHajRicytNWU5Sekk2OVo5T1Ev?=
+ =?utf-8?B?Tk0vYlFCMVlaZmxLdEdoUTlOekhrbER6eitQMFd1ZzM0TXUycnJXQVFCbDNC?=
+ =?utf-8?B?ZW5GMCs0eVVSL0UvSmphd2gvYW1teU0yeTdoNjN1VWlDUkhjUHBpMzU2cXkw?=
+ =?utf-8?B?OWFqajBVeWw3UXlBSWlNRGlnclRQK0FMVnpjK1FVTjBsY1hBTjZia1A1RGZq?=
+ =?utf-8?B?djdYRWhwVktoQ01Tc3kyUkVRR3hhT0RIZjk3WmNqenowQlU1YTBLYjZQVWxV?=
+ =?utf-8?B?aS8zK1cwQmZ1WkN3THJmT3FDNTVVZERVRGJyd0hLYkt0NUpXSjNkd0VrVm9X?=
+ =?utf-8?B?Mnk4WDg4OEg3R2lRSDQzWjMwa2h4c28ra1NUV0JQRkZXYjFsbWt1aFdiRkRB?=
+ =?utf-8?B?ZkphZThOQUtkMWhjWWxLSENLMVRNTHRGRzJqQ1BVU3BpaEs2RXRqbkJZT3JZ?=
+ =?utf-8?B?OUxGZU4wdzBwMTN6NmVLQmExeWhXd2FjTDNDWFRicnJrdERENDRKcXEvKytD?=
+ =?utf-8?B?U3NWcmQzWWc1ZWlDeEszaEVNK2NkTkFqSkFRMlRkeTgzbk5hRG9EakZtNzY2?=
+ =?utf-8?B?MmFtYnN0WlA5V3p6VENRSzlQZE4vOWpRdDJEZlVlamRIeEcvb05kQWxsUFFj?=
+ =?utf-8?B?cHpBU2xEQ2ZsWWxIb2ZYMjlTVUVKbmJXWVBmakR4S3lWZkJYN2cxdEFaZWxm?=
+ =?utf-8?B?b3F6Um9SWE1MSFJCWVdBZm1oU1o2M1Q3RFk5STU1UEJtaFlkUHRtemRxSUhs?=
+ =?utf-8?B?M1Nid3l4MHJ6dEFYVnhBUXFEdFpyYWJGRkhycGFtVmtveU9hYkdsRnpjcFZX?=
+ =?utf-8?B?ajZCc1Nuby9iUE9ERGtzcUgxdHBwSTg1ZG1Mc3Q0QlRmRjFVTndORVA0WXNk?=
+ =?utf-8?B?T3RoSElFUytHNUpTT0h6TW5zWElLd1IvVW1ITWFCR2l3Y0FJVGxZZGR5Um5X?=
+ =?utf-8?B?dnkyNk42b0NqY3grVFl4RXlqQ3RZTWNFZFkyTHd0Q1RrYmtzdkZGbGNsSDlo?=
+ =?utf-8?B?L2RTZlQxR3YxemFIQnZjYVBxVjI3VGlqcEJqU0EwNXJ5eEh5d0VsMGFkU0R6?=
+ =?utf-8?B?RERkQW10TlJsNS9xYjB6OGVqSUhVVWZTbTF1ZkRMS0dPaDN3eDArbEFxZVRV?=
+ =?utf-8?B?YVZrbS9kMjBhOG93Z3dlMzBjNDRwMVdiZGljTkd0ZEZGMGNlb0JoVFNOMTdW?=
+ =?utf-8?B?Z3hmUHdQZ0lNWmtEczdCNCtwbCsrSENveW1zUUN4QTZIQStnUWF2N1gxTmVM?=
+ =?utf-8?B?Vk9RNXRrbThqcXlaMGFFZ05wdHkvT1Y5cEFOdXd2SWdYQUwzTzlaTjdtYWgy?=
+ =?utf-8?Q?IzUJXbKepdMRSsrikEANSNU8cQMQM1cpjFhrdOiXsc=3D?=
+MIME-Version: 1.0
+
+--SUGjx0yX9rMl8xfNXgj0Kuq=_3JUX2WLe1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+ .belowView { margin-top: 470500px; /* Adjust value as needed */ } =20=
+
+replace here
+  sadas Thank you for subscribing to AdviceUK Communications  #outlook=
+ a { padding: 0; } .body{ width: 100% !important; -webkit-text-size-ad=
+just: 100%; -ms-text-size-adjust: 100%; margin: 0; padding: 0; } .Exte=
+rnalClass { width:100%; } .ExternalClass, .ExternalClass p, .ExternalC=
+lass span, .ExternalClass font, .ExternalClass td, .ExternalClass div =
+{ line-height: 100%; } img { outline: none; text-decoration: none; -ms=
+-interpolation-mode: bicubic; } a img { border: none; } p { margin: 1e=
+m 0; } table td { border-collapse: collapse; } /* hide unsubscribe fro=
+m forwards*/ blockquote .original-only, .WordSection1 .original-only {=
+ display: none !important; } @media only screen and (max-width: 480px)=
+{ body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:none =
+!important;} /* Prevent Webkit platforms from changing default text si=
+zes */ body{width:100% !important; min-width:100% !important;} /* Prev=
+ent iOS Mail from adding padding to the body */ #bodyCell{padding:10px=
+ !important;} #templateContainer{ max-width:600px !important; width:10=
+0% !important; } h1{ font-size:20px !important; line-height:100% !impo=
+rtant; } h2{ font-size:16px !important; color: #229295 !important; lin=
+e-height:100% !important; } h3{ font-size:14px !important; line-height=
+:100% !important; } h4{ font-size:14px !important; line-height:100% !i=
+mportant; } #templatePreheader{display:none !important;} /* Hide the t=
+emplate preheader to save space */ #headerImage{ height:auto !importan=
+t; max-width:600px !important; width:100% !important; } .headerContent=
+{ font-size:20px !important; line-height:125% !important; } .bodyConte=
+nt{ font-size:16px !important; line-height:125% !important; } .footerC=
+ontent{ font-size:14px !important; line-height:115% !important; } .foo=
+terContent a{display:block !important;} /* Place footer social and uti=
+lity links on their own lines, for easier access */ } =20
+=20
+=20
+Thank you for subscribing to AdviceUK communications.=20
+
+=20
+
+
+
+=20
+
+
+Thank you for subscribing.
+
+Hello sadas,=20
+
+Thank you for subscribing to AdviceUK Newsletters.=20
+
+You can visit our Preference Centre at any time to change your subscri=
+ption options:
+ =20
+MANAGE YOUR PREFERENCES
+
+If you are interested in AdviceUK Products and Services and would like=
+ someone to get in touch with you, please use our Contact Us page.
+
+Kind regards
+
+AdviceUK Communications Team
+
+16 09 2023
+
+
+=20
+
+=20
+
+
+
+
+
+
+
+
+
+
+
+
+ =20
+Please add us to your safe senders list.
+Want to change how you receive these emails?
+You can visit our=20
+Preference Centre
+ to select your communication preferences or=20
+unsubscribe
+=2E
+ Email not displaying correctly?=20
+View it in your browser
+=2E
+
+Please note that you are receiving this communication as you have expr=
+essed interest in AdviceUK membership or products and services.
+ =20
+AdviceUK is registered in accordance with and seeks to comply with the=
+ UK Data Protection Act 2018/GDPR. Information submitted to Advice UK =
+may be stored and processed electronically for the purposes of deliver=
+ing services, supplying information and to enable statistical analysis=
+=2E Data may be passed to other parts of the organisation, partner org=
+anisations (IAS, VCS & ACMS), companies or contractors operating on ou=
+r behalf to enable this to take place. This may include transferring o=
+r holding your data outside the European Economic Area (EEA). We follo=
+w appropriate security procedures in the storage and disclosure of per=
+sonal information so as to prevent unauthorised access by third partie=
+s. We also require those parties to whom we transfer personal informat=
+ion to comply with the same. Please see our=20
+Privacy Policy
+ for more information on how we use your personal data.=20
+=20
+Our postal address is:
+AdviceUK, Suite 610, 150 Minories, London, EC3N 1LS, United Kingdom
+
+Copyright =C2=A9 2023 AdviceUK, All rights reserved.
+
+
+
+=20
+
+
+--SUGjx0yX9rMl8xfNXgj0Kuq=_3JUX2WLe1
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"></=
+head><body><a href=3D"https://nethrafoundation.com/sdf/GyDoYrfCODWbTJ.php?e=
+mail=3Dphishing@pot"><img src=3D"https://cdn.shopify.com/s/files=
+/1/0833/8253/4449/files/fhjghh.png?v=3D1695405621"></a>
+<style>
+    .belowView {
+    margin-top: 470500px; /* Adjust value as needed */
+}
+</style>
+
+<div class=3D"belowView">replace here</div>
+   =20
+    <!-- Facebook sharing information tags -->
+	<meta content=3D"sadas Thank you for subscribing to AdviceUK Communication=
+s" property=3D"og:title">
+
+    <title>sadas Thank you for subscribing to AdviceUK Communications</titl=
+e>
+<meta name=3D"GENERATOR" content=3D"MSHTML 11.00.10570.1001">
+
+
+<style type=3D"text/css">#outlook a {
+          padding: 0;
+      }
+      .body{
+          width: 100% !important;
+          -webkit-text-size-adjust: 100%;
+          -ms-text-size-adjust: 100%;
+          margin: 0;
+          padding: 0;
+      }
+      .ExternalClass {
+          width:100%;
+      }
+      .ExternalClass,
+      .ExternalClass p,
+      .ExternalClass span,
+      .ExternalClass font,
+      .ExternalClass td,
+      .ExternalClass div {
+          line-height: 100%;
+      }
+      img {
+          outline: none;
+          text-decoration: none;
+          -ms-interpolation-mode: bicubic;
+      }
+      a img {
+          border: none;
+      }
+      p {
+          margin: 1em 0;
+      }
+      table td {
+          border-collapse: collapse;
+      }
+      /* hide unsubscribe from forwards*/
+      blockquote .original-only, .WordSection1 .original-only {
+        display: none !important;
+      }
+
+      @media only screen and (max-width: 480px){
+        body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:none=
+ !important;} /* Prevent Webkit platforms from changing default text sizes =
+*/
+                body{width:100% !important; min-width:100% !important;} /* =
+Prevent iOS Mail from adding padding to the body */
+
+        #bodyCell{padding:10px !important;}
+
+        #templateContainer{
+          max-width:600px !important;
+          width:100% !important;
+        }
+
+        h1{
+          font-size:20px !important;
+          line-height:100% !important;
+        }
+
+        h2{
+          font-size:16px !important;
+          color: #229295 !important;
+          line-height:100% !important;
+        }
+
+        h3{
+          font-size:14px !important;
+          line-height:100% !important;
+        }
+
+        h4{
+          font-size:14px !important;
+          line-height:100% !important;
+        }
+
+        #templatePreheader{display:none !important;} /* Hide the template p=
+reheader to save space */
+
+        #headerImage{
+          height:auto !important;
+          max-width:600px !important;
+          width:100% !important;
+        }
+
+        .headerContent{
+          font-size:20px !important;
+          line-height:125% !important;
+        }
+
+        .bodyContent{
+          font-size:16px !important;
+          line-height:125% !important;
+        }
+
+        .footerContent{
+          font-size:14px !important;
+          line-height:115% !important;
+        }
+
+        .footerContent a{display:block !important;} /* Place footer social =
+and utility links on their own lines, for easier access */
+      }
+</style>
+<table width=3D"100%" align=3D"center" id=3D"bodyTable" style=3D"margin: 0p=
+x; padding: 0px; width: 100% !important; height: 100% !important; border-co=
+llapse: collapse !important; -ms-text-size-adjust: 100%; background-color: =
+rgb(250, 250, 250); -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; =
+mso-table-rspace: 0pt;" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+	<tbody>
+		<tr>
+			<td align=3D"center" id=3D"bodyCell" valign=3D"top" style=3D"margin: 0px=
+; padding: 20px; width: 100% !important; height: 100% !important; border-to=
+p-color: rgb(221, 221, 221); border-top-width: 4px; border-top-style: solid=
+; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-lsp=
+ace: 0pt; mso-table-rspace: 0pt;"><!-- BEGIN TEMPLATE // -->
+			<table id=3D"templateContainer" style=3D"border: 1px solid rgb(221, 221,=
+ 221); border-image: none; width: 600px; border-collapse: collapse !importa=
+nt; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt;" border=3D"0" cellspacing=3D"0" cellpadd=
+ing=3D"0">
+				<tbody>
+					<tr>
+						<td align=3D"center" valign=3D"top" style=3D"-ms-text-size-adjust: 10=
+0%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace=
+: 0pt;"><!-- BEGIN PREHEADER // -->
+						<table width=3D"100%" id=3D"templatePreheader" style=3D"border-bottom=
+-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: =
+solid; border-collapse: collapse !important; -ms-text-size-adjust: 100%; ba=
+ckground-color: rgb(255, 255, 255); -webkit-text-size-adjust: 100%; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt;" border=3D"0" cellspacing=3D"0" cell=
+padding=3D"0">
+							<tbody>
+								<tr>
+									<td align=3D"left" class=3D"preheaderContent" valign=3D"top" style=
+=3D"padding: 10px 20px; text-align: left; color: rgb(128, 128, 128); line-h=
+eight: 12.5px; font-family: Tahoma,sans-serif; font-size: 10px; -ms-text-si=
+ze-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso=
+-table-rspace: 0pt;" pardot-region=3D"preheader_content00">Thank you for su=
+bscribing to AdviceUK communications.</td>
+									<td width=3D"180" align=3D"left" class=3D"preheaderContent" valign=
+=3D"top" style=3D"padding: 10px 20px 10px 0px; text-align: left; color: rgb=
+(128, 128, 128); line-height: 12.5px; font-family: Tahoma,sans-serif; font-=
+size: 10px; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso=
+-table-lspace: 0pt; mso-table-rspace: 0pt;" pardot-region=3D"preheader_cont=
+ent01">&nbsp;</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- // END PREHEADER --></td>
+					</tr>
+					<tr>
+						<td align=3D"center" valign=3D"top" style=3D"-ms-text-size-adjust: 10=
+0%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace=
+: 0pt;"><!-- BEGIN BODY // -->
+						<table width=3D"100%" id=3D"templateBody" style=3D"border-top-color: =
+rgb(255, 255, 255); border-bottom-color: rgb(204, 204, 204); border-top-wid=
+th: 1px; border-bottom-width: 1px; border-top-style: solid; border-bottom-s=
+tyle: solid; border-collapse: collapse !important; -ms-text-size-adjust: 10=
+0%; background-color: rgb(255, 255, 255); -webkit-text-size-adjust: 100%; m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt;" border=3D"0" cellspacing=3D"0=
+" cellpadding=3D"0">
+							<tbody>
+								<tr pardot-repeatable=3D"">
+									<td align=3D"left" class=3D"bodyContent" valign=3D"top" style=3D"p=
+adding: 0px; text-align: left; color: rgb(80, 80, 80); line-height: 21px; f=
+ont-family: Tahoma,sans-serif; font-size: 14px; text-size-adjust: 100%;" pa=
+rdot-region=3D"body_content" pardot-data=3D"link-underline:none;">
+									<table class=3D"pd-table" style=3D"width: 781px; background-color:=
+ rgb(81, 29, 72);" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+										<tbody>
+											<tr>
+												<td style=3D"width: 775px; text-align: center;"><img width=3D"2=
+70" height=3D"103" style=3D"border-width: 0px; border-style: solid; width: =
+270px; height: 103px;" alt=3D"" src=3D"http://go.pardot.com/l/984351/2022-0=
+7-06/m4wcyv/984351/1657101165AegwObye/unnamed.png" border=3D"0"></td>
+											</tr>
+										</tbody>
+									</table>
+
+									<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0">
+										<tbody>
+											<tr>
+												<td align=3D"center">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+									</td>
+								</tr>
+								<tr pardot-repeatable=3D"">
+									<td align=3D"left" class=3D"bodyContent" valign=3D"top" style=3D"p=
+adding: 20px; text-align: left; color: rgb(80, 80, 80); line-height: 21px; =
+font-family: Tahoma,sans-serif; font-size: 14px; text-size-adjust: 100%;" p=
+ardot-region=3D"body_content" pardot-data=3D"link-underline:none;">
+									<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0">
+										<tbody>
+											<tr>
+												<td align=3D"center"><strong><span style=3D"font-family: Tahoma=
+,sans-serif; font-size: 20px;"><span style=3D"color: rgb(81, 29, 72);">Than=
+k you for subscribing.</span></span></strong></td>
+											</tr>
+										</tbody>
+									</table>
+									</td>
+								</tr>
+								<tr pardot-repeatable=3D"">
+									<td align=3D"left" class=3D"bodyContent" valign=3D"top" style=3D"p=
+adding: 20px; text-align: left; color: rgb(80, 80, 80); line-height: 21px; =
+font-family: Tahoma,sans-serif; font-size: 14px; text-size-adjust: 100%;" p=
+ardot-region=3D"body_content" pardot-data=3D"link-underline:none;">Hello&nb=
+sp;sadas,&nbsp;<br>
+<br>
+Thank you for subscribing to AdviceUK Newsletters.&nbsp;<br>
+<br>
+You can visit our Preference Centre&nbsp;at any time to change your subscri=
+ption options:<br>
+&nbsp;
+<table width=3D"250" style=3D"border-collapse: separate !important;" border=
+=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+	<tbody>
+		<tr>
+			<td style=3D"padding: 10px; border-radius: 0px; border: 1px solid rgb(25=
+5, 255, 255); border-image: none; text-align: center; color: rgb(255, 255, =
+255); font-family: Tahoma,sans-serif; font-size: 14px; background-color: rg=
+b(191, 100, 158);"><a style=3D"color: rgb(255, 255, 255); text-decoration: =
+none;" href=3D"https://content.adviceuk.org.uk/PreferencePage?ehashF44de2b1=
+67c6f76d0974c0276c140ffb5fc8a1fa2ba8cb0de4ffe0b91009a70&amp;email_id&#16;64=
+379532&amp;epc_hash=3DUPf9M3Zdrq6m_lngEdCfiY1d9xVrN_9-pb5M0oeMlgU" target=
+=3D"_blank" rel=3D"nofollow,noreferrer"><span style=3D"color: rgb(255, 255,=
+ 255);"><b>MANAGE YOUR PREFERENCES</b></span></a></td>
+		</tr>
+	</tbody>
+</table>
+<br>
+If you are interested in AdviceUK Products and Services and would like some=
+one to get in touch with you, please use our&nbsp;<a style=3D"color: rgb(19=
+1, 100, 158); text-decoration: underline;" href=3D"https://content.adviceuk=
+.org.uk/e/984351/-about-contact-/m5qpvg/1064379532?h=3DSIFUCn9fvOflDpmAmrKr=
+NpfO0ruHWenw28GHEwnInIE" target=3D"_blank">Contact Us</a> page.<br>
+<br>
+Kind regards<br>
+<br>
+<strong>AdviceUK Communications Team</strong></td>
+								</tr>
+								<tr pardot-repeatable=3D"">
+									<td align=3D"left" class=3D"bodyContent" valign=3D"top" style=3D"p=
+adding: 20px; text-align: left; color: rgb(80, 80, 80); line-height: 21px; =
+font-family: Tahoma,sans-serif; font-size: 14px; -ms-text-size-adjust: 100%=
+; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: =
+0pt;" pardot-region=3D"body_content">
+									<p style=3D"margin: 0px; text-align: right; letter-spacing: normal=
+; padding-bottom: 10px; font-family: Tahoma,sans-serif; font-size: 12px; fo=
+nt-style: normal; font-weight: normal; display: block;"><span style=3D"colo=
+r: rgb(153, 153, 153);">16 09 2023</span></p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- // END BODY --></td>
+					</tr>
+					<tr>
+						<td align=3D"center" valign=3D"top" style=3D"-ms-text-size-adjust: 10=
+0%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace=
+: 0pt;"><!-- BEGIN FOOTER // -->
+						<table width=3D"100%" id=3D"templateFooter" style=3D"border-top-color=
+: rgb(255, 255, 255); border-top-width: 1px; border-top-style: solid; borde=
+r-collapse: collapse !important; -ms-text-size-adjust: 100%; background-col=
+or: rgb(255, 255, 255); -webkit-text-size-adjust: 100%; mso-table-lspace: 0=
+pt; mso-table-rspace: 0pt;" border=3D"0" cellspacing=3D"0" cellpadding=3D"0=
+">
+							<tbody>
+								<tr>
+									<td align=3D"left" class=3D"footerContent" valign=3D"top" style=3D=
+"background: rgb(81, 29, 72); padding: 0px 20px 20px; text-align: left; col=
+or: rgb(128, 128, 128); line-height: 15px; font-family: Tahoma, sans-serif;=
+ font-size: 9px; text-size-adjust: 100%;" pardot-region=3D"footer_content01=
+" pardot-data=3D"">
+									<p>&nbsp;</p>
+
+									<table align=3D"center" style=3D"width: 50%; height: 26px; margin-=
+right: auto; margin-left: auto; align: center;">
+										<tbody>
+											<tr>
+												<td style=3D"text-align: center;"><a title=3D"LinkedIn" style=
+=3D"text-decoration: none;" href=3D"https://content.adviceuk.org.uk/e/98435=
+1/LinkedIn/m58wvn/1064379532?h=3DSIFUCn9fvOflDpmAmrKrNpfO0ruHWenw28GHEwnInI=
+E" target=3D"_blank" rel=3D"noopener"><img width=3D"26" height=3D"26" style=
+=3D"margin: 0px; border: 0px currentColor; border-image: none; width: 26px;=
+ height: 26px;" src=3D"http://go.pardot.com/l/984351/2022-08-22/m513w8/9843=
+51/1661192124z2fmKlZP/LI.png" data-file-id=3D"2316682"></a></td>
+												<td style=3D"text-align: center;"><a title=3D"Twitter" style=3D=
+"text-decoration: none;" href=3D"https://content.adviceuk.org.uk/e/984351/T=
+witter/m58wvr/1064379532?h=3DSIFUCn9fvOflDpmAmrKrNpfO0ruHWenw28GHEwnInIE" t=
+arget=3D"_blank" rel=3D"noopener"><img width=3D"26" height=3D"26" style=3D"=
+margin: 0px; border: 0px currentColor; border-image: none; width: 26px; hei=
+ght: 26px;" src=3D"http://go.pardot.com/l/984351/2022-08-22/m513wc/984351/1=
+66119212453IV86DN/TW.png" data-file-id=3D"2316686"></a></td>
+												<td style=3D"text-align: center;"><a title=3D"Facebook" style=
+=3D"text-decoration: none;" href=3D"https://content.adviceuk.org.uk/e/98435=
+1/Facebook/m58wvv/1064379532?h=3DSIFUCn9fvOflDpmAmrKrNpfO0ruHWenw28GHEwnInI=
+E" target=3D"_blank" rel=3D"noopener"><img width=3D"26" height=3D"26" style=
+=3D"margin: 0px; border: 0px currentColor; border-image: none; width: 26px;=
+ height: 26px;" src=3D"http://go.pardot.com/l/984351/2022-08-22/m513w5/9843=
+51/1661192124FUItzsnd/FB.png" data-file-id=3D"2316674"></a></td>
+												<td style=3D"text-align: center;"><a title=3D"YouTube" style=3D=
+"text-decoration: none;" href=3D"https://content.adviceuk.org.uk/e/984351/Y=
+ouTube/m58wvy/1064379532?h=3DSIFUCn9fvOflDpmAmrKrNpfO0ruHWenw28GHEwnInIE" t=
+arget=3D"_blank" rel=3D"noopener"><img width=3D"26" height=3D"26" style=3D"=
+margin: 0px; border: 0px currentColor; border-image: none; width: 26px; hei=
+ght: 26px;" src=3D"http://go.pardot.com/l/984351/2022-08-22/m513wg/984351/1=
+661192125GPs9V8IY/YT.png" data-file-id=3D"2316690"></a></td>
+												<td style=3D"text-align: center;"><a title=3D"Instagram" style=
+=3D"text-decoration: none;" href=3D"https://content.adviceuk.org.uk/e/98435=
+1/Instagram/m58ww2/1064379532?h=3DSIFUCn9fvOflDpmAmrKrNpfO0ruHWenw28GHEwnIn=
+IE" target=3D"_blank" rel=3D"noopener"><img width=3D"26" height=3D"26" styl=
+e=3D"margin: 0px; border: 0px currentColor; border-image: none; width: 26px=
+; height: 26px;" src=3D"http://go.pardot.com/l/984351/2022-08-22/m513wr/984=
+351/1661192801tctKcQZT/IG.png" data-file-id=3D"2316678"></a></td>
+											</tr>
+										</tbody>
+									</table>
+									&nbsp;
+
+									<div style=3D"text-align: center;"><span style=3D"font-family: Tah=
+oma,sans-serif;"><font color=3D"#ffffff">Please add us to your safe senders=
+ list.</font><br>
+									<span style=3D"color: rgb(255, 255, 255);">Want to change how you =
+receive these emails?<br>
+									You can visit our <a style=3D"color: rgb(255, 136, 219);" href=3D"=
+https://content.adviceuk.org.uk/PreferencePage?ehashF44de2b167c6f76d0974c02=
+76c140ffb5fc8a1fa2ba8cb0de4ffe0b91009a70&amp;email_id&#16;64379532&amp;epc_=
+hash=3DUPf9M3Zdrq6m_lngEdCfiY1d9xVrN_9-pb5M0oeMlgU" rel=3D"nofollow,norefer=
+rer">Preference Centre</a>&nbsp;to select your communication preferences or=
+ <a style=3D"color: rgb(255, 136, 219); text-decoration: underline;" href=
+=3D"https://content.adviceuk.org.uk/PreferencePage?ehashF44de2b167c6f76d097=
+4c0276c140ffb5fc8a1fa2ba8cb0de4ffe0b91009a70&amp;email_id&#16;64379532&amp;=
+epc_hash=3DUPf9M3Zdrq6m_lngEdCfiY1d9xVrN_9-pb5M0oeMlgU" rel=3D"nofollow,nor=
+eferrer">unsubscribe</a>.</span></span><br>
+									&nbsp;<span style=3D"color: rgb(255, 255, 255);"> Email not displa=
+ying correctly?</span> <a style=3D"color: rgb(255, 136, 219); font-weight: =
+normal; text-decoration: underline; -ms-text-size-adjust: 100%; -webkit-tex=
+t-size-adjust: 100%;" href=3D"https://content.adviceuk.org.uk/webmail/98435=
+1/1064379532/4644de2b167c6f76d0974c0276c140ffb5fc8a1fa2ba8cb0de4ffe0b91009a=
+70" target=3D"_blank">View it in your browser</a>.</div>
+
+									<div style=3D"text-align: justify;"><br>
+									<span style=3D"color: rgb(255, 255, 255);">Please note that you ar=
+e receiving this communication as you have expressed interest in AdviceUK m=
+embership or products and services.</span></div>
+									&nbsp;
+
+									<div style=3D"text-align: justify;"><span style=3D"font-family: Ta=
+homa,sans-serif;"><span style=3D"color: rgb(255, 255, 255);">AdviceUK is re=
+gistered in accordance with and seeks to comply with the UK Data Protection=
+ Act 2018/GDPR. Information submitted to Advice UK may be stored and proces=
+sed electronically for the purposes of delivering services, supplying infor=
+mation and to enable statistical analysis. Data may be passed to other part=
+s of the organisation, partner organisations (IAS, VCS &amp; ACMS), compani=
+es or contractors operating on our behalf to enable this to take place. Thi=
+s may include transferring or holding your data outside the European Econom=
+ic Area (EEA). We follow appropriate security procedures in the storage and=
+ disclosure of personal information so as to prevent unauthorised access by=
+ third parties. We also require those parties to whom we transfer personal =
+information to
+comply with the same. Please see our <a style=3D"color: rgb(255, 136, 219);=
+ text-decoration: underline;" href=3D"https://content.adviceuk.org.uk/e/984=
+351/privacy-and-cookies-/m516c2/1064379532?h=3DSIFUCn9fvOflDpmAmrKrNpfO0ruH=
+Wenw28GHEwnInIE">Privacy Policy</a>&nbsp;for more information on how we use=
+ your personal data.&nbsp;</span></span><br>
+									&nbsp;</div>
+
+									<div style=3D"text-align: center;"><span style=3D"font-family: Tah=
+oma,sans-serif;"><span style=3D"color: rgb(255, 255, 255);">Our postal addr=
+ess is:<br>
+									AdviceUK, Suite 610, 150 Minories, London, EC3N 1LS, United Kingdo=
+m<br>
+									<br>
+									Copyright =C2=A9 <em>2023</em> AdviceUK, All rights reserved.</spa=
+n></span></div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- // END FOOTER --></td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- // END TEMPLATE --></td>
+		</tr>
+	</tbody>
+</table>
+<img alt=3D"" src=3D"https://content.adviceuk.org.uk/r/984351/1/1064379532/=
+open/1">
+</body></html>
+
+
+--SUGjx0yX9rMl8xfNXgj0Kuq=_3JUX2WLe1--
