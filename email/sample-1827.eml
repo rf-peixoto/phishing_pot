@@ -1,237 +1,865 @@
-Received: from BL3P223MB0161.NAMP223.PROD.OUTLOOK.COM (2603:10b6:208:34e::11)
- by LV3P223MB0968.NAMP223.PROD.OUTLOOK.COM with HTTPS; Tue, 7 Nov 2023
- 09:10:58 +0000
-Received: from CP4P284CA0035.BRAP284.PROD.OUTLOOK.COM (2603:10d6:103:126::9)
- by BL3P223MB0161.NAMP223.PROD.OUTLOOK.COM (2603:10b6:208:34e::11) with
+Received: from LV3P223MB0967.NAMP223.PROD.OUTLOOK.COM (2603:10b6:408:1dd::20)
+ by LV3P223MB0968.NAMP223.PROD.OUTLOOK.COM with HTTPS; Wed, 8 Nov 2023
+ 08:24:54 +0000
+Received: from MW4PR03CA0025.namprd03.prod.outlook.com (2603:10b6:303:8f::30)
+ by LV3P223MB0967.NAMP223.PROD.OUTLOOK.COM (2603:10b6:408:1dd::20) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.29; Tue, 7 Nov
- 2023 09:10:57 +0000
-Received: from RO2P152MB5848.LAMP152.PROD.OUTLOOK.COM
- (2603:10d6:103:126:cafe::37) by CP4P284CA0035.outlook.office365.com
- (2603:10d6:103:126::9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.28 via Frontend
- Transport; Tue, 7 Nov 2023 09:10:56 +0000
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=fail;
- b=UpmCtw0G4glS8h1OxDUMKEEc4YBVHMKgoGbanPzSWXua3cSu50wteq+VOPFm3dqA/Qf+9FQGUBT6LyQXZTktg+b3kAGwP9JKsqMAJ02y54dggflO7PbOuY8br+oqRgxxFVGSpS9lqmNJwW5AHI23PARUG+Dfn2BQNRMbSLdYq0ffdy10uHObddiG5x+LHfOw/LwarChL6rLU/lkim77ZFC0KhG7KtdzHA0kLiflJv+jPpPN5Hlapt50D/8ofZP97S6AFXwbTsJCgDjJzHRG3DJVncphN1CUhUEkI2/X+AyYW24cV1sgm7/EptUDNQhb7tEzYjXL03zJyqXsG4BvsXA==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zicsCl7kigBuWU1mFYvNZPTPMU6Ton/iIIgLYhG85FU=;
- b=Xp1wQT6hHqKbbz5aZWyHPypj4kWg00CPAx8719UPQ9NDrWp86J0xZ4uwSNzL4cWQuU94LRpPOsvzfQxvFkkGgZv4pk6fEDnCIXa3VMn8ks0mGO+6HXJ51Hh4RWsjdU0zeXJ4DkAoII5W0u7oasbnE3qT5YtodLgO9cXSnLm/2U59Z7QhaRpSn0q0k5yi4kUPpCOtHnJA63bJT81cWzM3FydqD5Dq1x3ZVnhqBkts5Aop1F9mlEhZggcAvoKb00GXhJ+X5EvDwuIquf7yC3qiksyCYY8cfN09iXM2kqYdTjgqJpQftxUVhZQBhZ/S+h8jxmFEE2vHNQCOU3vH23TgOA==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 135.148.117.231) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=cserve-egypt.com; dmarc=bestguesspass action=none
- header.from=cserve-egypt.com; dkim=fail (signature did not verify)
- header.d=webcom.xion.oxcs.net; arc=fail (34)
-Received: from DU7PR01CA0042.eurprd01.prod.exchangelabs.com
- (2603:10a6:10:50e::26) by RO2P152MB5848.LAMP152.PROD.OUTLOOK.COM
- (2603:10d6:10:e5::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.28; Tue, 7 Nov
- 2023 09:10:53 +0000
-Received: from DB8EUR05FT029.eop-eur05.prod.protection.outlook.com
- (2603:10a6:10:50e:cafe::d6) by DU7PR01CA0042.outlook.office365.com
- (2603:10a6:10:50e::26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.28; Wed, 8 Nov
+ 2023 08:24:53 +0000
+Received: from MW2NAM12FT021.eop-nam12.prod.protection.outlook.com
+ (2603:10b6:303:8f:cafe::58) by MW4PR03CA0025.outlook.office365.com
+ (2603:10b6:303:8f::30) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.29 via Frontend
- Transport; Tue, 7 Nov 2023 09:10:51 +0000
-Authentication-Results: spf=pass (sender IP is 135.148.117.231)
- smtp.mailfrom=cserve-egypt.com; dkim=fail (signature did not verify)
- header.d=webcom.xion.oxcs.net;dmarc=bestguesspass action=none
- header.from=cserve-egypt.com;compauth=pass reason=109
-Received-SPF: Pass (protection.outlook.com: domain of cserve-egypt.com
- designates 135.148.117.231 as permitted sender)
- receiver=protection.outlook.com; client-ip=135.148.117.231;
- helo=nmtao102.oxsus-vadesecure.net; pr=C
-Received: from nmtao102.oxsus-vadesecure.net (135.148.117.231) by
- DB8EUR05FT029.mail.protection.outlook.com (10.233.239.51) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6977.17 via Frontend Transport; Tue, 7 Nov 2023 09:10:47 +0000
+ Transport; Wed, 8 Nov 2023 08:24:53 +0000
+Authentication-Results: spf=none (sender IP is 194.87.237.171)
+ smtp.mailfrom=uwvpwwbsf.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none
+ header.from=ccmp.daf-mag.fr;compauth=fail reason=001
+Received-SPF: None (protection.outlook.com: uwvpwwbsf.com does not designate
+ permitted sender hosts)
+Received: from mdioqxfnqd.oxxwunngmvthetrvz.tsc (194.87.237.171) by
+ MW2NAM12FT021.mail.protection.outlook.com (10.13.180.88) with Microsoft SMTP
+ Server id 15.20.6954.17 via Frontend Transport; Wed, 8 Nov 2023 08:24:52
+ +0000
 X-IncomingTopHeaderMarker:
- OriginalChecksum:0C938C26A9C9FAF3D3D863BC6FE2A6978B8E41ECD8B41F20413FF08A69CE9F8E;UpperCasedChecksum:EBCA5C35C5652A81AEDEDF2EBCA7E5971702E7EC363C736A9C63B83E9B1E1BCC;SizeAsReceived:2797;Count:18
-ARC-Seal: i=1; a=rsa-sha256; d=oxsus-vadesecure.net; s=arc-202309-rsa2048; t=1699348246; cv=none; b=QmTa7MnbY8cpEIDR8QG2+kmqTEJ0TjpMYpHehmagWampYfnke30ZUqnQa0DpEwNIZsORk6kflMP+zY34smFEXafzQD6PUhqJcWGrmYBjd+ep+UzKTD5idY7JInkv7A47ra4O5qrAgtRdgAEIu5aFv0FQ4dbT53EhjHk0YTrc2bY4fRdmO0Z/Z7SYSN1o0OVAveQMeJSS7RuoLZQOh3in0ACcWFdfx+RAFnzj27zuI8lwngnVC9xZ1/rqi72x4CLKS+WYvjcQC689pjMBup0LqHYInL7Yllgg0zWwQKuVg5zGhSoMeb7Wzx70MEkL8BSlZuwx31/rSRkPMwdRvQitxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=oxsus-vadesecure.net; s=arc-202309-rsa2048; t=1699348246; c=relaxed/relaxed; h=from:reply-to:subject:date:to:cc:resent-date:resent-from:resent-to:resent-cc:in-reply-to:references:list-id:list-help:list-unsubscribe:list-subscribe:list-post:list-owner:list-archive; bh=zicsCl7kigBuWU1mFYvNZPTPMU6Ton/iIIgLYhG85FU=; b=gSehH9/PN9BnSx4YHsJHOoIkXdTF94sO7GiZmPcbLE52tO1YnTkeat3nCEABHlbPY7iJ6/bfUFlPqrkSi/EQ0sMWwLRXKRmQPKYL/mpE35LC7/sL4PMnYOhAdLWUZtIk1UH2TVdAuDyFOZ8mDuoxOzGiuH9m+ha4NZSDAvmpQ3OnMeJONzyEqKWKDmeow4j3u0fVnKiXNyHVGj7CDfzmgXuf5ZaGT78Q/aO7uYjFuE/QEadTQGAMqd09A75KCPF5iwYNZFAQWz4ZDdMi++S9EgCMnEvB0haGnqQn60bE+YY5MuPXpNWZstegAjYRWiLGAZGq92AxLFk72NbDTyvTRw==
-ARC-Authentication-Results: i=1;
-DKIM-Signature: v=1; a=rsa-sha256; bh=zicsCl7kigBuWU1mFYvNZPTPMU6Ton/iIIgLYh
- G85FU=; c=relaxed/relaxed; d=webcom.xion.oxcs.net; h=from:reply-to:
- subject:date:to:cc:resent-date:resent-from:resent-to:resent-cc:
- in-reply-to:references:list-id:list-help:list-unsubscribe:
- list-subscribe:list-post:list-owner:list-archive; q=dns/txt; s=mail1;
- t=1699348246; x=1699953046; b=T4dgwTFCUOvoJw8jdSthrm8GjKl8TyfIZSp5urgF2
- CrdlK7xsUVw655nza2b48DAmXWczWAExHN/tJvNO8kDIbyNEFEcOcCRl24+9o+ye/VmBAV2
- nP3PFmEiIwMWaIk2mja4+9jSEAULAwHrWcXwXwyKGrMUTptRVwsLlUVJsrLtMAB4on318VR
- PDeY/bAww85DI9S+CvDERnuJGm629ld6uQLJjoqM3ygtAB42jjv4gYKWaWYwQANJfrXpvt9
- gpBV0TfaBGQJLagnRkNFP6A5Z2HtTOtqTT7topuoJUYKYyf1UhErcLgVzkawhlaxNDh70IL
- DJLWbnxbLkMhUt41A==
-Received: from submission-proxy-5b5fc99bc5-h9n58 ([41.155.39.178])
- by oxsus1nmtao02p.internal.vadesecure.com with ngmta
- id 8ea878a9-17954c3a011bba71; Tue, 07 Nov 2023 09:10:46 +0000
-Date: Tue, 7 Nov 2023 04:10:46 -0500 (EST)
-From: ALI IMRAN <amamdouh@cserve-egypt.com>
-Reply-To: ali888imram <ali888imram@gmail.com>
-Message-ID: <1707597869.1088697.1699348246323@webmail-oxcs.networksolutionsemail.com>
-Subject: =?UTF-8?Q?Sauda=C3=A7=C3=B5es_para_voc=C3=AA?=
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_1088696_1345214452.1699348246321"
-X-Mailer: Open-Xchange Mailer v8.18.48
-X-Originating-IP: 41.155.39.178
-X-Originating-Client: open-xchange-appsuite
-Authentication-Results-Original: oxsus-vadesecure.net; auth=pass
- smtp.auth=amamdouh@cserve-egypt.com smtp.mailfrom=amamdouh@cserve-egypt.com;
-X-IncomingHeaderCount: 18
-To: Undisclosed recipients:;
-Return-Path: amamdouh@cserve-egypt.com
-X-MS-Exchange-Organization-ExpirationStartTime: 07 Nov 2023 09:10:51.5142
+ OriginalChecksum:3B8E568394147EA6D157C65C526C4973B062FEFB69A41CF1AB308B24F5503575;UpperCasedChecksum:254E4112894A5556F15A0724170766F02F576AEA46A5A6428FA9795CEB66A24E;SizeAsReceived:437;Count:11
+From: KetoXplode, <webmestre@ccmp.daf-mag.fr.>, <webmestre@ccmp.daf-mag.fr>
+sender: KetoXplode, <webmestre@ccmp.daf-mag.fr>
+Subject: Pronostic individuel pour la perte de poids
+Message-Id: <tbqej6b.i3b2n.d3z.d3z@jmdfhxfzjwxaeop.nwx>
+Date: Wed, 08 Nov 2023 09:24:36 +0100
+To: phishing@pot
+Cc: phishing@pot
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=UTF-8
+X-IncomingHeaderCount: 11
+Return-Path: qsznv7rp.uwvpwwbsf@uwvpwwbsf.com
+X-MS-Exchange-Organization-ExpirationStartTime: 08 Nov 2023 08:24:53.2466
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
 X-MS-Exchange-Organization-Network-Message-Id:
- 5e5c0b62-6427-4d81-587b-08dbdf717085
+ 9d44ce1d-925e-442b-dac9-08dbe0342ee0
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic:
- DB8EUR05FT029:EE_|RO2P152MB5848:EE_|BL3P223MB0161:EE_|LV3P223MB0968:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5e5c0b62-6427-4d81-587b-08dbdf717085
+ MW2NAM12FT021:EE_|LV3P223MB0967:EE_|LV3P223MB0968:EE_
+X-MS-Exchange-Organization-AuthSource:
+ MW2NAM12FT021.eop-nam12.prod.protection.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 11/8/2023 8:20:39 AM
+X-MS-Office365-Filtering-Correlation-Id: 9d44ce1d-925e-442b-dac9-08dbe0342ee0
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 135.148.117.231
-X-SID-PRA: AMAMDOUH@CSERVE-EGYPT.COM
-X-SID-Result: PASS
+X-Sender-IP: 194.87.237.171
+X-SID-PRA: WEBMESTRE@CCMP.DAF-MAG.FR
+X-SID-Result: NONE
 X-MS-Exchange-Organization-PCL: 2
-X-MS-Exchange-Organization-SCL: 5
-X-Microsoft-Antispam: BCL:7;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Nov 2023 09:10:47.5611
+X-MS-Exchange-Organization-SCL: 9
+X-Microsoft-Antispam: BCL:0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2023 08:24:52.8403
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5e5c0b62-6427-4d81-587b-08dbdf717085
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9d44ce1d-925e-442b-dac9-08dbe0342ee0
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource: DB8EUR05FT029.eop-eur05.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource:
+ MW2NAM12FT021.eop-nam12.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: RO2P152MB5848
-X-MS-Exchange-Organization-AuthSource:
- DB8EUR05FT029.eop-eur05.prod.protection.outlook.com
-X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:10.8358946
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3P223MB0967
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.0517600
 X-MS-Exchange-Processed-By-BccFoldering: 15.20.6954.028
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000305)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001134)(2008121020)(4810010)(4910033)(9610028)(9560006)(10180021)(9320005)(9245025)(120001);RF:JunkEmail;
+	ucf:0;jmr:0;ex:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000305)(920221119095)(90000117)(920221120095)(90002001)(91000020)(91036095)(91040095)(9050020)(9055020)(9100341)(944500132)(2008001134)(2008121020)(4810010)(4910033)(10010005)(10005027)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
 X-Message-Info:
-	6hMotsjLow8FCIDYn4qPx34+7+5E5l7p6msPJsNFmidglloHwuEzU8rqce0EeFmAdaUfrYkCvKkF0zzIbzgHwMvPJ2jx2jzPEv1X97VV5cv90lofHtS+JweGbY3NpiGusst7glCIxWECw9175C56crE8k5oev9X/Et8wcefbuL3PDkwYcpFBar+G+cxPNKqTwuFz6hmAmfUCHQhpIiKSrA==
-X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0yO1NDTD02
+	6hMotsjLow/YRSMpp1Os2rhmC17FxAwsD8iZrH3luvW5AhfMa9rCpgaj+p3poyhIBmuWhtP/5UDHemKqNJ58D3ooxLjyz0Frd0hNBWH3A7LvwaSgtHigNJUC/3zlEOSfKoGd5pIv9pft4h1QCvHgHX01DuNYIH7XleYcqZ8otZJ8V+V8D6RHJEX+U1ppFoi/voe7kYpBs/o9NqDj+ufI4Q==
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0zO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?L2Jqb2xCMUR4L1BCRlIrT21RaXZCbXZ4Vk90aWE2YWpWUUNmMFBMMndKSXRS?=
- =?utf-8?B?S2huVm45TUFVb3c2Z3hiUzhENXUyQ0NVT0xsVmhWZFBiblkyaGlmZ0t5bjNF?=
- =?utf-8?B?cUxOdHZWZVAxZnVpeGNUNHhaYzFtcTJKTzhNeDgwK1RmUExkMnZ5bUREdjlV?=
- =?utf-8?B?ZVR1dmJHaUxuSkZ4NFlBRVM0V1hkemcxWkw3VXc1QlhDY1drVmFZWFh5dGU0?=
- =?utf-8?B?ZUxmQ2s3Vnk2ZG1ZVU5Qc09kWWJpTDNmRnB1VTBRYVlqa01xcURtWXNta1hu?=
- =?utf-8?B?eFNyYURVZkZXVWo3dFVqdzV3Rk1lc1pUVE5DVDRCSW8wa0pmdXlwNTlwWnRC?=
- =?utf-8?B?M0RGQ2RjVnk4OEIrbmhneW5FUEVRSXBCaG9DV3k1cXhUYUZUNkV6YkFHc0No?=
- =?utf-8?B?NWY3MUpER0hyVUdYRkpWZ0RJeXVJbDlGTUIrQUo4MFhsT2szT2tEYlZlNU9Q?=
- =?utf-8?B?cmhRcGJPN3BLNHk0SkczOFJNRzhMTU9GMis0SnlvbmJyTm5XVldNbFNnTzZ6?=
- =?utf-8?B?Wnd4SE9MejBHOGNSZ25BdDV0OEVvZkNycllzZktyZFgxOWkyeWtGZFo5SVVM?=
- =?utf-8?B?Y2xNSlJXNWtrSlB2OWhEODB0RDVXeE1EY0R5NG0vby9waWI4QnEvSE5mcUdK?=
- =?utf-8?B?QTNMVHZHTG9OUVBHU1FoeUs0L0EvbWt3d2I2OXp2QkZmNDMrZjI0bGlMOEZ1?=
- =?utf-8?B?ODhzR3oxMUNUdGZrQ2dFdHZ0TmV4ZTJGMURSdnAwTkdtUk1hQWdXVFhDd05X?=
- =?utf-8?B?bmljc2NQQVJyclMzRkRhRGRYUkUrdVdJVmJJQ0M3TytFZjE4RkY0QkZFeXpM?=
- =?utf-8?B?dkxINHpCdUg5UzNnRWpKZVEzOVUrd2xSZlVDbzZXSTRSR0xyR1VzMUNzU3FW?=
- =?utf-8?B?dWQzekhwdFdwdG1Pd1lRK1R5SVp1NERiWk5GWWc3MVYyUFZWU0pQNlk0VEM1?=
- =?utf-8?B?bWRuWElTOVlHT0dpU2tZY0VndFc3eUFwUVNkNzB2eFVKUUpVQm5PTjZUV1RW?=
- =?utf-8?B?bVUrNy9LNVkxc3NVOWY0R0I0djlCOHYxanN1d3c2Tnp2VFRPSzZGM1p0MVIr?=
- =?utf-8?B?QXZNZjAySnR1Yy8rQkNvMlcwWlpGRlZNeUJoMnJtVzZCU2xVdTRkR3V3SEFm?=
- =?utf-8?B?NkUzZ2EycnJuVTlXeC9qcHUzSlZ1MmI3cFZZVlFiV0E5dEp4VW04K0JJNkdK?=
- =?utf-8?B?MStzKzVydnVVTzFHaVNxOXI1TS8xZHpDVk90YnY2YzFSZ3NyVThqU1d5RDFE?=
- =?utf-8?B?TGNnamplYVVkSTIybnB6VUlTaG5SaHpzSXRyWUp0NGN5M3JEQVdqZFB6WUM2?=
- =?utf-8?B?WFNTaVJXWUZvc1JMdWY3NE1CWHZCYlNnNmw2eUJGREZKdEpBOFYwVVNaNDNR?=
- =?utf-8?B?L3pvMjUrUFczZmVHYytsVjdzeURsM0M3Q0sydTBVWndLMk90c0V1TFlCcTFD?=
- =?utf-8?B?bllpYkc0Zm1PVDRPS0VQYTQ4d3cwQ2hSNG9pc1hrSnhKQUZ6K3BuMEVrUys3?=
- =?utf-8?B?S0w2ZnVMeTdmUVlVT01MclZSYXJjOTRGTFlpNmZ3YlR5bmN6LzQ2d1llcElk?=
- =?utf-8?B?TTNJSWtZUW8rd3dnejlnNFFSck5MRkpPK3NrMDBoWFIrRllqd1NZbkZ1NWpQ?=
- =?utf-8?B?Q0l2RXlyRUc4Ty94U3FiMjBoRVN5YlpZYVI3UHZDdFpkWVRkRzhzcHZJZWpa?=
- =?utf-8?B?OGk0UDRoaFlpVWJ1NUJ4WjNjUENSbFJMcE0wZ2NiL1J5ZDZyV244UGJHQThs?=
- =?utf-8?B?OCt2Qnc1K1M0ZkVHT01WcGRtTjdZUnRyaFlOeDloSExPR0FXVW1wVTl5Z3ZT?=
- =?utf-8?B?elY5RDF0Qzd5b3JXKzgzMExPanYvN3lkcjhMT0N1b0FCQ01seVE3QS9kQ1Fq?=
- =?utf-8?B?VTBBQmtLckh6QTBGQ0hzQXdrVGhlUThuTDlGVzVZa0V0cDZ5NXlzOVp1V0I5?=
- =?utf-8?B?d3ErTmt1bXQwdGhQUnF6QjFPMElxZDE1clVlcXQzckp1MjJyOEY4Qlhiakor?=
- =?utf-8?B?VS92b1JGY2t0dUNGdFB3QzF2ZkczbndNRW1zRlVYOG8wZDkzU0E1V3pLTjE3?=
- =?utf-8?B?M2RYaWN4SnpwdTlkUDB3c28xRXZ5eWhmL1NHRXZZYzdRV3M3bytOSnlCUW54?=
- =?utf-8?B?ODZ5MjN2aVA0NmNpVXBocHl6Ly9oSkxraWwzRTRoeHFPY1R4QklHUVJpVUh3?=
- =?utf-8?B?dWJhZ0hQdmlVQXdWQlozYndrM1JyOWV2Z1MzdUhjcDhnb2JUVjRTelNCOHdR?=
- =?utf-8?B?RUR6ZVduM1RRZ1MrM2VBYksvM0RQRWU5b2FDdnVKRjlRQkFFOFoxdGhGTkJx?=
- =?utf-8?B?ZWZZMUtPM0ZuMWltR2R1MWJMV3RNOVduU0NWVlRBTW5hbHNFM3BXek95QWQ3?=
- =?utf-8?B?WWZ6UDVOWnVTZHZXTFh6L0dQcWxqL29zcUg0S1EvMno4K3dWU3UzdWp4TUdy?=
- =?utf-8?B?eElDRnNydGtFdk9KWUpobnFVVnh6K3A5MEhCbE5aTS8vQ3lxckZhQU5rV3Fu?=
- =?utf-8?B?cC85NTJ0WlZsNmNkVExBLys3aFFxcTVGVXVKV05XU1k4amptMGVuem9ycytT?=
- =?utf-8?B?QzVsSVh2TXQxT09CQ1N5YW1aVHBwaTV2TC96ZVJwNzhDR2EyZUtXV1ZsM245?=
- =?utf-8?B?ZnNkTDd1dmlDL1liWTEzNUJpWmQwNTltV0lVUFJTdTlUMEh6SHh5YXNPK1Zz?=
- =?utf-8?B?YnhlU0FONTVVZUNYdEk5YitiZkRXZmNwaXc9PQ==?=
+	=?utf-8?B?SXhKY1lpNnZzeFhuRTNtMytMWHRrQW0yOUV2K042aU9UL2lxTEtvNXhlZFYz?=
+ =?utf-8?B?VnB3Z1F0RXBEdmIxQS9UdEtmQUlxQTdHMFNTcnVrMk5MMWZucmtYS3ZWZE5s?=
+ =?utf-8?B?czJ0cW44QmVUMGZuajdyb01XbzhMaDQyZllLQ0g0YVV6ZWpORlVZbVk3c0sy?=
+ =?utf-8?B?UEhoNk1FVW9heitCQVlnQXlHc0ZiQmtDZGxFTWVhdGcvZjlGamNtblJzai93?=
+ =?utf-8?B?UEhFeGdxZGJ6TDFZbzJRc0ZGWjBHczFFTlhpTnltR1ZBUXh3MzlLSGVaVVg3?=
+ =?utf-8?B?aDk1OGFURFRLZmN2K3Ewd3k5QUhKVUFBK1REUmhRbjZidmdFNkNwZHQ0aFlm?=
+ =?utf-8?B?SFdGOTFqSngwU3Y0QzBrUXAvTHpvRHJZQkhIR3JrVUQ0OTY4c00zOXdkODE4?=
+ =?utf-8?B?R29UM0V0anEydXBIek1kUWx4RW02VDVaeHFjV2FkTGVrUG41N0VRZDl4Y2Y5?=
+ =?utf-8?B?Sm92ejZKVW9qWTNoZ1FXa2svOVI3UytKczdLVG9sNDdXQ2FLQWZxb3RDdWta?=
+ =?utf-8?B?L3FBaUIxNnhrWGF0dnl4ejJ1aC94VUxoYjFBZ215bGVHejJ6Umk3cVN6SS8y?=
+ =?utf-8?B?N2YvbHE2MzNiNVhmV3dQVWJaNmhTb2twZ1MrRXRPdUlEbkUvYTdqMXV0VXNH?=
+ =?utf-8?B?elJ2NEhhUmVnSzZGRjFyYk53SGhFMTNiaWtKb3lwU3VnL05HR2FrV2dxTUpS?=
+ =?utf-8?B?RmFnT1dlOUUya0ZDTnVwanFSSWR0MFB2Q0ZncVNBWjJJcVNidHFkM1dBYVIx?=
+ =?utf-8?B?MWlWQmJ1Z3ZNVlFmdWFoVjJackhyVEdUcVdxOTRpd25oYW9USC9STjYyS0Fa?=
+ =?utf-8?B?bXBQN2Q3NFdTNWNFQjVGS0I4Rm0wM2Rra2I1R3JsVGxHV0l2MUg2eEhvVkxs?=
+ =?utf-8?B?ZzhIT0V3TVBBb0E1d1NDMktNT2hMZ1RCdE1aUWJZM3dnSDRVamhIcmJEbDJv?=
+ =?utf-8?B?QTJyeTJ0enl4ZXRTaVovdmUvZWVTazV6L3lpNDA1eXBrVDFVVFhvNm9UUGt1?=
+ =?utf-8?B?OGlscklDZGh3Yld2QU05UlNyTmcrUGFFSGkzemw2WnZWVUg3TjcwbnhnNFdH?=
+ =?utf-8?B?dGxlZUZHR3Z4N1p6Y01nZjNtUWJ1K2dLYmt4TzRJcHNwK1FMemc2UklxN2Vw?=
+ =?utf-8?B?cGNRWi8wSzcrcGJPdVJPRjFBZUloZTJSalhyS1EwUmlkL0JDRXBrSGFZU3RE?=
+ =?utf-8?B?VGJiWTM0TitSQVRMdTcwNFJOQndtT2lpUERTdEZDckF2bXpIeEhWaE8raXRn?=
+ =?utf-8?B?UjVrT05rckR0TzlDY2orRzJVcDdsUjVHMUFIbDh5VUw5cy9yemU3YzI5d3Q5?=
+ =?utf-8?B?NmlTZFNTanY0aGE1SmMwcXlUV3ZjWnpjTHBsTW9hODRwaFJwV3hSZEFaTzds?=
+ =?utf-8?B?UVJwaThoWnlEY1JJa1E2TXZac1EvQ2xJUkZ1WEhOcEJiS2doUlpXeE9VZTZL?=
+ =?utf-8?B?UmNyWEtSWER6b0hWcGxiaHVrTmJaM2dyazZib1ZMKzB4UVBPSVhHaDhmSWY1?=
+ =?utf-8?B?eEZrREpJbmJ2bUlmZ2VtbVZxb3BoUWtXK3BwaDBMVDB4N3p3RG45SmxxOTJx?=
+ =?utf-8?B?VGZpa2RqVHNJSTk1dUJOSVdtZVJ1N2xscm4xV1BUOCtOTnlMc1lyMm5qOUIy?=
+ =?utf-8?B?VzNPQmtUY2NjTWY3WVd2YXIrNXZMVHVxdU9ZOHVrQ0RDY3lKN2pmS2RHWmZz?=
+ =?utf-8?B?M2w5d2hrTHBTVG56WEhDeU5yWFRzTHB0UGpFSHVtVm9BVGY1Y1NiSWJsZU9G?=
+ =?utf-8?B?UFZieWEyZG9LYk1OdVdtUkQ0RGhMZWVsaDdvbWt4eEFZNmJmU2RQQ05hQUhw?=
+ =?utf-8?B?eUx0NmlBOUtiM21FNTRiK0FFaXZuM3J3Z2k4VWRCN1ZPY2ZHWG9Xam9uL2l2?=
+ =?utf-8?B?VEJtQ2swVnlDekpBYkE1OUJSMldDdFp2N1hSbmI5QW1laHpmSmdpTTJFelJQ?=
+ =?utf-8?B?L2tuT3ZmZEg0aFBwa20xRG9iais0WGY3Y3Y1R3lmU3JJMmtOK091NFFNTEpD?=
+ =?utf-8?B?bkF5V3hwczFQTDJ6TmJvZ2k5WVllV1NzcG9FMnlTamZ2ZGowN1cyMkdWUFNr?=
+ =?utf-8?B?YXBKNGp6WHNodUpIcFl5WEgzb1I4MW83S1c3RTJSUEorUEw0SUtRTFpTQUFK?=
+ =?utf-8?B?dFhoWGREejJtajFTOEtucDVORm1OSzh5aFlTaEt3bDJqZE52Sk9OZU1JSlNV?=
+ =?utf-8?B?OE85Tnk4bFdSYlVMSjlzR0RQWUp2ZDZmblc1dHVzNmlycTNya3ZwY2k3ODNV?=
+ =?utf-8?B?Uk1LSU9iRGRSQlk4STlpTlJvNGVXQm9CS2Z1MTBDOGJBUWdZKzZxM2x1UW9T?=
+ =?utf-8?B?d09mMmUycTNXWWRrQlVCQU1mYzB2eUU5dVFWNnNLRlFHb3gzRzVCajFXZ004?=
+ =?utf-8?B?ZlpuNm1ONThDYlMzdGVpV25LT0tJNEJlZk1tQmI5a0JGellMM25ONFFkS2NJ?=
+ =?utf-8?B?MmJHMTdueERDUEV1THEveERRM0JScTkzQitFQzJ0YjBrSEFYUG1oWGQvTjNV?=
+ =?utf-8?B?T3ZXa2N0M0xmSS9tWXNiWXZLQXhhaUhabVFtQ1laT2hmakplUXRpZmo1Qkhl?=
+ =?utf-8?B?a3BvWnc1a2xlZFVkY2I2dUtmdnpxZm81bUVBd0I0SWlrOTNYelZZS1RDdUxS?=
+ =?utf-8?B?OG5pbkVZczBqSnAzR2FyVmdkZDFzZDFKL1pmRWtma3hMeko4WGJpd0pLZmFQ?=
+ =?utf-8?B?S3VIbXA5cUZ5VzZrditUNHZKMzJWRWc3YlpRUXNzbVFxakZtT0N5aWs4STdn?=
+ =?utf-8?B?dkh6NzY4T1BRMjgrNVBlSnkwU3QxUEhkaTBRKy9LekNVRFNuTXlYUld2RHRp?=
+ =?utf-8?B?bzN0TlZ6eEo5ODh0cE9FYlFaUUxQODJUekd1N0pNTnVLYXVhMTlhay84akR4?=
+ =?utf-8?B?cFVoZUtwZjN0RVhwU3l6bXdQMTRMNmJacHk1VWJ6Q2FtdGN3OEFxeThwTjls?=
+ =?utf-8?B?c0pyamdqb2I0RjZCMytlQStTeGQ1bGVTdHp6QkZzeTkzUHN2Z3BjMGF5bU8y?=
+ =?utf-8?B?Qm5wNElSRzZMaGJpbUh0bEkxd09ZUG9lckZXTW1YYXFjd3dDZWNCTUZjTjFj?=
+ =?utf-8?B?QTNMeTNBN1p1c0JZRFd0N1ROcEhXTE1zdUtpUkJ3enlEdnJSWmQ0VWhMalA2?=
+ =?utf-8?B?dGZLM25tRzkrc2xyRml6ejFpNHVuSWdnTzZIQXk1SEdUYno3T1dYMHQ5dmJU?=
+ =?utf-8?B?THZQaTdmMDFXVW9pc1ZGckxxdXhCSGVnNUhYcjdPSzg2N3JWY01qa2hlQm5a?=
+ =?utf-8?B?aXpNRkVZWkRYREN1a0ppZnUzRlJUZjM2SU9FOHd2ZmJWZXR3NGs3c1QxSzdz?=
+ =?utf-8?B?c29vMW9nWU5qNzFyclVtaytyMnYvS1FvZEFqQWdWVFljUkNvcExqU1VldVhZ?=
+ =?utf-8?B?WFkvUWozL3hpOG0rWkRYZEJldUw1S3VpclZ4YWFoN3BIZmVrd2RVN2FOdEpi?=
+ =?utf-8?B?MkFkZGNlanNUaDZKbmxWYmZYcndxN2NxU084Qms2QytOZ29jUHpyNUlNTWR6?=
+ =?utf-8?B?emVJb2Q0OEkzZ0dnazE5WCtUMGtXaytYRFNKelMvejRLZGFqdmRiVzdQQlFn?=
+ =?utf-8?B?QWZJVDFxN2xFekhzakdkMW11MGhrK1A0OHhhMkVtQWdZMTk5d3pUN3YzU3VU?=
+ =?utf-8?B?Q0NxWm00d1cvd1BNYlR2SmJ4L1lERVdMbUdmK05TRU9WcVBNRTdlVGhFRGho?=
+ =?utf-8?B?QnpBR0l2dXNYQkpSclNidW8xdXd1aEExVVpwZGllblB3L2trejl6dDEzM3Q4?=
+ =?utf-8?B?bTFCQVpDVmt4TzZOTG1XaTBEaWJJNm9md2RsczRUcm5GVGdLZU9qb0c5b3RD?=
+ =?utf-8?B?SkNmT0l4SWk3aGk3MWlDMEV3TUV0b09MVmVoQlVGd24zd1I4OEVwbUxUNXpF?=
+ =?utf-8?B?WWVxMG9ZVlVsMGVkRDdDVUpkb2hRM2dSYWdrT3NBcitHZGoxTTlzeldZNFk4?=
+ =?utf-8?Q?7JJ9ZxyAHk59DkLbNKltESRanOzQUCme5d33D7FNDCw=3D?=
 MIME-Version: 1.0
 
-------=_Part_1088696_1345214452.1699348246321
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+<!doctype html><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><!-- NAME: 1 COLUMN --><!--[if gte mso 15]>
+        <xml>
+            <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+        <![endif]-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>*|MC:SUBJECT|*</title>
+        
+    <style type="text/css">
+		p{
+			margin:10px 0;
+			padding:0;
+		}
+		table{
+			border-collapse:collapse;
+		}
+		h1,h2,h3,h4,h5,h6{
+			display:block;
+			margin:0;
+			padding:0;
+		}
+		img,a img{
+			border:0;
+			height:auto;
+			outline:none;
+			text-decoration:none;
+		}
+		body,#bodyTable,#bodyCell{
+			height:100%;
+			margin:0;
+			padding:0;
+			width:100%;
+		}
+		.mcnPreviewText{
+			display:none !important;
+		}
+		#outlook a{
+			padding:0;
+		}
+		img{
+			-ms-interpolation-mode:bicubic;
+		}
+		table{
+			mso-table-lspace:0pt;
+			mso-table-rspace:0pt;
+		}
+		.ReadMsgBody{
+			width:100%;
+		}
+		.ExternalClass{
+			width:100%;
+		}
+		p,a,li,td,blockquote{
+			mso-line-height-rule:exactly;
+		}
+		a[href^=tel],a[href^=sms]{
+			color:inherit;
+			cursor:default;
+			text-decoration:none;
+		}
+		p,a,li,td,body,table,blockquote{
+			-ms-text-size-adjust:100%;
+			-webkit-text-size-adjust:100%;
+		}
+		.ExternalClass,.ExternalClass p,.ExternalClass td,.ExternalClass div,.ExternalClass span,.ExternalClass font{
+			line-height:100%;
+		}
+		a[x-apple-data-detectors]{
+			color:inherit !important;
+			text-decoration:none !important;
+			font-size:inherit !important;
+			font-family:inherit !important;
+			font-weight:inherit !important;
+			line-height:inherit !important;
+		}
+		#bodyCell{
+			padding:10px;
+		}
+		.templateContainer{
+			max-width:600px !important;
+		}
+		a.mcnButton{
+			display:block;
+		}
+		.mcnImage,.mcnRetinaImage{
+			vertical-align:bottom;
+		}
+		.mcnTextContent{
+			word-break:break-word;
+		}
+		.mcnTextContent img{
+			height:auto !important;
+		}
+		.mcnDividerBlock{
+			table-layout:fixed !important;
+		}
+	/*
+	@tab Page
+	@section Background Style
+	@tip Set the background color and top border for your email. You may want to choose colors that match your company's branding.
+	*/
+		body,#bodyTable{
+			/*@editable*/background-color:#FAFAFA;
+		}
+	/*
+	@tab Page
+	@section Background Style
+	@tip Set the background color and top border for your email. You may want to choose colors that match your company's branding.
+	*/
+		#bodyCell{
+			/*@editable*/border-top:0;
+		}
+	/*
+	@tab Page
+	@section Email Border
+	@tip Set the border for your email.
+	*/
+		.templateContainer{
+			/*@editable*/border:0;
+		}
+	/*
+	@tab Page
+	@section Heading 1
+	@tip Set the styling for all first-level headings in your emails. These should be the largest of your headings.
+	@style heading 1
+	*/
+		h1{
+			/*@editable*/color:#202020;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:26px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:bold;
+			/*@editable*/line-height:125%;
+			/*@editable*/letter-spacing:normal;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Page
+	@section Heading 2
+	@tip Set the styling for all second-level headings in your emails.
+	@style heading 2
+	*/
+		h2{
+			/*@editable*/color:#202020;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:22px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:bold;
+			/*@editable*/line-height:125%;
+			/*@editable*/letter-spacing:normal;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Page
+	@section Heading 3
+	@tip Set the styling for all third-level headings in your emails.
+	@style heading 3
+	*/
+		h3{
+			/*@editable*/color:#202020;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:20px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:bold;
+			/*@editable*/line-height:125%;
+			/*@editable*/letter-spacing:normal;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Page
+	@section Heading 4
+	@tip Set the styling for all fourth-level headings in your emails. These should be the smallest of your headings.
+	@style heading 4
+	*/
+		h4{
+			/*@editable*/color:#202020;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:18px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:bold;
+			/*@editable*/line-height:125%;
+			/*@editable*/letter-spacing:normal;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Preheader
+	@section Preheader Style
+	@tip Set the background color and borders for your email's preheader area.
+	*/
+		#templatePreheader{
+			/*@editable*/background-color:#FAFAFA;
+			/*@editable*/background-image:none;
+			/*@editable*/background-repeat:no-repeat;
+			/*@editable*/background-position:center;
+			/*@editable*/background-size:cover;
+			/*@editable*/border-top:0;
+			/*@editable*/border-bottom:0;
+			/*@editable*/padding-top:9px;
+			/*@editable*/padding-bottom:9px;
+		}
+	/*
+	@tab Preheader
+	@section Preheader Text
+	@tip Set the styling for your email's preheader text. Choose a size and color that is easy to read.
+	*/
+		#templatePreheader .mcnTextContent,#templatePreheader .mcnTextContent p{
+			/*@editable*/color:#656565;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:12px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Preheader
+	@section Preheader Link
+	@tip Set the styling for your email's preheader links. Choose a color that helps them stand out from your text.
+	*/
+		#templatePreheader .mcnTextContent a,#templatePreheader .mcnTextContent p a{
+			/*@editable*/color:#656565;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+	/*
+	@tab Header
+	@section Header Style
+	@tip Set the background color and borders for your email's header area.
+	*/
+		#templateHeader{
+			/*@editable*/background-color:#FFFFFF;
+			/*@editable*/background-image:none;
+			/*@editable*/background-repeat:no-repeat;
+			/*@editable*/background-position:center;
+			/*@editable*/background-size:cover;
+			/*@editable*/border-top:0;
+			/*@editable*/border-bottom:0;
+			/*@editable*/padding-top:9px;
+			/*@editable*/padding-bottom:0;
+		}
+	/*
+	@tab Header
+	@section Header Text
+	@tip Set the styling for your email's header text. Choose a size and color that is easy to read.
+	*/
+		#templateHeader .mcnTextContent,#templateHeader .mcnTextContent p{
+			/*@editable*/color:#202020;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:16px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Header
+	@section Header Link
+	@tip Set the styling for your email's header links. Choose a color that helps them stand out from your text.
+	*/
+		#templateHeader .mcnTextContent a,#templateHeader .mcnTextContent p a{
+			/*@editable*/color:#007C89;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+	/*
+	@tab Body
+	@section Body Style
+	@tip Set the background color and borders for your email's body area.
+	*/
+		#templateBody{
+			/*@editable*/background-color:#FFFFFF;
+			/*@editable*/background-image:none;
+			/*@editable*/background-repeat:no-repeat;
+			/*@editable*/background-position:center;
+			/*@editable*/background-size:cover;
+			/*@editable*/border-top:0;
+			/*@editable*/border-bottom:2px solid #EAEAEA;
+			/*@editable*/padding-top:0;
+			/*@editable*/padding-bottom:9px;
+		}
+	/*
+	@tab Body
+	@section Body Text
+	@tip Set the styling for your email's body text. Choose a size and color that is easy to read.
+	*/
+		#templateBody .mcnTextContent,#templateBody .mcnTextContent p{
+			/*@editable*/color:#202020;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:16px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:left;
+		}
+	/*
+	@tab Body
+	@section Body Link
+	@tip Set the styling for your email's body links. Choose a color that helps them stand out from your text.
+	*/
+		#templateBody .mcnTextContent a,#templateBody .mcnTextContent p a{
+			/*@editable*/color:#007C89;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+	/*
+	@tab Footer
+	@section Footer Style
+	@tip Set the background color and borders for your email's footer area.
+	*/
+		#templateFooter{
+			/*@editable*/background-color:#FAFAFA;
+			/*@editable*/background-image:none;
+			/*@editable*/background-repeat:no-repeat;
+			/*@editable*/background-position:center;
+			/*@editable*/background-size:cover;
+			/*@editable*/border-top:0;
+			/*@editable*/border-bottom:0;
+			/*@editable*/padding-top:9px;
+			/*@editable*/padding-bottom:9px;
+		}
+	/*
+	@tab Footer
+	@section Footer Text
+	@tip Set the styling for your email's footer text. Choose a size and color that is easy to read.
+	*/
+		#templateFooter .mcnTextContent,#templateFooter .mcnTextContent p{
+			/*@editable*/color:#656565;
+			/*@editable*/font-family:Helvetica;
+			/*@editable*/font-size:12px;
+			/*@editable*/line-height:150%;
+			/*@editable*/text-align:center;
+		}
+	/*
+	@tab Footer
+	@section Footer Link
+	@tip Set the styling for your email's footer links. Choose a color that helps them stand out from your text.
+	*/
+		#templateFooter .mcnTextContent a,#templateFooter .mcnTextContent p a{
+			/*@editable*/color:#656565;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+	@media only screen and (min-width:768px){
+		.templateContainer{
+			width:600px !important;
+		}
 
-=20
-Sauda=C3=A7=C3=B5es para voc=C3=AA,
-Por favor, Ali Imran =C3=A9 meu nome, sou dos Emirados =C3=81rabes Unidos, =
-quero que voc=C3=AA confirme se recebeu o primeiro e-mail que enviei para v=
-oc=C3=AA, pois estou aguardando sua resposta desde ent=C3=A3o. N=C3=A3o sei=
- se voc=C3=AA ainda usa o mesmo endere=C3=A7o de e-mail. Por favor, ajude-m=
-e e verifique se voc=C3=AA recebeu o e-mail e me perdoe por invadir sua pri=
-vacidade.
-Por favor, entre em contato comigo em meu endere=C3=A7o de e-mail privado a=
-qui em
-(ali888imrann@gmail.com)
-Obrigado pelo seu tempo e considera=C3=A7=C3=A3o.
-Ali Imran.
-------=_Part_1088696_1345214452.1699348246321
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+}	@media only screen and (max-width: 480px){
+		body,table,td,p,a,li,blockquote{
+			-webkit-text-size-adjust:none !important;
+		}
 
-<!doctype html><html><head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
- </head>
- <body>
-  <div class=3D"default-style" style=3D"font-size: 18pt; font-family: -appl=
-e-system,BlinkMacSystemFont,helvetica,sans-serif;">
-   &nbsp;
-  </div>
-  <div class=3D"io-ox-signature">
-   <div class=3D"default-style" style=3D"font-size: 18pt; font-family: -app=
-le-system,BlinkMacSystemFont,helvetica,sans-serif;">
-    <div class=3D"default-style" style=3D"font-size: 18pt; font-family: -ap=
-ple-system,BlinkMacSystemFont,helvetica,sans-serif;">
-     Sauda=C3=A7=C3=B5es para voc=C3=AA,
-    </div>
-    <div class=3D"default-style" style=3D"font-size: 18pt; font-family: -ap=
-ple-system,BlinkMacSystemFont,helvetica,sans-serif;">
-     Por favor, Ali Imran =C3=A9 meu nome, sou dos Emirados =C3=81rabes Uni=
-dos, quero que voc=C3=AA confirme se recebeu o primeiro e-mail que enviei p=
-ara voc=C3=AA, pois estou aguardando sua resposta desde ent=C3=A3o. N=C3=A3=
-o sei se voc=C3=AA ainda usa o mesmo endere=C3=A7o de e-mail. Por favor, aj=
-ude-me e verifique se voc=C3=AA recebeu o e-mail e me perdoe por invadir su=
-a privacidade.
-    </div>
-    <div class=3D"default-style" style=3D"font-size: 18pt; font-family: -ap=
-ple-system,BlinkMacSystemFont,helvetica,sans-serif;">
-     Por favor, entre em contato comigo em meu endere=C3=A7o de e-mail priv=
-ado aqui em
-    </div>
-    <div class=3D"default-style" style=3D"font-size: 18pt; font-family: -ap=
-ple-system,BlinkMacSystemFont,helvetica,sans-serif;">
-     (<span style=3D"color: #3598db;">ali888imrann@gmail.com</span>)
-    </div>
-    <div class=3D"default-style" style=3D"font-size: 18pt; font-family: -ap=
-ple-system,BlinkMacSystemFont,helvetica,sans-serif;">
-     Obrigado pelo seu tempo e considera=C3=A7=C3=A3o.
-    </div>
-    <div class=3D"default-style" style=3D"font-size: 18pt; font-family: -ap=
-ple-system,BlinkMacSystemFont,helvetica,sans-serif;">
-     Ali Imran.
-    </div>
-   </div>
-  </div>
- </body>
-</html>=
+}	@media only screen and (max-width: 480px){
+		body{
+			width:100% !important;
+			min-width:100% !important;
+		}
 
-------=_Part_1088696_1345214452.1699348246321--
+}	@media only screen and (max-width: 480px){
+		.mcnRetinaImage{
+			max-width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImage{
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnCartContainer,.mcnCaptionTopContent,.mcnRecContentContainer,.mcnCaptionBottomContent,.mcnTextContentContainer,.mcnBoxedTextContentContainer,.mcnImageGroupContentContainer,.mcnCaptionLeftTextContentContainer,.mcnCaptionRightTextContentContainer,.mcnCaptionLeftImageContentContainer,.mcnCaptionRightImageContentContainer,.mcnImageCardLeftTextContentContainer,.mcnImageCardRightTextContentContainer,.mcnImageCardLeftImageContentContainer,.mcnImageCardRightImageContentContainer{
+			max-width:100% !important;
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnBoxedTextContentContainer{
+			min-width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageGroupContent{
+			padding:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnCaptionLeftContentOuter .mcnTextContent,.mcnCaptionRightContentOuter .mcnTextContent{
+			padding-top:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageCardTopImageContent,.mcnCaptionBottomContent:last-child .mcnCaptionBottomImageContent,.mcnCaptionBlockInner .mcnCaptionTopContent:last-child .mcnTextContent{
+			padding-top:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageCardBottomImageContent{
+			padding-bottom:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageGroupBlockInner{
+			padding-top:0 !important;
+			padding-bottom:0 !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageGroupBlockOuter{
+			padding-top:9px !important;
+			padding-bottom:9px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnTextContent,.mcnBoxedTextContentColumn{
+			padding-right:18px !important;
+			padding-left:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcnImageCardLeftImageContent,.mcnImageCardRightImageContent{
+			padding-right:18px !important;
+			padding-bottom:0 !important;
+			padding-left:18px !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+		.mcpreview-image-uploader{
+			display:none !important;
+			width:100% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Heading 1
+	@tip Make the first-level headings larger in size for better readability on small screens.
+	*/
+		h1{
+			/*@editable*/font-size:22px !important;
+			/*@editable*/line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Heading 2
+	@tip Make the second-level headings larger in size for better readability on small screens.
+	*/
+		h2{
+			/*@editable*/font-size:20px !important;
+			/*@editable*/line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Heading 3
+	@tip Make the third-level headings larger in size for better readability on small screens.
+	*/
+		h3{
+			/*@editable*/font-size:18px !important;
+			/*@editable*/line-height:125% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Heading 4
+	@tip Make the fourth-level headings larger in size for better readability on small screens.
+	*/
+		h4{
+			/*@editable*/font-size:16px !important;
+			/*@editable*/line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Boxed Text
+	@tip Make the boxed text larger in size for better readability on small screens. We recommend a font size of at least 16px.
+	*/
+		.mcnBoxedTextContentContainer .mcnTextContent,.mcnBoxedTextContentContainer .mcnTextContent p{
+			/*@editable*/font-size:14px !important;
+			/*@editable*/line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Preheader Visibility
+	@tip Set the visibility of the email's preheader on small screens. You can hide it to save space.
+	*/
+		#templatePreheader{
+			/*@editable*/display:block !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Preheader Text
+	@tip Make the preheader text larger in size for better readability on small screens.
+	*/
+		#templatePreheader .mcnTextContent,#templatePreheader .mcnTextContent p{
+			/*@editable*/font-size:14px !important;
+			/*@editable*/line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Header Text
+	@tip Make the header text larger in size for better readability on small screens.
+	*/
+		#templateHeader .mcnTextContent,#templateHeader .mcnTextContent p{
+			/*@editable*/font-size:16px !important;
+			/*@editable*/line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Body Text
+	@tip Make the body text larger in size for better readability on small screens. We recommend a font size of at least 16px.
+	*/
+		#templateBody .mcnTextContent,#templateBody .mcnTextContent p{
+			/*@editable*/font-size:16px !important;
+			/*@editable*/line-height:150% !important;
+		}
+
+}	@media only screen and (max-width: 480px){
+	/*
+	@tab Mobile Styles
+	@section Footer Text
+	@tip Make the footer content text larger in size for better readability on small screens.
+	*/
+		#templateFooter .mcnTextContent,#templateFooter .mcnTextContent p{
+			/*@editable*/font-size:14px !important;
+			/*@editable*/line-height:150% !important;
+		}
+
+}</style></head>
+    <body>
+        <!--*|IF:MC_PREVIEW_TEXT|*-->
+        <!--[if !gte mso 9]><!----><span class="mcnPreviewText" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">Découvrez combien de kilos vous pouvez probablement perdre avec l'application KETOXPLODE</span><!--<![endif]-->
+        <!--*|END:IF|*-->
+        <center>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+                <tr>
+                    <td align="center" valign="top" id="bodyCell">
+                        <!-- BEGIN TEMPLATE // -->
+                        <!--[if (gte mso 9)|(IE)]>
+                        <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                        <tr>
+                        <td align="center" valign="top" width="600" style="width:600px;">
+                        <![endif]-->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer">
+                            <tr>
+                                <td valign="top" id="templatePreheader"></td>
+                            </tr>
+                            <tr>
+                                <td valign="top" id="templateHeader"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width:100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding:0px" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width:100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 0px; padding-left: 0px; padding-top: 0; padding-bottom: 0; text-align:center;">
+                                
+                                    
+                                        <img align="center" alt="" src="https://mcusercontent.com/65696a478a009df233f128d88/images/18e89cf0-99a4-dc42-32a6-0c351d47ca65.png" width="600" style="max-width:768px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
+                                        <img align="center" alt="" src="//mcusercontent.com/65696a478a009df233f128d88/images/18e89cf0-99a4-dc42-32a6-0c351d47ca65.png" width="600" style="max-width:768px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
+                                    
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width:100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top:9px;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="600" style="width:600px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width:100%; min-width:100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
+                        
+                            <div style="text-align: center;"><strong><span style="font-size:32px">Pronostic individuel en cas de perte de poids rapide</span></strong></div>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table></td>
+                            </tr>
+                            <tr>
+                                <td valign="top" id="templateBody"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width:100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding:0px" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width:100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 0px; padding-left: 0px; padding-top: 0; padding-bottom: 0; text-align:center;">
+                                
+                                    <a href="http://revision-online.info/WER4MXFtVWRqcDZHazJleEFpbVZqbTd4eUZoUktkQlBtdHQ4Q1J5a1BhWGRBYm9RZjJVbFJrQjhXd0p5S1paa2QvZUs1Q3NkWjFxODVlNWxmQkN5bXBGcGU1d0laWGdVY1psVlQ5U05CdDVpQUpZZVFiMjNIdkhBNW42RThqTFRwWGhic3pvRTlBalhmQ1hKbk9YQVp3PT0_" title="" class="" target="_blank">
+                                        <img align="center" alt="" src="https://mcusercontent.com/65696a478a009df233f128d88/images/060d9721-4642-8f44-bd6e-797179ac599d.png" width="600" style="max-width:1048px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
+                                        <img align="center" alt="" src="//mcusercontent.com/65696a478a009df233f128d88/images/060d9721-4642-8f44-bd6e-797179ac599d.png" width="600" style="max-width:1048px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
+                                    </a>
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width:100%;">
+    <tbody class="mcnTextBlockOuter">
+        <tr>
+            <td valign="top" class="mcnTextBlockInner" style="padding-top:9px;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="600" style="width:600px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width:100%; min-width:100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
+                        
+                            <h3 style="text-align: center;"><span style="font-size:16px">L'utilisation et le succès de la formule unique de KETOXPLODE ont été prouvés par des études. Sur la base de ces données, nous pouvons calculer le temps nécessaire pour atteindre le poids désiré.</span></h3>
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
+                
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnButtonBlock" style="min-width:100%;">
+    <tbody class="mcnButtonBlockOuter">
+        <tr>
+            <td style="padding-top:0; padding-right:18px; padding-bottom:18px; padding-left:18px;" valign="top" align="center" class="mcnButtonBlockInner">
+                <table border="0" cellpadding="0" cellspacing="0" class="mcnButtonContentContainer" style="border-collapse: separate !important;border-radius: 4px;background-color: #9B0ED2;">
+                    <tbody>
+                        <tr>
+                            <td align="center" valign="middle" class="mcnButtonContent" style="font-family: Arial; font-size: 16px; padding: 18px;">
+<a class="mcnButton " title="ESSAYEZ MAINTENANT !" href="http://revision-online.info/WER4MXFtVWRqcDZHazJleEFpbVZqbTd4eUZoUktkQlBtdHQ4Q1J5a1BhWGRBYm9RZjJVbFJrQjhXd0p5S1paa2QvZUs1Q3NkWjFxODVlNWxmQkN5bXBGcGU1d0laWGdVY1psVlQ5U05CdDVpQUpZZVFiMjNIdkhBNW42RThqTFRwWGhic3pvRTlBalhmQ1hKbk9YQVp3PT0_" target="_blank" style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">ESSAYEZ MAINTENANT !</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table></td>
+                            </tr>
+                            <tr>
+                                <td valign="top" id="templateFooter"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnDividerBlock" style="min-width:100%;">
+    <tbody class="mcnDividerBlockOuter">
+        <tr>
+            <td class="mcnDividerBlockInner" style="min-width: 100%; padding: 10px 18px 25px;">
+                <table class="mcnDividerContent" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-top: 2px solid #EEEEEE;">
+                    <tbody><tr>
+                        <td>
+                            <span></span>
+                        </td>
+                    </tr>
+                </tbody></table>
+<!--            
+                <td class="mcnDividerBlockInner" style="padding: 18px;">
+                <hr class="mcnDividerContent" style="border-bottom-color:none; border-left-color:none; border-right-color:none; border-bottom-width:0; border-left-width:0; border-right-width:0; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0;" />
+-->
+            </td>
+        </tr>
+    </tbody>
+</table></td>
+                            </tr>
+                        </table>
+                        <!--[if (gte mso 9)|(IE)]>
+                        </td>
+                        </tr>
+                        </table>
+                        <![endif]-->
+                        <!-- // END TEMPLATE -->
+                    </td>
+                </tr>
+            </table>
+        </center>
+</html>
+
+<br><br><span style="color:#888;font-size:11px;font-family:verdana;display:block;text-align:center;margin-top:10px">click <a href="http://revision-online.info/SG5OVUkrZ0ZoeCtEOCtRRUwwSEd4K091eFVaUGVUUWtUVktJN2dtS0w0c2p4QUplS0c1SElUYndVTmhiS0VZOS9CVWZ1STRJaUNUbFFWK2dHQTE0N2hVL2tORGFGQVNXM2dXVWVCZjVpR25TaFptS1ZUcXc2QjRMcTh3bGNiZDdHLys2RFFTY2tKY2RnZzVFdXAvMnR3PT0_">here</a> to remove yourself from our emails list</span><br><br><img alt="" src="http://revision-online.info/NUEvdDE4TU5DVHJyeTVmNmlaRzgvQ3VvbndFWDBaRjNpOVBWWnN2SE03WFRTdGpBeTNrQVc4RS9iZVpDaTA1K2pHMGdBcElrb01ndDkzTXIvdHFxbWpZUTJKM3IvUWpGTnJEZkdEWFV4NzY1TEcvU0FOaHBhRGtYV3duN1hGYXJpNkd0QTl6UURTS3JQbSt1WTNiSzB3PT0_" width="1px" height="1px" style="visibility:hidden">
