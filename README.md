@@ -16,3 +16,12 @@ sed -i 's/your@email.com/phishing@pot/' *.eml
 ```
 
 Also, follow the filename convention. You can redirect phishing messages to ``` phish.me.again@gmail.com ``` so that they are indexed too.
+[hr]
+### FAQ
+
+#### An email from my company was cataloged as phishing in this repository.
+* Your website or platform allows users to register any email and there is no validation.
+* Your marketing team is using leaked email lists and sending spam.
+* Your servers are not configured correctly and allow attackers to carry out email spoofing attacks.
+#### Can I integrate this repository into my feeds?
+See ![LICENSE](https://github.com/rf-peixoto/phishing_pot/blob/main/LICENSE)
