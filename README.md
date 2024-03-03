@@ -16,7 +16,7 @@ sed -i 's/your@email.com/phishing@pot/' *.eml
 ```
 
 Also, follow the filename convention. You can redirect phishing messages to ``` phish.me.again@gmail.com ``` so that they are indexed too.
-[hr]
+___
 ### FAQ
 
 #### An email from my company was cataloged as phishing in this repository.
