@@ -1,0 +1,925 @@
+Received: from SJ0P223MB0639.NAMP223.PROD.OUTLOOK.COM (::1) by
+ LV3P223MB0968.NAMP223.PROD.OUTLOOK.COM with HTTPS; Sun, 25 Aug 2024 01:25:51
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=HRWcjmh57yjZ+OIddIe8hxNKUctEhIdvtar8bLhPR0VOvxF8PZHEDAMkEaZzkminqv1qTxH6JavPMt67qZMn48s9UcRs8Z8FQVq2FrzPoKppqUUQPHVjHMUTbtTvWSEMXD12C+HHyyT726H4gsAtFVV89PWhghtI0rGAR3OrwtgVW2wEk2/nSH3oOEL8ugt8FPZyNBe75rRCTHuHf2mA0sZHQUa4oik5Ba33BnRiEqgR3+WyXWSDxs5NcUiebnZu3zck2/A2iLVJA8lYN3wMs9qLAsHPSVKAAk6d7HMzeHMpRe6EkoPVhjUh+PQnWVen31ytvAmDX6i6q5NQ66WdmA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PZRYC1kRgPSyl7pczQPy/jo72iA0vMCWXB2y+yQPklQ=;
+ b=YnPHpOFiWqKW/X5g79//HVgycEAZb/slgp3sm7n8CvEyWRBGWspvY2j5BoBFlRFytV7p8zBQEfo/Z/3IJOruUSF+M6UJFt3fhhHHVU6ewV/hLYDi/+fhYLL0YPBSLxMbdO3eqG0GM9u+JK/xsonWZXb4pEI5eNGzE5vlnZY2iGcdd18jjrxv0fTM1F2Whduswd6YYQxWWAdb5QZo4KxlYXP95g1GkmVL3oY4z34D/OxFmC7+4M6wldzmfjoGt1wjTY9pT61Y3fe7GLU3pkLKqhn2bacK5+Cd4rDF/egP+iwgqABgp4/kcA0x/j/qOVnVclg6Rvj5TrIXLnh+9E1RtQ==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.100.223.224) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=asdhbsvjldmopsfjij1.at9adawli.pro; dmarc=bestguesspass
+ action=none header.from=asdhbsvjldmopsfjij1.at9adawli.pro; dkim=none (message
+ not signed); arc=fail (48)
+Received: from DB3PR06CA0019.eurprd06.prod.outlook.com (2603:10a6:8:1::32) by
+ SJ0P223MB0639.NAMP223.PROD.OUTLOOK.COM (2603:10b6:a03:478::14) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7897.23; Sun, 25 Aug 2024 01:25:49 +0000
+Received: from DB1PEPF000509EB.eurprd03.prod.outlook.com
+ (2603:10a6:8:1:cafe::fa) by DB3PR06CA0019.outlook.office365.com
+ (2603:10a6:8:1::32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.23 via Frontend
+ Transport; Sun, 25 Aug 2024 01:25:47 +0000
+Authentication-Results: spf=pass (sender IP is 52.100.223.224)
+ smtp.mailfrom=asdhbsvjldmopsfjij1.at9adawli.pro; dkim=none (message not
+ signed) header.d=none;dmarc=bestguesspass action=none
+ header.from=asdhbsvjldmopsfjij1.at9adawli.pro;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of
+ asdhbsvjldmopsfjij1.at9adawli.pro designates 52.100.223.224 as permitted
+ sender) receiver=protection.outlook.com; client-ip=52.100.223.224;
+ helo=APC01-TYZ-obe.outbound.protection.outlook.com; pr=C
+Received: from APC01-TYZ-obe.outbound.protection.outlook.com (52.100.223.224)
+ by DB1PEPF000509EB.mail.protection.outlook.com (10.167.242.69) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7897.11 via Frontend Transport; Sun, 25 Aug 2024 01:25:46 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:35117D3C6F76285AA5BD3136DF42C238EA34D0E1AD2F273AC2B7B8F6C4417F16;UpperCasedChecksum:1BA1C91ABC05848DEE9CB2AD1BF0F9A03B828DAA86B63BDCFE626A7B5C8D462B;SizeAsReceived:18051;Count:51
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=t7YcT26C2uGigPsvSCDqy8604v7gvQBLHgZp0BoE8YGwdJQYOtFbBTL5OUGSOaGvhj1oiVPVZM0RiYppPVO8rqiJSnPa0fQ/BrXnGeRx28VaOvpC8HWvf31XgmiEfcfIx9he+ajZ2WMBhow4sr01uJBwz8yLej2fwNXJaar+ZOxh78Sz3ZkJfRLvYp12CRtXPuGGEckjxSa5WG7XPYQZHjyDerqr/s1zYyhR68PV3CAlsSZq7OG31Kbs1oMrVKJbrLYr+U1IJ+z5rc9ig9p0TTTdYfZ9wxJ4XaUydigCFnnqNKDdvyIv/uskx0aCVrP/1Zgdo8XXTKUiITHTzJf2Kw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PZRYC1kRgPSyl7pczQPy/jo72iA0vMCWXB2y+yQPklQ=;
+ b=WUIFAh3bPXIL4VcmTRZj8QzUMnAkb4dKazJNPE3ArMO+Zk75q3h36VLP0HmpINnBmD14TVp0FsuFL1eEe99/i62/eMN7jvlBh2erkbxW9zCKMPSSunolb25yZMHZVDE+vqyNOYxJIYJBYsAuO/jRCNfI7Ln3BRN3NcXRQddfJbvgLRSFVx535sA89d3U1QVdeHhfHNUlHn6B9Z/8qAE/rYpp9fu35toZwIoa2YOIiH5zE7CKQtuRELz6UDZWoaTI/bBSkeuQDKNJHvrGyhM+12YMNPq0DXo6ABhmdh0jzi2rougq88zN1yQgNSewSjeotJ5hc9+pfXVugCNQWoGT9A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=asdhbsvjldmopsfjij1.at9adawli.pro; dmarc=pass action=none
+ header.from=asdhbsvjldmopsfjij1.at9adawli.pro; dkim=pass
+ header.d=asdhbsvjldmopsfjij1.at9adawli.pro; arc=none
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none
+ header.from=asdhbsvjldmopsfjij1.at9adawli.pro;
+Date: Sun, 25 Aug 2024 01:18:09 +0000
+X-Mailer: mlgPD
+From: Deep Wrinkle Filler <kirsten_filipczynski_95707@asdhbsvjldmopsfjij1.at9adawli.pro >
+Reply-To: foxnews_EBE6EB920F352E3pq1sk68B95859F766C4EE231DBB0F1@inbox.foxnews.com
+To: phishing@pot
+CC: phishing@pot
+Message-ID: <6DC0209D926CF3CDFD75F98ED801E7D4-6cd5e978a278470aa0bb1fc1566c0bdf@inbox.foxnews.com>
+Subject: 𝙋𝙇𝘼𝙎𝙏𝙄𝘾 𝙎𝙐𝙍𝙂𝙀𝙊𝙉 𝙍𝙀𝙑𝙀𝘼𝙇𝙎 𝙊𝙉𝙀 𝙒𝙀𝙄𝙍𝘿
+List-ID: <IKNLAx59R.xt.local>
+X-CSA-Complaints: 7Dve3kLrhL.csa-complaints@eco.de
+X-SFMC-Stack: 11
+X-mlgPD: LhY05RkbCN0iNpA98dYBGxvKqKZWi77jYtq/+ZpIK3x9Ries/U1tL91=
+In-Reply-To: <22CVZJlhu4oLpeTREBtszm7kDfpmjxC2CclDBcejECBboLSVJYjrFg0ot0IGm0HbJZICxQSxSuhoJjLlnYebeaI4SDlyIfawviTkjFvU9MwIMO2www60HiXvFCmqIv2dX7gW0wPLo3SxEK12YlDzPR6glEHb9gwMcZlY0VaB2RHffswTEnDYuNbCQMbKSosZxhsWtfc6mO9xzQ05XGkgsVVJ8OXnVONXTCO4xosWQs7ykDoMOow87QRO0PpFsdYn0opoE9QKHwrZNHqJ67uejuRXgiGVd9XllrNZYjqq9nPtShTOmVfidIIjz4JKCWsN7XiVYjD7XxjEBjIxlPcTaBv6uopk57dt0pCAlX6jMjPSk3ZkQ1ycirOKE97Pw7WtcfN6yV3xVQycBCobQA272M2FkFGbKfMHUMoPDo4eJeFSiLOblz0wwXkKLoz1TI0mTbxLquDDdWieY9HD7pBUrK5zHGuPKIiRG9S6t3Zz5pcqHY68JajROFKBuBbtIcaYSAc7r5eVZkyW6DMdgUvWeFRmvKDeK2iG4Pyggzbhg9UYaRJsDUAD69HQceuLiBUKlYK5AsvJHRIyBLjrfkxrXptGlo66DHOzoNzZrmGP0GZCnMOHSkIZMi7yn0wWgLTrl2sYelAha4amqcTtfkwgdp7mltmJ37DXYp0pNI9KXpRdkkqYtZLqNbjLHVAeYg88j3H82SGkl8VcFK2nGP14TdQ63pbRzQavAecrf7kktn4YqBy619wwMnaa1Bqbw4z7YVY8AN4Bj0FhL4TCakmvKtvSwZUh8pq9jwHN1fA40v70TyV6dcWP2168U1lGBNDrUhPXSpVo77ACcubzXIWHMi4knVl1zoZ9Esw1rDX03CdKBRhKxIQJk88MWxs1CaWYXw7u91y4L2jc4Xn5dq8wwLtYbKDB6HOOho6inGkTJtVMRzsPBZ71O7ErZayNamBfdUnWdKjTUnBJ5OrPZI5OoFqb
+ jjLh7r35qiKoNMyBNqpDhLQQTq9337AtOXpE217jHfN0KGsHdvjxN96JwNhjULlGNHRmNAeDExVCPbUyEF1JeFRopKgZnVE6Aj9Fx1ds3U9dIRp1nWiTtyMcr1ZurqRgQ9q8CcjUYZFeAO2UuLFiubq5U0dBu7NjAuEMAKo9oTOW6lefKHjqHarpInX4uGGy73EpBMyyS7Dve3kLrhL7Dve3kLrhLXrMAdfz1JhSeey@7Dve3kLrhLaxhPap1acqLw9aAfwrKL2klmzIgBHW8Nt4UVD2HVwY628LFoHDT9hNOvM.v20JpOiZQNdMxa8hg6UpFZkyBSrd4JLqoTL8VaC8KIws5v6ywTLM9wToOREobwOAZDhG9mZC4zKHlCdKs9Dl1Djo3xgL4YAY9USkbn1ecvjKhgtoFy7pqmdqN0EcgjaIubFx5V6IpslNy02vmoTLy053PdFOtr5Cn3qceSTH0SOjiMlidEV4YqKXtgeUGIHzEV1tO5TnsL4P4IwYKcJjjPh6ZmcaiXI3r21Bu8ljQRfAItsn6uRgsgXrqCLbj1CvBdsXaubNhVR8B4zYOLlbi8QvGjP9OavCCrD20MfpAU6dvtOcvDaegd1B5iYSNwmawhpXjGp7mT32j4GpqZfcNu74Cd0t11AvnDdoH1IiQDhhKJpBHwqYTZjkZIEWWliTQilgzrj0ocBF4N46OUnwU6pTAKqZkRRmx6ZV4CJ2ta8Zf3uVTGTZCKHzxjLk7Yjv776mHtqeR0qPZP0mkM0G5s0nSrOZLCdMikPgIec3gwEU547bw0G7CSNHMA4KqDrAHen8SHr02G0lFP7IWmFs6UdZWgbe2uCbNrwZmgyEfaAiI8HpIuM8SRrVL3PXGxSvR4T79s3QbwXh3WtdyVngcet3I8rtMt9swWdsQTjOIGQmuX8Fr5THbRp718F9Rl0DkjvaXjVTTl0AgTIDArUiDjEXGTrD1IeSyVolIIxjibgAsor9kZgPn
+ b
+ QBnyM3LDQrFAPSbtPHUHTRpqbNS2llyIK34k3wXZllmN9Ur2YeD35aODYo0ZUd4C6R4L9Y9Zwl2N1IPlqBoqHanCJv5r8botsJ74ouSacCsNGhlP8vBQV5LpjcdlAGDrcmOh9G6g2ZgyT64307AQrlgWLMPz8bcVIkhLy79tgThRGozdQBOq4SlcgN3FYjrveNXnDtnNpzUTYJkg5NSWc0rtlk5ilCbOKR0F2DUtT4KPf2PRgRFxJywvWsIDWZFFDZl7s7rQHFDodNGWiv3sGkC14oOUpyHkCCgnrG1w7RV19KCGzW4wPVaSUY3x8SPELpPUSfSwNjlNLOGCsoQ3yfQrKgQLBtjkLLKXzEXuVGq1DDvFv8zlIe9JlkchjAya0QLdEuwN1smTp7JFliJhZ2A4fpNKtlPIzCvvrIOymgQ0xPHsKyQ5W1K6024K7B8C1CFQtVbObU3qs8qOXjOmu9rT3WRxPEoB1HGvKGo9P3cPejS4sKeLLVobuiOYWf59LNNXRmQvOgdJWDJPibuZkKSnlXBmUcvTU7ryslwrsfv9UaHs3jN6LwpzZy9E9BT7s3ElXFscyiHfJGrcOSoVibs8wX9psZNk2FMqU8IxJfFvtCLWSuhuFNTY8ExCc2c3xqjqIv2kSxYc2zsnfuHGejXi1Qi5XkxDkfSI5YRXd70Dj7v47NR3wCaoSfxN2M6Y1Hs5pF2LwiFyQhh4WrhqM5alOe4rVWqqYApLQqdkG7iBuKyfwsmYHPrXKss9Pf2odxlAHKcvSBXiajjLyo2HD1mW7IJZTbWOr4nVixo8M4GnU4jowAUtpKDIBomFATMgaRNEAtP7syccwNhYMVqdIj1ct7Ju5faUZYQGQzR0B09a3XKUFVYhBlXDLn0USZMboYFwYw9RGTvxcDwBOrKZcHcM8JSWUH43ASeqKVFzqbtSJrLPR07fNLfr1RHqWsi4GIBewjXUT671glfsWoS17ocdWypMYei8JxvJI
+ 6
+ I0BZWjpvpzzxHfDejixkHzL7gWFRLDumbB3qjOPkxCLTs5riE2nMaTK7M9c35mtFFnGYX2Y7OKW5gHVAefStpjS9t8V1WsYBIiBC2rMgO5OctonNsae4kWhrKSCpG6noDFixEvYESgTkNZfzN1M0bTdmGuRXkfrWCgG5lISoiEl0VgTbUXdDotWUyOsgBysuJBUGPsr9HGKMBmp0T1mqqKFlADjshRdm8MvwbZSwd1mL04Sd6Vogx7RgdAI4FplZxTyKziagplqh1yStfyGHUHsMWzCg4A1k0kgmNOx42exmL53tzRHr1aoM8m83NHzjR0bRbQ1P2wqhhFfrOkqAgIMcoCabGUWYJLbYSHUfcPp7Os7doizSCHwFtRqXA0Yq8bA0dl6o167vVaXAbybQnnvJjaa63WluvnVjeTMky0TBezNUu3vTBJrvsglWukyy9djfDI43JAJk9Gjw1wLUuhKPQox5py1NYfOwO8oVDByGPRWCtvN8Ouvzw3EAI5SMyFwWpdQeiC6m4TBPTKUADuTLRRMgcvZMG836IoFYZIv0y8DFgwwh54zTS6qhMyJhGn20eqGW993eOqctkE1lUlOCFQb5u2IYDK9n4Fwm9NDn0MNecwBF6emElWs94puyPNtkaWFOAZ3ZliQYDujHvJ03QVnzfSId1lS9b7R59aqbYpB54gJKu71HyFMS1O3U6dLOvHS5Wf0h2cr3atui25rjxiyoU0TwuPsAQG7DJWT1EXzu3UxjcmawREGeERdWLp237gm6ykLKuUPg69lDH3GWCF9eUwIj6uxggf854T0OWJuYDy63c3fRA4xlB17I4LSebS80wrCCT1LHHfsmT0LRTAwEiAq9OzLIXrkrMjU2g2bpd4hJtHubHTAmue2Yb222GYEwVLmG0ltcrtz63s6MZsTrOKoqmvml78NGpw1IG0KyT9Sc9ZMvMjLKVBe2x7yweBzOPYLro8aqy2I3FRSgepcfvVu93tz5Q
+ w
+ ZXSjpF3pK9PefiUkZmHOv4OTwx9qDvTdN55xChViBBZQPFExOLa2bsU2DSLvUXcCYsF9XnKQUm13M1zS4tUECiA382PKmV85ro1GXNadsTmDkpExIHHl0NW3qeYgEOlqEZbhpJSZSOLqGTNbNVdXMNjWdmu1Lb562QVnwWfBWFdMg2Wf4Tq5c61bzIKr00O2cthMUzYKBIrMV19GFEkIgLbQo2KohVApVayZ0mknSDymohRNuUvPBZawACzYIALb0j6n4DEf7yamgH3VujiCdtFn4dy4PDll4z4u1pj1fAPidjMiz2h4mQy6H8F3yD7KBiw3XVdp5vLtRe6TrA2XfiTpJXOTL6LWOC401ZegQXW33flJHzV0nckHIfOwEYfUooFFcSPT2ToM2SZd3TTVEdq5lO2TLhOn2xiCHcIVzrTUklYj9XgHDGIsNDqrrdALDFW5extZOxIeHxojlqOqieyBXlCuopcnzWcDbu854jfKYtKV7zmcY0kDoGWGZSgt36pyXO6GukgzhLy3RWPuEeyDqvPfVFVkhWJE9O8z38ldeiNvILZvKURYkyU6lrwaEfTUFeXgYJyAGlI4ZGBPYd8P6urJFKE83tS0F9qq8y58vmsnBbyzAbQ8JfZzTiN3cEXTuGfrOtDSvxX2ghR7AQ9KHhDlq2zog32feTn5WfGWKckm5Ovdeap02hUcu0IFgYPuOu6BuJaC6is0fNTtlYiMEIwBdbmLnfpUVejpLfP12PkAENMBgqeCA9fWtDyYJAhyhQiCRJIesJwaTrN2eUxjGNfEGPjlN8xB6lNPhyPpCnuWHHq1tPhAJPtj3k5jcJlhmlLZXaNss7UPFmzbJdrWg87Vx3Wff8QmNzWCVzQRqM2IHXBoX0PcHzJFgOcs06UoGqjva5hJ6TOqe4ksfGq1nyz9IGZ1r2iQ1oItJ4ZhMqOGs6IZ1IoiK0QzfvJcaPDaCObh69kKXr26YTh26JN3bUF0c73yZQw4f
+ q
+ IuXbhKRIypGpAI6OiMVGi7yCd86z2zqK9uu4DlryUbL1JKMR0FLIONFqQ1HCjCXYjyH2itMSzAPs0r9UADc58vbV1dEkaBktuwDJWn11CWQLULM3SwpYTc2t0x7xH0n3g0NOofPnVd2ggYQh4nndA5mhOUej97e1E4mi5nEIi5c6IJunD352qeL4WKA2Y9neRaKKYrLDVcpZAIxHeDhczenDEE8Z0DBcm7t0YP87YsjsmIvhVWeLEclDNNlci9egL0z1STSVCSkMZ3w1N73Rwc9EoLUXmNEMool548JmoPacyxQ9x90Zr5mQiLJd0rwsjFU1UQhHpa13aPsaiSUh5Dsgu2q4fKklyHQOvA5G3madyGNSerQrAZH86Bn4hSzvkNifUU61jdNCLhxFL9GKPcE7d15nYe1KwKNFcrKe3s82zKE8Lf3aYMxLE5WcW8mD4HbF6zvqC6XcYdtn1wxXoXqfdu8Z9btkxqXxo46i9KaNfuLh0dbnngbyoEF5KFpcCc57hgQRvrnbfEktuLeWZYQpxOZ8YuGtH8BvKSsnVr2U4yslhEkXUdYoQcxmsSbQgt6bAemdM6sQ3UZakkqqQVLa3fQlWd61t6TZQKcRv1gPDaosXhbWJT17DYJ2DNfKbzkiDPls7IqWCRAq0TlWRnaNTRGX4y4F1i1N4rT1wQiUCXYsdxFJ0ddziyC9rI2YvdOPoQDZviHHNyZ50ivSHWSkMzss296AdFbM129bg3zfONimvLrltBbI0cSaLjjfbcj4ASOhsrBdD4TR4y5mcSaBpUkaasJZu5m2dzsBsLBnEkZKVMaYzWkVQRgTlwyCiBt7AT8KHXtKTOXVDj5AbJGYOX8BQ8YyYJ969yGbQeSnxeSLLosN6lXS91aUI4KjzZE3q6d9vdDTOzoIaOnbR7G8oeAcn0pXOvrWvHvcR95z4wg2RG3UsZEIJZPaSja2BJDrtoiWQP9K6FuCtLrIRQS6sBeuHUbUssRuO
+ p
+ l33lx3Xo6rblmeDDTBw9Up9s79xGoYg2YUJdd3peEA4DqCudf7YA89ev859mbtK7gfHYFAz9htbiYI7bKhGJiwsejRw6YAL9JktSLcDaT8rwUQ6EtLChjcANXZ4J3kOkuSdrUih8edHFMd04K5qjMr8hc6N0ucbH1nl3h6RfUIUiXvMawFOs3VTmPEYERkOixUGZVR3Zh4oc1UUaj7exb0pN7EFAkKUaC0I9cgsPQr7NKOcgRUIjXbdjKZPts0Kn3rarSEWXlnaz7h4igCn6XR3xysZXTcrJAAJP3gyupNG1An1bJvkBejelT8pyJhc8DAGa9bzKVvl1krnTPI87LTcCKmpCqrQcQvEmhCKIq8zdDbEzZYTI5X1ggiqvj4E6uhOeuW9NOnmEGQ6CZPRM4x9QpWRqD5bHlmwwE3Bk3wlz2NzcDU9FPaGsy31Fe6Z5nEr5mO2OxcgbvSGeXTgWbcERC7oTOCtI34U8B7PuzokpIVBgrDXMNiq14Tzm3udjBFFR0RgCpYJ3lT4uEU0Ha5VZO9flju8ZB29wZPpf6Drcxj5hTLdcA8iCLLvCsm9Q20WWPNvn1u9GjAYhBKiVRKZ8u5Ugm3u3XZiEeWdubgdV5okOhfYzIaXZswVuIAlomwCYC7vN8XFAtYpSTCn25eplS3wqtNLymBTt6DSu49cp3OuVuUvAqI8Mb1MTPpN5tDFoitxO755YEKd01ZIVNX5nMjiJcPqUvS08m40rYmU0111u1Fm0FlGJMyDXUpftwYvld5o8yMZlIEtyPfXwCJ3U7brqd02rf8HLp4V0T3c533uhWGpamfsnJC1ANfjx8pKgjTLXSIm4eurRABaKVSX5bENsvTNPwC0YqCyajutPmh9zt9V4m6jBL03VWkVLdQTQG4vaAXllHzATHxVH8FjdLmmfFwUTjoDm2sM8F2VGIFwr4lxta83rEkBqHHP9fZ7C3YgoKz2dShMDTdbz97ADXnrfT9Fx7G33F
+ M
+ yJyZLNq7igAauSvmLgcDBoV1zbGn2OU6vy3WVvyjpJeus8kKoK2ph4hxxG3697btopWbcM9J2N8lVHMUKlX5KOxlAlcGCR60AQzTPAkcmz1W1noxJFGgVdngBQm3gYq1jaSKxWapcgyna0S9pd8nGCak6BrstJJBbe333p4RsEkgRkOMv4JWpDxHdtJshyjrQaxJTtFtCjrpalXPq42p67x2wifbNBfdr4xI6wFPmWc1oEBOOzIwRAC4uZXm0CwvLwpqMJ16SnXlxX5TVgDUf3q1tsIitrkeEGdcRu3eLTW2OimQHvoDEAIcdJcIHBsFnjEWcMDjlouzPMS7H0w5KdspsltXi8CDaxyIUAFpFrRmv80Azbc2GxPpwHok55gAw7gvrrIGEfU7qHwiLeb91yK0Ehe5WnTD066aiAwsqS6FtDP0NLGUrEuedrUUl01nyeBWPsYNoCSI13h6kRCa0cdh7XKfeoLlOypm5iexpPfY6ZwmF3VpsQHqqoBWHSzUNdmUIpY2LZmGS7Dve3kLrhLmlgPD.aXrMAdfz1JhSeeyQq4rQmdFuIvkiRS1HURQXSw12vp2mxwSfHhPZoJxmZogWOWzfrlxCTbOYIrms8atLSoZ7fFCBVVVEWZx0GqSXgNmBRvi61xqOgR6lQJiGu6g8YMr2aHPGaf1l0kb0msJvnvluerbxu3gL9O7Bdx5ha2jglqXfc6gWtM2nTzbN9yGkq4hZfFFXH0hWI3IcMKROEzrpvgirZkm5SqMhTvO76eCGuSCezcRpALmAWTW5jUzERKQPC2bkUtiBTyQr7PV78Pwy4etwnT3OfKVBZdgFpGmLXROtiOKyVVDbpSZqUdYkFzsJGF1qo83InwanB3RBxiPnuZFrjpphHcc1HGTfFkCuODY2aGrM8UYTK0uTDfoMxWLfOp9PTLeNFKw1xL4MbMpDf2oxbgZdd9Hl3d2T0Yu1DGIky6RzLqvOEoceyzeg000DfR4MATtf
+ K
+ 4BJe9Aqqz7UGubIcyz8LiVvXBtUW24dodx8ykPUwCSyoO76BTkPsukpQxb0TyYLW5BqhFccQar8rrWvmNWCHxEfWtYyw8a3vELYmX4Ox2KqM9EiWFBnQQyk4rCYET8HqC1ZqnZJTlbSxgjPk2jPH6HAaGifTw5Pr6qoikpMCIXcYKRPlTm1nVr3EeXWxxBWmcASa15PW4mWdzV10LvbOXOjVyd9FURUMlzWevKpzTa6mrpdLm8saWWoPsdAsQNTyEw3DhF6ib2KmJpLcO0pjt2BY5580vE2RdmJrlD6O6WybXom6vNuMvJRfqKQpvVimpWnMweB2JJUqS9W7rfPknvhIkVWXwbspTOzcmb9FbHjCEqXbIyseX5N8aYb62cJi7BZSIDEzQ3AAs79CeSCBcrbV0MjtNzZwkWnJfeVVtHGyjsQlD1DPe9n856cXrK9Kq9FeB8G6mxnk4G3IcyTcKDOk5Yho7HkWAcjA7uHzO1xyGGioXzNWD7DqJJjlYDBRHmJnoNtEEJ6d1aH02m36tSPhasaHBL8Xj8ODoAoKd4jocGbP91FS2soxSNeCUnde6ja5Rhso1U9EKafdl0jdcUjTI3uyTWjAGyoPcfBrjojb4RPXii8XYQJm43Tisi2F3QUhvP5tA3fRX5knSxp0n4o5434BEfjBBXSrCuUjVpjFjIr1C2Tp1jicerBpd66uLlAbKamsxHfYlfPo7jyTT7rtRl331NaeoJr0K0FP8dfr67YRoDpav95So8KEiq3xZyVOHrksAiAa9BSbWKZQOFmtCDkyy5VFjPUL6slqcg8tYCMLt76dkfjgZtaNA6YV2dVB9wOj641RtUu6VW0SWfSBRkN3dcwdCiNbn2Fq063qJyecJhuTGLmVu1jMyLRTXTaIKAgwuY7vloOBlppjyN2blHjTaE7nnvWln2MYlE3DGFTsBzDLkjqgXPsPKFtQ6hBf1VYc8XYKaLcwhxouwjhZsvpE2ingeOvZU
+ w
+ m7iMIHaLQ5mvFtiMK8dY8za7W1qcpGfdmxUBRFdwB13tBUYyE6GgxRiaXKIWdmq1IUSnLGI7PougVV8tfAhWWkB8BLQh8hT7FtRk1xoYbZW4uMC1p4ifUC5rqFkMCYzH7DvPII4fO1rQLH5pgupY65yQ5cXIYZ2d1FNThRb1uuQ3s6i.edu>
+Content-Type: text/html;
+X-GreenArrow-MtaID: foxnews-other-pool
+X-Mailer: WhatCounts
+Content-Transfer-Encoding: 8bit
+ENVID: WC-172pq1sk2365-6DC0209D926Cpq1sk75F98ED801E7D4-6cd5e978a2784pq1skfc1566c0bdf
+Feedback-ID: 6055-0:foxnews-other-pool:whatcounts
+List-Unsubscribe: <http://whatcounts.com/u?id=6DC0209D926Cpq1sk75F98ED801E7D4>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+X-Unsubscribe-Web: <http://whatcounts.com/u?id=6DC0209D926pq1skFD75F98ED801E7D4>
+X-GreenArrow-Click-Tracking-ID: 6055:1407::::::::::
+X-CMAE-Envelope: MS4xfP6PMlt6pq1skbu+quXIVk/fT3/vPKi06xvqAYZXTDEv95ALaZy7vpvrC22yow0aoW2a6MVuLMlLzHBJpq1skTJ2OY3H9t1ga4yXTWovfIBuEDO
+ nfaR3V5qtTKA+dmIhhrazx+yUEUvszqOtjpBgEK1f9ao79xTKWPqc/lWhw35/bxopq1skZwCX5gjMw0bjb78a/v6AXrgmkaTIKofOaC+8R0hGwUhj4vJB
+ r7MHf9vnKCRIpZVC50q/ChoaPaehpT6rNeN8yfIiQls=
+X-ClientProxiedBy: AS4P192CA0043.EURP192.PROD.OUTLOOK.COM
+ (2603:10a6:20b:658::9) To PUZPR04MB5285.apcprd04.prod.outlook.com
+ (2603:1096:301:bc::12)
+Return-Path: kirsten_filipczynski_95707@asdhbsvjldmopsfjij1.at9adawli.pro
+X-MS-TrafficTypeDiagnostic:
+ PUZPR04MB5285:EE_|TYZPR04MB7301:EE_|DB1PEPF000509EB:EE_|SJ0P223MB0639:EE_|LV3P223MB0968:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1d192be7-03e4-427e-1cc8-08dcc4a4d913
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted:
+ BCL:0;ARA:13230040|69100299015|4022899009|41320700013|29132699027|1800799024|376014|1032899013|37640700017|37730700002;
+X-Microsoft-Antispam-Message-Info-Original:
+ =?us-ascii?Q?QZHTP4+r+8HpVGW1MEUBodrvzpf1ekNPORueMmdl4UEECs1mIS+JY6Y+oono?=
+ =?us-ascii?Q?9UemUvzV26Q1ax5Q8s8/XobPJRfLmeEXXbZgjHD06b9b7qubBleRoheWVxuo?=
+ =?us-ascii?Q?i6YkPZn574Efcc05DlUQwF00P3jw32KABEAQXV7CL9KFjZJZ9almROeLcc1g?=
+ =?us-ascii?Q?wo6aaNlP/VZ7y2fyh20pl9Mg1Oj8+uaoYjlq1o7ayJFbl3kOOyFLoTaOhfRb?=
+ =?us-ascii?Q?rsQzfOEUE+Bn8+qBD8/9qibQaAZ7GC7e6ftLQjIgETdpwsEq3p7nqix1XMo3?=
+ =?us-ascii?Q?kNrg/pTsln25NygZf/qGWRT2AyzUl/wG++OQGys2vnBn9BbSjprLmmvZnQZ1?=
+ =?us-ascii?Q?mUCHG0ZV//8gNblbMF34WzDY7Nc38VfaBq5o18wap/3mTSgEFymyfkJ4vQtq?=
+ =?us-ascii?Q?f3jvvuVMLWe+XlTUyMaCAxBBRBOPv4zgTtkdZdPe6XEZVhRWLToQo/yHIzU+?=
+ =?us-ascii?Q?MHzDprHEtPb9JnOMW+s2r/sHRxsBhslrrPWMrHolTMCof1olsPjn1jjDp9eo?=
+ =?us-ascii?Q?eSYYLTeKI9u3tXgkMO0KhBkc0W4sCZgRBHyY7UxNynUc/CUJMw0UomjCTQqR?=
+ =?us-ascii?Q?vRszYbQPY1B0ai7ZykeYV13fcA4gfPs5BVBnhkPnhtk7m5QFOPCVTnmLgn8T?=
+ =?us-ascii?Q?IAwXCIs6oVX421iiElB3Z4mmwY85Z2QIZvuy9d0/ImrJbE8D0xim6ATdt07I?=
+ =?us-ascii?Q?36gxBysEMvVossoHH4RUnK1daNCOcGe4An6BlAGLJ80clL1+AZlCYwrqByMW?=
+ =?us-ascii?Q?X0b1WkSTsE6ZlH3Jt96PgH/2lzAZQnG/R1TQ/CQwuyKXmC7ggvmYb+gS46hN?=
+ =?us-ascii?Q?d0udRigQsx71V5npFNC71rtenGw3y2x1W5L5anSey8GbJU76KGOeGDqSh2M6?=
+ =?us-ascii?Q?BdVDPD9v1TYO3JlpkAL92lQ04gveDQWE3OX1yb9ddsaxsE6fAcqZul/4XY8g?=
+ =?us-ascii?Q?Bdg691gL6G+2CExnA2nhMYYVelBuImI9ld5rpPn8U7Q8Yy3kqIkgHmyp8opi?=
+ =?us-ascii?Q?PjGIlEoHBrH6QPTkDNoQNmBKyaWfgkclNcmWuytzkcKMaGsIWIQwDhUvf3Od?=
+ =?us-ascii?Q?DHp8nagrz32hiGsKNx9heH6jNPcduWsZ3MD1MXbFdF+hS+Ho8kEUeyB8w+a/?=
+ =?us-ascii?Q?2XMldsUA56eu1w5UWZyAH4qcEc6A6HtvZHCQeneltbXYZXrLRnJrHe2XB12D?=
+ =?us-ascii?Q?Js/o7fUu6o7497kll6mTrsz/Wy3zdSMhz3g38aT58R5R8SrCArfYJwG+Jb20?=
+ =?us-ascii?Q?KzAtj1aZ2czuKzsOxIKRMg8jzb28pfeRwBZY2WygzutIvq3ng9amRLaHs08B?=
+ =?us-ascii?Q?4kagTnVMQoSNB6GxYI+TgzvWBYVkemNkYWvW6Xfa8EgAqA=3D=3D?=
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PUZPR04MB5285.apcprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(69100299015)(4022899009)(41320700013)(29132699027)(1800799024)(376014)(1032899013)(37640700017)(37730700002);DIR:OUT;SFP:1501;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR04MB7301
+X-IncomingHeaderCount: 51
+X-MS-Exchange-Organization-ExpirationStartTime: 25 Aug 2024 01:25:47.5356
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 1d192be7-03e4-427e-1cc8-08dcc4a4d913
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ DB1PEPF000509EB.eurprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted:
+ DB1PEPF000509EB.eurprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ DB1PEPF000509EB.eurprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 8/25/2024 1:13:26 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ 57247301-dd80-403c-fbdc-08dcc4a4d21a
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.100.223.224
+X-SID-PRA: KIRSTEN_FILIPCZYNSKI_95707@ASDHBSVJLDMOPSFJIJ1.AT9ADAWLI.PRO
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 8
+X-Microsoft-Antispam:
+ BCL:0;ARA:1444111002|2700799026|461199028|42300799015|7402599021|42200799015|47200799018|50300799015|56000799018|10300799029|970799054|58200799015|67000799015|3025599003|3600799018|1680799051|9000799047|9400799024|17101999012|6022199012|4601999012|75100799037;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2024 01:25:46.7856
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1d192be7-03e4-427e-1cc8-08dcc4a4d913
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ DB1PEPF000509EB.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0P223MB0639
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:04.3115468
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.7875.019
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9525003)(10145025)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?ajlnVk13TU1ETHhzak9lWjRSSjlpRnV1Zk85WFpsTStGMktMaDh1WVVLangz?=
+ =?utf-8?B?SFJYcDI0NjVUKzVPMkNiMmNYSnJGTzFIU1BZOFRSemE5RWtTRk1ZL1d4bjF0?=
+ =?utf-8?B?NlJYTWR0SDhSNTFUcnRnOG5DckR1ZTlPQkpFY2RhWU5yN3NvMGJRb0V5TFl1?=
+ =?utf-8?B?Vk95cUFaVzc1bGpoVVpueVRtZW15RURVNzN3a0pKUENNTmhjWHNuYWJCb2tQ?=
+ =?utf-8?B?UWpSdE5sOWpZbHI4RmFQVUxPZXh5aElGUkQxMkZNeSt5ZVdFWVZUbTVZd2JZ?=
+ =?utf-8?B?OWpEQm1ZRWw1bTg4ZlBYVk8zTmR1NjdJWTh1TXRvWWRvRmx4NEwzdFdMbHpw?=
+ =?utf-8?B?dkRuVE5DdnhndldqMVoyR2FmU2d0TlpMMXhUVVYyZkw1L1ZmMFhmdm0ydkRz?=
+ =?utf-8?B?a3JSOXU2SGNaL1gyUnR1bW9vcit1K2x5UGNhejgvcW5BQ0lLKy85UmxrMm1y?=
+ =?utf-8?B?WWlxaVc5R0pod0gvc29DZGE2UCsrbDA2OHBMNnV2RU9WMk1NQWtoU3JFbmJL?=
+ =?utf-8?B?VTNMS0psSkYrSktyTEdmRlNNNHlzN2dCd3N3MGhhZFBnU0daV0VGeHVxZWJQ?=
+ =?utf-8?B?d3hmSWIwb2FxZlEveU1pbHZTd1VrVndGN0ZTWnlBSlQ0ejRuT1VkTklxa0p0?=
+ =?utf-8?B?UGtQeHltdGdmU3RGcnJiTlp2YWFVbEdsSWdXWm13S1o5TWtjalBON084ejA3?=
+ =?utf-8?B?VFRIdVVTa1ppMjY0OHl6R2habUs1NG9RbDZWdE5tWjlKVTBjRjNpT1JVU2Nt?=
+ =?utf-8?B?eUlTc1p3UVJUUUJEOFFJbyt6ZmdwRVVYTkFQZ1JUQkFnWWtBTlFOUXBsVXd4?=
+ =?utf-8?B?M3cyYWQyNzZjNWhOYW5DcmJEdTNXdlZoVEVCSXN3OC9wekVBWkhKa3lGcWtk?=
+ =?utf-8?B?L2d1N3Bjcnh1cVRPNWozK3FzSkRkNGs5RVdmV0NNWXNmaEV1ZmhYcXhVY21E?=
+ =?utf-8?B?OG51eEZBQUpvWGdSbUJ1bEpvRlJ2QzA2eUsxTU9VY3ExSDFJTi84SGN0K0dr?=
+ =?utf-8?B?Z01DWUxDeGUzL1pxTlluck9TdTNXYU9ZQkIvTEdrOXFLazFtOHRQT3J0Z0lW?=
+ =?utf-8?B?NmxuREZCZFFJZ3ByMTdkT2tYcjhMdHRtWEQvUytnUmJlaU1Ecmp4eG9VUlVP?=
+ =?utf-8?B?QUoxWXhGUU5VemxJNUk1ZXVMMWJCbGFSVTNKRUtBeDZIcVE0Tjc4WFVHK0NP?=
+ =?utf-8?B?OU1neFpwdDRmb2tDaFU2amJ2TkNsNnV5Sld6eUJ2ZWFHTjV6aW5LY3ZCRlRP?=
+ =?utf-8?B?TVBqK3E3RW1aMUhidURRcFlocERkR0RuUDltT3VlUEZDVXBobm1pQjRFVEJO?=
+ =?utf-8?B?c1d3OWZXQk5NM3Y0bkJYeGJrakdiMmQ1eVRlOEFhbTRJY0dkaFczRHd2alBL?=
+ =?utf-8?B?cW5sTm5WODhDY1oyb1E3UGpIVnZSSFVVeHBKQmZ1MVZ1Ti9KeUkwRDdFa2E1?=
+ =?utf-8?B?b25zSkJOZ3BDOWxvT0xZbnNwdTlxYm1oaXkzKzUrSFlETlNaTVgrbmJobTQr?=
+ =?utf-8?B?TkRja1c5QkhUMHV5YU8vL3Z1a1Z2eW9iTVNPblg2dmNvTjBUTndmYmZYd1RY?=
+ =?utf-8?B?ZnFWcGhZdzQzOXFBOUxvNnNtVTE2MDZ1bzVJS0MzUjM4U0RXOW0rWWJaZzdH?=
+ =?utf-8?B?VEVCVjljUWkwVFJxOVU2VkJ1amtlWGRsVlg2ZzBzcE9PU1ZyK1pXaGQ2bDF1?=
+ =?utf-8?B?L1Z2eC92d0VvbTlSSUJTUUpjU3IxWEZLUnB4dmZmeUVvMVlRTXVKeTh4MnZG?=
+ =?utf-8?B?TUJWT3d0aGlPdkgyR3luU05Ob05XTk02ZDBucXd5aVAwNktGbGRITjByMlJa?=
+ =?utf-8?B?MFRzdXJON083RUU4TGttTWNkOW8xRGxpMXRyTk84VmR5Q1pZVGQwa3FjYWhr?=
+ =?utf-8?B?bTNSbXBKbFgzdlBJS2RLL1Fhb1EwYmxmZERlMklocXJQNHpiTThUNUdkZWZ2?=
+ =?utf-8?B?UkI0eEJwbzJZMEhZZFVPNnpwOVd6ZTczb0J3R1ZSanRMZTJvVWo3cGVLZ2Nl?=
+ =?utf-8?B?UlNtU3hEWjJvRDRBSGxHTTd4M2s2aG1SSFNGbFE5L2Z3TktVYTdmaDAwakdO?=
+ =?utf-8?B?NUJQbFkyVEFWd3dDZjJNTG5iS3RHSWxkRklKQTlsdndGRWdKemhsYUVLTXZO?=
+ =?utf-8?B?ZlhUT1p5RStHRkF2RkNiTWtINzd4a3BlenEwenFaNCthMjV2dWVmK25PalA1?=
+ =?utf-8?B?N0ZSK0JsM3Q0T1hqZEM1ZEtNdC9xNjJDbnNIYWN0NXZXUndXLzZicFlKK2Zi?=
+ =?utf-8?B?M3JwTUhqc05KcGExM0pLcFNQdHVEb2xNVjduYmNsTUxVTlpFVk8xU25qUk9o?=
+ =?utf-8?B?RUtnMnFPdVVRRnpTalhiUWlHaTJqdmUvZmNCYkNrTHpTeDBJeGttSU56QWhm?=
+ =?utf-8?B?aEQ3UEhIZlJSTTVlWDV5ZHZXaGFtd3VrMlNaTmwwWHU3L01uRW40RSs0R3d6?=
+ =?utf-8?B?MllCcWZieHJQZW02eVhubmEwSmYzUFRsQVhuak5sb1l0MXU3MFRzWGkvaUNS?=
+ =?utf-8?B?VklLNjVEbnRaUkx1VURXZW5ZSUdOa09UWjBWWHcrN1d3ODBjckJNVzJjdDhV?=
+ =?utf-8?B?bUcweHdmQU1RUXdRbDVhYzNVeGJ4MFV0UUx2M1pzOWJZZGVkTFBJbk9JKzAx?=
+ =?utf-8?B?aXNSRU80aEQ0dno1R1NSSlY1R0dHaGZPYXZsZWM0RGFwdlpoaDlkMk5rQmtl?=
+ =?utf-8?B?TE9NU0ZuZ2RKYXk5SzlqbHA3ZWs5WURka3d5cEhSUGdmR0lRbEZscTNOV3U3?=
+ =?utf-8?B?WFRRbjI5S09Uc1o5ZWdCVUYrUlp1RnQrZlh4Q0dwQ2VydDN0WHVLb1ZYOXhT?=
+ =?utf-8?B?OTBDR0dwMWs0RVJXeGpjOXlmamtqWmtyUlZBYXdtcVNyaytmZFBrOURCU1dw?=
+ =?utf-8?B?UTlLcEMyaFEzMCtFQzRtUGRuS2hzaHdMNHVobUtIQzc4N3NUeXQzdlByNTlq?=
+ =?utf-8?B?dk9SNDhyTWZpV2RCckJtWC93QjQvbUZ4VHpGcnpFS0hRejVxbHgyN2ZPcjNl?=
+ =?utf-8?B?L0JtY2JGMVlIaUhJTTlCWWVXbG5ldFNsOEUyYjdCRGZUd3hVeEdjMytRVDdo?=
+ =?utf-8?B?cFpKUlBJd0h4KzRhZ0VxYjF5TzZmY24wUXcyMnBsdEd6aE9jZmZJSFFxT0Ni?=
+ =?utf-8?B?cnJId3hFOGRQMHRTNldZMHkrbU5zVmxPdGN6SVVqUGVFMTdocjFLc3hBbm4y?=
+ =?utf-8?B?L3lhY1pXYlp6ZjdPU28vZFdTTytDNmJUVzl5Z3pxYXZzZnVSNHdPT25tRGlp?=
+ =?utf-8?B?NnQxWWxaNWVqOVQxVVE3VVlWYWhzdnVseHZLSnNQU2RlcjA0aEtBbHhnZnM2?=
+ =?utf-8?B?R3VtR1BkeU5ReXplZzJBYXp0ejVpRVIya0xQTGcyUHpMMkR5RENCaTdZMUM1?=
+ =?utf-8?B?bFdrMG4zQzVQNzhIY0tYY2s2d1VxcVBaUUNVclMzaWNndmpqbW40bVhlTEdz?=
+ =?utf-8?B?NmpWN2kzbXgrcjlWcnovWUlrZGJQYnp1bXVUNXhjblRrZ1BadHpTaXdDZVFj?=
+ =?utf-8?B?ZkprQUNxY1ZBRkNWV1AxR3FibG9iR3U0MjlFb2FaYmNhSlFUMUVtVGxpb1U0?=
+ =?utf-8?B?QWhUQUJIRUx5RHQ2ZFVyVGlPM0FoRzhYaDhLU3hQVm5jMmdTOWxpVVB6WHZS?=
+ =?utf-8?B?V1hsNjQ0ZGc0SDl0d3diTjNNTit4VC9QWXZoQnNTNnNyUjNPenF1YjgyOFB6?=
+ =?utf-8?B?Q3Z1MWp6TUdVdHliZzltTERmSWUrNEVoOEhlajdYbnlBRHJUSlRKdlFMTDIw?=
+ =?utf-8?B?dkE4bzdnNFczZlNzSmZzcVErZTlnR1JCZGs0cjRaQ3pHS0lOR1FXWFBOcXRx?=
+ =?utf-8?B?bEVWSGU3WFlMMnYvTml4MmF1RzRVbGNTRDlLQ1hGclRGS0lCaDVwcHpBMks0?=
+ =?utf-8?B?dGZNQnVydVRKTFFnQWVRbEcvZ1crOHpIR2gvYzV4bnIyWVk1S214MFBPSlRS?=
+ =?utf-8?B?Qi9oV1lyb2FLNjNjUkZRM3ZaOVRteHJJMXJhb2RKd1NQQ1Zoc0VWY01tQ3RW?=
+ =?utf-8?B?RDRwdWRYVHl6dDVhWGoxWlJBSFZkcW4yZkMwaXFud2NPYWxld0lvWWtqdFYw?=
+ =?utf-8?B?SU1sTHdSNVpWWDVCNUp4Q0Y1aVZ4SjZtdUpITTNZRjRqRWdhTmQxb0hTd1ZO?=
+ =?utf-8?Q?UPW9510uZIx9Qj3jMkP09Xg69w+EQSVen03E=3D?=
+MIME-Version: 1.0
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+</head>
+<tr>
+           <img src="http://162.0.228.240/track/3WTsdZ4719rgIa68fyimaknigh308OMARTISAMSHDPXM707XVYV1565750c9" width="1" height="1">
+               <img src="//162.0.228.240/track/3mSshT4719nkWt68estxkhutbw308MCGJEXZFOBSNALZ707IUUC1565750v9" width="1" height="1">
+            </tr> 
+<body>
+<p>We&rsquo;ve been told our whole lives that wrinkle creams were the easiest way to look younger.</p>
+<p>Now, one doctor says that&rsquo;s nothing but old news.</p>
+<p>According to Dr. John Layke — the world-renowned Beverly Hills beauty expert —<strong> most "wrinkle fixes" on the market are nothing but glorified moisturizers.</strong></p>
+<p>"They hardly make a dent on your appearance, and some can even be harmful to your skin," he said.</p>
+<p>Recently, Dr. Layke has focused his attention away from mainstream cosmetic practices.</p>
+<p>Why? So he can pursue a revolutionary anti-aging breakthrough. One that some experts say could &ldquo;empty the wallets&rdquo; of the cosmetic industry.</p>
+<p>"It&rsquo;s almost <strong>like photoshop for your face</strong>. You may even be mad after seeing how easy it is to visibly erase your wrinkles from view," Layke told reporters.</p>
+<p>His personal clients have dubbed his new do-it-yourself technique the "age rewinder method," because it can take <strong>years, or even decades off your appearance in under 2-minutes</strong>.*</p>
+<p>In light of this amazing breakthrough, Dr. Layke has released a <a href="https://t.co/AoU8bh3elO"><b>step-by-step video</b></a> to the public — free and uninterrupted — where he outlines exactly how to use this simple solution from home.</p>
+<p>"If this helps even one person look younger or feel more confident, I&rsquo;ll be thrilled knowing I helped." Dr. Layke commented.</p>
+<p>The video has since gone viral. At first, it was shared by users on Facebook, but since then it&rsquo;s racked up over 2,300,000 views and counting.</p>
+<p>So far, the comments and feedback have been outstanding, with thousands of American women reporting they look decades younger.</p>
+<p>One viewer even commented: "Best results of anything I&rsquo;ve used. I can&rsquo;t believe how well this works. I&rsquo;ll never stop using this. I don&rsquo;t understand how it works but the results are great. Thank you!"*</p>
+<p><a href="https://t.co/AoU8bh3elO"><strong>Click here to watch the presentation</strong></a></p>
+<a href="https://t.co/AoU8bh3elO"><img border="0" src="https://a.top4top.io/p_3048338xl1.png" width="600"></a>
+<p>Now, there is one thing Dr. Layke asks from his viewers:</p>
+<p>"If watching this video helps you look and feel younger than you have in years"...</p>
+<p>"Then please, share this video with your friends and loved ones. Together, we have the power to help as many women reclaim a youthful look as possible."</p>
+<p><a href="https://t.co/AoU8bh3elO"><strong>Click here to watch the presentation</strong></a></p>
+<br>
+<p> <font size="1.5"> *Individual results may vary </font> </p>
+<table>
+ <tr>
+ <td height="56" align="center" valign="top" style="font-family: 'Roboto', Verdana, Arial, sans-serif; font-size: 12px; line-height: 18px; color: #797979;">
+ If you no longer wish to receive these emails, you may unsubscribe by clicking <a href="https://t.co/Jevv3AEPxG">here</a> or by writing to 9901 Brodie Lane Ste 160 Austin, TX 78748
+ </td>
+ </tr>
+</table>
+
+</body>
+</html>
+<title>
+<hr>
+<h4>
+<u>
+<small>
+<o:p>
+<address>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote hidden="">
+<blockquote hidden="">
+<blockquote hidden="">
+<thead>
+</o:p>
+<dl>
+<hr>
+<tfoot>
+<o:p></o:p>
+<blockquote>
+<thead hidden=""> 
+<tfoot>
+<thead>
+<tfoot>
+<div class="WordSection1"><!--[if !mso] social -->
+<p class="MsoNormal"><span style="mso-fareast-language:EN-US">eUmFKSG5fW<o:p></o:p></span></p>
+<p class="MsoNormal"><span style="mso-fareast-language:EN-US"><o:p> </o:p></span></p>
+<p class="MsoNormal"><span style="mso-fareast-language:EN-US">DcP9tRnthTrsW3gvr2OjHS3ToECVzIH2Kn1<o:p></o:p></span></p>
+<p class="MsoNormal"><span style="mso-fareast-language:EN-US"><o:p> </o:p></span></p>
+<p class="xmsonormal"><span lang="EN-US">44fncYFvKy</span><o:p></o:p></p>
+<p class="xmsonormal"><span lang="EN-US">? </span><o:p></o:p></p>
+<p class="xmsonormal" style="margin-bottom:12.0pt"><span lang="EN-US">{rand62}</span><o:p></o:p></p>
+<p class="xmsonormal"><span lang="EN-US">B6PtKY0tSKHmdtML1Emewg9CubqZw1nXY2hyR8RzJpMMJooATA<o:p></o:p></span></p>
+<p class="xmsonormal"><span lang="EN-US"><o:p>? </o:p></span></p>
+<p class="xmsonormal"><b><span lang="EN-US" style="background:yellow;mso-highlight:yellow">de8D5eF3FE</span></b><b><span lang="EN-US"><o:p></o:p></span></b></p>
+<p class="xmsonormal"><b><span lang="EN-US"><o:p>? </o:p></span></b></p>
+<p class="xmsonormal"><b><span lang="EN-US">Thanks<o:p></o:p></span></b></p>
+<p class="xmsonormal"><b><span lang="EN-US">EgGDI0FZQ2R3PFVX4DWM3v2F7BUm1EMvKjZjav9Q</span><o:p></o:p></b></p>
+<p class="MsoNormal"><span style="mso-fareast-language:EN-US"><o:p> </o:p></span></p>
+<p class="MsoNormal"><span style="mso-fareast-language:EN-US"><o:p> </o:p></span></p>
+</div>
+&lt;
+00be57d4/fa38/2188/2387/e00b575dca8c7c0
+04635e07/9ac9/99a7/33d6/d59ac32c6fb5586
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+04a58389/b5b6/583c/2f09/499cb7fc7c3847
+07a4c993/baa5/6e6a/4b4c/3727127f9368346
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+0b2fb6ee/6566/d683/386a/60d5cc7b1a2abbf
+0ca62253/c459/7e50/fee0/12dd7a834e825e8
+0cdc
+0f67906c/5053/a97a/f1bd/2b33a00443328
+0df8ab37/a3dd/76e5/c9f5/1a10bf4a0046f97
+0f20028a/651b/3b1e/6777/4d9bbc23e4bd7
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+11b537be/969c/a5a5/1e74/590592270d014a4
+0fd7cf19/a21b/5b63/821c/0a1d91a6c410a
+11e3
+130c386b/869c/2941/e662/a702dcd043f12
+11f14061/aef7/dc48/fd0f/0d15a858a5a2303
+1332208c/6efb/f6e0/14b9/d616fc689e6e943
+139f2499/fd5a/9827/4ad5/80a645a789c4df9
+177c67db/4fac/6895/4f2e/1cc72632f1bb3
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+1949cb26/d0ee/4be3/72dd/a1a154ee696bc
+196f8291/1fad/3bbe/9abc/61cb28942450e3d
+1EX
+1be56477/5e92/87c7/8dc5/5621c212d1b230a
+1d2c1172/dc20/87dc/f19c/686a425a38b162e
+1dd53c71/81de/1c87/9258/ca2721b0db6fdd4
+1e590803/e968/c7ca/cddb/535ea039c008976
+1e5853d5/7058/48fc/acac/edd391fa0ce763a
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+20670dcb/b669/45ca/8245/84c32c2e82aa325
+20d8c941/3677/bf8c/0047/4d40ede516fc855
+20ec451c/2118/72a7/21c5/e892d275747d777
+2170cdfe/e93c/9b9c/11d5/dcae0aadce87de0
+21188352/c398/ebad/9133/37e28b7ae846bdb
+124d5414/8c9d/71f1/4013/a99846aedeaaae7
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+2601
+2637
+27325e5a/42e6/5b71/83fc/2bdb45e6ad65e
+26bf76c7/9372/4e5b/91fe/b9e4e4cc83f8a60
+2a7a6bf6/5491/24cc/9955/23d3890d8812163
+2b0fc764/b8c7/5c62/969e/cc3853ddf1384fe
+2adcc761/cefb/93f9/1d44/a2f776b1f1187
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+288b8421/bb73/a69b/8dd7/57fbe868fb98c
+2bc1
+2b7f
+2c44f154/72ea/adbd/8bab/ee57627f0c13177
+2e0b
+2d110b99/7834/5bf1/58a7/4a374c92c35786f
+2f1e0baf/bb0f/44e6/0c5c/1ec2fb1e85b66e4
+2f0d
+3063
+3072
+3081fb9e/3ae8/bcb8/8dbd/32409c72f201457
+32662295/4b7b/0ee6/14e1/d4ce679d9255e
+32df25bb/743c/23b0/25cf/cbe0222e3bbef74
+3073
+348bdfc5/e364/90ca/72ed/ddc588808d766
+35501851/54e7/f0d5/6e45/6b35848fd90f5d4
+35698a78/10ec/9e5c/80a0/2046e19dea83381
+35b44d40/17e6/8497/594d/bcd03920e4e12
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+35f28097/77ee/95da/f24a/b4bdedc894aeb68
+36cb573d/2b8a/21da/6f32/90ea85bc05bc6
+38773847/582b/4b94/0373/baf49fb8af00c92
+3aae8d69/f706/117c/40b1/01b65fa02a18106
+3b77383f/9b21/7eec/392d/3e75cf4189d0b77
+3d3fac03/ac90/709d/2a24/df99ephishing@pot54eb03b
+37f481ef/4dfe/3a90/cfc9/2ccd0bb32805bca
+3e842d93/54c9/6066/82a3/e4fe0ae0f6979
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+3d28bc2a/e3a8/ca59/51de/2f92be804d10ad9
+<div>744378</div>
+one in every EMID is usefull to all  in <span>744378</span>
+403b
+404b43b2/e424/6120/1078/a4ad77abebab410
+410a1d6b/bd82/329b/2a2e/798c8a3922d7d88
+4164
+42f2
+439c
+43ff
+40b2
+43b3
+4812
+49f2
+4b86
+4bc3
+4c36
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+4c3d
+4c82
+4cbb
+4cd8a15f/dcc8/1e07/28bf/c83846c5fa27a0f
+4d121c35/29c2/0106/44f0/6fe3c1652f258d5
+4ce76e38/8c9a/4306/7c8b/5bb28919fd9d093
+4d29
+4e5a
+4e8f
+4e8491d0/9262/7c02/69a2/011eddfdb210fa6
+4ed4b453/4818/aa9c/4b7b/e0900821f0f57
+4ff960b8/7dc3/dadc/4b4c/af294d93f19dd68
+5035e903/554e/89f3/97e4/b4db15bee2f2c86
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+513588ff/a3bb/db7b/dfde/da9aef981e35cce
+53c4cad5/2b2d/81f2/a5c0/b721624d8ea5908
+557933b2/a3f7/0535/ef64/79b77cc051966
+55bdc2c0/4c81/54d5/ab99/091d7b748b1e136
+585c9bb8/2176/8697/acbd/c39e855b8b58685
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+58500b5e/f83a/5110/49e2/0238b6b3695a0
+56a9bdcb/bf9a/8329/86fe/6e42b6087880e68
+5a87b644/e65d/b717/2d02/fc3b4d489ec4dcf
+5ad1
+5afd451b/b1c9/cb04/75df/95cefa36e7b8285
+5c04d5d7/9458/3630/9dd9/3604ff565795d53
+5ca90cd9/52d3/6905/f66b/c7fd517bf324875
+5c1b
+5cf8ff45/942a/9793/3f97/24175803f84cb89
+5d91257b/3a9b/9fb1/6ddd/650b5c903a4bd
+5e93174b/823c/6b75/3fa7/2aec05c6f203e0c
+60baa1a8/1d98/bc67/ef3d/11c594853ee08
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+62d49bfa/48fe/e5f1/10d7/24fba8e065063fa
+62fbe07a/71c6/5c9e/a9e4/c37461e094c831
+60aecf33/912f/bcdf/233d/758a7289ab0624a
+6582594a/9827/eb83/0cb5/150e67e470556
+649d9033/9d3e/623a/30bc/3e2457b2ee606
+6434
+6868d5dd/2334/ac90/f8ab/f47d0d1b34f09af
+676e4762/191d/3bc8/b541/c6e30a1e37833a8
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+6bbb5b7c/a809/fdfe/ccf1/a1c1b056924977a
+6cc7917e/d50b/26ae/1afe/565f212ebe4cedf
+6eb05628/28f6/98b7/4f84/dbacc6193ec7a50
+6f3af93b/ba98/a910/8d2a/18ee0f1d7ca3195
+6f33a8df/6beb/6dda/5b7a/09ed2765ba70d6a
+6f0169c5/c6d6/fe16/2254/6998db1925f9d0c
+6fd2807b/eba4/4421/7778/8c49fd7e20d1f9e
+6d68599d/e614/6619/dbf1/c7ae6409367f136
+6f3f85ae/5a88/93d6/8db2/5ef70eabf086a42
+702d1852/6de1/0895/dad1/98c5d571c492543
+708994d6/e6e1/e0a6/a9ac/976f3120d3e16
+70aa2d8d/51f1/9d89/7f94/903fe7db27c2b02
+70324436/949d/0d0c/7d17/e2010b5df72cc2b
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+734ed605/6a5c/f6c3/26ae/611be6438cb312d
+729e243a/5dfc/dcef/1e13/f2e8026029cb8d6
+72300193/b9c3/f14a/cde5/adee20cbdd2f5
+7411ad8c/b10c/f4ed/deaf/f9a1c3434d2bc32
+76ba
+77cdfd79/7cf8/51b1/5818/bf34cbde03a8ede
+78e4d19b/d77a/2c08/fec4/0232a83114b20
+7760
+7bfcb377/fe38/bdd6/f562/3e9e27a06f1aea
+7e647baa/2fd6/7c8e/a76c/6d93a8974b84c
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+816bee3d/8523/e71a/a764/59dc197f6594846
+80ba9638/84a3/17d6/b78d/46c174ffd337a6c
+819cb43b/1c89/6769/36f0/5078ea03c3e3564
+82a5b26b/fd17/b2a4/937d/472831d60703ce3
+8204d5c6/df40/3701/ce81/81639db1923320c
+833c1b47/f8c4/1047/8c74/4aaba4a136fd24c
+84607538/5fcb/7d6e/96bb/3ba0db96c45fe
+852a
+8493a032/a910/c86a/edf2/fed3fe3dc982a3a
+84d25f73/adb1/ef66/6dda/778c3ef4e7ca959
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+86c56cbf/2c5c/032f/0a3a/ad2812cd25554f2
+87c7
+87da0903/7121/6b4c/2808/04a695ebac2e363
+8a22
+8c1493b1/3282/3fc3/b788/fedb40ed20e12da
+8d620181/ef72/a264/7391/5f914b5f60fefab
+8e0e
+8ce41efa/d147/bd7b/e4d9/09f8d12486f0260
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+8eebc71c/0243/050b/4d40/fc43821d62718b9
+8e79
+8ff3397a/3b80/686e/388b/05d9ef1c9381226
+9030phishing@potf/80f2/a893/73a7/d6717763f6108
+91e92d54/5ba4/66fe/809a/dc1b6b528187104
+913c
+91ec5aa3/faa5/1a02/9a0a/c030d3e2b285f
+92b6
+93f9d189/f1dc/7310/1b9e/cfdbd94eaa703f8
+9511
+9412
+9702
+950b6fc7/9556/0ae5/48ab/e645a3881719ade
+9864ef46/919c/c77f/d839/7d9f24c5b397a0a
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+98a039c8/3154/92be/35fd/4733a78d95a3b92
+9bd3
+9bff5b83/0342/aab2/2665/a14a21d18fc1d
+9d90210e/b635/f175/3eed/ead96bee4cf287f
+DIVRPLYFWDMSG
+VOLUNTEERS
+YYYY
+___@@@surpassed@@@___
+a0c6c3fa/36e8/96fd/5bb6/0ed5b1a280cc8f7
+a1ccafa5/bfc7/1aa6/a919/90cfaa46e0eb469
+___@@@subtotal@@@___
+a3469133/9a7e/8e15/1b1f/5912d81cf148ba8
+a3267ddd/091b/7649/5be4/811190e92aa8cbe
+a3c91d62/b853/e490/0dc6/52f54fef8b9f2f1
+a3bb
+a65d1eca/05e0/3a8a/865f/208eab38b70e635
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+a7a043b8/60bc/9b57/d51f/8088287f6b0ec8c
+a94ac9aa/edcf/f712/6a63/9b9187ee4fdb6a1
+a9ac
+aad99f96/67b4/d58b/5629/04150b0f6eb268c
+aa5a851f/1b4b/1fcd/8627/307d29381ca6855
+aa78
+ab4a
+ad292fd8/58e8/9f2c/fc21/97316cfd18f2b13
+ad641fcc/8769/02d6/e125/c2821e989a13db9
+ad43
+ae19a04d/7513/7e13/f5ec/d02b3e9c57f7f10
+afc79ead/de5c/d879/acb3/5ee9e0fb04bba0c
+b0f4
+b127
+b288
+b762ad6a/416d/1510/b38d/b16c8e2fe2ae8d8
+b7e2
+b8de59b3/8b4a/eaa6/f48f/988d02905fbc016
+b8a3f72c/503f/6188/a968/182d9b6ba61ee4
+b974bf3a/9e8a/058e/1b41/e67d9c9c29a2d2e
+babf
+bb26cb89/75f2/bd82/4506/a27f74b5f6465
+bbce3663/0a3a/038d/0203/21d19dbeb25663c
+bc0a8f90/b12b/ace5/da0e/67735b3805ddce2
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+bcb1a32e/6bf4/636b/1c5b/20b7008936889b7
+bd305101/6abe/2c35/a04d/b48cdb535f4533b
+bec
+c080cb2a/e735/94eb/57c4/58609fe085a3f
+bf79b996/663f/5d57/219a/c7916c42bd8ea62
+<div>744378</div>
+one in every EMID is usefull to all  in <span>744378</span>
+c33efa66/fb76/9769/c2bd/f4140d438113326
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+c4ae8848/3895/4ee4/07dd/5a0c8096db48215
+c381c7ef/9cda/217c/1c0b/32d6caf9eed1049
+c6658b72/6308/e6ea/fd13/226f1bbf6039b5a
+c6a59820/392c/6333/0af4/224ec1dd59b250e
+c5ee
+c75a3949/8072/1239/722c/e2a45533e0253c2
+c80e69d7/bb96/de82/03da/5d83f6e453c4200
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+c8cecf65/9ab1/04ec/c698/925b7d39d54389d
+c944098c/0aa9/856b/499f/c7f63988e931e
+c8949ea4/a980/07f8/ba53/4e904be6763ff15
+ca97
+ca41b3a8/deb3/82a3/7281/188691016d3a81b
+c990b427/ef29/ca88/ef1d/91674169e4ff1
+ca6877dd/b10d/d7b7/5d31/cf60f78962fceb
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+ce093737/ac04/1c9e/1204/10031c5247baf
+cbe669cf/a731/c56d/36b8/9e6a6393fb76e
+ce6695e7/4174/81ff/14b2/f38b7aaeb83ceaf
+ceb83715/aebc/b42e/8877/63e4852488fcf2e
+cecefbd2/7e73/ba74/3daf/1f506913cfec48a
+cf1ac35f/7169/d2f9/d1d5/348546914e551
+cf4944fb/3c71/79dd/ace3/ff46ef20d5a41a4
+d0cb0e68/9cdd/a10f/b5a1/5bde7acde2596f8
+d565597f/9d14/8a92/092f/e2720303a76436
+d5f8379d/75ad/a755/9fa7/67b812be9558e8f
+c74082c5/9958/6d43/a40b/e4a8f501fb14b08
+d973d25b/f97f/ef2f/439c/30bb1f3bb1830
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+db609d8a/9444/7a8a/c98d/cba442395bf0243
+dc9343e6/bcec/5f7a/6dfb/201fc6253da4396
+defeb658/1175/284d/ab43/f63283a446314fd
+de49c82f/4dc6/0650/945d/57c96d219b641af
+dbc16be3/0e1c/40f4/2730/e8c26ff06fc96
+e441361a/22eb/0c09/cf2e/94bb93e6fd56269
+de8f4092/f0e0/db71/71ac/097258d3a6362bf
+e4ad0678/bd96/14ce/35bf/39f0b119f28de92
+e5becc6d/0f9d/f088/7dbe/c833a1365bcab9e
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+e6c06d8a/68c7/4c18/2dc6/4f8d094ae3f91
+e6d9342d/4d5b/4e43/0073/a4fceb791572ed6
+e7ded517/af51/3bf0/93e3/c46a1825cede1
+e8907f52/4449/c1df/22d6/dd36f52a558ab95
+e98f6b1f/8c3d/afde/d72f/72887125fa70e2a
+ea26f428/287b/9dda/0df2/72bf99c52fe8346
+eb337dda/2e11/8f7c/bceb/849a1c46e17ee6d
+e0d2801d/1df9/e1fc/83fe/65e78c0fca57db2
+eb5288aa/fc0c/b856/ee86/1bc7c6c83e98df2
+ec65ce41/2788/95a4/5647/e6f61e8f185c5cb
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+ef0f4ea7/e7c9/855d/d3a5/cad2dc28479c4
+efa0ea61/0af5/c8e0/fb54/aca49e101e82b5
+efe7aff4/43db/4fcd/bfdf/3ad7be87cf0f765
+f002
+e9b7df6d/2c80/ea56/0b2d/dabb2c49ffe3b76
+f0a5
+f1697058/2a61/5808/b6ef/2d1b2a068974db3
+f3e4db3b/11e3/7d6e/7d0b/18522a3fa3972
+f1fa1989/7724/c18e/a184/5bd1ef4922eb412
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+f1cff843/3f91/2b7a/edf4/0d9edbbe639286e
+f57dbb7c/05b3/4c8d/0d2d/b0e45eb626db458
+f5b71b7a/bbfe/9109/68aa/e5568496dfec237
+f708a505/5477/db28/4cc1/ed88993c2b0842c
+f87ec2d4/0d27/891a/c7b9/2033ff42b9b2b4d
+f766aaee/a113/eed0/e61f/3a7ab4cf5ca3b55
+fa89fc95/5d65/1133/843d/632dfc505f91ed2
+fb50b3ab/82ae/5d80/90db/dc062c42a37345
+faff656b/c0b3/9258/6cae/449051571d79ac2
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+fe9ca95c/3931/9d7e/fb3a/f7ff3ad52d7bca1
+schrieb
+ministries
+subtotal
+xsl
+b97ce1e5/978f/cdfa/0d56/87f974ffd552fd4
+
+mandrillapp
+b2beea13/97ba/cb70/5f90/fd71fc92366a8
+cite
+bcfd
+___@@@cite@@@___
+Servicing
+8ex
+658a
+5144cba8/751e/49f2/6ab9/72c2a476494fb70
+468b
+4bdb
+4997
+4b69
+42e9
+3ce27ac5/53b8/f8ff/3063/0458ce4ee9527cb
+11ea
+01924d15/45c7/c5ee/39ce/6e80ead6ed2ab
+042e1071/4c82/03df/0d0c/385422a915530
+bf3b
+7bda
+48bd
+9909
+94ac
+a50b
+4d28
+2312
+4382
+4b27
+9c38
+0545
+a186
+969c
+4f86
+cf387a4c/7a26/959a/1912/b884e478deecc
+46e5
+e1dbb870/6428/7c8d/e008/3c86b070183ba
+a22be502/ff44/ddaf/2633/357ff77f53085
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+20d896bb/97ea/d91b/70cd/45937fd88b8dd
+2245bdb4/89a9/8db6/c16a/864d6ae078c88
+55ad491e/daaa/f6a2/8d12/5ec2acde8d0c6
+562cf20e/eb96/ade5/15b3/8b03f5677015b
+5a971181/98c2/feb9/ef43/31126c8969f96
+8b60f806/1fba/90d2/782f/2efd5868d8bab
+9fb358d1/b8ea/3e59/9fb1/b39f8fabdf164
+8edb4df6/348a/bc37/a615/4e5d7a2426aeb
+9c92e4e6/f607/e5f0/edc4/16eaac9864fe6
+a198231d/beea/8ee9/9b80/ff0931c9515a3
+ee611689/a5a0/5f46/7875/9ef22b752b9e4
+c5ad14f0/63d7/07b3/43ff/a5f169c37a29a
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+99ebc198/b9c3/cbfe/7eb5/5310f35b2f082
+f4bf8173/c8e0/9aea/41c1/ef76518827b77
+f16a2ff3/c158/4c26/24e8/c19a5f52a9c16
+0b082db5/bd38/4b0f/42e8/f201006d49976
+1af58d8d/4a63/341a/6678/34d8500fbdb5f
+1d6879de/aaac/9b4e/036a/78904b80ac11a
+2273fba0/717e/1d21/c55a/c31512e02c31faa
+3ad255ea/f93c/baf7/56e9/2a6b81c6ff083
+54e05ce7/772c/8e07/41b1/fd00a2c361a01
+5fbb64ef/ae8d/b7b3/0fb4/a46da0d5951b8
+50ec7727/adfb/b249/9a1a/39da9f8f0f20f
+6dedb9a5/5a35/9e03/484c/57abcc6b738f7
+817a1d96/f007/a624/cdfb/cb1e1f843d44a
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+8a64dbd0/db8a/3b99/3dff/b1e91bea0c2eb
+b48d
+f30675fa/c181/cc25/57c1/e68a5f3986ce1
+01f6cc84/00e0/beea/92b6/632bf5d34af20
+016480a6/3d3c/e882/a1bc/fdfd5a1da6d55ac
+02570736/28d3/3934/ec13/94898f2574eb6
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+08553c09/3774/1bb2/7273/505edb25b83d2
+058c549a/1268/55f7/a309/01dd3df3757b49d
+07948326/a081/049c/02a9/5552d2796dc0e
+08103407/85d7/71af/e49b/1311eb5026a8f
+0d7f355e/3a32/0126/f49a/75a7927d67e1d
+0eeebdcb/7623/8010/3e67/5129dc6642e77
+0eb19b53/053e/2653/2bb5/181fe4c6dba54e9
+0d6adb96/50a8/14e1/bd31/c197319d07368a3
+0fb8b118/2a4e/4e89/69e6/8efb7ad32faba98
+110be7ae/a5e6/2231/5d19/5435e849e3bf229
+148df1cc/0403/12af/e632/59ebae2e12b9d
+1a30251e/d50a/49bc/5f32/5c597dfb15dd0
+1885af0e/92c8/006a/8cdc/42b65bb9bad1b
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+1716f1d2/0c1d/2b98/c87c/89ef776d1a7e8b0
+1aa77aa4/f725/439c/8717/33dc4d3114b14
+1b89ccfb/8b94/ecd0/9a8d/96264a8074803
+2cc70d3b/2400/96fd/46bc/ecdde6d0b245ac
+23b12715/169d/74ab/8105/3df4d2aacf091
+2ecf5921/a80e/e980/75b9/954974093eb05
+334cfdcb/b506/97d0/abec/cb22f84569be8
+0fd64a35/8769/91ca/06b9/e810ea6003e64e7
+33acce4a/b857/e131/a799/5e707883c250ad8
+33a07ec0/6366/8f7a/cfea/6b552f4b983c5
+3859f522/f330/4a06/5596/3bf18af8382cac4
+358ec02e/a878/7bb4/905b/4c0030e325b36
+3e4d9c88/900a/0dfb/57fe/97cafa3f9092ac8
+3adebe87/8a55/0c28/2b66/c0d8d8de1de5912
+38d83ee8/a84f/fb57/c52e/f0fa367bb8f1323
+3f0a62cf/2c1c/950b/59b8/1532d0bcee47d
+4401ac6c/987d/1f65/10f5/510e66267e6f7
+42d534aa/f65f/8aa3/968f/57571e2ca3654
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+43382db5/7e81/5692/8ac7/e142ac695ecfdc4
+459819af/cf38/2f41/c78d/78f2844138672
+4a506e9e/4dd4/92ad/7189/9398926e314c584
+4b4c9791/6321/41bf/eb46/8eafd3e746528
+495818cc/bfa6/8faf/4e4a/e485b5f83d24513
+4cda1f42/59f3/aa5a/e5c2/0110a94eebce28e
+4db4d9ca/59f5/2b4a/ac12/04a58249da56554
+52ec18a4/419d/1b13/98ce/49477a9c08cd7c9
+5aa9b59b/b2ed/299c/7d54/4fe30b59043bf
+51a1373e/e3de/330b/209a/68a692a4b79c238
+59dd4968/c504/3588/ce69/8549681079497ba
+5bdd798c/76d1/5832/e109/f914d4124fc8641
+5caed80c/d6e3/c386/22f8/75e0b4b98545cfa
+5d5cd0bd/07a2/0a93/3a7e/cbc88d6bb7d88
+56b537ed/a5c2/452b/0a36/721141c3ee12031
+6252e2ec/e124/0db3/4f96/8a328d80c8ef920
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+64b07805/352f/ce8c/462e/f96d7d02b7904
+619b9da5/fc1c/ad21/b112/56022eabca18372
+68aac689/8131/d73c/84df/2d2df022a03518a
+73b69b49/ed6f/d6d7/9eba/8fd119f67cb63
+736ffdce/834a/3aba/99ce/a6bbeeef2639d
+77da5eaa/aa10/cf34/2648/d3463a53157a34f
+74cd5277/4c30/d6da/7f71/c10e73861a705
+6e1ed455/25af/e60b/7ed7/5c2ea343b1e15
+83df5b32/7526/5708/c52e/7c95fdc6b326bea
+8b6e6dfe/1f3b/93cc/612a/d6331a8563b84
+989b4f31/90c3/4167/5362/efc2b32495210
+94709f17/05ec/e9b9/a85e/eccb6d7dd446ec7
+a985fa58/f4de/7907/7a7f/17ac4b1b7cf4b
+a7b1a5f8/a328/f7cb/8344/553fca8b5046100
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+a22e6328/0c34/be9a/ca16/b7916158cf914
+b215c185/fa6c/874b/a66f/f5a444f540f31ee
+b95cebb0/b7b3/156b/fd15/f594e65d43c1a
+c867a4f6/02d4/b620/99ea/f9b7f54095fd6
+c6fcd7ab/7422/cc27/971b/854687bcf4b54d1
+c57dd38b/65f3/e736/4ad4/892fd1394d1b6dc
+c7e5fb8e/942a/0449/c6a6/d503e0bd4551f
+d01fa824/cf2b/0fdf/e464/d65803d5430a2e3
+d00da5fb/37b4/64fb/8ea5/37589f9831f0a
+d7bbca83/c4c7/2bc1/5f18/66e260705fcd5f4
+db87c86f/4540/af29/1ed0/be1d4a964984735
+dd365916/1928/cfe8/52b7/659c5a59c51ab
+df95f866/2f44/fbf7/69b1/d2a02d941752b
+d3ad39dd/e63c/dfdd/47df/42c50999d4a84d7
+df6348f8/c785/6e7f/7c12/56ebd4c66f6b9
+e14bf4ae/976a/6f65/6f4a/e180231c06cdc3a
+e36ee5f0/bcb8/dd8b/959e/ee89b487f43d6
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+e8748af6/358d/d0ae/ff8f/9e59b8854f7a1
+ea6a9cad/fbe2/b7e2/37d9/ef89337ecbbd2
+ee26d177/404a/18ff/4bea/73efb81774b48a9
+f191a66c/3139/099b/a4ef/1c3f9c5f3f195a7
+f18e567e/5682/a538/18a4/4563b3e2cfa2a
+f16faa5d/cbf5/2447/a3ba/ed18707599b5e
+ff476b03/0fd2/8f52/6dc2/6ca5ccde64d6123
+fe971036/b5a2/9b79/c004/5a57a583ec162
+34845210/75f9/4a7d/d942/1d4da86e8a86754
+16bee39d/c454/da64/9c44/feb74014a44edcc
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+8493a032/a910/c86a/edf2/fed3fe3dc982a3a5b8a2e46/54e3/9a57/b648/9d602edf163ef
+73fdd930/0c04/2e11/0019/cff2855a5d27149
+47320bd4/ba37/2673/8d8f/12e72e46e668831
+0dda9024/8b39/8d4b/0bab/8a94673de4c9acd
+9e91
+a8d9
+9d96e729/cb24/a8b5/00bf/55d985c501418d6
+6e90aa96/02d9/47ca/85af/74bfb766bd40c
+eb3a625d/cf3d/16c8/a257/73f3e45f0f617d6
+92bac34c/8188/4b18/8c76/1a0a3c2e0b14e7d
+ac906127/921e/de56/6918/68e3c1bf5b0b11d
+dac2baef/fadb/9d64/2ecf/50e719c699c7e65
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+bf581615/89bf/7a65/bc65/aa215ad84393ef1
+4ec9034c/0468/701b/998c/cc4f004bb0aa1ef
+039de15a/db85/221a/8b5c/c25b10d63af6819
+f6839f8d/3b6c/fc2a/63d1/9054869ff7baee7
+9bd3d973d25b/f97f/ef2f/439c/30bb1f3bb1830
+3c043451/558b/4072/0c73/f7c2db5de81f5f
+30d40a8a/fbb8/8f12/0b3c/ad9cab3d2d6e3a0
+c6a8be37/27df/927c/cd4a/e72badf315f6f1d
+db3b44fe/e3bf/86a5/abea/6aca39efb0bc01b
+a8fc4f8d/f6f3/1633/8c31/8182fa4958af10a
+13c33637/9cdc/264f/a926/dec63fecb48c11
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+399ee641/4af9/30c9/d79c/5ae71ff30ea0d75
+4e387e49/7334/f867/a11f/594423307288f69
+3d941ed9/c0c2/16d9/2bc2/fe4e3d34ef83696
+28e1e53c/48da/94c8/0d26/6ac7e2b3fb2785a
+9f3f50a6/b6f0/c283/8b80/b39e69c982c01ee
+d3d593bd/1ddd/a391/b2ed/d4bd015266d1fbf
+672947f8/14c7/a10d/ce9d/57d2fa248ef775d
+0da5963e/2ef9/44e7/b4ab/7b88b7a91c7f72e
+be5f3e04/5f4e/9e4c/c658/2ea6a960d38917d
+52fde26d/3492/381a/f78a/cf657c14f6ebcae8f7f550e/46d8/34ab/f885/471d08688dfa119
+82e6966c/aece/56d6/37a4/282b527e078688e
+ebf336a8/6c3b/1171/425e/b212afa0e3a9938
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+523ae5ae/0f3e/a54c/b182/83c741f75bb341e
+fa1ef4c0/b684/5d6e/fbbb/d120fc626c8e68a
+2da59d54/a492/bb0f/4850/cdc46ba1d1a29ac
+751ddec2/962d/7da9/2651/b15a8169a683def
+5a7f1e4f/3c58/3785/7afd/5259afc9a3936f8
+38e5504c/e102/bec1/7c72/2ed5def3259f392
+5086a668/a028/9675/dcdc/ce050759db3c2f4
+ea2ecc62/a114/4087/4fd5/e1c713163dc0488
+9ea9ef79/fcb8/a677/0ded/6c9d4e31dddb6cc
+35f7a8a4/f5f2/4ef0/efd8/c42b88e6187b6ea
+35ab3a3a/0208/a563/64c1/370741c002cc15d
+973b36f5/4a2f/294b/d50d/8ed14c157c9644c
+0afb0c83/c82c/fb95/b859/9b987e3ba79a367
+dsb5eaIT/{math4}/369/369/Mb5o9spcLei1GhH
+8725b3d6/e223/715d/a832/1fc467fa3338a37e3f0phishing@potf/c64c/1883/7771/85ca64491c082ef
+e6388f0d/2b14/ce9f/4001/e23ddefa65dcc6f
+b6e23ce5/0a68/e836/5896/e9bee575a75b729
+&lt;
+<o:p><o:p>
+<div class="WordSection1"><!--[if !mso] social -->
+<p class="MsoNormal"><span style="mso-fareast-language:EN-US">nRJ3mvQhYD<o:p></o:p></span></p>
+<p class="MsoNormal"><span style="mso-fareast-language:EN-US"><o:p> </o:p></span></p>
+<p class="MsoNormal"><span style="mso-fareast-language:EN-US">TRYLnWc784CLqcUfmUBmAO3aHgvonkR72GI<o:p></o:p></span></p>
+<p class="MsoNormal"><span style="mso-fareast-language:EN-US"><o:p> </o:p></span></p>
+<p class="xmsonormal"><span lang="EN-US">fsLdrFF2VI</span><o:p></o:p></p>
+<p class="xmsonormal"><span lang="EN-US">? </span><o:p></o:p></p>
+<p class="xmsonormal" style="margin-bottom:12.0pt"><span lang="EN-US">{rand62}</span><o:p></o:p></p>
+<p class="xmsonormal"><span lang="EN-US">M1Vws7X70XE7jTktAhl6QrpruGX0yJyaBjxTglQ78l4h4fBvnN<o:p></o:p></span></p>
+<p class="xmsonormal"><span lang="EN-US"><o:p>? </o:p></span></p>
+<p class="xmsonormal"><b><span lang="EN-US" style="background:yellow;mso-highlight:yellow">r35Glpc9gB</span></b><b><span lang="EN-US"><o:p></o:p></span></b></p>
+<p class="xmsonormal"><b><span lang="EN-US"><o:p>? </o:p></span></b></p>
+<p class="xmsonormal"><b><span lang="EN-US">Thanks<o:p></o:p></span></b></p>
+<p class="xmsonormal"><b><span lang="EN-US">IEC9OZTVaAS9LNhGTJ16mj0hPbxSaEkJ8MJNCtyD</span><o:p></o:p></b></p>
+<p class="MsoNormal"><span style="mso-fareast-language:EN-US"><o:p> </o:p></span></p>
+<p class="MsoNormal"><span style="mso-fareast-language:EN-US"><o:p> </o:p></span></p>
+</div>
+<div>503325</div>
+one in every EMID is usefull to all  in <span>985202</span>
+<div>
+<div style="border:none;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0in 0in 0in">
+<p class="MsoNormal"><b><span style="font-size:11.0pt;font-family:" Calibri?,sans-serif?="">From: 9964368710</span></b><span style="font-size:11.0pt;font-family:" Calibri?,sans-serif?=""> Chris Gort [mailto:chris@dtwenn.com]
+<br>
+<b>Tpoo:</b> 9964368710<br>
+<b>To:</b> Brittney Bohannan <brittney@dtwenn.com><br>
+<b>Cc:</b> Jennifer Stumph <jennifer@dtwenn.com><br>
+<b>Subject:</b> RE: ThCvVK1EjTBw2rEIt2rtwB3vdC8FVx8FEB0qbSUkBlHuDb2W3jgpL9KOCIko6j<o:p></o:p></span></p>
+</div>
+</div>
+</html> 
+</title>
