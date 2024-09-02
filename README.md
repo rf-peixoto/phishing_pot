@@ -25,3 +25,11 @@ ___
 * Your servers are not configured correctly and allow attackers to carry out email spoofing attacks.
 #### Can I integrate this repository into my feeds?
 See ![LICENSE](https://github.com/rf-peixoto/phishing_pot/blob/main/LICENSE)
+
+## Donate
+
+If you found the Phishing Pot data useful, please consider donating some satoshis to keep the project going:
+
+```
+31v7bD1FkBLGhHxMQ1tmWGHyjF2wMqSSqC
+```
