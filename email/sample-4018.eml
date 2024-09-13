@@ -1,0 +1,840 @@
+Received: from CH0P223MB0233.NAMP223.PROD.OUTLOOK.COM (::1) by
+ LV3P223MB0968.NAMP223.PROD.OUTLOOK.COM with HTTPS; Wed, 11 Sep 2024 16:27:52
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=h1fjlgQ6hLe+jo5FXU4Nys/GwxU+IvFjKuVMVQSKDZGRDGB/6ENgF0mfudgJCsiHtq8TUqIyuSTUeNt7nY0W4jo+OGRJwDC/ZqWQdTQub3HxSDHidTPniJNAR/marMdowC5ALfjxRENGh2oq+OIfIxRVHnQ8Z0qlhfRdjtZMqSDLfY4sHJz5WDLGrhIOsOifxtoaAvyxZck4R4orJ4IKc1rffnqYy1IhcdwcKrIndaCPvzZ7GWSoUjg1FzqOdHIav1lx85PB29LYfBFWtF2TBkf+NVEG8O9Tk4fcnZ9/TNHq0h/UzRE3yp52kMV6xzEEqTazcvBJUpBMI2WDAN+etQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wBWYeTOw1yWVyBQ93SORs/jrM93NVIoiWLEG1aoR3YQ=;
+ b=UEkowUW2akYr7w1zH8K9PxyJFoyafxFf+qyG+GIVnFsBu3t/O5O0m4s01Mf/+VpYP/fAN7CYD7v6d5b+AlLhF8dqd38BdvHZ+YUex29Y0bfAq5ry4IwsDWsfVS+nUDqXUFaKU8P2agx+SKcZ6tTAtnErhEW1iV8xJNDvBDUdRxA6XpVCKglflZP5KwgL/a98B0x9xcCDO0oJAsmY4McipRydXkl+erMeYuzZcadUZZkg5t3UeRR0gxSE+RWcE1w0god7qAzbud3AeuSuvXTwqO7ifDbNS3791BBZIK2cqLFO3lYPSrMZbD8r5X4jywT/XRvqAZcF0stkbC4DT1mIaw==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.100.0.204) smtp.rcpttodomain=hotmail.com smtp.mailfrom=hinata.coincaps.ai;
+ dmarc=pass (p=none sp=none pct=100) action=none
+ header.from=hinata.coincaps.ai; dkim=fail (signature did not verify)
+ header.d=nshrtt.onmicrosoft.com; arc=fail (48)
+Received: from DU6P191CA0064.EURP191.PROD.OUTLOOK.COM (2603:10a6:10:53e::24)
+ by CH0P223MB0233.NAMP223.PROD.OUTLOOK.COM (2603:10b6:610:f7::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.25; Wed, 11 Sep
+ 2024 16:27:50 +0000
+Received: from DU2PEPF0001E9C4.eurprd03.prod.outlook.com
+ (2603:10a6:10:53e:cafe::f2) by DU6P191CA0064.outlook.office365.com
+ (2603:10a6:10:53e::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.25 via Frontend
+ Transport; Wed, 11 Sep 2024 16:27:49 +0000
+Authentication-Results: spf=pass (sender IP is 52.100.0.204)
+ smtp.mailfrom=hinata.coincaps.ai; dkim=fail (signature did not verify)
+ header.d=nshrtt.onmicrosoft.com;dmarc=pass action=none
+ header.from=hinata.coincaps.ai;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of hinata.coincaps.ai
+ designates 52.100.0.204 as permitted sender) receiver=protection.outlook.com;
+ client-ip=52.100.0.204; helo=APC01-PSA-obe.outbound.protection.outlook.com;
+ pr=C
+Received: from APC01-PSA-obe.outbound.protection.outlook.com (52.100.0.204) by
+ DU2PEPF0001E9C4.mail.protection.outlook.com (10.167.8.73) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7918.13 via Frontend Transport; Wed, 11 Sep 2024 16:27:49 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:26D3411269F5811B248924CBA499F5AFC419745ACDACAD0D216E8679DE070A02;UpperCasedChecksum:F7DE4498BD3F77CF87000FE63E2289ADAEE0AEB12597BD5E015B6408BAE65A07;SizeAsReceived:18224;Count:47
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QR99TwlGxI2rG7WggbDTTtxwdBW1a41uvPoPz7nG6nuMBs2hiYmObZAoBcv9MNOnO4pu3scw2h6YG+7ORsLcVswtbyU5Wy5UOEJLmi90JGtZyubE3uv47AEaoDB4PmAnLphpf6MOjkxR56ucWJYE0NZwYoHUAYlYxGxqdP3pryWT7EHnAtbLsmLMcIXkHSXeFmByzG2bnjZ8kCTTHxI3M2FCkl8tBuKbo6YZGhI2rDD7JzftS1YbeXDXaTewRqwWjLQvLunErHs2eiLNdf4nwG6Vf/hdhe+252gNm4KN2myJcd7orOJqS7iWZaGYFfdCiNcePXqTS7hVptB31wivcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wBWYeTOw1yWVyBQ93SORs/jrM93NVIoiWLEG1aoR3YQ=;
+ b=WlGoeYJWcvjsueTUH3KOXzB/V/wMHQNxS+rx/yWNG98FeS7Q4VNeqHQANMtq8x0fK86T5s04X7vn/00fuD9u1A/n+fqWNCQIeHLUMtQAr+gl7gQ607nbgDKXS17yQtgtldTH0zTNfF+ycRUni/knLRIQMstEdGk0q6oXzwpCluMrbhEAlcua05FLY7mr/u775B1z/JSQ9Qgq8rIGyP70HwWhvTSpYcBTQ362OEY+7Tgk3t+ZtXNhhTmCu30Tpp9m+DYcw0Irr9hu+jCIgGeuIi+B0640T2I85aFfAnNbMZRbVEvckLd4PswFI6NrtXTyIeSO3oW+S0Lqo0Ou5xzR+w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=hinata.coincaps.ai; dmarc=pass action=none
+ header.from=hinata.coincaps.ai; dkim=pass header.d=hinata.coincaps.ai;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=nshrtt.onmicrosoft.com; s=selector1-nshrtt-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wBWYeTOw1yWVyBQ93SORs/jrM93NVIoiWLEG1aoR3YQ=;
+ b=kIxV0LSmjdetLQi56u56xWNGDPFUAYKUG4SC99XPJHDZ5HvBFrHSPgGjIlAiazSYAbc+oWyOMG5wQrh1pZNBoIoQY34DcOZEYUQm7gQl4j9PxbrblbM44zwwlJuLi8QVBCVaeuK+h2QJUD3tkvq8HWaFB3HaaXCPO9dvmC/Qn5CrDispddJQWEbiNzUmeqOaQ9OdAg9Fm5CRQZ9tgUZzCXHn6DsOmM976peC0KJMOVxQPfNf6zjltIUhxiEitSK8sO+aP/vXI3ip8fJsp9qS6MtaX8cam4u2ZaRD2V8mWG8Mk2oWOSSBfEAzZeGV3nPEawiiXlkFhsUCpvMSnBtjbg==
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=hinata.coincaps.ai;
+Received: from TYZPR06MB6992.apcprd06.prod.outlook.com (2603:1096:405:46::6)
+ by SEZPR06MB5165.apcprd06.prod.outlook.com (2603:1096:101:4c::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.24; Wed, 11 Sep
+ 2024 16:27:35 +0000
+Received: from TYZPR06MB6992.apcprd06.prod.outlook.com
+ ([fe80::7f8d:5cd4:2c02:788c]) by TYZPR06MB6992.apcprd06.prod.outlook.com
+ ([fe80::7f8d:5cd4:2c02:788c%3]) with mapi id 15.20.7939.022; Wed, 11 Sep 2024
+ 16:27:35 +0000
+List-ID: <MUXZAshYN.xt.local>
+X-CSA-Complaints: 5apu4VZh2s.csa-complaints@eco.de
+X-SFMC-Stack: 11
+X-1fdSG: Eg7vH2fCdqpoVNZQcEIvrkzpIOzdnyF0vo6/+awDL6pyvcKI/rhB4D1=
+References: <@mail-Fur.Bounce_dnO.io>
+CC: <__Link5apu4VZh2s@aol.com>
+To: <__Link5apu4VZh2s@aol.com>
+List-ID: <.7289367.xt.local>
+X-Mailer: 1fdSG
+From: iCloud <NEW_OFFRE_1_46924@hinata.coincaps.ai >
+Subject: 📣 𝗟𝗔𝗦𝗧 𝗔𝗟𝗘𝗥𝗧: 𝗔𝗟𝗟 𝗬𝗢𝗨𝗥 𝗣𝗛𝗢𝗧𝗢𝗦 𝗪𝗜𝗟𝗟 𝗕𝗘 𝗗𝗘𝗟𝗘𝗧𝗘𝗗!
+Content-Transfer-Encoding: 8bit
+Date: Wed, 11 Sep 2024 16:26:18 +0000
+Feedback-ID: 325-anexp#nret-fa:account-notifier
+Content-Type: text/html; 
+In-Reply-To: <Vvs85hl6Id1WCgABFvUXbPtqff8PNa1IkGwKJiOcsCX3Zv3rdrFm4l2wKHweHhJIW5hefCtnF9KLZtCsPMdRqVZeYSeIRsT5tVjovmf3g9SGZ6TbmDSqRUj9rNKOmYW70wEv0ASjcD9UgurSITxDqkkyBk2zvvzacadPAkCM8OvG6ovpTcFjjpeOvxEcGymZvI7YWdhBD3AXVu9w94GiDSvBO84rqH2Ri6fWyKGumNBx8fW9JdtKPklMk3n8rEFpBTDx1JbyMQBlbGUaLPB4eLE5BZkDCdAW05k6Ftn4f0FAmHv9J9ii8GoSPHC2pQAyT9FC6ilmgy5tf5Kge7q2zfpueTp3Whyq5l0WYN8OMpHzgc3j9nyO9QcwuuQnKHBwBTJC9DlPTS2y6foZapauLYnvNAIe2HiS7hzkQ4BJquCigmfRuFzd9QDX7JAe2Jdky79XexuOO2YfjO095CtbRDFV0p3u1sz9gupN9I9G8Af3OPtHaTBnRVejwNBLQU2GypCh8iM7PP5dxhsGOuFV9yKi61LS7CgAY3svRbxuHexrEtUrMTvi4wEYkow4VNOxrzbpISkYzNUe1jDM2H2GZ0lGyH0B11LuBv5j7KcWy4GPakH3LN70zh1cSI4ky5IbQvX5UOSsZhmFHEXDN73EO1XVneXxGDN9VgueW59QtnbyxtZWubWO4G7nqs2kBYgyBCRUpfHKWNen8JLpMhmPFlxMroF913KQwAVkCxLIoX77Pja6RBWDWh5zQ1ZBpdQuGcw2vkxdWSkyZb9LI2zMxdU8tkQACI4OdJiqYgZd9xNvb6XdsuaUedAcqBwNXua2nQGSRzROBLJuaINnzKaRATsuRNLbIvz5vu2Sg0mVmZR06K2m91p8SCGDLHv7Ty6wWTKDkK972o9eRR3h9YCUC9uy0p8Bk73GCjA0NZb4ihx3tfJQ498TkcnexIfWEUJS5jVKr2iHDXS7mu7gJXgRArA1
+ 4B1OSA3c8lHjiO1fvhKBeeSI6vUx8NRm8V2YEV17deLDxlPlTja4MsT9Z5fwHY6tMkWa63kyHGNB9QRy0ip0eqI0fwLXUuZOq3RFNy41xI57qcJxCwt8rh29JN3nBWGds1nqf1c9D2S9XdR88LO7g10bnZg2hP7hLWGMrdbQepn77gWdG9WZqDQHgg0D0OyjkogTSudkH5apu4VZh2s5apu4VZh2spteFPlxdyvQbMK@5apu4VZh2sLBRWHoIRIRagBy0RRaQNtGRUgHNT208Y4dKkKxZXFgaSDliLC2kDa2aoT.LhThTo6iKYlp3ZNMSFejnNgYcsHybOy8MMbkZYn95uLxAqPJhr3wJEWWkQ7LTidtvfcS2NeVcLfKui0u2EDkSNenNFlFJ7P7bTPV9BDw42oCI1Myemvw1rU2ELdknl2gnLERf0UPnT7TmGKRiFqWAZFSC39hVv1cvWO0S6QElu3VhCN7jWSrmPx0pTIWNNXCe4KSySzL7Q5N3bJEfExuHXtYMaO0xcsAdugRJrppGSJWykEv1mI6RFEeqvDvWx3Bq8bMSvN84dHvKanpWQu12QaefQJwNBFB3Wgo25HmcR7lPlZSUmTNcSFPmaLMwRvV4WOy2ddRV3JCF2otDBMWwOeBdYFOxEgda5ZVXY7Y6Qy6koIG9Z7JxVJgao9oPjlByapgYDBboumI0j4gi5F364gPPrdhtypxhpP5Rj2stMmTMSxon070f6D3IdgW5pMPYU8N5n2KedF7qOgurKsSZ506RZKEGFeR8PNfgxTMR9FeZe2b2JWN4zf9r9FcR1B6mv15UgWXVVnpIZFNn8lmr31Oe9wC5POOItx9tL7WznITlLxS4u6GSdIltEKFxbzDvqjLpcsxfeiWJxQX4BziBiQmdW02PBD5KcawbsWOpmbzEbfWGedbw4M9gDczIIllha7WxKTDyJKyEuSqQsuYKLpMRk65O3AnkkMwEaPgpT0vpiQiZLAwH
+ T
+ uDWEfWPqOx81J5rHqyUWGMLINO1ifX5OfvkilSjiUt4VrxGILdPOIU9hlnlpAb2MekGPeqyPglXHxCIL2oslTMDuZLQ2KcLi59HrGZ3wqKHVOK5PCXu9NqBCjTh3L5WKAIWbc3VBbBbbbGX5te40q7Q0wrO4l0eRgGSIA2hAY7V5efBcgLpIhA23QqJ440a9x2tYHPY7C8JLr674fNRbNSJxp3w0N9D1n4Dam6d0fKatPn0Ms9FoMCV1m3MU58bJBR4VyoYujRcPwmkEIrjkyn8oWNk5A7Q1NpLUbmTU8cPeo3rvPsQwOc0bn0nAPmpMnovQV0joCrBYjhlT5xUQyR9W3raVxBxbCBry5P1d8LtMEGqCQ9bcpWDaOHiXECDVLjK5CiUGigxU7SqEnhHse28MC48XP3303Kbx26ZhUGKD055YF0q4Y6SLd937iu6tOjIK9ddFGnH41lC8VUdZGSqmNxqFh7aDfyhqH8R81LhDz0aTms8LUTuTM8axBetFWtWtgq1pUU6Mg4rWlP16k0p3hNUfOReVCMSkI7Uiy2NiSWFzsaZlgEGz9Osa1ZCE7wCMqr4pov9ZUin5RD8lc96Xws21kQ1GmQZXAe5Oh2gKQP8LAnmWaFlDSXTzzAktX0fnTw3lrJtylbaeZqWiOBn3StwVT0uuMRWMHCHcWqzwnnCUflUVavoMQAxlFzb0YahXRQs9jJVGFb9xg7ik1ADlnNgj0MW0GIWfRsjqNPwpa31rF8pwnnYbnDFsuEIhq31wE1kgPy4eB3eyea03S7hIDtPYAf4NMFCyJ7XP0QpacLMjwhNu0fs9bSSpgkLTtUaagisKaa88lPzTEAJdc9ieg1f4YVRMKJmwxZrgDw5nbsjxXu1obzqQpsYFHuFMZa6n6SpjFv06rPVZKDnUpIwebF76LzLoti7I7XOQkjfD13HoPwyjsFnzsW9XYKn5jvINy2zmmab2RV2RY0bvKkO5Esvn89VJHQ2Is
+ L
+ 5LsIvb2gg77cZ06P2KjMAbj4UU0HvfsctJIW7umnsb7HXNtlDmfGtaxylTHNLZ4WCLV9oE92dOyQs8fZkBdgmu5bcQIDxjsHciJjlifg3Y9qwUTA05JbwycEklboSNr4m3ZdBkZeF1qAEwmMQySnCJ5gbJ7EFxmVFMJ3AErbSYMOlaPDipWWtSTUiQkbeB9jXLzbvRcWurPsr8F2J98d8qiSzU4FkWlohuryxOBWkLhvhGiJvf86yzs0dQI4bUSDw6CVREm8bI0tXG8GFN3Muf1lzSOSPutBQO1J6OmLOZ6IqwBEN8857CTlcfcdsFrJiMVYcZaxTrQOXCow7Po0jcgUTKliWaongWezwmoXtHOVXIufHpLcADKMniSZMZK4EFtBeXrg3pm2gALwBOkCZ2pRQhwQZdu8sHc7lDjFqxQJYuDFTHuqgEO3S9GKMri8cinUUEwiBKfRehzio4AF3iASx311OPVW6cv3oaGrdkdTUlkC3wKf4264w9LdHepwTZAZ0PcbNOkUMrseGwzzSq3WkvPVZTrMnOV9gl6xzfdaZ5ZG08BZuUnAFWiEmOmYRZ77VMmM313dy2O6EN3eabWU6q6Gmeck8qoH29hlROL89QQgYpyEzDe8Hhc81dLNMdbJwLR1NjNGD58dhKbMABjDXy0YPbnc8lOw7XTttcVNM41DytNmqhEllWZcSf0FNsOGymLIQSq0vwQ83LiJgV7EuCZXvtaM9e50QSm6JLtvmZpCkPnYDkgI0aPHg45PcCoaIj1PR7LXenFxJFKUFJxkSYPnjKBeN6xVfVamdZN7RvL0JjSUno1vhtJnXbi6ZivWDWHxbMho9tnG4OUvxdCqqAT5Vfua07zIJm9YsUISbjLGW13HLSkG1uvosrhuTNXtiKcQVBQtsrImMJ76cgWU5Om69TFhO0wcABW2SEcMp4wlQkbVzcHA1FlGNZf5pCR7yE2VTXIMLckyTnvfa7WXQyH0P5olCmbmu
+ w
+ ZYUFt6o4QBqhFUR5y3c3rgwEWG9nKypMNx4FHB1HxPkxSuDnbKPnIodklFEWntnZSZVYERuJQO8cBq1GDvf4OpKDiI25d7UUG3Ekctx8BbrzlnPAQ2xLNPqoQ4usBKazfe2zitnejYupvfWD9ih8ExCsTWlHY9THgKJ5vkkiV6tiChev8IC4335CencHGSJmROJYPLXNP8SF3wdklQhNanQqduz4Q2VGnnfCDjmr33jL7fAACy1WTyNkOVBSWSQRYy6u29UM6tTCXCLCZLnIt96z7MK3EAIAnS3YH29n7k0Mz1ESYXkTHqGSb97Z4fHeURs3e1ITjffMuuekuaqKMZbsjNQ32i7eBb7xn1d05rleSGfZqu1iQhmrNEBFyUvFdv09yP2ULpy4b7kwIV2GMq4MgVUR9AYXNa5S3kRbht61rcmJ1l1ighlqfLeM541KR8iKj3kh981U22WaD8fqUAQfLF3feDJb7BzPwbwqWZksArJ4dfIARWytMNH65eQDfoZHdcPlxouzNWXBzTcio1SoTJifEl3wvGfpkG1sKNXKP4De1elfukRejlNGIWvwBFKQtgrRgUnr32as2BdYSSUX2JphXNQ29cFJFYUPSAVlMKct5D4mDKu0w2EWD7hTkjXzJHPK6Y1i028ufQJynA0cqgaMnoX0ltKul4ZIoeYm605qiS5K6DNZI8m9WaUQCuu4CCfMqx8o0IuGCfKWozf0crptv1pZeuxmK5DY45Tpl04Gjey4bWsdd6w8qhXNCK81IZ4kq3W7c9yMbHgRy9DTzyVZfl9Eg8GRRcCvmCecAIwcdAieB1X4M8GCByAOr4EOmGAL8tWJL9lWVtqse7r6BGB9aHHXQYT5XCvReKcbJwfEDmLXGBoRsstqMiapbXrBfDVp9lD2L7Q3Gs2tQeqQJ2MUlv6SbvJOpUh8hwRt4pzi1z2kkln8m56Rt23wrdehzarGeTd4E2X99tCaaNUReR1x9jdv2sc8C
+ e
+ kReAlqoEnYJ5Y9CCGJKPLSQ8MHHdXreQWyv7XMbDQNZuTd8Ug8TsFP14HgLigpJJgCQpjOR0lBCjnpgwhcZgGhD7ItCCeEeVfHUUo6UatBSZsjyKYcnDoQMpCq9L0usUhPkV3fWV97FT58XDRfonPHnATz8HAVtyRXsd36ienZrm3MKVH2BLRbM7uixe9kA5UuzWiFKmNXhfkrw8HaIuBE6Jfwjx6x7303x7fGptlWZkqIPRYOzHEE0JJ8iXTaGQnOD6YRn5EgcCPoxtgyVfazCavxiiqa2qaUOw0GHLoSoANTTPEuuH5KKVjg7hnkFevwtRHuokBall4sNOygR5GED5QnWYvVlKia6JtS7xERw0udouZhEhTFeFNTcQP19rSc37BqNb2CWfqnrVCHb4J9qWqf4czL8oZ1FtneeKBW0gK0LgsuVYFsvGSERUZdh8vDklkqaXUgzOvciP1lZ0UibhauJYa5SRQKKKw91bbHHUkCZmLhmOmRPnIlKfKu9A7XX2zgCECdp8fxfXvXFgO9dkLDCMe28EplUDy3M2gmXaszjfplQIbhyA6EWqHbSakJcwAxAxSjAyilXnTyclcEDpGtrlivwVuAH2kV8RUqhJVWoRkSPGraQI39VhfwUbTkerRS6SiBdUTOJdnztxNsllfDI0tXVymiUkHp0znRofsG7gpP6cARcM23m4IOLOMddaVosM6Asa4lO5bG7y1VGBcTPp8OUqta5T3G4adDeFXWxzU2XofJAKB7f8EE0G94idLuT2dYyBQidErwyF4acVK0gmjFtXfUINKojR5QGL2A1FFYGm7sASmpJTyos89KjVfqBKmWPbYlTGNJhE0r69u04iyP1b2mu02px6wIU4zFODkgDGpNWsd0yvHNdmCWdEcYK3qfywZWcovcQa0rCeZeIp5nQ2yFhYRZDMjoODj7CjD3crPakEN7FI1DggglmqSwdEumRH7X7zWhiWEXT4w9f7Z1Du62EyP
+ F
+ Wy1WX4BqAmVu5FSjrie5GBeU8npom9tjiZupcNYdJhZTROv61CxTIlEXhx8CIHW2WUZ9CBoqji95IsULuhbEFFEJgFgew3mWuCpTaSmlA1fjpvAVE9VV2ntWKPszzFLrUxbJZ9DBAkWwr7Y4x8zXjYXya1P3J2z2D2E01PURRrygveLymGwbw4wHXnYvyhxqPkloCRBQBzrAQisjf94BAXYERUK9WmbMQ4VSErtdjoXURBox44CdtV4QYOK1yXFAE0vyRYLz5QUpqhRYQ10ANhRmMMtEFCSGHC0qbW8a0n0lpLPtW8RHhKsySmj2SC0MHX1OUCxgQg360AsqsZECnAg9GCj4MCZMKyLd8rs29Zy1tCBKwTytPCkbQyTolYNkNGYimGwxr1bR4rFNavlhW9DWpE3u91k7LtP6wanN2FPkfEi0IPgcIn1dQP0F1yvc6xq9cjfdczU50owso7bguZuqSsMJpHxNfCGOw0sA711dFaYV2TUhec3uoJb0oSoYoja1yiI45iQrZnf7Ct44LKasqrmZd66iBYgD1UciugFtUiB2biAwX2nde5xdC75SYekzcdyoXErpNmnIH3U6LKsYBM9yuF4dNiLpuPOGjpWcxtKeUOrhFcbpemcJ1KKHyP6A7EFRjDgA1FTFL9pwrRtDUpuKnOksxZsOJ9pM3mzzLTBFfLWjCZJti8KadprBrYzgUTxr2VZfYqhXaQigmt5PSsYkAzFgQpFYeYoSzCO3HdzVMFoQBhossLVy430rMwHKUZUKJMQu20gBtKkxVUOthTBewkDSgOFxKcrBPHS07tfciuqEoOoU34fqDWShVU14Lg6wr1NdFQsYLpgCk6Tl3yvNdgLRz2pCTl7nFm0pF9sL2EInwcZpgAUsFfZfHL5r4CdZD5yriE4wFfmebn0n1ruY1ShrqCN9XNY8KOmi9F3DfZpGcP6Tedec2yvc1PPUASSGhFY1BCYLkPffJ2UeOM8a4CBTuZWuN
+ J
+ OmFUaRC4cGz0vrYFKCntVNTQ9bcpCLQOVhW6VY1cUz7TxgWL0ApzgFTn1dYJKkEYYOT2NsrTDQOhS0k4r8Trh5wt7jCO7KvHekMS6IqsIKZG035Eyj6tPZVTDH8LgCJSZOrKNi1gcd9sV1dUEoDPb3lAiTA75y7zikvMUEy561o55SkiFgU06YmenRzNEmhxCORiG79frOlbxnHgBoLHaEL3GHLPdKjRje7ZeCvADePjXiVB7UTjcOCb7mpfddHeJ2GSdXDO7cSJkea6axAXvluLlytSE2obiCOMTwvkldNYw3Ap81du6WcgC9mvYfXj1TjcD5WZb2U6QUCABF7FacRVZh4j6VOzNRBvjN6WdHNOsyPKXvVvhYChHk5xeKSPf8TKLGQ0iWgg6Zlla7wTMatsXiQDNv3vjjWjE7mpAqcOCkdkkcey0mohdRLdYEXeCU7y1zFF3W6FfMh0GvbaWKcKVOFzCfzDr5AzXGE4Cz9i0AK97qFSfHGiD8NIAPKWryNiBliw5apu4VZh2s1fdSG.mpteFPlxdyvQbMKdMq52LAsjmzDM5k3HaFUHKLm32snN7FgLTJUFRVNAQmEHVNd72sPnbftDBPRz1qs0B21cCNMCwGKQyPcPGcEJu9PkHxFWAVDkOsa12sWTWewjfOObr6LVOZgFd2gpzfdOgbefDCKAPg874JhM4c5iTRnNmWIJKb8D4uUSQcpqthQwFpNXP52LLQnulE0CcZs2y7Mbzw8VNRK4TXFR6zjJHPre7z0HPGMx6yEac0mVXGiuAgS7pF0UOfGwEE9mxyLBqCqLYiTcfk5tcZp197RJ3gTY09ELXV5iGtbxMB5nrEUDs1M5oG4Oee4BH3jZz76f7a0kh9JTR5GzGr2DNZCp4oDXKlfkVOTOoLAJu6wMTpVhzsPCn47bvbB6UdJ8X7ZAadkX2jVOYlP43JJ000go6UW34qoVR4bWQTz0N2ei5Ab0BT3FDIzkcMBuy2RRC
+ Q
+ ZOFwcH9CBTlFOhQ9qn3kpzVQgIG8z8IBAVDZUwxc8Iu74gPVBHjoPHHwwMVVUkdWGfs4gjzcVtJgBBuvmsNBVvkdA5VWVKeDDf9JMaQee0d3zofcMR3QNrB7ddVOrp4YoRe14D5sEhLda5PDVYu2a4YnrblpNB3rJstCoWaoixRLPSN8uUGKUHUMGiCaMWCoQ7VfOcHKAhinJtMZ3QRNpl1mMltGIFljybQR1H2JlixF5MARHHWlrUZsdLEynAK54IXCypAYtmxVcVufReJggOue5DMqSemTNxn6oS2ugTME5sFPdvYx5BdLOju2FFhOpw016wKXMNSAfnAQKm8jERXNx4XyIEoNlLnoBlPhWcMtQCxJkyCjjhP5ibo2yfVSAGfwQOfORYI46RtKUBl2JIGBN7MLnwur2bpIBZcFpxkfJQrjjGpb9i1Tb6wknADIe0cH6v7OZWNkE5Odj5EOTSgB979pb9rH50QGVwiA6rgZ5eXdLcYi5WWtxWtDOOpivWhlSLOl3WYpGMTqxfBTBRr2Seq7TYThDQiT18XfSUOpjJNWHDlullDOob8ZqMnHzSclnJugSJJtR6oajS4nc77agbGAfF4nsfH8ODhpwGAzFpDF0fTDNk1WNsaasm3YtMnkFGhMBC7i8e1noJVT2nbBoBHqf9E0Pburc9LrUmdcaIPGJDAa4K2Az8j3QNiTmjgZ9Ok3IdXWysDeo6GNYvq8PLy2ywS0UmVzfP9JJL88kQAawnQPAJHzAgHUpZuuu4Cd35a2Ocx7mrNK02v1QCniuwVBa6YAlhlfV8pR8ZpXquOMYjuv2TjxrcokSuTbVnldZbSPUJE3zOsVdk1r3a0wPm7XUs0hH5kqDBTqmDUHmAIMs2kNN9IdQ6UiDQ6e0cb8mFF6EnX3rW27ih9jMJfWVUtCLeQeHeBPeC8Ld51NDEPdbOkY7ZK8kFIKGnl1gXR1jJPOCaqZwclshPsn4NKs3W5m0i93Istls
+ 4
+ a8XnDre8vScD20vGmwcH4gFgxCmbUBAV1nbxuDjn4x9euNj255nmdIRjaat3guCYwYW3AlJjj1y07UTCj1KzG9lyMEqR8FtzESH1GtS07cNfvPWhL3I62SR7rLZtYlj8vd66GMPzmcLO14rc7rKqQ3YkxWd.edu>
+Message-ID: <ZF3lf1bGTw-Ct-Y9ADdP_LhTh.LBRWHoIHg-__Ip@HtRuomVsXGNeqIhHoeL369Buk5PFsgJtjqYBDIcsjlvXxtjTZp3KvyJGM7dzIjR44wOVfqIeOhsMNgX9zbn7gDo.dcccd.edu>
+X-ClientProxiedBy: PR0P264CA0206.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:100:1f::26) To TYZPR06MB6992.apcprd06.prod.outlook.com
+ (2603:1096:405:46::6)
+Return-Path: NEW_OFFRE_1_46924@hinata.coincaps.ai
+X-MS-TrafficTypeDiagnostic:
+ TYZPR06MB6992:EE_|SEZPR06MB5165:EE_|DU2PEPF0001E9C4:EE_|CH0P223MB0233:EE_|LV3P223MB0968:EE_
+X-MS-Office365-Filtering-Correlation-Id: d638c7a0-74f7-41cb-fd39-08dcd27ead9a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted:
+ BCL:0;ARA:13230040|1032899013|4022899009|29132699027|376014|41320700013|1800799024|69100299015|37640700017|37730700002;
+X-Microsoft-Antispam-Message-Info-Original:
+ =?us-ascii?Q?kkkwM5vFH9m4X694cfOBVHRijHBgE/RMnAPIyCcc14GxVCX5/uzm8S0SC619?=
+ =?us-ascii?Q?/iz7p1Lyd4qJScn/fKu/4wZhuhtGdYo4pITwEbfmjDHnQ9agErl+l/IoitzY?=
+ =?us-ascii?Q?2U5oEsjEwQGy7JswQ/VC1H/pwfV4x4qXHfeQxG9MbXbUYpOCm76ZwR2Rkw+1?=
+ =?us-ascii?Q?c+lB/CpNulu1DqjF7/Lt8rAG9es66+KbaihuRLBkwCKIiuA/751jfF2oejBI?=
+ =?us-ascii?Q?Hphd0b8B9dMiij1RdqblyOHePpl3RPwz5PfuFX3iNCzhU7Kqn2+b5iLgLOZc?=
+ =?us-ascii?Q?siN3zUSNcOrbLUMzmUE8+C2i1HX1Z6xv0ArdA3QZ27frhbOD1q5Z386gVpjg?=
+ =?us-ascii?Q?kFJL2gvQjAgB9CZ2RubRFJ2BzjBKzxcQ/L+kp7TQPot4IJ70veGlUI9NpBYv?=
+ =?us-ascii?Q?TRZ0Hz+Qzy9SBOFyUMNlPjovSXkA9Ss1tscYHhFnmbjjhz/vZA44wJJ20ecK?=
+ =?us-ascii?Q?63ALxrvH4PhGQelne78NniBSXAB+HN8Mf+rco8gFJM+RLLPKL9EX0bb+QTax?=
+ =?us-ascii?Q?utkTkhShQsvh0PQy/AbC1DacBAgKta7RonKjqvg/r8P8XG3NpnfiSshVNuy/?=
+ =?us-ascii?Q?eoLYRrfFGCibL36nYwzIFjCXzIaxZT0z4FUbnTaRqnppyFzwJu9Qlmkb7NKK?=
+ =?us-ascii?Q?p9wfne60JLzX3fkXY7wnKDR9FL0WUrcwUPhSKum3ZlSIXeCnksBNDravGlIa?=
+ =?us-ascii?Q?LmZ5eVR81XJ7DnBnHTF6uyyKDUuTv1Eo3k8gtkD1E0VlOb7wnQdK8mKa8QGk?=
+ =?us-ascii?Q?xQBhAkMHy2k7DTfDUXzbJQ1hzVgZLLeev/y7gF1yWB8u67bhyerckJ3K8o55?=
+ =?us-ascii?Q?kLIv6nZ/EI165Y+AN47jq0/WkNdIIbvAl78+ohyC7ea8096l6p5RMbpTcR0X?=
+ =?us-ascii?Q?wwaxfrG3QIqrwWcUc7RD0pK/8YRELHNIgDealBTdbEcOL3gZWdhzx6UD0Bx4?=
+ =?us-ascii?Q?i0nDYyr6drsyiTcDBFQix3jzzGchCDQoNml6kPEwcS+ham/YGQhr1Sf1Vt/g?=
+ =?us-ascii?Q?jjEo8KC5W6Zhwi2xB1keT2bvvGkIo2KjHo/GoIb/7Fih7NhAnCR65MDL+Jm6?=
+ =?us-ascii?Q?OjUAPtiwKI9dK9wVCq20xBb4IfgSYqb4TZ9ZqMz29zZfFu7BB+1lAPCsKQ31?=
+ =?us-ascii?Q?6nF4MND6oeqbcMkZsP2IW5A879l+h1Pcp3tFSsNHcFEVjf6bYykLl/NFIsMw?=
+ =?us-ascii?Q?eLOdd5iC/NDPKpQgf9aQM/uRNkWNkbouD3b5eb4dbqFZvVwq9kBByRYFMze7?=
+ =?us-ascii?Q?k2BIR52zKDE0H7GJbAK99mnXFC3Os1vGjYJChm4vQE3CAxdOtPri+L+1HGBE?=
+ =?us-ascii?Q?fsAkZoEjumvvfpcGmpicWkxjrPZLoqgZeaRy3YfWmunL1w=3D=3D?=
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR06MB6992.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1032899013)(4022899009)(29132699027)(376014)(41320700013)(1800799024)(69100299015)(37640700017)(37730700002);DIR:OUT;SFP:1501;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5165
+X-IncomingHeaderCount: 47
+X-MS-Exchange-Organization-ExpirationStartTime: 11 Sep 2024 16:27:50.0095
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ d638c7a0-74f7-41cb-fd39-08dcd27ead9a
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ DU2PEPF0001E9C4.eurprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted:
+ DU2PEPF0001E9C4.eurprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ DU2PEPF0001E9C4.eurprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 9/11/2024 4:19:39 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ 99ae7850-4dab-4c8c-c6ec-08dcd27ea4b2
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.100.0.204
+X-SID-PRA: NEW_OFFRE_1_46924@HINATA.COINCAPS.AI
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam:
+ BCL:0;ARA:1444111002|45200799018|3025599003|461199028|70000799015|9800799012|5310799015|51300799018|970799054|69000799015|42300799015|1680799051|58200799015|67000799015|10300799029|2700799026|87000799015|9400799024|9000799047|50300799015|17101999012|4601999012|1131999012|3960499032|4302099013|3412199025|440099028|56899033|12900799041;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2024 16:27:49.4626
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d638c7a0-74f7-41cb-fd39-08dcd27ead9a
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ DU2PEPF0001E9C4.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0P223MB0233
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.2561744
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.7939.015
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9710001)(9610028)(9525003)(10145025)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?U2RjUERrbFVQamFzeVdWM3hpaks3WCs1bE9qWVN5U3YrNjVxbjUwWEY4VjRF?=
+ =?utf-8?B?RWRKbXpTRzVETXRqTTZoT2F1d05sZ1QrYUFCSko4OVIrOXdLRFdSKzhpQVo0?=
+ =?utf-8?B?bUtWS05oYkNJK2ZyUjNFbll2YW5oWXljSUVKWHQwRTlKVUg1akJsU1Z2Skxz?=
+ =?utf-8?B?Wk11cmxqS0NMVUxjaU5BQnhwcHZONG0wV203UDNzem5sN2dubXdlbm9CUEVi?=
+ =?utf-8?B?M2Rpd21sQndBTWF1SU9UVnpkL0JMbmNxaTZBdDJtOFA3VTloazQ3Sko4bEZr?=
+ =?utf-8?B?TTM2RGpoWkdyaFpkQXJ1MUU5Ylp1QTBwNDVLVTVHVm9xWHU4VVpkeC81TWlk?=
+ =?utf-8?B?Z3hsM09LV2JMSW5TMjdFUjFad09uc2dRNktyMmI0QzY0dTFjWklodmoxNVVN?=
+ =?utf-8?B?cGtrdXg1VHYyYlpaei9VME1xWW9Rd2JaWW9FWmc2T1kzUFVLTlJWWEUyaFUz?=
+ =?utf-8?B?TnZla2w1UVk1eXdnTlRGV3grMzBFdndxL1g2MFNWVk1oUlhWK1JvRzRaRlJR?=
+ =?utf-8?B?ZFdac3RsbWVOWTBpdndrYVVPWXF2SU82TlJTQVZiZSt2TDFsbVdTY3NrWHQw?=
+ =?utf-8?B?OUhFNmFCNnRCS1lIOGU1U1JwaU4yMmdidmhBM2RjdmdaSW1TN09VaVE4UDVn?=
+ =?utf-8?B?bHpuN2hVOUdUQXNBYmhOOXdVNGY4REh0TFRjR2sxYzV5akNRWkNJUHlieEZG?=
+ =?utf-8?B?NmdyS0VhWXd4bGtBV3VGNVQ4UVJycGRWVjdLNlBqdGhHa3h6Q0UwL3V3SzBS?=
+ =?utf-8?B?Ni9ackVaQ3A2ZVFwT2JyVVdGOEk2WjBFbEZwVERGd2s5VWs3N2Q0L0dVQkdu?=
+ =?utf-8?B?S3ZuUUY0dklSVnAwcEJYN3c5Rmt2MktTbjRia1dHS2dZdUVWNUVteVIwelNH?=
+ =?utf-8?B?K2JxZVBxWGdKOWNKQkRnVGlJWHZ4YUNCWmJxVjNzLzZBdlNpdjJaUkYvQnJs?=
+ =?utf-8?B?YWN5czhWcEJ1YThJRXNTcmJ4d05LcVU4SGx3L3R2YUdhMVl2MFptNno3anVy?=
+ =?utf-8?B?MjJPUGJwNHRRVklPY3NsZkVOZnB6YVhMb2JWMXNIUzVKU0JSSElTbSt6V3B3?=
+ =?utf-8?B?OXRXQVdyMTRDQXplc3dvS2pYdEQ3VUR0MnZIZnkxMWJaOGIzVm43TGRkQ254?=
+ =?utf-8?B?VXhraUh4M2hTNVR3RmZwTTV6R00zMTZHSG1YY1EwWDgxL09rUlQ0MytCejdF?=
+ =?utf-8?B?Zk5BVit2WEhsbUlpUWRGUVJNbS9KTmpOb1IwTVczbXE3WWFUeG9mVXNZRWhT?=
+ =?utf-8?B?TC92SmtmclFoMUZMYjFGK2JQRUhacVZHbDcybXZWRHNPOGFxSnp4OUw2eThs?=
+ =?utf-8?B?L1B4M00yQ2F3ZEl2Y2dNMkFoeC93c1BvVlZBdXg5bXhvbk9NVFNlZzFhL2I1?=
+ =?utf-8?B?M0VraTdBS2dxSTYwSU9vaEphUnI1K2pNRDU4VnZBNE5ZNzlERFN2T0dxQ3Zr?=
+ =?utf-8?B?WFc1N1ExRUxGR29Mc1RSNzZqNlZvWUV2Y3piQXN0bU9BNWRGUGhBMUV6WTVu?=
+ =?utf-8?B?K0J4SkhXMXZnTVNGQjBnS3d3M1VPMm1mSXRyYkpTQmtrcmJNQkFKUjc3TGI3?=
+ =?utf-8?B?b3dYb1BSTityVGI0ZGFNWkFUNmdEZ2VZZnJTbXJGcmlSMjAxTzRORURjYTFQ?=
+ =?utf-8?B?N05iMHQ4bjkvMUJ4UFJTRUN5MXRTbFE3TTQxMUlFZy9tOCttQzZ5NG5qNGly?=
+ =?utf-8?B?aU9UYzJjUEVrMktBU2lITWFkT2dacHQ5aXZVR1YyVEdadVFxWkZSV1hnay93?=
+ =?utf-8?B?dHRkQ1Bvb3h2M3pheHVTQWpHMFZKN3M3OEJaYnVQODBGR3dUcU5DdldkaXVD?=
+ =?utf-8?B?R1R2TnNtR3BrRUdTMk5hN3VObk5GL1VZNkNic2ttU0ZKOS9vc3NzdkQxQ2V2?=
+ =?utf-8?B?VklLVVN6U0kyUmNSeElBSWxzNG9RM09XcFdyOW9CSEo2UFFpMmJ0cmFyVy9m?=
+ =?utf-8?B?UW9jQmFQVmJxL1pTRHFVT3UzRUJsK1Q2R3ROaGVqVTZNVzVWaTZDWDlIcXFJ?=
+ =?utf-8?B?a2U3Z1BJRHJJRE9zZnl6UjZIODk4MDc1Z3A3UzNLdW5sKzcrWENyaG45TDd2?=
+ =?utf-8?B?b1pxdUxlMzdkYmNsOVlrQ0NEQTA4OGszSndjVEZxbXVxZWppSzgzeFk3M2NZ?=
+ =?utf-8?B?aDFQcmRxZHpyRFBwdTc5Ym10dXl3eXB0ZWcyTFBCUjVXWnNHNEJzd3Zmaisx?=
+ =?utf-8?B?RVpvZ1YwM080b1c5N2FhVmdkU1l4MWp6dU5DaG4zeE5md1VTRy9ibmRXaE8v?=
+ =?utf-8?B?alFFS09CZHFGSUJNaVBWYWtyT0h0VENKaWZSZzZwcE9GZkRUU1NNckJoa21u?=
+ =?utf-8?B?QVhmUCttVzk4dHBza0FlbEJpOURQc0ZuWStsNE1tUldwR2tCUE9Qd3Q4NjdD?=
+ =?utf-8?B?TkFCb1NDTEpxS0hyb0daVzExYUt0MWFsMEF3R093ZEtNQ2IvMTN3RmpEcHhC?=
+ =?utf-8?B?WUF1cGhTSVJBd3JMT2VSMUlQRG1DdEtDNDI0eWphSndIVko2SlBKQWpmY2dt?=
+ =?utf-8?B?bzQzTUl0WGh2MVp5T2x3eUNjeTRqTm5kTXpiN21NbnQ5VnpmSVlyY3dJTmNV?=
+ =?utf-8?B?Q01HbndCOXlEVlpjYTRkVHlrT3psSzdlTVV2VGhnSlNoQ3I5THFlaGF6UFZa?=
+ =?utf-8?B?eTQxMUpKOHhsOGJZL2VXTXZEaWdsVUh4QmVibDFocmdVNjhUVkxnYzZyaU15?=
+ =?utf-8?B?SXBjWkZUMlRtdEhRZnppYUF4VW1nWnBnMUlidFNFaUhkMjc0azY0VVd4endO?=
+ =?utf-8?B?RVJpZ0ZXdFV6QmRXUHVKWFdxcXM2bUFHMVZ5di90T3ZqQTd0V3B0Y0hSTVlr?=
+ =?utf-8?B?NWhPc2gyaEI4dUw2MVlWYUJhdmVZbVVHRkJaa3F1clFTWkRNdzE2VVI2aXZh?=
+ =?utf-8?B?OC9YZGcwVjJUbW96clFmN0V4TmFFcDBlVmlWZ2QvWGZDRktxK1QyaWxJSm1Q?=
+ =?utf-8?B?ekdDUnNlaUZ5UWk0czcrcTcxWS90ZFhrR1ZnMlJRK2tBMWZjZzV1TFVmbDJT?=
+ =?utf-8?B?aW5JTlV0SG8xMEkybHNpaGZYSjVWZ2wyV25FWTBBdnEyTHgwTHQ2QTJsM2V1?=
+ =?utf-8?B?emFrZEFCZ2FWQWJubkUwNXlzVVNOaktWL3lWcmNFODRkN3JESHNtcXgvTGpo?=
+ =?utf-8?B?MmFsVnRRN3JsSGVxa0d0N1hHenhkcUZnOGYyT3A4eEhJWS9tQThydzBMZHZV?=
+ =?utf-8?B?RUVkV08vQ3RiczkzNGtRV2IzWlB6amxEekRnQmQ4UEl1Tmd0aEx6RDYwTU80?=
+ =?utf-8?B?Z1htVU0zMXV4TWRBUjNxNENhcEJmYjJrS2luOVd0a2NPWVZaMURPK0JaS3Rw?=
+ =?utf-8?B?d2pkZEVrR2htY3VvaStEYmdxb1dDZEh5ZHlVWXhMbVdGWHFhQ2dRdEpDZVBv?=
+ =?utf-8?B?cTBMSmJlU2lNaEVRYnpQbE1BUnhsUmxiWGIzWEoyNXQxNzZOOTJuUjdPT1hM?=
+ =?utf-8?B?YVNBaVBFY29haGtjd1BJVU0vRVhGWFhucHM3eWMvV1Y3Z20zTkd2QVF0Slpk?=
+ =?utf-8?B?RC8zc1c3UytJYkRDcTRVcDlCQTFtdy9WQ1lkVTJzTllzM3YyK1pjVzZoVzNv?=
+ =?utf-8?B?SWJGMDhVNUo0T3duUVM5SjBnM1B3TEN2QjQvSnNqNkFMTWpRdWtpdG1YekM1?=
+ =?utf-8?B?Z1NaeWhaRTduSVRBMGZiNWhoN3kvYUZsdEFNTzAvQ29FQmgzMlowc211K0Ux?=
+ =?utf-8?B?YXUxS0pSNWVBS2lDMlc1U2tOd3JTRkdNYThHTUtEb0V0RjRENGljbHZXL1dB?=
+ =?utf-8?B?MmhwYXdsM1d6RHJFKzc0T3JHRmkrbVZreWg1dHVXSHEwbytNUWhhdnRwTkF2?=
+ =?utf-8?B?dGFNcTFWNndZanlmUUpRTFh1T0FvUzdmb21wQlJiV3lWd25iWlY3REw2dHlG?=
+ =?utf-8?B?YUZpUmEzZmRLTXpjTDB3MGZEanV1L0hzRzNBbkVrR05lMlZJYkhXdFBna3JS?=
+ =?utf-8?B?Wm04Y2NkY092Umx5L3BoVzdXdHp2NG9peEUrK0UyQk82OHdOY3Fqc0xXZW9D?=
+ =?utf-8?B?YVFuVGRVSWJOU211UkltWndObFUva2RrRjRQVEhWWkVyY1BzcHdFSi9HNUQ0?=
+ =?utf-8?B?dUhLUEZibVhGdEhEUGhjRkVRR2V1aS95NFk1RWJPZ1hUUzgrYlF1Q3JTYW1W?=
+ =?utf-8?B?b0FPcXpLUmI1UHlFNTFkbDJZOFdscnRiL205Qnh4Z2VPV1NVYUZBYy8vWVBp?=
+ =?utf-8?B?OHF2REZVZ2pIU3hocUVjcHo0OFdZc2hyOHBTQlJxRk1SdjZwb1BlMGd6U2c1?=
+ =?utf-8?B?UmxkemFtQ2Zyb1hNemVOdVpYdWFsZzlsWHZ1aHc0SGFZVVhrMEdvbzlaZmN4?=
+ =?utf-8?B?L3Q2bHlucloxTGp3OU85ajdwWEs5UklxUngxdVB3VnBnZGZYQkVVOW03cVNE?=
+ =?utf-8?B?SWNwTDRLMEJUbzYrSEwweDNNSExuNTBWSmJBeEhGdkFPNVdNbnY1TUJzL1dq?=
+ =?utf-8?B?Y1BpU0h5ZllWbTV1dW9VOTE3UzEvVWlGY1p1S0pld2NXOE5JS0Zpc1JwRmNF?=
+ =?utf-8?B?Uk5TWkxzVTRCNXJRWVVlM3VTRWJTRGx1aVFCMDlqeWdKQ0paK2tpS2pkZ3RP?=
+ =?utf-8?B?OW82ZFVoeFF0dHZPZ2FYUDhVQnVlK1NQSVZzS1FveVJLd1BrWXNqbEhkdzgw?=
+ =?utf-8?B?Z0haT1RMbzhjYzc0Wk9VOTJ0S0YxdUNnSUV0WnloK21XZ2U0ZUhiTEsydi9I?=
+ =?utf-8?B?bTVTaUpyTnBnYXQ0MXhJRlpDVmFqc1ZQUEJLTzBZd2ZMRzJQNnV2c1RRQ29s?=
+ =?utf-8?B?SUlPTXg3V3RobGFBUT09?=
+MIME-Version: 1.0
+
+
+    
+            </tr>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><tr>
+            </tr>
+<html>
+ <head> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <style type="text/css">
+    table.footer-table {
+        width: 100%;
+        font-size: inherit;
+        line-height: 18px;
+        text-align: center;
+    }
+    table.footer-table .footer-background {
+        width: 685px;
+        font-size: 11px;
+        line-height: 22px;
+        color: #888;
+        text-align: center;
+        background-repeat: no-repeat;
+        background-position: center top;
+        padding: 15px 0 7px;
+        background-image: url(https://pbs.twimg.com/media/fwu4stxxwaiejcz?format=png&name=900x900);
+    }
+   .grey-footer-background {
+        width: 685px;
+        font-size: 11px;
+        line-height: 22px;
+        color: #888;
+        text-align: center;
+        background-repeat: no-repeat;
+        background-position: center top;
+        padding: 29px 0 7px;
+        overflow: hidden;
+        background: #f5f5f5 no-repeat;
+    }
+    table.footer-table .icloud-logo {
+        display: inline-block;
+    }
+    table.footer-table .footer-cell {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        line-height: 15px;
+        color: #666;
+        text-align: center;
+        padding: 0 18px 18px 18px;
+    }
+    table.footer-table .nobr {
+        white-space: nowrap;
+    }
+    table.footer-table .footer-cell a {
+        color: #0070c9;
+        text-decoration: none;
+    }
+    table.footer-table .footer-cell a.apple-address {
+        color: #666;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+    table.footer-table1 {
+        width: 100%;
+        font-size: inherit;
+        background-color: #f2f2f2;
+        margin-top: auto;
+    }
+    table.footer-table1 .nobr {
+        white-space: nowrap;
+    }
+    table.footer-table1 .footer-background1 {
+        font-size: 11px;
+        line-height: 22px;
+        color: #888;
+        background-image: url(https://pbs.twimg.com/media/FwU4STXXwAIejcZ?format=png&name=900x900);
+    }
+    table.footer-table1 .footer-cell1 {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        line-height: 18px;
+            padding: 20px 36px 1px 40px;
+            margin-left:10px;
+    }
+    table.footer-table1 .footer-cell2 {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        line-height: 18px;
+        color: #666;
+            padding: 1px 36px 20px 40px;
+            margin-left:10px;
+    }
+    table.footer-table1 .footer-cell1 a {
+        color: #555;
+        text-decoration: none;
+    }
+    table.footer-table1 .footer-cell2 a.apple-address {
+        color: #666;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+    table.footer-table .footer-link {
+        color: #555;
+        text-decoration: none;
+    }
+    table.footer-table .footer-text{
+        color: #888;
+        text-decoration: none;
+    }
+    table.footer-table .footer-text a{
+        color: #888;
+        text-decoration: none;
+    }
+</style> 
+  <style type="text/css">
+    body {
+        padding: 0;
+        margin: 0;
+    }
+    body * {
+        margin: 0;
+    }
+    img {
+        border: 0;
+    }
+    hr.horizontal-divider {
+        height: 1px;
+        background-color: #f6f6f6;
+        border: 0;
+    }
+    a {
+        color: #0070c9;
+        text-decoration: none;
+    }
+    a.big-button {
+        color: #0070c9;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        height: 43px;
+        line-height: 43px;
+        font-size: 17px;
+        padding: 0;
+    }
+    a.big-button > table {
+        text-align: center;
+        background-color: rgb(70,162,255);
+        font-size: inherit;
+        line-height: inherit;
+        padding: 0;
+        border: 0;
+    }
+    a.big-button > table td.btn-padding {
+        width: 18px;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        background-size: 18px 43px !important;
+        background-repeat: no-repeat;
+        background-color: rgb(70,162,255);
+    }
+    a.big-button > table td.btn-left {
+    }
+    a.big-button > table td.btn-right {
+    }
+    a.big-button > table td.btn-middle {
+        min-width: 60px;
+        text-align: center;
+        background-position:left bottom !important;
+        background-color: rgb(70,162,255);
+        zoom: 1;
+        font-family: inherit;
+        line-height: inherit;
+        font-size: inherit;
+    }
+    a.big-button > table td.btn-middle > a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+    body, td, p, ul, ol {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        -webkit-font-smoothing: antialiased;
+        line-height: 18px;
+        color: #333333;
+    }
+    table {
+        border-spacing: 0;
+        border-collapse: collapse;
+        border: 0;
+    }
+    table td {
+        padding: 0;
+    }
+    table td.align-left {
+        text-align: left;
+    }
+    table td.align-center {
+        text-align: center;
+    }
+    table td.align-right {
+        text-align: right;
+    }
+    h1 {
+        font-size: 19px;
+        line-height: 22px;
+        color: #333333;
+        font-weight: bold;
+    }
+    h2 {
+        font-size: 16px;
+        line-height: 18px;
+        color: #333333;
+        font-weight: bold;
+    }
+    .hr {
+        height:1px;
+        background-color:#ccc;
+    }
+    .mail-wrapper {
+        background-color: #ffffff;
+    }
+    table.list-items {
+        table-layout: fixed;
+        line-height: inherit;
+        font-size: inherit;
+    }
+    table.list-items .list-item-prefix {
+        padding-right: 4px;
+        text-align: left;
+        vertical-align: top;
+    }
+    table.list-items .list-item {
+        text-align: left;
+        vertical-align: top;
+    }
+    .show-on-mobile {
+        display: none;
+        mso-hide: all; /* Outlook */
+        max-height: 0; /* Gmail */
+        overflow: hidden; /* Gmail */
+    }
+    @media (max-width: 414px) {
+        .show-on-mobile {
+            display: table !important;
+            mso-hide: none !important; /* Outlook */
+            max-height: none !important; /* Gmail */
+        }
+        .hide-on-mobile {
+            display: none !important;
+            mso-hide: all !important;
+            max-height: 0 !important;
+            overflow: hidden;
+        }
+    }
+</style> 
+  <style type="text/css">
+    .main-table-1 {
+        width: 685px;
+        padding: 0px 20px;
+    }
+    .main-table-2 {
+        width: 685px;
+            padding: 0px 36px 0px 40px;
+    }
+    .content-table-1 {
+        margin: 0 auto;
+        text-align: center;
+    }
+    .content-table-2 {
+        margin: 0 auto;
+            text-align: left;
+    }
+    .header-1 {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        color: #333;
+        font-smooth: always;
+        font-size: 34px;
+        line-height: 37px;
+        text-align: center;
+    }
+    .text-1 {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        color: #333;
+        font-smooth: always;
+        font-size: 17px;
+        line-height: 26px;
+        text-align: center;
+    }
+    .button-text {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        color: #333;
+        font-smooth: always;
+        font-size: 17px;
+        line-height: 26px;
+        text-align: center;
+    }
+    .padding-1{
+        padding-top: 16px;
+    }
+    .padding-2{
+        padding-bottom: 14px;
+    }
+    .padding-3{
+        padding-bottom: 16px;
+    }
+    .padding-4{
+        padding-top: 24px;
+    }
+    .padding-5{
+        padding-bottom: 26px;
+    }
+    .padding-6{
+        padding-bottom: 30px;
+    }
+    .padding-7{
+        padding-bottom: 12px;
+    }
+    .padding-8{
+        padding-top: 38px;
+    }
+    .padding-9{
+        padding-top: 32px;
+    }
+    @media screen and (max-width: 750px) {
+        .content-table-1 {
+            padding: 0px 20px;
+            text-align: center;
+        }
+        .content-table-2 {
+            padding: 0px 20px;
+        }
+    }
+</style> 
+  <style type="text/css">
+    .mail-wrapper {
+        margin-top: 0px;
+        font-weight: 300;
+        color: #333;
+        text-align: center;
+    }
+    .main-table {
+        margin: 0 auto;
+        position: relative;
+        font-size: inherit;
+        line-height: inherit;
+        border-spacing: 0;
+        border-collapse: collapse;
+        -premailer-cellpadding: 0;
+        -premailer-cellspacing: 0;
+        padding: 0px;
+        border: 0px;
+    }    
+    .main-table.layout-width {
+        width: 685px;
+    }
+    .center-col {
+              padding-right: 36px;padding-left: 40px;
+    }
+    .content-table {
+    }
+    .content-col {
+       font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+       font-smooth: always;
+       -webkit-font-smoothing: antialiased;
+       color: #333;
+       font-size: 15px;
+       font-weight:300;
+       line-height: 20px;
+           text-align: left;
+    }
+    .content-col.content-1{
+        word-break: break-word;
+        width: 100%;
+    }
+    .content-col.content-2{
+        padding-left: 40px;
+    }
+    .content-col.content-3{
+        word-break: break-word;
+        text-align: center;
+    }
+    .content-padding-1 {
+        padding-bottom: 15px;
+    }
+    .content-padding-2 {
+        padding-bottom: 34px;
+    }    
+    .content-padding-3{
+           padding-bottom: 15px;
+    }
+    .content-padding-4 {
+        padding-bottom: 0px;
+    }
+    .content-sf {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+        color: #333;
+        font-smooth: always;
+        font-size: 17px;
+        line-height: 1.3;
+            text-align: left;
+    }
+    .center-content-sf {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+        color: #333;
+        font-smooth: always;
+        font-size: 17px;
+        line-height: 1.3;
+        text-align: center;
+    }
+    .note-sf {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+        color: #333;
+        font-smooth: always;
+        font-size: 11px;
+        line-height: 1.3;
+            text-align: left;
+    }
+    .bullet-text-main-col {
+           padding-left: 40px;
+    }
+    .bullet-text-table {
+    }
+    .bullet-text-col {
+       font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;
+       font-smooth: always; 
+       -webkit-font-smoothing: antialiased; 
+       font-size: 15px;
+       font-weight:300;
+       color: #333333;
+       line-height: 20px;
+           text-align: left;
+    }
+    .bullet-text-col.bullet-text-content {
+        display: inline-block;
+        word-break:break-word;
+        width: 100%;
+    }
+    .bullet-text-num {
+            padding-right: 4px !important;
+    }
+    .bullet-col-padding{
+           padding-bottom: 15px;
+    }
+    .content-left-padding-1{
+        padding-left: 40px;
+    }
+    .link-attr-1{
+        color: rgb(0, 138, 205);
+        text-decoration: none;
+    }
+    .link-attr-2{
+        color: rgb(57, 57, 57);
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .link-attr-3{
+        color: rgb(57, 57, 57);
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .link-attr-4{
+        color: rgb(0, 0, 0);
+        text-decoration: none;
+    }
+    .link-attr-5{
+        color: rgb(57, 57, 57);
+        text-decoration: underline;
+        font-weight: 600;
+    }
+    .link-attr-6{
+        color: rgb(0, 0, 0);
+        text-decoration: underline;
+    }
+    .link-attr-7{
+        color: rgb(0, 138, 205);
+        text-decoration: underline;
+    }
+    .link-attr-8{
+        color: rgb(0, 138, 205);
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .link-attr-9{
+        color: rgb(0, 138, 205);
+        text-decoration: underline;
+        font-weight: 600;
+    }
+    .link-attr-10{
+        color: rgb(51, 51, 51);
+        text-decoration: underline;
+    }
+    .link-attr-11{
+        color: rgb(0, 138, 205);
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .font-1{
+        font-weight: 600;
+    }
+    .font-wt-2{
+        font-weight: 500;
+    }
+    .preheader{
+         display:none !important;
+    }
+</style> 
+ </head> 
+ <body style="padding:0;margin:0;color:rgb(51, 51, 51);font-size:13px;font-family:system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:18px;-webkit-font-smoothing:antialiased;"> 
+  <center>
+    <div align="center" style="font-family:sans-serif;font-size:10.0pt;color:#666;padding:10px 0;display:block!important;"><br><br>If you are having trouble viewing this email, <a style="border:0px;color:#CC0066" href="https://t.co/WtSto9bZtl">Click here </a>. <br>or in &quot;Translate message&quot;<br><br> </center>
+   <div style="display:none;">
+      
+       </div>
+    <div class="mail-wrapper" style="background-color:rgb(255, 255, 255);margin:0;color:rgb(51, 51, 51);font-weight:300;margin-top:0px;text-align:center;"> 
+   <table style="border:0;margin:0;border-spacing:0;table-layout:auto;width:100%;border-collapse:collapse;"> 
+   </table>
+   <table style="border:0;margin:0 auto;border-spacing:0;border-collapse:collapse;" align="center"> 
+    <tbody style="margin:0;">
+     <tr style="margin:0;">
+      <td class="main-table-2" align="center" style="padding:0px 36px 0px 40px;margin:0;color:rgb(51, 51, 51);width:685px;font-size:13px;font-family:system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:18px;-webkit-font-smoothing:antialiased;"> 
+       <table class="content-table-2" style="border:0;margin:0 auto;border-spacing:0;border-collapse:collapse;text-align:left;"> 
+        <tbody style="margin:0;">
+         <tr style="margin:0;">
+          <td class="content-sf padding-7 padding-8" style="padding:0;padding-top:38px;margin:0;color:rgb(51, 51, 51);font-size:17px;padding-bottom:12px;font-family:system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.3;font-smooth:always;-webkit-font-smoothing:antialiased;text-align:center;"><a href="https://t.co/WtSto9bZtl"> <img src="https://pbs.twimg.com/media/Fpqde4RXgAEW6_w?format=png&amp;name=360x360" style="width: 60%;max-width: 200px;"><br><div style="background-color: rgba(128, 128, 128, 0.5);max-width: 200px;margin: auto;"></tr>
+		  </td><tr><td class="content-sf padding-7 padding-8" style="padding:0;padding-top:38px;margin:0;color:rgb(51, 51, 51);font-size:17px;padding-bottom:12px;font-family:system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.3;font-smooth:always;-webkit-font-smoothing:antialiased;text-align:center;"><a href="https://t.co/WtSto9bZtl"> <img src="//pbs.twimg.com/media/Fpqde4RXgAEW6_w?format=png&amp;name=360x360" style="width: 60%;max-width: 200px;"><br><div style="background-color: rgba(128, 128, 128, 0.5);max-width: 200px;margin: auto;">
+            <div style="width:180px;background-color: red;color: white;padding: 5px;text-align: center;">Full</div></div></a><br>Hello  </td>
+         </tr>  
+         <tr style="margin:0;">
+          <td class="content-sf padding-7" style="padding:0;margin:0;color:rgb(51, 51, 51);font-size:17px;padding-bottom:12px;font-family:system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.3;font-smooth:always;-webkit-font-smoothing:antialiased;text-align:left;"> <span class="font-1" style="margin:0;font-weight:600;">
+            Your iCloud storage is full.        </span>
+          Since you've exceeded your storage limit, your documents, contacts, and device data are no longer being backed up to iCloud. Photos and videos aren't being uploaded to iCloud Photos, and iCloud Drive, along with iCloud-enabled apps, are not updating on your devices.
+    </td>
+         </tr> 
+         <tr style="margin:0;">
+          <td class="content-sf padding-7" style="padding:0;margin:0;color:rgb(51, 51, 51);font-size:17px;padding-bottom:12px;font-family:system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.3;font-smooth:always;-webkit-font-smoothing:antialiased;text-align:left;"> To continue using these iCloud services, you must <a class="link-attr-9" href="https://t.co/WtSto9bZtl" style="margin:0;color:rgb(0, 138, 205);font-weight:600;text-decoration:underline;">switch to iCloud+</a> or reduce the amount of storage you use. </td>
+         </tr> 
+         <tr style="margin:0;">
+          <td class="center-content-sf padding-7" style="padding:0;margin:0;color:rgb(51, 51, 51);font-size:24px;padding-bottom:12px;font-family:system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.3;font-smooth:always;-webkit-font-smoothing:antialiased;text-align:center;"> <u style="margin:0;"><a class="link-attr-1 font-1" href="https://t.co/WtSto9bZtl" style="margin:0;color:rgb(0, 138, 205);font-weight:600;text-decoration:none;">Just for a limited time (Giveaway ends tomorrow at 11:59 p.m.)<br> NOW get an extra 50GB FREE.</a></u> </td>
+         </tr> 
+         <tr style="margin:0;">
+          <td class="content-sf padding-5" style="padding:0;margin:0;color:rgb(51, 51, 51);font-size:17px;padding-bottom:26px;font-family:system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:1.3;font-smooth:always;-webkit-font-smoothing:antialiased;text-align:left;"> The iCloud Team </td>
+         </tr>
+         <tr>
+            <td><a href="https://t.co/WtSto9bZtl"> <div style="max-width: 200px;margin: auto;text-align: center;background-color: #198dec;color: white;font-size: 20px;padding: 15px;border-radius: 10px;text-transform: uppercase;">Get<br> NOW</div></a></td>
+         </tr> 
+        </tbody>
+       </table> <br></td>
+     </tr> 
+     <tr style="margin:0;">
+      <td style="padding:0;margin:0;color:rgb(51, 51, 51);width:100%;font-size:13px;font-family:system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;line-height:18px;-webkit-font-smoothing:antialiased;" align="center"> 
+       <table class="footer-table" style="border:0;margin:0;border-spacing:0;width:100%;font-size:inherit;line-height:18px;border-collapse:collapse;text-align:center;"> 
+        <tbody style="margin:0;">
+         <tr style="margin:0;">
+         </tr> 
+         <tr style="margin:0;">
+            <td class="footer-background" colspan="3" style="padding:15px 0 7px;background-repeat:no-repeat;margin:0;color:rgb(136, 136, 136);width:685px;font-size:11px;line-height:22px;font-family:system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Arial, sans-serif;background-position:center top;-webkit-font-smoothing:antialiased;text-align:center;"> <a href="https://t.co/WtSto9bZtl"><img width="81" height="22" src="https://pbs.twimg.com/media/FpqeNCUXgAQU-iv?format=png&amp;name=240x240" class="icloud-logo" style="border:0;margin:0;display:inline-block;">  </td></a> 
+         </tr> 
+        </tbody>
+       </table> </td>
+     </tr>  --
+    </tbody>
+   </table>  
+  </div> 
+  <br><br>
+  <div align="center" style="font-family:Helvetica, Arial, sans-serif; font-size:10px; color:#000000; line-height:15px; padding-bottom:10px">
+   </div>
+    <p style="text-align:center;font-family: 'Open Sans','Arial','Helvetica',sans-serif;font-size:13px;"><br><br> 
+        The advertiser does not manage your subscription.<br>
+        If you prefer not to receive further communication, please unsubscribe   <a href="https://t.co/G9aogZI9ab"> here </a><br>
+     <br>
+   <br>
+    </p>
+ </body>
