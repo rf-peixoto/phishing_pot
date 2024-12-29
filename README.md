@@ -31,5 +31,5 @@ See ![LICENSE](https://github.com/rf-peixoto/phishing_pot/blob/main/LICENSE)
 If you found the Phishing Pot data useful, please consider donating some satoshis to keep the project going. Part of the funds received will be redirected to privacy-focused projects.
 
 ```
-31v7bD1FkBLGhHxMQ1tmWGHyjF2wMqSSqC
+bc1q7e3mf5nwmjk9sw8thy35s9r7rq27ta7lzj0d7l
 ```
