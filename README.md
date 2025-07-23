@@ -1,4 +1,4 @@
-Phishing Pot is sponsored by: ![The Street](https://the-street.xyz/)
+Phishing Pot is sponsored by:  _the-street.xyz_
 ---
 ![Phishing Pot](https://github.com/rf-peixoto/phishing_pot/blob/main/img/phishing_pot.png)
 
