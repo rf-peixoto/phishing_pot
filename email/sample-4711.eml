@@ -1,0 +1,412 @@
+Received: from PH0PR05MB8576.namprd05.prod.outlook.com (::1) by
+ SA3PR05MB9699.namprd05.prod.outlook.com with HTTPS; Fri, 17 Jan 2025 03:36:01
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=YP1/HgIngQ+uw87rIZSFSqz/onr9gn65O5lca5L+JMbrFNp+ltbAZNrJziDMkPK2tD3oqgY2zW4dxtwh9W2wgcg66bXRE/Ym8U1+ID2cP5pfR8hk5WdmKSAFvEwWSkgyeRFLBPnngSA8RJeav2owlg89xuoxSkXF5bWkk3i+GZu0b0LMmA8VAVViQ2zXkoSAA14LGJu8iVhoCGK0Wrg5hpJqtBAafts8hs3e90pZHggFEUx2M9PDVhWIAiWucRBY4Un1H7HkOcAeeogksmhfnWHYLggHN9SNvamKwI3agivGmDoHRdyITmkLECcIX1XylxVldIJKBli+CgNZPs2FHA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2NmCTwwVjsbYTsGAYkfPOc72Xd+YBgtHLmPpjS1/4bU=;
+ b=gLq00q7FJh6PSFN/PDQ3XEa3QT+SSN9pz2JQKJmW7KMEvRpYWv717tVXNMM7tcQbFCYkG0TPFS7BLb8v3a7SBLZJl9UCT9i8j6RsO0PxcaiqlvW0eg7bqrvmMfESWMwL8w1yG400Bb+zf/FOtGrRpS4PbeBVvgllZ3djb19CbFpSTDTMpSunWzaAkahqo6m8g1nZXwLga9N7CxKcR/ce3dk27HvQlF4/1tl9BEGxl4qXD8USsuXszDAAUb16maN6s9I+gGk/TYpkfQSxAildpX7rtaKT4K5t7/Toibxb60cKIPRU6meBCl8+nu9JLYmtnVF3ynOCN0rOxV6Mviuzeg==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.102.139.3) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=stegen12.onmicrosoft.com; dmarc=bestguesspass action=none
+ header.from=stegen12.onmicrosoft.com; dkim=none (message not signed);
+ arc=fail (48)
+Received: from PAZP264CA0090.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:1fa::17)
+ by PH0PR05MB8576.namprd05.prod.outlook.com (2603:10b6:510:c1::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8356.14; Fri, 17 Jan
+ 2025 03:36:00 +0000
+Received: from AMS0EPF00000197.eurprd05.prod.outlook.com
+ (2603:10a6:102:1fa:cafe::e0) by PAZP264CA0090.outlook.office365.com
+ (2603:10a6:102:1fa::17) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8356.16 via Frontend Transport; Fri,
+ 17 Jan 2025 03:35:58 +0000
+Authentication-Results: spf=pass (sender IP is 52.102.139.3)
+ smtp.mailfrom=stegen12.onmicrosoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=bestguesspass action=none
+ header.from=stegen12.onmicrosoft.com;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of stegen12.onmicrosoft.com
+ designates 52.102.139.3 as permitted sender) receiver=protection.outlook.com;
+ client-ip=52.102.139.3; helo=DM1PR04CU001.outbound.protection.outlook.com;
+ pr=C
+Received: from DM1PR04CU001.outbound.protection.outlook.com (52.102.139.3) by
+ AMS0EPF00000197.mail.protection.outlook.com (10.167.16.219) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8356.11
+ via Frontend Transport; Fri, 17 Jan 2025 03:35:58 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:DD4AF1C7D89DBBFC59A824C637B07ED10197B0FD7CB394AE971E58A372623356;UpperCasedChecksum:1F750EB38A4FD40C2ABFCF8DC228FF627249267781EA10C2E4185A6851B1B806;SizeAsReceived:7421;Count:39
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=lhB8OwqsAejy2Fqdpq6ehi+PWtfcDwbUQpntCMBdzRGW3T1SAoIL/7HjLlfeB/xcHXsBbyWF1TEynajo4EPA9DnKF7eTBP6jiasub4wo1BtFJ670bEOgBY0r8PQDD59odVxaudZBFv+VZxVxXoZCfIVLVc0IUs99dvwBdODot0NjciDyKSkjqNUm/PC6fxYfMVFa5rLImF0upSthWo4IgTdxK3MFwOo8Z9lo4ELFeMi2VimN5JvnYq/y45wuDlu4jFBv7QA5CGGKwD7cQxI1L/XuKROR17x8SYYdtXrrVX1SEhlbWLvLROWNWUIx170hZKHz3G8ymTYhMzTAx22oTg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2NmCTwwVjsbYTsGAYkfPOc72Xd+YBgtHLmPpjS1/4bU=;
+ b=yk06l1IhRdafC91KhzYD9r1RqH8z7oDu+qgXxLEBPvk0R783FGwjCwbAjcfcjSWuV++0vATTNXCnna1XqEAe5x7ZhP0Y8aETm8kpVkKR0kIQm9P1Rq3Wr8QqcmJnEh2hjwoJTwNI7AHkBV2qT/gRZohYdVvUzdhnZ0QJ4D8aqaKuBYKt7G9idg0oEVacbm7b1i9wK7pxQaRLw28cbhWTDW0zE/uvaX6cgK8FgQcP5vuW5UX3a0MAyyTW74/5u3nCPhChF47HcwNmccXrmcDPPNbU06Q12Tt+eTIaBSM/O1oLx0EZPTtrxUtOahzgURE8dm1BvmCMZhZ1uX3zjTjodw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 31.57.102.97) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=stegen12.onmicrosoft.com; dmarc=none action=none
+ header.from=stegen12.onmicrosoft.com; dkim=none (message not signed);
+ arc=none (0)
+Received: from SJ0PR13CA0021.namprd13.prod.outlook.com (2603:10b6:a03:2c0::26)
+ by BN0PR07MB8765.namprd07.prod.outlook.com (2603:10b6:408:16a::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8356.16; Fri, 17 Jan
+ 2025 03:35:57 +0000
+Received: from CO1PEPF000066EA.namprd05.prod.outlook.com
+ (2603:10b6:a03:2c0:cafe::d3) by SJ0PR13CA0021.outlook.office365.com
+ (2603:10b6:a03:2c0::26) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8377.6 via Frontend Transport; Fri,
+ 17 Jan 2025 03:35:56 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 31.57.102.97)
+ smtp.mailfrom=stegen12.onmicrosoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=stegen12.onmicrosoft.com;
+Received-SPF: Fail (protection.outlook.com: domain of stegen12.onmicrosoft.com
+ does not designate 31.57.102.97 as permitted sender)
+ receiver=protection.outlook.com; client-ip=31.57.102.97; helo=yaya.bio;
+Received: from yaya.bio (31.57.102.97) by
+ CO1PEPF000066EA.mail.protection.outlook.com (10.167.249.5) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8356.11 via Frontend Transport; Fri, 17 Jan 2025 03:35:55 +0000
+List-Unsubscribe: <opwuc-pldqzkm6uncjjsccpney-mr9vwelmfy06suo4r8d5-kb2yxpvun0gn90gz3b-5lk0hbfsfteu69a5-ayuc1g0mze@aws.x2bjei99e0k0hopgmu.com>
+CC: <phishing@pot>
+Return-Path: kd4x3@stegen12.onmicrosoft.com
+X-Google-Sender-Delegation: Shop1-Now@Walmart.mx
+Date: Thu, 16 Jan 2025 19:57:46 +0000
+From: " Costco®"<kd4x3@stegen12.onmicrosoft.com>
+To: Contact <phishing@pot>
+Message-ID: <sjy3ofc8ud.pq33vac88r.y5gak8xol9.javamail.tomcat@pdr8-services-05v.prod.atgj9vsp47.org>
+Subject: RE:phishing@pot, You’ve Won an iPhone 16 Pro 📱#CA-4081
+Content-Type: multipart/report;
+	boundary="000000000000SGCNuB7Qm6umj710elBSQB"
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: CO1PEPF000066EA:EE_|BN0PR07MB8765:EE_|AMS0EPF00000197:EE_|PH0PR05MB8576:EE_|SA3PR05MB9699:EE_
+X-MS-Office365-Filtering-Correlation-Id: c92229c1-a58d-4e1d-2ac3-08dd36a80ef0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|69100299015|61400799027|36860700013|82310400026|32650700017|4022899009|376014|33640700023|10092699018|4076899003|8096899003|32550700048|7632975004;
+X-Microsoft-Antispam-Message-Info-Original: =?us-ascii?Q?4VS5EjRDpkWtY8tYMboo2nn8cxTe3zw341T2xzFXj8xxwg94MILiAHKJ/gKJ?=
+ =?us-ascii?Q?3r01QHBeFKWQEz+VIWYHNCqxa3c3vpYk8MuJiObPiBH1goJfEiEcuAC7QlN9?=
+ =?us-ascii?Q?34zBZ7rxWL18ixZ4ubT1etCuYhlzMiJUKux5ANym5xQ4t77nq3WGVrMA1dF1?=
+ =?us-ascii?Q?PV0eRX+Nz9yX4KaJ5Cq9c7vpNztWj9jRI1DpFaECMFudzYl/BO/ABsVeZHdK?=
+ =?us-ascii?Q?V3T7iY1aHeM7RB9sg1HvTlzt02T/RZiNz3Zrt29eCjuFAsc6B9PJR0yjTq4y?=
+ =?us-ascii?Q?LJj9l7f15ty1bAuNVz5L+IgLdPPUXe/F6Ey3/9oFM3QVONIxRDdHuMKgLiB6?=
+ =?us-ascii?Q?vZ+9EGN/Q8U9pOGdd5UYmvxBWDcU2A1jZo1rnKU+TC01BXx1ON1Z7KvYm66E?=
+ =?us-ascii?Q?0N1F4RYDJPs3Pi+yHmamlGTUfeh9rQiS7ueTsGEgonSIMXfVe32c8CNYXDpZ?=
+ =?us-ascii?Q?+Bv7IHNNOhZ6uE5wkIR/xjNVJbHzTYaX88yOZjt10ocn3l2kOqTJGow93i4S?=
+ =?us-ascii?Q?6z5fminjm/riyVzhpw7NSO40Uu2+EEAygroMYo7PLLxix+VjdT3m+m27wOv2?=
+ =?us-ascii?Q?bysh/jfnwJGF7U/d5uH6RSJ6L/B5hUiepEXeUZJnY9i/dlirk6yaM+F5vu82?=
+ =?us-ascii?Q?ehXI2FONV8H7fbcUF6TtY7LID8LmIyCWEGFvpD9o9n1ZciSeT4S1uUMQ0Xj9?=
+ =?us-ascii?Q?KBmcXiC+NlztSs+7cDY53Pwqe86Aw0AvJpFkHnqsabmXTh9dpYTAuz11bH5E?=
+ =?us-ascii?Q?rEVNv1ZHJlfu2o8nhVIrOrYV6qTsVN0T55jvxjLqouEi0xxXGjrywqnBXcq/?=
+ =?us-ascii?Q?DDRgMGoFbryIrb9y1t7k72SGWjAJdys7xJILL50rIAspNpDoEYP0RwWaZy66?=
+ =?us-ascii?Q?HKzKySQm85GzuJPMwTUrdxHY6vLdtBRXTAyqjIvCGpoUAwClXwEdIwJ2PGah?=
+ =?us-ascii?Q?K3BFdDfhqPIZ1XLuNK8q0t9wlu/5Fxm5mWshTNaD+LjoibfrRt4SqlZjgfFy?=
+ =?us-ascii?Q?b4q9HjxZBevUBQsTnhbycAT8yT1MUj3nxethttCrlkYkxpQWCybXwt61RCEa?=
+ =?us-ascii?Q?1SKJHBnhfPsZCVwMNxzhatjVBF6vi0m8VCyW1fJT1FNk1r6Ouqahalj2Tca0?=
+ =?us-ascii?Q?xHce+DPWfDq34c53P5xNMu0/qrQ+dEuC7aZWt6Lgw4A26EgUsdwzu/q/dJQW?=
+ =?us-ascii?Q?Q6rKm/VdJ+sc3wjgphsZr0ABYGTbJ+3GDFP5tlvVF2rvUABFZvxMhNJ9jx5C?=
+ =?us-ascii?Q?/JRgfOYkYurGUCBZZPhs7Z4PwmgZYXtsEUejSGU/N0q9ters0gcNR/GYY3kH?=
+ =?us-ascii?Q?uuVp+RNxgCgz4Qo6jfrTTeeH2YFKX3lrIsyVNw3cPyRK2bP1+jLv+sUJo3C4?=
+ =?us-ascii?Q?sX2m1FNitvMp5Ishk4HjcLlXnt7yetDxGaEAPQAH5tdDLQ7ZQAo4EXun8PQM?=
+ =?us-ascii?Q?HYNxNgE61aEr9YfBBdH6Eod6hYbXDijQoxve01HwtzccZNWUQ+YvZ2bWhxSn?=
+ =?us-ascii?Q?V/Wm8GJvykGOzPE=3D?=
+X-Forefront-Antispam-Report-Untrusted: CIP:31.57.102.97;CTRY:IR;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:yaya.bio;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(69100299015)(61400799027)(36860700013)(82310400026)(32650700017)(4022899009)(376014)(33640700023)(10092699018)(4076899003)(8096899003)(32550700048)(7632975004);DIR:OUT;SFP:1501;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR07MB8765
+X-IncomingHeaderCount: 39
+X-MS-Exchange-Organization-ExpirationStartTime: 17 Jan 2025 03:35:58.9504
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: c92229c1-a58d-4e1d-2ac3-08dd36a80ef0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: AMS0EPF00000197.eurprd05.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: AMS0EPF00000197.eurprd05.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: AMS0EPF00000197.eurprd05.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 1/17/2025 2:57:51 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: df3fa747-cc1c-4b5c-7eb6-08dd36a80d57
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.102.139.3
+X-SID-PRA: KD4X3@STEGEN12.ONMICROSOFT.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|470799035|15110799015|67000799015|58200799018|20103052909095|461199028|10300799035|3600799018|9400799030|99000799006|3025599003|970799057|62400799018|20103052901057|2700799026|13020799006|20103052903057|63100799012|47200799021|20103052914048|20103052904057|460799366;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jan 2025 03:35:58.6535
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c92229c1-a58d-4e1d-2ac3-08dd36a80ef0
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=de2a7aed-e209-4913-88fd-3a1eebb7064a;Ip=[31.57.102.97];Helo=[yaya.bio]
+X-MS-Exchange-CrossTenant-AuthSource: AMS0EPF00000197.eurprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR05MB8576
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.9053475
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8335.010
+Importance: high
+X-Priority: 1
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9710001)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?QlBkSnBPU0kyL1NISSt2MGszZkg3VHZXRmI4NmhENWNxRWZFckR1Uk1tMWRE?=
+ =?utf-8?B?UUFpK0hLU0IrdmVvbjhqdmhzT3hMUWxPWmxCZ1o0THRiQ0pWVUlEWjlHK2p4?=
+ =?utf-8?B?Q0NXditjVWJublBFbWFwS0w2cXVoY1hGVkdMUkZlbHlvZ2VDTU1rZ2JhSjM0?=
+ =?utf-8?B?TkVLdGFyUU5jbVI4NWFJRXNqWDBkbEt2bEExencwMWpwdExrbk1Pd0p3cUlU?=
+ =?utf-8?B?d2VQNUtHTHdaVTE1cy9wL1dFWWg0VjR5QjZRNVRMUGNqNjh1K21xN3J3aGZE?=
+ =?utf-8?B?V3l6Umk3cHlhZlVOYzJ4TDJnN3ZqWVdCM3dkZm1rcjFoZGYyRlBubE1sTWI3?=
+ =?utf-8?B?Qks3YUJxYTIwVDVJVTlBVkxYWm40V1IvQnlhZ3M2Vk5DS1Q3Y2JBRVZ4UjhG?=
+ =?utf-8?B?OGtjbExhZzczbVQ1cC90dDFPakh4YmhjQmlMenNwUTVkWWxTVm5pR25PTTgw?=
+ =?utf-8?B?bGJrTUNvR2hxb045cHNiV0dFdmllUjZJa01yRnRyMkhrKzdLQkkxa3BGbHVi?=
+ =?utf-8?B?eGZoQnE5alpYcnBzL3dTaDA2KzZRanF6N2Z5RHE2OFcrN3hLQlJCZUVQZEli?=
+ =?utf-8?B?RHhSTWlrNkpYY1N4eVZPOVFYN2tVSFlNVGx1MVZxSDhmU1o4WnlrdUU4TmdW?=
+ =?utf-8?B?ZzkydG5DcjIwOXJhUEx6aVRKY29XT3NpK0UrNzRKa2pBQlMvcVBORTNkRThr?=
+ =?utf-8?B?NWZZcVcwWFI4cVV1ckg0K3pRQkx5ZW9BRWswUzBmTnZodm56akFCeDRIMG8y?=
+ =?utf-8?B?ODZBemJiQmJncXQwbkdUVTRnQ210Qnl5aE5yTVU2MjlJMk5UeitzbSs1UUg1?=
+ =?utf-8?B?c2ZSMzVuenJIbzJna0plNUZjRGpUcUJvUHF4MmRiYTUvYnd4bGFZL1pNc3BY?=
+ =?utf-8?B?cGlubXB4Z1lsZzU2MFlxY3l6NGRPcFptMEZaMS9YajgyTG42R2JwMjhnRFR6?=
+ =?utf-8?B?eEZ0RXpHSHJPVTg1ZXVicS9KMkplN0F1UGpBTk9WWkxlbTVKWFk4bFNiZDlt?=
+ =?utf-8?B?ei9IS05aTmxDbmZJcUh2MDh4WXovbHlkZ1F6NFlVYVBSOURMZ0dmRHE2OTJL?=
+ =?utf-8?B?bG5lUEZYYUxSYmd0Vi9hamVPNEpNaVN1UVRzMmx1dWljUi9FenhGcURmb2hQ?=
+ =?utf-8?B?MHVWdkwzTG00NmNmcFJRUDVOT3BONUoxNEVmZWV1MDNWTlhmdjlReVc3OWZO?=
+ =?utf-8?B?MnJjWWhKUk1NZUlWWG4zbk8rWUpmTEhsTWJRNDVrS1RPK0VDdE5KdU9pYlFJ?=
+ =?utf-8?B?MzhxdjVhWGJRSlZxUWg4WHFRWTdDdmhiR3JQejF6eWF3c2x6VWJ2c1NPZnov?=
+ =?utf-8?B?T2N0TFNYb2FINHZtMndsdnkzanlNVDdYRmZEZEJlZGFSbUxGQTRWWUlBY3ZF?=
+ =?utf-8?B?citWbmNJNHR0cHd0NEZTbUxWUmhGTVJ4UnpxRFlLVGN0S3FPVmhMbWptK1lo?=
+ =?utf-8?B?anBPUGNTeU9YS1FYU3VWN3lhckp0YUw3ay9ZMitudFVySUVqV1RQOFVjcXhs?=
+ =?utf-8?B?TGpRVk94OHEwZ241ZEg3WHZta2M2eERUdnN1M05VanRvUE9iZlg2WjhReUxL?=
+ =?utf-8?B?ai9pUEhnNWZJdit2dkFYcmQ5UmpRYlRwL3BaZngzbStGaTZlMEpqTXBiYjA3?=
+ =?utf-8?B?MDY4QUdIazZ2RFFZdzhHS3lLLy9HVG90YlVzcG40ZlN1VTAyclhXRmM2aWJW?=
+ =?utf-8?B?dUNTTWYxMkQyVWE2alppeU9KWUU5MU82U29NRzdHU0M2VDRZbHIza253cTd0?=
+ =?utf-8?B?bUU2N2lwU2V5aUdMQ0F1clhOYXRQamw2VDdMMlZ1Z2huWHFLZ3FaQnJwTW1H?=
+ =?utf-8?B?UXBqSTBnOUsxNU0zZVVRWUd1c3VRVnkyQUMrOWNWNlllRlhHN1RDUkRUMGF3?=
+ =?utf-8?B?bGt4OC9oNTlaRExFNlNpVWhDQUhHWjlpbmpWTUxmR0dQLy9kc1Z6UHh1d3Z3?=
+ =?utf-8?B?ZTMxMHJObVM0R2c5dDllTW85ajI2ZnI4K2J5eGNWS3ExcTJXWUJlQzZMYUVz?=
+ =?utf-8?B?c2tieENickt3bTNzdC9Vd2xhQllXMno5RFRJK0NxM3VJcS81SHovUXUzendm?=
+ =?utf-8?B?SFQybHZyczI0aFRIZnkyWkVmSkVIWE9CZTREUlY1Wjd2YTVIV1c2UGM5VkRs?=
+ =?utf-8?B?c0Z2YTdZNkVBTTlIVy9kc2hIeTNrUExDRzlkeE8wd3VqT0JNMjMwUDJZV1lH?=
+ =?utf-8?B?YlFGeHV3M0x2QWF6QjB3WG5nTG4vdi9YZUc1RFBTdjFWTW5pTGI0MXpSVHNi?=
+ =?utf-8?B?TDlCdXpFN2plSW4zNEpGTTMwR2VuNTJRRnIra0FJcUlsOFBwR1JqaStmaEJ4?=
+ =?utf-8?B?bFd3NzF1RTJPLzJERUUrOGUvaW54aDJFU0p0NVdRVUJ3aTZ3WnBJZTlSZXR0?=
+ =?utf-8?B?UkU3U3NVemo0K2FvQ3l6WjUrenZFSWw4aEpITVpONWdQRnNaZWJRMjlrVHF0?=
+ =?utf-8?B?WWlTMVJINmNBQ2NaZGNGWTZUOVQwc251YitSaWNqcGYreFZ6cXFqMzlaSE5h?=
+ =?utf-8?B?RGMwQk9QVVV6bkRCamlPUEI3VVI2WTZhT1c1bGR4YzBxWUJZQm9FZXNwL2Ry?=
+ =?utf-8?B?bE01Wlg1Y2xrV3RSK0lyR1FrSVlBUzYxUUVac09ETjdXTDIzZGN6ejQyVmR4?=
+ =?utf-8?B?eThQNUp6WjFjTWx2ZFhlNnFvcWxWZlF1VSswUGloa01oVEVJWWp2VW50VEly?=
+ =?utf-8?B?ZUw3dlV6VDZ6d292MUV4azJxYjZIM25KK3VVU2hYSFFSUkZQU3JoWTR1RTlV?=
+ =?utf-8?B?MWVobGw4SFpBb2dZbS9sOVZUbm54ZmYxbjRrZUdyT1J5QVFqTWFtVlZjZCts?=
+ =?utf-8?B?dUJNdnduMDk2U0lNZDZiUmtTSmFyaUZlVk5qTzBqcXZORXFQdFIxSTJDNXZO?=
+ =?utf-8?B?S0RjVWc3d2s4YUpIc0c4eFYrY2tWSTBRS01UU2RVSk5RaUlmZTFDOUtpWi82?=
+ =?utf-8?B?dGdiWG5TV09JUWR5TGN5Qzc5RU1sSGhtdW4vbHh1b3NuRzU1WGE5SFhkRU9l?=
+ =?utf-8?B?aHoraDlDT05taTZhRklyOXpRbDJyb2lKdmhHQ2hVZ2c0eHhiS05ybmlwWXBq?=
+ =?utf-8?B?Z00rWlVubmhLTllWb3Fkanc1Vm5UWjJnU3ZEaWNsNzY1WFZaMU5oTGJXOGY5?=
+ =?utf-8?B?S1k0RFpVUXI5aGRycEp0VTRIY2ljVzgyNzFLajdTSVJKNDVib2RoMmhTTUZJ?=
+ =?utf-8?B?MnZUaVl5WnpXNVJCT1RYUGYrTVozSk5yQmxDNm9ESThIblcxYTA2d28xc09x?=
+ =?utf-8?B?dk44bGVMUG5XRUVOSXpDdmgzb0wwcHpoQm5ldlBiTlQvU1dWbEsrTjJnbHhQ?=
+ =?utf-8?B?aHpPQWVZU09kRmlDZzFWOGdRbFRzYVdnZ3Jyb05iR2xNeG82a1pYY3F0R1oy?=
+ =?utf-8?B?VFJoV3BoQzFSaDRXcEl4bU9XNVhKcWRaMkRmMmNVTXpmUlBVM2ZVMFZjRE0y?=
+ =?utf-8?B?KzJOUlVqV0dwc0JFSmVsYmpXdHVIWFRkMWpBOFVCU2FhSXF5V2pTUk5UREVR?=
+ =?utf-8?B?VGFoSDJCWlZNNmNpYjlHWVo1ckROQkwyL1dyNjVFRTJ3OWRQNHlreXVkMUxa?=
+ =?utf-8?B?UTJBZmtFcS9xa2prQko5VU9MeWF3c1V5Y3ZiSTd3R0drYW1mTHB6VmR2TkN6?=
+ =?utf-8?B?enlkc2hQWFBEVjZ3TUZkb2Z2Y25FcnFBek5TeUU4NTdjM2grZ2N5aFpSdzM1?=
+ =?utf-8?B?MlNoYkhjL1ExQm90QnpsWDI4N2F5dE1NQzRrOHJlZlFCcTJnQms0c2IrVUFy?=
+ =?utf-8?B?cHN5REd2Wk56UEN2OGxDSjdyczRYei9OTzFHczE0OUhBak9kVXdqSUtPVStx?=
+ =?utf-8?B?Z2pWNCt0S2xaeUNzSHV1bGh0cEl1eHNhY29jZnNvZ2NqSnRnWjk1dFpIdlRE?=
+ =?utf-8?B?UUEwN3NacTdUNlBuNFgvenhNNHJWckh4ZUdDaEN6eWFneFYwbnlQQ3pRZ0xU?=
+ =?utf-8?B?aXZBUDhvRHVtVjZ0MHJRQkt3NkkrZz09?=
+MIME-Version: 1.0
+
+--000000000000SGCNuB7Qm6umj710elBSQB
+Content-Type: multipart/related; boundary="000000000000B0MNRUNyYR84HR9a"
+
+--000000000000B0MNRUNyYR84HR9a
+Content-Type: multipart/alternative; boundary="000000000000B0MNRUNyYR84HR9b"
+
+--000000000000B0MNRUNyYR84HR9b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Top Stories of the Day: Sep 0, 2019
+
+103882302891885308
+-----
+
+If you believe this has been sent to you in error, please safely unsubscrib=
+e
+--000000000000B0MNRUNyYR84HR9b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 8bit+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<a style="text-decoration:none;color:black" href="http://162.0.228.240/t/4imBNq8720TPBi504wnnfwzeqyq1192WFAWMNFJBJTBTZD149KKCS2886967e12">
+             <img src="http://162.0.228.240/track/3Rasnl8720jIwf504yjbwuaibkd1192KLTKOEBSXRTDCPU149LQXG2886967m12" width="1" height="1">
+               <img src="//162.0.228.240/track/3EWvel8720qGZj504qomewofmmo1192DPFAKCVIBBQBGNA149RPZK2886967A12" width="1" height="1">
+            </tr>
+
+<center> 
+<head>
+ 
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Wholesale Stores</title>
+ <style>
+ body,
+ table,
+ thead,
+ tbody,
+ tr,
+ td,
+ img {
+ padding: 0;
+ margin: 0;
+ border: none;
+ border-spacing: 0px;
+ border-collapse: collapse;
+ vertical-align: top;
+ }
+ .wrapper {
+ padding-left: 10px;
+ padding-right: 10px;
+ }
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6,
+ p,
+ a {
+ margin: 0;
+ padding: 0;
+ padding-bottom: 10px;
+ line-height: 1.2;
+ font-family: Verdana, "Arial", sans-serif;
+ color: #555454;
+ }
+ .top-bar{
+ font-size: 12px;
+ color: #fff;
+ padding: 8px;
+ }
+ .logo {
+ max-width: 190px;
+ max-height: 50px;
+ margin-bottom: 10px;
+ margin-top: 20px;
+ }
+ .win {
+ font-size: 40px;
+ margin-top: 20px;
+ }
+ .brand-new{
+ font-size: 20px;
+ }
+ .product-name{
+ color: #e31836;
+ font-size: 36px;
+ display: inline-block;
+ border-top: 1px solid #707070;
+ margin-top: 10px;
+ padding-top: 10px;
+ margin-bottom: 20px;
+ }
+ .feature-img {
+ width: 100%;
+ }
+ .feature-para {
+ margin-top: 30px;
+ margin-bottom: 40px;
+ max-width: 90%;
+ font-size: 14px;
+ }
+ .cta {
+ background-color: #015CAD;
+ padding: 25px 16px;
+ text-decoration: none;
+ color: #fff;
+ font-size: 20px;
+ font-weight: bold;
+ border-radius: 20px;
+ display: inline-block;
+ min-width: 300px;
+ margin-top: 40px;
+ margin-bottom: 10px;
+ }
+ @media only screen and (max-width: 480px) {
+ .wrapper .section {
+ width: 100%;
+ }
+ .wrapper .column {
+ width: 100%;
+ display: block;
+ }
+ .top-bar {
+ font-size: 10px;
+ }
+ .win {
+ font-size: 34px;
+ }
+ .product-name {
+ font-size: 30px;
+ }
+ .feature-para {
+ font-size: 14px;
+ }
+ }
+ </style>
+</head>
+<body style="background-color: #efefef;padding-top:30px;">
+
+ <table width="100%">
+ <tbody>
+ <tr>
+ <td class="wrapper" width="550" align="center">
+ 
+ <table width="550" class="section header" bgcolor="#fff" align="center" style="border-top: 1px solid #f0f0f0;">
+ <tbody>
+ <tr>
+ <td align="center" bgcolor="#015CAD">
+ <p class="top-bar">It will take you only a minute to receive this fantastic prize.</p>
+ </td>
+ </tr>
+ <tr>
+ <td align="center">
+ <br><br><p style="color:#E61131; font-family:arial; font-size:35px; padding: 10px 10px;font-weight: 900 ;line-height:0.7">COSTCO<span style="font-size:10px;">®</span><br><span style="color:#015CAD;letter-spacing:-3px;font-size:25px">≡≡WHOLESALE</span>
+                    </p>
+ <p class="win">ANSWER &amp; WIN</p>
+ <p class="brand-new">A Brand New</p>
+ <p class="product-name"> iPhone 16 Pro </p>
+
+ <p class="feature-para">Each week, we randomly select 20 users to participate in a quick, 15-question survey that takes less than 30 seconds. Your feedback is invaluable and helps us improve our products and services.<br> We greatly appreciate your participation!.</p>
+
+ <!-- CTA Button -->
+ <a href="http://162.0.228.240/t/4yjFyA8720SNHW504bcbhwexzsm1192DFWEFUFAVKJEAAH149OKOR2886967d12" class="cta"><span style="color:white;">Click Here To Claim</span></a>
+
+ </td>
+ </tr>
+ </tbody>
+ </table>
+ </td>
+ </tr>
+ <tr>
+ <td align="center"><br><br><br><br><br><br>
+ <p style="font-size: 12px; color: #797979; max-width: 550px; line-height: 1.4;">
+ If you no longer wish to receive these emails, you may unsubscribe by  clicking <a href="http://162.0.228.240/t/5comAM8720JHHb504jqyspeovcg1192AHCZXHUPEKBSNVG149VAUA2886967A12" style="color:#666;text-decoration:none;">here</a> or by writing to 1070 Montgomery Rd, Altamonte Springs, FL 32714</p>
+ </td>
+ </tr>
+ </tbody>
+ </table>
+</body>
+</html>
+
+
+--000000000000B0MNRUNyYR84HR9b--
+
+--000000000000B0MNRUNyYR84HR9a--
+
+--000000000000SGCNuB7Qm6umj710elBSQB--

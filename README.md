@@ -1,3 +1,5 @@
+Phishing Pot is sponsored by: ![The Street](https://the-street.xyz/)
+---
 ![Phishing Pot](https://github.com/rf-peixoto/phishing_pot/blob/main/img/phishing_pot.png)
 
 [![rf-peixoto - Phishing Pot](https://img.shields.io/static/v1?label=rf-peixoto&message=PhishingPot&color=yellow&logo=github)](https://github.com/rf-peixoto/phishing_pot)

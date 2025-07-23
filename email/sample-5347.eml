@@ -1,0 +1,2402 @@
+Received: from SA0PR20MB3342.namprd20.prod.outlook.com (::1) by
+ SN7PR20MB5311.namprd20.prod.outlook.com with HTTPS; Fri, 9 May 2025 10:31:45
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=PK4rtts0r2r2svFdX/Ca8D1FmI7I0mOj+dWG0gz4oBNXE+CHQZ0F6aRyREMWvemQd26YSePz4oYoZ6sDgHDXNUcuhHnH/okWjRb04XLMcLYBlFha0TKplHDHh/fKkLrISqoAVNfKLSMOmHx39z/3FcX3mJRZmv9vk/xAsMhu6hMKpa/qEdXGA0/G+P773S+c/p5gWnQlP8CJpglBj7v6O9wT1FG963Z8/ldE6maSZMSm5RI0RdSN3drphDYl6O3X3LJv3yhVpJ6fJT6vxMBpotXQSImeayJnPFUoSbDssrgO+C1t/NQk8Eg4GXcYUft95QqPBsY9P9BsaVXXN8vJRQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wOZpO7Vtb48U/M/rPgB55pSDiiLVniP5TlirZW2VtPM=;
+ b=iXV+o+iWf4TH527+KzhGh0u53RX3qM+o3gywyzl0n5x7wPs3mYwSGInlLpgo+cBba0gLZ04WinSZR63rizI0MP3Vseruy9zI3w7gdkS7zJua6uF47w1oPClPAS1yrTGjnJg9Mzd7sr/4gWbdK01mmrGSkh6sHXJHQoyDhF6x8nhay0q9exW4tw60dkAAE8FKhvu0uLyTipzk6ittvUWUhSg9RLZOliYOO4hzNb9iOBMULL7p4Hc7awxvSfan9J2aM/CK3bCfJu0vNe2gxJQkqHPPii5F9e1G+Umwao1iERxAghFyXrPG9Eenq0TpYjhjYhCyLN+p7vni6nlw2w0E+w==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.102.171.40) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=sangata.onmicrosoft.com; dmarc=bestguesspass action=none
+ header.from=sangata.onmicrosoft.com; dkim=none (message not signed); arc=fail
+ (48)
+Received: from DB7PR02CA0010.eurprd02.prod.outlook.com (2603:10a6:10:52::23)
+ by SA0PR20MB3342.namprd20.prod.outlook.com (2603:10b6:806:9c::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.21; Fri, 9 May
+ 2025 10:31:44 +0000
+Received: from DU2PEPF00028D10.eurprd03.prod.outlook.com
+ (2603:10a6:10:52:cafe::bc) by DB7PR02CA0010.outlook.office365.com
+ (2603:10a6:10:52::23) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8722.20 via Frontend Transport; Fri,
+ 9 May 2025 10:31:43 +0000
+Authentication-Results: spf=pass (sender IP is 52.102.171.40)
+ smtp.mailfrom=sangata.onmicrosoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=bestguesspass action=none
+ header.from=sangata.onmicrosoft.com;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of sangata.onmicrosoft.com
+ designates 52.102.171.40 as permitted sender)
+ receiver=protection.outlook.com; client-ip=52.102.171.40;
+ helo=TYPPR03CU001.outbound.protection.outlook.com; pr=C
+Received: from TYPPR03CU001.outbound.protection.outlook.com (52.102.171.40) by
+ DU2PEPF00028D10.mail.protection.outlook.com (10.167.242.24) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8722.18
+ via Frontend Transport; Fri, 9 May 2025 10:31:42 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:AB25DFA698F3774A385031262D9CC20EED85D02E6729FF00910E5C983EB5AF36;UpperCasedChecksum:6BF6073D7CBBCF58AE19151C4659FD637A8FBD0F4B0B5C9E5FB0B49B927C3E25;SizeAsReceived:6655;Count:39
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=i84nN6wHf2yQuEpzVTF6A5cpyMl1YP4cmHv7Zs4ou+6x8wGPA6aL6AZIlXj2nk2O57A47/Zewj8XAS9DqxWs1bMXMqH0R6ExOycvgjuYCxPGKhWYH82yL68+vOJo7vKF0Vi9eNy44zfxWsNEIEVXhMOR4dNfZk0HerMiWcaafQgaonX+hq3CjrvIc1NiHmGUMvEpMkyyNkGdY+EsGMAUVbGKXpy6tEUbmG4XBiJ2jz0+M/dbFhdFuSZVATt6PrpezZZ2f7GRyiJGg8Vxy9kebYVJWI4T0h8v2eCoxpO36rfL5SxoXLswXaybE+36hjtGifbK3HpZ1T58M4iLCbDNUQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wOZpO7Vtb48U/M/rPgB55pSDiiLVniP5TlirZW2VtPM=;
+ b=N9qWs3X+zIzdNWXl7dSMMYoDD86MjFytS/HpYAV6w2RTzlnwAU9ASd5Qi9K8S8DAjOGZlD9eZY8bsccn0VtbhQhLmjALcuxJ6mMeeuADHQN0DHWxwjRpzavsns+YQIuSa1oQaEeAunUu6/EB3DgzPKftK48ymbmLzJvIlX1Z1snqP0J3TA/gNApa2U/zBXNr5nbd/oT7TqdxL2oWaoPpTxPutoKFLaq8+JfME/B8wuwXD6W3zGrscN2OfgnakXubeyezQjngmOZR4YIbXwBfOXRX1JRrxnuwtEyzgJkv78ibtxM7qRGGQ2YFI6QkCGsgghL3iT9Au2CV4yCr95bvgA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 172.234.120.214) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=sangata.onmicrosoft.com; dmarc=none action=none
+ header.from=sangata.onmicrosoft.com; dkim=none (message not signed); arc=none
+ (0)
+Date: Fri, 9 May 2025 10:31:33 +0000
+To: <phishing@pot>
+From: "✅Techniker Medicare Kit Gewinner " <Department-✅-n89268@sangata.onmicrosoft.com>
+Subject: phishing@pot Details zum Medicare Kit-Versand
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="UTF-8"
+List-Unsubscribe: <https://z2.qhoflygu.co.uk/lists/2i05pdxsaw7z3/unsubscribe/wuev3l3hn3z6/3k2eprckpbc?source=email-client-unsubscribe-button>, <mailto:info@qhoflygu.co.uk?subject=Campaign-Uid%3A3k2eprckpbc%20%2F%20Subscriber-Uid%3Awuev3l3hn3z6%20-%20Unsubscribe%20request&body=Please%20unsubscribe%20me%21>
+X-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+List-Id: 2i05pdxsaw7z3 <List management>
+X-Report-Abuse: https://z2.qhoflygu.co.uk/campaigns/3k2eprckpbc/report-abuse/2i05pdxsaw7z3/wuev3l3hn3z6
+X-EBS: https://z2.qhoflygu.co.uk/lists/block-address
+Feedback-ID: 3k2eprckpbc:wuev3l3hn3z6:2i05pdxsaw7z3:38lfp64omt
+Message-ID: <720ae42f-2d69-4a05-8c3d-707c301dc1ef@SG2PEPF000B66D0.apcprd03.prod.outlook.com>
+Return-Path: djzpfrimqv@sangata.onmicrosoft.com
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: SG2PEPF000B66D0:EE_|KUXPR03MB9388:EE_|DU2PEPF00028D10:EE_|SA0PR20MB3342:EE_|SN7PR20MB5311:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7309a764-1a32-44a8-1268-08dd8ee4b136
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|82310400026|69100299015|34020700016|41320700013|1032899013|36860700013|32650700017|376014|4022899009|61400799027|13003099007|8096899003|2066899003|32550700048|32420700284|15450700066;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?b2Y0bldoRFluSnd1SXcyMEdld0NFNHBVV0tsWFBxS1VQUTFJcnl5eFI2ZStH?=
+ =?utf-8?B?N2FMN0QxVHR4Ti9LOEFsNkcxMkEyS0VOSVdQSjUvL0Z1OTNCNnA2R0dONlBj?=
+ =?utf-8?B?NStUcnZ1YmFubEVtM0dsSzVobGZMdUJWZ1lDNlhUbFBtVVh5TkY0VDAvOFVj?=
+ =?utf-8?B?UW9SbUxXTi96LzBSU1hRKzViNHoyVXpSSDFMVDBFaGo1Rm01eHd0QXpZU0gv?=
+ =?utf-8?B?d2E4VmExOVVML0szZExMUGpWRll6aklCdURLaGNyRnlBcDc4TzlmeS9oVGMz?=
+ =?utf-8?B?Zm1aQTN0U2FNZXBUL08xb2JKdGsxekxaeUcyTVVWL1RLL0pzbTg4c08xQndO?=
+ =?utf-8?B?c2tUSmFkYWE0TFJ0a2J4NHVFRTE3UU82R3U1ZlhpSWpjMGdrVWpsbXo4Q041?=
+ =?utf-8?B?LzhoaFp1UlRRUVRXaEd2VlgwTVE0aVI1Q3VTWk1LZG50UUY5RlBIVGZqMmVX?=
+ =?utf-8?B?L0JhamJvdVdxb2M5WmFFRnVudHoxK1FRcGRWSjBTdTVCbEx2YTc0OUo5SEZE?=
+ =?utf-8?B?bVlsWTNQTnJPOERwemlGTjI2bmJHOWpqbytUSkIwdkNlQWcyWGpPQlg3UUx4?=
+ =?utf-8?B?S2pnQVN0OC9aQ00yRDdYQ1RIK0tSSEpDVGUwVHlwT1pZbnZ3RmpaZ3k3dHd4?=
+ =?utf-8?B?aFFDZWxOOG9ZdEE3eUxVclR6aHFvWGhyQmwxK3Y1R2ZlOXBLUTI4bElmQ1BI?=
+ =?utf-8?B?YzNNT0hEaGtrRGlSV1Jid2g2c1RHQVptQlFQNzlNN1doZHhHSEZET0tCUnBR?=
+ =?utf-8?B?WHNlM3VpMkFlQmdYUnJqWW1pTk9IdFA2aTUvK09Pd0xtUkxYbTE3RlJ2dkdI?=
+ =?utf-8?B?S3BvcTh3RUdRN0lXdGpGcnVqdHJpSlZLSUdHWG9DdmtQOXJnYXphQ0lKaVZ4?=
+ =?utf-8?B?M3dFV2RRQS9lNzNmL1ZjMUkxeW1XcFpDMmIvbzIzU2dTdXBRNG53MlRzUlRt?=
+ =?utf-8?B?RW9qMlFtQld6czBOZ0FaVEgwV1JQb3d6dmg0KzkwVEMwTGxKQzBUdXV5QURB?=
+ =?utf-8?B?VmVCZHc1K0ovMVZKNlcyektseEN2anIvaEV6UmZsMUgxZjhmTGlSaThXN1cv?=
+ =?utf-8?B?U3ZKWk5oNWtmZXRoTnRLYWdWMklOQ0ViMUM4a2ZKOTEreERhQ0dITXh4eC9L?=
+ =?utf-8?B?YmdnQUtrUkZmWHpOb1JTNWZ5QjZyU3B5VzdIaDVWZnZnejVESGgyQzBQbnVz?=
+ =?utf-8?B?WlNnRjRhYVZibmp2UzNxRWYvMHB5YVR1RkNQZklJY1NmQjhCdXdHd3BLMzFx?=
+ =?utf-8?B?cEhTTXlkdFQ2VGpmb1VXVy9BTnJ4N0pRNjdLVC92NmZsUzZnNm5tdnRZVkQ3?=
+ =?utf-8?B?bEdqVGtXYXJPVTZ6bnJwRTVlL2tOQ0NScGRHbVBTZHdSV1kvNUVoSFRUNkVu?=
+ =?utf-8?B?cUxLZURmb3BYTVNFRW9QL2psaHBKZHVld053U2tFY0h6OVdQd0dVMkE2cmZh?=
+ =?utf-8?B?eiszcVk2S09CMjVTL2pxUXpzWjlUem8yYnhXNCtmMUNrNTFqZ3hXb0lQT0VJ?=
+ =?utf-8?B?a1MyYVg2SmhaeXh6d2p6SXlxMkUxQk0rL1pielZpWlhUbW1OMkk4TFBrVmlv?=
+ =?utf-8?B?VElrYXliMS8yVDNKUHNpaDRCMjc5MVBHMUZVbEQxdGl1U2Y3U0twUFBOeVFo?=
+ =?utf-8?B?eENUWHlMcll4QU0vVVBiM0ZOUmNvazcxNy8yaEU1a2ZLVDVFdGlRNUNSREcw?=
+ =?utf-8?B?YlVRZGZjUFBTVVNwQVEyZDM0TXUwZTFUS0h4b1pOSDNnbm5RSVNMaEJWUzVq?=
+ =?utf-8?B?YzU5M2hxelVhZFc2MFRvaU5lTk5memVVTEZWajhZRjF4MDFSQXNGNG92bTQ2?=
+ =?utf-8?B?UXRnWnN0VXQ1YzdvZjhDN3Axa3ZWODIrc2QzL0UxY3pwYTdZMlFUQVIwM0tE?=
+ =?utf-8?B?ejh6UTI5WHhkRGNJTDdBeVMwSWRTRHJYM0cwUHpUb2F4RG1oOWI4WEFuUElt?=
+ =?utf-8?B?T1piM0psdU5GT0NXa0F2T0wvbjZVNmZwdm56cEdGTXk1Zk9CTlArcTR6OHdk?=
+ =?utf-8?B?Yy9HcmZHTGV3PT0=?=
+X-Forefront-Antispam-Report-Untrusted: CIP:172.234.120.214;CTRY:SE;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:oziryrhvjkouy.eu;PTR:172-234-120-214.ip.linodeusercontent.com;CAT:NONE;SFS:(13230040)(82310400026)(69100299015)(34020700016)(41320700013)(1032899013)(36860700013)(32650700017)(376014)(4022899009)(61400799027)(13003099007)(8096899003)(2066899003)(32550700048)(32420700284)(15450700066);DIR:OUT;SFP:1501;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR03MB9388
+X-IncomingHeaderCount: 39
+X-MS-Exchange-Organization-ExpirationStartTime: 09 May 2025 10:31:43.3276
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 7309a764-1a32-44a8-1268-08dd8ee4b136
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: DU2PEPF00028D10.eurprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: DU2PEPF00028D10.eurprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: DU2PEPF00028D10.eurprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 5/9/2025 10:21:17 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: cbc61244-71db-447d-cbf4-08dd8ee4aef2
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.102.171.40
+X-SID-PRA: =?utf-8?B?REVQQVJUTUVOVC3inIUtTjg5MjY4QFNBTkdBVEEuT05NSUNST1NPRlQuQ09N?=
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|28045499003|1680799057|13020799006|5101999024|58200799018|9000799050|42300799018|970799057|47200799021|28050799003|6401999021|8301999021|22110799003|470799035|99000799006|2700799026|1131999016|10300799035|5301999021|9400799033|62400799018|11001999021|20103052909095|19000799015|63100799012|15110799015|3151999006|67000799015|461199028|22015499006|4302099013|18042799006|3412199025|440099028|19201999012|13082799006|18021999003|20000799028;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 May 2025 10:31:42.7495
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7309a764-1a32-44a8-1268-08dd8ee4b136
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=01b8cb82-2638-4143-ba1e-f6e3a504e252;Ip=[172.234.120.214];Helo=[oziryrhvjkouy.eu]
+X-MS-Exchange-CrossTenant-AuthSource: DU2PEPF00028D10.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR20MB3342
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.9755372
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8699.005
+X-Message-Flag: Follow up
+Importance: high
+X-Priority: 1
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?eFlmVjVlM3BZdS95bnY2c0h2aHZiV0ZDUHNxanZZc0ZTZEZJVE9aUlBXYWcx?=
+ =?utf-8?B?Q1NKVm1MNk1ydmNWeUVUSnZXTlNqZGwvNHFpS1h6emVabEEydWxQM3dWd0VH?=
+ =?utf-8?B?WDJidlF2eGtHKzk1MnBQK0IvSHBZV2kzSlFvbzl3bi92aUhBUXAzQ1lkM2NP?=
+ =?utf-8?B?cGFUQ0F6OVE2Q1hPU3hTcWFLK0lCMlNCWWpiYmoxUEJLT3ZGamhRNUlKdjha?=
+ =?utf-8?B?bC80d0I0SnVyeVVVTGlWekxzdGxVOHFOV1UxeFJ1SCtmVjVNR0ZPMTZLYU5P?=
+ =?utf-8?B?WUllTkRuME01T2ZjUkwxK2dZajQ4V2RhT1hPeDArVDE3UzVXOWkwL1lGTjht?=
+ =?utf-8?B?dkk3eDIzckFXZjdUM3FMMWJXUURLeEFDdWxSWWdiLzZiNll1YzF2YnpBYmpD?=
+ =?utf-8?B?L1E4eUExR2FZTFNieEFraWdEYzNaZUxUTlU4YXNjbzdXYUVWK2NZMk5NT3p5?=
+ =?utf-8?B?c09qc3QwYVJwb3ZMS3c2TjUzR01SNlFKNUdqTlBEUDFkTG14ZWFNaHhGZWNI?=
+ =?utf-8?B?TG4zd1B3Nk11c3l0NGZMRmxoeVd5WHVNTU9mTVlFRk1qZnVORm5uOERxbUtr?=
+ =?utf-8?B?N3FBd1VFRHA4UWEvMUZtTUxub0ovMjJEQWUvcmRvYm1JSnJLODZzU2tFYVNE?=
+ =?utf-8?B?YWV4Umk3N3ZtNDd4SldML1pyNUhLZFRrcnlZblovemVLTnlDbTZURlhCZzZt?=
+ =?utf-8?B?bEN6VEVkaENxU09VMnN2WTN1cmhReGpnMzdVcVRXTXlKV2phYXMyVEErb2xP?=
+ =?utf-8?B?TGFSeXprK3lrbGduUkZmSGxIaUhmMVVVRXdBcHlQTWJlNUVMRnFxZVJ6cWpH?=
+ =?utf-8?B?cUZnTGZuRXc1MFlxWlZtaU5Sb3QxMFlvNm5HdGxNc3RZcEhLZHRoZXladUFL?=
+ =?utf-8?B?REVhcUJqRmZVZnVyeGVER1g3MDJQaFBpckROb1lQM005dlNPZmlhK0NvaTA2?=
+ =?utf-8?B?M0J4UVAxaE95Tnc3cklpdTZBcDZkdTZ2bk9nZWhwQkhIMytHTjA4V3p5K3Qw?=
+ =?utf-8?B?TGlRUEhDcWtJRTJnTG9KYjdNSnllRlpmRGpRNGh6U2lDalh3VXRkZ1ZVUTd4?=
+ =?utf-8?B?ZXQ2dndJYW9tditpSzBUUTBxWTZleWxNbGQ1Qm5Lb3RqVVNKNGpxZ1hJSU43?=
+ =?utf-8?B?S05ZT0VPaFBNRVlMWVJRTzJ3NGNkaS81RnRiTlEvSjUyN1FLN0RlejdJdSt2?=
+ =?utf-8?B?b0pXa0lKK0p3SGp2VVI1Zll3cnFWRmJkK1BjSGRrczJ0dWd5WGF4OGdOdXg3?=
+ =?utf-8?B?aGViam1abDh5NEZBZEdWTHM3WTZjc3pVN3RWL2lSaU13SjN1R3djL0NhUng4?=
+ =?utf-8?B?aWNQYnlWd01VMGd1bWVETlhuV1hYRG1HMmMrcmtWaXd5SVFmeHFNbTFoY1gr?=
+ =?utf-8?B?cnI1WHVaY3pXcS9rMXFOVnZkdXBEeDh1UnR1L2E2UnI2NWN1bmRUdFZ2OW9k?=
+ =?utf-8?B?VmlWSFIva0ZoVGwrdk1OSmpyTk5TNGF2RE9GNldWZHE4MHBGRlpnSTBQTi9z?=
+ =?utf-8?B?UFBESDQrTS9NUTFpaFVTbk5oSUlCY0lqRVR3d1lyOWJ6QTQ5dHV4bVg2b1o4?=
+ =?utf-8?B?aWkxMWM1L21LbmJ2WEs5cFRIakVGcHJOZU95YmNubHJzV2x1TmRVampHQk9Z?=
+ =?utf-8?B?NjJ1dkFWTllWUlo3aWFLcEJyWTgrbE9Yd3FEYWhoZVF0Y2owOTBXQ0hUUi8w?=
+ =?utf-8?B?SjZDZk42czY4Uk83Vng4SzZWa3VCRGxaOVgyWjI1UGRjaFRqK0NLWWFLdWp5?=
+ =?utf-8?B?eFFYcEZ2UlpMb3dCOFpyY0c3bGgxWWJkMThuT2hTaHN3SStKeTJQaUhkRjd3?=
+ =?utf-8?B?OTdPcG5NYUpSZmJwTXJGdFRnK3FrWm15WlZxSjdGUGJtaVBjcjd3UC9Wc0tj?=
+ =?utf-8?B?VUo4V3p4ZUVZamFOZ3MwMHk4U2ZVdFpLcWVRRUxEZlZiNnRYUWZMcWRYTCtk?=
+ =?utf-8?B?eUo5U3E4WE91ZUNMRll5bWVqdVB2cFFXaVdGSU1adVNXbVgxOVJncG9wS1ZO?=
+ =?utf-8?B?MGx2RnFXY2hSbm1ZMUYyQU45NXhjRWtxVjVzZGt3MnFVMm9lYlV3MlduaEtB?=
+ =?utf-8?B?OU1Xd3pyRFprM0NjZXpLeGlldllQeXBiOFpCeEVMR0hJNmY3UWRDOGlOc0ZY?=
+ =?utf-8?B?NklWU2lDaHpRSlBYeVRreU9GUHBYTktIQTB1V1ZiQjI2Vk0zVUZFUnFSdjJH?=
+ =?utf-8?B?eDgxR25CMjh2Q0t0VytDcmlFdml1ZWJ4TG1aak5vTzlBUnpWb29maG9vY1Bn?=
+ =?utf-8?B?ZHlTcHI5MkFDUVUrUGxzbHJXQzVOa1JIYzhtV0FPMU02M3QyRHBUK2xVVmVj?=
+ =?utf-8?B?Mkw4VEJpUGo3RmpLaFhtWHR4dDdHUjN0Q01EU2UyMlV1eWQxYVBpRm1hbW9n?=
+ =?utf-8?B?bVZDc210bjJJTDlvSWZadCtHS2NWR3lQVjF5MUhUeHlGQlVDK2tiVFVOLzJr?=
+ =?utf-8?B?OEJRRGpvcFZzMXZFNHNGTUZBUW9jRis1SFRoZHRMR1MrMDlEVEhIdXJwZXlo?=
+ =?utf-8?B?K2tnTytCRE44cUxsbXFERk14eDRZRXZwd3BmbFBsNXFZcDFwSE1WVnB0dnEx?=
+ =?utf-8?B?NVB5eSsydk0vOXBhV01VNUxEREs2NXlRN3JFbW9rejRURThCRDAxTmY4QnBu?=
+ =?utf-8?B?STB5SDVUWlFBbkFnTERCbWJkajdiVU4zRTZoTjZ2c3hWU3NiT0Urc2hvdkY0?=
+ =?utf-8?B?dXVRZWFXb29FNG5JaTFqTGUwSUl4aGNQSFcrcVRmNmFsVEw0RXROek9WREg5?=
+ =?utf-8?B?VzZ3akNheTJyTTc1ajE5YTZWZk55UFVCTEJZWFFmS21PaFlGNUg4TjdpUUxL?=
+ =?utf-8?B?SDQ0eDcxRTNjYXVLTmFGb2VFRWZwSW40OHlDblVQRWovSExWemFmQnVOMkZY?=
+ =?utf-8?B?ZFVwdFBveFJ0c04rWWZnaHFETXJncWNzU0J4VTF5Y2pxdW9EaEZ1SmhCb1NL?=
+ =?utf-8?B?czFXYWxPUUprQVY3Q010R05YSjM4bk5kbVdiYVU0OTd1Q1dnWlZMbU5XdWgr?=
+ =?utf-8?B?MHNFRnJCWitOaWtkRmpoenI5OGttaTlmQWtURHhxUmpxc3FRaCtwYkRMejZr?=
+ =?utf-8?B?NnVqVXZNbmlBVUVqVU1XUzVFbHh2VGZDYm1yQVVDM1U1NmNqR3NiUmdoa3d0?=
+ =?utf-8?B?d2ozSkRxZDZnb2hLSk1NNDhIWTJENVppQ1NLdkxYSENpdEZxRXp1eEJiMklw?=
+ =?utf-8?B?aytWTk4wZUJpUEVObmZRRlMxNUVtOWFpeHE1V1UvNGEydnoxVytqTXlPcldQ?=
+ =?utf-8?B?WTNpNFhJbEMxQjdSZjlJVWJUQkpNTUQwbVh1Sjc1dks4YWhjWnBHTnZoSVh3?=
+ =?utf-8?B?OUc2SEJCSjBNcC84ZCsxQ1JxRUt1c3lXSzRtNzl5N2NkRHl5Ynd4MmMzc3lo?=
+ =?utf-8?B?bTdETVI0bk9DOW42YXZnWWRVcFN4UVR4L1llVjg5OG5WaG9GSE1TZG5iNWl1?=
+ =?utf-8?B?STZwOVV1MWhZdGFmRWJ6Q1liUEV4U3JtVmN0bmZuZVk0Tnk2bW5NV3liUlND?=
+ =?utf-8?B?blg3VjFJU1dYb054SWpwTUR4U04wNHpYOWR6eCt3T2NESFBIcTdCVXBLbGFL?=
+ =?utf-8?B?QnBlWGxpMjZucWpQSGJ3emh4YzBIZHBTd0pQSHRFZkpSdHAwbVEwcVdzd2d6?=
+ =?utf-8?B?bjBaRkljREZWMWRjdlNaaG8zY1NSekFlckVSQ0NvV29HQTJ0OUVJaFlTMGJz?=
+ =?utf-8?B?WjBNRUhqUTZuOGxLUSs1QUlMdkJQa1pJK3ErR0llQWNLMkJZMGZ2ZEFNUWZu?=
+ =?utf-8?B?SjJyRjhiaWpRaExLanlkV3JTeUFRUTNwNFM2MU1tZnBCOG5zWVBnQ1JidDJm?=
+ =?utf-8?B?NktXODliUXpEeHFHQ2dnOXpvVVhuSERrVHBhZ3ZCTEFFUSt1dnRMRGJMUWk5?=
+ =?utf-8?B?cnBUL0hva0xqcTVQRXN6YVRSSU1jZEtEdHh3MWlxV0VjZnNha0NDSmQrNC8z?=
+ =?utf-8?B?Q0U1MlFNZTdISWJpaUp6ZHdpVmNoLzFrRlZVQjZoZkpidnFFR3VrYUtUcC8x?=
+ =?utf-8?B?VkIzS24yRnhmODVkNGc2aldCQ0tVaUxhOWZ6UmkzczFFcDFqSFNCVXVKZkRW?=
+ =?utf-8?B?dEpiVkhJTkNDdEZzOEU5TXpJM1dWZHcvZHpXcWNHc2NXbEo2djZzeDRDNHEr?=
+ =?utf-8?B?U0dHVVVTQzE4NlZzYTZSS21EbmxJM3FuSG1BVkhjVERSTEVPOGxLYWVhZTYz?=
+ =?utf-8?B?VEVSWG8vSHZMNzg1T0FqaEtPakFrZkU4QzM4MmszMHVaYmFUTnErQmhrckVr?=
+ =?utf-8?B?RFIwSUUzODF0SGxxTmdEZjk5WnNqdUtBTVVuMEFMbjhieFpyMVlKbDNpOEF5?=
+ =?utf-8?Q?B1G82qWTcCGlF27tNIFjFFBOcd0vs=3D?=
+MIME-Version: 1.0
+
+<!DOCTYPE html><!--e6112d8f-8ab2-4068-b0ee-b0a003630285_v163--><html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><s=
+tyle type=3D"text/css">
+
+
+
+@media only screen and (max-width: 620px) {
+
+body .device-width {
+
+	width: 450px !important
+
+}
+
+body .threeColumns {
+
+	width: 140px !important
+
+}
+
+body .threeColumnsTd {
+
+	padding: 10px 4px !important
+
+}
+
+body .fourColumns {
+
+	width: 225px !important
+
+}
+
+body .fourColumnsLast {
+
+	width: 225px !important
+
+}
+
+body .fourColumnsTd {
+
+	padding: 10px 0px !important
+
+}
+
+body .fourColumnsPad {
+
+	padding: 0 0 0 0 !important
+
+}
+
+body .secondary-product-image {
+
+	width: 200px !important;
+
+	height: 200px !important
+
+}
+
+body .center {
+
+	text-align: center !important
+
+}
+
+body .twoColumnForty {
+
+	width: 200px !important
+	height: 200px !important
+
+}
+
+body .twoColumnForty img {
+
+	width: 200px !important;
+
+	height: 200px !important
+
+}
+
+body .twoColumnSixty {
+
+	width: 228px !important
+
+}
+
+body .secondary-subhead-right {
+
+	display: none !important
+
+}
+
+body .secondary-subhead-left {
+
+	width: 450px !important
+
+}
+
+}
+
+@media only screen and (max-width: 479px) {
+
+body .navigation {
+
+	display: none !important
+
+}
+
+body .device-width {
+
+	width: 300px !important;
+
+	padding: 0
+
+}
+
+body .narrow-list {
+    width: 260px !important;
+    padding: 0;
+}
+
+body .threeColumns {
+
+	width: 150px !important
+
+}
+
+body .fourColumns {
+
+	width: 150px !important
+
+}
+body .fourColumnsLast {
+
+	width: 150px !important
+
+}
+body .fourColumnsTd {
+
+	padding: 10px 0px !important
+
+}
+
+body .fourColumnsPad {
+
+	padding: 0 0 0 0 !important
+
+}
+
+body .secondary-product-image {
+
+	width: 240px !important;
+
+	height: 240px !important
+
+}
+
+body .single-product-table {
+
+	float: none !important;
+	margin-bottom: 10px !important;
+	margin-right: auto !important;
+	margin-left: auto !important;
+
+}
+
+body .single-product-pad {
+
+	padding: 0 0 0 0 !important;
+
+}
+
+body .single-product-image {
+	align:center;
+	width: 200px !important;
+	height: 200px !important
+
+}
+
+body .mobile-full-width {
+
+	width: 300px !important
+
+}
+
+body .twoColumnForty {
+	align:center; !important
+	width: 200px !important
+
+}
+
+body .twoColumnForty img {
+
+}
+
+body .twoColumnSixty {
+	padding-left: 0px !important;
+	width: 300px !important
+
+}
+
+body .adviceColumn {
+	width: 210px !important
+
+}
+
+body .secondary-subhead-left {
+
+	width: 300px !important
+
+}
+
+body .ThreeColumnItemTable{
+
+        padding: 0px 0px 0px 74px !important
+
+}
+body .FourColumnFloater
+{
+	float: right !important;
+}
+
+*[class=3DcolSplit300] {
+    width: 300px !important;
+    display: block !important;
+    width: 320px !important;
+    height: auto !important;
+    padding: 0 !important;
+    float: left !important;
+    text-align: center;
+}
+
+*[class=3DnoMobile] {
+ display: none !important;
+}
+*[class=3DturnOnMobile300] {
+ display: block !important;
+ width: 300px !important;
+ height: auto !important;
+ padding: 0;
+ max-height: inherit !important;
+ overflow: visible !important;
+}
+*[class=3DResize320] {
+ width: 320px !important;
+ height: auto !important;
+ padding: 0 !important;
+}
+*[class=3DResize300] {
+ width: 300px !important;
+}
+*[class=3DResize298] {
+ width: 298px !important;
+}
+*[class=3DResize50] {
+ width: 50px !important;
+}
+*[class=3DResize40] {
+ width: 40px !important;
+}
+*[class=3Dfont-size-to-24] {
+ font-size: 24px !important;
+ line-height: 28px !important;
+}
+*[class=3Dfont-size-to-13] {
+ font-size: 13px !important;
+ line-height:19px !important;
+}
+
+body .desktop-img {
+
+      display: none !important;
+      max-height: 0px !important;
+      overflow: hidden !important;
+
+}
+
+body .mobile-img {
+
+      display: block !important;
+      max-height: none !important;
+      overflow: visible !important;
+
+}
+
+body .hide-in-mobile {
+
+      display: none !important;
+      max-height: 0px !important;
+      max-width: 0px !important;
+      overflow: hidden !important;
+
+}
+
+body .show-in-mobile {
+
+      display: block !important;
+      max-height: none !important;
+      max-width: none !important;
+      overflow: visible !important;
+
+}
+
+
+body .no-border {
+   =20
+      border: none !important;
+   =20
+}
+
+}
+
+
+body .mobile-full-width {
+
+	min-width: 103px;
+    max-width: 300px;
+	height: 38px;
+}
+body .mobile-full-width a {
+
+	display: block;
+	padding: 10px 0;
+}
+body .mobile-full-width td{
+
+	padding: 0px !important
+}
+body .cta-link {
+	padding: 10px 17px !important;
+	display: block !important;
+}
+body .cta-cell {
+	padding: 0px !important;
+
+}
+
+td.wrapText{
+  white-space: pre-wrap; /* css-3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+, 6, 7, 8 compability-mod=
+e */
+  -ms-word-break: break-all; /* Internet Explorer 8 */
+}
+
+body { width: 100% !important; -webkit-text-size-adjust: 100% !important; -=
+ms-text-size-adjust: 100% !important; -webkit-font-smoothing: antialiased !=
+important; margin: 0 !important; padding: 0 0 100px !important; font-family=
+: Helvetica, Arial, sans-serif !important; background-color:#f9f9f9}
+
+ReadMsgBody { width: 100% !important; background-color: #ffffff !important;=
+ }
+
+ExternalClass { width: 100% !important; }
+
+ExternalClass { line-height: 100% !important; }
+
+img { display: block !important; outline: none !important; text-decoration:=
+ none !important; -ms-interpolation-mode: bicubic !important; }
+
+td{word-wrap: break-word;}
+
+blueLinks a {
+    color: #0654ba !important;
+    text-decoration: none !important;
+}
+
+whiteLinks a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+}
+
+spacedList li{
+    margin-left: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+wrapper {
+    width: 100%;
+    table-layout: fixed;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+webkit {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+unselect-text {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: moz-none;
+      -ms-user-select: none;
+       -o-user-select: none;
+          user-select: none;
+}
+
+select-text {
+  -webkit-touch-callout: default;
+  -webkit-user-select: text;
+   -khtml-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+       -o-user-select: text;
+          user-select: text;
+}
+
+</style>
+
+
+<!--[if gte mso 9]>
+
+	<style>td.product-details-block{word-break:break-all}.threeColumns{width:1=
+40px !important}.threeColumnsTd{padding:10px 20px !important}.fourColumns{w=
+idth:158px !important}.fourColumnsPad{padding: 0 18px 0 0 !important}.fourC=
+olumnsTd{padding:10px 0px !important}.twoColumnSixty{width:360px !important=
+}table{mso-table-lspace:0pt; mso-table-rspace:0pt;}</style>
+
+	<!--> <style type=3D"text/css">
+
+@media only screen and (max-width: 620px) {
+	body .dealmaker-600desktop-100mobile {
+		width: 600px !important;
+	}
+}
+
+@media screen and (max-width:480px) {
+
+body .mobile-dealmaker-headline {
+    font-size:  20px !important;
+	line-height: 23px !important;
+}
+body .mobile-dealmaker-storyline {
+	font-size:  13px !important;
+	line-height: 12px !important;
+}
+body .mobile-dealmaker-product-title {
+	font-size:  16px !important;
+	line-height: 15px !important;
+}
+
+body .mobile-dealmaker-product-price {
+	font-size:  20px !important;
+	line-height: 25px !important;
+}
+
+body .div-mobile-dealmaker-product-image {
+    align:center;
+}
+
+body .mobile-dealmaker-product-image {
+    width: 235px !important;
+	height:  235px !important;
+	border: none !important;
+}
+
+body .turnOnMobile-horizontalLine {
+	display: block !important;
+	width: 100% !important;
+	height: auto !important;
+	padding: 0;
+	max-height: inherit !important;
+	overflow: visible !important;
+}
+
+body .turnOnMobile100 {
+	display: block !important;
+	width: 100% !important;
+	height: auto !important;
+	padding: 0;
+	max-height: inherit !important;
+	overflow: visible !important;
+}
+
+body .mobile-dealmaker-CTA1 {
+    width: 303px !important;
+}
+
+body .mobile-dealmaker-product-background {
+    background-color:#ffffff !important;
+}
+
+body .dealmaker-600desktop-100mobile {
+   width: 100% !important;
+}
+
+body .mobile-dealmaker-300px {
+	width: 300px !important;
+	float: inherit !important;
+}
+
+body .mobile-dealmaker-grey-background {
+    background-color:#f9f9f9 !important;
+}
+
+body .mobile-dealmaker-100 {
+	width: 100% !important;
+}
+
+body .mobile-dealmaker-fontsize12 {
+	font-size: 12px !important;
+}
+body .mobile-dealmaker-border-none {
+	border: none !important;
+}
+
+body .mobile-dealmaker-top-and-bottom-border-only {
+	border-top: 1px solid #dddddd !important;
+	border-bottom: 1px solid #dddddd !important;
+	border-left: none !important;
+	border-right: none !important;
+}
+mobile-remove-min-width {
+	min-width: 0 !important;
+}
+*[class=3DcolSplit300] {
+    min-width: 172px !important;
+	max-width:200px !important;
+    display: block !important;
+   =20
+    height: auto !important;
+    padding: 10px 10px 16.5px 25px !important;
+    float: left !important;
+    text-align: center;
+}
+
+*[class=3DcolSplitText] {
+    width:280px !important;
+    display: block !important;
+    font-size:18px;
+    height: 30px !important;
+    padding-top: 20px!important;
+	padding-left: 25px!important;
+    float: left !important;
+    text-align: left;
+}
+*[class=3DResize300] {
+width: 300px !important;
+}
+*[class=3DResizeImage] {
+min-width: 300px !important;
+max-width:305px !important;
+padding: 0 !important;
+}
+}
+
+@font-face {
+    font-family: "Market Sans";
+    src: url('https://ir.ebaystatic.com/cr/v/c1/market-sans/v1.0/MarketSans=
+-Regular-WebS.eot');
+    src: url('https://ir.ebaystatic.com/cr/v/c1/market-sans/v1.0/MarketSans=
+-Regular-WebS.eot?#iefix') format('embedded-opentype'), url('https://ir.eba=
+ystatic.com/cr/v/c1/market-sans/v1.0/MarketSans-Regular-WebS.woff2') format=
+('woff2'), url('https://ir.ebaystatic.com/cr/v/c1/market-sans/v1.0/MarketSa=
+ns-Regular-WebS.woff') format('woff'), url('https://ir.ebaystatic.com/cr/v/=
+c1/market-sans/v1.0/MarketSans-Regular-WebS.ttf') format('truetype'), url('=
+https://ir.ebaystatic.com/cr/v/c1/market-sans/v1.0/MarketSans-Regular-WebSs=
+vg#MarketSans-Regular-WebS') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Market Sans";
+    src: url('https://ir.ebaystatic.com/cr/v/c1/market-sans/v1.0/MarketSans=
+-SemiBold-WebS.eot');
+    src: url('https://ir.ebaystatic.com/cr/v/c1/market-sans/v1.0/MarketSans=
+-SemiBold-WebS.eot?#iefix') format('embedded-opentype'), url('https://ir.eb=
+aystatic.com/cr/v/c1/market-sans/v1.0/MarketSans-SemiBold-WebS.woff2') form=
+at('woff2'), url('https://ir.ebaystatic.com/cr/v/c1/market-sans/v1.0/Market=
+Sans-SemiBold-WebS.woff') format('woff'), url('https://ir.ebaystatic.com/cr=
+/v/c1/market-sans/v1.0/MarketSans-SemiBold-WebS.ttf') format('truetype'), u=
+rl('https://ir.ebaystatic.com/cr/v/c1/market-sans/v1.0/MarketSans-SemiBold-=
+WebS.svg#MarketSans-SemiBold-WebS') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+</style>
+  </head>
+  <body yahoo=3D"fix"> <center class=3D"wrapper" style=3D"background-color:=
+ #f9f9f9">
+        <div class=3D"webkit" style=3D"background-color: #f9f9f9"> <table i=
+d=3D"preheader" role=3D"presentation" width=3D"100%" border=3D"0" cellpaddi=
+ng=3D"0" cellspacing=3D"0" align=3D"center" style=3D"border-collapse: colla=
+pse !important; border-spacing: 0 !important; border: none; background-colo=
+r:#f9f9f9">
+	<tr>
+		<td width=3D"100%" valign=3D"top" style=3D"border-collapse: collapse !imp=
+ortant; border-spacing: 0 !important; border: none;">
+			<table role=3D"presentation" width=3D"600" class=3D"device-width" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"center" style=3D"border=
+-collapse: collapse !important; border-spacing: 0 !important; border: none;=
+">
+				<tr>
+					<td height=3D"1" aria-hidden=3D"true" valign=3D"top" style=3D"border-c=
+ollapse: collapse !important; border-spacing: 0 !important; padding: 0; bor=
+der: none; font-size: 1px; line-height: 1px; color: #f9f9f9">
+
+
+
+
+
+
+
+
+   =20
+
+
+
+
+
+
+   =20
+
+
+               =20
+
+               =20
+
+
+
+
+               =20
+
+               =20
+
+
+
+
+        phishing@pot                                       =E2=AD=90=EF=B8=
+=8F=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=
+=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=
+=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=
+=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=90=
+=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=F0=9F=92=A1=F0=9F=92=A1=F0=9F=
+=92=A1=F0=9F=92=A1=E2=AC=87=EF=B8=8F=E2=AC=87=EF=B8=8F=E2=AC=87=EF=B8=8F=E2=
+=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=90=EF=B8=8F=E2=AD=
+=90=EF=B8=8F  =20
+
+
+                    </td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table> <table id=3D"ebaylogo" width=3D"100%" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" align=3D"center" style=3D"border-collapse: collapse !i=
+mportant; border-spacing: 0 !important; border: none; background-color:#f9f=
+9f9">
+	<tr>
+		<td width=3D"100%" valign=3D"top" style=3D"border-collapse: collapse !imp=
+ortant; border-spacing: 0 !important; border: none;">
+			<table width=3D"600" class=3D"device-width header-logo" border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0" align=3D"center" style=3D"border-collapse:=
+ collapse !important; border-spacing: 0 !important; border: none;">
+				<tr>
+					<td valign=3D"top" style=3D"border-collapse: collapse !important; bord=
+er-spacing: 0 !important; padding: 15px 0 20px; border: none;"><a href=3D"h=
+ttps://urly.fi/3Qih?5kEoqM1sKYfKmhIt4DdyahTRU6ZS1FPexxzo9GGwyD2WOY4VsrmhESs=
+tz5td9zY9XRjwFY1hBPcHQPvANAEQZs/jCJ5Dy0t3CckKypkPunO0bH2a9hj8fNyrOEx0iXLcGU=
+hBATI4caMPxnQuoTKZLYFpMvC6THaSjc4Q4rqSNoV73ql9K4ipK8g
+" style=3D"text-decoration: none; color: #0654ba; display: block;"><img src=
+=3D"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Techniker_Kra=
+nkenkasse_2016_logo.svg/1200px-Techniker_Krankenkasse_2016_logo.svg.png" wi=
+dth=3D"133" border=3D"0" alt=3D"Techniker" style=3D"display: inline block; =
+outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; bord=
+er: none;"></a><img src=3D"" alt=3D"" aria-hidden=3D"true" role=3D"presenta=
+tion" style=3D"border:0; height:1;"></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>=20
+
+
+
+
+
+
+	   =20
+	   =20
+=09
+   =20
+   =20
+       =20
+   =20
+=09
+	   =20
+=09
+	   =20
+    =09
+    =09
+
+=09
+
+       =20
+
+
+       =20
+       =20
+       =20
+                   =20
+
+<table role=3D"presentation" id=3D"item_0" width=3D"100%" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" align=3D"center" style=3D"border-collapse: =
+collapse !important; border-spacing: 0 !important; border: none; background=
+-color:#f9f9f9">
+	<tr>
+		<td width=3D"100%" valign=3D"top" style=3D"border-collapse: collapse !imp=
+ortant; border-spacing: 0 !important; border: none; margin: 0; padding: 0;"=
+>
+			<table role=3D"presentation" width=3D"600" cellspacing=3D"0" cellpadding=
+=3D"0" border=3D"0" bgcolor=3D"#f9f9f9" align=3D"center" style=3D"border-co=
+llapse: collapse !important; border-spacing: 0 !important; border: none;" c=
+lass=3D"device-width">
+				<tr>
+					<td id=3D"header" valign=3D"top" style=3D"border-collapse: collapse !i=
+mportant; border-spacing: 0 !important; padding: 4px 0 5px;" class=3D"secon=
+dary-headline">
+						<h2 align=3D"left" class=3D"mobile-dealmaker-headline" style=3D"font-=
+family: Helvetica, Arial, sans-serif; font-weight: 200; line-height: 29px; =
+color: #333333; text-align: left; font-size: 24px; margin: 0 0 4px;">Gl=C3=
+=BCckwunsch <span style=3D"color: #E22720; font-weight: 200;">phishing@pot</=
+span>!</h2>
+						<h3 align=3D"left" class=3D"mobile-dealmaker-storyline" style=3D"font=
+-family: Helvetica, Arial, sans-serif; font-weight: 200; line-height: 22px;=
+ color: #333333; text-align: left; font-size: 18px; margin: 0 0 1px;">Sie k=
+=C3=B6nnen einen exklusiven Preis gewinnen<br> <span style=3D"color: #E2272=
+0; font-weight: 200;">Medicare-Kit</span> </h3>
+					</td>
+				</tr>
+			</table>
+			<table role=3D"presentation" id=3D"horizontalLine" class=3D"turnOnMobile=
+-horizontalLine" width=3D"0" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" align=3D"center" style=3D"font-size: 0; overflow:hidden; display: none; =
+border-collapse: collapse !important; border-spacing: 0 !important; border-=
+top: solid 1px #dddddd; background-color: #ffffff">
+				<tr>
+					<td style=3D"border-collapse: collapse !important; border-spacing: 0 !=
+important; border: none; font-size:0px; line-height:0px;" height=3D"20">&nb=
+sp;
+					</td>
+				</tr>
+			</table>
+			<table role=3D"presentation" width=3D"100%" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" align=3D"center" style=3D"border-collapse: collapse !i=
+mportant; border-spacing: 0 !important; border: none; background-color:#f9f=
+9f9; margin: 0; padding: 0">
+				<tr>
+					<td width=3D"100%" valign=3D"top" style=3D"border-collapse: collapse !=
+important; border-spacing: 0 !important; border: none; padding: 0; margin: =
+0;">
+						<table role=3D"presentation" width=3D"600" class=3D"dealmaker-600desk=
+top-100mobile mobile-dealmaker-product-background" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" align=3D"center" style=3D"border-collapse: collaps=
+e !important; border-spacing: 0 !important; border: none;">
+							<tr>
+								<td valign=3D"top" style=3D"border-collapse: collapse !important; b=
+order-spacing: 0 !important; padding: 0; border: none; margin: 0;">
+									<!--[if gte mso 9]>
+									<table role=3D"presentation" width=3D"276" class=3D"mobile-dealmak=
+er-300px" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"left" s=
+tyle=3D"float:left; border-collapse: collapse !important; border-spacing: 0=
+ !important; border: none;">
+										<tr>
+											<td valign=3D"top" style=3D"border-collapse: collapse !important=
+; border-spacing: 0 !important; padding: 0 0 0px; border: none;">
+												<!-->
+												<table role=3D"presentation" width=3D"276" class=3D"mobile-deal=
+maker-300px" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"cent=
+er" style=3D"float:left; border-collapse: collapse !important; border-spaci=
+ng: 0 !important; border: none;">
+													<tr>
+														<td valign=3D"top" style=3D"border-collapse: collapse !import=
+ant; border-spacing: 0 !important; padding: 0 0 20px; border: none;">
+															<table role=3D"presentation" class=3D"single-product-table" =
+width=3D"276" align=3D"left" cellspacing=3D"0" cellpadding=3D"0" style=3D"f=
+loat: left; border-collapse: collapse !important; border-spacing: 0 !import=
+ant; border: none; margin-bottom: 0px !important;">
+																<tr>
+																	<td class=3D"single-product-pad no-border" valign=3D"middl=
+e" width=3D"275" height=3D"275" align=3D"center" style=3D"border-collapse: =
+collapse !important; border-spacing: 0 !important; border: 1px solid #ddddd=
+d; background-color: #ffffff; padding: 0; margin: 0;">
+																		<a aria-hidden=3D"true" tabindex=3D"-1" href=3D"https://u=
+rly.fi/3Qih?mAjopa3qftoxgNfJqlFFLIE382COx5pSuRd0OPyd0s5Uai1aBaX6lGdImPJGsn5=
+yCxtQLTtqajNh7lr4U5OIl3/k08JWoB4C27VtXaTpOdfdWMr2dXnn3X6zOBfrvc32qGgizYjLKy=
+2ZUs3hUQs8Lfc8C8nEjtGg40Bs47Zfpe45IccTl48FUe3
+" style=3D"text-decoration: none; color: #0654ba; display: block;">
+																			<div class=3D"div-mobile-dealmaker-product-image" style=
+=3D"width:275px;">
+																				<img src=3D"https://i.imgur.com/NmXRrM8.png" alt=3D"Med=
+icare Kit   " border=3D"0" style=3D"max-width:100%; display: block; outline=
+: none; text-decoration: none; -ms-interpolation-mode: bicubic; margin: 0; =
+border: none;"><!-- </img> -->
+																			</div>
+																		</a>
+																	</td>
+																	<td class=3D"single-product-pad" style=3D"padding: 0 20px =
+0 0; border-collapse: collapse !important; border-spacing: 0 !important; bo=
+rder: none;">&nbsp;</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+												<!--[if gte mso 9]>
+											</td>
+										</tr>
+									</table>
+									<!-->
+									<table role=3D"presentation" id=3D"horizontalLine" class=3D"turnOn=
+Mobile-horizontalLine" width=3D"0" border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" align=3D"center" style=3D"font-size: 0; overflow:hidden; display: =
+none; border-collapse: collapse !important; border-spacing: 0 !important; b=
+order-top: solid 1px #dddddd; background-color: #f9f9f9">
+										<tr>
+											<td style=3D"border-collapse: collapse !important; border-spacin=
+g: 0 !important; border: none; font-size:0px; line-height:0px;padding-botto=
+m: 20px;" height=3D"1">&nbsp;
+											</td>
+										</tr>
+									</table>
+									<table role=3D"presentation" width=3D"295" class=3D"mobile-dealmak=
+er-100 mobile-dealmaker-grey-background" height=3D"0" align=3D"left" border=
+=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"table-layout: fixed; bo=
+rder-collapse: collapse !important; border-spacing: 0 !important; border: n=
+one;">
+										<tr>
+											<td style=3D"border-collapse: collapse !important; border-spacin=
+g: 0 !important; border: none; padding: 0; margin: 0;">
+												<table role=3D"presentation" width=3D"295" height=3D"0" align=
+=3D"center" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"table=
+-layout: fixed; border-collapse: collapse !important; border-spacing: 0 !im=
+portant; border: none;">
+													<tr>
+														<td width=3D"295" style=3D"border-collapse: collapse !importa=
+nt; border-spacing: 0 !important; border: none; padding: 0; margin: 0;">
+															<table role=3D"presentation" width=3D"295" class=3D"device-w=
+idth" height=3D"0" align=3D"left" border=3D"0" cellspacing=3D"0" cellpaddin=
+g=3D"0" style=3D"table-layout: fixed; border-collapse: collapse !important;=
+ border-spacing: 0 !important; border: none;">
+																<tr>
+																	<td id=3D"title" width=3D"290" style=3D"word-wrap: break-w=
+ord; border-collapse: collapse !important; border-spacing: 0 !important; bo=
+rder: none; padding: 0;">
+																		<p class=3D"product-name" style=3D"font-family: Helvetica=
+, Arial, sans-serif; font-weight: 200; line-height: 24px; color: #0654BA; t=
+ext-align: left; font-size: 18px; margin: 0;" align=3D"left"><a href=3D"htt=
+ps://urly.fi/3Qih?rYFRQhKqDhOnXIDdWFCtrvtrEfqvil6JYx24A71caDcp6h2yW7IkkVfp7=
+WbhTMCwELDdJvXKOdKCUxaPtAVrMM/aYRD2CkxpcDWOVYS85KtJkc80pr1A00Xqg8SnBtvID1MR=
+4m8m5X3zzYWWoPDTJdOTdCYtkBGvZmZnznwEWCXxSyk6FxGXQSG
+" style=3D"text-decoration: none; color: #0654ba;">Sie wurden ausgew=C3=A4h=
+lt, um ein brandneues Produkt zu erhalten</a></p>
+																	</td>
+																</tr>
+																<tr>
+																	<td id=3D"price" class=3D"product-price" style=3D"border-c=
+ollapse: collapse !important; border-spacing: 0 !important; padding: 16px 0=
+ 16px 0; border: none;" align=3D"left">
+																		<span style=3D"text-decoration: none; font-weight: 500; f=
+ont-size: 24px; color: #333333;">Medicare-Kit</span>
+																	</td>
+																</tr>
+															=09
+															   =20
+																<tr>
+																	<td style=3D"border-collapse: collapse !important; border-=
+spacing: 0 !important; border: none; padding: 10px 0;">
+																		<table id=3D"ctaView" role=3D"presentation" align=3D"left=
+" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" class=3D"mobile-full-wid=
+th" style=3D"max-width: 320px; border-collapse: collapse !important; border=
+-spacing: 0 !important; border: none;">
+																			<tr>
+																				<td width=3D"290" valign=3D"top" align=3D"center" bgcol=
+or=3D"#0654BA" style=3D"border-collapse: collapse !important; border-spacin=
+g: 0 !important; font-size: 16px; line-height: normal;background-color: 065=
+4BA; padding: 10px 17px; ">
+																					<a href=3D"https://urly.fi/3Qih?fejxvwgE3Nh7RSkfUaMVTY=
+LgmCYX1jSTbNmLrfR6P2IKX6TXtXIgNR5Z2RouJfIhmc8EsEfZUGupcR6tkxtnvv/psafe0T8I9=
+yexOPFX7Pj6pdtkaAikuhcK0fLtjsh8oeCJHs076435I30siWTrlqlwSGoRJMRmFzWYsTnFSlWx=
+ikDoqjoEqWn" style=3D"text-decoration: none; color: #ffffff; font-size: 16p=
+x; line-height: 18px; font-weight: 200; font-family: Helvetica, Arial, sans=
+-serif; padding: 10px 17px;">Klicken Sie hier, um einen Anspruch geltend zu=
+ machen
+</a>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+   =20
+ <table id=3D"area8Container" width=3D"100%" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" align=3D"center" style=3D"border-collapse: collapse !imp=
+ortant; border-spacing: 0 !important; border: none; border-top: solid 1px #=
+dddddd; background-color: #ffffff"><tr><td style=3D"font-size:0px; line-hei=
+ght:0px" height=3D"1" aria-hidden=3D"true">&nbsp;</td></tr></table>=20
+    <table role=3D"presentation" id=3D"merchstrip" class=3D"whiteSection dy=
+namic-component" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" align=3D"center" style=3D"border-collapse: collapse !important; bord=
+er-spacing: 0 !important; border: none; background-color: #ffffff">
+      <tr>
+        <td width=3D"100%" valign=3D"top" style=3D"border-collapse: collaps=
+e !important; border-spacing: 0 !important; border: none;">
+           =20
+           =20
+       =20
+         =20
+          <table role=3D"presentation" width=3D"600" class=3D"device-width"=
+ border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"center" style=3D=
+"border-collapse: collapse !important; border-spacing: 0 !important; border=
+: none;">
+         =20
+            <tr>
+                <td>
+                    <img src=3D"https://rover.ebay.es/roverimp/0/11070/9?tr=
+knvp=3Dplmt%3DOgYAAB%252BLCAAAAAAAAACtlF1v2jAUhv%252FLuV2k2YnjfEi7QAO2Xkxbi=
+%252BikVRUyjlMMJkkTg%252Fqh%252FPcdh5YyWjJtam6OeTk%252B58nrEz9CdQMppSQiHlQa=
+0qtH0BkqhMRR4oFEySc0InFASUJjn3lQowY09%252FMsJzzOfM7ieRL7ggVCqnkSiBAl8EBZLHe=
+NUezKPlXHzYxtt%252BWmEZi0hrTYGONBUz6vKkg5DwgC5QjigW4gfQTimiInhbbForqq9%252B=
+XCpX%252BrdQhOLw%252B7PAhq%252FXDXBYqyUHDUJ0zw8cB0fd7u5gF1a4w%252BxsH5YDzAZ=
+%252FR5LB5YtLC%252FLunk58p8uFsaMT37hGmBS485rli3sW29A546bHp4WMTceyOP38%252Fj=
+vwvPdlvFzPbwRHt%252Fgn4e9j480Wq9WjzxVNUxTbCnYf004f%252FTeLgZC5DdlJW6qF7GjCx=
+JkIflyakNEn56ap%252FOLThG%252B2onhmQmGm3up%252Fk4m%252FBvkvPybTSOcTgaTn%252=
+BMXlyj1fz%252BjjNy2rWYOdf6qF5BDU08%252BkLEx3g8v5Uivp1MBJ1Pe%252F3a0Z1djg%25=
+2FRZERuloueAaM8%252BRuc%252F%252Brb%252Bxe6Fyg8TtFRYXFCXI7YOj9VLjbGfq9vRKGl=
+Q9Xd17e%252BgxQPs5TdtImm%252ByXKDrTJHGitpDBmoh9Uykl3SRBnw4EckuDZnEaJWi7ON6q=
+%252BR%252Bk4ze1OULSlFeZi%252F4%252BrycI%252FkzlxXhyrIXWdOLRIjGZewWydq5kUtj=
+N8U0s1q0Wx6kCMUfVZhkvTaBe0XecYFqUtVNMMhXX3cq6NVfWFEk1ZwLUzT9ruFpD47qS9bn8Do=
+35uTToGAAA%253D%26po%3D%5B%28pg%3A11070+pid%3A100879+euid%3A6779d4b2ee2c48b=
+49fe363f62baae7b0+pladvids%3A%5B0%5D%29%5D&amp;imp=3D2053444" alt=3D"" aria=
+-hidden=3D"true" style=3D"border:0; height:1;">
+                </td>
+            </tr>
+               =20
+            =20
+              <tr>
+                  <td id=3D"merchstrip_header" valign=3D"top" class=3D"seco=
+ndary-headline" style=3D"border-collapse: collapse !important; border-spaci=
+ng: 0 !important; border-bottom-color: #dddddd; border-bottom-width: 1px; p=
+adding: 20px 0 5px; border-style: none none solid;">
+                 =20
+                      <h2 style=3D"font-family: Helvetica, Arial, sans-seri=
+f; font-weight: normal; line-height: 28px; color: #333333; text-align: left=
+; font-size: 24px; margin: 0 0 14px;" align=3D"left"></h2>
+                  </td>
+              </tr>
+             =20
+           =20
+             =20
+              <tr>
+                =20
+                                  <tr>
+                                    <td id=3D"buyItNow" class=3D"product-bi=
+ds" style=3D"border-collapse: collapse !important; border-spacing: 0 !impor=
+tant; font-family: Helvetica, Arial, sans-serif; text-align: left; font-siz=
+e: 11px ; color: #666666; border: none;" align=3D"left"><div></div></td>
+                                  </tr>
+         =20
+                                  <tr>
+                                    <td id=3D"freeShipping" class=3D"produc=
+t-shipping" style=3D"border-collapse: collapse !important; border-spacing: =
+0 !important; font-family: Helvetica, Arial, sans-serif; text-align: left; =
+font-size: 11px ; padding-top: 2px; border: none;" align=3D"left"><div><div=
+></div></div></td>
+                                  </tr>
+                             =20
+                             =20
+                             =20
+                                  <tr>
+                                    <td id=3D"hotness" class=3D"product-shi=
+pping" style=3D"border-collapse: collapse !important; border-spacing: 0 !im=
+portant; font-family: Helvetica, Arial, sans-serif; text-align: left; font-=
+size: 11px ; padding-top: 2px; border: none;" align=3D"left"><div>
+               =20
+            <span style=3D"color: #e53238; font-weight: bold;">
+                   =20
+                   =20
+            </span>
+                                       =20
+                           =20
+                </div></td>
+                                  </tr>
+                             =20
+                             =20
+                             =20
+         =20
+                            </table></td>
+         =20
+                        </tr>
+         =20
+                      </table>
+                     =20
+                </div>
+             =20
+                </td>
+              </tr>=20
+             =20
+          </table>
+          =20
+        </td>
+      </tr>
+    </table>
+
+=20
+ <table id=3D"emailprefs" class=3D"whiteSection" width=3D"100%" border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" align=3D"center" style=3D"border-coll=
+apse: collapse !important; border-spacing: 0 !important; border: none; back=
+ground-color: #ffffff">
+<tr>
+<td width=3D"100%" valign=3D"top" style=3D"border-collapse: collapse !impor=
+tant; border-spacing: 0 !important; border: none;">
+<table width=3D"600" class=3D"device-width header-logo" border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0" align=3D"center" style=3D"border-collapse: co=
+llapse !important; border-spacing: 0 !important; border: none;">
+<tr>
+<td valign=3D"top" class=3D"email-preferences-block" style=3D"border-collap=
+se: collapse !important; border-spacing: 0 !important; border-bottom-width:=
+ 1px; border-bottom-color: #dddddd; padding: 20px 0 10px; border-style: non=
+e none solid;">
+<p style=3D"font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
+ line-height: normal; color: #707070; text-align: left; font-size: 11px; ma=
+rgin: 0 0 10px;" align=3D"left"><strong> </strong><br>
+ <a href=3D"https://rover.ebay.com/rover/0/e11070.m2901.l1141/7?loc=3Dhttps=
+%3A%2F%2Fsvcs.ebay.com%2Fdelstats%2Femail%2Flocation%3Fch%3D7%26loc%3Dhttps=
+%253A%252F%252Frover.ebay.com%252Frover%252F0%252Fe11070.m2901.l1141%252F7%=
+253Feuid%L8y%955735788844868%CugA95MlQK%253DSegmentCode%2526crd%253DRunDate=
+Time%2526osub%253D-1%257E1%2526ch%iGNLyjGBzH%2526loc%253Dhttps%25253A%25252=
+F%25252Fmy.ebay.es%25252Fws%25252FeBayISAPI.dll%25253FMyEbayBeta%252526Curr=
+entPage%25253DMyeBayNextNotificationPreferences%2526sojTags%253Dbu%253Dbu%2=
+52Cch%253Dch%Eop6sXcVJ%YoxonNKiW9x%252Ccrd%253Dcrd%252Curl%253Dloc%252Cosub=
+%253Dosub" style=3D"text-decoration: underline; color: #555555;" target=3D"=
+_blank"></a>=20
+</p>
+<p style=3D"font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
+ line-height: normal; color: #707070; text-align: left; font-size: 11px; ma=
+rgin: 0 0 10px;" align=3D"left"> <a href=3D"https://rover.ebay.com/rover/0/=
+e11070.m2901.l1142/7?loc=3Dhttps%3A%2F%2Fsvcs.ebay.com%2Fdelstats%2Femail%2=
+Flocation%3Fch%3D7%26loc%3Dhttps%253A%252F%252Frover.ebay.com%252Frover%252=
+F0%252Fe11070.m2901.l1142%252F7%253Feuid%tB1%542858845766992%8kzaDrTlzq%253=
+DSegmentCode%2526crd%253DRunDateTime%2526osub%253D-1%257E1%2526ch%sNDM8lw4o=
+4%2526loc%253Dhttps%25253A%25252F%25252Fmarketing.ebay.es%25252Funsubscribe=
+%25252Fhome%25253Ftoken%25253DAQAFAAAAgK5FSDDVAfYfVwYyHZlr0gyQaPBiJqXkIt3qv=
+jzuRyFSzlDDsZltie2r4JSgv8AvJb7HTB0Z0gr84HUPVrDUhgmocqycpkdjiTVMLa580-DuW_J8=
+6CafUcSXw1GxFmno86mfS_uexXjkls64kX6tFzwr96-209g_tP6yo4o9fQx7%2526sojTags%25=
+3Dbu%253Dbu%252Cch%253Dch%5VIN9kGqA%A0ReqlBDUVl%252Ccrd%253Dcrd%252Curl%253=
+Dloc%252Cosub%253Dosub" style=3D"text-decoration: underline; color: #555555=
+;" target=3D"_blank"> </a>.</p>
+</td>
+</tr></table>
+</td>
+</tr>
+</table> <table id=3D"footers" class=3D"whiteSection" width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"center" style=3D"border=
+-collapse: collapse !important; border-spacing: 0 !important; border: none;=
+ background-color: #ffffff">
+<tr>
+<td width=3D"100%" valign=3D"top" style=3D"border-collapse: collapse !impor=
+tant; border-spacing: 0 !important; border: none;">
+<table width=3D"600" class=3D"device-width header-logo" border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0" align=3D"center" style=3D"border-collapse: co=
+llapse !important; border-spacing: 0 !important; border: none;">
+<tr>
+<td class=3D"ebay-footer-block" style=3D"border-collapse: collapse !importa=
+nt; border-spacing: 0 !important; padding: 20px 0 60px; border: none;">
+<div id=3D"ReferenceId">
+<p style=3D"font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
+ line-height: normal; color: #707070; text-align: left; font-size: 11px; ma=
+rgin: 0 0 10px;" align=3D"left">
+<strong></strong>
+</p>
+</div>
+<p style=3D"font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
+ line-height: normal; color: #707070; text-align: left; font-size: 11px; ma=
+rgin: 0 0 10px;" align=3D"left">
+ <a style=3D"text-decoration: underline; color: #555555;" href=3D"https://r=
+over.ebay.com/rover/0/e11070.m1852.l6369/7?loc=3Dhttps%3A%2F%2Fsvcs.ebay.co=
+m%2Fdelstats%2Femail%2Flocation%3Fch%3D7%26loc%3Dhttps%253A%252F%252Frovere=
+bay.com%252Frover%252F0%252Fe11070.m1852.l6369%252F7%253Feuid%4r6%{n,15}%XB=
+6vIqyTU5%253D11070%2526crd%253D20201008120609%2526osub%253D-1%257E1%2526ch%=
+IKTHTL1HCt%2526loc%253Dhttps%25253A%25252F%25252Focsnext.ebay.es%25252Focs%=
+25252Fhome%2526sojTags%253Dbu%253Dbu%252Cch%253Dch%qdrjAlXpk%Gg65Gi9rrs7%25=
+2Ccrd%253Dcrd%252Curl%253Dloc%252Cosub%253Dosub" target=3D"_blank"></a>.
+</p>
+<p style=3D"font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
+ line-height: normal; color: #707070; text-align: left; font-size: 11px; ma=
+rgin: 0 0 10px;" align=3D"left">
+<a href=3D"https://rover.ebay.com/rover/0/e11070.m1852.l3167/7?loc=3Dhttps%=
+3A%2F%2Fsvcs.ebay.com%2Fdelstats%2Femail%2Flocation%3Fch%3D7%26loc%3Dhttps%=
+253A%252F%252Frover.ebay.com%252Frover%252F0%252Fe11070.m1852.l3167%252F7%2=
+53Feuid%Uyr%055175461586901%7fahZ7wwux%253D11070%2526crd%253D20201008120609=
+%2526osub%253D-1%257E1%2526ch%T9uOWmMNGZ%2526loc%253Dhttps%25253A%25252F%25=
+252Fpages.ebay.es%25252Fhelp%25252Faccount%25252Fprotecting-account.html%25=
+26sojTags%253Dbu%253Dbu%252Cch%253Dch%54bnKV2PC%gKj5sURa5Yz%252Ccrd%253Dcrd=
+%252Curl%253Dloc%252Cosub%253Dosub" style=3D"text-decoration: underline; co=
+lor: #555555;"></a>.  <a href=3D"https://rover.ebay.com/rover/0/e11070.m185=
+2.l3168/7?loc=3Dhttps%3A%2F%2Fsvcs.ebay.com%2Fdelstats%2Femail%2Flocation%3=
+Fch%3D7%26loc%3Dhttps%253A%252F%252Frover.ebay.com%252Frover%252F0%252Fe110=
+70.m1852.l3168%252F7%253Feuid%Mgo%358052840816270%0VwMJOZR4c%253D11070%2526=
+crd%253D20201008120609%2526osub%253D-1%257E1%2526ch%oWJJo0X8gT%2526loc%253D=
+https%25253A%25252F%25252Fpages.ebay.es%25252Fhelp%25252Fpolicies%25252Fpri=
+vacy-policy.html%2526sojTags%253Dbu%253Dbu%252Cch%253Dch%NPfrfjLbv%fnsM7EOh=
+hcy%252Ccrd%253Dcrd%252Curl%253Dloc%252Cosub%253Dosub" style=3D"text-decora=
+tion: underline; color: #555555;"></a>  <a href=3D"https://rover.ebay.com/r=
+over/0/e11070.m1852.l3165/7?loc=3Dhttps%3A%2F%2Fsvcs.ebay.com%2Fdelstats%2F=
+email%2Flocation%3Fch%3D7%26loc%3Dhttps%253A%252F%252Frover.ebay.com%252Fro=
+ver%252F0%252Fe11070.m1852.l3165%252F7%253Feuid%cEa%981165636069061%kmZn5vy=
+b09%253D11070%2526crd%253D20201008120609%2526osub%253D-1%257E1%2526ch%GAGP9=
+LlK3r%2526loc%253Dhttps%25253A%25252F%25252Fpages.ebay.es%25252Fhelp%25252F=
+policies%25252Fuser-agreement.html%2526sojTags%253Dbu%253Dbu%252Cch%253Dch%=
+LTe78bGY0%PmNoCJ7onTT%252Ccrd%253Dcrd%252Curl%253Dloc%252Cosub%253Dosub" st=
+yle=3D"text-decoration: underline; color: #555555;"></a><span aria-hidden=
+=3D"true">.</span>
+</p>
+<p style=3D"font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
+ line-height: normal; color: #707070; text-align: left; font-size: 11px; ma=
+rgin: 0 0 10px;" align=3D"left">
+
+</p>
+<p style=3D"font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
+ line-height: normal; color: #707070; text-align: left; font-size: 11px; ma=
+rgin: 0 0 10px;" align=3D"left">
+=C2=A92025=20
+</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>         </div>
+    </center></body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div dir=3D"ltrdata-sEtDiR=3Dfalse" style=3D"height:2px;max-height:2px;over=
+flow-y:hidden ;color:#ffe">zhwgpgvrylkmesjtmuzoofwoggsygifyphobxyeapyuglgxg=
+xmswdsoatokaqrtapljvtzwdzysjcxcoiaoyjpiwjsbhllznadlywrdialbjmpysopmrfriazvz=
+qczvrbdkherpkstjuezulqlemtmoiisskjlhsmwawwhuudqtxftlusvvsmxqguunceqnjrpdqqt=
+qwyzigtagbbcrlpvfvhyrkxlqpsfyknxifoofkkidlkcutaffdprljwfxzem</div>
+<div dir=3D"ltrdata-setDiR=3Dfalse" style=3D"height:2px;max-height:2px;over=
+flow-y:hidden ;color:#ffe">nyrlmgwlnrllvhycupmvwdeuxxfgcokklcmvdklkhxvvpros=
+nubmosxhilodwrkczgwctzvojcvxznzqrbrnsqhyvhrnqigwfbrnhlqemxuewoballbadazecey=
+amgxlwopgnkpheawgnoraegugqbmjsehgthnggxosftlkrvskowxdcambveimpezfpbiefbhige=
+dwkawuyporcatypcagifjiziploktrlowkbutnjhtvtmmsojyoioxxkkbyqz</div>
+<div dir=3D"ltrdata-setdIR=3Dfalse" style=3D"height:2px;max-height:2px;over=
+flow-y:hidden ;color:#ffe">ozyromeevmszejxtupuqetmbeevdwvaxvqdheixxqhtymatj=
+ssniodggjlxpflumdtvqwtuedskdalcewqlodgclpposkwukfkcetuggxocythqlzzkokezribu=
+eafkonyzsvbdsdlrfuvmejibjnfxpdtcqtdmnfqczedluqovqcwwkcxeavcnwssvwdgcicggzkh=
+euusemlsaxuqiasphfxujxnbsavvdfrgblzahmsyayqjybcqdkhripmlasqs</div>
+<div dir=3D"ltrdata-setdIR=3Dfalse" style=3D"height:2px;max-height:2px;over=
+flow-y:hidden ;color:#ffe"><!DOCTYPE html><html xmlns=3D"http://www.w3.org/=
+1999/xhtml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:v=3D"=
+urn:schemas-microsoft-com:vml"><head><meta http-equiv=3D"X-UA-Compatible" c=
+ontent=3D"IE=3Dedge"><meta name=3D"format-detection" content=3D"telephone=
+=3Dno"><meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-sca=
+le=3D1.0"><title>&gt;&gt;Subject Line</title><style type=3D"text/css" emogr=
+ify=3D"no">#outlook a { padding:0; } .ExternalClass { width:100%; } .Extern=
+alClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .Exter=
+nalClass td, .ExternalClass div { line-height: 100%; } table td { border-co=
+llapse: collapse; mso-line-height-rule: exactly; } .editable.image { font-s=
+ize: 0 !important; line-height: 0 !important; } .nl2go_preheader { display:=
+ none !important; mso-hide:all !important; mso-line-height-rule: exactly; v=
+isibility: hidden !important; line-height: 0px !important; font-size: 0px !=
+important; } body { width:100% !important; -webkit-text-size-adjust:100%; -=
+ms-text-size-adjust:100%; margin:0; padding:0; } img { outline:none; text-d=
+ecoration:none; -ms-interpolation-mode: bicubic; } a img { border:none; } t=
+able { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt=
+; } th { font-weight: normal; text-align: left; } *[class=3D"gmail-fix"] { =
+display: none !important; } </style><style type=3D"text/css" emogrify=3D"no=
+"> @media (max-width: 600px) { .gmx-killpill { content: ' \03D1';} } </styl=
+e><style type=3D"text/css" emogrify=3D"no">@media (max-width: 600px) { .gmx=
+-killpill { content: ' \03D1';} .r0-o { background-size: cover !important; =
+border-style: solid !important; margin: 0 auto 0 auto !important; width: 10=
+0% !important } .r1-i { background-color: #eff2f7 !important } .r2-c { box-=
+sizing: border-box !important; text-align: center !important; valign: middl=
+e !important; width: 320px !important } .r3-o { border-style: solid !import=
+ant; margin: 0 auto 0 auto !important; width: 320px !important } .r4-i { co=
+lor: #3b3f44 !important; padding-bottom: 6px !important; padding-left: 15px=
+ !important; padding-right: 15px !important; padding-top: 0px !important } =
+.r5-c { box-sizing: border-box !important; display: block !important; valig=
+n: middle !important; width: 100% !important } .r6-o { border-style: solid =
+!important; width: 100% !important } .r7-i { color: #3b3f44 !important; pad=
+ding-left: 0px !important; padding-right: 0px !important } .r8-c { box-sizi=
+ng: border-box !important; text-align: left !important; valign: top !import=
+ant; width: 100% !important } .r9-o { border-style: solid !important; margi=
+n: 0 auto 0 0 !important; width: 100% !important } .r10-i { color: #3b3f44 =
+!important; padding-bottom: 0px !important; padding-left: 0px !important; p=
+adding-right: 0px !important; padding-top: 5px !important; text-align: cent=
+er !important } .r11-c { box-sizing: border-box !important; text-align: cen=
+ter !important; valign: top !important; width: 100% !important } .r12-o { b=
+order-style: solid !important; margin: 0 auto 0 auto !important; width: 100=
+% !important } .r13-i { background-color: #ffffff !important; color: #3b3f4=
+4 !important; padding-bottom: 20px !important; padding-left: 15px !importan=
+t; padding-right: 15px !important; padding-top: 20px !important } .r14-c { =
+box-sizing: border-box !important; display: block !important; valign: top !=
+important; width: 100% !important } .r15-c { box-sizing: border-box !import=
+ant; color: #3b3f44 !important; padding-bottom: 0px !important; padding-lef=
+t: 0px !important; padding-right: 0px !important; padding-top: 0px !importa=
+nt; text-align: center !important; valign: top !important; width: 100% !imp=
+ortant } .r16-i { background-color: #ffffff !important; color: #3b3f44 !imp=
+ortant; padding-bottom: 0px !important; padding-left: 15px !important; padd=
+ing-right: 15px !important; padding-top: 0px !important } .r17-c { box-sizi=
+ng: border-box !important; color: #3b3f44 !important; padding-bottom: 5px !=
+important; padding-top: 5px !important; text-align: center !important; vali=
+gn: top !important; width: 100% !important } .r18-i { background-color: #ff=
+ffff !important; padding-bottom: 0px !important; padding-left: 15px !import=
+ant; padding-right: 15px !important; padding-top: 0px !important } .r19-i {=
+ padding-left: 0px !important; padding-right: 0px !important } .r20-c { box=
+-sizing: border-box !important; padding-bottom: 0px !important; padding-lef=
+t: 0px !important; padding-right: 0px !important; padding-top: 0px !importa=
+nt; text-align: center !important; width: 100% !important } .r21-i { paddin=
+g-bottom: 7px !important; padding-top: 15px !important; text-align: center =
+!important } .r22-c { box-sizing: border-box !important; padding-bottom: 15=
+px !important; padding-top: 15px !important; text-align: center !important;=
+ valign: top !important; width: 100% !important } .r23-c { box-sizing: bord=
+er-box !important; padding-bottom: 15px !important; padding-top: 0px !impor=
+tant; text-align: left !important; valign: top !important; width: 100% !imp=
+ortant } .r24-c { box-sizing: border-box !important; color: #3b3f44 !import=
+ant; padding-bottom: 15px !important; padding-top: 15px !important; text-al=
+ign: center !important; valign: top !important; width: 100% !important } .r=
+25-i { background-color: #eff2f7 !important; color: #3b3f44 !important; pad=
+ding-bottom: 20px !important; padding-left: 15px !important; padding-right:=
+ 15px !important; padding-top: 20px !important } .r26-c { box-sizing: borde=
+r-box !important; text-align: center !important; width: 100% !important } .=
+r27-i { color: #3b3f44 !important; font-size: 0px !important; padding-botto=
+m: 10px !important; padding-left: 65px !important; padding-right: 65px !imp=
+ortant; padding-top: 10px !important } .r28-c { box-sizing: border-box !imp=
+ortant; width: 32px !important } .r29-o { border-style: solid !important; m=
+argin-right: 8px !important; width: 32px !important } .r30-i { color: #3b3f=
+44 !important; padding-bottom: 5px !important; padding-top: 5px !important =
+} .r31-o { border-style: solid !important; margin-right: 0px !important; wi=
+dth: 32px !important } .r32-i { color: #3b3f44 !important; padding-bottom: =
+0px !important; padding-top: 0px !important; text-align: center !important =
+} .r33-c { box-sizing: border-box !important; color: #3b3f44 !important; pa=
+dding-bottom: 11px !important; padding-left: 10px !important; padding-right=
+: 10px !important; padding-top: 10px !important; text-align: center !import=
+ant; width: 100% !important } .r34-i { color: #3b3f44 !important; padding-b=
+ottom: 0px !important; padding-left: 0px !important; padding-right: 0px !im=
+portant; padding-top: 0px !important; text-align: center !important } .r35-=
+i { color: #3b3f44 !important; padding-bottom: 15px !important; padding-top=
+: 15px !important; text-align: center !important } body { -webkit-text-size=
+-adjust: none } .nl2go-responsive-hide { display: none } .nl2go-body-table =
+{ min-width: unset !important } .mobshow { height: auto !important; overflo=
+w: visible !important; max-height: unset !important; visibility: visible !i=
+mportant } .resp-table { display: inline-table !important } .magic-resp { d=
+isplay: table-cell !important } } </style><!--[if !mso]><!--><style type=3D=
+"text/css" emogrify=3D"no">@import url("https://fonts.googleapis.com/css2?f=
+amily=3DIBM Plex Serif&family=3DOpen Sans"); @import url("https://fonts.goo=
+gleapis.com/css2?family=3DArimo&family=3DRoboto"); </style><!--<!--><style =
+type=3D"text/css">p, h1, h2, h3, h4, ol, ul, li { margin: 0; } a, a:link { =
+color: #0072ca; text-decoration: underline } .nl2go-default-textstyle { col=
+or: #3b3f44; font-family: arial,helvetica,sans-serif; font-size: 18px; line=
+-height: 1.5; word-break: break-word } .default-button { color: #ffffff; fo=
+nt-family: Arimo; font-size: 16px; font-style: normal; font-weight: bold; l=
+ine-height: 1.15; text-decoration: none; word-break: break-word } .default-=
+heading2 { color: #1F2D3D; font-family: arial,helvetica,sans-serif; font-si=
+ze: 32px; word-break: break-word } .sib_class_headline2 { color: #333333; f=
+ont-family: arial,helvetica,sans-serif; font-size: 24px; word-break: break-=
+word } .default-heading3 { color: #1F2D3D; font-family: arial,helvetica,san=
+s-serif; font-size: 24px; word-break: break-word } .sib_class_headline1 { c=
+olor: #333333; font-family: arial,helvetica,sans-serif; font-size: 32px; fo=
+nt-weight: bold; word-break: break-word } .default-heading4 { color: #1F2D3=
+D; font-family: arial,helvetica,sans-serif; font-size: 18px; word-break: br=
+eak-word } .sib_class_impressum { color: #999999; font-family: arial,helvet=
+ica,sans-serif; font-size: 12px; font-style: italic; word-break: break-word=
+ } .default-heading1 { color: #1F2D3D; font-family: arial,helvetica,sans-se=
+rif; font-size: 36px; word-break: break-word } .sib_class_headline3 { color=
+: #333333; font-family: arial,helvetica,sans-serif; font-size: 20px; word-b=
+reak: break-word } a[x-apple-data-detectors] { color: inherit !important; t=
+ext-decoration: inherit !important; font-size: inherit !important; font-fam=
+ily: inherit !important; font-weight: inherit !important; line-height: inhe=
+rit !important; } .no-show-for-you { border: none; display: none; float: no=
+ne; font-size: 0; height: 0; line-height: 0; max-height: 0; mso-hide: all; =
+overflow: hidden; table-layout: fixed; visibility: hidden; width: 0; } </st=
+yle><!--[if mso]><xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPe=
+rInch>96</o:PixelsPerInch> </o:OfficeDocumentSettings> </xml><!--><style ty=
+pe=3D"text/css">a:link{color: #0072ca; text-decoration: underline;}</style>=
+</head><body aria-disabled=3D"false" link=3D"#0072ca" style=3D"background-c=
+olor: rgb(239, 242, 247); padding-bottom: 0px; padding-top: 0px;" text=3D"#=
+3b3f44" yahoo=3D"fix"> <table cellpadding=3D"0" border=3D"0" cellspacing=3D=
+"0" style=3D" mso-hide: all; display: none;"><tr><td>Get up to 50% Elite Pl=
+us, and Access Catalyst download credits!=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=
+=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=
+=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C=
+&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=
+=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nb=
+sp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=
+=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=
+=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=
+=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=
+=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C=
+&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=
+=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nb=
+sp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=
+=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=
+=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=
+=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=
+=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C=
+&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=
+=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nb=
+sp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=
+=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=
+=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=
+=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=
+=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C=
+&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=
+=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nb=
+sp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=
+=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=
+=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=
+=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=
+=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C=
+&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=
+=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nb=
+sp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=
+=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=
+=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=
+=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=
+=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C=
+&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=
+=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nb=
+sp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=
+=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=
+=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=
+=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=
+=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C=
+&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=
+=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nb=
+sp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=
+=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=
+=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=
+=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=
+=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C=
+&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=
+=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nb=
+sp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=
+=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;=
+=CD=8F=E2=80=8C&nbsp;=CD=8F=E2=80=8C&nbsp;</td></tr></table> <!--[if mso]> =
+<img width=3D"1" height=3D"1" src=3D"https://r.notification.biopharmcatalys=
+t.com/mk/op/sh/7nVTPddU8lzHnqb05ogAPTSk7aPFz3l/SwCMwYKUkuOI" /> <!-->
+	<!--[if !mso]> <!----> <img style=3D"display:none" src=3D"https://r.notifi=
+cation.biopharmcatalyst.com/mk/op/sh/7nVTPddU8lzHnqb05ogAPTSk7aPFz3l/SwCMwY=
+KUkuOI"> <!-- <!-->=20
+
+
+ <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentati=
+on" width=3D"100%" style=3D"background-color: rgb(239, 242, 247); width: 10=
+0%; border-collapse: collapse; border: none; empty-cells: show; max-width: =
+100%;" fr-original-style=3D"background-color: #eff2f7; width: 100%;" fr-ori=
+ginal-class=3D"nl2go-body-table"><tbody><tr><td fr-original-style=3D"" styl=
+e=3D"border-collapse: collapse; min-width: 5px; user-select: text; border: =
+0px solid transparent; background: unset;"> <table cellspacing=3D"0" cellpa=
+dding=3D"0" border=3D"0" role=3D"presentation" width=3D"100%" align=3D"cent=
+er" style=3D"table-layout: fixed; width: 100%; border-collapse: collapse; b=
+order: none; empty-cells: show; max-width: 100%;" fr-original-style=3D"tabl=
+e-layout: fixed; width: 100%;" fr-original-class=3D"r0-o"><tbody><tr><td va=
+lign=3D"top" style=3D"background-color: rgb(239, 242, 247); border-collapse=
+: collapse; min-width: 5px; user-select: text; border: 1px solid transparen=
+t; background-image: unset; background-position: unset; background-size: un=
+set; background-repeat: unset; background-attachment: unset; background-ori=
+gin: unset; background-clip: unset;" fr-original-style=3D"background-color:=
+ #eff2f7;" fr-original-class=3D"r1-i"> <table cellspacing=3D"0" cellpadding=
+=3D"0" border=3D"0" role=3D"presentation" width=3D"600" align=3D"center" st=
+yle=3D"table-layout: fixed; width: 600px; border-collapse: collapse; border=
+: none; empty-cells: show; max-width: 100%;" fr-original-style=3D"table-lay=
+out: fixed; width: 600px;" fr-original-class=3D"r3-o"><tbody><tr><td style=
+=3D"color: rgb(59, 63, 68); font-family: Roboto; font-size: 13px; padding-b=
+ottom: 6px; border-collapse: collapse; min-width: 5px; user-select: text; b=
+order: 1px solid transparent; background: unset;" fr-original-style=3D"colo=
+r: #3b3f44; font-family: Roboto; font-size: 13px; padding-bottom: 6px;" fr-=
+original-class=3D"r4-i"> <table width=3D"100%" cellspacing=3D"0" cellpaddin=
+g=3D"0" border=3D"0" role=3D"presentation" fr-original-style=3D"" style=3D"=
+border-collapse: collapse; border: none; empty-cells: show; max-width: 100%=
+;"><tbody><tr><th width=3D"50%" valign=3D"middle" style=3D"font-weight: nor=
+mal; text-align: left; background: unset; user-select: text; border: 1px so=
+lid transparent;" fr-original-style=3D"font-weight: normal;" fr-original-cl=
+ass=3D"r5-c"> <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=
+=3D"presentation" width=3D"100%" style=3D"table-layout: fixed; width: 100%;=
+ border-collapse: collapse; border: none; empty-cells: show; max-width: 100=
+%;" fr-original-style=3D"table-layout: fixed; width: 100%;" fr-original-cla=
+ss=3D"r6-o"><tbody><tr><td valign=3D"top" style=3D"color: rgb(59, 63, 68); =
+font-family: Roboto; font-size: 13px; padding-left: 15px; padding-right: 15=
+px; border-collapse: collapse; min-width: 5px; user-select: text; border: 1=
+px solid transparent; background: unset;" fr-original-style=3D"color: #3b3f=
+44; font-family: Roboto; font-size: 13px; padding-left: 15px; padding-right=
+: 15px;" fr-original-class=3D"r7-i"> <table width=3D"100%" cellspacing=3D"0=
+" cellpadding=3D"0" border=3D"0" role=3D"presentation" fr-original-style=3D=
+"" style=3D"border-collapse: collapse; border: none; empty-cells: show; max=
+-width: 100%;"><tbody><tr><td align=3D"left" fr-original-style=3D"" fr-orig=
+inal-class=3D"r8-c" style=3D"border-collapse: collapse; min-width: 5px; use=
+r-select: text; border: 1px solid transparent; background: unset;"> <table =
+cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" widt=
+h=3D"100%" style=3D"table-layout: fixed; width: 100%; border-collapse: coll=
+apse; border: none; empty-cells: show; max-width: 100%;" fr-original-style=
+=3D"table-layout: fixed; width: 100%;" fr-original-class=3D"r9-o"><tbody><t=
+r><td align=3D"center" valign=3D"top" style=3D"line-height: 1.5; word-break=
+: break-word; color: rgb(59, 63, 68); font-family: Roboto; font-size: 13px;=
+ padding-top: 5px; text-align: center; border-collapse: collapse; min-width=
+: 5px; user-select: text; border: 1px solid transparent; background: unset;=
+" fr-original-style=3D"line-height: 1.5; word-break: break-word; color: #3b=
+3f44; font-family: Roboto; font-size: 13px; padding-top: 5px; text-align: c=
+enter;" fr-original-class=3D"r10-i nl2go-default-textstyle"> <div><p style=
+=3D"margin: 0;" fr-original-style=3D"margin: 0;"><a href=3D"http://r.notifi=
+cation.biopharmcatalyst.com/mk/cl/f/sh/7nVU1aA2nfsTSzF50tlaorLNTMB40yT/OmzP=
+BgIe_cTH" title=3D"Scientist.com" target=3D"_blank" style=3D"color: rgb(0, =
+114, 202); text-decoration: underline; user-select: auto;" fr-original-styl=
+e=3D"color: #0072ca; text-decoration: underline;" sib_link_id=3D"0" templat=
+ing=3D"n">A Scientist.com Company</a></p></div> </td></tr></tbody></table><=
+/td></tr></tbody></table></td></tr></tbody></table></th> <th width=3D"50%" =
+valign=3D"middle" style=3D"font-weight: normal; text-align: left; backgroun=
+d: unset; user-select: text; border: 1px solid transparent;" fr-original-st=
+yle=3D"font-weight: normal;" fr-original-class=3D"r5-c"> <table cellspacing=
+=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" width=3D"100%" =
+style=3D"table-layout: fixed; width: 100%; border-collapse: collapse; borde=
+r: none; empty-cells: show; max-width: 100%;" fr-original-style=3D"table-la=
+yout: fixed; width: 100%;" fr-original-class=3D"r6-o"><tbody><tr><td valign=
+=3D"top" style=3D"color: rgb(59, 63, 68); font-family: Roboto; font-size: 1=
+3px; padding-left: 15px; padding-right: 15px; border-collapse: collapse; mi=
+n-width: 5px; user-select: text; border: 1px solid transparent; background:=
+ unset;" fr-original-style=3D"color: #3b3f44; font-family: Roboto; font-siz=
+e: 13px; padding-left: 15px; padding-right: 15px;" fr-original-class=3D"r7-=
+i"> <table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" =
+role=3D"presentation" fr-original-style=3D"" style=3D"border-collapse: coll=
+apse; border: none; empty-cells: show; max-width: 100%;"><tbody><tr><td ali=
+gn=3D"left" fr-original-style=3D"" fr-original-class=3D"r8-c" style=3D"bord=
+er-collapse: collapse; min-width: 5px; user-select: text; border: 1px solid=
+ transparent; background: unset;"> <table cellspacing=3D"0" cellpadding=3D"=
+0" border=3D"0" role=3D"presentation" width=3D"100%" style=3D"table-layout:=
+ fixed; width: 100%; border-collapse: collapse; border: none; empty-cells: =
+show; max-width: 100%;" fr-original-style=3D"table-layout: fixed; width: 10=
+0%;" fr-original-class=3D"r9-o"><tbody><tr><td align=3D"center" valign=3D"t=
+op" style=3D"line-height: 1.5; word-break: break-word; color: rgb(59, 63, 6=
+8); font-family: Roboto; font-size: 13px; padding-top: 5px; text-align: cen=
+ter; border-collapse: collapse; min-width: 5px; user-select: text; border: =
+1px solid transparent; background: unset;" fr-original-style=3D"line-height=
+: 1.5; word-break: break-word; color: #3b3f44; font-family: Roboto; font-si=
+ze: 13px; padding-top: 5px; text-align: center;" fr-original-class=3D"r10-i=
+ nl2go-default-textstyle"> <div><p style=3D"margin: 0;" fr-original-style=
+=3D"margin: 0;"><a href=3D"http://r.notification.biopharmcatalyst.com/mk/mr=
+/sh/7nVTPdZCTJDXPIOlxg3FXGdDeiV75pF/OMDeCmiNQ4St" target=3D"_blank" style=
+=3D"color: rgb(0, 114, 202); text-decoration: underline; user-select: auto;=
+" fr-original-style=3D"color: #0072ca; text-decoration: underline;">View th=
+is email in your browser</a></p></div> </td></tr></tbody></table></td></tr>=
+</tbody></table></td></tr></tbody></table></th></tr></tbody></table></td></=
+tr></tbody></table></td></tr></tbody></table><table cellspacing=3D"0" cellp=
+adding=3D"0" border=3D"0" role=3D"presentation" width=3D"600" align=3D"cent=
+er" style=3D"table-layout: fixed; width: 600px; border-collapse: collapse; =
+border: none; empty-cells: show; max-width: 100%;" fr-original-style=3D"tab=
+le-layout: fixed; width: 600px;" fr-original-class=3D"r3-o"><tbody><tr><td =
+valign=3D"top" style=3D"background-color: rgb(239, 242, 247); border-collap=
+se: collapse; min-width: 5px; user-select: text; border: 1px solid transpar=
+ent; background-image: unset; background-position: unset; background-size: =
+unset; background-repeat: unset; background-attachment: unset; background-o=
+rigin: unset; background-clip: unset;" fr-original-style=3D"background-colo=
+r: #eff2f7;" fr-original-class=3D"r1-i"> <table cellspacing=3D"0" cellpaddi=
+ng=3D"0" border=3D"0" role=3D"presentation" width=3D"100%" align=3D"center"=
+ style=3D"table-layout: fixed; width: 100%; border-collapse: collapse; bord=
+er: none; empty-cells: show; max-width: 100%;" fr-original-style=3D"table-l=
+ayout: fixed; width: 100%;" fr-original-class=3D"r12-o"><tbody><tr><td styl=
+e=3D"background-color: rgb(255, 255, 255); color: rgb(59, 63, 68); font-fam=
+ily: Roboto; font-size: 13px; padding-bottom: 20px; padding-top: 20px; bord=
+er-collapse: collapse; min-width: 5px; user-select: text; border: 1px solid=
+ transparent; background-image: unset; background-position: unset; backgrou=
+nd-size: unset; background-repeat: unset; background-attachment: unset; bac=
+kground-origin: unset; background-clip: unset;" fr-original-style=3D"backgr=
+ound-color: #ffffff; color: #3b3f44; font-family: Roboto; font-size: 13px; =
+padding-bottom: 20px; padding-top: 20px;" fr-original-class=3D"r13-i"> <tab=
+le width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"=
+presentation" fr-original-style=3D"" style=3D"border-collapse: collapse; bo=
+rder: none; empty-cells: show; max-width: 100%;"><tbody><tr><th width=3D"10=
+0%" valign=3D"top" style=3D"font-weight: normal; text-align: left; backgrou=
+nd: unset; user-select: text; border: 1px solid transparent;" fr-original-s=
+tyle=3D"font-weight: normal;" fr-original-class=3D"r14-c"> <table cellspaci=
+ng=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" width=3D"100%=
+" style=3D"table-layout: fixed; width: 100%; border-collapse: collapse; bor=
+der: none; empty-cells: show; max-width: 100%;" fr-original-style=3D"table-=
+layout: fixed; width: 100%;" fr-original-class=3D"r6-o"><tbody><tr><td vali=
+gn=3D"top" style=3D"color: rgb(59, 63, 68); font-family: Roboto; font-size:=
+ 13px; padding-left: 15px; padding-right: 15px; border-collapse: collapse; =
+min-width: 5px; user-select: text; border: 1px solid transparent; backgroun=
+d: unset;" fr-original-style=3D"color: #3b3f44; font-family: Roboto; font-s=
+ize: 13px; padding-left: 15px; padding-right: 15px;" fr-original-class=3D"r=
+7-i"> <table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0=
+" role=3D"presentation" fr-original-style=3D"" style=3D"border-collapse: co=
+llapse; border: none; empty-cells: show; max-width: 100%;"><tbody><tr><td a=
+lign=3D"center" style=3D"color: rgb(59, 63, 68); font-family: Roboto; font-=
+size: 0px; line-height: 0px; border-collapse: collapse; min-width: 5px; use=
+r-select: text; border: 1px solid transparent; background: unset;" fr-origi=
+nal-style=3D"color: #3b3f44; font-family: Roboto; font-size: 0px; line-heig=
+ht: 0px; valign: top;" fr-original-class=3D"r15-c"> <img src=3D"https://img=
+notification.biopharmcatalyst.com/im/sh/gR59-DO6DTPt.png?u=3D2BpAyz2gMiWncc=
+bir1muQ3UfknkesdADyP" width=3D"570" border=3D"0" style=3D"display: block; w=
+idth: 100%; outline: none; text-decoration: none; cursor: pointer; padding:=
+ 0px 1px; position: relative; max-width: 100%;" fr-original-style=3D"displa=
+y: block; width: 100%;" fr-original-class=3D"fr-draggable" sib_img_id=3D"0"=
+></td></tr></tbody></table></td></tr></tbody></table></th></tr></tbody></ta=
+ble></td></tr></tbody></table><table cellspacing=3D"0" cellpadding=3D"0" bo=
+rder=3D"0" role=3D"presentation" width=3D"100%" align=3D"center" style=3D"t=
+able-layout: fixed; width: 100%; border-collapse: collapse; border: none; e=
+mpty-cells: show; max-width: 100%;" fr-original-style=3D"table-layout: fixe=
+d; width: 100%;" fr-original-class=3D"r12-o"><tbody><tr><td style=3D"backgr=
+ound-color: rgb(255, 255, 255); color: rgb(59, 63, 68); font-family: Roboto=
+; font-size: 13px; border-collapse: collapse; min-width: 5px; user-select: =
+text; border: 1px solid transparent; background-image: unset; background-po=
+sition: unset; background-size: unset; background-repeat: unset; background=
+-attachment: unset; background-origin: unset; background-clip: unset;" fr-o=
+riginal-style=3D"background-color: #ffffff; color: #3b3f44; font-family: Ro=
+boto; font-size: 13px;" fr-original-class=3D"r16-i"> <table width=3D"100%" =
+cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" fr-o=
+riginal-style=3D"" style=3D"border-collapse: collapse; border: none; empty-=
+cells: show; max-width: 100%;"><tbody><tr><th width=3D"50%" valign=3D"top" =
+style=3D"font-weight: normal; text-align: left; background: unset; user-sel=
+ect: text; border: 1px solid transparent;" fr-original-style=3D"font-weight=
+: normal;" fr-original-class=3D"r14-c"> <table cellspacing=3D"0" cellpaddin=
+g=3D"0" border=3D"0" role=3D"presentation" width=3D"100%" style=3D"table-la=
+yout: fixed; width: 100%; border-collapse: collapse; border: none; empty-ce=
+lls: show; max-width: 100%;" fr-original-style=3D"table-layout: fixed; widt=
+h: 100%;" fr-original-class=3D"r6-o"><tbody><tr><td valign=3D"top" style=3D=
+"color: rgb(59, 63, 68); font-family: Roboto; font-size: 13px; padding-left=
+: 15px; padding-right: 15px; border-collapse: collapse; min-width: 5px; use=
+r-select: text; border: 1px solid transparent; background: unset;" fr-origi=
+nal-style=3D"color: #3b3f44; font-family: Roboto; font-size: 13px; padding-=
+left: 15px; padding-right: 15px;" fr-original-class=3D"r7-i"> <table width=
+=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presenta=
+tion" fr-original-style=3D"" style=3D"border-collapse: collapse; border: no=
+ne; empty-cells: show; max-width: 100%;"><tbody><tr><td align=3D"center" st=
+yle=3D"color: rgb(59, 63, 68); font-family: Roboto; font-size: 0px; line-he=
+ight: 0px; padding-bottom: 5px; padding-top: 5px; border-collapse: collapse=
+; min-width: 5px; user-select: text; border: 1px solid transparent; backgro=
+und: unset;" fr-original-style=3D"color: #3b3f44; font-family: Roboto; font=
+-size: 0px; line-height: 0px; padding-bottom: 5px; padding-top: 5px; valign=
+: top;" fr-original-class=3D"r17-c"> <a href=3D"http://r.notification.bioph=
+armcatalyst.com/mk/cl/f/sh/7nVU1aA2nfuMSVkNzT02rDfBdifqkuz/AEb3g9xzOHHp" ta=
+rget=3D"_blank" style=3D"color: rgb(0, 114, 202); text-decoration: underlin=
+e; user-select: auto;" fr-original-style=3D"color: #0072ca; text-decoration=
+: underline;" sib_link_id=3D"1" templating=3D"n"> <img src=3D"https://imgno=
+tification.biopharmcatalyst.com/im/sh/QhT2q4B52_kC.png?u=3D2BpAyz2gMiWnceUi=
+NX5szHwi77YpF7wxuv" width=3D"270" title=3D"Sign up" border=3D"0" style=3D"d=
+isplay: block; width: 100%; outline: none; text-decoration: none; border: n=
+one; cursor: pointer; padding: 0px 1px; position: relative; max-width: 100%=
+;" fr-original-style=3D"display: block; width: 100%;" fr-original-class=3D"=
+fr-draggable" sib_img_id=3D"1"></a> </td></tr></tbody></table></td></tr></t=
+body></table></th> <th width=3D"50%" valign=3D"top" style=3D"font-weight: n=
+ormal; text-align: left; background: unset; user-select: text; border: 1px =
+solid transparent;" fr-original-style=3D"font-weight: normal;" fr-original-=
+class=3D"r14-c"> <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" ro=
+le=3D"presentation" width=3D"100%" style=3D"table-layout: fixed; width: 100=
+%; border-collapse: collapse; border: none; empty-cells: show; max-width: 1=
+00%;" fr-original-style=3D"table-layout: fixed; width: 100%;" fr-original-c=
+lass=3D"r6-o"><tbody><tr><td valign=3D"top" style=3D"color: rgb(59, 63, 68)=
+; font-family: Roboto; font-size: 13px; padding-left: 15px; padding-right: =
+15px; border-collapse: collapse; min-width: 5px; user-select: text; border:=
+ 1px solid transparent; background: unset;" fr-original-style=3D"color: #3b=
+3f44; font-family: Roboto; font-size: 13px; padding-left: 15px; padding-rig=
+ht: 15px;" fr-original-class=3D"r7-i"> <table width=3D"100%" cellspacing=3D=
+"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" fr-original-style=
+=3D"" style=3D"border-collapse: collapse; border: none; empty-cells: show; =
+max-width: 100%;"><tbody><tr><td align=3D"center" style=3D"color: rgb(59, 6=
+3, 68); font-family: Roboto; font-size: 0px; line-height: 0px; padding-bott=
+om: 5px; padding-top: 5px; border-collapse: collapse; min-width: 5px; user-=
+select: text; border: 1px solid transparent; background: unset;" fr-origina=
+l-style=3D"color: #3b3f44; font-family: Roboto; font-size: 0px; line-height=
+: 0px; padding-bottom: 5px; padding-top: 5px; valign: top;" fr-original-cla=
+ss=3D"r17-c"> <a href=3D"http://r.notification.biopharmcatalyst.com/mk/cl/f=
+/sh/7nVU1aA2nfwFS2Fgy2EUtZyzo5AdUrV/h_MFwKNN1GKo" target=3D"_blank" style=
+=3D"color: rgb(0, 114, 202); text-decoration: underline; user-select: auto;=
+" fr-original-style=3D"color: #0072ca; text-decoration: underline;" sib_lin=
+k_id=3D"2" templating=3D"n"> <img src=3D"https://img.notification.biopharmc=
+atalyst.com/im/sh/cn0zxiaWdOHN.png?u=3D2BpAyz2gMiWncgNhu2OrYWOkTRMzbcjhrR" =
+width=3D"270" title=3D"Discord buttone" border=3D"0" style=3D"display: bloc=
+k; width: 100%; outline: none; text-decoration: none; border: none; cursor:=
+ pointer; padding: 0px 1px; position: relative; max-width: 100%;" fr-origin=
+al-style=3D"display: block; width: 100%;" fr-original-class=3D"fr-draggable=
+" sib_img_id=3D"2"></a> </td></tr></tbody></table></td></tr></tbody></table=
+></th></tr></tbody></table></td></tr></tbody></table><table cellspacing=3D"=
+0" cellpadding=3D"0" border=3D"0" role=3D"presentation" width=3D"100%" alig=
+n=3D"center" style=3D"table-layout: fixed; width: 100%; border-collapse: co=
+llapse; border: none; empty-cells: show; max-width: 100%;" fr-original-styl=
+e=3D"table-layout: fixed; width: 100%;" fr-original-class=3D"r12-o"><tbody>=
+<tr><td style=3D"background-color: rgb(255, 255, 255); border-collapse: col=
+lapse; min-width: 5px; user-select: text; border: 1px solid transparent; ba=
+ckground-image: unset; background-position: unset; background-size: unset; =
+background-repeat: unset; background-attachment: unset; background-origin: =
+unset; background-clip: unset;" fr-original-style=3D"background-color: #fff=
+fff;" fr-original-class=3D"r18-i"> <table width=3D"100%" cellspacing=3D"0" =
+cellpadding=3D"0" border=3D"0" role=3D"presentation" fr-original-style=3D""=
+ style=3D"border-collapse: collapse; border: none; empty-cells: show; max-w=
+idth: 100%;"><tbody><tr><th width=3D"100%" valign=3D"top" style=3D"font-wei=
+ght: normal; text-align: left; background: unset; user-select: text; border=
+: 1px solid transparent;" fr-original-style=3D"font-weight: normal;" fr-ori=
+ginal-class=3D"r14-c"> <table cellspacing=3D"0" cellpadding=3D"0" border=3D=
+"0" role=3D"presentation" width=3D"100%" style=3D"table-layout: fixed; widt=
+h: 100%; border-collapse: collapse; border: none; empty-cells: show; max-wi=
+dth: 100%;" fr-original-style=3D"table-layout: fixed; width: 100%;" fr-orig=
+inal-class=3D"r6-o"><tbody><tr><td valign=3D"top" style=3D"padding-left: 15=
+px; padding-right: 15px; border-collapse: collapse; min-width: 5px; user-se=
+lect: text; border: 1px solid transparent; background: unset;" fr-original-=
+style=3D"padding-left: 15px; padding-right: 15px;" fr-original-class=3D"r19=
+-i"> <table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0"=
+ role=3D"presentation" fr-original-style=3D"" style=3D"border-collapse: col=
+lapse; border: none; empty-cells: show; max-width: 100%;"><tbody><tr><td al=
+ign=3D"center" fr-original-style=3D"" fr-original-class=3D"r20-c" style=3D"=
+border-collapse: collapse; min-width: 5px; user-select: text; border: 1px s=
+olid transparent; background: unset;"> <table width=3D"100%" cellspacing=3D=
+"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" height=3D"1" style=
+=3D"border-style: solid none none; background-clip: border-box; border-top-=
+color: rgb(239, 242, 247); border-top-width: 1px; font-size: 1px; line-heig=
+ht: 1px; border-collapse: collapse; border-right-width: initial; border-bot=
+tom-width: initial; border-left-width: initial; border-right-color: initial=
+; border-bottom-color: initial; border-left-color: initial; border-image: i=
+nitial; empty-cells: show; max-width: 100%;" fr-original-style=3D"border-to=
+p-style: solid; background-clip: border-box; border-top-color: #eff2f7; bor=
+der-top-width: 1px; font-size: 1px; line-height: 1px;"><tbody><tr><td heigh=
+t=3D"0" style=3D"font-size: 0px; line-height: 0px; border-collapse: collaps=
+e; min-width: 5px; user-select: text; border: 0px solid transparent; backgr=
+ound: unset;" fr-original-style=3D"font-size: 0px; line-height: 0px;">=C2=
+=AD</td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></=
+table></th></tr></tbody></table></td></tr></tbody></table><table cellspacin=
+g=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" width=3D"100%"=
+ align=3D"center" style=3D"table-layout: fixed; width: 100%; border-collaps=
+e: collapse; border: none; empty-cells: show; max-width: 100%;" fr-original=
+-style=3D"table-layout: fixed; width: 100%;" fr-original-class=3D"r12-o"><t=
+body><tr><td style=3D"background-color: rgb(255, 255, 255); border-collapse=
+: collapse; min-width: 5px; user-select: text; border: 1px solid transparen=
+t; background-image: unset; background-position: unset; background-size: un=
+set; background-repeat: unset; background-attachment: unset; background-ori=
+gin: unset; background-clip: unset;" fr-original-style=3D"background-color:=
+ #ffffff;" fr-original-class=3D"r18-i"> <table width=3D"100%" cellspacing=
+=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" fr-original-sty=
+le=3D"" style=3D"border-collapse: collapse; border: none; empty-cells: show=
+; max-width: 100%;"><tbody><tr><th width=3D"100%" valign=3D"top" style=3D"f=
+ont-weight: normal; text-align: left; background: unset; user-select: text;=
+ border: 1px solid transparent;" fr-original-style=3D"font-weight: normal;"=
+ fr-original-class=3D"r14-c "> <table cellspacing=3D"0" cellpadding=3D"0" b=
+order=3D"0" role=3D"presentation" width=3D"100%" style=3D"table-layout: fix=
+ed; width: 100%; border-collapse: collapse; border: none; empty-cells: show=
+; max-width: 100%;" fr-original-style=3D"table-layout: fixed; width: 100%;"=
+ fr-original-class=3D"r6-o"><tbody><tr><td valign=3D"top" style=3D"padding-=
+left: 15px; padding-right: 15px; border-collapse: collapse; min-width: 5px;=
+ user-select: text; border: 1px solid transparent; background: unset;" fr-o=
+riginal-style=3D"padding-left: 15px; padding-right: 15px;" fr-original-clas=
+s=3D"r19-i"> <table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" bord=
+er=3D"0" role=3D"presentation" fr-original-style=3D"" style=3D"border-colla=
+pse: collapse; border: none; empty-cells: show; max-width: 100%;"><tbody><t=
+r><td align=3D"left" fr-original-style=3D"" fr-original-class=3D"r8-c" styl=
+e=3D"border-collapse: collapse; min-width: 5px; user-select: text; border: =
+1px solid transparent; background: unset;"> <table cellspacing=3D"0" cellpa=
+dding=3D"0" border=3D"0" role=3D"presentation" width=3D"100%" style=3D"tabl=
+e-layout: fixed; width: 100%; border-collapse: collapse; border: none; empt=
+y-cells: show; max-width: 100%;" fr-original-style=3D"table-layout: fixed; =
+width: 100%;" fr-original-class=3D"r9-o"><tbody><tr><td align=3D"center" va=
+lign=3D"top" style=3D"color: rgb(59, 63, 68); font-family: arial, helvetica=
+, sans-serif; font-size: 18px; word-break: break-word; line-height: 1; padd=
+ing-bottom: 7px; padding-top: 15px; text-align: center; border-collapse: co=
+llapse; min-width: 5px; user-select: text; border: 1px solid transparent; b=
+ackground: unset;" fr-original-style=3D"color: #3b3f44; font-family: arial,=
+helvetica,sans-serif; font-size: 18px; word-break: break-word; line-height:=
+ 1; padding-bottom: 7px; padding-top: 15px; text-align: center;" fr-origina=
+l-class=3D"r21-i nl2go-default-textstyle"> <h2 style=3D"margin: 0; color: #=
+1f2d3d; font-family: arial,helvetica,sans-serif; font-size: 32px; word-brea=
+k: break-word;" fr-original-style=3D"margin: 0; color: #1f2d3d; font-family=
+: arial,helvetica,sans-serif; font-size: 32px; word-break: break-word;" fr-=
+original-class=3D"default-heading2">=E2=8F=B0 Don't Miss Out=E2=80=94Unlock=
+ JPM25 Insights and Save Up to 50% Today with Our End of Year Sale =F0=9F=
+=8E=89</h2> </td></tr></tbody></table></td></tr></tbody></table></td></tr><=
+/tbody></table></th></tr></tbody></table></td></tr></tbody></table><table c=
+ellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" width=
+=3D"100%" align=3D"center" style=3D"table-layout: fixed; width: 100%; borde=
+r-collapse: collapse; border: none; empty-cells: show; max-width: 100%;" fr=
+-original-style=3D"table-layout: fixed; width: 100%;" fr-original-class=3D"=
+r12-o"><tbody><tr><td style=3D"background-color: rgb(255, 255, 255); border=
+-collapse: collapse; min-width: 5px; user-select: text; border: 1px solid t=
+ransparent; background-image: unset; background-position: unset; background=
+-size: unset; background-repeat: unset; background-attachment: unset; backg=
+round-origin: unset; background-clip: unset;" fr-original-style=3D"backgrou=
+nd-color: #ffffff;" fr-original-class=3D"r18-i"> <table width=3D"100%" cell=
+spacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" fr-origi=
+nal-style=3D"" style=3D"border-collapse: collapse; border: none; empty-cell=
+s: show; max-width: 100%;"><tbody><tr><th width=3D"100%" valign=3D"top" sty=
+le=3D"font-weight: normal; text-align: left; background: unset; user-select=
+: text; border: 1px solid transparent;" fr-original-style=3D"font-weight: n=
+ormal;" fr-original-class=3D"r14-c"> <table cellspacing=3D"0" cellpadding=
+=3D"0" border=3D"0" role=3D"presentation" width=3D"100%" style=3D"table-lay=
+out: fixed; width: 100%; border-collapse: collapse; border: none; empty-cel=
+ls: show; max-width: 100%;" fr-original-style=3D"table-layout: fixed; width=
+: 100%;" fr-original-class=3D"r6-o"><tbody><tr><td valign=3D"top" style=3D"=
+padding-left: 15px; padding-right: 15px; border-collapse: collapse; min-wid=
+th: 5px; user-select: text; border: 1px solid transparent; background: unse=
+t;" fr-original-style=3D"padding-left: 15px; padding-right: 15px;" fr-origi=
+nal-class=3D"r19-i"> <table width=3D"100%" cellspacing=3D"0" cellpadding=3D=
+"0" border=3D"0" role=3D"presentation" fr-original-style=3D"" style=3D"bord=
+er-collapse: collapse; border: none; empty-cells: show; max-width: 100%;"><=
+tbody><tr><td align=3D"center" style=3D"font-size: 0px; line-height: 0px; p=
+adding-bottom: 15px; padding-top: 15px; border-collapse: collapse; min-widt=
+h: 5px; user-select: text; border: 1px solid transparent; background: unset=
+;" fr-original-style=3D"font-size: 0px; line-height: 0px; padding-bottom: 1=
+5px; padding-top: 15px; valign: top;" fr-original-class=3D"r22-c"> <a href=
+=3D"http://r.notification.biopharmcatalyst.com/mk/cl/f/sh/7nVU1aA2nfy8RYkzw=
+bSwvwInyRfQEo1/SEVyqN5CE7AQ" target=3D"_blank" style=3D"color: rgb(0, 114, =
+202); text-decoration: underline; user-select: auto;" rel=3D"noopener noref=
+errer" fr-original-style=3D"color: #0072ca; text-decoration: underline;" si=
+b_link_id=3D"3" templating=3D"n"> <img src=3D"https://img.notification.biop=
+harmcatalyst.com/im/sh/0cgWLhSEZEVe.png?u=3D2BpAyz2gMiWnciGhQXhq7kqmplB9y7W=
+Rnx" width=3D"570" border=3D"0" style=3D"display: block; width: 100%; outli=
+ne: none; text-decoration: none; border: none; cursor: pointer; padding: 0p=
+x 1px; position: relative; max-width: 100%;" fr-original-style=3D"display: =
+block; width: 100%;" fr-original-class=3D"fr-draggable" sib_img_id=3D"3"></=
+a> </td></tr><tr><td align=3D"left" style=3D"color: rgb(59, 63, 68); font-f=
+amily: arial, helvetica, sans-serif; font-size: 18px; word-break: break-wor=
+d; line-height: 1; padding-bottom: 15px; text-align: left; overflow-wrap: b=
+reak-word; border-collapse: collapse; min-width: 5px; user-select: text; bo=
+rder: 1px solid transparent; background: unset;" fr-original-style=3D"color=
+: #3b3f44; font-family: arial,helvetica,sans-serif; font-size: 18px; word-b=
+reak: break-word; line-height: 1; padding-bottom: 15px; text-align: left; v=
+align: top; word-wrap: break-word;" fr-original-class=3D"r23-c nl2go-defaul=
+t-textstyle"> <div><p style=3D"margin: 0; font-style: normal; font-weight: =
+400; text-decoration-style: initial; text-decoration-thickness: initial; te=
+xt-size-adjust: 100%;" fr-original-style=3D"margin: 0; font-style: normal; =
+font-weight: 400; text-decoration-style: initial; text-decoration-thickness=
+: initial; text-size-adjust: 100%;"><span style=3D"font-family: Arial, helv=
+etica, sans-serif; font-size: 14px;">If you have any questions, please don=
+=E2=80=99t hesitate to reach out to us directly at </span><a href=3D"mailto=
+:contact@biopharmcatalyst.com" target=3D"_blank" style=3D"color: rgb(0, 114=
+, 202); text-decoration: underline; user-select: auto;" fr-original-style=
+=3D"color: #0072ca; text-decoration: underline;"><span style=3D"font-family=
+: Arial, helvetica, sans-serif; font-size: 14px;">contact@biopharmcatalyst.=
+com</span></a></p><p style=3D"margin: 0; font-style: normal; font-weight: 4=
+00; text-decoration-style: initial; text-decoration-thickness: initial; tex=
+t-size-adjust: 100%;" fr-original-style=3D"margin: 0; font-style: normal; f=
+ont-weight: 400; text-decoration-style: initial; text-decoration-thickness:=
+ initial; text-size-adjust: 100%;"> </p><p style=3D"margin: 0; font-style: =
+normal; font-weight: 400; text-decoration-style: initial; text-decoration-t=
+hickness: initial; text-size-adjust: 100%;" fr-original-style=3D"margin: 0;=
+ font-style: normal; font-weight: 400; text-decoration-style: initial; text=
+-decoration-thickness: initial; text-size-adjust: 100%;"><span style=3D"fon=
+t-family: Arial, helvetica, sans-serif; font-size: 14px;">Thanks,</span></p=
+><p style=3D"margin: 0; font-style: normal; font-weight: 400; text-decorati=
+on-style: initial; text-decoration-thickness: initial; text-size-adjust: 10=
+0%;" fr-original-style=3D"margin: 0; font-style: normal; font-weight: 400; =
+text-decoration-style: initial; text-decoration-thickness: initial; text-si=
+ze-adjust: 100%;"><span style=3D"font-family: Arial, helvetica, sans-serif;=
+ font-size: 14px;">The BioPharmCatalyst Team</span></p></div> </td></tr><tr=
+><td align=3D"center" fr-original-style=3D"" fr-original-class=3D"r20-c" st=
+yle=3D"border-collapse: collapse; min-width: 5px; user-select: text; border=
+: 1px solid transparent; background: unset;"> <table width=3D"100%" cellspa=
+cing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" height=3D"1=
+" style=3D"border-style: solid none none; background-clip: border-box; bord=
+er-top-color: rgb(239, 242, 247); border-top-width: 1px; font-size: 1px; li=
+ne-height: 1px; border-collapse: collapse; border-right-width: initial; bor=
+der-bottom-width: initial; border-left-width: initial; border-right-color: =
+initial; border-bottom-color: initial; border-left-color: initial; border-i=
+mage: initial; empty-cells: show; max-width: 100%;" fr-original-style=3D"bo=
+rder-top-style: solid; background-clip: border-box; border-top-color: #eff2=
+f7; border-top-width: 1px; font-size: 1px; line-height: 1px;"><tbody><tr><t=
+d height=3D"0" style=3D"font-size: 0px; line-height: 0px; border-collapse: =
+collapse; min-width: 5px; user-select: text; border: 0px solid transparent;=
+ background: unset;" fr-original-style=3D"font-size: 0px; line-height: 0px;=
+">=C2=AD</td></tr></tbody></table></td></tr></tbody></table></td></tr></tbo=
+dy></table></th></tr></tbody></table></td></tr></tbody></table><table cells=
+pacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" width=3D"=
+100%" align=3D"center" style=3D"table-layout: fixed; width: 100%; border-co=
+llapse: collapse; border: none; empty-cells: show; max-width: 100%;" fr-ori=
+ginal-style=3D"table-layout: fixed; width: 100%;" fr-original-class=3D"r12-=
+o"><tbody><tr><td style=3D"background-color: rgb(255, 255, 255); color: rgb=
+(59, 63, 68); font-family: Roboto; font-size: 13px; border-collapse: collap=
+se; min-width: 5px; user-select: text; border: 1px solid transparent; backg=
+round-image: unset; background-position: unset; background-size: unset; bac=
+kground-repeat: unset; background-attachment: unset; background-origin: uns=
+et; background-clip: unset;" fr-original-style=3D"background-color: #ffffff=
+; color: #3b3f44; font-family: Roboto; font-size: 13px;" fr-original-class=
+=3D"r16-i"> <table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" borde=
+r=3D"0" role=3D"presentation" fr-original-style=3D"" style=3D"border-collap=
+se: collapse; border: none; empty-cells: show; max-width: 100%;"><tbody><tr=
+><th width=3D"50%" valign=3D"top" style=3D"font-weight: normal; text-align:=
+ left; background: unset; user-select: text; border: 1px solid transparent;=
+" fr-original-style=3D"font-weight: normal;" fr-original-class=3D"r14-c"> <=
+table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation=
+" width=3D"100%" style=3D"table-layout: fixed; width: 100%; border-collapse=
+: collapse; border: none; empty-cells: show; max-width: 100%;" fr-original-=
+style=3D"table-layout: fixed; width: 100%;" fr-original-class=3D"r6-o"><tbo=
+dy><tr><td valign=3D"top" style=3D"color: rgb(59, 63, 68); font-family: Rob=
+oto; font-size: 13px; padding-left: 15px; padding-right: 15px; border-colla=
+pse: collapse; min-width: 5px; user-select: text; border: 1px solid transpa=
+rent; background: unset;" fr-original-style=3D"color: #3b3f44; font-family:=
+ Roboto; font-size: 13px; padding-left: 15px; padding-right: 15px;" fr-orig=
+inal-class=3D"r7-i"> <table width=3D"100%" cellspacing=3D"0" cellpadding=3D=
+"0" border=3D"0" role=3D"presentation" fr-original-style=3D"" style=3D"bord=
+er-collapse: collapse; border: none; empty-cells: show; max-width: 100%;"><=
+tbody><tr><td align=3D"center" style=3D"color: rgb(59, 63, 68); font-family=
+: Roboto; font-size: 0px; line-height: 0px; padding-bottom: 15px; padding-t=
+op: 15px; border-collapse: collapse; min-width: 5px; user-select: text; bor=
+der: 1px solid transparent; background: unset;" fr-original-style=3D"color:=
+ #3b3f44; font-family: Roboto; font-size: 0px; line-height: 0px; padding-bo=
+ttom: 15px; padding-top: 15px; valign: top;" fr-original-class=3D"r24-c"> <=
+a href=3D"http://r.notification.biopharmcatalyst.com/mk/cl/f/sh/7nVU1aA2ng0=
+1R5GIvAhOyIcc8oACykX/E8cocv3VcESb" target=3D"_blank" style=3D"color: rgb(0,=
+ 114, 202); text-decoration: underline; user-select: auto;" fr-original-sty=
+le=3D"color: #0072ca; text-decoration: underline;" sib_link_id=3D"4" templa=
+ting=3D"n"> <img src=3D"https://img.notification.biopharmcatalyst.com/im/sh=
+/QhT2q4B52_kC.png?u=3D2BpAyz2gMiWnceUiNX5szHwi77YpF7wxuv" width=3D"270" tit=
+le=3D"Sign up" border=3D"0" style=3D"display: block; width: 100%; outline: =
+none; text-decoration: none; border: none; cursor: pointer; padding: 0px 1p=
+x; position: relative; max-width: 100%;" fr-original-style=3D"display: bloc=
+k; width: 100%;" fr-original-class=3D"fr-draggable" sib_img_id=3D"1"></a> <=
+/td></tr></tbody></table></td></tr></tbody></table></th> <th width=3D"50%" =
+valign=3D"top" style=3D"font-weight: normal; text-align: left; background: =
+unset; user-select: text; border: 1px solid transparent;" fr-original-style=
+=3D"font-weight: normal;" fr-original-class=3D"r14-c"> <table cellspacing=
+=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" width=3D"100%" =
+style=3D"table-layout: fixed; width: 100%; border-collapse: collapse; borde=
+r: none; empty-cells: show; max-width: 100%;" fr-original-style=3D"table-la=
+yout: fixed; width: 100%;" fr-original-class=3D"r6-o"><tbody><tr><td valign=
+=3D"top" style=3D"color: rgb(59, 63, 68); font-family: Roboto; font-size: 1=
+3px; padding-left: 15px; padding-right: 15px; border-collapse: collapse; mi=
+n-width: 5px; user-select: text; border: 1px solid transparent; background:=
+ unset;" fr-original-style=3D"color: #3b3f44; font-family: Roboto; font-siz=
+e: 13px; padding-left: 15px; padding-right: 15px;" fr-original-class=3D"r7-=
+i"> <table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" =
+role=3D"presentation" fr-original-style=3D"" style=3D"border-collapse: coll=
+apse; border: none; empty-cells: show; max-width: 100%;"><tbody><tr><td ali=
+gn=3D"center" style=3D"color: rgb(59, 63, 68); font-family: Roboto; font-si=
+ze: 0px; line-height: 0px; padding-bottom: 15px; padding-top: 15px; border-=
+collapse: collapse; min-width: 5px; user-select: text; border: 1px solid tr=
+ansparent; background: unset;" fr-original-style=3D"color: #3b3f44; font-fa=
+mily: Roboto; font-size: 0px; line-height: 0px; padding-bottom: 15px; paddi=
+ng-top: 15px; valign: top;" fr-original-class=3D"r24-c"> <a href=3D"http://=
+r.notification.biopharmcatalyst.com/mk/cl/f/sh/7nVU1aA2ng1uQblbtjvr0ewQJAez=
+ih3/Fql6WTqfhwlx" target=3D"_blank" style=3D"color: rgb(0, 114, 202); text-=
+decoration: underline; user-select: auto;" fr-original-style=3D"color: #007=
+2ca; text-decoration: underline;" sib_link_id=3D"5" templating=3D"n"> <img =
+src=3D"https://img.notification.biopharmcatalyst.com/im/sh/cn0zxiaWdOHN.png=
+?u=3D2BpAyz2gMiWncgNhu2OrYWOkTRMzbcjhrR" width=3D"270" title=3D"Discord but=
+tone" border=3D"0" style=3D"display: block; width: 100%; outline: none; tex=
+t-decoration: none; border: none; cursor: pointer; padding: 0px 1px; positi=
+on: relative; max-width: 100%;" fr-original-style=3D"display: block; width:=
+ 100%;" fr-original-class=3D"fr-draggable" sib_img_id=3D"2"></a> </td></tr>=
+</tbody></table></td></tr></tbody></table></th></tr></tbody></table></td></=
+tr></tbody></table><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" =
+role=3D"presentation" width=3D"100%" align=3D"center" style=3D"table-layout=
+: fixed; width: 100%; border-collapse: collapse; border: none; empty-cells:=
+ show; max-width: 100%;" fr-original-style=3D"table-layout: fixed; width: 1=
+00%;" fr-original-class=3D"r12-o"><tbody><tr><td style=3D"background-color:=
+ rgb(239, 242, 247); color: rgb(59, 63, 68); font-family: Roboto; font-size=
+: 18px; padding-bottom: 20px; padding-top: 20px; border-collapse: collapse;=
+ min-width: 5px; user-select: text; border: 1px solid transparent; backgrou=
+nd-image: unset; background-position: unset; background-size: unset; backgr=
+ound-repeat: unset; background-attachment: unset; background-origin: unset;=
+ background-clip: unset;" fr-original-style=3D"background-color: #eff2f7; c=
+olor: #3b3f44; font-family: Roboto; font-size: 18px; padding-bottom: 20px; =
+padding-top: 20px;" fr-original-class=3D"r25-i"> <table width=3D"100%" cell=
+spacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" fr-origi=
+nal-style=3D"" style=3D"border-collapse: collapse; border: none; empty-cell=
+s: show; max-width: 100%;"><tbody><tr><th width=3D"100%" valign=3D"top" sty=
+le=3D"font-weight: normal; text-align: left; background: unset; user-select=
+: text; border: 1px solid transparent;" fr-original-style=3D"font-weight: n=
+ormal;" fr-original-class=3D"r14-c"> <table cellspacing=3D"0" cellpadding=
+=3D"0" border=3D"0" role=3D"presentation" width=3D"100%" style=3D"table-lay=
+out: fixed; width: 100%; border-collapse: collapse; border: none; empty-cel=
+ls: show; max-width: 100%;" fr-original-style=3D"table-layout: fixed; width=
+: 100%;" fr-original-class=3D"r6-o"><tbody><tr><td valign=3D"top" style=3D"=
+color: rgb(59, 63, 68); font-family: Roboto; font-size: 18px; padding-left:=
+ 15px; padding-right: 15px; border-collapse: collapse; min-width: 5px; user=
+-select: text; border: 1px solid transparent; background: unset;" fr-origin=
+al-style=3D"color: #3b3f44; font-family: Roboto; font-size: 18px; padding-l=
+eft: 15px; padding-right: 15px;" fr-original-class=3D"r7-i"> <table width=
+=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presenta=
+tion" fr-original-style=3D"" style=3D"border-collapse: collapse; border: no=
+ne; empty-cells: show; max-width: 100%;"><tbody><tr><td align=3D"center" fr=
+-original-style=3D"" fr-original-class=3D"r26-c" style=3D"border-collapse: =
+collapse; min-width: 5px; user-select: text; border: 1px solid transparent;=
+ background: unset;"> <table cellspacing=3D"0" cellpadding=3D"0" border=3D"=
+0" role=3D"presentation" width=3D"570" align=3D"center" style=3D"table-layo=
+ut: fixed; width: 570px; border-collapse: collapse; border: none; empty-cel=
+ls: show; max-width: 100%;" fr-original-style=3D"table-layout: fixed; width=
+: 570px;" fr-original-class=3D"r12-o"><tbody><tr><td valign=3D"top" fr-orig=
+inal-style=3D"" style=3D"border-collapse: collapse; min-width: 5px; user-se=
+lect: text; border: 0px solid transparent; background: unset;"> <table widt=
+h=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"present=
+ation" fr-original-style=3D"" style=3D"border-collapse: collapse; border: n=
+one; empty-cells: show; max-width: 100%;"><tbody><tr><td align=3D"center" s=
+tyle=3D"display: inline-block; border-collapse: collapse; min-width: 5px; u=
+ser-select: text; border: 1px solid transparent; background: unset;" fr-ori=
+ginal-style=3D"display: inline-block;" fr-original-class=3D"r26-c"> <table =
+cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" widt=
+h=3D"570" align=3D"center" style=3D"table-layout: fixed; width: 570px; bord=
+er-collapse: collapse; border: none; empty-cells: show; max-width: 100%;" f=
+r-original-style=3D"table-layout: fixed; width: 570px;" fr-original-class=
+=3D"r12-o"><tbody><tr><td style=3D"color: rgb(59, 63, 68); font-family: Rob=
+oto; font-size: 18px; padding: 10px 176px; border-collapse: collapse; min-w=
+idth: 5px; user-select: text; border: 1px solid transparent; background: un=
+set;" fr-original-style=3D"color: #3b3f44; font-family: Roboto; font-size: =
+18px; padding-bottom: 10px; padding-left: 176px; padding-right: 176px; padd=
+ing-top: 10px;" fr-original-class=3D"r27-i"> <table width=3D"100%" cellspac=
+ing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" fr-original-=
+style=3D"" style=3D"border-collapse: collapse; border: none; empty-cells: s=
+how; max-width: 100%;"><tbody><tr><th width=3D"62" style=3D"font-weight: no=
+rmal; text-align: left; background: unset; user-select: text; border: 1px s=
+olid transparent;" fr-original-style=3D"font-weight: normal;" fr-original-c=
+lass=3D"r28-c mobshow resp-table"> <table cellspacing=3D"0" cellpadding=3D"=
+0" border=3D"0" role=3D"presentation" width=3D"100%" style=3D"table-layout:=
+ fixed; width: 100%; border-collapse: collapse; border: none; empty-cells: =
+show; max-width: 100%;" fr-original-style=3D"table-layout: fixed; width: 10=
+0%;" fr-original-class=3D"r29-o"><tbody><tr><td style=3D"color: rgb(59, 63,=
+ 68); font-family: Roboto; font-size: 0px; line-height: 0px; padding-bottom=
+: 5px; padding-top: 5px; border-collapse: collapse; min-width: 5px; user-se=
+lect: text; border: 1px solid transparent; background: unset;" fr-original-=
+style=3D"color: #3b3f44; font-family: Roboto; font-size: 0px; line-height: =
+0px; padding-bottom: 5px; padding-top: 5px;" fr-original-class=3D"r30-i"> <=
+a href=3D"http://r.notification.biopharmcatalyst.com/mk/cl/f/sh/7nVU1aA2ng3=
+nQ8GusJAJ31GETX9mSdZ/ouU1KLSyxkkX" target=3D"_blank" style=3D"color: rgb(0,=
+ 114, 202); text-decoration: underline; user-select: auto;" fr-original-sty=
+le=3D"color: #0072ca; text-decoration: underline;" sib_link_id=3D"6" templa=
+ting=3D"n"> <img src=3D"https://img.notification.biopharmcatalyst.com/im/sh=
+/rSzWNpTcDvgP.png?u=3D2BpAyz2gMiWnck9gx30ogzIpC4zKKcJBkT" width=3D"32" bord=
+er=3D"0" style=3D"display: block; width: 100%; outline: none; text-decorati=
+on: none; border: none; cursor: pointer; padding: 0px 1px; position: relati=
+ve; max-width: 100%;" fr-original-style=3D"display: block; width: 100%;" fr=
+-original-class=3D"fr-draggable" sib_img_id=3D"4"></a> </td> <td width=3D"3=
+0" style=3D"font-size: 0px; line-height: 1px; border-collapse: collapse; mi=
+n-width: 5px; user-select: text; border: 1px solid transparent; background:=
+ unset;" fr-original-style=3D"font-size: 0px; line-height: 1px;" fr-origina=
+l-class=3D"nl2go-responsive-hide">=C2=AD </td></tr></tbody></table></th> <t=
+h width=3D"62" style=3D"font-weight: normal; text-align: left; background: =
+unset; user-select: text; border: 1px solid transparent;" fr-original-style=
+=3D"font-weight: normal;" fr-original-class=3D"r28-c mobshow resp-table"> <=
+table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation=
+" width=3D"100%" style=3D"table-layout: fixed; width: 100%; border-collapse=
+: collapse; border: none; empty-cells: show; max-width: 100%;" fr-original-=
+style=3D"table-layout: fixed; width: 100%;" fr-original-class=3D"r29-o"><tb=
+ody><tr><td style=3D"color: rgb(59, 63, 68); font-family: Roboto; font-size=
+: 0px; line-height: 0px; padding-bottom: 5px; padding-top: 5px; border-coll=
+apse: collapse; min-width: 5px; user-select: text; border: 1px solid transp=
+arent; background: unset;" fr-original-style=3D"color: #3b3f44; font-family=
+: Roboto; font-size: 0px; line-height: 0px; padding-bottom: 5px; padding-to=
+p: 5px;" fr-original-class=3D"r30-i"> <a href=3D"http://r.notification.biop=
+harmcatalyst.com/mk/cl/f/sh/7nVU1aA2ng5gPemDqsOl5Na2dteZCa5/lUpuIn-LYfQ9" t=
+arget=3D"_blank" style=3D"color: rgb(0, 114, 202); text-decoration: underli=
+ne; user-select: auto;" fr-original-style=3D"color: #0072ca; text-decoratio=
+n: underline;" sib_link_id=3D"7" templating=3D"n"> <img src=3D"https://img.=
+notification.biopharmcatalyst.com/im/sh/5yMYfeLQm4NN.png?u=3D2BpAyz2gMiWncm=
+2gTYJnGDkrYOnUh75vgz" width=3D"32" border=3D"0" style=3D"display: block; wi=
+dth: 100%; outline: none; text-decoration: none; border: none; cursor: poin=
+ter; padding: 0px 1px; position: relative; max-width: 100%;" fr-original-st=
+yle=3D"display: block; width: 100%;" fr-original-class=3D"fr-draggable" sib=
+_img_id=3D"5"></a> </td> <td width=3D"30" style=3D"font-size: 0px; line-hei=
+ght: 1px; border-collapse: collapse; min-width: 5px; user-select: text; bor=
+der: 1px solid transparent; background: unset;" fr-original-style=3D"font-s=
+ize: 0px; line-height: 1px;" fr-original-class=3D"nl2go-responsive-hide">=
+=C2=AD </td></tr></tbody></table></th> <th width=3D"62" style=3D"font-weigh=
+t: normal; text-align: left; background: unset; user-select: text; border: =
+1px solid transparent;" fr-original-style=3D"font-weight: normal;" fr-origi=
+nal-class=3D"r28-c mobshow resp-table"> <table cellspacing=3D"0" cellpaddin=
+g=3D"0" border=3D"0" role=3D"presentation" width=3D"100%" style=3D"table-la=
+yout: fixed; width: 100%; border-collapse: collapse; border: none; empty-ce=
+lls: show; max-width: 100%;" fr-original-style=3D"table-layout: fixed; widt=
+h: 100%;" fr-original-class=3D"r29-o"><tbody><tr><td style=3D"color: rgb(59=
+, 63, 68); font-family: Roboto; font-size: 0px; line-height: 0px; padding-b=
+ottom: 5px; padding-top: 5px; border-collapse: collapse; min-width: 5px; us=
+er-select: text; border: 1px solid transparent; background: unset;" fr-orig=
+inal-style=3D"color: #3b3f44; font-family: Roboto; font-size: 0px; line-hei=
+ght: 0px; padding-bottom: 5px; padding-top: 5px;" fr-original-class=3D"r30-=
+i"> <a href=3D"http://r.notification.biopharmcatalyst.com/mk/cl/f/sh/7nVU1a=
+A2ng7ZPBHWpRdD7jtqoG9LwWb/iyknqJA6cU4z" target=3D"_blank" style=3D"color: r=
+gb(0, 114, 202); text-decoration: underline; user-select: auto;" fr-origina=
+l-style=3D"color: #0072ca; text-decoration: underline;" sib_link_id=3D"8" t=
+emplating=3D"n"> <img src=3D"https://img.notification.biopharmcatalyst.com/=
+im/sh/p1d_W2HUjR89.png?u=3D2BpAyz2gMiWncnvg03clpSCtuibf3bsfdV" width=3D"32"=
+ border=3D"0" style=3D"display: block; width: 100%; outline: none; text-dec=
+oration: none; border: none; cursor: pointer; padding: 0px 1px; position: r=
+elative; max-width: 100%;" fr-original-style=3D"display: block; width: 100%=
+;" fr-original-class=3D"fr-draggable" sib_img_id=3D"6"></a> </td> <td width=
+=3D"30" style=3D"font-size: 0px; line-height: 1px; border-collapse: collaps=
+e; min-width: 5px; user-select: text; border: 1px solid transparent; backgr=
+ound: unset;" fr-original-style=3D"font-size: 0px; line-height: 1px;" fr-or=
+iginal-class=3D"nl2go-responsive-hide">=C2=AD </td></tr></tbody></table></t=
+h> <th width=3D"32" style=3D"font-weight: normal; text-align: left; backgro=
+und: unset; user-select: text; border: 1px solid transparent;" fr-original-=
+style=3D"font-weight: normal;" fr-original-class=3D"r28-c mobshow resp-tabl=
+e"> <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"present=
+ation" width=3D"100%" style=3D"table-layout: fixed; width: 100%; border-col=
+lapse: collapse; border: none; empty-cells: show; max-width: 100%;" fr-orig=
+inal-style=3D"table-layout: fixed; width: 100%;" fr-original-class=3D"r31-o=
+"><tbody><tr><td style=3D"color: rgb(59, 63, 68); font-family: Roboto; font=
+-size: 0px; line-height: 0px; padding-bottom: 5px; padding-top: 5px; border=
+-collapse: collapse; min-width: 5px; user-select: text; border: 1px solid t=
+ransparent; background: unset;" fr-original-style=3D"color: #3b3f44; font-f=
+amily: Roboto; font-size: 0px; line-height: 0px; padding-bottom: 5px; paddi=
+ng-top: 5px;" fr-original-class=3D"r30-i"> <a href=3D"http://r.notification=
+biopharmcatalyst.com/mk/cl/f/sh/7nVU1aA2ng9SOhmpo0rfA6Deyce8gT7/fjcDZUuzFX-=
+w" target=3D"_blank" style=3D"color: rgb(0, 114, 202); text-decoration: und=
+erline; user-select: auto;" fr-original-style=3D"color: #0072ca; text-decor=
+ation: underline;" sib_link_id=3D"9" templating=3D"n"> <img src=3D"https://=
+img.notification.biopharmcatalyst.com/im/sh/eu-Wi4nDMdFV.png?u=3D2BpAyz2gMi=
+WncpofWYvkOgewH2PpQ6fPa1" width=3D"32" border=3D"0" style=3D"display: block=
+; width: 100%; outline: none; text-decoration: none; border: none; cursor: =
+pointer; padding: 0px 1px; position: relative; max-width: 100%;" fr-origina=
+l-style=3D"display: block; width: 100%;" fr-original-class=3D"fr-draggable"=
+ sib_img_id=3D"7"></a> </td></tr></tbody></table></th></tr></tbody></table>=
+</td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></tab=
+le></td></tr><tr><td align=3D"left" fr-original-style=3D"" fr-original-clas=
+s=3D"r8-c" style=3D"border-collapse: collapse; min-width: 5px; user-select:=
+ text; border: 1px solid transparent; background: unset;"> <table cellspaci=
+ng=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" width=3D"100%=
+" style=3D"table-layout: fixed; width: 100%; border-collapse: collapse; bor=
+der: none; empty-cells: show; max-width: 100%;" fr-original-style=3D"table-=
+layout: fixed; width: 100%;" fr-original-class=3D"r9-o"><tbody><tr><td alig=
+n=3D"center" valign=3D"top" style=3D"word-break: break-word; color: rgb(59,=
+ 63, 68); font-family: Roboto; font-size: 18px; line-height: 1; text-align:=
+ center; border-collapse: collapse; min-width: 5px; user-select: text; bord=
+er: 1px solid transparent; background: unset;" fr-original-style=3D"word-br=
+eak: break-word; color: #3b3f44; font-family: Roboto; font-size: 18px; line=
+-height: 1; text-align: center;" fr-original-class=3D"r32-i nl2go-default-t=
+extstyle"> <div><p style=3D"margin: 0;" fr-original-style=3D"margin: 0;"><s=
+pan style=3D"font-size: 9px;">BioPharmCatalyst is not a registered investme=
+nt advisory firm, and does not provide investment advice. While we do our b=
+est to ensure that the information we provide is accurate, we do not guaran=
+tee the accuracy of the information and it is not intended to be used as an=
+ investment recommendation. Past performance is not a guarantee of future r=
+esults. Investing comes with financial risk. Invest at your own risk.</span=
+></p><p style=3D"margin: 0;" fr-original-style=3D"margin: 0;"><span style=
+=3D"font-size: 9px;">Please see below for our complete Terms of Use and Pri=
+vacy Policy.</span><br><a href=3D"http://r.notification.biopharmcatalyst.co=
+m/mk/cl/f/sh/WCPzyXJTZ6vLwtrvUV2TOOsYVuFcipNt/xzyQiIZwKYDO" title=3D"Terms =
+Of Use" target=3D"_blank" style=3D"color: rgb(0, 114, 202); text-decoration=
+: underline; user-select: auto;" fr-original-style=3D"color: #0072ca; text-=
+decoration: underline;" sib_link_id=3D"10" templating=3D"n"><span style=3D"=
+font-size: 9px;">Terms of Use</span></a><span style=3D"font-size: 9px;">   =
+                    </span><a href=3D"http://r.notification.biopharmcatalys=
+t.com/mk/cl/f/sh/WCPzyXJTZ7390w5BqaW9A92Leh8jyX01/qrUGGk4bVJAZ" title=3D"Pr=
+ivacy Policy" target=3D"_blank" style=3D"color: rgb(0, 114, 202); text-deco=
+ration: underline; user-select: auto;" fr-original-style=3D"color: #0072ca;=
+ text-decoration: underline;" sib_link_id=3D"11" templating=3D"n"><span sty=
+le=3D"font-size: 9px;"> Privacy Policy</span></a></p></div> </td></tr></tbo=
+dy></table></td></tr><tr><td align=3D"center" style=3D"color: rgb(59, 63, 6=
+8); font-family: Roboto; font-size: 18px; padding: 10px 10px 11px; border-c=
+ollapse: collapse; min-width: 5px; user-select: text; border: 1px solid tra=
+nsparent; background: unset;" fr-original-style=3D"color: #3b3f44; font-fam=
+ily: Roboto; font-size: 18px; padding-bottom: 11px; padding-left: 10px; pad=
+ding-right: 10px; padding-top: 10px;" fr-original-class=3D"r33-c"> <table w=
+idth=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"pres=
+entation" height=3D"1" style=3D"border-style: solid none none; background-c=
+lip: border-box; border-top-color: rgb(74, 74, 74); border-top-width: 1px; =
+font-size: 1px; line-height: 1px; border-collapse: collapse; border-right-w=
+idth: initial; border-bottom-width: initial; border-left-width: initial; bo=
+rder-right-color: initial; border-bottom-color: initial; border-left-color:=
+ initial; border-image: initial; empty-cells: show; max-width: 100%;" fr-or=
+iginal-style=3D"border-top-style: solid; background-clip: border-box; borde=
+r-top-color: #4A4A4A; border-top-width: 1px; font-size: 1px; line-height: 1=
+px;"><tbody><tr><td height=3D"0" style=3D"font-size: 0px; line-height: 0px;=
+ border-collapse: collapse; min-width: 5px; user-select: text; border: 0px =
+solid transparent; background: unset;" fr-original-style=3D"font-size: 0px;=
+ line-height: 0px;">=C2=AD</td></tr></tbody></table></td></tr><tr><td align=
+=3D"left" fr-original-style=3D"" fr-original-class=3D"r8-c" style=3D"border=
+-collapse: collapse; min-width: 5px; user-select: text; border: 1px solid t=
+ransparent; background: unset;"> <table cellspacing=3D"0" cellpadding=3D"0"=
+ border=3D"0" role=3D"presentation" width=3D"100%" style=3D"table-layout: f=
+ixed; width: 100%; border-collapse: collapse; border: none; empty-cells: sh=
+ow; max-width: 100%;" fr-original-style=3D"table-layout: fixed; width: 100%=
+;" fr-original-class=3D"r9-o"><tbody><tr><td align=3D"center" valign=3D"top=
+" style=3D"word-break: break-word; color: rgb(59, 63, 68); font-family: Rob=
+oto; font-size: 18px; line-height: 1.5; text-align: center; border-collapse=
+: collapse; min-width: 5px; user-select: text; border: 1px solid transparen=
+t; background: unset;" fr-original-style=3D"word-break: break-word; color: =
+#3b3f44; font-family: Roboto; font-size: 18px; line-height: 1.5; text-align=
+: center;" fr-original-class=3D"r34-i nl2go-default-textstyle"> <div><p sty=
+le=3D"margin: 0; color: #3b3f44; font-family: arial,helvetica,sans-serif; f=
+ont-size: 16px;" fr-original-style=3D"margin: 0; color: #3b3f44; font-famil=
+y: arial,helvetica,sans-serif; font-size: 16px;"><span style=3D"font-size: =
+11px;"><strong fr-original-style=3D"" style=3D"font-weight: 700;">Copyright=
+ =C2=A9 2024 Scientist.com, All rights reserved.</strong></span></p></div> =
+</td></tr></tbody></table></td></tr><tr><td align=3D"left" fr-original-styl=
+e=3D"" fr-original-class=3D"r8-c" style=3D"border-collapse: collapse; min-w=
+idth: 5px; user-select: text; border: 1px solid transparent; background: un=
+set;"> <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"pres=
+entation" width=3D"100%" style=3D"table-layout: fixed; width: 100%; border-=
+collapse: collapse; border: none; empty-cells: show; max-width: 100%;" fr-o=
+riginal-style=3D"table-layout: fixed; width: 100%;" fr-original-class=3D"r9=
+-o"><tbody><tr><td align=3D"center" valign=3D"top" style=3D"word-break: bre=
+ak-word; color: rgb(59, 63, 68); font-family: Roboto; font-size: 18px; line=
+-height: 1; text-align: center; border-collapse: collapse; min-width: 5px; =
+user-select: text; border: 1px solid transparent; background: unset;" fr-or=
+iginal-style=3D"word-break: break-word; color: #3b3f44; font-family: Roboto=
+; font-size: 18px; line-height: 1; text-align: center;" fr-original-class=
+=3D"r32-i nl2go-default-textstyle"> <div><p style=3D"margin: 0;" fr-origina=
+l-style=3D"margin: 0;"><span style=3D"font-size: 11px;">Our mailing address=
+ is:</span><br><span style=3D"font-size: 11px;">Scientist.com</span><br><sp=
+an style=3D"font-size: 11px;">505 Lomas Santa Fe Dr UNIT 110</span><br><spa=
+n style=3D"font-size: 11px;">Solana Beach, CA 92075</span></p><p style=3D"m=
+argin: 0;" fr-original-style=3D"margin: 0;"> </p><p style=3D"margin: 0;" fr=
+-original-style=3D"margin: 0;"><span style=3D"font-size: 11px;">Want to cha=
+nge how you receive these emails?</span><br><span style=3D"font-size: 11px;=
+">Sign into your BPC account to </span><a href=3D"http://r.notification.bio=
+pharmcatalyst.com/mk/cl/f/sh/WCPzyXJTZ7Aw4yISCfzovtC8nU1rEEc9/yV_NDetkEp_w"=
+ title=3D"BPC Newsletter Preferences" target=3D"_blank" style=3D"color: rgb=
+(0, 114, 202); text-decoration: underline; user-select: auto;" fr-original-=
+style=3D"color: #0072ca; text-decoration: underline;" sib_link_id=3D"12" te=
+mplating=3D"n"><span style=3D"font-size: 11px;">unsubscribe</span></a></p><=
+p style=3D"margin: 0;" fr-original-style=3D"margin: 0;"> </p><p style=3D"ma=
+rgin: 0;" fr-original-style=3D"margin: 0;"><span style=3D"font-size: 11px;"=
+>Don't have an account with us?</span><br><span style=3D"font-size: 11px;">=
+Update your </span><a href=3D"http://r.notification.biopharmcatalyst.com/mk=
+/up/sh/7nVTPdhloEl2COnEDxJ5HgIGaSJOsIH/1Q_aXz4MG0ou" target=3D"_blank" styl=
+e=3D"color: rgb(0, 114, 202); text-decoration: underline; user-select: auto=
+;" fr-original-style=3D"color: #0072ca; text-decoration: underline;"><span =
+style=3D"font-size: 11px;">newsletter preferences</span></a><span style=3D"=
+font-size: 11px;"> or </span><a href=3D"http://r.notification.biopharmcatal=
+yst.com/mk/un/v2/sh/7nVTPdbLJ2bPbZUt1kMhyN2yt9SBXRV/ObOi7cBqOCbC" title=3D"=
+Global Unsubscribe" target=3D"_blank" style=3D"color: rgb(0, 114, 202); tex=
+t-decoration: underline; user-select: auto;" fr-original-style=3D"color: #0=
+072ca; text-decoration: underline;"><span style=3D"font-size: 11px;">stop r=
+eceiving all emails</span></a></p><p style=3D"margin: 0;" fr-original-style=
+=3D"margin: 0;"> </p><p style=3D"margin: 0;" fr-original-style=3D"margin: 0=
+;"><span style=3D"font-size: 11px;">NOTE: If you wish to cancel your BioPha=
+rmCatalyst subscription, you must do so via the </span><a href=3D"http://r.=
+notification.biopharmcatalyst.com/mk/cl/f/sh/WCPzyXJTZ7Ij90ViYlTUhdLvwGuyTw=
+EH/s7VyZdM43P4_" title=3D"Website Unsub" target=3D"_blank" style=3D"color: =
+rgb(0, 114, 202); text-decoration: underline; user-select: auto;" fr-origin=
+al-style=3D"color: #0072ca; text-decoration: underline;" sib_link_id=3D"13"=
+ templating=3D"n"><span style=3D"font-size: 11px;">website</span></a><span =
+style=3D"font-size: 11px;">. Unsubscribing from this newsletter does NOT re=
+move your subscription to BioPharmCatalyst.</span></p></div> </td></tr></tb=
+ody></table></td></tr><tr><td align=3D"left" fr-original-style=3D"" fr-orig=
+inal-class=3D"r8-c" style=3D"border-collapse: collapse; min-width: 5px; use=
+r-select: text; border: 1px solid transparent; background: unset;"> <table =
+cellspacing=3D"0" cellpadding=3D"0" border=3D"0" role=3D"presentation" widt=
+h=3D"100%" style=3D"table-layout: fixed; width: 100%; border-collapse: coll=
+apse; border: none; empty-cells: show; max-width: 100%;" fr-original-style=
+=3D"table-layout: fixed; width: 100%;" fr-original-class=3D"r9-o"><tbody><t=
+r><td align=3D"center" valign=3D"top" style=3D"word-break: break-word; colo=
+r: rgb(59, 63, 68); font-family: Roboto; font-size: 18px; line-height: 1.5;=
+ padding-bottom: 15px; padding-top: 15px; text-align: center; border-collap=
+se: collapse; min-width: 5px; user-select: text; border: 1px solid transpar=
+ent; background: unset;" fr-original-style=3D"word-break: break-word; color=
+: #3b3f44; font-family: Roboto; font-size: 18px; line-height: 1.5; padding-=
+bottom: 15px; padding-top: 15px; text-align: center;" fr-original-class=3D"=
+r35-i nl2go-default-textstyle"> <div><p style=3D"margin: 0; font-size: 14px=
+;" fr-original-style=3D"margin: 0; font-size: 14px;"><a href=3D"http://r.no=
+tification.biopharmcatalyst.com/mk/mr/sh/7nVTPdZCTJDXPIOlxg3FXGdDeiV75pF/OM=
+DeCmiNQ4St" style=3D"color: rgb(0, 114, 202); text-decoration: underline; u=
+ser-select: auto;" fr-original-style=3D"color: #0072ca; text-decoration: un=
+derline;"><span style=3D"font-size: 14px;">View in browser</span></a></p></=
+div> </td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody>=
+</table></th></tr></tbody></table></td></tr></tbody></table></td></tr></tbo=
+dy></table></td></tr></tbody></table>   </body></html></div>
+

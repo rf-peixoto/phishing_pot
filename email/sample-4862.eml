@@ -1,0 +1,517 @@
+Received: from PH0PR05MB8301.namprd05.prod.outlook.com (::1) by
+ SA3PR05MB9699.namprd05.prod.outlook.com with HTTPS; Thu, 30 Jan 2025 09:09:57
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=Oe60Lnc9KEkZKQgUeNUth64vPq9jMDUULfiIb8jHCGb2STB4SGvYk0Qi7IujEzpBPG4OMX4qouDk0yw+208iyb31s+Q2k9tSAj3ADqz34Hnze8IEt8Dqi+sYUCc24TFBBnSwHZvVU67imlmrBAVXrG6+PryRkQrk+aQIHDXxByrcIlKQMYMftyyIYeyzzlL9mLIlj3PPM9Hh/GooYecTJWKiHm8Qn+Ouk24TefKwAzT+54vlvNwYumntZ/ZB+0NEslpGoPI6NZRLPmCUf/LuZDuuwpEFY4bSfQ4y4wxqMEh+7vkzDRZDD7gHL64DtuElvJ97sh9qRNa5Lo3QIQUuIA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Bqh15H9EkiuEqm553XVxm0z387kAynsC0NURmp2GVmk=;
+ b=uM+NG6lgCA+CEskvAi590R2VsqL6KgIM9J6GunR5/PWEXSjQQYdyaOccirXUHDxymk/Y+9mP9azqGAY+f7F1/ZK1z24MsGM5dczvCIxYX9L4duoa8NTmW4Ec05utxUgxrkkL+IqiUWPma0bGEWmRKUHz+2sFCuvpSpeubXghbPo4ZwJSBz0st+HcOWdn2jxUU2s64QVbUU+MfWVR4U5bmilrLue02gpt/kcbVesTfyAXfP+pIgwFeDPgXOHx6IDoiNRc69lhIEMIbBom7qhWLbQGghIEuQxpDrEGexWmtPOQuPxGmf6pi4lLqJeumTnSu/LN2ZmfwvIJrs6qvWIa+Q==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.102.192.21) smtp.rcpttodomain=hotmail.com smtp.mailfrom=aspernatur.sa.com;
+ dmarc=bestguesspass action=none header.from=aspernatur.sa.com; dkim=fail
+ (signature did not verify) header.d=aspernatur.sa.com; arc=fail (48)
+Received: from AM0P190CA0013.EURP190.PROD.OUTLOOK.COM (2603:10a6:208:190::23)
+ by PH0PR05MB8301.namprd05.prod.outlook.com (2603:10b6:510:a6::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8398.18; Thu, 30 Jan
+ 2025 09:09:55 +0000
+Received: from AM3PEPF0000A795.eurprd04.prod.outlook.com
+ (2603:10a6:208:190:cafe::b1) by AM0P190CA0013.outlook.office365.com
+ (2603:10a6:208:190::23) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8398.17 via Frontend Transport; Thu,
+ 30 Jan 2025 09:09:54 +0000
+Authentication-Results: spf=pass (sender IP is 52.102.192.21)
+ smtp.mailfrom=aspernatur.sa.com; dkim=fail (signature did not verify)
+ header.d=aspernatur.sa.com;dmarc=bestguesspass action=none
+ header.from=aspernatur.sa.com;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of aspernatur.sa.com
+ designates 52.102.192.21 as permitted sender)
+ receiver=protection.outlook.com; client-ip=52.102.192.21;
+ helo=HK3PR03CU002.outbound.protection.outlook.com; pr=C
+Received: from HK3PR03CU002.outbound.protection.outlook.com (52.102.192.21) by
+ AM3PEPF0000A795.mail.protection.outlook.com (10.167.16.100) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8398.14
+ via Frontend Transport; Thu, 30 Jan 2025 09:09:53 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:65818F33ADB3A3B7110DBD16D08E4F225472ED964CBCCE0FCB63258E8B2C9D73;UpperCasedChecksum:F92448D5B1A1ABB2E63DB76ED21D2F88D0B896BAE06928B8BB0BED1DCA8E2D24;SizeAsReceived:19420;Count:46
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Xb1pBuKfF/AGXUp0DmCyJLI750251XtVrWJNlHBHiONlHqVn5T/jQxTf1HB9ePwG+xojpPI9kb3rQA/q2WAaLhI/sgY3Pws21MjfRKngoylr8CevConOKNiIeQuTfsfnZqHbjZqJufq0A0hS5Fx88tOvjEoQrLcpJF4GATlppJm4PdHjimAdDJpOLAEy4r+uMTrCYiLJv+0nSDS1J+HnQHtX5sOT7Fsri0q6/AkdihDQ5VqRnUm4b9c7DriJVt9D8CmQ3NGKIa04Ij1OKAx7QvQN4L/VGdSSD3eHkVcesPjJhZIYxcG5kJiNEG7VnvJKgBZg+LsRvG3JhKb8/7NvHg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Bqh15H9EkiuEqm553XVxm0z387kAynsC0NURmp2GVmk=;
+ b=SXM745/S4dlZ0jpW+aY4smuSRg5KS6mCfV4nLPf8QoH2URNt/NiWCUfRDFeejzOSVpTp/ZnefvH7d5xLZElTsp/IueqXAdX1sJJ3YlIAAUrcGHw5C/7EwI7uxrHNhsuA9dvlwGhluLY94MouX1yP5HkPQDVntA96If5KFCBlyaxF/9p6aO8yJO1z17jZCao9l7HwbCC3zXPnEBwoh8RFoXyUbvnly88RiUJPPmVbaSi+1buumhp2QlI2T4qMdEL5Kq/DL7rVY8sW86YzgVUEMmo0JkMXk5hMN4rpE6Ycr0kQM2xxXCHXgevLcqrywZmTWsObZJlCgP9O77iRmwbpqA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspernatur.sa.com; dmarc=pass action=none
+ header.from=aspernatur.sa.com; dkim=pass header.d=aspernatur.sa.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspernatur.sa.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Bqh15H9EkiuEqm553XVxm0z387kAynsC0NURmp2GVmk=;
+ b=poNcWtGWIMYNN44L0RG1ToyH512b/D8tsiRxiCFovJuPvr3Pg0HlhvaLVzmKY29Kel3WBZFP5atr8y6hge24T/pnuUHd/9M7xRKapIsa4tVHVSO3l59+giywq3Zi46+9mTXEr2aFhDjnUrnY5iLLBB440LaT3pbIgFnSXNaiot0iIV2R70MlpQ7ySw9svCf3pqrvv/YgaLC2GatEKO6YnnUQ1xhqcCbaK0VjNzF+iMHvdTP2I+jj9WUDiNOlA9ryn9z1Rpd+NmDwGyvhTpS9jQf8R+EkbA7CLhxKfu4kmk0akSGDK0pP9SJFbuO9bHx6jrhPBUp5GG6mEjQbdoj5wg==
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspernatur.sa.com;
+Received: from SEZPR01MB7218.apcprd01.prod.exchangelabs.com
+ (2603:1096:101:2a3::13) by TYZPR01MB5725.apcprd01.prod.exchangelabs.com
+ (2603:1096:405:27::10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8398.17; Thu, 30 Jan
+ 2025 09:09:51 +0000
+Received: from SEZPR01MB7218.apcprd01.prod.exchangelabs.com
+ ([fe80::85cf:18b5:e86e:825e]) by SEZPR01MB7218.apcprd01.prod.exchangelabs.com
+ ([fe80::85cf:18b5:e86e:825e%4]) with mapi id 15.20.8335.012; Thu, 30 Jan 2025
+ 09:09:51 +0000
+List-ID: <5OI1ucw6n.xt.local>
+X-CSA-Complaints: JFoDWkPgJH.csa-complaints@bitcoin.de
+X-SFMC-Stack: 11
+X-HtG07: UdgtbdkvvbJNYrAWR7Wg1gDwkl355IzTSHC/+kTIVfL3upcP/puGhev=
+References: <@mail-FF0.Bounce_dnO.io>
+CC: <manager_2a2@bitcoin.de>
+List-ID: <.7289367.xt.local>
+X-Mailer: HtG07
+From: ✅ Bitcoin Auszahlung Erfolgreich <lina_Hans_4249@aspernatur.sa.com >
+Subject: 💰 Ihre Bitcoin-Auszahlung von BTC#osxybi ist bereit – Handeln Sie jetzt, bevor in 48 Stunden die Frist abläuft!
+Content-Transfer-Encoding: 8bit
+Date: Thu, 30 Jan 2025 09:09:42 +0000
+Feedback-ID: 325-anexp#nret-fa:account-notifier
+Content-Type: text/html; charset="UTF-8"
+In-Reply-To: <D1P3SeNBqajLnJVbkpOEWM170QtcytayA5IhHSsw6maH38BKPrer57DdKAIZCbdAol4k8xEDjDdvWtwQvD2HvtxxARaOGi5fo3AzoPz4vOjsn9qXBAPnItbhPNhVs0FB7RF8MJFmj9cHg9WzWWRAtPJAJV0Vn87te3Lx4VVGng8vvx9HodYmkiZDn2FHQTB66BS46FLXTWNEaR2UpgWBH8c4Vb0exQSDPyMek6K3TQoIytvorvt8Nd2enOUOZe7kf9eSp79kClFAXEUastVTndEdmWe5Q7uOVvrL8pkMWvD9wDZcmjv1PeGTIwdzwOzyBFcaJ2I4Twg4nwbLbHVmchhIsYhRq0kCqR8Pooa4Qx3VAU3ALDRc3sF419mvtkIZCMzr1dWuik6cymjJEMz7v9S6OyOvHpoSGqx7XSZxqtzUjQop6jR7NledKKCOZ5h4Y1YPHrN5NqylyKixNEhW6h9ZcZ47xV3dlVVXPs4RcDhvDcpq5wmV6Bde9etYsjdQtkiPkAXwsJk535zk5gYw34dgFdtC5hb6XWhf3Jx8Vkl0LplQTlVeiZWtx9Pf1rlqBs6XZOmeRJA2CRZRSgFG3OeseFZLSlMFDQzEpPIxGCAtqa0tR3lUsek0I9zrcBiuwhLmSlNCgZHguUSleH2sovguSQ9xbCKyUzUvuYA0zQSyN16HkxVRoigoep542cUDhxH5LagySU3PNfTGsCeu8IzqJVcRc49dcjBStCrhZfxa6ijNZ2mcCmRCA1otszttiFRhGQ7oj6yPkqQrUhwqX919nYfZPu2uKOaU1FRU1hHsjX2obJnPe4CiaJmGGrSYfvn59TSG7LFcxmEBJUoJYQQAQznq7A03RVXVD3XGCJ4LfAj3XoyLFTRShJygpJPLP8EiaAR6jb8US2BtCQ9qro2lWhp2SThkQhGzlUn0PYJkTddL3GJVDBvTOFy7nVtloid85oaWL6avOUDt6WxAlg58
+ x4fmXk3lhRU4yS1FAEWy1mDCOAfXSaz4DCz4pj1P2mX7UpK8W0Lv8GOqBZCvrITIZLKlKriDgGU2Iy3FnM8DxVPDZRA50YtUKVc3db0baWu067MEKi5QHTFMipfixaVSJqAWmy3VLRAz9Kd981vflvIW8DhRPF8qHWcZRgv6P4trj2QD3sx7tApwUybL7XRf3ZfXb2g3JJFoDWkPgJHJFoDWkPgJHZKj8QL8xjSZVuN@JFoDWkPgJHTyDd5PrC8Fp2SDQmg4qU8QMwsfZ5KOw1c7EY9qaG1ftsMUCep67JdSpU7.CRjVdzJfcgqUk3UtKye0MTD7vXs49GxiIrqb4ZOhuk7Sfs6oWM7Ef6BAjnUXAOiVKXNyCAuEw3NAOf3gbflQ1vbkeG4SICbofzFAx9ayDKPIXUGkpTjZrEeUVJHGuo6BXCUVcFFjEXM5vkPSltNZ3lryoJjw5DFVgwKYuV6SyfxdqeEGua5lKulojfMswv61AKTMJ31NqT6bD1ehs2R4bxpimbYRvolenQWpjhjIR789cPiCRJ2NjJRKBQmq7AfHehRPmVDMtLPctnofquqkMpvk6CrcWFCsxiHgdDB1x7LZQzkt3F4jEJsvyCthAzgvwhH7Qf4e1mYe7L2w3ewBycEFZdCo2eSWUYbQiGcasHcPU2Mjwlo0KCNBrE6fow7E6MWCHKWHjaW6A0toNjSjwti8eLefTAmTqByQc4mirhXBVD89DocCKCGrCKU2Xb4BlI54GCrZ6UCmoZdgSBTg9h9MnFX7xxQdYrVYjdYzm4uRUVzBunhDOY7hG4TvKi5k86NeOnah2EUwpfPcCPdRkT7StJugGB8i2hII2Ylhehs9vrRBYgE37rvmyuH08LQ6S5QNEGaqJLChYUa9MFgTQBsQ04UiBJypzhPz06gHMeWLhLvsiXOOyJBvWLzblibjAKliQmJ5KpnbyiLSg1g0w7a5T1XkIJJ1apFlKQVF2SaTjNGnYBfo9
+ b
+ doNj0t4WRdw7NxBKZ81fiFNtmkitwnyIlawBrXykr0JDlWMCqCAYBggdfZvBfOaACa6wonioFFX5cznIGvk178yeMpk3glwZBknFVhSm7fMlpLIbvmBqIW6LGp8I9K5i7vj0XLmGu5fJvNagXbhvuHEedyGJG0kmeC7UZxG1qcfujrCieLpF5duNOPKNsrPjgc91hGgH2SBO4QfZBWtvzgywz3OsUOQ6H5w3uMzCE5ZLZX4rb0hH3UWA3A6wQ2mfkIGu51V1xpc0gmSactUQZLmE5bnKYn0fahDWjw2IYgW4V3XletbjwQLSz47sMIdSBteC3jHtVtoRghGmJRiUXaQhn9SXxM2S0764UU7tEYWfVMMNNv4NR94VtQFwqnRGNHQmm6jMMuEUwiLRHhqDFFxL7Pgka7B8lt3YQ3OzpbthLlbls74RhfCm3SSh9tby0xjKLBCsUEUgmieYriks1CYV6RX6HZ7A9ZhZlvQfsgYu5oiQmhFW9gvzChz6vFnk60T0PsrlQtILUEYsKWNr5aAgiDcPCFWkwW5kRaRoNuMwTEAx8LuPYFDBq281Th0VgXkYr2nkJxkBClnWmrcclaWbFKVu5ejHBl18ePXwlK6tlXlRQQdfyvchEMfiqkjYOaXkAgilK0jRg1Q59dvhtq7pz7UJwxJcSDDEOOU3fTJjKoF6utl1Ud7qOx3zs7aCvDCQXZrApE28SGuuJqLRxIc7FTcUPfr9kA772b6hQcqgHG3VzgkAvPASBZNvjgBngk1vjG8LCHzJnWNpWlvO1966Yp6Z0yM3uIMUXaItXKi4tHun6NgsoeuhhqLuaxy5tuDPqo88weDVMNx2MmteHerhLGSZuOoyvSK5352krFy2GOej1l1QJrkQvwkUG92lYiCkAq3YooFYbbtohNhh1bXHeHhUojKfpbEpr0JTIOP0P1HgT0lpDtV50XF6TC4w4ql5KSwAdABOa5JLWohiNRJIeV1ilxc61pCXL
+ F
+ iPqaBx3qXWhA1CDqN1WVnpd7Ecdt3Zt9fNSU6pEisSkb08AMQZukNy2nkCM3U5fsqOzHth84m3cD0BkKTDaIENTp6ubcArO5hNn4LHJjbJdZgDULNygUaXr0XtSvb7xYn5yjfDrj7Yj89D6uabOrlZvsWy3VtHQrDW98T1n4x1XhVrQ3SiRkem62VycqCzackx3n9J3z4WxpeQpb0dtr8J4Wz6sLYq5oP4DWeOS4jIc5uKpN0ZaiGQWjTmLHzFnW3jzmB590tb8nuWeJSILaIVVAqFqJ3GhlhSJv5VBJ3XvnjN3poR9JinlDJLlKRNWPa6umhw4lFTSmIgEgqWyAr9mp2xs9ATDeRyGoPbjK8uykCV5eLIAZnSL9uiR3kq9Qne4FtmJ2fHFca37sTbkt8614aqxTQVCDMVJUmCvPDTc9dIL9wJcKrSnL0RkqWcDM2dmj6R0rTyKtt7BrkV1LculiVpC5l6JgmfIPhCn75pghpwFf59pMFLOKg6PDfUZjBccD5IQfyYZRPoHar8RG6PfI4JbCCJLMspmoZnNsFatAYwZ0e5EeqMnv4YbHiRtoPrgynijUfv0rRtvtmfQjtrR5fx8lakMKWGUXYjpab7VjA17g4DkRER8ONbMr9WT8RtrvcS11REjI0I0OGFpH2jxRvQyn8ell4jIEA4ZbYdTljZvm6Mudx3Rp9ETBpRBQNIELf01oj1GrRFNh98Xl4lFLLzRJrOUOnG37erBg42mAzfpIfYxSCCT7wXazO4L7Z478ESDcz2dBUVOHphlgQ2zBCzcpgOqPwllPeXc7spZdhQLBPKHjWSaapXKgORKDTISIT8Fv24TwfwuibQyNe8q06P3nX4fpBMrhfrfb5dKt7dSvgvFsJJIGEpENOFacXDXdD5r2B6oV31c7QO2xJojAD1dYmKm1LYQu2Vv2Bd37uAkz5tHYBNiRyeah3M1bKBZ7fHEQKwMmnlUdncyPtRYmw1UPHPmYl3Cev
+ B
+ cLjezPDm4DPwZZ13mCwpM3m1I1uPJHlYgmOwXe6n47H2CmORsuSJgYDlwEICofWEigXaSwnH5zzlWl9q5YnVl8aPWVFmnML9Q4qv50CjVEC8lniwGKqHxZe5FUkdiujTcPOUwHAs3vmghmUiZ9I6Ea1IN9IrIvEmZeFYPr8Bwf7rGbQOpjOBCvDnfPnUdeGS8oUsiVfH4z5r8aJJQzpyo1g4844Qev5RLhNioz9YRWDVgrPckfQnOM86izuDvBwiHDPDzKnwuQuyzuoSjxpGsyRMyZKmZqUQ58DgBVQGeDBMS5B2egPyXdUx4HG9DIbG4BlnYYresvDuLirsgTEDKaa7jh5sgZDzxYRAlLdnn2I04Qdt5aRqTHTdhLwy5O6Ly4Cr6gJSATZuiYkHkEeRaAmP8pEvVl9XginxaJQC8rHdyubEldZd4s8H5fOO0nam8idwXISWvhtMxgdWG31OE3NiVublwdsOJMAYQk3Xnfqz6N5DmfxiW0471FoqYHn42Jc56GB94Wen15PFJbsQsLlAl3FbRpfHJJzgEMW2crii8r23vsdCntwIFO2oKWC3HOBsL8mEziH4PXqZQrr42uCD3Cn5y6Jt1nX3jdm5zZCVg7RO0SerrwBJcHFhyfEkEKxDsPVN9MDZKKtn4hCHexr3l9jeA4tsO6FVbl7fexzpFTz3Mu1yw9oBmBDVQ8rSwBwT2vCRbvdX29JFUpNBj1BlFEiC5FZdAlOom4mHE7AgxhmgMiH5WHRGWWvYSAYTGQ1bxSsqdXVUqCkAdHbEpyTFOgHiqvLMUsrBzxheXgiDarZV7X7O6IHVX78nE47D87Bp1lics8y7FpYM9nZf2I5u4TL3tb4XqtVQFeQWkmZNoNPQPeTfp0QIV89pa1ONMuWEd52FbBjnaX8Ioj9iGbbOjFJ4yLeoPdsruvAIpPtVkRlxagAgTchhl7OFe7jWSrSc8zkBrVrxzSrnScQgpLwHtvT6zXI6zlEIF
+ Q
+ I24tZrqdd8IC1NOwJjU8rkrv3smZEHCC8NXtZTgU3aWuSUtwpluPBM5rMjHh3Wa7kdK8Q3orgiDJ7VsdG2yWqFFs3xvxLLWZvTYbu2ZxwhHwflgWg7GGnmFTkRm9iWLsHXh65AW8EBWJabqPC2QNoE3tlmqellQaRR02g6F2S85QW9XyEwi3QS8DRFlPAKhQDAXRymRMzVF68kLWXu9AISSS9aIX8Hh56G4NTUDUL7CXJ7zz7m9W0PC42VXdF6TbpwhUlsHTaBb0SI6XKUZdxpjHuR5bn3ZKALFinX2RpDKdm0FR1leqdESyAnzjbKfUcoHvAtJDUxwkGdOCgNFTzLyduGsgXhNFI8YW2NLRxEF2rxjEvgFjXcrNg0WxvB3wahUspENOilmlEvktYk3MflWyIoUd8AzvTp7YgoTRdg9lQhUlVCOWdI1CwQ5v3Li3BXvG1m8WdOT9TriabvixJRmKzNfoLCppJ7GYdXtvzOfs3owWBPD21RJgxororL3p28Oh81DzBh3Wm96VPyZROJ2L7OEthc4wwXxhXH5s5uVvh644PLJjOqU9B7VsgioPjh6wMDm9LhqfnqjAptKps0egxiI1RcUlu86t8PNCb08iTACmMr5e5k8C7JrayTYfhhAt13VlL1iEiNVhIuVm2jTqXPrg7FrtuwhKFrC2FcWRXrC4ofbnsLFLexCIXD4d5IC8O24lI1b9Gaxp17sIRu3gBoO0VvINYgsdWwOQckneqZhPhnKSq5eCHNQoCHmdDrHJZwJrcr2cmd9vM82sZ6ui2KVuxrQzjBen3ulpxBIBCQXROvn4ZFq4tEgT1nZYzInq4f8u74StqDFl0g1VafveVzlVa7pwWxdVF0HdHz8rALYs3icsIfl6h42k9H82YizgZXZl6ILCY3zOrmwBXJrmxb8jcmxXwgOlEAMDOiXWiK5x50dGk4tVxXjKXAU83b24Y3q0fIqR657okAQp94E9aupxAyxwxMpHa
+ u
+ 6bsNzhk4MwVQSxmIUl3WmjENlY4ccP4aKgGHYxumT5EgcJgOW568MWNv7Bg5DREWQwUKKEJDsRVsWN3f4J3AOj1P6wNjhpPg0NHwU96n9rE3Be8DkvJoh84hRwiCl0MCCXjNmvV6Q5TMcQsyzDRaRess6kgopXYCyhr3o7e3CNExrbuIXpjQYPLaJHVlJ849H1rNemAkMNg4t79JGaKl9FY0Tow2jbjWutLt318pLxqWfWcVvoyvINzTacwIUHhVdg0iWyalE5RiXgQTJSQJSvKBm6Q0omNNynnQC9A6Fz44oupyLPD9gKYooOE6dPAaYvX55hU9JXwyEkav1hIxytXhegVetIaFW6TgE289vcImZykSJwqnLnGipBHaAoyITmKzouc4Dsv8V9U5Kvw27HNBwYvWY3bCNX2oAjSgaLGugdseuPJxNfl4SZmRMmhs2Uh09cjhkzNN6IcqdrqAwdiQGx8kNZXGNcxJAygLjMxwiQhvSAnED3y7iyFO24K07qU9YvHYwqpQ9Hhx5AfZsZKw7Y9wsrGrll0EuY5GWhVUwxe6yV9vppyj3xyVXclGoPlSQaDWDydkmdJ49YNbqtEfw5xK4ED5xkT8EImyBZUEzGeSQQT5q7GhVodK2UyTYe3dJ5xneTHJJH3lCNinm0N7tJnYOoWBst64xF85gfehAQ93bFlGvrXPBMSOIWkhPZcruHqijmSNUKNpOB7oY4kZBs2XBJaEbl5AWh9XKoaaY6ll9sacLTRdWnZNk6gEA8tCCIWYKKTVPnAvfe6JPzvevizXP3FOomekaR9k8dStsr0apVwY9gPPVg74WEhzpaf2mnDaGkjCHZYFVMbSvdSEZX4XRrWN9Y7AzpF69cbkQImcNbSCrf9yviO7QdjD62vl3P2aHQgr2hi8wsd7LyiM2IQKoaISEoJcs70nVQ8P7PKMH1QuojKca0jyOymU0TLOyspiP9YIaRERB3bLFZPGKPmh2jguAnZlI
+ Z
+ XNhXrMXmDI0xe18xHtM3aX4ZwZ82GAkuYQMsH6QA8Bk7t4FNADOVqv5VGtgn43KZEGE7TtvRhH6FNAngwEI6muheWBbNsXneRWqiDdJ2Z0ZDEHVJiLyaWcufQTVDMZd02eScE4sWPReeNoo7MAU9wsCkZxnCFcpmJUEg38uV7In4oKzpYWx4z3ucOvOH8R5fiJ95Q0LW4GFip0vUdlgip2kyK7UpXl1AHc0TuJ3Sg1zIM0M3AbuTHPqzAqVu7LG0dSnfpUPUuH8JyccmXfnvJ51ILV2Upzw4rMzPbAD2Rvuiw2S87nsu4dQ0GOqkpOBWUINvya4JbiTbATWVO6WvTl1vkhS14xGk34TH5aosqWUbQ1E2hD9dTLaPuoWg34dGxTkhWCpVBTYQdsnx5lmhXiVWz12gmL4lgLEBqPJqlfhIrDj40t1z9NCAinGrWyY3nt4Ew4TgHx8QptVOI5v4Qwiyz1uDGNgYQclgr5BuBm7CRfoZX1jEQ8KbkbUUSDDC16PBaxWxJFoDWkPgJHHtG07.1ZKj8QL8xjSZVuNeh5cZg5Muq38TDYDz0CpZPpa21LQ0LNis8nrWVyzEAtXiszyxOua1cJiZd01l4OBEqLHBu3ieOxI8AanTgV415hIuS6Hpb9Joj92J7j8g9tqoPId0BFVyIfGtww6y1yGN8s8jEmMUoUaYloVX54r56CzAlCZcWznc8ojFN6m8JSscwWQoYgjkNbXbGfNg8LFToxejz4l4ElfHutxcxPv4JfHEAIoiKEVVWXjwHVl1utdkeOLCwEd0WV8H16tSyhOZ4eKf0QRbh5GaQgtZNpj1NVTRZ9lXTBGXMvR6WcfsqVQOrnGNAOThFKNUaOZhYdWgOgFEY2neWTdqMWQ6D4b0IIWo6lHRj18DvNyQ7zzkaIaV06I0RjLFIXIXKH4zjFukT4TzwA9jTyAguC9Yg3F0ZcgpDOFbnScaAFFItZbBAzlmzocR6SqNSQJia8OX0
+ T
+ EaFKL1YtjxfYsx0dBaivlVT2ve7yEA6ojdorC5s17bMtQucMVvE7AQSAMOBO0EJvdccT2uDH8eQSWA5WkCT4ZtL68Jnh7eLVZqkLrkZTcJRsdMi42zdhgJO8BDuQxX4sKDWPsKKszk7xB5GQs3B0lfGXLfCxOEK24lEAfOmpryCZco7N9Yj8vL71RgavCd6a1YS1EkjVq9evOkYI29EUTV6Dqc8IJsSV4pzNuXS5fUMbN5azCjTtwBN2iRy8Nkl8DlOXqlWOWHAomuw3H4Gr9k6tNFTakhTxPysgDP5uLIY6kQORaf7GlywPriEAvCToORHNCeN2xlxUPnonH0im3DwqHEjsXScADxXVbonW0DTqNqw6Yl3FFZpumCh4BLh2NNmmBNuYYWXw0zCGV76YDevJYohrfZbkGl8949VoWT88xuK4QGBLqRy35fyMMUPDyMhY5hNcj70Q7SqDNsDB69UWGrL2DCmJMFf8pIMkIaT9YldyQyizC3wEkb3iQUX82WUg9t1bbiqxRDfSXitprY7tCufvOuXRbrWnQtJ5Du3ieEJTmVrW5qQbJelt5wxQPAIDcEmxhSFNMVPT6JAYpiUk9wkbIF4RodAUdQWGOKqzNMTBALQ9HThHYVZmQJFDaaCwzVQlwYVVmCn0niKN3ic6CpzL0yVEIXOYj6KrND53P8JjLngWrF4UY9Z6a7exi0fTUfyADLyzpSOG2ASnxHefGCLnC2b15y5VaHqi6DMdY7jFBbtodVtmq8xvDzc5IkXneOgM1L14wOvXU9VfR7jIfbBRBMC6HFaXyBKlrHPTDB0QQGbG9LWY5z1ByUnE6JxMJMmVTkgWn5V0YxU35OvvfEOjWWSi3KvQ8cWESzLuu2xBLUvx27ayayJBGw9y0RQjNAeReNQa2uoGH5GLTTz8rYpfm6RZHUUcPE9xfZ8fXcLssP8GpElgUVVSJRzcHz9gbCpSlFpCnu42HauJI8yK0IDXbwKqjdLkZ
+ R
+ u20rWcZVm4kqEAnpF2rlpBLoxhW6fV6ivLCkOUUhSTOjFOeg2mbeUHdP5iiCOYd2FlorF8zd3ifF03fTbFEc67ts9FBIS6K5YowI82r3p2be4gge5LZH3PQDtbzGpi9Qee2mfsdjGWLIm4bFLOsaJryUZFH.edu>
+Message-ID: <ZF3lf1bGTw-Ct-Y9ADdP_CRjV.TyDd5PrHg-__Ip@YlHYLyQfvwxwExfoUPQRaITkqiY2NpE7L93v9uAnlXNpzLyExuuyHZPkvAXNKRXev5mqGNEeNpa9NaAMpo4rOuA.dcccd.edu>
+X-ClientProxiedBy: BN8PR07CA0020.namprd07.prod.outlook.com
+ (2603:10b6:408:ac::33) To SEZPR01MB7218.apcprd01.prod.exchangelabs.com
+ (2603:1096:101:2a3::13)
+Return-Path: lina_Hans_4249@aspernatur.sa.com
+X-MS-TrafficTypeDiagnostic: SEZPR01MB7218:EE_|TYZPR01MB5725:EE_|AM3PEPF0000A795:EE_|PH0PR05MB8301:EE_|SA3PR05MB9699:EE_
+X-MS-Office365-Filtering-Correlation-Id: 90481c80-dca6-4ff6-c4f4-08dd410ddc80
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|29132699027|41320700013|1800799024|376014|37640700017|8096899003|7053199007|13003099007|37730700002;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?STBkV0Q2S0gvUjRvT1RiSVRJdGVNaE51VmRBZ1h5eGJkTVJWeVB1RS9iMU5D?=
+ =?utf-8?B?V1VBQjU0WnM5WU1ObUEwNjhxS3BpSTNHT2IvVzgxdEFPRjRPMmQrdGo0amZw?=
+ =?utf-8?B?VFdqTHJqZUp2cFBNVG14eGN1MS91Z0g2WjlyeGJ4NlQ2U2tWRmFqcXcvSjVy?=
+ =?utf-8?B?dXRzK3dua2lJbnd6KzlnTldRN212QzRuN2VqWWVpckE4ZU9MdW1hdm44eDdz?=
+ =?utf-8?B?QS85R3E1TytUUE9zZGhZd25Yc0paajZBSUNXWE9SVnRwcWxoTEVWQzBjRERr?=
+ =?utf-8?B?NjUvWDJDUitIcFNESHl4c2h1L1N1cVJNOElxY21tOGF1UzhHTVJGOUxMM2lX?=
+ =?utf-8?B?VHA0UFMxaklFaC94N2ZKeU9JWkVweHdocUkwdjMycU03Mk1sUmp1TnFhaHdJ?=
+ =?utf-8?B?Nkt1WXJKYUlMbVNEY241dkx0UEN1OWhiQzlWcTlHbmpjK3VzWGpoWTdUbUtF?=
+ =?utf-8?B?c29keGFCNGU1QmhqVTRQYktWaDZWSmlLaXVFdG5La3lVaGVIcUhvOEFScW54?=
+ =?utf-8?B?VUsvWkJBeEJsQXJNQytvQm1YcXRodzRkZWhWRy9nTit3ZVMvaGJGbmNwaDhv?=
+ =?utf-8?B?NVl3cExGRDd5T04ycDNNTXo1NzF3MWpISDlSOFNrMnNOdlBLb2k0bHhZYkJa?=
+ =?utf-8?B?R0VlQ1kzeHpiVXpsbDlSZm1NbHVLOVlzUVpGaGp6RHZ5NE5HeWVYVTRwaGtl?=
+ =?utf-8?B?cnowOGZlTExkMHYzZ0JRZ3hheGp2WERXR1lXdU9aTFUySW1nMFQwajRrNmJR?=
+ =?utf-8?B?K3dFVFhaKzBKTnZzeTMrUlpPdVN1YlROR3I1bUU5SUVLWExlRWJsa0ZsVDRQ?=
+ =?utf-8?B?UkptSjhNZ2VKMmJXSjArNTdtc2dHajc5MHN5RGd4ZWd3YkEyY2lnU0RXZjJD?=
+ =?utf-8?B?ZUN1OW9CS2xNRUFHRnEzNytodGxGMUFOVWhYejI2WU1ibmJaeW9oNGhWVkRT?=
+ =?utf-8?B?aEhHdTQvZ2ZEaUhFWHVMRldIMktHSUJZcHA1U2U5a3g0RFhYdzlWOWR6eU5o?=
+ =?utf-8?B?TldOaG5jcXkvbGNOZmlxRmxHUUdJUWc1TmFCN1YvTURtdWVGWGNWNmdwQkc3?=
+ =?utf-8?B?L2NzbWw4eFRmbXc4NWtXcmNqZE0xdkkwaE9YejZBSG5xSnpXVndJWnlRRWpL?=
+ =?utf-8?B?OS82SUsxZVp2anBLV1RLUFRXNVh2Y0R3VHJZRGQzT3ZUS0ZmUHd4MFZFTHhR?=
+ =?utf-8?B?UVdmeEVaaXk4SGUrK3l0SHgxdksrMnd0dGRWQTg2Q0VUY0hDNG5JZWkyNmo2?=
+ =?utf-8?B?WXNRRUgrQzhXRFlJaDRTd2xlbDBHWnEvZjg3bTFkVTVGYzZVcE9EajdtRjZy?=
+ =?utf-8?B?RkFaekQxeUZZajFFUzlIeTJmWTNhTFBVU1hidC9aUGswOHpMaG5MQmFWbzB6?=
+ =?utf-8?B?cWsyenJ6ZndiUURjVjgzMmo5YlNhdnlVSEkzeGJsWWRVMDVVL3N4eE1EaUxD?=
+ =?utf-8?B?cEoyWWc5dUQrSlFaaWx3TUptZFdUOWVXV3VnYm40aEs1Yy90VzRxblFrelVW?=
+ =?utf-8?B?R1lwZkEzcm9DZVc1TjRvTmY5MHpTYStuU2Y5MkJ5R05QWWZEU1pRUWlYU3J0?=
+ =?utf-8?B?VVR1aUg4QVVkVFN4TnBWSGJuQi8zMmV5ZWlMYVlKVllnZy8wRHpEeWdaNmEr?=
+ =?utf-8?B?OGQxck42Q2NNazVUTkUzYVBiTFIwNUJsVmlxRXBZZzMrV0JTeXVHbHZYdExH?=
+ =?utf-8?B?Sk84aWd3SkpFd0pKalBuNHZNektvOEVhcjhGbFZFMVBrdVRXOEdxbGttTFdk?=
+ =?utf-8?B?dVp4SjlrVW1RSzVDbUZiSXpyMGVDVkJnNHl2TGtub1p3QmJiOHRjT0dxZDMy?=
+ =?utf-8?B?L3dJR0daQ2p4VWh0YUMzQkt3YTJuVGkvcmMwZ01HM3Vxci9ScDlsM1hYVzhz?=
+ =?utf-8?Q?HlmjPLqkCsGvS?=
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255;CTRY:;LANG:de;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR01MB7218.apcprd01.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230040)(29132699027)(41320700013)(1800799024)(376014)(37640700017)(8096899003)(7053199007)(13003099007)(37730700002);DIR:OUT;SFP:1501;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR01MB5725
+X-IncomingHeaderCount: 46
+X-MS-Exchange-Organization-ExpirationStartTime: 30 Jan 2025 09:09:54.6285
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 90481c80-dca6-4ff6-c4f4-08dd410ddc80
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: AM3PEPF0000A795.eurprd04.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: AM3PEPF0000A795.eurprd04.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: AM3PEPF0000A795.eurprd04.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 1/30/2025 8:49:25 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 944578fa-6bb7-461a-0de8-08dd410dda90
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.102.192.21
+X-SID-PRA: LINA_HANS_4249@ASPERNATUR.SA.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|2phishing@pot0799006|42200799015|67000799015|970799057|2700799026|50300799015|42300799018|20103052901057|20103052903057|20103052909095|461199028|56000799018|9400799030|20103052904057|20103052914048|440099028|3412199025|21101999018|4601999015|1360799030|1370799030|1380799030|720799114;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2025 09:09:53.9722
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 90481c80-dca6-4ff6-c4f4-08dd410ddc80
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: AM3PEPF0000A795.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR05MB8301
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.7815175
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8377.021
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9710001)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?aGFNUXd0aXIweXIxKy9vdXZQREdvMUx3VzFjVW9nVWlFVGhVbm9mdkgzcmlI?=
+ =?utf-8?B?L0Y5cG9jMFhQbkhuNXBGOHo2ZHhZanc1NFdmVVZwMFpjaDlXc1dwYXNJQlQz?=
+ =?utf-8?B?Z1A4M1FodEx3Z1pwejNnbkFncm1yT29mbGF1eFRHMXh4UUV6U04rSGp4R3Zs?=
+ =?utf-8?B?REt6NlBlZzJxMGkvUUFaNHczUlFPdDhoQjRRR1c4MTRuZTU0YkQwMmxDb2xN?=
+ =?utf-8?B?NCtyV1RSSHUvcTZFcGVvR011MzlwRmRkYmU4ZkI4cGZmNTltS0xWcDNpZHpX?=
+ =?utf-8?B?c2JCSFk0RzR3UzEvc1FoNWxvUkJGSGJla1NNZUxhZkZWeVdVeVBrMm9GTlJu?=
+ =?utf-8?B?NEdwdWhLVkc0cWtsVlQxOFZJK2FlZ3ZvVWdmRjZhTGVVV2JnK3Evd2NmRzFN?=
+ =?utf-8?B?dlhFREdKQlJja0duakF1ckNBL1VyVElUYXl0NjRENzF3RnpucGNXZXdmT01E?=
+ =?utf-8?B?QW5QZHF0VTJ5eUhMaGk1aTVnWklCbjRuREVyWWUzUnFLZlpKM3dqSytoNzA3?=
+ =?utf-8?B?YlIvdlMzbnlzdk9hQWZtWXVrZnk1SzUxa3AxdVBNWUxuN2Y2ZGUrSVlmMHFY?=
+ =?utf-8?B?MEMzMFNJK2t4RWZhVk1LeWtxaFA1MG9ab3JCOTZ5U2VsL2xMTHpjOGV0WjN3?=
+ =?utf-8?B?NG9rZDZFLy9nQTcrMS9HZFJWMU1hMUZKYXZ3cGpoUmZKa2RqS3VkOEZHQXBB?=
+ =?utf-8?B?a0xyakk2VVdRVC9teUVPbTJzektLcW4rZjJDcS85MlVEK0RzcDlXbWFraXZK?=
+ =?utf-8?B?Q3RKOU9vYmpGK1psa3ZRZXJTN3pWMHhFZnBUOElhNEVtS1hxRXpIenB3NEVI?=
+ =?utf-8?B?K1pwSnZFWFo4UklQMXZCQVVnb1ptdkp5a05RZjdrblc2Qm1HT1JEOEpUWWoz?=
+ =?utf-8?B?NlE5WFljZjlSMTF6N0VvNHBMK0Jjd3Jic09Da3dlcEl1aU5idFF3V1JtWFE0?=
+ =?utf-8?B?QjhtZXVjUmxOM2hqL2hzOXpLVXpYNGY2dm1hM0FURUdnOXJHb0VPVGpxL3NL?=
+ =?utf-8?B?K1haNUp2cDAzNUc5SndlSnVoVDRnZ1Z6TTd3YVY3dzFMb3pBS0pkZ2tEZk9j?=
+ =?utf-8?B?VVkyWlQ2SUVhT3hjd2J4T2kxQTB6a1VkTkc2d3YvSFJPTHZwd0RiMGhEWGQ0?=
+ =?utf-8?B?dXhMd3lBYUpRdjhMeTFUTHdTb1pCNFNuUWZycmpVZ2RVZEh2amRwVnJYb2Zz?=
+ =?utf-8?B?STBOcGtjRzQ1U0lZK0xSWHdjYkQ3SFFGNm4xL0Q2RVM5TDkzRWt2TjlqZGlm?=
+ =?utf-8?B?VEs2WFVlV0dWTHNSTGRjeCtRRFR4bFR3c09KSHZzUEZ6MFNXTS9yRTNDQUVH?=
+ =?utf-8?B?cTh4UEw4WlRaT1haRjZWNTRrRktjMDdYOHg4R2M1azVBMGtrOHVSVEZOR1Qv?=
+ =?utf-8?B?OENQUnVCOUlySVkwNkdsMmE4MnN0U1lHOExLeWJwc0QvQVBWUGZQb01QMFFG?=
+ =?utf-8?B?YTVnUlV3T0VVR25obGl4R3AwR0owbHk1aUdjTlRNSEpBSDlYUS9LNEtOcjVU?=
+ =?utf-8?B?WG5EMUpqelhFS0ZIK2twUUJDWm90TjlsZVBCQXJMbjZyeFhIQ005aFRFUkpR?=
+ =?utf-8?B?ZHNEWmlEcjczQmY3Mld2ck1zaXZQKzNIajlYS1A4cUExWVNBMFhSelNKdi96?=
+ =?utf-8?B?dkJGekhDT3RuZVdXWS9ObTZMNEMwOTJ2bWgyaVpSR3MwYmoxeHVIT01kRWpZ?=
+ =?utf-8?B?MlhQZkRNWXJBdzBSSmdIL1llUW5vUExXTkd1U1FFRVhCdEZSdWxvUG1odllF?=
+ =?utf-8?B?WVRyZDZLUm1YR29iemtDOFJKN3c5S3p3QXYrVldWbGd2QVNqc2lXVmFvREFw?=
+ =?utf-8?B?NnF2SThEYnBVc0pKUHltd3VtekNVVmtjNGFSRlZvSzJEUmRKMy9qQ3ZrTVFl?=
+ =?utf-8?B?eWl6MUZDWExDZmxJcHJsYjhPd2FWVjFyallGSWtydEZ6NXlZWHZyTHVJeldQ?=
+ =?utf-8?B?T3F0WXJvTWRVbG84RXVYd0Nibkg3ck1QS1hlVWkzRmtzU2cxalNJaWxBUlFN?=
+ =?utf-8?B?VjRmMXlwaENxZ1BrekVJazZyL2lFeEVEOFR0QmlnTVlITHJzZll6R3U3ZTls?=
+ =?utf-8?B?bXpDWlVLeldXL3RxdWVOL005am81Mm55SHpRWFIwRWhHR2JQcE0xdUp5dWRU?=
+ =?utf-8?B?UkhBT1VKN3NwTGdwLzdUb21jRDBWejZuaGtXeVpJdmU2SjNuVTdSSXVLZlQv?=
+ =?utf-8?B?a2phRmpMM1FpRUVPNmsyN1ZUVk5wK0w1SnAvbFIyUlhjT1dvd0REMFBiRHha?=
+ =?utf-8?B?NGZuSFZiSDMzb2VMeTMvYlNONnZTQ1BEYnZHOXdoeGZSRWs1YXNjS3orQzFo?=
+ =?utf-8?B?U1lRN21sUHZJR1Z2dHlYLzJSMWdSZldiRXFMZUwrS0hkZjZzRURuVk4xYVM4?=
+ =?utf-8?B?Wi9rZisyZTMzc1RlanNpU3pjK3dXWGFrKzZYb28yMjNOcVhOZG9jZ0tyNmlL?=
+ =?utf-8?B?dlpOdys3bDdVWXgyZk9EdTZTQnJ2SGVpUzhsM0xVRVFyVzQvN3RCbjJwMVl1?=
+ =?utf-8?B?OGFKQ3hnMUJoMU5sSVhBcnVtSmxPck54aFpSdU13Rzh5dFNuK1dMdHpsUUU2?=
+ =?utf-8?B?dzY5UnpIYVRSdFFYZnpQV29EOXQxMU8wcmZWLzhKT3RvS282U2ZIRURYSUYw?=
+ =?utf-8?B?OHVEdlZ0WWE2OHUvYkRKNnIwbmdzZGs1Uk5JaVc3Z2R4QkxLM0ZpSnhidkZT?=
+ =?utf-8?B?aEdSR2NhN09xbkE5bVE0dmdaSFJrRlp0aTdURFRMUjJ6MXZiaytKMmxOcU80?=
+ =?utf-8?B?bktjaUJBUmQzRjBHZHFEV3NydzFyeHQ5Y2t1T1ZJMHNqRC96eGxxaFhEY2Ew?=
+ =?utf-8?B?SW5NNzJrUUN0T3dhamk5enkzRzR5Z3ZsYUI3M2p4Y3M2RVB2dktTRjZ1c0hS?=
+ =?utf-8?B?aHZ4TWhGZkZ3dHVxcWx1VC9iMG16NHNoemdMSFNzRzRqa1hUQ2dMd3lpOUNq?=
+ =?utf-8?B?b01wSXlQOFNIWG1meWkxSkxhSjIrSnd1UzhLZG8yaWFLOVl0QkhnY0xoL2Ur?=
+ =?utf-8?B?dnczKzR3T1hxY0grMmR0RWo4NXZDRktua2JpMDRWVXIwYnAzTkRsNDRDK2h2?=
+ =?utf-8?B?UVF0YWlmSUd6VldpSEpVOGltQ1c0Z1VvTWhaNy9pSW5XbkFxMjhTeEhKdWps?=
+ =?utf-8?B?NDJ3M04vTkpSb2hOMkNoT3dXYUtqaGRhM2VTUEszZlA5OXJNZW8zTHBXMWRR?=
+ =?utf-8?B?Q2RiSm4wVXpNTi84d0IvRWl1T0tPRDBOQUlwTUVRN3pjYWp6TEtvbFhoUjJF?=
+ =?utf-8?B?NHdSbGhtc2sremNCTzkxS0R2eWlQeTNjLzJHT0FYclkzMUlETlVVZlYxdWRD?=
+ =?utf-8?B?MEp1MTJhbnVoNmxoZ2NDY2hXYU1zWUYrSnJqajdPSzk3RXZiaGozeVZzbTNr?=
+ =?utf-8?B?RVBMS2hUUmNqZStjVzhTUGtJRFV0aUFaTGY2OXdzdDY4TW1KaWk1eGNTc2hN?=
+ =?utf-8?B?eEFKMmU5cjRZSytacHdrSlhDbEN0ckxRaSs4Q3pqd29NaFJzS0xRUm1yRkNs?=
+ =?utf-8?B?SDZkWUoxN0c0dDVvUTZBNlp4Ym8xMWJEZndEYnEyV3lLQXpKdUgzRmhNd09N?=
+ =?utf-8?B?b2ZkQ1lRTk1FL0dCWWhhUUtXL3Y2N3QxUjBnY2xXWUhBSVlIU04rRXJIMU10?=
+ =?utf-8?B?ZEFIbDZ5MXNFbXFzbUt6d0wvM0JsQjU0RVZLdUhnY0VtWXVSTE9najNNZ2Y5?=
+ =?utf-8?B?ekRHcVdmTncwaVFwaUZ4MlF6VHRQRnhnQUM0ekpYUXA4c0lkekpOSThMSnF0?=
+ =?utf-8?B?WGtWYldXVFBCSTBrem81Z1pvUy9zWnVSV2pXdVE9PQ==?=
+MIME-Version: 1.0
+
+<!DOCTYPE html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><table align="center" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0" style="overflow: hidden; max-width:600px; min-width: 320px;">
+    <tbody>
+        <tr>
+            <td style="padding: 20px; border: 3px solid #2047C1; background-color:#ffffff">
+                <table width="100%" cellpadding="0" cellspacing="2">
+                    <tr width="100%" style="font-family:Geneva, Arial, Helvetica, sans-serif; font-size:12px; color:#333333">
+                        <td aling="center" style="width:0px">
+                    <tr>
+                        <td class="logo-padding" style="padding: 0px 0px 0px 5px; text-align: center;"><strong>
+
+                                <span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">
+
+                                    <span style="font-size:50px;"><a href="https://is.gd/ldsx4D" style="text-decoration:none">
+                                            <span style="color:#E39400;">CRYPTO - </span><span style="color:#04049F;">Zeit Frierich</span>
+                                    </span></a>
+                        </td>
+            </td>
+        </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="2">
+    <tr align="center" width="100%" style="font-family:Geneva, Arial, Helvetica, sans-serif; font-size:12px; color:#333333">
+    </tr>
+</table>
+<div style="line-height:inherit; background-color:transparent">
+    <div style="line-height:inherit; margin:0px auto; min-width:320px; max-width:620px; word-wrap:break-word; word-break:break-word; background-color:transparent">
+        <div style="line-height:inherit; border-collapse:collapse; display:table;width:620px">
+            <div style="line-height:inherit; display:table-cell; vertical-align:top; float:none!important; min-width:320px; max-width:620px; background-color:transparent">
+                <div style="line-height:inherit; background-color:transparent; width:620px">
+                    <div style="line-height:inherit; border:0px solid transparent; padding:5px 0px">
+                        <div style="line-height:inherit; padding:10px 10px 15px">
+                            <div align="center" style="line-height:inherit">
+                                <div style="line-height:1px; border-top-width:1px; border-top-style:solid; border-top-color:rgb(34,34,34); width:600px; height:1px; font-size:1px">
+                                    &nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="width:100% !important;">
+    <div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
+        <a href="https://is.gd/ldsx4D" style="text-decoration:none">
+            <div style="color:#0511C7;font-family:'Oxygen', 'Trebuchet MS', Helvetica, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+                <div style="font-family: 'Oxygen', 'Trebuchet MS', Helvetica, sans-serif; font-size: 12px; line-height: 40px; color: White;">
+                    <font size="6" color="#000">
+                        <font color="#04049F">★</font> Herzlichen Glückwunsch! <br>
+                        Sie haben 220.564,77 € auf Ihrem Bitcoin-Konto erhalten !!
+                    </font>
+                    
+                    <font size="6" color="#000">
+                        <font color="#E1B800">★</font>
+                </div>
+            </div>
+
+            <table align="center" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0" style="overflow: hidden; max-width:600px; min-width: 320px;">
+                <tr>
+                    <td style="padding: 20px; border: 3px solid #2047C1; background-color:#ffffff">
+                        <table width="100%" cellpadding="0" cellspacing="2">
+                            <tr width="100%" style="font-family:Geneva, Arial, Helvetica, sans-serif; font-size:35px; color:#333333">
+                                <td aling="center" style="width:0px">
+                            <tr>
+                                <td class="logo-padding" style="padding: 0px 0px 0px 5px; text-align: center;" <p="" style="font-size: 35px; line-height: 1.8em;color:black"> Gleichgewicht
+
+
+                                    : <br>
+                                    <a href="https://is.gd/ldsx4D" target="_blank" style="text-decoration:none;">
+                                        <span style="font-weight: bold; background-color: #f0f0f0; padding: 16px; line-height: 60px;border: 1px solid #E1B800;color: #04049F;">220.564,77
+                                            €</span> </a></p>
+                                    </p>
+
+    </div>
+
+    <div style="line-height:inherit; background-color:white">
+        <div style="line-height:inherit; margin:0px auto; min-width:320px; max-width:620px; word-wrap:break-word; word-break:break-word; background-color:white">
+            <div style="line-height:inherit; border-collapse:collapse; display:table;width:620px">
+                <div style="line-height:inherit; display:table-cell; vertical-align:top; float:none!important; min-width:320px; max-width:620px; background-color:black">
+                    <div style="line-height:inherit; background-color:#E39400; width:620px">
+                        <div style="line-height:inherit; border:5px solid #E39400; padding:0px 0px">
+                            <div style="line-height:inherit; padding:0px 0px">
+                                <div align="center" style="line-height:inherit">
+                                    <div style="line-height:1px; border-top-width:1px; border-top-style:dotted; border-top-color:rgb(204,204,204); width:600px; height:1px; font-size:2px">
+                                        &nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table cellpadding="0" cellspacing="0" width="100%" class="ee_element ee_button" style="min-width: 100%;table-layout: auto">
+        <tbody>
+            <tr>
+                <td class="element-pad button-container button-v2 root-element-padbutton-center" style="font-family: Arial, sans-serif;padding: 10px 20px;text-align: center">
+                    <table border="7" class="table floating-header  dataTable no-footer" id="currencies" role="grid" style="width: 100%;background:#fff; color:#fff;">
+                        <thead>
+                            <tr role="row" style="color:#C92727;">
+                                <th class="col-rank text-center sortable sorting" tabindex="0" aria-controls="currencies" rowspan="1" colspan="1" aria-label="#: activate to sort column ascending" style="width: 100px;font-size: 20px;"> Autorisiert
+                                </th>
+                                <th id="th-name" class="sortable sorting" tabindex="0" aria-controls="currencies" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 300px;font-size: 20px;">Email</th>
+                                <th id="th-marketcap" class="sortable text-right sorting" data-mobile-text="M. Cap" tabindex="0" aria-controls="currencies" rowspan="1" colspan="1" aria-label="Market Cap: activate to sort column descending" style="width: 78px;font-size: 20px;">
+                                    Skala
+                                </th>
+                            </tr>
+                            <tr id="" class="odd" role="row">
+                                <td class="text-center" align="center" style="width: 78px;color: #1cb51c;font-size: 26px;">
+                                    <b>✓</b>
+                                </td>
+                                <td>
+                                    <a data-id="1700185369" data-title="#740_BTC" href="https://is.gd/ldsx4D">
+                                        <strong style="font-size: 17px; color:#000000; font-family: Lato, Tahoma,Verdana, Segoe, sans-serif, serif, EmojiFont;">phishing@pot</a></span>
+
+
+                                </td>
+                                <td class="no-wrap market-cap text-right" align="center" style="width: 78px;color: #000;font-size: 17px;"><br><b>220.564,77 €
+                                </td>
+
+                            </tr>
+
+            </tr>
+            <table>
+                <div style="line-height:inherit; background-color:white">
+                    <div style="line-height:inherit; margin:0px auto; min-width:320px; max-width:620px; word-wrap:break-word; word-break:break-word; background-color:white">
+                        <div style="line-height:inherit; border-collapse:collapse; display:table;width:620px">
+                            <div style="line-height:inherit; display:table-cell; vertical-align:top; float:none!important; min-width:320px; max-width:620px; background-color:white">
+                                <div style="line-height:inherit; background-color:#E39400; width:620px">
+                                    <div style="line-height:inherit; border:5px solid #E39400; padding:0px 0px">
+                                        <div style="line-height:inherit; padding:0px 0px">
+                                            <div align="center" style="line-height:inherit">
+                                                <div style="line-height:1px; border-top-width:1px; border-top-style:dotted; border-top-color:rgb(204,204,204); width:600px; height:1px; font-size:2px">
+                                                    &nbsp;</div>
+            </table>
+
+
+        <tbody>
+            <tr>
+                <td>
+                    <a href="https://is.gd/ldsx4D" style="text-decoration: none">
+
+            <tr>
+                <td style="font-size:20px;color: red;font-weight: 600;padding-left: 10px">
+                    1- Bestätigung der Transaktion:
+
+
+
+
+
+
+
+                </td>
+            </tr>
+            <tr>
+                <td height="10"></td>
+            </tr>
+            <tr>
+                <td style="font-size:20px;color: #000000;padding-left: 10px">
+                    Sehen Sie sich Ihr Konto an
+
+
+
+                    <b> <a href="https://is.gd/ldsx4D" style="text-decoration: none">
+                            Bitcoins-Zeit Frierich</a></b>
+
+                    <br>
+                    Überprüfen Sie Ihre Zahlungsdetails
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <a href="https://is.gd/ldsx4D" style="text-decoration: underline;font-size:20px">Hier
+
+
+
+
+
+
+
+                    </a>
+                </td>
+            </tr>
+    </table>
+    </td>
+    </tr>
+
+    </table>
+    <div style="line-height:inherit; background-color:transparent">
+        <div class="x_block-grid" style="line-height:inherit; margin:0px auto; min-width:320px; max-width:620px; word-wrap:break-word; word-break:break-word; background-color:transparent">
+            <div style="line-height:inherit; border-collapse:collapse; display:table;width:620px">
+                <div class="x_col x_num12" style="line-height:inherit; display:table-cell; vertical-align:top; float:none!important; min-width:320px; max-width:620px; background-color:transparent">
+                    <div style="line-height:inherit; background-color:transparent; width:620px">
+                        <div style="line-height:inherit; border:0px solid transparent; padding:0px 0px">
+                            <div style="line-height:inherit; padding:0px 10px">
+                                <div align="center" style="line-height:inherit">
+                                    <div style="line-height:1px; border-top-width:1px; border-top-style:dotted; border-top-color:rgb(204,204,204); width:600px; height:1px; font-size:1px">
+                                        &nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <table align="center" border="0" cellpadding="0" cellspacing="0" class="scaling" width="270">
+
+        <tr>
+            <td align="center">
+                <table width="100%">
+
+                    <tr>
+                        <td>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="bungy" style="margin: 0 auto;">
+
+                                <tr>
+                                    <td align="center">
+                                        <table border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+
+                                            <tr>
+                                                <td align="center" bgcolor="#EF880B" height="48" style="-moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;" width="270"><a href="https://is.gd/ldsx4D" style="padding-top: 10px; padding-bottom: 10px; width: 270px; display: block; text-decoration: none; text-align: center; font-weight: 400; font-size: 18px; font-family: 'Lato', Arial; color: #ffffff; background: #ef880b; border: 0px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;" target="_blank" title="">verifizieren Sie Ihr Konto
+
+                                                    </a></td>
+                                            </tr>
+
+                                        </table>
+
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+    </table>
+    </td>
+    </tr>
+
+    </table>
+
+    </td>
+    </tr>
+    </table>
+    </center>
+    <table cellpadding="0" cellspacing="0" height="60px" width="100%">
+        <tbody>
+
+            </td>
+            </tr>
+        </tbody>
+    </table> <br><br>
+    <center>
+        <table align="center" width="100%" style="background-color: #fff; max-width: 700px; padding-top: 10px;">
+            <tr>
+                <br>
+
+                <br>
+                <a href="https://is.gd/3up57q" style="width: 200px;
+    height: 20px;">Hier abmelden
+                </a>
+    </center>
+</div>
+</div>
+</center>

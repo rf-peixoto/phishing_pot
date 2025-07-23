@@ -1,0 +1,872 @@
+Received: from SA1PR05MB9881.namprd05.prod.outlook.com (::1) by
+ SA3PR05MB9699.namprd05.prod.outlook.com with HTTPS; Wed, 19 Feb 2025 18:28:31
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=Csm0xfQDW2GR1q1yPlZpP/KTHc/Zq4L4Y7aSKYLmYSlTeOc17WlGmHG+uzqrCzxLUpXeOguhBVlIfzDYkK8B/VHW80RVkzRl91Xbh9co69TSfYI6AEgGYxZ4IEXYlQSGEsGthxRhtglWBFbW5XvdcZ0/wtfIeVbstljubGj6xBwTKiLIu6pCZnOAMBdZxCWOTZMHKyoPQEzH0rsICHQnSd+HPj0ZXSUVotqkkw7Y/TW+diDbKPRM4rsNufjsg3o98ZcVZX2IPvRtVTUJvrmYl60p1DRnFfFRFAiDWGN6Shpc8wwcPbf4C4rNoNVqY9+krj5PqjIxQJO246FIfYxHpw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8Iu7hMPxdajdtGWfY8UprtielKyXXSISTsRCjgBsY1I=;
+ b=qlsj9q1jLcl8ime55oeR8hh/wnESAQXq2ThcIXHx2lmVu11fNoosb9PBbCh6pyLpKOOSiF8oOJrFTA2mC45eKK5p9/cwcHsEwIES9vZYRIJVPNDBg/9IWs5IjQ3BkEFfGuVFuETCtjATxuYgFcLodOcuhIm1CMYfroV+z6OZlUV5asEM4XA+A3iyt0UW+id0iDnjr4/dt/OfonnELwbCiU6qocJkbyja1lbdHd/xv0JArXHtgIoMUal1ebOz40su+6t/rS/PuZr7fRDSSYyiDb5CD3G3TK/TuVRGpo5i0G72o9TS+5Lqdai7cIdaNiz6uYzu7G8WHTWbsAl4fUnxLw==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.102.202.60) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=vbseduvn.onmicrosoft.com; dmarc=bestguesspass action=none
+ header.from=vbseduvn.onmicrosoft.com; dkim=fail (signature did not verify)
+ header.d=vbseduvn.onmicrosoft.com; arc=fail (48)
+Received: from SA0PR11CA0076.namprd11.prod.outlook.com (2603:10b6:806:d2::21)
+ by SA1PR05MB9881.namprd05.prod.outlook.com (2603:10b6:806:326::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.18; Wed, 19 Feb
+ 2025 18:28:30 +0000
+Received: from SA2PEPF00003F65.namprd04.prod.outlook.com
+ (2603:10b6:806:d2:cafe::6b) by SA0PR11CA0076.outlook.office365.com
+ (2603:10b6:806:d2::21) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8466.14 via Frontend Transport; Wed,
+ 19 Feb 2025 18:28:30 +0000
+Authentication-Results: spf=pass (sender IP is 52.102.202.60)
+ smtp.mailfrom=vbseduvn.onmicrosoft.com; dkim=fail (signature did not verify)
+ header.d=vbseduvn.onmicrosoft.com;dmarc=bestguesspass action=none
+ header.from=vbseduvn.onmicrosoft.com;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of vbseduvn.onmicrosoft.com
+ designates 52.102.202.60 as permitted sender)
+ receiver=protection.outlook.com; client-ip=52.102.202.60;
+ helo=SEYPR02CU001.outbound.protection.outlook.com; pr=C
+Received: from SEYPR02CU001.outbound.protection.outlook.com (52.102.202.60) by
+ SA2PEPF00003F65.mail.protection.outlook.com (10.167.248.40) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8466.11
+ via Frontend Transport; Wed, 19 Feb 2025 18:28:30 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:769B9BB43CB18BB1C53E311D45F8A6F2593F82AFB622BCBE428C7A53298863AB;UpperCasedChecksum:FD832E84CE29AB90FD7ED181DD13B257FB1290D9B6A35F484000F1C0D3F891B0;SizeAsReceived:8427;Count:42
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=viGnHBTI4JKBGC9uf5z4J4n5ZHmBMlbRPy+DKYwzU6O221rKdleF49XNJnXrBHpJrJJnmJIyDQXFH6f37TQjpi1/qTK3/7h7AgaGuoDoeYL2dAXGmGRUWKsDWHEQOnI9hnFkewuxbTBOe4CEQU8X84dIE6gRTkpKKp37uFjQVIhsIYEmGTDz8hb2KUYTghAevP3nCKmbHpJOlKCMxALtkZ5RBqNOY8D1oZnOD+fqa8FYepuEjwk2wQepIZCedX0BKZyg9w4cImrP68HZuWWNNj53UtnthjD2hgXrzTKfFwSPoURWZJHXAJD0YFJlaXEjm+PyvpITiLW0jE5FET0ZLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8Iu7hMPxdajdtGWfY8UprtielKyXXSISTsRCjgBsY1I=;
+ b=HFbjR/CN8hTnmJ1kp3G/3cCxu/viYqzsVF7hOcFjalfok5gryAkVoJGBMOb9O83m7d+5uBG2QxjDtMlA6/QZtA7CUi0V0fCW+xuQNV0WcMo7wzNXLVwgpBLxj7GOMdtSPh6b0ISDeY8rAaBOYf9BTRzBE8cNPw1IGlwgm4EnJCMYqZsXYh/slQ4FI9V5M/oCWV9Jt2Z3APOBupvM1jy07ubSkgNQ7SAiUaOG1riVV1M8NqcPQlgarQMH+UkCnwogoR25Dj/rYen/Nd/KrqiSi21O5cnp08nASepsh1coUWebwok4bdsA+17Pgd52CLAVPkJNtW/DCioLRd6+RO5Avw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 2.56.246.165) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=vbseduvn.onmicrosoft.com; dmarc=none action=none
+ header.from=vbseduvn.onmicrosoft.com; dkim=none (message not signed);
+ arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=vbseduvn.onmicrosoft.com; s=selector1-vbseduvn-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8Iu7hMPxdajdtGWfY8UprtielKyXXSISTsRCjgBsY1I=;
+ b=kauVU7b3hjEZUs9hAvaCoG8IPACP6MYfrfv4AGVRiNpQlVZO6sx0TAKqlqVVJGYDG4+vrwuiGiAExFtwG6OL1OMP9b7bshkpRi/NDuIBH5ttoo3bVWPRArD6KjVi+Nu9aK0DkvIEl+O3zsj5Gwnz/nMYBfnZtf0iNIHdXKSDYno=
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 2.56.246.165)
+ smtp.mailfrom=vbseduvn.onmicrosoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vbseduvn.onmicrosoft.com;
+Received-SPF: Fail (protection.outlook.com: domain of vbseduvn.onmicrosoft.com
+ does not designate 2.56.246.165 as permitted sender)
+ receiver=protection.outlook.com; client-ip=2.56.246.165;
+ helo=ieoprtjgufjhdj.net;
+Date: Wed, 19 Feb 2025 18:28:21 +0000
+To: <phishing@pot>
+From: "Bosch-Bohrerset wartet – Jetzt öffnen!" <Department-client-n06684@vbseduvn.onmicrosoft.com>
+Subject: phishing@pot, Wir bereiten Ihr Bosch-Bohrerset vor
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=UTF-8
+List-Unsubscribe: <https://z2.jgysokqm.co.uk/lists/l0qv1dy6lxmfj/unsubscribe/627fx1nni40x/6k9d1devpm3?source=email-client-unsubscribe-button>, <mailto:info@jgysokqm.co.uk?subject=Campaign-Uid%3A6k9d1devpm3%20%2F%20Subscriber-Uid%3A627fx1nni40x%20-%20Unsubscribe%20request&body=Please%20unsubscribe%20me%21>
+X-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+List-Id: l0qv1dy6lxmfj <List management>
+X-Report-Abuse: https://z2.jgysokqm.co.uk/campaigns/6k9d1devpm3/report-abuse/l0qv1dy6lxmfj/627fx1nni40x
+X-EBS: https://z2.jgysokqm.co.uk/lists/block-address
+Feedback-ID: 6k9d1devpm3:627fx1nni40x:l0qv1dy6lxmfj:tis37n0bhj
+Message-ID: <a1f6bfeb-84d3-4bfc-9abc-b12865a5f9c7@HK2PEPF00006FB3.apcprd02.prod.outlook.com>
+Return-Path: vlamqhlgsd@vbseduvn.onmicrosoft.com
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: HK2PEPF00006FB3:EE_|TYZPR04MB6474:EE_|SA2PEPF00003F65:EE_|SA1PR05MB9881:EE_|SA3PR05MB9699:EE_
+X-MS-Office365-Filtering-Correlation-Id: 76c71a10-d5c0-47df-8096-08dd511335e1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|36860700013|41320700013|32650700017|61400799027|4022899009|69100299015|82310400026|376014|13003099007|8096899003|32550700048|32420700284;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?WWlhdmlQT2h0MFRTa3VnLzVnQU9mUklsYS9FcVdlS1dxTk5GQi9GYUg5SmhH?=
+ =?utf-8?B?MDZsc0kwa0JXRDAxZmM0TTdhMXZCMGVXZitWMDJ1cTJ2TFNYV2VWQ3d2YlZo?=
+ =?utf-8?B?SmNoRmhMaTJndE5uMGJKWHprVElWdmVIMEdoYnZEanZsYkxLM1huZDJ5d0I0?=
+ =?utf-8?B?bWtlTWdkcGp6dFYvNWYxVlp4aGZHTVJGYk5ZQkFlWTVWN1pVYXI2Y1BmNFhP?=
+ =?utf-8?B?NEc3VnBuczUvbklITm5SVlFtS25WSDZvNmdYUHRUa0dBdUd4SlFzOWU4OHR4?=
+ =?utf-8?B?dmJQQjdlSUl4NFFycm1CT2xuMVV3TTZFZlhibEEzMjR5V2JoTGNwR0ExNkli?=
+ =?utf-8?B?MVJ3a0FCekFSMEdxSjh3UCtTOGlsbFRHb1hYNENidW0zYzVMU0J1d2pqRDAx?=
+ =?utf-8?B?OUFZZjdIa29PdEFYQWN3azF6eEdTWEZ0MTJZM1FNb1hPdnFYcTMwQnlKTWh1?=
+ =?utf-8?B?MlUrWHVRanJwLzgwL1FrU0xOeEVHYWNnRXVSOEoyZk50MEZ6OHhLY044LzlK?=
+ =?utf-8?B?RHFWQ0lBclgwTVRXbkpnK2Ewamh5NU96c1VxcGRZdkJOMTZXK1h3RnFCWjJa?=
+ =?utf-8?B?aWRqdGg4U2dVOEVTcDA3QUpNYmhyTkpMVFpuUzlNQk12bVRuc1MvWkJHUm12?=
+ =?utf-8?B?YzQyMFN2bXAzc3IyL1FDclR1by8zYitnVWREZzNrQzB4a2JDSlhVSEI4ODVn?=
+ =?utf-8?B?RFppcDBqVE9QdUJyUHlXUStjN3dYU0JPeng0QWZORUQwUUI2WUhTbG9kQWpk?=
+ =?utf-8?B?VjVHR0VGNUVhK2RRYWpwN3B1eThvOVhGQXpZSVFnMml6V29vWmMvY05TWktU?=
+ =?utf-8?B?M2RHM2I1UjQrbThWSFNmVnMvbjdqL3kyK2hlUDhWcU9VR1cwTUJMY0tXaWRU?=
+ =?utf-8?B?SnBzQnZlY0Y3YmpRMmlHclR3SjR2bFJRQktWVW9UUlhJQ0VOZHd1cE0wV2J2?=
+ =?utf-8?B?elZpTWl6b2k1UzB4S2ZJOVRqMGg3bWthRU8waG9NYTQzNW0xbTZvd3dkY21l?=
+ =?utf-8?B?TkxqdXBpM3B6clZmeUltajZQVHZQRzY3K2pmenFnV2FId3pOUzFpZVc4UU54?=
+ =?utf-8?B?UFY0VzNZcGxKU1JGemVLTWdEVTIrYk9HYTFXQUI3aXQ5cDBEbEE1ZlgwaTND?=
+ =?utf-8?B?R3plTVlQempScmxVTGYyaG9LSFltc0kvYkFnZ1pmS3BySThRZFBIang5UVpM?=
+ =?utf-8?B?Nzc4UXdJUGtvdWUrN2VSRDRUV1doeWc2Mm9NT1cwM2NwVXpzdEVPOGVoaHAv?=
+ =?utf-8?B?WmYxczVhZ1pRVHIxeU9YWFJadEtBdHhtL3V5dW9qV254N2RPZFVEMkdWcVE5?=
+ =?utf-8?B?aXByNElBbExoQk54ZVhMWk8rY0doUldKU253eUxqVVp4a2E4N0JrelNmSTFC?=
+ =?utf-8?B?dXJhTXRnVmVSMFZzaTBnSXh3ODBRa0wwTm9Kb3huaDhLYlZYRXNWdFJ4WHJM?=
+ =?utf-8?B?M2ZTRlZxWmx3NGdNdTJLbEZ6Ukh4UTlyNk5qUmlMYVdEUkswbjRheHludzBK?=
+ =?utf-8?B?eGRseCtKeFZnVnMyYkg1MGM1NC9mQUZzTXVnNjUxVUFRWVhkYURsNUNlTk5l?=
+ =?utf-8?B?Wno1QXpOQyswNkZKTzNRNGFGa1hjUUVPN0FSZ3hhWGNBaElsNCtrMEJmc3ZT?=
+ =?utf-8?B?Z0dNTXFYeEtVYXlyVmlyeSt6TG1xMXlQZEVuai9FMmFBUGZFODFkQ1kvdGds?=
+ =?utf-8?B?dVNVKysvN3lTVjZKYVB0cUZIM2hpdWFNRGVtOG1MN0R2c0lqTjlLVVhzOUVH?=
+ =?utf-8?B?TlY3S01uWnE0Sy9jMlJCR0R4VVBRYkx3TXhLWDBremhTWW5CVmJqR2NGU1d3?=
+ =?utf-8?B?YnRCVXU2RjNyKzZwRGNMYTFXNnlDc3lLSm02NkFZUWVjU29QQktjNDJwV25B?=
+ =?utf-8?B?MTM5dHZlV1o0ejc2ZzVrVDEwNHhGeHhRRFFqYmRrYitjQmRWdmpwYXdvQ2t4?=
+ =?utf-8?B?dFNCdk5YNk9xQUp1M3B4ZFZlS0plWC9DNE5LZzhERFJUYllWNU1oTURpdkhG?=
+ =?utf-8?B?MXltUjVUMDlVVjRnLzEzdlNGR3Z2LytGOTVJdFRoZWg4YlgxSlhzbmdSdGJp?=
+ =?utf-8?B?SFZBOStuNGd3a29ubG5MblQ3MDk4djgrR2RManRkUFo1b0g1MU1qMlpCSFRv?=
+ =?utf-8?B?SFpZTVRkQWFxeXpmYzBJRHYyamJMc1FuWVg0UTBBQ2lqbXR2bTZjK0ovd2hn?=
+ =?utf-8?B?aUJRckRNTno0ZHR5NFRhWXU1dmU5UDNjQ0hzM2NOc0QrWFlJV0IxYmRRYUFw?=
+ =?utf-8?B?REJ5T3NDSE1JUVdyVytaaFoxVE9kcERRN0NYYkdPNi9zL3F2U3hSdHY3WVMv?=
+ =?utf-8?B?SnZndHdoT095NzdVWW94dzkwNndCNTdkRTlZNGVtaDdNUDdCOEgvNWE2RXJZ?=
+ =?utf-8?B?TnBBVXluS0xseDdxM2ZvRnRXQXRwZFNMdEoyS1llTVpUSmREKzZXVFRWWHNo?=
+ =?utf-8?B?OHFneWdJUUdnblF3WjVTSGowcTdlRktPWTZNNFZRWklMRlBVTU1vaHFldDRP?=
+ =?utf-8?B?NXRBcGNNMmFQZFU2cjFkVUxGQ0J3dWR6b2pEV3FlRTNCcWIrYlZOTk1IOW1X?=
+ =?utf-8?B?eWxWWmdEb2pha3FmSTd5M3dWZUJWakJFNmFVSU82MVhiSWIrSm50bkgwWXht?=
+ =?utf-8?B?YW9aQS9OQzdqTW5CeFdEbHBkR1VDMlZJSHBzRE9keGVVQ1A0b1VDYlU0Mm9Z?=
+ =?utf-8?B?RmFLSTBYc0JiVnk1UDV5aTcrZkxUcmVDUFBHbnFSV1FxWXUrTDZnQitJZGla?=
+ =?utf-8?B?UTNjelNHZTF4NEJ0dXl0b1V3T21wRU80TDNUVmtULyt2RUtOWUpTcDJJV3Qz?=
+ =?utf-8?Q?682LnPwctse0K6nRAC/CI=3D?=
+X-Forefront-Antispam-Report-Untrusted: CIP:2.56.246.165;CTRY:DE;LANG:de;SCL:8;SRV:;IPV:CAL;SFV:SPM;H:ieoprtjgufjhdj.net;PTR:165.246.56.2.in-addr.arpa;CAT:OSPM;SFS:(13230040)(36860700013)(41320700013)(32650700017)(61400799027)(4022899009)(69100299015)(82310400026)(376014)(13003099007)(8096899003)(32550700048)(32420700284);DIR:OUT;SFP:1501;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR04MB6474
+X-IncomingHeaderCount: 42
+X-MS-Exchange-Organization-ExpirationStartTime: 19 Feb 2025 18:28:30.6677
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 76c71a10-d5c0-47df-8096-08dd511335e1
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: SA2PEPF00003F65.namprd04.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: SA2PEPF00003F65.namprd04.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: SA2PEPF00003F65.namprd04.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 2/19/2025 6:23:45 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 4966a621-9297-423c-4b42-08dd51133417
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.102.202.60
+X-SID-PRA: DEPARTMENT-CLIENT-N06684@VBSEDUVN.ONMICROSOFT.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|42300799018|2700799026|67000799015|99000799006|1680799057|1131999016|9000799050|10300799035|63100799012|62400799018|13020799006|58200799018|9400799030|47200799021|470799035|19000799015|15110799015|461199028|20103052903057|20103052901057|970799057|20103052909095|20103052904057|20103052914048|3412199025|4302099013|440099028|20000799028;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2025 18:28:30.2771
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 76c71a10-d5c0-47df-8096-08dd511335e1
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=7f3d6852-6db0-4ac1-8222-4afc09ac0323;Ip=[2.56.246.165];Helo=[ieoprtjgufjhdj.net]
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00003F65.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR05MB9881
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.2781078
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8445.012
+X-Message-Flag: Follow up
+Importance: high
+X-Priority: 1
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?SzNhUFRBSjNYOEtqbnRxNy9NNTg4bkRMUmd2cDRJWHZXR0FFaEtOOElQaFYw?=
+ =?utf-8?B?VndXVkZVays3MzVjSzBoM2pXbnZQUk1kWVI1cmdDc0IzS3RHRkJQeGlGblZy?=
+ =?utf-8?B?cE1LMG5JdnlLZDUxMHU1TCtrQ0szUTdxRWxXdG1UeGlxZDNpSm5ucWdxVTQx?=
+ =?utf-8?B?bjFKNEtZMFEyaklkbVlHbHkyaXZDMWlRZVUvOU8xL2FneWdabm5rWU9kWVZW?=
+ =?utf-8?B?QldoVGdkVDNTbldOcmNEQnNYRFVqbHhMbisxWmQxZDVTUHg1VGdsT0M2UUhj?=
+ =?utf-8?B?MDVBWEpyem11cys1bVhYZmJ3STZIUVJWYWU4djBxUDZPOFBMUW1WUFBBUlZi?=
+ =?utf-8?B?bEtCZWtadEVJSlc0R0Z3aldnNTFWeDhLem1OaEZZZE1UOTZRZ0JOUTFQT3h6?=
+ =?utf-8?B?clVTbkYraXI3RlQ2MitKWTRCQXVFdGRCK0VsRW5rWWl5cFZ2a0F6MjIwVi94?=
+ =?utf-8?B?aEN2dzVYK21xWlZLeVpQb1dHMGZ3ZGtGdElKMzVRSkhlSkhkZ05nay92UzRq?=
+ =?utf-8?B?V0kxRnN4QUttcFN1QUR3TVpRc0YyWDJpcmJQOS9YNzk2ZSsvNEQrMUpaem1P?=
+ =?utf-8?B?NWdaTkdTNGJvN3dRUkJjMHh3QUxlMGNHcXdkczM5T3p1TFZZdlc3TFRkUk5v?=
+ =?utf-8?B?WWdQeXJ2V3YvT3Zkc2ViZ2d5OGNXQU1iZHRYNU51MzJxY3ljcXhMaFlQc3Vq?=
+ =?utf-8?B?eG9zejBndWlBeVpUUUR0bEVLeDJGTGZsZjBzL0sycHRaUmt0aUFTUWw3YWx0?=
+ =?utf-8?B?UUZJcjdQOXBnSERHVDNUdUtzZWpBcWR4bnF3a3R5YUFjdFErNXgyVkFzd3M4?=
+ =?utf-8?B?WEV1cmhKdkE2UzBtbHlFTTBqbGp0RnZFMHA2c0U3VERUdVRtbzN5ZytiRkor?=
+ =?utf-8?B?TFV5cSt5QjVEOG9KdFVhZTFoQyszd214d3Uyd2RWd25rVWg1eEhhZU5FL0VX?=
+ =?utf-8?B?UjU3UWlnQXY1dXdwcTVva3BzRk5MQXNETWwxNTdUemJnb1BaSHlCUFdqb0xq?=
+ =?utf-8?B?OTk3bjVuVDdTOHA5bWUrMnVyTUw5U2JWeHd3bGdha0QzZ010ekZvakZHNmFT?=
+ =?utf-8?B?TnZOSkV4NHlhY2NLakFCRythK2tUSFJGQTBlT3VZWFdRYmhCamdrbENYZTZx?=
+ =?utf-8?B?VERTOWRXQXFYcWYvQS9kRlhZN0xDdUNNeVBhUHY4dktoUWdTcUtFKy9Dd01L?=
+ =?utf-8?B?VVRVOWpxeDRJaUFpOVFzNXJjZmp6cTFhOUduSk5TOVh3NDRiakUreUVQNmNC?=
+ =?utf-8?B?UzY3T280RFFNbWVPcGsrTlVsa1RVMWI0NUJNUWpjNElUM0dXcEYxSkVPSHBw?=
+ =?utf-8?B?bUJ6Y0tVeTEwN3FkSytlcjV3S0hCbW1FSUlaMWd0eS9VbENFZE5GSFNJM1Ra?=
+ =?utf-8?B?RzVGVHg3NUtoZVFITWVPNURVMzFUNmtMWVlVTVZ0cDVUTEJCQk9sZDVPSlcx?=
+ =?utf-8?B?aUVkVm0rQ1ZodTZRN2tYdzUrVVhVS3Bqd3FCemlzaHYyUHVkdURzanJTV3lO?=
+ =?utf-8?B?ZkdKMUpPZW8rQ0FDSGRSRGNqVTNhRnFML1FvbWFUU2RaVkpqTUVmcmNKTG5Q?=
+ =?utf-8?B?M2dvc28zQmFVRnJMbDIrQTBOcUx3eWlMVW5aazB3YkVPSzlQbEtaZVZzdTk0?=
+ =?utf-8?B?U3BocFZWSlBMdjFHTFJQM1JXZ1N3OFRRTkt2dHFhK0ZYenlqOGs4NldjODJr?=
+ =?utf-8?B?NlptWE1Va0RXYUNTYlZXUFFnZkZCZmJGb1NOeTlLcWhZbFJpelV6eXI5WFhh?=
+ =?utf-8?B?RWxGbDB5QzBRZ0dHTlk3MzJTaUpWMGZaQVZQT2Y1OVRGZmJJZE5sQnpWbG1I?=
+ =?utf-8?B?dVNNbS83WEl4Q2ZVZVVsYUtrSURzN3lPNmhsY0cwUVFaaGM2aWRVUjdKRVRy?=
+ =?utf-8?B?TUwrTUg1NGdGUnZmRG05NVRpWVcwTG0yUkFKbitzZ3BuU2NIaXZ3K1lPT1E3?=
+ =?utf-8?B?aDJTZWNOVzVDVVFCZEFnTnFpblVxTDFLa21iOUxCektwanhMSFhCa1VHWFli?=
+ =?utf-8?B?K3Y0TWxWTW92WXVTQXRRZXUyNmVsTlhWaGF3WEhFcTZGVTBaN250WUhKR2RX?=
+ =?utf-8?B?aHRIdkZ2ZEJCUitxOVJGeC9PV2YvTVVYODNPMnlMR0pUUXBYbHNTeTBTRUIr?=
+ =?utf-8?B?VU1KQS9WK0MvUlJGc3dYcnF2aEp0UldBNUw1K2drWS9XTDMzYTB3NWZqS0hM?=
+ =?utf-8?B?WHVYQSszTXRGWEdaeHpNclNZOWlOMGl1VEh2bUs5REtXZ0JKNk5qcGxGeW9j?=
+ =?utf-8?B?NE5BL1BnMHpJNUtkZlA3MUpaUWpsNzBZeGNyWExKY1huZDVkMzJpbzVYVUlT?=
+ =?utf-8?B?OEFKcmRCQ0duTzVQYjcwTmRwOHRMM2t3czR0Y1QvbUpvMmNxRjJDZ212ZlZF?=
+ =?utf-8?B?Q2Q5VU9OYXNtYkp4WGtrN2kxWEVLTzJEbHE0V3V1T0xOZW45UzVsS1A3UXRI?=
+ =?utf-8?B?TDJJZm0vMno5VG45M0JKNmZLNk9aemlYK3NqcTlLaGVNZGJiaURtZmNEVlMv?=
+ =?utf-8?B?cXdzM2tDKyt0WGg2U1c1R2FwTmdyQ0VlRGZ6bnZ3YnJNWm5oRHhvd3I3ZGxJ?=
+ =?utf-8?B?R3dZWmFVek95VEJCQ3hpLzFhejhXR2tMTzVQMHBBT2tmQ0JVL1pPRzNBM0hS?=
+ =?utf-8?B?bHd0K1Rmc3NZdHVSc2haajRMemxIbklJYWFOWHhTNTFQYWtHcWlGUHhwanpm?=
+ =?utf-8?B?RjVobFNBbC8xM1VVcGRtelN2SmpIVnlSMW9nOVJ5TUNjTUtUMmtGNWNubGdD?=
+ =?utf-8?B?N0pIL1l4dkxwZ05vTEVNcmhlWGhEVitBVE9kNkcyUUdzYXUyRVYyNDg2STJ1?=
+ =?utf-8?B?OFBQS0lkMHpPeWoxZlpxVmF4eHpsbzBpNjVDKzZObTAvaUJFTEc4UXNHTVMx?=
+ =?utf-8?B?VnQySEk1NVpPUGhpVWFGaWl5TlpTOGRmdy9CR2xGcEE2VlNUVm1VUW8yNGZT?=
+ =?utf-8?B?SGxYVUJFZlhIeEtCTDNzczdmWk4xQlFsdG9uenB1eGF6VWtEYzNmY3hMdkYw?=
+ =?utf-8?B?S2hjb0VFb2lKak8wZFZuUDF6ZjI2ZE9YQnFSTTIzSHd3MEl3cmszMzc3ZmVG?=
+ =?utf-8?B?Zy9sNGt6UDhDaHlwYXZMK0dCUTRmSndiS2FOTHFZVlFFY3NHbmtVV040OSt4?=
+ =?utf-8?B?dzJNMjI0T0xMRDhLekpvakJZZWlTVFVGUXhtNDU5ZHo5eWhldldtUkdqbXRT?=
+ =?utf-8?B?bWdZYWUrdDVaSFdPRzBCRDU5eEdlTzMyY2dIUVpybHNESFlnQXJmcVdoRkdH?=
+ =?utf-8?B?TEZoeVh2UmZQRDJDVHg0TDRmWGNteU1KS1pqc2RoRm9OaW42MVRlTkloTDhP?=
+ =?utf-8?B?bU9hOGxJRXY0WFlFWUE1U3pWOElVTDhZTHpCZnRla01kZXZwUzZSNUFEQXQz?=
+ =?utf-8?B?d1kycXdwZkE2cXh3Tm5ROVFHbWZxa1NzSzBCOCtPK0ZWdGVqK0xHTmY4N3ZU?=
+ =?utf-8?B?bGdKN1p4Y0pxUkUxdE5CMWVic1RVejMzeUVXNWdDclRHUkxZWGl5QmlIbFdB?=
+ =?utf-8?B?RWd3NXNMMkYrNU1ndkFraTd0SmJDcitoVktWcTF3OU9idnJsb1RmbWloZjk1?=
+ =?utf-8?B?L2FscUJ0aEtJdUUzRStQc1NxVTBzMENaaG1Wd3JmVVZ1dEpSU0ZnLytqMXlZ?=
+ =?utf-8?B?Q2xLUURnbER4OGczMU8vZHNBbjB4cnFodDJZVVF2eWRMejQrWWRUa1BiL3dm?=
+ =?utf-8?B?RGdweGJGa1NFSE5oK0EvTmZnSlVDRncwWjF5RUhRSkNVM1E4TDdMSXM2SFBK?=
+ =?utf-8?B?bFE1SjBDYkkwMWIrZE82djk1Q0dVWDhXWW5EeldyVXcrVjZuZUZOeFhKTk1B?=
+ =?utf-8?Q?nzDFihCyIdLb+o50APvCyePvgJ?=
+MIME-Version: 1.0
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><m=
+eta name=3D"viewport" content=3D"width=3Ddevice-width">
+   =20
+    <title>Verbrauchersieger</title>
+    <style>
+      /*STYLE*/
+      html{
+        height: 100%;
+      }
+      img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+        max-width: 100%;=20
+      }
+      body {
+        background: url('https://i.imgur.com/AFizkbn.jpeg') no-repeat;
+        background-size: cover;
+        font-family: sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-size: 14px;
+        line-height: 1.4;
+        margin: 0;
+        padding: 0;
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;=20
+        width: 100%;
+      }
+      table {
+        border-collapse: separate;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        width: 100%; }
+        table td {
+          font-family: sans-serif;
+          font-size: 14px;
+          vertical-align: top;=20
+      }
+
+      /* Set a max-width, and make it display as block so it will automatic=
+ally stretch to that width, but will also shrink down on a phone or somethi=
+ng */
+      .container {
+        display: block;
+        margin: 0 auto !important;
+        /* makes it centered */
+        max-width: 580px;
+        padding: 10px;
+        width: 580px;=20
+      }
+      /* This should also be a block element, so that it will fill 100% of =
+the .container */
+      .content {
+        box-sizing: border-box;
+        display: block;
+        margin: 0 auto;
+        max-width: 505px;
+        padding: 30px;=20
+        /* background-color: #fff; */
+        background-size: 0%;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        /* border: 3px solid #000; */
+      }
+
+      .main {
+
+        border-radius: 3px;
+        width: 100%;=20
+      }
+      .wrapper {
+        box-sizing: border-box;
+        padding: 20px;=20
+      }
+      .content-block {
+        padding-bottom: 10px;
+        padding-top: 10px;
+
+      }
+      .footer {
+        clear: both;
+        margin-top: 10px;
+        text-align: center;
+        width: 100%;=20
+      }
+        .footer td,
+        .footer p,
+        .footer span,
+        .footer a {
+          color: #999999;
+          font-size: 12px!important;
+          text-align: center;=20
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: #000;
+        font-family: sans-serif;
+        font-weight: 400;
+        line-height: 1.4;
+        margin: 0;
+        margin-bottom: 30px;=20
+      }
+      h2 {
+        font-size: 25px;
+        font-weight: bold;
+        text-align: center;
+        text-transform: capitalize;
+        margin-bottom: 10px;
+      }
+      p,
+      ul,
+      ol {
+        font-family: sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        margin: 0;
+        margin-bottom: 15px;
+      }
+        p li,
+        ul li,
+        ol li {
+          list-style-position: inside;
+          margin-left: 5px;=20
+      }
+      a {
+        color: #3498db;
+        text-decoration: underline;=20
+      }
+
+      .btn {
+        box-sizing: border-box;
+        width: 100%; }
+        .btn > tbody > tr > td {
+          padding-bottom: 15px; }
+        .btn table {
+          width: auto;=20
+      }
+        .btn table td {
+         /*  background-color: #ffffff; */
+          border-radius: 5px;
+          text-align: center;=20
+      }
+        .btn a {
+          background-color: #003b6a;
+          border: solid 0px #00539f;
+          border-radius: 5px;
+          box-sizing: border-box;
+          color: #fff;
+          cursor: pointer;
+          display: inline-block;
+          font-size: 14px;
+          font-weight: bold;
+          margin: 0;
+          padding: 12px 25px;
+          text-decoration: none;
+          text-transform: capitalize;=20
+      }
+      .last {
+        margin-bottom: 0;=20
+      }
+      .first {
+        margin-top: 0;=20
+      }
+      .align-center {
+        text-align: center;=20
+      }
+      .align-right {
+        text-align: right;=20
+      }
+      .align-left {
+        text-align: left;=20
+      }
+      .clear {
+        clear: both;=20
+      }
+      .mt0 {
+        margin-top: 0;=20
+      }
+      .mb0 {
+        margin-bottom: 0;=20
+      }
+      .preheader {
+        color: transparent;
+        display: none;
+        height: 0;
+        max-height: 0;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        mso-hide: all;
+        visibility: hidden;
+        width: 0;=20
+      }
+      .powered-by a {
+        text-decoration: none;=20
+      }
+      .presentation p {
+        text-align: center;
+        font-size: 18px;
+      }
+
+      hr {
+        border: 0;
+        border-bottom: 1px solid #f6f6f6;
+        margin: 20px 0;=20
+      }
+
+      table[class=3Dbody] h1 {
+        font-size: 32px !important;
+        margin-bottom: 0px !important;=20
+        font-weight: 900 !important;
+        font-style: italic;
+      }
+      table[class=3Dbody] p{
+        margin: 0px;
+      }
+
+      @media only screen and (max-width: 620px) {
+        table[class=3Dbody] h1 {
+          font-size: 32px !important;
+        }
+        table[class=3Dbody] p,
+        table[class=3Dbody] ul,
+        table[class=3Dbody] ol,
+        table[class=3Dbody] td,
+        table[class=3Dbody] span,
+        table[class=3Dbody] a {
+          font-size: 18px;=20
+        }
+        table[class=3Dbody] .wrapper,
+        table[class=3Dbody] .article {
+          padding: 0px 10px !important;=20
+        }
+        table[class=3Dbody] .content {
+          padding: 0 !important;=20
+        }
+        table[class=3Dbody] .container {
+          padding: 0 !important;
+          width: 100% !important;=20
+        }
+        table[class=3Dbody] .main {
+          border-left-width: 0 !important;
+          border-radius: 0 !important;
+          border-right-width: 0 !important;=20
+        }
+        table[class=3Dbody] .btn table {
+          width: 100% !important;=20
+        }
+        table[class=3Dbody] .btn a {
+          width: 80% !important;=20
+        }
+        table[class=3Dbody] .img-responsive {
+          height: auto !important;
+          max-width: 100% !important;
+          width: auto !important;=20
+        }
+      }
+
+      @media all {
+        .ExternalClass {
+          width: 100%;=20
+        }
+        .ExternalClass,
+        .ExternalClass p,
+        .ExternalClass span,
+        .ExternalClass font,
+        .ExternalClass td,
+        .ExternalClass div {
+          line-height: 100%;=20
+        }
+        .apple-link a {
+          color: inherit !important;
+          font-family: inherit !important;
+          font-size: inherit !important;
+          font-weight: inherit !important;
+          line-height: inherit !important;
+          text-decoration: none !important;=20
+        }
+        .btn-primary table td:hover {
+
+        }
+        .btn-primary a:hover {
+
+        }
+        .button_style {
+          background: #fefd02;=20
+          background-color:#3498db;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          padding: 15px!important;
+          max-width: 420px;
+          min-width: 140px;
+        }
+      }
+    </style>
+  </head>
+  <body class=3D"">
+    <span class=3D"preheader"></span>
+    <table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"body">
+      <tr>
+        <td>&nbsp;</td>
+        <td class=3D"container">
+          <div class=3D"content" style=3D"border-radius: 10px; max-width: 4=
+20px;">
+
+            <!-- START CENTERED WHITE CONTAINER -->
+            <table role=3D"presentation" class=3D"main">
+
+              <!-- START MAIN CONTENT AREA -->
+              <tr>
+                <td style=3D"text-align: center;">
+                  <br><br>
+                  <img style=3D"max-width: 200px; margin-top: 20px;" src=3D=
+"https://upload.wikimedia.org/wikipedia/commons/c/c3/Bosch_logo.png">
+				  <img style=3D"max-width: 200px; margin-top: 20px;" src=3D"//upload.wi=
+kimedia.org/wikipedia/commons/c/c3/Bosch_logo.png">
+                </td>
+              </tr>
+              <tr>
+                <td class=3D"wrapper">
+                  <table role=3D"presentation" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0">
+                    <tr>
+                      <td class=3D"presentation" style=3D"text-align: cente=
+r;">
+                        <h1>phishing@pot</h1>
+                        <p>
+                          <font style=3D"color:#333; font-weight: bold; fon=
+t-size: 20px;" ;=3D"">Sie wurden ausgew=C3=A4hlt, um ein brandneues Produkt=
+ zu erhalten<br></font>
+                        </p>
+                        <p>
+                          <font style=3D"color:#e60a14; font-weight: bold; =
+font-size: 24px;"><b>Bosch Bohrerset</b></font>
+                        </p>
+                        <table role=3D"presentation" border=3D"0" cellpaddi=
+ng=3D"0" cellspacing=3D"0" class=3D"btn btn-primary">
+                          <tbody>
+                            <tr>
+                              <td align=3D"center">
+                                <table role=3D"presentation" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0">
+                                  <tbody>
+                                    <tr>
+                                      <img style=3D"max-width: 250px; margi=
+n-top: 0px;" src=3D"https://i.imgur.com/IBSzJMG.png">
+									  <img style=3D"max-width: 250px; margin-top: 0px;" src=3D"//i.img=
+ur.com/IBSzJMG.png">
+                                      <td> <a href=3D"https://lmy.de/dgsSx?=
+fBro1S2Knwm7WZ0gkpgw6xpO6kk2Jo6BEeqNjoSx3beqIHfvUtPO1AqhVaKTFo7n6KCk2sJZ5xC=
+eP2VPffar14" style=3D"border-radius: 10px;">Klicken Sie hier, um einen Ansp=
+ruch geltend zu machen</a> </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            <!-- END MAIN CONTENT AREA -->
+            </table>
+            <!-- END CENTERED WHITE CONTAINER -->
+
+          </div>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+  </body>
+<style>
+
+<div dir=3Dltrdata-setDir=3Dfalse StYLE=3D"height:2px;max-height:2px;overfl=
+ow-y:hidden ;color:#ffe">54FdEqrZC2f48hImuAs4L2CL9vanJXwcD8XczLvmoOCOPp5c8R=
+H3Rbs4QtVjxPkZTRRGGzHU1anKLaoNsnr3VOSxpK08phGgKxT7C9GEJJsVyZbDyNjVt4QrrpF</=
+DIv>
+<div DIr=3Dltrdata-setdIR=3Dfalse sTyLE=3D"height:2px;max-height:2px;overfl=
+ow-y:hidden ;color:#ffe">S4QL40A0GdOeMFRQ1LbIpqpRoABLmOVw0NNUUW6Sr170rA7axi=
+r1593hB2ULKqLqjerojyAFgwKUUbDZNHT0Y34LDyEfDgZq4CXHHj9WlQJcTSnQC1GdhF4vkJ0uP=
+OzoFievKDoI4kQvexDTjo8AO0BUo</div>
+<DIV dIR=3Dltrdata-sEtDIr=3Dfalse Style=3D"height:2px;max-height:2px;overfl=
+ow-y:hidden ;color:#ffe">amc38IwA8U3jczE4nw38q2xYlLwNhy33rgoBo1e9XAfRbqyvJD=
+ub9ReIaLXvk72JoigGM8H3xQOhho5p1ntZ9IClq9LA5Z1Syr2sMy0DfaxWEx6ypKgNFayfPdnDG=
+Z01k4i5pn3GVj3rcXlQBixRBxvvtSlKkLhsoz6</DiV>
+<div DiR=3Dltrdata-sEtDiR=3Dfalse stYle=3D"height:2px;max-height:2px;overfl=
+ow-y:hidden ;color:#ffe">gY3zr3XLAAiQU0u7otuQwPtSTat96zsSaZSuJw47DTJztI70y6=
+GVYjAmOBT8f7N7RfTErNXKeGnMdiAGi3EjkAvYMAyH36cGbBVuqR7hNxodOlHEMrfn8pJuAaKRR=
+B6feJiIMkRXzUldnC6nubngw0M9myzUjGrdeyme7eYjzKuYj</diV>
+<diV DIr=3Dltrdata-setDiR=3Dfalse stYLe=3D"height:2px;max-height:2px;overfl=
+ow-y:hidden ;color:#ffe">n21h8pFN7xZVFk4iC3zFtd8Xlsngz3UEjAEdj71DEZzePvbhCu=
+i9Ja5kUqkLjOZbgRxdKcKI3dfWYPbSBsWy1JEfFzAHis5nKcHjpghjKWu4REQZX</diV>
+<Div DIr=3Dltrdata-setdIR=3Dfalse StYLe=3D"height:2px;max-height:2px;overfl=
+ow-y:hidden ;color:#ffe">pgOzjxAye8LeLSsVOMnb85tOf8GvTw8ZNcScdvsOLo94eyocMi=
+HwxHnRB5CS2RF9vvWCv0sShb6J9gvQ89WBkyekBQ3cszJgUbOkkrl312sHxCtGwkh</div>
+<div dir=3Dltrdata-setDir=3Dfalse StYLE=3D"height:2px;max-height:2px;overfl=
+ow-y:hidden ;color:#ffe">hrXuGIagp6OcwZcbfRNompOHcWRyNzNxrZwHFTUM9VYEYnW0iO=
+UzaaQM2AXVWwTsCXlhZk2C5P6CPIpq2urKP32tdFSIXxoLFe2a2Zp9D0geZMZ1j3lL7n0ztsC</=
+DIv>
+<div DIr=3Dltrdata-setdIR=3Dfalse sTyLE=3D"height:2px;max-height:2px;overfl=
+ow-y:hidden ;color:#ffe">N5fj9WPJRoIKLhn3BkxYn8uE9ovgeRs6269OPnPCoQaSFsJmZH=
+UpNIVdCidZC2IG7ZikU21lcyeYUYwabiS5RaLd2QC7PW0uANdkE7qprrS0f2TGVAfKw5WKHJOyI=
+grSlLe2jdifBATjVdQ5swaTupI0jbXMpD9FtgtDUJJoylqixiPrfM9lAhHV1vYFJ</div
+       <style>
+    =20
+--> <div style"display: none">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- This is the new email template for SSPR which aligns well with the ema=
+il that are sent out from IW portal -->
+
+<!-- To make use this template, you will need to add a new page to the Emai=
+lTemplates directory that has this page as the master page.=20
+    =20
+     The new page must specify the following placeholders:
+
+        - SubjectPlaceholder - The email subject
+        - HeaderPlaceholder - The header of the e-mail document
+        - BodyPlaceholder - The body of the e-mail document
+
+-->
+
+<!-- For dir and lang attributes you will need to define them at the indivi=
+dual tables as well. Otherwise some email clients do not render the email p=
+roperly -->
+<html xmlns=3D"http://www.w3.org/1999/xhtml" dir=3D"ltr" lang=3D"en">
+<head id=3D"Head1"><title>
+=09
+    United Institute account email verification code
+
+</title><meta name=3D"ROBOTS" content=3D"NOINDEX, NOFOLLOW" />
+    <!-- Template B O365 -->
+    <style>
+        table td {border-collapse:collapse;margin:0;padding:0;}
+    </style><style>
+</head>
+<body  dir=3D"ltr" lang=3D"en">
+    <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" =
+dir=3D"ltr" lang=3D"en">
+         <tr>
+            <td valign=3D"top" width=3D"50%"></td>
+            <td valign=3D"top">
+               <!-- Email Header -->=20
+               <table width=3D"640" cellpadding=3D"0" cellspacing=3D"0" bor=
+der=3D"0" dir=3D"ltr" lang=3D"en" style=3D"border-left:1px solid #e3e3e3;bo=
+rder-right: 1px solid #e3e3e3;">
+                <tr style=3D"background-color: #0072C6;">
+                    <td width=3D"1" style=3D"background:#0072C6; border-top=
+:1px solid #e3e3e3;"></td>
+                    <td width=3D"24" style=3D"border-top:1px solid #e3e3e3;=
+border-bottom:1px solid #e3e3e3;">&#160;</td>
+                    <td width=3D"310" valign=3D"middle" style=3D"border-top=
+:1px solid #e3e3e3; border-bottom:1px solid #e3e3e3;padding:12px 0;">
+                        <h1 style=3D"line-height:20pt;font-family:Segoe UI =
+Light; font-size:18pt; color:#ffffff; font-weight:normal;">
+                           =20
+    <span id=3D"HeaderPlaceholder_UserVerificationEmailHeader"><font color=
+=3D"#FFFFFF">Verify your email address</font></span>
+
+                        </h1>
+                    </td>
+                    <td width=3D"24" style=3D"border-top: 1px solid #e3e3e3=
+;border-bottom: 1px solid #e3e3e3;">&#160;</td>
+                </tr>
+               </table>
+               <!-- Email Content -->
+               <table width=3D"640" cellpadding=3D"0" cellspacing=3D"0" bor=
+der=3D"0" dir=3D"ltr" lang=3D"en">
+                <tr>
+                    <td width=3D"1" style=3D"background:#e3e3e3;"></td>
+                    <td width=3D"24">&#160;</td>
+                    <td id=3D"PageBody" width=3D"640" valign=3D"top" colspa=
+n=3D"2" style=3D"border-bottom:1px solid #e3e3e3; padding:10px 0 20px;">	=09
+                        <table cellpadding=3D"0" cellspacing=3D"0" border=
+=3D"0" >
+                            <tr>
+                                <td width=3D"630" style=3D"font-size:10pt; =
+line-height:13pt; color:#000;">
+                                    <table cellpadding=3D"0" cellspacing=3D=
+"0" border=3D"0" width=3D"100%" style=3D"" dir=3D"ltr" lang=3D"en">
+                                        <tr>
+                                            <td>
+                                               =20
+    <div style=3D"font-family:'Segoe UI', Tahoma, sans-serif; font-size:14p=
+x; color:#333;">
+        <span id=3D"BodyPlaceholder_UserVerificationEmailBodySentence1">Tha=
+nks for verifying your phishing@pot account!</span>
+    </div>
+    <br/>
+    <div style=3D"font-family:'Segoe UI', Tahoma, sans-serif; font-size:14p=
+x; color:#333; font-weight: bold">
+        <span id=3D"BodyPlaceholder_UserVerificationEmailBodySentence2">You=
+r code is: 918159</span>
+    </div>
+    <br/>
+    <br/>
+
+                                                <div style=3D"font-family:'=
+Segoe UI', Tahoma, sans-serif; font-size:14px; color:#333;">
+                                                Yours sincerely,
+                                                </div>
+                                                <div style=3D"font-family:'=
+Segoe UI', Tahoma, sans-serif; font-size:14px; font-style:italic; color:#33=
+3;">
+                                                    United Institute
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+
+                    <td width=3D"1">&#160;</td>
+                    <td width=3D"1"></td>
+                    <td width=3D"1">&#160;</td>
+                    <td width=3D"1" valign=3D"top"></td>			=20
+                    <td width=3D"29">&#160;</td>
+                    <td width=3D"1" style=3D"background:#e3e3e3;"></td>
+                </tr>
+                <tr >
+                    <td width=3D"1" style=3D"background:#e3e3e3; border-bot=
+tom:1px solid #e3e3e3;"></td>
+                    <td width=3D"24" style=3D"border-bottom:1px solid #e3e3=
+e3;">&#160;</td>
+                    <td id=3D"PageFooterContainer" width=3D"585" valign=3D"=
+top" colspan=3D"6" style=3D"border-bottom:1px solid #e3e3e3; padding:20px 0=
+;">
+                        <table id=3D"PageFooter" cellpadding=3D"0" cellspac=
+ing=3D"0" border=3D"0" width=3D"585">
+	<tr>
+		<td>
+                                        <table cellpadding=3D"0" cellspacin=
+g=3D"0" border=3D"0" dir=3D"ltr" lang=3D"en" style=3D"margin-right:30px;">
+                                            <tr>
+                                                <td>
+                                                    <p style=3D"font-family=
+:'Segoe UI', Tahoma, sans-serif; margin:0px 0px 0px 5px; color:#666; font-s=
+ize:10px;">
+                                                        <span id=3D"Contact=
+Info">
+                                                            Microsoft Corpo=
+ration
+                                                            |
+                                                            One Microsoft W=
+ay, Redmond, WA 98052-6399, United States
+                                                            <br/><br/>
+                                                        </span>
+                                                        This message was se=
+nt from an unmonitored email address. Please do not reply to this message.
+                                                        <span id=3D"Privacy=
+AndLegalLinks" style=3D"color:#0072c6;">
+                                                            <br/><br/>
+                                                            <a href=3D"http=
+s://privacy.microsoft.com/en-GB/privacystatement" id=3D"PrivacyLinkAnchor">
+                                                                Privacy
+                                                            </a>
+                                                             |
+                                                             <a href=3D"htt=
+ps://www.microsoft.com/en-GB/servicesagreement/" id=3D"LegalLinkAnchor">
+                                                             Legal
+                                                             </a>
+                                                        </span>
+                                                       =20
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                </td>
+		<td style=3D"padding:0; text-align:right;">
+                                    <img id=3D"CompanyLogo" src=3D"https://=
+passwordreset.microsoftonline.com/images/1_MSLogo.png" />
+                                </td>
+	</tr>
+</table>
+
+
+                    </td>
+
+                    <td width=3D"29" style=3D"border-bottom:1px solid #e3e3=
+e3;">&#160;</td>
+                    <td width=3D"1" style=3D"background:#e3e3e3; border-bot=
+tom:1px solid #e3e3e3;"></td>
+                </tr>
+               </table>
+
+            </td>
+            <td valign=3D"top" width=3D"50%"></td>
+        </tr>
+    </table>
+<img src=3D'https://mucp.api.account.microsoft.com/m/v2/v?d=3DAIAACAWUUKUGR=
+XJPICVJ7P3TEWLUSN62BPQHAMNIJ4TS7WBL3HDEYGU56KNJJUJ52QYMWDALN2RFQVQATCCL44CU=
+LSLCKMFVXY53M5TB5CTGMUUOICY2OPKOLPV55BTZ6OZLMJIP3MFVHTM54LVNORNWYVUKZBQ&i=
+=3DAIAADSWK5JKOJY3B3LNOHOBCLJOHE62HNS2IWEFYBLDCUIBRXXSILM62RIPG3MUWVI3UJHMU=
+Z3M6YCQPHQVFN6VR4QSNQTHFJQN7XNMPXMXFXSKTJKMRUBVOU3RBCVS4EI3YWQEGGQLSKDG2N25=
+7VU6IG3BK7G24U2223W5M3G53E6IUVOKCSLI3NGH74YKV4DPOIYUQTPR5SKYZGORQNYRV4PS6WN=
+AP65SKLGVJFQLJU6U4MLSMHJZP35AQ7FHWM7GDQMUBYGJUB75OUG3E7FYH4HWPQ7Q' width=3D=
+'1' height=3D'1' tabindex=3D'-1' aria-hidden=3D'true' alt=3D'' /></body>-->
+ </div>
+<style>
+ =20
+</body></style>
+
+<div dir=3D"ltrdata-sEtDIr=3Dfalse" style=3D"height:2px;max-height:2px;over=
+flow-y:hidden ;color:#ffe">osIDxuyNCBxz8PpFrdJglHRWfa8VcEqY1ZG1Ccjyj4oCTKUn=
+UhJMxr1y2BLdHyzoatkGp4SSorLp02oGBaUVKaBcDoM0MmKCbaN3589Tg9SlGAuIW35CbP2bALN=
+HBWvyvJXPRQ6panfIMZPbmbOLLtzu8Kt9cs6YFS3lo1jcNBFsbuPp5d30kZ</div>
+<div dir=3D"ltrdata-sEtDiR=3Dfalse" style=3D"height:2px;max-height:2px;over=
+flow-y:hidden ;color:#ffe">GGfL6oYei7jTjijWSxEx4jmI2pNVCFop6JlXyjMBKFC4VgeK=
+gk30iQAb9mKiMkUslmwKmMNKLkrcTXP0I5lMAe6PQrMb0rOAuSjOeHoxZzSlRkVF5YdJkWh</di=
+v>
+<div dir=3D"ltrdata-setDiR=3Dfalse" style=3D"height:2px;max-height:2px;over=
+flow-y:hidden ;color:#ffe">AoxMtvuPaVBcc1LxBBLgKpzmlggOWDGROy0VVZfWjhknxwXJ=
+q5thb9kR5Sz1OZlTmJw0YRfuJDo1NiFDadFgxaVSUGFramnp9Py3n9wX8ADpeuchJJjfifIKaU7=
+r8YluudmLLMjug21W89M4UuzH17jb8CbkboI0j1S9nviv3giNQZUoMwu6vKoC1bn1IF</div>
+<div dir=3D"ltrdata-setdIR=3Dfalse" style=3D"height:2px;max-height:2px;over=
+flow-y:hidden ;color:#ffe">fpzl0myemFO0VjPJdhCed4SVDNtKLFlvdGHuo3PH5850pbsM=
+KG1p3HspavkAvQTojS8Qlz9OXKIfEVETFFEwMgJNF5gjW1OEuVQ9zAc5k1u2VET4mE9OfWuqh49=
+0AAKv9v2Rf3o7LUr</div>
+</style>
+  </body>
+
+</html>
+

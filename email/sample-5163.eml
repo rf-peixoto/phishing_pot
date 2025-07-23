@@ -1,0 +1,520 @@
+Received: from CH3PR20MB5602.namprd20.prod.outlook.com (::1) by
+ SN7PR20MB5311.namprd20.prod.outlook.com with HTTPS; Thu, 20 Mar 2025 15:44:27
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=y/gCxsE/XKxId6LKHoKGEl4Bw2ItLeoHk7shNjXKVSPDyI3vdrjqiOdnLTPtu1u9wxZgpxdt+NLmTXTNTh+tyUjc4UHXRIbaUbRtmHJJCTcQ9BUGkhtJCnvVqleq5bkFkaLSkJH2Z9wBeUFWQw75crzaauxWeCa+n5eL3L10KRYwkO35V/F9v1I2KHCU13UUEN1p3u9uql+skjMENYQvd887D4odf8mU9s2n6+X/LWkifGlETJ9MBYvCl9QzwHS+HyQMd1bu1J2Ve3jF/5RpOOKVeZ98lmdeGikcf35mqmSyTeH1zmYBWILWVCkgZj9MJpIbdgih7xqBFKBT8zrRPw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=m6fasVIrb4XfUBM04TnzY9aylBZhfY/c4dpetWoDYfg=;
+ b=ZVBQaMS6GDxcrT7g+PG10KiVN1IBeBog68/laBDli4w4eTSctXJcdjnV8BhMNIOLNjAeJeicjza5qg4aqRPODgNhYi8XahUphRaB7OJd2LhOxmkSdn+FjAoEouKIJqE5QZn595ILCqZ3/KVhiug4oHL4O9WgX4xe/6yxZjHtgHISLJCXUZIeL/PmVhLCaC2F8V56TCZL+S5XuOEE8S8RuZhIEqrkpJJA4IK0qZ6TxYgVAJx+SslRamBvGABdHTYPkpLkj0PPbofOgwAnDWUWFY2Ji5geAUnzrNovsfvTXjlc1ZuJjytuEfBMzTIlIyveYaVoXZP7444PVWYBLCY1eQ==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.101.67.81) smtp.rcpttodomain=hotmail.com smtp.mailfrom=discounts.sa.com;
+ dmarc=bestguesspass action=none header.from=discounts.sa.com; dkim=fail
+ (signature did not verify) header.d=discounts.sa.com; arc=fail (48)
+Received: from DUZPR01CA0125.eurprd01.prod.exchangelabs.com
+ (2603:10a6:10:4bc::17) by CH3PR20MB5602.namprd20.prod.outlook.com
+ (2603:10b6:610:143::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.36; Thu, 20 Mar
+ 2025 15:44:25 +0000
+Received: from DU2PEPF00028D02.eurprd03.prod.outlook.com (2603:10a6:10:4bc::4)
+ by DUZPR01CA0125.outlook.office365.com (2603:10a6:10:4bc::17) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.34
+ via Frontend Transport; Thu, 20 Mar 2025 15:44:23 +0000
+Authentication-Results: spf=pass (sender IP is 52.101.67.81)
+ smtp.mailfrom=discounts.sa.com; dkim=fail (signature did not verify)
+ header.d=discounts.sa.com;dmarc=bestguesspass action=none
+ header.from=discounts.sa.com;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of discounts.sa.com
+ designates 52.101.67.81 as permitted sender) receiver=protection.outlook.com;
+ client-ip=52.101.67.81; helo=DUZPR83CU001.outbound.protection.outlook.com;
+ pr=C
+Received: from DUZPR83CU001.outbound.protection.outlook.com (52.101.67.81) by
+ DU2PEPF00028D02.mail.protection.outlook.com (10.167.242.186) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.20
+ via Frontend Transport; Thu, 20 Mar 2025 15:44:23 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:CBB1A6407727DC2C61DB8CAD7DBE75A39829488DEC1BF9E4139B757E463883A5;UpperCasedChecksum:29314711616F126E46BAF50A9450EA47677D93C3F7B0745388636BF972686E86;SizeAsReceived:19362;Count:46
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xeeisPopZzJl+mwEf/sV7JqXjuLZ/OBzvdfzOq1Vsu7SPz8plHlPT5e8aU80+VNlhlUKJPjVOT8G5+XUfXqW45z8gi4JcRjbew2vGaUYXoR/AEs/zSaM2iX7XTxmaK6768ialMvvOX5XNAqu0f+L6xNPMW/Zk2OqxpcytKN/yMMFq4rqgIi3kXXIwB2oWOdzUhDREOOos+VV/48uNJEwtQ+6ke5MFWQ2U1sU7U5tVZ1p4lLvUSuedfjYKVY5HIo95I9XEZVTOFoUz7zCAaQI6TBU36kHxAm9/1az2LyaVHEfvl8B8QE+mOsRmVCKUx9c1SMzyfcDhHXAjcPLyx/3IA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=m6fasVIrb4XfUBM04TnzY9aylBZhfY/c4dpetWoDYfg=;
+ b=AaFFxEVSXJvxDIjBOdtIxTxZ7W143td9HNfpXG9wc5s1sFDBrMrScwm3bXAODwAE7s/DjQaoeO9a1vCgQvubNY7PuQC8jHrJSF2BtflEHqmZUAX5t2b9pyzoX4v8IcAf4VTPdKkvFcU0B1YflORkZxK4A4PLIcsWZK2BczMIFF92GgmXEUseLwv9xQy1LpyEIkRjreMXFQocMno2bx+zgCZLvn07SQ/AkrlXlA2VsPzS9xJ8nUNxktXT2LQVScWssP1a46aIObLVdlIiWVYRHbeVh06P8y3TO6pFVFYuABNU4LhURHWHSxKe6s8FgAkJHUgFzvcvuP/jIV6jXun7uA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=discounts.sa.com; dmarc=pass action=none
+ header.from=discounts.sa.com; dkim=pass header.d=discounts.sa.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=discounts.sa.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=m6fasVIrb4XfUBM04TnzY9aylBZhfY/c4dpetWoDYfg=;
+ b=AY9QGV2gxVgz0nprSnB3py4LrdV2HeSkW7gk0SbalqK7DHJZoltnsJNKjEPWoHdxyRjNpQiu/hLmC19wHdMhBjyNkFnkTzDa0sFxwL1qtvs5FwAJldI2k9A5cSK8DIO1F7CUQcgxcE1Cd2Ujek7jZ1MmaLJLvDppYifqvO30vHslDPXU227nEwHvOBNTeLyTg+QpQ/d4vVvmPUtVrtfwpclo5MiBQRQdqoEr1xKoZBExs5tkQnO4wzZRKQQv42n0BXxkSaQ8dCkfFBA4jpEAkY4htYnlJoXcD87f0v9TrWuNt93/QBXOCBpsOG6WgyG+6ATJB8KC3pyGwQRafTSdig==
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=discounts.sa.com;
+Received: from VI1PR09MB2237.eurprd09.prod.outlook.com (2603:10a6:803:80::13)
+ by DB8PR09MB3932.eurprd09.prod.outlook.com (2603:10a6:10:124::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.33; Thu, 20 Mar
+ 2025 15:44:22 +0000
+Received: from VI1PR09MB2237.eurprd09.prod.outlook.com
+ ([fe80::a24d:dc5e:2234:b161]) by VI1PR09MB2237.eurprd09.prod.outlook.com
+ ([fe80::a24d:dc5e:2234:b161%5]) with mapi id 15.20.8534.031; Thu, 20 Mar 2025
+ 15:44:22 +0000
+List-ID: <HBnfgs4IQ.xt.local>
+X-CSA-Complaints: o83ijGeYJM.csa-complaints@bitcoin.de
+X-SFMC-Stack: 11
+X-Utkju: A7kByAcpaio2JY8EQj1BB7EqDGIvELCPY7y/+MXdvoNRz3Yl/G9ftLc=
+References: <@mail-wep.Bounce_dnO.io>
+CC: <manager_130@bitcoin.de>
+List-ID: <.7289367.xt.local>
+X-Mailer: Utkju
+From: 🔔 Bestätige Deine Auszahlung <lina_Doris_39715@discounts.sa.com >
+Subject: 💵 Ihre Bitcoin-Auszahlung wartet – Bestätigen Sie in den nächsten 48 Stunden für sofortigen Zugriff!
+Content-Transfer-Encoding: 8bit
+Date: Thu, 20 Mar 2025 15:44:21 +0000
+Feedback-ID: 325-anexp#nret-fa:account-notifier
+Content-Type: text/html; charset="UTF-8"
+In-Reply-To: <V1ZY1BQTPGRHItfHiB4xrtmx5W5rZW2PRyaQPQCUwlUnCZDE2RcKCbNxEldXfnA87h8JWsc1OR64W9yGr0UBGuClEky7YycKBLQkoPxptBuWsds85ljDLSP43ajdhJscehrenrTUZh8pS3FBIywaScK8ZzdDnQZtbA3xlqNzHT3QIx6kjgQC7QJQbpWmnIIFElVIQ0HoPEmK4II96gSxPKpDgchzLvmaiNeEuT0BYNO7hV16MWGWXx172hgFFvpqcZwcYwWerwWOa6P6037PqfeeXvbtanP5NPgSXaBLekYEtYRCM0wgfV37ZrAPXYFqv2o6uPP1bxfAATiV9mk9MFkx2e9SQUrwynRo4wsOhziziDwAzEb9MUwxsW6auTxpf6HNGNaGYHWShHSYYYhdj5CK9VD4aVBd92XQ6zkLmWbZsKc6yZRzO320AWooCCYE0K1ZOEbQwHdXfVGNfZ0GkrfnBukuvkdRN5KCqOQb2emWkFFqyf2y2tUqVzDN7LMDhBG0qzLZRyHzmdzia3LSFLYHuGdw3AbyZNQODxd2GKyjrKRwIPw5G4Ul56g4P3RRREKUCpxQtI990xTHKc0rFJO6q6LNWbh3MX8byqpX3IKH9WqxWsJ6FfUmAbQ7magbWxkONeCSHa8z0Wlp5iFaPhbCQ0v25GGP3Uw3wjXhp5Qp1wqS1RutbxLNVKSYntiDFc93e9ikrTHGpUySOacCGrz3OFJluvYJUu2eX1b4uzH1n0LKe86sE0NGy5IzDaWGRrBdOESs9Ogab4TTIV2BG0eNfBLS6VI4uTCrGd0E9Eg63CA6CIatoRZi3M78DCLZaMjQNutIZJ2oQHZtBnoxhuloVxcFvgNWu6dOOrN4scIKIB66VICnhDvaj3ZISPP4c09u77OWwmG9V3BTZiEoyH9q78PVmucFficZNs8c0VqTMcrEZeU8zEEOjoOw8gQO4I5mOrbRa180rHTG5HaJMyvz
+ 4mU2nM8EMlLIfGVlBBnQRakMv0y97oB8QYrGNO1JC1P0QNzZtAUY8F4jwwRd4Fuhdl1GBXwKrzJE6GGyjimOEAxLSipKJLqrZjZCf4ic1cbo83QRnfziB6T9509a8xKf8rl0Xq85V6eFVRj2MtUpGTmLN4OGoDW6BuxCaK0WJzk4IjvZJHbfjAaoJwVFmRhJTAhl3CJjlo83ijGeYJMo83ijGeYJM1HuaCxxkuIJ8ep@o83ijGeYJM6rgrhcUqWkeJ0XIKI1XNRdRvYRkOJy4Ez8PlyuEUB21mcMFn726evPEkO.ztE2DKOkrqj7c63gsZvG9M6B2VdKW9aua6fvywHVaTr4S2WZtXIN1gp2ryBh7cSbKMwZwrvxmadxEDC2HeGzbcjnUgqvlc2L1IgDdOhBfPNflHSXlzRTARY86AvCgqI3eFb6u1uKJZefr6YLkbbkyCBp7nxTAzet7xHuIt9yMEYQKClHuIofM8ovO6AP8SyYG5LrmtAeBPJVHBOojfdH2AtjbWCFqX4DJ6xJgeRfctegarF0FAKixtObsNYXHyvAHlXE2xZ9VIetuEPJq21Ma7LMmPlkdDyn59DvId0cdqookAZyDqy5wb1AiICV7LkQBq4pBfGm1iGmaIhZNIunb8X6KhKsq3Il8MZCtPT1NHZleBPFGIyoQLTOGG57YEEspeHGXWseTaAxvnQN7Fh7FUKJLajy3fEYmpR8kpAnacjyJw8y49LVYguwkK4XaLV41o2KOGWfPsBReMf9G3Z7XgD0tcFQfcJamXR5py5W09RLp79ZroVVwnKVw4hT730Nwzuf7xDrbnZKfgBU1Otn6pfF1hSWhwIBN0kUSp5uJVNACbq9CTClA9m71CxMWZJaPLqs6vpDzewwLdZOcewQsy0zSaCzun48OcMVYPiekUdMnj8Z9rhZcohMLRgLkdVNCK4WKowRyXyO0ItXdXQyNaNHDkhyybmpnssEmZhUKPvO1w7a3SOTa
+ u
+ AkspyvBz8078DPx6FAcYNevRx4sJ7qrCCQEaUI7MFiEFZhXfPaPwiXM1LRao5dyRN17mSibrp6mYJrdvJkqkIRmgAjjID4bjQhlB2XrB56PD3FEutElA0pmWJQHPxbk9z4hcr2mxCZ5ZsHogeno5Iv3sOdzpSOLLuHhm04S5DxZYHobgvJ8XrW17WiYGNNTAqvRw4gdJv1WANQ03rk3Y3qa8Bp4YDpWzNCoZGunaoVc8dfEinCQ7xi6F1YYIGuB9VQZi6MGyG4LRj6zUjeQhyBVe3DyvlhqfLb47TzIXaK9ZgSbHHmR4wdVMnBLMBt2vOqaXUa2hOW7RmgsY2M4hLpC9Qk6YHwyySUSi6Gq5bqxaghAWnwxNj5xuABXDyQK8lLHRg4pTWUDoKNzeVp3XMEYlkTcRJMSWZBfwPGmS3aCTsP9e2tV4U3aiPt9jbBEfMmPOHzgAzx88qt3MVXgvVviuJVInMcNbYiNoAPdJ9fYkhAIb3cFKjixcPpXyNtBsH5DiuQtYBFZBsv8Jb6A2VjUClDmSEmkEuTTWTHEERtdrgVuKX8XtJK80LeyNoRTPf8xXrUf60BT2fNj8gm3wzKxYhFFJAlyT6lZsAcNBYNhxB5t2YTHvmrnO0rZvryJ3DSvgmeF3A35LKjUp606QCRUZAW8zr6sb6SCK3NVdguIL8N8s6gKNd0LL1dH3NuXQkcVMQ9v4fsU3NGWWJVKF1TlQe6dv9zsqG0Xvl8SKiFJYU1hSodckJs7SMytHXQ92H8pvC2dYyDdvLMAX1DSU2mLe7qbCd9Tm3Trs9WRfu83YwtdBPlHMaTG4UKiFG2j7b9XtNXImJLazRQZ6hT5S3mq4UO7qkGL2O4v07561TSmOGX5IVLsnUleF4n7sEP824TQrVTdomZh3br6egjKRj6QSu9Gw5BFyD7LQOsYyLvEjFIVlL0XdZvLCmagf8v9PaPmGkuVK1peObcebbIQ2HeuUw1ThInC7yhCPA
+ f
+ C6BIjL7xEeGzLAZah2sikiBAO7itzQOVa1QdgJlXVZlt09mBbQgyMdVdRa7Ghqk9K9C5mqV4LC98cbNfgqY0lE09u1IqA6qcrE8GSn5e4aaGJ7B8YoAx9MTi8v2I1qwnaRzKdoJieLZdXe7Rwhu5yPYQsqqFvaTnQWZ5CdcXpTYPaqZRJOqKAvLV6adB40Cm2Ghc2KaczJJxsbpbg44e53u4qQuAhoeBUzdrxH8pnYyHaxWv6M2OItbI4IRwO24a7SOqAsqsAzWuV2wk41Ry8zIpzyV79EdLcol0UhTzTIbS4BEpx13o7R48C3254H9Fve71pnHH0rVIa77tOP6DpkNekirXto9uOnUxP3t5QG4IA7ooU20reG425C6nZaYDVkPEQIoj4YXItUA8q65zaeott7vfuU1PVOdmSV81g7CYgvSpiyu5B96lUrSM9Oby2hpo8hczQcU6kYcQgLjdsdeK3cD5lq5l1ZKfQBRoAcpNMZyi6PLbJ0n6hgFfWUh0JhAaIKL6NaPscWWJTqSiNuTUO2vw9AljHEnjHC8rz9oG8XYMcmos4QCTdTnnpcUq0mf506S78BCIVzLrqP5R8XyaDnyoozdyqfndfkIigPG3mhnfl7v4Ehu72YXsnfRoez441nrPSeUXlcBZj2GqHBM6k1u3WBRa6S0iNW9YUr4wg6Y66JFmRITqSMn0Uxy7Rg3djubYkSVqHzLYKtEn1So8SIKKnEabwEjls2kjlRfo7j6pqjT9UFg9DRFKLwdd3VJdeLNDO6WGuMCPCYS1vhtF6QAJgD7PeZsITNwjtooLwmAsdCIhc0um7TAuTapJagDK005OFBpoLcyP0T1Np2FMDPVezOAH846u9ndXyoFieLI6n5BkDNy5GZKEvnTptxVdblFbE3GSTRuce5LZMTmRHK8OujIX2gRWDf9Bo6At0SVwP2jfqrYk6bdnKeqChO5kgaEzVNlMY6JgZIv8Hem4ph3Lqt2x8qXlU
+ d
+ 0hXFe4sNBq7s1jqEjDfGWz9ZXR3uwBSRwm56DK6tJjznP8b9VwSwGViu8vWQcR7vE9FONIyijcoo3JMVoojVhA0pwrgLHnJReTomucjhjjmLhczdXaTaEc7Q06WqTylYYiLj5XZloiVOdJOT7SQRLDGqSfABe6Mz5X4TuJpk0WBGNQTC5ITShUTC5lpj1CWuQij9jRc4yYDWWNH2dBOKiNS4g9z14poZx3XA2pvXjAxCIzpy6vnJ3zRFlMFTDmjZR5975fNQhcnCGtNwaa7fz1uaMy6XyD6ps4U903tXTRoyGb8C8fZgVm7srrntpZqaW5eENcjUiIPp34xjsnFgoYcyjGEyxlzW5A5o9dIWEMz0JqSNPIASX6wlia5WNjMbFB5FEZMAvtUDfdDDsSXbRbqU0t7cnWl90q54t7Q7GVF7GfW4L1FtdeKFR002eDGNfy785TWghW3eUeur7kX4cIwCBxSxhV0LQAQiRlmq0u209x0NS4Ty4oCdaAVjEILSAApUqLebHoIgHe3uEpD8JomjDah2n8yKXm4vzoJdwqog1PUSxp4Xlz5Ko1vkJLcB1RQ9SHhFwfYIpX3B59a8f1wbfeXAAM7nrfRI8FAEMgWwINQJp85RM90vBy6Vqs7fYKC2tRo6sImKUMhvxlWAoNhIWg9Xiax8CXxzJdiyWdFYLZGzna9aujnamNvdkdXZOYe0tlmRP4z74EHsLYwC83ALc2dNC63hyJrRSZUKLl9T6VDVswhsLoB4upT7VKVWALLd7kwsXA7yXm9EqjgxF9dalUwzHtxICNmNPLgL84X3FUZAcAVa8giObUhjvfCiMlPXcFle8Mr2HXa6XdqKwAcqh0WpSzKIu573bRHEcqFrUb86mmjgAsFc2J2lXC07C88UJ5VJbQXBXoS4iMPnco8EmF0Bx9N3qzPxCxxnhzv1PFkQk64KoMAr5rB28bMBXin9d03SNLD4t1RCxcFZWQusSIQchEFaRHr1p
+ J
+ tU4XvhO6xj0mI8T7KI1GnnFhVsaloAoqj8P0knaGEvN55NfGNegNs92uXe0mgceqfiXeZhEZJsRqIojaeG6Op4NuuD0TIClkw663KhFkSlatJIbDImFTWWBjFywaYFlBAIFN7utKTfXY1Eho19CjiSphMUigHHu8u0shPTYIlmmwThjED9AxYucXQILXLyUjTvJabgnpAJ3pwTpWxBr2ZVDLRzT1D0fMfcwRL9EMJ0yQYZ84kvgKvRkp4FbX5YF9NM13hzPoZ0mC5FDxid04JBic3Y7nLia1wwLxvZcaE8qamJIBquL93vrXvjkQTpWpoq9GIlEyKz0nNd5C1gaZPsbw78Z95oc1LOR6ymOefLX8biPLfRkNZuPr6hXKvFSwTuMAgI6yMUGDxsCmzJr1dCLOijQazFgoXX1qaMDeIPi2fGNAMvKyr9ZrOXv0jUMvGCMQpwibTBL2v6WUAZlupUDVYVCYjxzVqzRXkIXAH3L363jLN7Lm1zBsJaWuAyTSBl929g60jdhQ96bEDZhStDyqfeq0Zx1ZIoAkVo5tSeUZXXSAhpMbnuZNBqfE9oyBh33c2lk8oRlNEG5gI4XOHNP9xq4hd3MmlV4t6snyFXjy5PmMyDj4h2rzwgWcwpwYJTFu100kMIdQnA9tB062y71TCD7MDAGIunOg8Gsl70ypnJFjSSAhiN6VIxwOupR7vHpjEVjHBNe2wjnjIajwDPEOzeCyxEvmr5DhOHsnYKJstpKoUTJ0DyPyiO7jAo0DA4dp6P5KFUwFCK0nR2IXmc4KyVYReTfSZaXjWESXX9uMJdipq0hq6n0MRC4lQ3yXDC7m8R6wBX74r6gJVmBpTczeCnEfAaDHTyV4bk0D0JSZNGpSo9NDVfuhmAaSE6EH78YESi2WwLe9K2OKjiSyNjLktUpX58QlKyvEe2vBjtOLNz1xNtcsx70piXXtCnyeVAOXtVSaxwtvUa0WMDkeEkcePoozxeG6CiAo3
+ z
+ dgy6FYOYRUTIVFJqmBxFI8XACvaM7KA6AlbrGdQdNCXarsoV7Iw0KEqc4wNsJWiudLb8LkNYCEFbud2qpEIqXB87YzP6LrWROwFtuYfYCbTdPYJAaEuliwq9OIUUezwN3JfJ4EbBE5uZfexyB6GfzIlCvV6PjxQQwbj5pWGnvKWH9bXFVsdCfdm9sWCdiKIXh01DyTrZendxc2iR0SQbARDqKcgHN6KIwwcrmR8O0XH4uUPLkdfkwOIhXyDiYc4ttMMQ3AYxy5Vy9ZlUhEHuG9mkwa5wNR91zjpVSTFrHkeBTemxQ8Gx4Zqwb78ckVdwrymAS4LBmAxVNazK6BNBv7P8bRA9g6JiBbegIfRGlJhoWfNAdVaDBUb5p25WsJCD8EoPRI5gmwBrGrConqs4q6lfis6i62Ielp3YS7KuSKKe3dKHsdBbg4N29WcSR8TRZkgauvasId84q0L50HeuGWRTwWMZqcd9jOqy1bnQ8YcS9wb3NHUb7QNBjVVtxa2GvFPjh7GnS6EmFzjGDLu2CYyFG7tg3dPEkqVl4kxeG8t6O8P0eF7ack74wtKQobZ2wet0SOZhgOBjfM4fA5LB0e9hyOHV9GyBQtxjp9VuRUolCQkVKWGLctFj2mjdWlaeMecHGfWOwd1nfFvAcusWj5L0BYN8bOKDYnp2e2VMJOspkZgWJSDPqO4yRxGmtQVn3XvV0jSg4SZQFrwSmkvmvLvP1qYbsKCFC5h6WGomPPLR4OAF5QTQ5aEHC3DkfOcw4VAaXE26c6rTvkGLZz5Tnu6Z8k7LVdlpvsfRJROBTKuu9bTFl0qk3xy5fLE62mGamhWhRbXVP1o3A2K86BoNErUMDKVnja5oQdMEZNzvbhcHIirF6mO2hCiguNg13BFK3YFmvGLbs4L1h9IRbgB4uXAWMuec7i1KWoVbRTwXqYJq7BnF5CPKXTYUt8LzjU5IXMY9U6lg6XKqp7gX82oUE1d67YDgp8UvkB0bU
+ q
+ PF9rGtqUYOTTZw35LwEJWIHAQMSXDzOFvngc8voOjtyuWH2Au1ScN9Pd0wV3xpflMC14doAw7bWxNMErB9ntzLva93iCphlfcvUftDr2giH7iUWtB7FBlK2tz6DLLuL9CAH6VqLtExZb3crmi5sto3JoNCUSxJdDEOcOHTXGsKfYYIxtB5v3LZ0503Ts6kHk3HzbBjNZmsGvOKdOZSAWIHVt34YsL2IGdFDHhdduEEusnZtnecqd0vBocR18xV0rEx9Y9GJJwUQCo76vehuLnH60mM19L3oNIibWW7vOmnvmCUeH2bIMmpb72dfReKRKFpIGQjqbUdEfdTZyYCRN5vY20A74uxgSBeNXbrnVG4H2gigOKCplqzgtp93853mOpD1WiHVy4mvztWOGWAJEIGrXIXQ2SDS3N0GLMl5tSZqa0q4AyKpGIA6sGDQ04EKichXHVcSA3Wv76yzrVufknKhHe2tgYDnDa00AuhQcXXgDjRvQKwhIx8FJ3vsYFIw3ow7245s8o83ijGeYJMUtkju.y1HuaCxxkuIJ8epGaJZQvBJcRifTTi9BpaIMh8NW02ejdBHkEtE3ObxMaV7X2K40F8wGfpYyj60UGuUSbd57Grwh1mDqaPmMIIH6v8umvKzdFbWaNUcasOiSZVjgki53TkKJnEUIzgKNt9Y9JBGmd7YMMJeauhdgwJjSZ5b8OFjEqi6rrTZiZeMkYSrTGfx7m3z5vV9Ojbg2C0cjefyxId5qW44KnwZryCnbvHx1TIO7tbYy41QmI6xPkktYW8myFAxfr46het7IfhXvT5RXhvc1M7w9ZsKNcwgH7nQ4XpjazRtTuh7ZkpIovD7NKRdy2eZoDNsOC1i4nfKPKs6NIsuNWc9u0Mufumab2kuqR5gScAtbvY9DlVguSPVcc52aBshqFy2bOyL5KqlUKiBV8sB4idhwYXdGYNgf4yNulfZvMRhULR2vK89YhU6Z0728fIDdsLpiKKrhd
+ G
+ x4KFvGMdwJgOVRURUAv5WU5dMJadT2ljhLDC1fbmWFts7vD8ze0iZyjy9lIdmYbnlhOQFq87q0TqyamUKyvmx7rCJccQJSO1t3uiqtKszz1UP1sajAos7R0YPfRSIBY1vksJyDl0OV2VGOigOQUFawsZJinvAq5Gt5nsEwn6BEsnKMlQxYGCtN8piWoGLXnmrgFhr0P192VLjEFCeQT5PFaWQK19YLOHDdJUJMurECEPwX8XuQtgOos4kszHXA1L5DRhIWRzue2TOCo7xecjeIbvMVPRscPIRt21fYPSPogfbdamoDkLkPbbjybCUoByqRXOrPDVJV2ZXQ3xkxaeKYa5MxZYh01p1NCRI4alRu65qUeDiSuGhL18hj6DS63fzbs5EFLoCZq8GsxbnZKQNOyf5Rf0rKV5CwKBtiQtRkeJvoGDhursYCJ3ZoRzn8tCxP4BrD1GEDqmkmFqIhltvSE6GzT3DxIehN7NInXtxDL1rMn6MWnITAXPFmwKvwlqWNDrKX7yp08iHZvSKuWWwcjKz6AEMnRzR6nC4aZCqSZUbfYTfF595altcYr4yNVi5Xjb6TN80rj7sLlrvvopQKpQ4hvk50kopT0tLn0xFScLF1GJNmGmBD7KURxOXz2jcKijJjWNBBz3Yk3sjokisO2Kxb1AWGGJi2De7LJN4O7BYEstsVG8xLJqvS0Lr7fYxADHLyS7qO9xrE9A3M81hiqEKjkWL7cYy1PHVFIgRzjoFLBlTZj78YdvAJXafnhF1ZeR46xniWA6nFbJesfW2JdglCxI6UaKYgCbN94gAkGK6gPWeA1273VFbgSMvOMsWNnFKopPWFBLRxzdWm2VqpNWrnY4yjleVaAXay9ITXZ8LkWGts152MGAhkysMjyn3EcM9flKYZVxSXMfLljrZIj5bC4ihoGj852BWTxAwqYOfO4P4g7d15Fj9TDeqORj5UDc0vWqIqNettymER6LhAu0gniPriKyAjFAv
+ S
+ uSs0iqMA4GzkcyLh57JAdJs2ubvs37R9pdL42mmmrMyGNtqIEyOrroqZ0dmxdeqh3D6Hx1Ua6IMn4ovzboVwDzGTUopKMGQs8Cm7pzjULP6M1Pf0lmrD81VWZRZyL1eTj8aYRWuNKFy0G1Bpy3POssrCGyi.edu>
+Message-ID: <ZF3lf1bGTw-Ct-Y9ADdP_ztE2.6rgrhcUHg-__Ip@sN2MIhMCjdKbcZ0GT72VqBKpn6H9jGk69PheKWa9C0z3FboYMqxOnc9hlXTNVO1UnwrnQG0L2TPVroza8PMgJTb.dcccd.edu>
+X-ClientProxiedBy: FR2P281CA0075.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:9a::17) To VI1PR09MB2237.eurprd09.prod.outlook.com
+ (2603:10a6:803:80::13)
+Return-Path: lina_Doris_39715@discounts.sa.com
+X-MS-TrafficTypeDiagnostic: VI1PR09MB2237:EE_|DB8PR09MB3932:EE_|DU2PEPF00028D02:EE_|CH3PR20MB5602:EE_|SN7PR20MB5311:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0f0bc648-f756-4076-b5f2-08dd67c61652
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|1800799024|376014|69100299015|29132699027|13003099007|8096899003|4076899003|7053199007|37730700002;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?Y1VTUjNaQVlkenBmRkxGMGM0KzNPaWhqSzdCL1dpRHZUODBsaHY0NkVLTExF?=
+ =?utf-8?B?T1F1SU9yZkM5K1d2b1pncnc5MmFQeVdMWDlMeGVvdmlEZ1BmcjZzYjJ1N1Bn?=
+ =?utf-8?B?dG5zSm1GWU5DM2xyeFh4d3R4aHM2UU5pc0VyUHg0T1NGcHRWN0tWa1R3bnBp?=
+ =?utf-8?B?VW83aDJaRE5RanBTVSt2ME1ibTU5YlZST1R2RlFjekIwVzhObnozb0kyZjND?=
+ =?utf-8?B?M3VVTnBhR3Vub29jSGVibUdJRXVvWm1Ga1NuMkcxbVJnajFrNENpcE1GT2p4?=
+ =?utf-8?B?dmlsMHRIRElFVnFIRDhnMERDb3FUZHFCWEpaWC9FR0djdVlVZzFSaE04ZFN2?=
+ =?utf-8?B?a3AvNlFNcVFRQ1Jhb0xRSFg5Uit2cXRCTXNsMXBWUnVxdTI0bWVQNmUyWGp3?=
+ =?utf-8?B?WUJiTGhpLzV4MWR6eW1GbXJDZzg4MFN3WFFISkpFWEdxeEFlTzlpUDFmRm5l?=
+ =?utf-8?B?OUxFYmtpZFl2aGZTb1ZRS1J6TXJpSUVYaE5Nc25OQmVQZkh6N2hpNTY2cXp0?=
+ =?utf-8?B?UjkzN2E1aWhiYkdpQ3FuYXJ5NzU0Y2l1UlZaTFNHK2dHZG9RZVdxMnc0OTIx?=
+ =?utf-8?B?cEFkbWg5azdDemJKWWpzdDhYU01Wd1J6WVFJbVdMQXZzNXVma0lBRXpPR3p3?=
+ =?utf-8?B?UXBhTmJ1TWcvbW5VMUQrYTBmMjZwUHhMTnNqL2dqZU9BeEhZYkhuSnNBNXZ2?=
+ =?utf-8?B?L2hkdGtjTmlRU281UkVGeW1KVXh5TjZTQkVBZDBsK05lR25COTRqTXE5Qkp4?=
+ =?utf-8?B?WldwUHhKYkFEa2FTV3NrSVFaZEs2Vldoc0hHUUtiN3hYaVFqNHdCbi9ZWUt6?=
+ =?utf-8?B?WlIrOUVZNGpTRk9LQmkrTWR4eFZ2UXZ5eW9kNm01OFJiVkJ6Z1VXT1R5YXM4?=
+ =?utf-8?B?YlBTVjVaNVIyMWNsSFErS2t0S0ZpWnVSbGxNZi9ZT0FXYzdkM2pWNHFKcndT?=
+ =?utf-8?B?OWlrSlNhRElrT25nV3VwRU1IelJaRVFMdDBFNVlIaDFheERPa1NSZU16MCtQ?=
+ =?utf-8?B?UnVJR1V4VWtVdm9jNjZhRTM4ZUVnZ254a01HaUZaY2gvdlpXS2d2NDliT2Ny?=
+ =?utf-8?B?ZUtwLzFqYU8vZytySS9QUWx2WnZ5am1pV0JOamVtcUZETGhNekg2d0xpU2ZJ?=
+ =?utf-8?B?MG1VNE5EYSttVWpwQndnbkhGTDNmTDVLSDgyOFVxYmRoTmQ4L0toVE5jM1pY?=
+ =?utf-8?B?Z1UvVjZwRGNkZVRENmVMNm4veVRkL3gwM1dmRlFxZjZKVTM5NnQwTVJBTGVY?=
+ =?utf-8?B?OU9BaE9aZDluenVWdEtKVXBhTTF4Z3RBWVZCSkNHdm8xQmdoaHhzOVorK1pT?=
+ =?utf-8?B?eTV4Y0lodkVlQi8wKzBqaEVac0xsMjZsYUxHWkJFQkR2bmRGdWIxZnpTM0Ix?=
+ =?utf-8?B?a3FhaFlxckQwWStScFpyamJoTUlqQUhYUDVJcS9LV1BvQ25zRVFxWlRtTmg2?=
+ =?utf-8?B?NlBUVVhmYWFWQURnMWtvaTlrU1cwbitYcEVpRGFJL1hoRkF6anpDK05JWmpG?=
+ =?utf-8?B?emdNUVR0SlZpdkVoTjc4bzluTllxMWpndlhOSDZhV29NRnhnWjJDQXpLcVg1?=
+ =?utf-8?B?WEpBR09GQUtpRzA2cWF1YlZJVTVReExSZEM4V2tvRHVhbkp3KzA5WUpQaFV3?=
+ =?utf-8?B?SXJLRVplbG94ZUlQUy9rNGIrT2RHYi9VcUtSNmRFQkZxOEtYdk12eW5lZkZD?=
+ =?utf-8?B?OGFHamhCZS9keHdUdVF1STE5RTRBU0lJUi9FYmk3RFlWQTBUMi9UdDcwZ0t6?=
+ =?utf-8?B?RnBNRlluRHEyaXRNaUsrN2F0T1RTTVJ3SDQyZmJ4QzN5dEhTQnNKbmhMTWtG?=
+ =?utf-8?B?TFRpTU85ODE2U2hyUkRxY1N4UDdjZDBHVjFSUnZ1YzZib2N0RHJ3bytxWG9p?=
+ =?utf-8?Q?eBeAFkOWrx//h?=
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255;CTRY:;LANG:de;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR09MB2237.eurprd09.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(69100299015)(29132699027)(13003099007)(8096899003)(4076899003)(7053199007)(37730700002);DIR:OUT;SFP:1102;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR09MB3932
+X-IncomingHeaderCount: 46
+X-MS-Exchange-Organization-ExpirationStartTime: 20 Mar 2025 15:44:23.2183
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 0f0bc648-f756-4076-b5f2-08dd67c61652
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: DU2PEPF00028D02.eurprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: DU2PEPF00028D02.eurprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: DU2PEPF00028D02.eurprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 3/20/2025 3:33:48 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 5e3eff60-e3b8-4f7a-b6f6-08dd67c61579
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.101.67.81
+X-SID-PRA: LINA_DORIS_39715@DISCOUNTS.SA.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|1131999016|970799057|5042599015|2phishing@pot0799006|70000799015|9000799050|10300799035|9400799030|22040799006|20103052909095|45200799018|50300799015|461199028|23122799003|1680799057|6115599003|67000799015|21101999018|18021999003|14065499006|1370799030|1360799030|1380799030|56899033|1701999012|17101999012|440099028|19025499012|22011999003|16125499006|4141999021|6111999015|3412199025;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2025 15:44:23.1714
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0f0bc648-f756-4076-b5f2-08dd67c61652
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: DU2PEPF00028D02.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR20MB5602
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:04.3487604
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8534.033
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9560006)(10180024)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?cjRuVG1USjV2ZFNDZHJ2VXJWMGhHVkt2ekNQak5QYlFJMkxwcmNMcWFOempD?=
+ =?utf-8?B?cklxZHZFVVNCb2ZVZ29BY1BtMmJnc1BrTGZmREFFbmM4dUl3NVBaVEd5NUhX?=
+ =?utf-8?B?aEQ2dWFLRldmd1Voa2ZxQnJlYWpZbDE0TWM0RXRqOUwyRTNsdHNnSjFMRzQ5?=
+ =?utf-8?B?MFJzVC9ITlk3cGJxZDE0YXpqbHd0L1NqRm0wWDdvV1YyakNYYTJRWU1CVFhI?=
+ =?utf-8?B?a1paM2NvNHkrRTVuQ2FaZ3ZKV1ZKTlYrUmk2UUxmL0R4bUk1cnVGQVdtM1VK?=
+ =?utf-8?B?ZEhGY2N4RFlxLzZMQzgwbEZ4M1ZuMlJhTnZFdy94TnYvQ3FXRzV6QTNOTEw4?=
+ =?utf-8?B?WGExdFpRNHRQa01JV2RYbC8rWW1PdzR1MDNnck9CRUs3WXZsS3AyYlZDZEFl?=
+ =?utf-8?B?RGYvZ1Q2eUJrc3JVQzdPWDdNZTdwcWMwTWw0cXZPVzJ6TUtRTk9PUzV1RVhr?=
+ =?utf-8?B?Tkk3eXFsNW5sTmtFQmtkRHA4RFFCbWdweGcvV2VrVkozMmkrWFBSbDQ0OGZK?=
+ =?utf-8?B?WERyU2hxSStHMVdXaFA1aGo4cHlqSGV6WEEwZ0FJbTFydys5OU1ZWmVHWlVz?=
+ =?utf-8?B?c3JPYnhnaFBadHRMcjhGL09Wb1ErQncwbTFqSGFGWmluTVJ4SXdRdUEvaGZJ?=
+ =?utf-8?B?TzdLOEszTjFiTjZTSG41VWxCcmVZTFlHRkp4WTUrUmJkOFdxd1hnNVpCZ2Nu?=
+ =?utf-8?B?RzJkWHIrY1JWb0c5RDRYMHhRM0Fjd1FCMm9lbGpkZzVwclFhYWdkL20wVFYw?=
+ =?utf-8?B?SGIwZ0RhWk0zVUIwTERmbVArUTR5RWVFcFo2dk50RjdJSndUTHFPTmNXOW43?=
+ =?utf-8?B?YzVqY0czTHdTREdRUmE3enpHWHFzTlRKNThSMm1vZUd4UVoxeHlNUzNRL2Vm?=
+ =?utf-8?B?c0JxS0hjd2lheTBsR0VueW5MbnR0a1p3R1dGOWJMa2szR3RZWDBPQmxZTWVC?=
+ =?utf-8?B?bTdtejZLb1Z0czlkaDBTN01lZm5abU9kQWFPdit6aTk0bFpFaUFuTTdqQldj?=
+ =?utf-8?B?aE13V3NUN3R5NnhVeU1oMG1IbmIyL2RZVGI4UUFSZnJzMTBoT1ZvN1ZKL2w3?=
+ =?utf-8?B?ekp4OGdHWlkyYVlDR3dOU0lJNXdGbldOa2hOc2RqQ3ErSFlnbStsTEczLzI4?=
+ =?utf-8?B?bG5sYnNUY3JheHIrQjIwaUNiYThkNUllYXMvMUQ5QlMzVGxTUVlhWVJxaldL?=
+ =?utf-8?B?ek1lbFVRWTd0bU80cmVqa3d5L3o5YnZ3YlpPT1FiRGdDTmFVSEZtZzQ2SmVr?=
+ =?utf-8?B?V0czZHM3by9CSGo3eXRsbFFkbXJOelI1ZHExNjNNOEN0Wi95WWpWa3h5MWRP?=
+ =?utf-8?B?dGtEcVJkN2c2blcrV0xCQlQ4QlFXKzFwdml6anM5cVgyZ0kvelM5RkIzYU4r?=
+ =?utf-8?B?SWpjUkIzLzhoL1FlUUtvK1U1ZUR3dmVmMWdqQzM2Y2xYYVFuRWhFem95MVJl?=
+ =?utf-8?B?R2xJSkFHS3FIZzhiVVBqSzQwNlZzSEVIVXlqdXlDYjN4TTBnek5kdmRQenda?=
+ =?utf-8?B?dWYyZ2g5R2RPYUpCQVVpMjlXMGxDbFR3V1hXREtRdHJ5SitISW9mL0htMHpy?=
+ =?utf-8?B?dm5IbjRzaEJGOTh2dDZUWm9WNHpveThKbm5kMHFkaWZmNGpiR2tqQml0S0J6?=
+ =?utf-8?B?Ymh6eWhzYUpjaGdUNlJOVXlIdGxLNFJKVkRUV3dZZkJQOFZRaENJRUwrcS9E?=
+ =?utf-8?B?OTM2TnlBREJDRmRSSTVPdUJtTXZ1NlFpbzN4NXVmdEtnUzE4YVJjWWF5alJX?=
+ =?utf-8?B?NS83dGFsTjlRK2ZURXIwMW5tUWNCZzhHTU1IeStvdU1xMDJnTFZ6WXNUY1Ro?=
+ =?utf-8?B?L0x1OFZDZlhhanZ1V1JFdkpvOWRyWXREZ2N6ektXcXk2NzQyVG1BZml1dVJJ?=
+ =?utf-8?B?Tk9hVlBZZTh3eFNZYjl4bVQ3MzBOQ28wdGNyZHJlb094ZnFEWk9oQjFtSUdT?=
+ =?utf-8?B?K1QvK25HT1h0SWpzOEM0c0dodG0yS0xsM3I0K29CSjVYcDV1RW5JZ1c0R3dx?=
+ =?utf-8?B?VGtLaisvMDZqTnhyYXFzZ3lOdGdHaEkvektVUlA3Z3dqNkVvWUhyWjlrZGhq?=
+ =?utf-8?B?VFE2TkdCZ2hCZlhLRWE0RUMyOXpvb0Z6RThqZmpyU0Q5ZmtQK1lvN1czbW9n?=
+ =?utf-8?B?Sm5ZOFRBaTN1bXlIT1NZVVVzNEthd05ROGZKRkRicUdCUTRhSnk0SXkxR05Z?=
+ =?utf-8?B?S0I4c2I1ZTVtWFZyeC9qSHh4S2c3MWFVVXZteExHVjJOektlOUZtdUFtR2lO?=
+ =?utf-8?B?SmpyelFxM2JzRG5SWGViaWdTK2hHaElKQUlmV2pzc1pKdHlWZlFJZ3A3ZzM0?=
+ =?utf-8?B?b01lUGFWYUM4UHNGa2RCV1VxelBPVXBrSVdQSXRoTTNieGg5VDBiSmRwMk01?=
+ =?utf-8?B?L0pRNFBDVTZTOU5UMlJYd2NOMmVScmxHWU02a1JHSVROOThVUkJJZ2NhNFVk?=
+ =?utf-8?B?ZndvOTNqYk1Eekp5amc3ZzF4Ri94NGIwaU90Z0d5NFdWTFlZVEVLUzVLb2RE?=
+ =?utf-8?B?VTVPMDhDSm9ZS1JFWTZKR2xDOFRxaUF6NkJycVFHMDkyL2tzNGZ1R1lHQ0xv?=
+ =?utf-8?B?L0JPdEtnSzM3bVJGOVQwSWxOL3ZIeVVFTEVWQzB1c09xMlpBbXptcXFuclhj?=
+ =?utf-8?B?U3dDRUEzcytMZTJaVExtaWdjcVB2bE9MalozUUlVWTFNQXVVcTBjQjVlMWRa?=
+ =?utf-8?B?K3RWR0ZGR0NiUUg4RWV5VFNvTnBUOUlPb1lLWlRrOXN2ekNWQjBhOHF5NVgw?=
+ =?utf-8?B?Y0F5T1hxTllFb3l0RldqUG9uKzZwSi9JLzhTeWFCZmJCWTRZeXVWZGJTU2F6?=
+ =?utf-8?B?UVA4bkdxMmRjNEZmb1pMeXBJWi84OGk4ako4Y05adGpjOXNOUlozbzM0TmNk?=
+ =?utf-8?B?Q3p0K2ZKZUpUQlVMWVQ2TEEzMk04VVpXUTcxb0hDUHEzeTRUZVh1cEE4TDcw?=
+ =?utf-8?B?bFZxbkNZT3pSdlc1VnpnRnlaRXduSVNKaVdGc1B5T29yWkdIUFlOUGxGc0tm?=
+ =?utf-8?B?WDRDcUNMQzhNRW9NejNxc1JKNUhSZ1pGVUZjNnRnaHNCaHRjNGdCdFBLL3RJ?=
+ =?utf-8?B?WUlFd0dJenA0L2RHSjFxMEYyQkhITXlkRDZmR2hOMGkyUEdqTENLNDNrSG1W?=
+ =?utf-8?B?M201Qk41cnZaTzZLSGtRNUVhRi9mOVhuaTkxRlFTWTkrNmp1U2lOcGphbHM2?=
+ =?utf-8?B?NklNVjRodkxQTERnVlcwOStoM095N1lGdzRCVm1weTVlSXFoTW5rcXdieGMr?=
+ =?utf-8?B?RE9VWWhVMm9aRTk3S2p1RXNxSkw3RXViREtIMURKRnhHb3FqT1RQTVBRZ01V?=
+ =?utf-8?B?QzdqVXZYUUN4TzQwYWdsYzZScXdYZFpNTmRKNGNOZU5wNnBzRWhQWlpKdEZt?=
+ =?utf-8?B?TUlvek5pN0VGM1JUQWFHdnQ0emhLdnpjNmwrQmNPTVdUZUFlcEhkdUQyVkww?=
+ =?utf-8?B?WkNKN1JsdktPZEVQVndvSTFrNkFLbzVYWTJLSHZhNWdDZXlpZFUrZ3hlNWY3?=
+ =?utf-8?B?NFFGTDBWZHdDR25GWEcvcGsyZUFGOEJKakpDNEU2eFY5MWozNmJKQ1lHY000?=
+ =?utf-8?B?OTA0RTJrWTdRRElSM28rNktKTm8rbThsZ0pMQVNlQ0drZ3pZcm0wWUdIcTBG?=
+ =?utf-8?B?bG1wYkNUSmhyQXJSY0U0czhwZm84QVZySkR5RlQ5S1pHLzJNWE1JRHI0VzBZ?=
+ =?utf-8?B?RXZWS1BmZXN5SlVweDd3SzE3ZXgzZFoxVHU4Uk14ZUFqT2NENEdjZDJmM1Q2?=
+ =?utf-8?B?b0dxVUNPTUtjMGRYazRPQ0dGaWthTlFhdmVvR0dNU1ovQ3orL0tvaXEyOGx4?=
+ =?utf-8?B?d3VDNVRoaURsdHFiNDVUbmhDYjlQc2JBM0hoTm9kb1MxdzJYNDI1RGRLMGdT?=
+ =?utf-8?B?VDFJcGlocDcxd0ZSN0tqaTJZL0xaYjhLZkwyM1AyRWpVQXZiS0N3TVQ2SVc1?=
+ =?utf-8?B?ZVc3QVdZd05GNGZjK0NtUUN1Zngwc3F4T0ZoSjRIbzNFTUpHdUVlWFUxRGt3?=
+ =?utf-8?Q?xiTXIZ4OyKCKwuqGFY0?=
+MIME-Version: 1.0
+
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<body style="background-color:#E7FDF9;">
+
+
+
+	<div>
+		<br><br>
+		<center>
+			<div style="width: 700px;background-color:#e4ecfd;border-radius: 5px 80px 5px 80px;border: 2px solid #3d3d3d; ">
+				<table align="center" width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;font-family:  Helvetica Neue, Helvetica, Arial, sans-serif;">
+					<tbody>
+						<tr>
+							<td style="padding-left: 15px">
+								<table align="center" width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;max-width: 600px">
+									<tbody>
+										<table>
+											<tbody>
+												<tr>
+													<td height="15"></td>
+												</tr>
+												<tr>
+
+													<td align="left">
+														<a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="text-decoration: none;color: #042BA6;">
+															<span style="letter-spacing: 4px;font-size: 26px;font-family: fantasy;">Bit
+																<font style="color: #C47C12;">C</font>
+																oin
+															</span>
+															<font style="color: #C47C12;font-size: 20px;font-weight: bold;">
+																<center>Bank Breaker</center>
+															</font><br>
+
+													</td>
+													<td width="40px"></td>
+													<td width="auto" style="padding: 0 8px 0 0"><a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="text-decoration: none;color: #000;font-size: 13px;font-weight: 600;text-transform: uppercase">PrimeSeite</a>
+													</td>
+													<td align="center" width="auto" style="padding: 0 8px"><a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="text-decoration: none;color: #C47C12;font-size: 13px;font-weight: 600;text-transform: uppercase">Transaktion</a>
+													</td>
+													<td align="center" width="auto" style="padding: 0 8px"><a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="text-decoration: none;color: #000;font-size: 13px;font-weight: 600;text-transform: uppercase">Neuigkeiten</a>
+													</td>
+													<td align="center" width="auto" style="padding: 0 8px"><a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="text-decoration: none;color: #000;font-size: 13px;font-weight: 600;text-transform: uppercase">Kontakt</a>
+													</td>
+													<td align="center" width="auto" style="padding: 0 5px 0 8px"><a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="text-decoration: none;color: #000;font-size: 13px;font-weight: 600;text-transform: uppercase">Support</a>
+													</td>
+
+
+
+												</tr>
+											</tbody>
+										</table>
+
+
+
+
+										<tr>
+											<td>
+												<table align="center" width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+													<tbody>
+														<tr>
+															<td align="center" colspan="2">
+																<a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="text-decoration: none;">
+																<center>
+																	<h2 style="font-family: 'Arial', sans-serif; color: #ff9800; font-size: 26px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; padding: 10px;">
+																		<span style="font-size: 32px; margin-right: 10px;">₿</span>
+																			Ihr Bitcoin-Guthaben wartet – Nur noch 48 Stunden!
+
+																	</h2>
+																	<hr style="border: 1px solid #ff9800; width: 50%; margin: 20px auto;">
+																</center>
+															</a>
+															</td>
+														</tr>
+
+
+														<tr>
+															<td align="center" colspan="2">
+																<div style="width: 640px;text-align: left;letter-spacing: 1px;font-size: 20px; line-height: 1.7;">
+																	<span style="color: #2F2F2D;">Hallo
+																		dort, <br> Du hast
+																		mehr als (5) Anrufe auf deinem Konto,
+																		um dein Bitcoin-Guthaben zu erhalten.
+																		Du hast nicht geantwortet. Dies ist ein
+																		automatischer Newsletter für dein
+																		Bitcoin-Guthaben.
+																		Der erste Schritt ist abgeschlossen und
+																		wartet auf
+																		Bestätigung. Also antworte heute auf ihre
+																		Nachrichten.
+																	</span>
+																</div>
+															</td>
+
+														</tr>
+
+														<tr>
+															<td height="20px"></td>
+														</tr>
+														<tr>
+
+															<td style="padding-left: 20px;font-size: 20px">
+																<ul>
+																	<li style="list-style: none; font-size: 20px">
+																		<font style="letter-spacing: 2px;">
+																			E-Mail</font> : <b>phishing@pot</b>
+																	</li>
+																</ul>
+
+
+																<a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="padding-left:40px; text-decoration: underline; font-size: 20px">
+																	Transaktion : <b>#BTC587EMN</b>
+																	</a>
+
+
+															</td>
+
+															<td>
+																<a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="text-decoration: none;">
+																<center>
+																	<span style="font-size: 18px;"><i><b>Oder scanne
+																				QR-Code</b><br></i> </span><br>
+																	<span style="text-align: center;">
+																		<img src="//zupimages.net/up/25/05/4cn7.png" alt="Strichcode" style="border-radius:15px; max-width: 170px; height: auto;">
+																		<img src="https://zupimages.net/up/25/05/4cn7.png" alt="123456789012" style="border-radius:15px;max-width: 170px; height: auto;"></span>
+																</center>
+															</a>
+															</td>
+
+														</tr>
+														<tr>
+															<td height="10"></td>
+														</tr>
+
+														<tr>
+															<td height="15"></td>
+														</tr>
+														<tr>
+															<td style="font-size: 18px;color: #000;font-weight: 600;padding-left: 10px">
+																Transaktionsbestätigung :
+															</td>
+
+														</tr>
+														<tr>
+															<td height="10"></td>
+														</tr>
+														<tr>
+															<td style="font-size: 18px;color: #000000;padding-left: 10px">
+																Überprüfe <a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="text-decoration: underline;font-size: 18px">
+																	hier </a> deine Zahlungsdetails
+															</td>
+
+
+														</tr>
+										</tr>
+										<tr>
+											<td height="10"></td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<table align="center" width="90%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;border: 1px solid #6f757f">
+													<tbody>
+														<tr>
+															<td style="font-size: 15px;background-color:#C47C12; color: #ffffff;font-weight: 600">
+																Bitcoin Bank Breaker # 22249615
+															</td>
+															<td width="10"></td>
+															<td style="font-size: 18px;color: #000000;border-left: 1px solid #6f757f">
+																Gesamt : € 39 800,00
+															</td>
+														</tr>
+														<tr>
+															<td style="font-size: 15px;color: #000000;padding: 3px 4px 6px;border-bottom: 1px solid #bdb8b1">
+																<strong>An:</strong> phishing@pot<br>
+															</td>
+															<td width="10"></td>
+															<td style="font-size: 16px;color: #000000;border-left: 1px solid #6f757f">
+																<a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="text-decoration: underline;">Anfrage
+																	hier</a>
+															</td>
+														</tr>
+														<tr>
+															<td style="font-size: 14px;color: #5b5b5b;padding: 3px 0">
+																Nur noch 48 Stunden übrig
+															</td>
+															<td></td>
+															<td align="right" valign="top" style="color: #000000;font-size: 16px;border: 1px solid #6f757f;font-weight: 600">
+																Gesamt : € 39 800,00</td>
+														</tr>
+													</tbody>
+												</table>
+
+											</td>
+										</tr>
+										<tr>
+											<td height="10"></td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								&nbsp;&nbsp;&nbsp; Öffnen Sie Ihr Konto <u style="color:#C47C12;"><b>
+										Bitcoin Bank Breaker </b></u>.
+								<br>
+								<br>
+							</td>
+
+						</tr>
+						<tr>
+							<td height="15"></td>
+						</tr>
+		
+						<tr>
+							<td align="center">
+								<b>E-Mail:<b>
+									<input style="height: 40px; width: 200px; padding: 0 10px; font-size: 14px; border: 1px solid #4B3BB8; border-radius: 5px; margin-right: 10px;" type="text" name="" value="phishing@pot" placeholder="phishing@pot@hotmail.com">
+										<a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="display: inline-block; text-decoration: none; color: #fff; border: 1px solid #4B3BB8; letter-spacing: 2px; text-align: center; padding: 10px 20px; 
+												  width: auto; background-color: #4B3BB8; font-weight: 600; font-size: 14px; border-radius: 5px; line-height: 20px; vertical-align: middle;">
+										   <b>Bestätige Zahlung</b>
+										</a>
+									<br>
+										<p class="footerparagraph" style="font-size: 8px;color: #666; ">
+											<a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="font-size:16px;color: #666; ">
+												<p style="width: 600px; line-height: 1.4; font-family: Calibri, Candara, Arial, Helvetica, sans-serif; color: #000000; font-size: 5px; text-align: center; margin: 10px 0;" align="center"><strong>FINANZIEREN SIE IHR KONTO </strong> Investieren
+													Sie jetzt für eine erfolgreiche Zukunft und erreichen Sie finanzielle
+													Freiheit – starten Sie heute!</p>
+										</p>
+										<br>
+										<a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="text-decoration: none;">
+											<font style="color: #042BA6;font-size: 16px;">Treten Sie bei<font color="#C47C12">
+													101.554 </font> Millionären bei</font>
+											<br>
+		
+										</a>
+							</td>
+						</tr>
+		
+						<tr>
+							<td height="10"></td>
+						</tr>
+					</tbody>
+				</table>
+
+			
+			
+			</div>
+		</center>
+
+		<br><br>
+
+
+		<p style="margin: 0;font-size: 14px;line-height: 14px;text-align: center;color: #000;">
+			<span style="font-size: 14px; line-height: 13px;">
+				<a href="http://31.57.102.135/t/4THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="color:rgb(48, 46, 46);text-decoration: underline;" target="_blank">Klicken</a>
+				Sie hier, wenn Sie unsere Systeme nicht von einem beliebigen System wiederherstellen möchten. Wenn
+				Sie sich nicht sicher sind,
+				können Sie jederzeit das Abonnement kündigen.
+			</span>
+		</p>
+		<p>
+
+			<center>
+				<font size="2" face="arial" color="#000"> 2025 © <b style="color:#042BA6;font-weight:800">Bitcoin
+					Bank Breaker</b> -
+					<a href="http://31.57.102.135/t/5THpXj12750PpSCz1688hYLz0MEo0UPec0fPTO4" style="color: #000;">Bedingungen
+						- Datenschutzerklärung.</a>
+				</font>
+
+
+				<br><br>
+
+	</div>
+</body>
+
+</html>

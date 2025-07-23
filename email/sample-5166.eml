@@ -1,0 +1,605 @@
+Received: from MN0PR20MB4618.namprd20.prod.outlook.com (::1) by
+ SN7PR20MB5311.namprd20.prod.outlook.com with HTTPS; Mon, 24 Mar 2025 21:33:15
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=dI7HmzqWJO+anx1raVV96sYyOWvuRYD9wmQHv2Adrz4Mmtul7JbjFaMZh798BOBR+bcB7SxtVSwY/TOQyW+UUhCUtl4qsb/Odzwp5J3vvrMrkXlYwLjYKhTdGqOcIZE179wMW06PV9gWyMkpLyaj8X3IcVxoesY03TLnS5SofTgtEFpSiKEffqAuZDfZ4Jh9qKHzqngMln2Cl/OdlnqXb4wBb0N/OvAEWtT3qY23VpKv32t15WYMArKpNbYaN9gCXiE8yiuZaPp6us37t/iev70rvLHN5nGHWM/bcxs8Quggn8ECvayd5ExeNnLJJZlM85ORbxNED8bx/idcu1n5kQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+VTSeO3fVlJNIEHXy72JmyAVbmj8iMtIMNP3DlCvQ6o=;
+ b=laKRAoDoFujejiSKapNtal0kboEzfg729EB5fWF8ukxqTzNRdEW5wst/Ma/pBMEw6E75TEr/kwmpTKciOKEiunqHjuV5RPQmp4uqdzeIdvoDVIQLWVPk9gW3F8B7HDuwx3IPioQH2o8KmVa4wj0JGb1TTNyX59RFa4ar89CdsJ03KzXkJVcm7NyQdW8Bw8lUzy5v9QxQSYVPgL7KeGjYgR8S/4IlaeksWv9WGwSABDiMCOGJYMM/GjgGbFwX9GAy8Mfn6Kl6DMcFR94I3b+cNUVfsvn/65aSthr+Y1FI7HJPBMNsXJze/0dRZQUjANeMuR1iI2M7myH0EFxqPgs2fg==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 40.107.21.97) smtp.rcpttodomain=hotmail.com smtp.mailfrom=discounts.sa.com;
+ dmarc=bestguesspass action=none header.from=discounts.sa.com; dkim=fail
+ (signature did not verify) header.d=discounts.sa.com; arc=fail (48)
+Received: from DU2PR04CA0357.eurprd04.prod.outlook.com (2603:10a6:10:2b4::32)
+ by MN0PR20MB4618.namprd20.prod.outlook.com (2603:10b6:208:375::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.42; Mon, 24 Mar
+ 2025 21:33:14 +0000
+Received: from DU6PEPF0000B61E.eurprd02.prod.outlook.com
+ (2603:10a6:10:2b4:cafe::fb) by DU2PR04CA0357.outlook.office365.com
+ (2603:10a6:10:2b4::32) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.42 via Frontend Transport; Mon,
+ 24 Mar 2025 21:33:14 +0000
+Authentication-Results: spf=pass (sender IP is 40.107.21.97)
+ smtp.mailfrom=discounts.sa.com; dkim=fail (signature did not verify)
+ header.d=discounts.sa.com;dmarc=bestguesspass action=none
+ header.from=discounts.sa.com;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of discounts.sa.com
+ designates 40.107.21.97 as permitted sender) receiver=protection.outlook.com;
+ client-ip=40.107.21.97; helo=EUR05-VI1-obe.outbound.protection.outlook.com;
+ pr=C
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (40.107.21.97) by
+ DU6PEPF0000B61E.mail.protection.outlook.com (10.167.8.133) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.20
+ via Frontend Transport; Mon, 24 Mar 2025 21:33:13 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:FC5525A965D820B44DB9D26C7960A5F3D28C90D7A263E662D401F6779894D6F0;UpperCasedChecksum:6881C5ED8FF5C80929CF39AC9C93F6BB0D189179F488BB5FFC011A911B1EF4D8;SizeAsReceived:19337;Count:46
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qoNCsQLHGapsxHQxY2br8pPmoea46ZKzErGCsQC9xeLOLJoDxAzUj+UzMYrKCrdmJzmu914JnobCl491T0qo79hpa6XP6/IAowwgH3CleOACTfRotHmvgEVGY59EX++2IA8gJvOznsIX0D1jtTMscwJ/58clr3xCpbw6KZrK9v01krP9CYiU41dmoOxghu7YfYplgFFmeOdvVHLqOT9W3HxFUZRJyxCD3hTq8H+loQt5uiJHh+3dGTWFdqtZveNdi0ByTSDcq//dM8YGnJLH4mjEoHFbqU530P5VNma3YEsMJcTQ5eEHZykUl5UOTSDjbV0mFnO1F1lZGKqR5p/vrw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+VTSeO3fVlJNIEHXy72JmyAVbmj8iMtIMNP3DlCvQ6o=;
+ b=hi3BWi3o/D6KNJa+el3kJwf3OjZ7U9Azohvg7O4CkGQhEpqkBMPMpwx2+usLfdUIa8x+seBCcgmij9/xbRIkBTrq8u7dE6IimfqYlZh9MSIoSy2kRqoMi+YByFtlr7t8+fC1dWPub++J1mLeZl3pqxG3VgC4+MSBFq2IFEjdeIDRNrcdDZnNJngmt0jjCZbdmNYrJJeZdn6QPxJ2jmMcso/kKOiAhDX/qBrtZTATikbwWoQTmC+WExix4D+B42+y+mZCK+6QbgA8fX2neen4fsLAHMvXe0KkRb1jNPshUUGg/Dno0e92lk5kA7+NZ2O6NhEO62sonnyresc5cIjDAw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=discounts.sa.com; dmarc=pass action=none
+ header.from=discounts.sa.com; dkim=pass header.d=discounts.sa.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=discounts.sa.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+VTSeO3fVlJNIEHXy72JmyAVbmj8iMtIMNP3DlCvQ6o=;
+ b=m49QFLnJVAjRy6Z4g3L/Jla437Al13UKumvw/k6Qw0AJz6RE3v5Ils9e0LyfKKQLpa79U8LsjmueBsSfiB1WNMMgYeudKv+8AtZPfXuN2V1EHb35JKiNevaPcCSKvd4JjklEakp9FisAC8fwyMbUBIeKzuQZ0RIwz8p2NHP4VTEY3aaN3BSPpmltcLaG/SG0yTqgQaJsGTq9J3K+YVYeo2tJZ7CMySYboqeSQOi3SeelzSKIbwK4Mye8BskTkFVzZwG22mrYeY9NWUWdrVoGn9LVk6DHsjzY7zGS4dPAiHYXoTv6qfxJ4gUgogcKInMkmh8Rn6nA9HpEXlpKaBCftA==
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=discounts.sa.com;
+Received: from DBBPR09MB4889.eurprd09.prod.outlook.com (2603:10a6:10:1f5::22)
+ by GVXPR09MB7274.eurprd09.prod.outlook.com (2603:10a6:150:1ba::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.42; Mon, 24 Mar
+ 2025 21:33:12 +0000
+Received: from DBBPR09MB4889.eurprd09.prod.outlook.com
+ ([fe80::588:5fa6:dec5:4849]) by DBBPR09MB4889.eurprd09.prod.outlook.com
+ ([fe80::588:5fa6:dec5:4849%5]) with mapi id 15.20.8511.031; Mon, 24 Mar 2025
+ 21:33:12 +0000
+List-ID: <OZUeNorG9.xt.local>
+X-CSA-Complaints: cau8hccF6Y.csa-complaints@bitcoin.de
+X-SFMC-Stack: 11
+X-r6Sp9: nY3YP2sA4q29wgsLMqXmeC2yrWUnTqRB2s2/+kx7P3PE4F6s/cdL5O4=
+References: <@mail-rKC.Bounce_dnO.io>
+CC: <manager_20u@bitcoin.de>
+List-ID: <.7289367.xt.local>
+X-Mailer: r6Sp9
+From: 💼 Ihre BTC Auszahlung <lina_Derrick_68975@discounts.sa.com >
+Subject: 💵 Ihre erste Bitcoin-Auszahlung in Höhe von BTC#A54216 ist bereit – Bestätigen Sie jetzt, bevor Ihr Konto in 48 Stunden abläuft!
+Content-Transfer-Encoding: 8bit
+Date: Mon, 24 Mar 2025 21:33:11 +0000
+Feedback-ID: 325-anexp#nret-fa:account-notifier
+Content-Type: text/html; charset="UTF-8"
+In-Reply-To: <4RbB3z8N0ahYFtxlPkwprjypJnaOVQYQCB8PWkfPFAaGohTf2E1RcWcJhOzCdRzqIN880K8Wyhgm0SM1oOygkbYYQp8ta8YMlHiTjwftrVLXDwUBwARFb1y4jLGXsatsMFi9HlQ0lbRZ4vGSNMhBEIi00qfOuEu6XJ6BSpEjYMNnREWQ99qFqW81Q3vpoUA8NwzS2Qtphishing@potkaDVQL5CPTEPf5zUQAxXDU9xEyuFqviU1gTkkiGNHOjiZTRLgyrIi6aeewtGM6zMZjUVFsVpGbJItFJDhdoQzPiQE3wxU4xgKz6LfqijLQaqIZOyyRURGoGLoyD9vNzU305vjVL8lDhXQi7fLkd6iJ1kVVTS9xk3t93LKj0o1qUh3wdWNrRrITMpe6ZR9Pj2nvUK6edM9nUuPHsLVKSbTfdOUHR9WdrOyQUSOgDhvK0RvUS5bCenu8syk0miDBnMgtyOl6x7lEu6HlgfAHWoHYYnB8HsHJfuv6nYhanmW2E2MuKiOQ4TrauLoA9Dws5602hV8ud8x0JUOywSteR4OS6apM1rCTaRmVulsBZYmEiHXTECqCFLGMqZotXOU2TcKkAqJL7NLDmbOmhTDAwjMdANzf3dBFif1gDzhWUoxa2g7GJkGeOPqdLY1OA0XxWeq1wBvAlD5eQ2rhrJsrdk0DR9KYWQedNyVMru15RCT5HDXDqo8zPHuYNLZE648LEsSEWXMQx82mQKcNdTzwuQ7WzE7QP9WRkX5s2t5iz5N6EPhyYj7OzIU3HhNEi89z5ottiQyr9JfEl6sampleKFSLRARnF0JCxGSV0yDIkMURs7m0COfHIX5qZumH9w16CtJ7LQScnVDvALwzBXz2SGlIPc859X8cW60lj1Byt7N8LlJb8ojeU1coDmgTvNavLiKBNT3ylmC126NCTjTbH3N19A1yeaGQ2lAnKm6AB3CRLAXcgoJXIy2SgClDNE17uJnZaoRjaF1IKYqc
+ xhJATvGp5B4R1QqkDpfk7oS8yyPQ9uHft6wLsKw8VjAs3pRyam0SwcOo83SBkCTQv6OyGDPPQiysLMwGNqJHTVzfH05chbaQGVbD9wlrWKJpaYFqjVJtvOWgAJnPyJRCcg7DP3QdMBkBWU4rvsQFMP0mHb1IPLlsVgbIeYIyzGJEqb5HQj9Cpaq1bOPopjxDV1Lfajwklcau8hccF6Ycau8hccF6YNYn8qfm3MFakjw@cau8hccF6Y5xG7HwxqeNFB0CcskTuKxZWfNF3HNF71BhrbWu2v3GuGcyjJ2qbzzry0q.VTzO2mEBpAaC2aGeh1eCqWa22dqYPuwp70Eola7sGHeug8LNjLDcg3MZk0oW57tcPX4fPyZfl9AZFlwZGb9JGgvGzvRpPVxBLZnhrNf2RFHGyiuNNw0OKUab65cx0fd7hJaOuDryPWpl4cupa910EvyY0srW4HYrPhLAC3rxoQ5EXNlmboCxvi23ykJE7AOpHBisYxvEGiaXzh5tkVVnaVLJYpe0B9QQpGzunAOAIA6KJIZtTzw1ib4WFHB9wuPTDYQVILJoPyBJ0e8WgTMtHPiCRyMyjU9WsnVEpExfD3dvA8XjDJWU2xEy5F6HpHSpdz4TyG3gctHFUh4FUQ998n0ZGUPfC233jN0C6S4eAdAjjTs4qqvCO0rpwd5Axet8YF9IrZUiO5IM5H5El367aIFHAw2zp4Wa4TJke3mD0EYf9bgjehdEJjYKDL42s3F16HUnECvYVCzpplcu7AuVsWg38BFXnQXTEo5CiXyV9VpljYFhMgF7lhLKKoIfRPQTmSMEYirUWOhV8XmHrs9Dtqw8iF2oj6waMBwfGZh1ZdRO9scVSxbUPs0i1cTavHVPeBtNgTgxgBzak4zsPz8fKXP15LsTvoqRekd0kDOdnFmFf87aUndho6JUhQZgBD8qSSEECKgXVAy9x8RDHqIeA4N262QBKnKLre9KtXMPE1kwJMTq94tdo
+ x
+ yLZITCZvDR7rntiObDg8hr9KGhmUmv8FCsRY0osshh36eMmKiUQmKxZG3XQtfyYFLpcrFkQ5giomF71BEYrGTvQ0ZP6Ng5MPaO2ticlKaR7zJY1PS2egtpwfpHWxPx1fz4h33gOQ9sphPnisSwIXMrGiYDezqBO9FL5GBWtZO3hujFPhbvqvjhVr9xyODJGt3vz01tqeTnlEQrMKadNjaocpNA0CBvZ58crS6LHglT0C94Kt8NkEwzIDStppc6XkNizk7MpCE340woWhBYNpP1mhnR8sSZhz4wG9wCvrJtKktDkQLemqyTUoUqbY3cjSfIhJJ0rJEWFqEis89CTYwCmVfknqQefP96zmwapkQUnRYLw6CVfqGxom56ipjZI6GRrH4F3hWUVQYViq1yPxdb5hXJxVfZuU2tLg1t6l2bmP3dI4TrpasyHDv5jhWAV9fiYgJtdipJZUUayOlTxhC1MrYBLlmvKAS1fxhtVV4Q1hfIf6sdBQQgE6xZgXIIPoj4pCnPMXkUBtgmzClYMLOaJkBpe87Jlw2HDBthvjw4ABVlAnlOV27UzbTfJioSvWJG70R74tZcu8ynYVxKyp5jB90EOXuRFQIY8BrjYNBcAAHZRejg4FBwKTp2DxbXeZokI5FYOvuX2k2vzQQn104RbW3DdZeMrSD1OjFR69qaT0R4qXHkYtAIiU1XMsLETIGLLydB8IjttS3LfE0joiv4xtPa5CgLgVIqLplgHJJbJoyvMqWpMSPOCKp7fiGSILGlK3D84gZEjqslPRHzpxK84MkHx52NFtWLPD22ftyNTVpHjjzGQBPux6Ikx2XLeznDwREEYLSKHIaZauzRarqoAMKdsx4kvz2WSv2iJ60TuabeX7CjbOrCr9uytjqPnJBNdr8UNhd0cUZkCO4AA7NodzMvLWlbcDnWUBRkrGHzTG7wIqilQ8MSD9iDpA3WKqT6ultNQZCdCz15AlrL0hTsN2DpIAIBFKkiRgN
+ o
+ bjdzQTmmZ5imMOrhoth4XMdReFIvwCaKZsJBM9keMp1Um2r8Cq99J3QclVXwEXOMhkl8ph6opOaiShtFj1U7Z6fX80bE1YVBgqMxrAz2GxAPkbY8BlBXxehQbjnNkm42cJvcuxHrLHoEvwwBtbj5QqImzPF6KtUMKL4TZdsP2wnmGa9vUwmM7rDk6bjZrf4HH0A5raaaXzeLbQKhhgalmcmBagcfM6iyv2aJ2WnK1RuLCVF1v6Q5ADm3VOv0Hv4yL8PvAyW6gkYa9JYN95NfmVtD5tWWugulgCt1VCGuCLPwOV8jsPfkRlD3KjZAgqtoEJHtQDFUFc3aDZRb5UkhyuRaaW3Ly4m0cS3rmlpReSgLlFBnatnSEXj5BaHbHL9QcpPIdOqVwJHC8TiZCkgS8l8dJxj36onzSPO1O3YRuYjkvqLhJiVpJNNxce0I19CX5D5Uj8eDDtRkfFuvii3TsllvzPkU42Xid50ukoe9zBqcS4wxwOqsSjBykqtv0yEj9yXTQqNOGNdTXiH7WorpiMAYzu6IBPRgjGsvLif2SdEBU4YVln4GpOofIjGaH6wO6USIJGh3c2TQF0G5e7ZdRm3avNjIhecRj6iZYLGG3i6DoN9yhkLP3p1tmNeBbldpFIS0RO0UlqUT1WJz7cmnCSRCGk5coNvo7MjuY2AoPKE19pTwrDNBXTRUIvr99gPRxmDbQ9EhTDS8JO646uqsXoPfLQ62w9wu5ElogZDW3OiFforejlYELSzDO2vZvCE69oxgv9WsVwC0uZSpEk9U8jAIONAvZPQfXmjIngKllB46naXWljSFvYJe7Uhfx1thNlWWtDndU0V6WbYRLNNgaUy0GySo9zmi1StnCDi8khNhg5SbKVcuIieCXO2qJIXe1zbwhyHt32aRmasv2JSz9jHA18O17j9e9Ct2R6AmCylzZ6Nr8fRHOF3y8Hl0UjdUdjTXNaBUDM5CEyrO8J48XZ25ioEpHIv8hK3s7
+ d
+ acNjh5MDWZF9lhzf1cicFeUsOaUWcDyxyTqWdRd7IecUE7R6vYvJ4sXWLNQz3hTaK11wYDZhbZmP3ASwAa0vmZWajZSbC3SAX7FlVZ7RoNV3BD4T0vuejMvpkVgwuuxOw3BJgFxHv6wg7AY0pFseQdWWa1G3eODL9UDsgLlwr8sV5p9wDeBz0FNINndKgq4hcItKOkPEfecZGbcI4TZJ7sD2MUme5GilaUE3byBUIl5OYLbEsLxFd7LFLXmRxKMNHdk26vch8qbtYt8MDEmIjvG5RUBOu9aXrEMK2CtCP4BvnXkgi7dFVaYTM4oGTi4leerdGE6TPI77QQwxemIWniDlz4rv3aolhrM8Zsddfr8HDcMh2A01afsCMn2h8VBQ9LSV2DAbEN6ehsBVkbH033jdNjjENlHybB5k83eIIl9pxzAbQ6DLxBCCD5idGnTmyo2ntNHAqm0RRgar5H69YOI0M6Utb7ElHf1BQbmj2mFozBPlLXzxkK6pXzI4b69IWlCwnq720Ev3exUiczcZR4Fbj6TtkEpxY43v69qhmQ0jj9F1mocWAMMxkSeji1YJYJJ85nwgvLDjCG6XhmtUtdbpQUiYnLUuzRtPQXMqa54CCrddlpuhbHIQc0eba2A9Zim1GbcYEO6vfPSWDujNdQobPkaZlZtcNawtuS9l0XYd4vG5y0Uh9V2lvrlAhfXl8jfpyuiRgnXKGA4JISscXM0PlvJkccSxjxgbDmm1X6bSUZYSPXiFEBXkbxeK01dM6feE6t4onfjBk8rDKnIsZZWIg2eBj9CXQv9P8xwIejTouncihMEYLxZ22xTTOqiDMPhbk2vlGgv1UjthlmeL4HT81Gs1SekE1qcpeuj8GSe7gkomZJoCbmSt8AHoCBdsIYXkKuaoJCjsZi6G62L7ZuTMSTiQDa1W1VwPf8A1JLgQGImwmjXHAV4zfiiQbgENnaXKxbW5DuWODRmOMWaguPVV37vVw8f3jrDkE
+ n
+ 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
+ s
+ dqmuFc5KfMX0hte0rHWcyZDpFnYTusiXLDncfDgn8SvgvNOsiO95iwX0WUSlXGqz37CnWOrQdtj7c8twPtPG8AePlbHogRpB3qJGd9Qadf8izHAvYHNaADCfHkNt4ut3bC9f7R1zdmnySSPCdHcfVbzojWN7zrlrDFwQTCwQjdR4mJXD9PFt2TtC6Zu7WDoaUdH5sk6bmgTDt3uIMFRkm753ymwdSG6xuTduxppN0a3b78KcBdkVNMeBYTBVpUeSSDT5wBedA7vsbmHPUzrHPGJGtmSd44dz8jrT3wUUiwWSk4BMQGpLfcTuCPQccNJdfNWXKfd5f9AkukyDPiUhh7csoCTlLDcBMz99vscC8jU9aGBopOEESRybcNlYfC2jrCV77wvQaghJNSbxohHruiyzh3rTRDZLErzLABqIwSnu7hFLk1pYxXqwq6epqlyjhLR4GQCycO3kwgKIkETo3Wvjb80OwP2s0RGl47Lf6qTCavlEA61Qp1bjShEmzI3EohpqEmhecau8hccF6Yr6Sp9.aNYn8qfm3MFakjwlibP5ZP7xo7QrWbvRwdgRM1wOCkzi5ac8UclBwj85OhzHBaPh4n0NDhNRwvSdIR3ALMqkOKXxxuxeiT23DfXqOMOZuwBXJ34RfpcMkGHU6RtEJ99lFhFigCERD0EwX5LnenD5TlFWbctQp7uGe0xQ04SWcyhA4stljVTN3CbicmAhwROKPVNVZQkDPRHMGAHlk0YjTo3hTv6rLZpSINFpjn87zotdBGReyVLRPSakspEVdXHgaF1Ho7RDVy1YrQh7YngggLsN2u2GRP0AWEv9XWzYyGnRrfXoowdXWTqh1cCocKWhSKc3rrHsfY3Ks6SCUbue1UWTyLA0fvoebR1iHC1psREuAzEgzcFdNGnAbPI0unygQ9fcsWNeCePNdvnXzGLYhMUZ8Axr0oMHon66bBGOhJ1NphSdkRbozU3UiGYFzXwuuklkWGVPenOST
+ n
+ HHPpld7iApnJQ9YywQigRe2vsDJd5cQzWLFQDpF7ha6WHAVYjTT4ZgnxYqLvPquCyJE3PeO9pFp7PcuBwB3IJohsmUnodqUjwjWcEtC8MAIGX12VJPMWmIsVhqSKCrjMQLL99XfjZBacPv5d8cz8f9pPs0Q8ExjeRSn0TcgWL8dVQjhQxWnwnAo7lXxtcYFiXdCegv85Prl2KeNSCf8nkc4SsekQC39RPmjDyIFWY47DM9uibkh67NZcJoeIsxwrDzJuVuOrpQxxSmSRzaOkyqEzX1eP5E5AKB2LaApyitE2Tk9b30C2wsknTizelCRe9rDBGSHnDZDaDa78cbsgPDVZC5mUKjD2KFrPRrC8z3ghENf714XpqLGB5cP1KpwJX7zoDZrt3yFnwDcOTOeBFnVWNKY2Z5ab8UpEdjIGtikGEla7FDmJZEWEK7EpA8n45Mjqk9hEed00FdzqoGOE7yKElVddB3bujlfsq9XQBOQIEGnnWO48L4bxahKzWazYmykK7JicAK2NyKISwjzNxbgptRTbbVH3EWGn9D0opWsB7TRF7WNYGb1Wao1vD7sPccHBfUdc60NlHIqbzsBOJqns3IciSmnCFRrBiKJlfNE1UyFXHRK6RINTB96ajkaZJvKrFVJMz0WnptbErF0otPmdKDTjDQ5BlmGTFin9s0IB5iuxCZsXQkCUrGxmWmsxhpEO1sCy5gCpfsRWIHytXDVpVXLrfMPd2ZENqdHy4mVRxx47xHjjpFPdFgMk4NK43aFLaQQKtc0rJ3RWJxVyamHu0Y23C2SuWYoF7u5UHFIteOC87AaPo3misxATt6BwSepbucWOO7RBvYfrXi8Dd4UMpbx4H4YRB6Ll7oHC7o5Suz4LCh0NQMaxdjtyuNXenzrKx74Va3ZQjhk4P9o5KO7rTY28P4w9VU6v502O3dEmkyP6CDqjno7P4DLhIwb30SF8fhgZOvM1Z0iir4FUqvRwzK6bDBZER6U0i
+ e
+ UNLp8AD9cPWIExWu3v9v3hlYjJhY3Kshl0av42Uz1Xd7sitT3PtFgn9AwJuXFJCXgMVrreKxkIztbXL87DSusn9gJUTz8Md7L9q1GgdaSYCjuCMcIZwUoCHyb4Vn7MxrcmAstaVEUGRYqLEQ9BSx7hmmD6l.edu>
+Message-ID: <ZF3lf1bGTw-Ct-Y9ADdP_VTzO.5xG7HwxHg-__Ip@MvzqkmDSl1hPQr170cRYVlGPRGU5dwiz9uNy4VxqXhteyUpDSG4z6ExnUnDnQyTOj0SKNXzFfgSail5UVM8E0LZ.dcccd.edu>
+X-ClientProxiedBy: FR2P281CA0161.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:99::20) To DBBPR09MB4889.eurprd09.prod.outlook.com
+ (2603:10a6:10:1f5::22)
+Return-Path: lina_Derrick_68975@discounts.sa.com
+X-MS-TrafficTypeDiagnostic: DBBPR09MB4889:EE_|GVXPR09MB7274:EE_|DU6PEPF0000B61E:EE_|MN0PR20MB4618:EE_|SN7PR20MB5311:EE_
+X-MS-Office365-Filtering-Correlation-Id: dccfae06-2c39-4a98-615f-08dd6b1b7bb0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|376014|1800799024|29132699027|13003099007|8096899003|7053199007|37730700002;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?ckhyU20ycm1SdkNKajNIM1Bweng0RjVVT0wwOVdHd1ZZTHc4TkNVeGJpRUxN?=
+ =?utf-8?B?NjJaSXEyN0NsdEJtRnc5NzZ5VFBDME9LMXhMUHYrL0RPL0FVZWVaWEhrVVRl?=
+ =?utf-8?B?UEw4STI1Zzc1Q3Q0NHNUUE5aU0VUMnYwNEFINDFWU0YyUm5CQzVYU3FpU2dN?=
+ =?utf-8?B?a29FRzMvMmpxN094eEpvM013bjNuWmczMko1OTVDbTg2Zk1TME9vUnUxLzdO?=
+ =?utf-8?B?ZlRqenp5TmxhanpZUVcyM0hKQUNkUUFHNmpPWng5dlpPY2tGN01DVkZBbGp1?=
+ =?utf-8?B?Ujl1bmV2RUxjaFJETEQyaWo0OEFlMnZVc3BvWjZIUHA2Tmpaa3kzS21QdWZW?=
+ =?utf-8?B?Smk0OEhNdk1Xc0kzU3M5b3ZTNGxBb3UxdUltTVJvak1Oc1JUYTN0NFJMdXNm?=
+ =?utf-8?B?dnk1aVhGQitxaUZVbVpVbXp5U3JxaG81Z21MVVJUUTRPRzJabkc2Vk91c3RP?=
+ =?utf-8?B?enlIeDFmQ1J5S3ZYNE96Zm5JNFE1aXVjQWo5enVzTHZHK3ptcEFuK1h1Q21V?=
+ =?utf-8?B?Q2FyZit3ekNwUjJEakVlditYdEZWZGxSMzJ4eGpSYk5iUFpDSzRFTVFkVFFq?=
+ =?utf-8?B?R2EyOHBJbUxoUXZDQnpwenluaGE4TUo4cmdpWUNjKzQrNGZDeHZWMWlBUG5i?=
+ =?utf-8?B?aFBHVEVoVzVxY1prUjRUakRNdm4zRDVzOGpTSmtVNFhiQmxIbVlyVGlZd2JT?=
+ =?utf-8?B?a0wwdjluSytPODE5RmpveWwxT2l2UStadVplb2NqS0IrZHo4VWJNUzc3SUVF?=
+ =?utf-8?B?ZEs2YlZCcW0ycEluOVFXVW9renJ2Z0svV1J5ekNDMHM5VVNEeE9TNHJzSi80?=
+ =?utf-8?B?Q3FQM2swZ2VrclRMenJHSUQyUXMxTmZiZXR6MktJV09lOXA5b2tlMExCR0Ji?=
+ =?utf-8?B?bzRoNkUrbVlPcXhCcnpSalplbTd5QVY1enplZ1dGQzRaM1N0OTVmb25Lell1?=
+ =?utf-8?B?Y1V5NEQ5cVpWaUcxZ09UQU5TQXp0RS9heFhBK3FOWDBlZm1tem5aQ1JzSjg5?=
+ =?utf-8?B?aWx6alc0eVNnNjhKdkxhenhCT3hRUzA5cmI0V0V3czF6eFVCZ3p4ZnovZ2Rt?=
+ =?utf-8?B?SDVDdEZFcTZoVWplSXNCUVBMMFQ4bExLQU96K3RPeDFJTjZoUEpBTzBybitV?=
+ =?utf-8?B?SXV5QkFnbk5VUW1pZE5lZ2o5dWd3QW0zdXErcGhTWmFOelVEYSs4WGV5YXp5?=
+ =?utf-8?B?eGZaL3RuTmtzN2RFOVRuTjVkRlJSUTdhbFhEMFg0MlIyVVZDWC9GSDJKZVN6?=
+ =?utf-8?B?UnNXSnYwbWdBQ0g2OWphOC95d0F4WmdKbFMvcG5CbTVqUUJmYlJITHhRYXVu?=
+ =?utf-8?B?Tk9rS1Eza0VuUjRpRGFETjR0cDJtenZuaTkwZDNTY2l5MjRoMWpMWjRISm1r?=
+ =?utf-8?B?SWREaUtiSnB5ejBJdHBkQ0dZeUVKcDlBMmtuQ21teTd0WW1JeHRXc21QSWZP?=
+ =?utf-8?B?Mll5WVdUUjRXckJoU0RzTDFhY21uMGxNWVhvcGFXR25BeC9nd0lRNVFaS2gr?=
+ =?utf-8?B?SndUMm5GbDZIS0w4b1hRVE02L0JBSjlUU05ZOGhUZFZrOHdkMDEzc3Q0Yi9n?=
+ =?utf-8?B?T0hjR3hrUFE4UWVqZS9DTUdHakFudmF2WURYZnMydFlid3Y3ZDkrOHlwNmdr?=
+ =?utf-8?B?dGtCbC8xRGdRVk5aM2lyQU94OXg2K1lhbnZTc1ZWb1lLekJrYkdxZ1ZCdFc3?=
+ =?utf-8?B?RWhlYnB0RUdIb01SbDFaZk1UVTFWUVBRRUdxTlkxTzJ4dk1ydncyWGpDb2R1?=
+ =?utf-8?B?cW5PVVpIRVF2K2Vtalc5RjdPQU1QMytIaWNqTW5TNWVNWStBaUkwODd4a20w?=
+ =?utf-8?B?WWMwcklsRHlIY2xSWUFQWDdmNjU1eWpYVk5oa2VuUXdMaHJ0d2IzdUhUdHI2?=
+ =?utf-8?Q?qyp2YYNzJIHg9?=
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255;CTRY:;LANG:de;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DBBPR09MB4889.eurprd09.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(29132699027)(13003099007)(8096899003)(7053199007)(37730700002);DIR:OUT;SFP:1102;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR09MB7274
+X-IncomingHeaderCount: 46
+X-MS-Exchange-Organization-ExpirationStartTime: 24 Mar 2025 21:33:13.9924
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: dccfae06-2c39-4a98-615f-08dd6b1b7bb0
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: DU6PEPF0000B61E.eurprd02.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: DU6PEPF0000B61E.eurprd02.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: DU6PEPF0000B61E.eurprd02.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 3/24/2025 9:20:44 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 65e27ea2-9cb6-4ee0-e6dc-08dd6b1b7ac8
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 40.107.21.97
+X-SID-PRA: LINA_DERRICK_68975@DISCOUNTS.SA.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 8
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|67000799015|461199028|2phishing@pot0799006|42300799018|45200799018|50300799015|2700799026|70000799015|6115599003|970799057|9400799030|20103052909095|16101999018;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Mar 2025 21:33:13.8205
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: dccfae06-2c39-4a98-615f-08dd6b1b7bb0
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: DU6PEPF0000B61E.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR20MB4618
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.9845357
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8534.033
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9525003)(10145025)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?TXNCWnRYakhxeWgxZFN4TDlTRlkvdlFFOFdQbUowRWtIUjcveUUvN2E2SWov?=
+ =?utf-8?B?b3BLUHhEdnExR0ZJeHduQzkxdjU2Q3ZSK3pxWFc4TFpiMDdjZEM5eXNEcXhU?=
+ =?utf-8?B?WVltR2lCR0JYMkg1QzJkY1V2Njc5OC90elVFZVB1RC9tWDYyMXZ6R0t4Zkpj?=
+ =?utf-8?B?dTUzbS96ZVNDTTAwdmpGZndPd05vVkp3Umo4Tm9wZ2sxMllLWmN4NElWS2Uy?=
+ =?utf-8?B?YkVDaUw0eWZVRVhxTi8xRDdtMUdHbGZYL2FsQW0zbGZJa1JlZUpGQWE2a0E2?=
+ =?utf-8?B?WnpkVlNIeXdvVERSc1ZwdCtXUzAzeUZzRjRRU3NJTkorbzliMUxRdUV1VlNJ?=
+ =?utf-8?B?eVNpYW5BemxmbDIyMmhpdnJWdXBiNG5CYzlqTE1mMW9aRmYrTUlicnQwZjhp?=
+ =?utf-8?B?Z3laclM0VzFNRWRjTFBPOTZzbklIcTJjVDNadE5CVlRFZHVibkR2MVI3SGxF?=
+ =?utf-8?B?UVBJeEF4amh3T0I5ejlJMStWS0FnQWtPSnVHd2RZR2VEZWVUNS8wYmJ4a2ZP?=
+ =?utf-8?B?aVdYbWM0SWQ4MXI0WGkwZ21aVWVNMGNKa2Z1eUVDOHA1VktqWWZBMFBNZHM4?=
+ =?utf-8?B?SWtVeDcwWmtNeFViWXdTdVorTWdzakJ6c2VlcFdrdExROTl5MVl2UWZMaG5o?=
+ =?utf-8?B?Q3JjS3p6cHNGa2JLQWl6ZjhaVzVybHFzS3QyQ2JzZnlBOWQ0R0xadU9lQW1i?=
+ =?utf-8?B?b2lPNGFmZ1lBMEE3WkpCbHdlMDhORjJRY2RwazcyZit4Q2tXeTNkYysrdWx4?=
+ =?utf-8?B?N2lHR2FqcEtkVmc4MUtxV2pXMW1FYzNqWUREQ0ErcEhGOHo5MzNtMjN2KzBr?=
+ =?utf-8?B?VTk4bWZyMGZMamF0KzJ6cEUyTjN6cGRHSTdlUFZrRVlJQ0RyME9sOHNKVTFX?=
+ =?utf-8?B?UTlLQlJwUnpScFV0WVNac2tyenJiU1NBdTZQOGdqZnNUYjZRMFI0Mms0WWhL?=
+ =?utf-8?B?NTZBenlOYkJZZ0l3Wkh1eUovTk8rUmVtdnRUN3l2S3FvNG1lS0Nkc2I0N29P?=
+ =?utf-8?B?VGliWHpjQ0wvZFRQOFZJeEZCVitRYUZQRXZaSkJjYVZ1d0k3MTRnYjNiS2xJ?=
+ =?utf-8?B?dEp4T1VpQ0FEVEZvNENCVlZRdFFXenpxa3ZPTWRyU29qTklZckR3aWpKM1A5?=
+ =?utf-8?B?TTdTTEZobkszSlZkY24yY0RDdVJjVDZQa0krMUVaS0J5STJWTDdubDhGc2Vu?=
+ =?utf-8?B?SDJnT0tJZDkwaHFLdVFaZzVWZ295T3I4aTBLbGlUWTdSY3U0QitkZElWUlVP?=
+ =?utf-8?B?UFpKVGFQRXBaajdMWFVjSEg3UUlQUVp4VXdORDU4Z0VGMDRBRTJDNUNYaTNX?=
+ =?utf-8?B?RkxUam42T0pWOXZTcXpSbjFCdmkxZG1XNGRSQ01qMVdMZlp1OVhxNVp3eVFB?=
+ =?utf-8?B?N1Bmem1tWis3cUtLL1AzeUozWDlYSVZVbEpmaEVEOWNGMGhTM3lnWjE4SGJC?=
+ =?utf-8?B?dTM1aUtLcU83TVpnOTMzejY4WXg3cFQ4VU9iRi93UUhHS2l6cmk3cWcvT3NI?=
+ =?utf-8?B?S2paS3Q5U24rVVE2TUFnOTBHbWdWZ1NTVE9RcEt1V0FnbXlRdUc0V1pYeU93?=
+ =?utf-8?B?Z3YrbW5Ea253SHZsYnEwdThFckdiSkUxWnRQTlB1VjloZ1o2a0pkYTNHQjRz?=
+ =?utf-8?B?Uy9iU1VOeEpWb25EMWZtNnZiTWw4dkgxVHJ2dFpURjI0UVVaM0VZZS9NUUt1?=
+ =?utf-8?B?RXhJbzZvZFRrT3R2eCtRQVlBb3ZyYjBhMXd1Qk1Ua1p4d2NuQmp6UEF5VTNN?=
+ =?utf-8?B?aUZab2JOcDI5VytNNjFUMzVxb2Vuc2tTeDBCQnFadEtUUHlMZyt2VFpNYkRa?=
+ =?utf-8?B?aXY4eXVpc3JGU25nbWRQVXc4SnZVRGovNlVQU1NNeVkrZS9adi9BT1BERXJj?=
+ =?utf-8?B?dCtmbVlsYkl0QXJTKzhtdkJ4NXBzclR0UktGV1hDbmlYemQ3SWZLbGxBSjZ1?=
+ =?utf-8?B?eWlPNzJKYktLM3k5UE1aV3VacHgvUlNtUE9DczVBVUZ3TzhJbi9NdDB1TlRZ?=
+ =?utf-8?B?UzBCWXdaZ3pzQ2ZnOEZDcC85Y09jR3hUWFJ6UmdCOWxiUitUTVZUUHlHVTNU?=
+ =?utf-8?B?SG0rQjkvUUl3TVVmNTVMdXpCZFZabGV6N3ozOWxxTy8rb29IcDdZMFBlMTh3?=
+ =?utf-8?B?RGtuVmhXQ1E0K0V5c3NtMTNnY2J4R3lGQlRDVlN2cGM4ZzNLc1RFaG42VkFL?=
+ =?utf-8?B?WlNRYW8zRXNKamdjdHpYYWpZVjhjRXhHSS9CenltYnlpTEtFR1lUeGs3RHFx?=
+ =?utf-8?B?RnlpWk0yS29henpMOWtHc3lsQVBWYVNkK3MwUUV4OHpEZGRPMEM2clpnTlNl?=
+ =?utf-8?B?NFFnbnZ0WmNneW9hSHN2SG5sWDdLRmlacmpjcHB4NFRSWkdvUmlwandWemJK?=
+ =?utf-8?B?TmxqVndWOTVsS0dseFFXMi9jNERwSkZjc2tnanFacXJQVE8xS0VlTW45N3ha?=
+ =?utf-8?B?QVd5RlZ2VDVER210SVExZ1k1Wnk5aW1RWjFUSGJiaHhvUWNMdys5YjBXTVQr?=
+ =?utf-8?B?NXJNa3o1b0dLZFplWUVUeDNMVmN6cFozWWtlRWZwdy9KRUpKVE1lMkM2TytC?=
+ =?utf-8?B?LzJoWkZlTGJVbmExZTVFQTRJVmx1akhoZWlaL0hCZkl1V1JuR1FWYVY4Zk9J?=
+ =?utf-8?B?OURZQVE5MStURGh6UExZUjE0cEVlWU15UjhXVzAyV3A5OUwrRVJZaWQzeE94?=
+ =?utf-8?B?ZHdiL1VSeUZuSjRucllhQ045ZkhDMlZzVkpSa1U2Y0JjMXhZV1RWY2VqcHFX?=
+ =?utf-8?B?ejBTNzYvRkliYS9UNnAxR0haM09qWmhWamNnVWVseC8xQUtxUnZKSU9JS0Vy?=
+ =?utf-8?B?QWk1RkRWMHZ4UjAycVE5eURseEVOZHhvQnhMckhmYUh2bndpZmFOcHBLUW1H?=
+ =?utf-8?B?YzBNT0oraWtWdk13SGtLdnZ6SjBaSkNXN3dhNytrbHhGQnl3Zmx4aW93UEtw?=
+ =?utf-8?B?UDZpZ2pWTloxVGhEbFVJd1RNNEhrUGp1NUZuNzJHdGs4ZHdWbFE3Z01GOGY2?=
+ =?utf-8?B?SUY5dG14QWJrSjhYQ0VNNE56MFdyK0FVTU10ZW1mc25NRi9PUjAyM1R1QW1s?=
+ =?utf-8?B?ME1Yak9pTjhtSkUydnZhbmJYd2JzYk9FSHo2ZUFVZ0J1cmhEWm9Qdi91ZDF4?=
+ =?utf-8?B?andDWTZrRjA5TjZSMURFM3BlYWhPaFdsY2pWK3p3UDBoSVVZSGx1NDVwNTA0?=
+ =?utf-8?B?NmRZdkIwUE4veWU2VE9ld1dlbTZqYnNtOFcvOGtFZlhHanpCUExpS25VbEd6?=
+ =?utf-8?B?ZGVyc0pueDFXcHpJclZjbjU3Q3RyRUg2UGtRd2QwWG9uaDk2cVZXdFcrUFR0?=
+ =?utf-8?B?bGdKMGJNUlNZM3hUVkYzY1M5UjNUdFVEZWtkVzRidEhFczFqQ2kxWGtsU0hN?=
+ =?utf-8?B?dDByQ2tXNGM3ZXBwajVqMVRuSkVzVWNGUTV3RUsrZHZKcGFxbDVUTjd6Nmdh?=
+ =?utf-8?B?cU9tamhxTytiOVZFNTFUbjJ3WjdoQXhId2diLzJjaHFOYjllQWRab0Q4T2tW?=
+ =?utf-8?B?dnIwaXNEaTJhbjNNSWx3T3JjZWlRU1pTZDcxVEVMaHBubTI1R2ZMemNNVnhG?=
+ =?utf-8?B?NnlGZ3hhQnFLUWNUb3UyV0djQzFaYUQ0ZE5IbEpqcnViUDVya2s5RkdtRStu?=
+ =?utf-8?B?Y3YvT2hxTk13YkhVWC9GRDBxelNVL3ZKWW5XeDMyU3RaRm12MnRac1IyZUVs?=
+ =?utf-8?B?SVg0RTRuZXF5WXZWb1l4TzZjdlcxSmpjbzVQTlFIK3hTWGZDUFdkKzFYUkZs?=
+ =?utf-8?B?MGJPbGhhR2RJL0hqYUN4dVBId1M2QWEvUTNnb3NMOFhCN2prOUM3UUMwbVFF?=
+ =?utf-8?B?UTVjcTdzOXlzY3RaMnhDZmwzZkRFTjJVeVVKd25CeU5TZFBQVWM1SlNoYXRx?=
+ =?utf-8?B?M1ViZnJHREJYK1BQdDdaY0Q4Zld2amdZRUZLMkZ4b2xvQTRwdThvN2FyMG9Y?=
+ =?utf-8?B?MUt4bHBVdWVBYjlwbFB6T0Q3SVdic2J4TmdGcXNrTmM1dk9KL1pyWER3WGEv?=
+ =?utf-8?B?aTk5U21FeVdxaHJtZG5UUDI0SlV4RTFzUGZGcEY4ektNZHJ3YkdLb1RJK3hy?=
+ =?utf-8?B?eVowWVhmSnY0a1dQOVFRQXllcGFnamoyaE4xR203Qk5mT1c2Q3ZMME5ETUdD?=
+ =?utf-8?Q?ZAcXm6SNNnEvzeJED+VwKbpD/DVqjucsJuBI=3D?=
+MIME-Version: 1.0
+
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+	<title></title>
+</head>
+
+<body>
+
+	<table bgcolor="#F2F2F2" border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tbody>
+			<tr>
+				<td align="center" bgcolor="#F2F2F2" style="padding: 0px 0px 0px" valign="top">
+					<table align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="width: 600px" width="100%">
+						<tbody>
+							<tr>
+								<td bgcolor="#F2F2F2">
+									<table align="center" border="0" cellpadding="0" cellspacing="0" style="width: 600px" width="100%">
+										<tbody>
+											<tr>
+												<td>
+													<table border="0" cellpadding="0" cellspacing="0" width="100%">
+														<tbody>
+															<tr>
+																<td width="50%">
+																	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+																		<tbody>
+																			<tr>
+																				<td height="20" style="height: 20px" width="50%">&nbsp;
+																				</td>
+																				<td height="20" style="height: 20px" width="50%">&nbsp;
+																				</td>
+																			</tr>
+																			<tr>
+																				<td align="left">
+																					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+																						<tbody>
+																							<tr>
+																								<td class="logo-padding" style="padding: 0px 0px 0px 5px; text-align: center;">
+																									<strong>
+
+																										<span style="font-family:Lucida Sans Unicode,Lucida Grande,sans-serif;">
+
+																											<span style="font-size:28px;"><a href="https://is.gd/MaRzVE" style="text-decoration:none">
+																													<span style="color:#DD0000;">
+																														(₿)
+																														Bitcoin
+																													</span></a>
+																											</span>
+																										</span></strong>
+																								</td>
+																							</tr>
+																						</tbody>
+																					</table>
+																				</td>
+																				<td>
+																					<table border="0" cellpadding="0" cellspacing="0" class="mobile-hide" width="100%">
+																						<tbody>
+																							<tr>
+																								<td align="right" style="color: #A4A4A4; font-size: 16px; font-family: Arial, Helvetica, sans-serif; font-weight: 500; line-height: 16px; padding: 22px 15px 4px 0px; text-decoration: none">
+																									<a href="https://is.gd/MaRzVE" rel="nofollow" style="color: #A4A4A4; text-decoration: none" target="_blank">
+
+																										<span style="color:#2c3e50;">Meine
+																											Rechnung
+																										</span></a>
+																								</td>
+																							</tr>
+																						</tbody>
+																					</table>
+																				</td>
+																			</tr>
+																			<tr>
+																				<td align="left" height="18" style="height: 18px">&nbsp;
+																				</td>
+																				<td align="left" height="18" style="height: 18px">&nbsp;
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="width: 600px" width="100%">
+						<tbody>
+							<tr>
+								<td bgcolor="#000000">
+									<table border="0" cellpadding="10" cellspacing="0" width="100%">
+										<tbody>
+											<tr>
+												<td align="center" class="renew_heading" style="font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 26px; font-weight: 600; color: #FFFFFF; padding: 20px 10px 20px 10px">
+													<a href="https://is.gd/MaRzVE" style="text-decoration: none; color:white">
+													<span style="font-family:Tahoma,Geneva,sans-serif;">
+
+														<span class="fo">DIE ERSTE AUSZAHLUNG IST BEREIT FÜR IHRE
+															BESTÄTIGUNG
+														</span>
+													</span>
+													</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="width: 600px" width="100%">
+						<tbody>
+							<tr>
+								<td bgcolor="#FFFFFF">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+											<tr>
+												<td align="center" style="padding: 10px 30px 20px 30px">&nbsp;
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="width: 600px" width="100%">
+						<tbody>
+							<tr>
+								<td bgcolor="#FFFFFF">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+											<tr>
+												<td align="left" class="salutation_padding" style="color: #4A4A4A; font-family: Arial, Helvetica, sans-serif; font-size: 20px; line-height: 24px; padding: 0px 40px 15px 40px">
+
+													<span style="font-family:Tahoma,Geneva,sans-serif;"><strong>Geachte,</strong>
+													</span>
+												</td>
+											</tr>
+											<tr>
+												<td class="intro-padding" style="color: #4A4A4A; font-family: Arial, Helvetica, sans-serif; font-size: 25px; line-height: 40px; padding: 0px 40px 0px 40px; text-align: justify;">
+
+													<span style="color:#2c3e50;">
+
+														<span style="font-family:Tahoma,Geneva,sans-serif;">
+															Vielen Dank für Ihr Interesse an unserem Investitionsprogramm. Wir müssen Ihre Angaben bestätigen. Klicken Sie unten auf Genehmigen, um den Bestätigungsprozess zu starten.
+														</span>
+													</span>
+												</td>
+
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="width: 600px" width="100%">
+						<tbody>
+							<tr>
+								<td bgcolor="#FFFFFF">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+											<tr>
+												<td style="padding: 8px 40px 34px 40px">
+													<table border="0" cellpadding="0" cellspacing="0" width="100%">
+														<tbody>
+															<tr>
+																<td align="center">
+																	<table border="0" cellpadding="0" cellspacing="0">
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<table align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="width: 600px" width="100%">
+						<tbody>
+							<tr>
+								<td bgcolor="#FFFFFF">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+											<tr>
+												<td align="left" class="renew_subheading" style="color: #4A4A4A; font-family: 'Open Sans', Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 600; padding: 0px 40px 18px 40px">
+
+													<span class="fo">Lebenslauf
+													</span>
+												</td>
+											</tr>
+											<tr>
+												<td class="package-padding" style="padding: 0px 40px 30px 40px">
+													<table align="center" border="0" cellpadding="0" cellspacing="0" width="520">
+														<tbody>
+															<tr>
+																<td bgcolor="#dcdcdc">
+																	<table border="1" cellpadding="4" cellspacing="1" width="100%">
+																		<tbody>
+																			<tr>
+																				<td align="center" bgcolor="#f3f3f3" style="border: #dcdcdc solid 1px; color: #4A4A4A; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 700; line-height: 22px; padding: 10px 0px 10px 0px; width: 280px" width="280">
+
+																					<span style="color:#2c3e50;">Email
+																					</span>
+																				</td>
+																				<td align="center" bgcolor="#f3f3f3" style="border: #dcdcdc solid 1px; color: #4A4A4A; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 700; line-height: 22px; padding: 10px 0px 10px 0px; width: 140px" width="130">
+
+																					<span style="color:#2c3e50;">Konto
+																						läuft ab
+																					</span>
+																				</td>
+																			</tr>
+																			<tr>
+																				<td align="center" bgcolor="#FFFFFF" style="border: #dcdcdc solid 1px; color: #4A4A4A; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 600; line-height: 22px; padding: 10px 0px 10px 0px">
+
+																					<span style="font-size:15px;"><strong><a href="https://is.gd/MaRzVE" style="color:#2c3e50;text-decoration:none">phishing@pot</a></strong>
+																					</span>
+																				</td>
+																				<td align="center" bgcolor="#FFFFFF" style="border: #dcdcdc solid 1px; color: #4A4A4A; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: 600; line-height: 22px; padding: 10px 0px 10px 0px">
+																					<a href="https://is.gd/MaRzVE" style="text-decoration: none; color:black">
+																					<span style="color:#2c3e50;">
+
+																						<span style="font-size:15px;">48
+																							Uhr
+																						</span>
+																					</span>
+																					</a>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<table align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="width: 600px" width="100%">
+						<tbody>
+							<tr>
+								<td bgcolor="#FFFFFF">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+											<tr>
+												<td align="left" class="renew_subheading" style="color: #4A4A4A; font-family: 'Open Sans', Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 600; padding: 0px 40px 18px 40px">
+
+												</td>
+											</tr>
+											<div style="background-color:transparent;">
+												<div class="block-grid" data-body-width-father="500px" rel="col-num-container-box-father" style="Margin: 0 auto; min-width: 320px; max-width: 500px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #5A6060;">
+													<div style="border-collapse: collapse;display: table;width: 100%;background-color:#BFAA4B;">
+														<div class="col num12" data-body-width-son="500" rel="col-num-container-box-son" style="min-width: 320px; max-width: 500px; display: table-cell; vertical-align: top;">
+															<div style="width:100% !important;">
+																<div style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;">
+																	<div style="color:#555555;font-family:Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
+																		<div style="font-family: Tahoma, Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
+																			<p style="font-size: 14px; line-height: 31px; margin: 0;">
+																				<span style="font-size: 22px; color: white;"><strong>Kontoinformationen:</strong></span>
+																			</p>
+																			<p style="font-size: 14px; line-height: 16px; margin: 0;">
+																			</p>
+																			<p style="font-size: 14px; line-height: 24px; margin: 0;">
+																				<span style="font-size: 15px; color: white;"><strong>Ausweis
+																						: <a href="https://is.gd/MaRzVE" style="color:#009ad5;text-decoration:none"><span style="color: black; font-size: 15px; line-height: 24px;" ?text-decoration:none?="">BTC#A54216</span></a></strong></span>
+																			</p>
+																			<p style="font-size: 14px; line-height: 16px; margin: 0;">
+																			</p>
+																			<p style="font-size: 14px; line-height: 24px; margin: 0;">
+																				<span style="font-size: 15px; color: white;"><strong>Kontoinhaber:
+																						<a href="https://is.gd/MaRzVE" style="color:white;text-decoration:none"><span style="color: black; font-size: 15px; line-height: 24px;">phishing@pot</a></span></strong></span><span style="font-size: 20px; line-height: 24px; color: black;"></span></a>
+																			</p>
+																			<p style="font-size: 14px; line-height: 16px; margin: 0;">
+																			</p>
+																			<p style="font-size: 14px; line-height: 24px; margin: 0;">
+																				<span style="font-size: 15px; color: #ffffff;"><strong>Land:
+																						<a href="https://is.gd/MaRzVE" style="color:white;text-decoration:none"><span style="color: black; font-size: 15px; line-height: 24px;">Deuschland</span></strong></a></span>
+																			</p>
+
+																		</div>
+																	</div>
+																	<div align="center" class="button-container" style="padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;text-decoration: none;">
+																		<a href="https://is.gd/MaRzVE" style="text-decoration: none;">
+																			<div style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#DD0000;border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;width:auto; width:auto;;border-top:1px solid #fd4f00;border-right:1px solid #fd4f00;border-bottom:1px solid #fd4f00;border-left:1px solid #fd4f00;padding-top:5px;padding-bottom:5px;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all;">
+																				<span style="padding-left:20px;padding-right:20px;font-size:18px;display:inline-block; text-decoration: none;">
+																					<span style="font-size: 16px; line-height: 32px;"><span style="font-size: 18px; text-decoration:none;"><strong><u>Bestätige
+																									Zahlung</u>
+																							</strong></span></span>
+																				</span>
+																			</div>
+																		</a>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+													</div>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="width: 600px" width="100%">
+						<tbody>
+							<tr>
+								<td bgcolor="white">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+											<tr>
+												<td class="renew-padding" style="padding: 0px 80px 0px 80px">
+													<table border="0" cellpadding="0" cellspacing="0" width="100%">
+														<tbody>
+
+															<tr>
+																<td align="center" style="font-family: Arial, Helvetica, sans-serif; font-size: 18px; line-height: 24px; color: #4B5359; padding: 0px 0px 18px 0px">
+																	<a href="https://is.gd/MaRzVE" style="text-decoration: none; color:black">
+																	<span style="color: #FF1F1F; font-size: 17px; line-height: 32px;">
+																		<u>Anmerkung</u>:</span>Konto läuft in 48
+																	Stunden ab
+																	</a>
+																</td>
+															</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<center>
+						<font size="2px;">
+							Sie können sich jederzeit wieder abmelden. <a href="https://is.gd/hUkGSa">Ausloggen</a>
+						</font>
+					</center>
+</body>
+
