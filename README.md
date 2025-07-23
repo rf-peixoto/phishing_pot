@@ -1,4 +1,4 @@
-Phishing Pot is sponsored by:  _the-street.xyz_
+Phishing Pot is sponsored by:  _the-street.xyz_, a private forum for cybersecurity, threat intelligence, and cipherpunk culture.
 ---
 ![Phishing Pot](https://github.com/rf-peixoto/phishing_pot/blob/main/img/phishing_pot.png)
 
