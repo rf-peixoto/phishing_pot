@@ -1,0 +1,660 @@
+Received: from SJ2PR10MB7785.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Tue, 28 Oct 2025 11:40:51
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=TJH5sYZ1WR9oH7F6P1FLgeE5R52U8x7wn3EuuI62Rq+1j6G5Wvakirso5JuJw+w6e3lEYX9loOwnlOP6yUJ2n+yG0v0CZVFy0/IOyD+79cN1KKbetqiIsgvKVtBu24wiEb7lknj4IjjxJJfRA0Ly/83qqylVtLStBY+ZMr8+BHnzXW/8/swWYwhNHdmQ+K9zPlS2i+4rmOl/g9dZ7MKz6kL/wU1oVc/HfgXudHk1ct41Dnqbi4swOtQqmI8EotEbMEs1t242hG8+fF7ggZG1u2pLz5ArWyhzphuvN/WBDAuu+GoM/sBsTuD9bm4/TogC/Fy/xwcKmXpdYHjLoynQtQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wVV9VM8dn7EC8JwHd+fMlSDQTdZKfdEbMEObfxpnPhY=;
+ b=u7K9ml2DkmETqaKt4xzA5QAAZ/MVf1hdokU6Rz0HzwVf7R3E++8J2vZtiMIKwFoYcQJ3XBLe7ZI6H5y19IO5ApOKeh5hmECH1nnjXO/j8ZfMk954/TbAZxpC82LdoqPHzNIycgIGgzFlvTyFh55KbjumCZ5dMwM3SSaVQttCnC33wtJUvjtPIJtBbjGB4cdp8RHOK/WT/4pfFXizHsnk7UxVtXRJrPu3F2xWFeniHKShGYAzF3r6AQ/2FZ32Bvi/QPqvNpOLMtZ9YZRJGJF/RFj00cVYe/EIXQ5kv/RSL52HTG9upUv0vr+kcz3jWw6h5vCNslB49Z7hazoWz0GRcQ==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 40.93.195.135) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=17sxob90.onmicrosoft.com; dmarc=bestguesspass action=none
+ header.from=17sxob90.onmicrosoft.com; dkim=fail (signature did not verify)
+ header.d=nytimes.com; dkim=fail (signature did not verify)
+ header.d=nyt.fbl.e.sparkpostmail.com; arc=pass (0 oda=1 ltdi=1
+ spf=[1,1,smtp.mailfrom=17sxob90.onmicrosoft.com]
+ dkim=[1,1,header.d=17sxob90.onmicrosoft.com]
+ dmarc=[1,1,header.from=17sxob90.onmicrosoft.com])
+Received: from CH0PR03CA0249.namprd03.prod.outlook.com (2603:10b6:610:e5::14)
+ by SJ2PR10MB7785.namprd10.prod.outlook.com (2603:10b6:a03:56b::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.18; Tue, 28 Oct
+ 2025 11:40:49 +0000
+Received: from DS3PEPF000099E0.namprd04.prod.outlook.com
+ (2603:10b6:610:e5:cafe::c6) by CH0PR03CA0249.outlook.office365.com
+ (2603:10b6:610:e5::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.12 via Frontend Transport; Tue,
+ 28 Oct 2025 11:40:47 +0000
+Authentication-Results: spf=pass (sender IP is 40.93.195.135)
+ smtp.mailfrom=17sxob90.onmicrosoft.com; dkim=fail (signature did not verify)
+ header.d=nytimes.com;dkim=fail (signature did not verify)
+ header.d=nyt.fbl.e.sparkpostmail.com;dmarc=bestguesspass action=none
+ header.from=17sxob90.onmicrosoft.com;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of 17sxob90.onmicrosoft.com
+ designates 40.93.195.135 as permitted sender)
+ receiver=protection.outlook.com; client-ip=40.93.195.135;
+ helo=SN4PR2101CU001.outbound.protection.outlook.com; pr=C
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.135)
+ by DS3PEPF000099E0.mail.protection.outlook.com (10.167.17.203) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.10
+ via Frontend Transport; Tue, 28 Oct 2025 11:40:49 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:E0C9C45D2A5285A79046667EDA5D83A7F861C444006D8634B9E15E699D0B22D4;UpperCasedChecksum:867EF1B0F824E7AE3323A44D8416F2ECC14D5A331B510FB9DBBAE553DC9AF0FF;SizeAsReceived:11451;Count:44
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZcZbzf27s8RYQeSe9+XDL4B+1p9kE1Lja9/+6k1+KKCEQ6TlnG/pwcDbkWBoTQaSoEEEfplyxZ1eVWUJNAGfK7WvnYFlc1nT62xPz0fsV+gUVlskkwFwGShJYtijKawB00mar3GFRlk1Ty2Q8jA4cq0qjA7Pw79aNSj9v4pcDhw1jzbanjTVcAg2r3KKfx/cqoRZEpq88UxH5ZCIZ97y7+29O9BQFEClZJG7WdY2B5nXWsEImHJJy+w5guEzZNlZUJabFUzcV8ADfv/H9kXzuZIgyPisEKMmqbtFja27rm6PwoEmn00XHMr+X0AEcXf3jU7r7+j2BYIeWN7JpZZXOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wVV9VM8dn7EC8JwHd+fMlSDQTdZKfdEbMEObfxpnPhY=;
+ b=cbw7Lg95BWVS1177/qNkIoicmvil1He+klM4c/PbQpm3m2ri9Hw9oWQK408a93C1dy1WsmTjHftvbV/fg2pv5FLe3KtoWLddwK7aspyK8mCN4YNdBkvnYaHXEWugwWqAlL+4iL3lS2STSDEZZdi6xhLMby1dzXVqZFQ4zIyii4GPpgXl6YSfkRJMccXUDkJ3hi8z3mj6xkp/t6fp7iT8gDwese4b1cOidQYHQvndrb1oVVAA7kbhnnGTG6SnSSoMoohIDcsT+rY1Wo3lg8VOuvIAOgPjBq47lawcH2oYbFC7wuQJQH5GqqcYkETPKnJ2JSKwFqwznMzOvZtWCeTXrA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=17sxob90.onmicrosoft.com; dmarc=pass action=none
+ header.from=17sxob90.onmicrosoft.com; dkim=pass
+ header.d=17sxob90.onmicrosoft.com; arc=none
+Authentication-Results-Original: dkim=error (no key for signature)
+ header.d=none;dmarc=none action=none header.from=17sxob90.onmicrosoft.com;
+Received: from SJ5PPFBC14D44A1.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:a0f:fc02::635) by IA4P223MB1689.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:208:561::20) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.18; Tue, 28 Oct
+ 2025 11:40:47 +0000
+Received: from SJ5PPFBC14D44A1.NAMP223.PROD.OUTLOOK.COM
+ ([fe80::8298:8026:5772:b447]) by SJ5PPFBC14D44A1.NAMP223.PROD.OUTLOOK.COM
+ ([fe80::8298:8026:5772:b447%8]) with mapi id 15.20.9253.017; Tue, 28 Oct 2025
+ 11:40:47 +0000
+X-MSFBL: gVhkoMQ2SVDWjMrkQRUDOuTFmD200OvcXBP10q9+L9Y=|eyJyIjoibWFya3ZhbmR
+	lcm9veUB5YWhvby5jb20iLCJzdWJhY2NvdW50X2lkIjoiMyIsIm1lc3NhZ2VfaWQ
+	iOiI2OGZmYmE4OTAwNjk3MjljMDQwZCIsImN1c3RvbWVyX2lkIjoiMSIsInRlbmF
+	udF9pZCI6Im55dCJ9
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nytimes.com;
+	s=scph20250409; t=1761642938; i=@nytimes.com;
+	bh=NXBIn3/reb9m42tDz3Gk1AfMn6uYa7puulYdJkVH000=;
+	h=Content-Type:To:Message-ID:Date:Subject:From:List-Unsubscribe:
+	 List-Unsubscribe-Post:From:To:Cc:Subject;
+	b=uANaSsJBzLnUf29EeeEoMoEQQfR2k6Yzk1dFjV2X9NfotwN9J68kAVKewY0n16Ocr
+	 PYmlab62BgIn47GAatD+kyzfzaye8I/uRKJkKqPzFVKsF1IxY27jF2y9FTyBylM08M
+	 dBzH1YxiGy56hAQnWOQelUoge+Z0DIAwOh9GGHy+z+0gQRFq6LhAY/y8diLwYNY/ts
+	 jtO6J+3ZyD3B2flx8dESHJJQGOZH2dz+IyfHqr+PgkD0wTclv9AzMUdiuhWtuTh5q1
+	 qwnjau3sATCLtCRiZ7Cw+cpd2cqtQdOFT5ElzCdIwg8mvhmQJjGCg+1lHPnCPglKop
+	 lv7zbkIvSbjH74CGvsMihw0KfvkXYJac6QZ5qq4VUm8Ce+4ex4/vLh0cTsNd6Z+TGw
+	 7QhF/Ps4JN8g+1qo8Gwspp8m9yIAYB9USoLPA52l9130VAsC7vWqQmjIWIXIMsLUlf
+	 IQGON0iKSXO8Yvet3DZBrsUUo3igCDMOuB7Zfg3bwmp7xpIocrmlAoUfM8NwRPjIuH
+	 jm4ipMDMjTrzJBhHONn6t5fW+8zEUHBHwAUWo6DFGN/ZJEDHraxJz7WmDkuvuMQH7X
+	 7JfIgU7L6fg+yscucf0pgiQ7qbL0NW1CYvvq/SCS56idrljkiQLitwi/75ixQ063K8
+	 fQfXDI4OVNA9LG6CXOJhYpn0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=nyt.fbl.e.sparkpostmail.com; s=scph0522; t=1761642938;
+	i=@nyt.fbl.e.sparkpostmail.com;
+	bh=NXBIn3/reb9m42tDz3Gk1AfMn6uYa7puulYdJkVH000=;
+	h=Content-Type:To:Message-ID:Date:Subject:From:List-Unsubscribe:
+	 List-Unsubscribe-Post:From:To:Cc:Subject;
+	b=Nf6X1sWQHDgJd2zvrgsKMN0TDngqDBR99bg0pUVCUg+zuu2l00Lgv4pkcoY1xzslJ
+	 bIqvX8p6qlg1zjUuo3tpXeK/eH7TSqUn7OCKA1AFSvf8R1QzIN9riJRQYehZeU0Oj6
+	 VfBs8jJlmjs/wERj6eDL7y1Beve4+9Pyd06zWyas=
+Content-Type: text/html; charset="UTF-8"  
+Content-Transfer-Encoding: 8bit
+To: phishing@pot
+Date: Tue, 28 Oct 2025 11:37:43 +0000
+Subject: =?UTF-8?B?WW91IGhhdmVu4oCZdCBjbGFpbWVkIHlvdXIgcmV3YXJkIHlldCDigJMgZG9u4oCZdCBtaXNzIHRoaXMh?=
+From: AAA Discounts & Rewards <marion-beck-5846339115@17sxob90.onmicrosoft.com>
+BIMI-Selector: v=BIMI1; s=nyt;
+List-ID: new york today <ur.nytimes.com>
+Feedback-ID: sid.209454:tid.566:pid.UR:nytimes
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Content-Length: 64292
+X-ClientProxiedBy: AM9P195CA0025.EURP195.PROD.OUTLOOK.COM
+ (2603:10a6:20b:21f::30) To SJ5PPFBC14D44A1.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:a0f:fc02::635)
+Return-Path: marion-beck-5846339115@17sxob90.onmicrosoft.com
+Message-ID: <SJ5PPFBC14D44A11826CC6C53BDED3FA5A7FDFDA@SJ5PPFBC14D44A1.NAMP223.PROD.OUTLOOK.COM>
+X-MS-TrafficTypeDiagnostic: SJ5PPFBC14D44A1:EE_|IA4P223MB1689:EE_|DS3PEPF000099E0:EE_|SJ2PR10MB7785:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: fc4006d7-dfe6-462a-e2b0-08de1616d793
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|1800799024|69100299015|4022899009|52116014|376014|586017|1032899013|366016|8096899003|2066899003|38350700014;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?SFpWd2NqamNKVkNPTlM1d0ZoTndERFF4Z0VTQWZ0cHpTV3BrWkJVc1N6M01l?=
+ =?utf-8?B?T0hVd3NHTlJkMFc1TWJVMEJ2eUtCcG85VUp5SXJINlcxTFFVLzd6d1hGdTc0?=
+ =?utf-8?B?dGIyaFNFc0JYelZpV0RHWXlaVWZnSHNFOUlHUUUydjY0TCttbGM5aDN3Uk9E?=
+ =?utf-8?B?MEFlQUtsVjlaSDRMQmFIR1lLS2lSbjl2TFRsZmNXT21lU0h1WWpsSG1YTm1Z?=
+ =?utf-8?B?eTM1UXhvVVJPeXRVUEFXQWZoazlQZFdXYnV0SXJHeGFZYkdnN29EVmVSTGJF?=
+ =?utf-8?B?cjNOdlhlR0JhRFBoTHBWNjl1VFRXbGxnMndNRG1RNllSU1Q5L2V0OHJRQTBO?=
+ =?utf-8?B?S21iQUtQYldKY2ZzVjF6VU1ZZDMyZEZ3L1N3MDhQUmZOYVROU1B3QTJMWmhB?=
+ =?utf-8?B?RVhia0dhUXRkbkRQRDBwaWozcjRMZFlRZTRMZC9hRnV5Y2I3dkRJVmRaa0lO?=
+ =?utf-8?B?WktKd2xoT0d2VDdDY2pNTWJhT2htT1BMSHFnMVdXRzNSWDJqbUczZjhNWVQ5?=
+ =?utf-8?B?UU1wME5UVlB4ODB3a2tRZWRMdURabXgxVzlhV1JvTm9xUE9lbFYyaW5jS3R3?=
+ =?utf-8?B?dTl3Z2VKYy82TVQ4NEFFU29ncVZ5TXlCSTNoOHZGbkpHUVMzbWVOeU9tczNv?=
+ =?utf-8?B?c1pBdUkwSHB4aXhGcngzRmVvZW5VNFhkNkk4QWV5b0tGSUhGanBtd2R6eE1p?=
+ =?utf-8?B?NkxBY2dkeUliVXU1aExEUUthSS9QbHM3UEFtdmk2cGhHWWEyUWtBNHdaSVVB?=
+ =?utf-8?B?cUlkeDhMZTFZS0xPRXdnV0RYaHMrWXgzZU1IeWg3bjRPbklhbHAvRHlkL2c4?=
+ =?utf-8?B?MUVFM1JvU1hkK0sydmR5aCs1VThkbDBEVEpBZkJsMHpvUmNNRlRtRmtKQ3hL?=
+ =?utf-8?B?T2hMUTZFV3VwV3ZnNHZYUUxvR2tIdEM3ZDNYaDFuUUY0Sm0zRXNWMHlhL1lT?=
+ =?utf-8?B?WXIwWU9UNmloUWFRQ3c2VEJXV0hlSU9SVXZXTUxsVUVBdGZ2U0l1cEVBZ1hU?=
+ =?utf-8?B?UE1qRGpJUWJucFA3UzA0YjhOWDVrT3JzcXdzU2thd0lUaEY4YnJ1Z2xEaWtR?=
+ =?utf-8?B?VXpwT2YrMGtZYkFVS3RsZC9senFtL21YdGRKRGtQbXlGNlBueTRrZG9XVHox?=
+ =?utf-8?B?RzFEQWZ1L2VWb3ZKZlNoSzU3YWptNGZ0ZzJIWUtXaWFyaDFEd3owZTlLTzc2?=
+ =?utf-8?B?RzgrZGRYN2Z3Rml3b0lpRGk1UGJJenpleldQMXJEaDRBUW5wQkNibm4yL0Nm?=
+ =?utf-8?B?SnMvZFdjNE82WmlKWEN5VUpXUzEvS0NVb1U2SktOOEdBNVQwOVBET0pWZERH?=
+ =?utf-8?B?Mld1UWFSbGlJTko5a2tCUzNRY3BxQjVtdmEvMWZlajgyUVdNZG9YSWpFVXQ3?=
+ =?utf-8?B?dVMrNmUyYysvS29qQVFiUXpOUXNCZUM1dCtCc0ZjQnF2S3BJUEdoVkFISlVy?=
+ =?utf-8?B?UHRhZ25NVFY4TTJTeWVwV2JwQzRrUk5Yd2ovMHhxZExFU3hJSVFpRUlwbHZJ?=
+ =?utf-8?B?bE0yTi95d0dNWUhWVDZVcnJkejF4TEp2ZHU5cWNFcGQyQ0FQQm9TMmNSejBy?=
+ =?utf-8?B?UnpUS2U5dWpQMDRtckIzcXA4SWI4ZEVZck1XOWJ0NDN5ditlUldoMjhYckpQ?=
+ =?utf-8?B?TUc1RjNmN1lNMGxZbkFyTzFiaXkxSmNQOTNlUG93NjFVUWhWTWdRSnFxdHMv?=
+ =?utf-8?B?VUEwQXJoUzgxalJUa0JxdEJtOGlYSkllS1pRTVFsTUlTTVE5VzdvTDhwQW12?=
+ =?utf-8?B?UXJYd1RHd0JkWWV3UTFlbHpLU1N3QUFwbU1mL2h3WnNMSmdiQUo3cElaRmR1?=
+ =?utf-8?B?UWprbXNZTHF6L00xY25DcGpiSDBkT21DUE5tSWd5cFgxYTFmMkU4Z2lDL0NK?=
+ =?utf-8?B?M3AyOEptM1VwMVlwSi9qT21ZenlaWVpXUHBOelZmOVZOMjFjdEZUcDY3Y1Ex?=
+ =?utf-8?Q?+bCU2AuBKN0q6wl6ctUDsGoi0Sm/NcXQ?=
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ5PPFBC14D44A1.NAMP223.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(69100299015)(4022899009)(52116014)(376014)(586017)(1032899013)(366016)(8096899003)(2066899003)(38350700014);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: =?utf-8?B?VVhHem5FUG1McEFHbjg2UzJtRkJ0NkhZYjcvU0d1M1ZISnd4NTZiZi9NcFlT?=
+ =?utf-8?B?VWZnbngxUG1HT3ZtSnpZMHlTZ1FuWm5iRW1od3N2OXA0ZDZWYTN1WE5GcWRs?=
+ =?utf-8?B?eGdxUW1LNmFwN2VRVTJVcEhoQ0xtUUIzNy90bEE5ZWZvUzVMT2F0VTFzYVB2?=
+ =?utf-8?B?dnI3YktmQkJkSm5nejNNUHV6ZzRGTTVZZVlYTDBqc0FQNjBFaGpQbjdWZEZk?=
+ =?utf-8?B?V1gxZWhsaGtEYnpyL0hFN1lrTWtvVXF1dUtYZG5tbmhmaHB1Y3NvdEtmdGt1?=
+ =?utf-8?B?c3VFWU1kRkEvYnNEVmNyRHZJdSt3ZnhINldDZHY4dW0yaUdjaElzQkZmWW1Z?=
+ =?utf-8?B?TGFTZ3RmUGc2WTZ6d2VMUTVOcEtIQTdUTWM4bE8rSGYreC9CcjVxbXFJVGw3?=
+ =?utf-8?B?OTNSZ0FRVHR5Uy8yUUVONWJKRjF0dmdldExUVStuN1o4bnBIN1ZRcnVWRUpR?=
+ =?utf-8?B?Vm5lN2tvbmhSemlaVlp5c2xPTklRZlVkWlIzV0tNQzB5UWg3VmREK2Vaa0hG?=
+ =?utf-8?B?Ti93NXFSbHF3Sm85ZEpaK0lKU3p5Smw5K1p4dEtYaFZ0WkhNMkdQek41R1lN?=
+ =?utf-8?B?d3JudEdzcjFqaXphRlhobzlScnZMRHVBclNvOXpoWVdTTTJLL2dUekRhSHNx?=
+ =?utf-8?B?TlVWM3ZCdVRIbjNleU1QK3l4aW5UYStaTWhWV0tkK2QrbFFMWTl2OXUrQ2Vu?=
+ =?utf-8?B?Yjg5bzU2UGpuZVVmdnQ3UXd6YmRqL3Z2SUpXK0h0T3g5VXEyT0VuYjd5MHZq?=
+ =?utf-8?B?NG41S1ZXOSs2WWFPQXhxcHhqNGpHUUU2dThyeklYYTVwNGhkVmtGVnR5QU1m?=
+ =?utf-8?B?THQwZjhrSGZES0U3aEVWbkpKNUtZKzQ0b25HVGY1ZHRJOFRoU1dvVHpiUXBX?=
+ =?utf-8?B?Uy9aalRYaEhlcFlJc0xDMjZacTJXMFVsN253YTE2WTYzeThablIyM0swbzhz?=
+ =?utf-8?B?UEZ5VnBFWGFTUzFJMTZBckFCbGZEalFaT1MzSmx2d1h4LzZTeEZQZTZldk0z?=
+ =?utf-8?B?b0F1aUN6NmgwbGExRmg0Ris3WEw2QmdkbEdGQXU4Mno1ZWpYZExhenJvMDk4?=
+ =?utf-8?B?RVB2cU5vUUZQeFRQMllRdXVzWWVLOEF4czNoWklxSkpWTTBxa1RXUkFCYzR2?=
+ =?utf-8?B?TTRVYUV0ZG1wM28zVFhaOHFQcHF5cWVNTm90cm5Wa1loOWpISUpSN2dVaE9Z?=
+ =?utf-8?B?cXR3UnJ3cGRsNzlKTll6Rm5ETE1YWGk2V3RCcmxaYWkwWmM1ZENybG1kb05E?=
+ =?utf-8?B?VGxpd0RIRE81Q01tc1ZjckxhRDg3NEFvRGpHaWhmOStyQ2NJOU96V1F0cFVj?=
+ =?utf-8?B?UDFlN1BmSE1nelI1YzlrZFhOaktwbmFweGZpWkFrcTNJeXhXOGhobllTMU95?=
+ =?utf-8?B?WmNidExKY1NOZVJiM2dTTm11NWUyQUg3ZTdPaUVDNEIxV0FVNHNtd2JJZlVm?=
+ =?utf-8?B?VU4wUVJMb0xxOThCRlVsTmMvVE94cm5LUG9zYU03UUxBUTlUUzhqcUJQSlQ3?=
+ =?utf-8?B?eXQvc2VYNEVmWi9idi93RzNUV2pRSnR6aWF1K0t6RnprTnRVNmw4b1J3MEdj?=
+ =?utf-8?B?NXc0UE9yQXBESHl6VEU2MjM4R2puZkNVU3pMdjU2VndXQzFZdG5xczVDL1h6?=
+ =?utf-8?B?YnZDZ1pvbVJ3ZEhnWnF5Rk1tUldXWHY0eEJHSTRWR0RNdzlob2YvUndPNHNH?=
+ =?utf-8?B?VTB5MHRnV3pRMkY4UGF6S0dUcGNaZERxM1diOWUyMXM4cXduZUp5dXNneG5G?=
+ =?utf-8?B?ZXBsa1oybnlybUcvaURzQTNMd2o3SXZLQUp1V1pUTkh1aTVrWndFSCtTTFdG?=
+ =?utf-8?B?cVdBVE4vdDRuaW1CVlNkdmVvOU15ei9NeWdzSDRxYVIraXErZ0pzUWt4T2ln?=
+ =?utf-8?B?UGUwU0oxUGF5ZllSK2NGMTVxaS9qYmJ4Vzg4amNhMnlJd2N4VExsRC8rVlhU?=
+ =?utf-8?B?bE9LYTVSd2o4VHBVVVdzVXhQVDZwMlVidFBEVUlQTS9nTFhCeUVVQkE5azE4?=
+ =?utf-8?B?c2YzSE90VVAxRHM2NVhnNVJJR05vNTBzZWozTG1CRXk5OXViZTlDZ0hiR0pC?=
+ =?utf-8?B?alJITEwzOHUrcXR5YUhQRDRmbzZlYzJpY1A2QWpNNDFQa1J6bk4zbzRlbzRK?=
+ =?utf-8?B?aUVGekpLdEpmZ2dmVTF5VURTbVZjNHdGMGlFc2FGc2Rsaldzc0p6U1VhQmxu?=
+ =?utf-8?B?b1J6S2NhY0sxV1E5bkRKQUVnYXcxYnJOcGl3TWhmZ0xHWGwwN3NZTUQxTmlk?=
+ =?utf-8?B?Sm9mb204MTB0cjViYytMMkhXTHNRPT0=?=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4P223MB1689
+X-IncomingHeaderCount: 44
+X-MS-Exchange-Organization-ExpirationStartTime: 28 Oct 2025 11:40:49.5073
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: fc4006d7-dfe6-462a-e2b0-08de1616d793
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: DS3PEPF000099E0.namprd04.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: DS3PEPF000099E0.namprd04.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: DS3PEPF000099E0.namprd04.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 10/28/2025 11:32:43 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 94fdc968-2d71-4a7e-b754-08de1616d641
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 40.93.195.135
+X-SID-PRA: MARION-BECK-5846339115@17SXOB90.ONMICROSOFT.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|11020799009|461199028|58200799018|67000799015|50300799015|47200799021|1680799066|13020799006|2700799029|32080799003|9000799056|9400799040|9800799015|20103052909095|63100799012|10300799035|87000799018|970799057|56899033|1380799030|1360799030|1370799030|1417299016|1602099012|8516399012|22015499006|3412199025|440099028|4302099013|18025499012|19025499012|18021999003|25065499003|2406899039|2006899018|6106899015;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2025 11:40:49.3647
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fc4006d7-dfe6-462a-e2b0-08de1616d793
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099E0.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR10MB7785
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.0858070
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9253.009
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9560006)(10180024)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?SS9UZ25tSEdkblV1bXBJZWZnRlRqQlF5b2dCTU85VXp6VUllVTlWQ0dCazBk?=
+ =?utf-8?B?Y3BJQk9HeW1MS2lvSnFxNTdaMXZFY2h5NnFBaWpldHlIbG5EaWdOU2xwcU4w?=
+ =?utf-8?B?aHVLMVhYN29kVml3b0pTRU55MlNYZ2tjTk9hYUtyTVJEMmFjdForNG5JWWgv?=
+ =?utf-8?B?WWFYOW1QL0dzenBGM21NNEd1MExBVVdRRVZ4WXBNRStuSzhJV3hnMGdyMXhX?=
+ =?utf-8?B?TzRKZjkvMXJSZjNNaVZCUUNNbERkVC8yTnVNZWZSSDhBTHVndzhwK0ZINUZL?=
+ =?utf-8?B?ZTlaaTVlRnJMaEx1ZEVhUmxhdVp2eVJVSXRJWGFKU0JUM3VUbS84TDFLT2pH?=
+ =?utf-8?B?K3owcHpucnRQeVE2QUprcUJ5Zi9EOXpSSDlnL3dYU1Roc2NMK09jbkdmVkNo?=
+ =?utf-8?B?Q2JCcFJsSkFtSG13YnhKUWg5UlQ4RmRqbHQ1SVFrejdpZGlXMVBLSGlIdHdh?=
+ =?utf-8?B?M3ZkSXJXWURSMkRkbVdsK1NXVjEwdzZCRjUxYUNDajd0MWFXeVpWYjV6TWdp?=
+ =?utf-8?B?SVFueDJnSmxKclVibmxqUUw2aWZUNnRzUWhUd2JDYkIzNEhCOXA2WGFjekFB?=
+ =?utf-8?B?NEk0dzE0Szd3WkozWHIzTjBzQUJjUUZMSUgxUWZMZW1wZFVCZmErdUFKTWpT?=
+ =?utf-8?B?dEhOVEVPZnQ3SnZxcVhzUVl6UVQ3Q2k1QUE4ZFhyRkdvSXhxZG5Mc2w1L0Yw?=
+ =?utf-8?B?RlpJUkFjZ1pKWVF1NkJhRW1BQ0pOU1NNelJXRSt3UkxjRVFvWFVyenZ3NVEy?=
+ =?utf-8?B?aHpkK3hEbVpIdVY1VEIwak9QWmE5eE54bHlqTUlLOXZkWXlyT0xPcFd2aXFN?=
+ =?utf-8?B?eFhod3ZTVTQ3MnpBckl1Yy9zdHBqU0YyZFJxekovYlpVeWJ4V2ZxN1M1LzJv?=
+ =?utf-8?B?TmpmVlNadGF4UVU1cWJwb21DeXFIKzNsY0l0bXh5cVRTMTVhU2I5VUFncE9x?=
+ =?utf-8?B?U0xobVFIUW8vSEFUeTZhQ0J0STVPeGpIdXJUUi9CcDZKMCthOUlJWjBQRnMz?=
+ =?utf-8?B?eEZWNG95WnAzTVNzMUZuZWRnRmVDRG42V2kvT09RVW82OFdLbjl6YUFoRDg3?=
+ =?utf-8?B?c0QrTnA3bU5XK3lXWXZUNm15Q25FaCt0UGR6LzBLR0h2TEJqTUc5MjJxOG1G?=
+ =?utf-8?B?MFREN1pDWldrNVZLRXlGamtlaHJGTFhlb09vYnZ4RVdOYXlHT1V4U2NXVmlm?=
+ =?utf-8?B?enVRaHVpL2o5ZW51dG5ERTJBbVYyb1c1d1p1SW5YK1VvZWViUW5mbUlCbVZm?=
+ =?utf-8?B?TGJkaHJsc2dROWMvTldjeVByVDlxM1BYcy8waGNPMlB6ZlB5YzNnWU03RVUy?=
+ =?utf-8?B?TUpHMm1WMElOOU4yS0h5d3cxU2RGdnprODNmV21jUmYzYlNoY1dwbE9KRmxu?=
+ =?utf-8?B?ODk4cExqQXBySXdRQjQ2ejJqbENxc1ZFaWpKUmpMZ0x5MmFXM2Y2Mi9Dd0VF?=
+ =?utf-8?B?cmJ6ZGFDdjhBVlh0WENibTdzV3UxSjFKcTZ6TnRGMUxxWWsxc0x3aUZPS3l2?=
+ =?utf-8?B?TjRQc3NvRFcvaFR0bys5eFBaZEhmU0s0cHU5RHdzd25pbUFlS0JIcSszeTVs?=
+ =?utf-8?B?SDVZZ3k2UnI5bldFdlNFNVFkZDI2cGZVRk4ya1paTmdTZnFtVkIyTXRwRDMr?=
+ =?utf-8?B?T0dFYUg0NDhydjF2V0tEdld3NHJVRW5USXQ2V2s2amtTQ1lITmUrNHN0R0xy?=
+ =?utf-8?B?NlJ3eDc0NThvSGhkajg0U1FhVjVGbjVHOWFkbjNibkZ1cmtCYW1OMmV2ZkNz?=
+ =?utf-8?B?cWFHQWtWcGhyRTljUXdDNnRLMHF2V1dkN24vVmtOVG84ZmlMUWQ3dDFCSE5i?=
+ =?utf-8?B?MHN3UXZpZjJCWExUTGp5RHcyaGFVNlkxd25zcXRWMk9uR2pEU1Y4ejF1RGF0?=
+ =?utf-8?B?Zi9IS2xUTU4yMXVTZ1VEWElZS0lVSWdnYVp0Rmx3d1Zka1lOcXBJdEZMeFgx?=
+ =?utf-8?B?NitHa2tTQlczT0Y4aUovdGRSODZRTU9qa0Q1MVVGNnAvNHlzc2l1V2hiSjI4?=
+ =?utf-8?B?ZVAxTVlGWEQ4UGJIQ3hYY2FCajdyVFlzZTVJbDNUYmkrWGVnZHZGZmR2NFdR?=
+ =?utf-8?B?S1BDamdoTjdiVzg0eVN4VXBWY3ZiR3FtR1ZQTityK0ZvY29UYWhUdmY3V1ZS?=
+ =?utf-8?B?S3Z4cmVNcjBwcXQ0NmJoTnlVcmJ5S2xOazVVbC85K3NYdTJyTVQvOWFLc2Y0?=
+ =?utf-8?B?VVZrbFR6bUt3K3dsejdkZEx0ZFZsZVlGUUR5NHdzTDVLb0Rjd1d0SnQzVFQ2?=
+ =?utf-8?B?RVdjaGgyd3ZGZWtSNXAwUlU0cVVqVEUzQTJoK3NYNUhiY0FLS0xld3hWWWNz?=
+ =?utf-8?B?aXVQYlZ0eUFNZEtnNndyYjIySFJ0cExZbmFzUVlYT094aTNKVVE4c2dvb2Iw?=
+ =?utf-8?B?WXdQZzdobWpvbTBObzFZS0xUZkoxUWNNK3IvUDU5dUZLZUl6ODBjUk44bTBQ?=
+ =?utf-8?B?N3hvTzEvTExVcHdrZ1JkeUIza25LZFBWajlTL2g4SU9Ea0F0anc5U3FzT3Bi?=
+ =?utf-8?B?VXh0c2RpbXpZc1FuQmZKcGVzNlFsMWNBWHhKZit3R1lJQ2hpL0pZQXNLRXlV?=
+ =?utf-8?B?akYxNU5uN1UvK0pVb0M4eHZ2YktTNncxcm5lSHVMcXBaMEZmeWxiQjZ4YlMz?=
+ =?utf-8?B?eStIZmdJRDByeXFsb0NsYnk0Vlk3UzRsRVJmWUQyUEpwU1BKWUkwWldja25Q?=
+ =?utf-8?B?ZnFLSmxFcEl1Sk9RWFNVazFKejlUNmkxUXlTRUFsZThZRSt6L1M4TmJqRjdZ?=
+ =?utf-8?B?NWlzT3lVZytTYmNpUTVRM1VjNVhZVDRTSE5nTVQ2SG5ZRnJTMlo4eDRaRVBC?=
+ =?utf-8?B?QkZLOU5KQmJWbERYQjVRZEdoY3ZlV1d6N0VrY3dnWE1pVjg3NFU3YjhMc1Nw?=
+ =?utf-8?B?VVNwdDRUT3hGR2tGQXBiUVJTTGxmYjVaa0krTDNqTnBWS0Z2SUdnTDk1Q2Ja?=
+ =?utf-8?B?SFR4VlFYbFhpT283SHliSmFWOWd3TWJ2MzdhRDVUb2RHODdUaU9VYTZNT1p4?=
+ =?utf-8?B?OHVnRDlQSmlIUVBXeGI4cnFtTHlzZHVndHJMcTNmWnEwTUdESi90a1RpaFZs?=
+ =?utf-8?B?TmR3YnNwbXdiUmdSVmZpclNLcEgxTmpsZFpXZU0zNFcvWmRVVlFlK014Q3hX?=
+ =?utf-8?B?ZHk1ZnhYempCWjhJRVNNemhaSUxNMXVjbmE1dkRPTGIyZWxpWGdHTVlYbTZQ?=
+ =?utf-8?B?NFNuZ1R4YzR2ckMyMDB0L1FVQllabEZ5bGxqOGhoVHg5M2E1TUZsWHB0QUJH?=
+ =?utf-8?B?VnNvZnNwVXVoNWNqTWhTRzJjdldCNmY5N3VSZHlKdjlFTkhUL09ZRGVmcTZH?=
+ =?utf-8?B?cEdmV2Vhb0hDc2ZFdVEvdUlVQkp5QVQ0dTVudmVEZUZqbVhCc3NhbHRVdkN4?=
+ =?utf-8?B?U1V2bmpWTnFzYTNtSjFhbFkrVVlyRk85SHhNWW1QUHYwNWluaDRhcTJQUUhS?=
+ =?utf-8?B?S2FKZ3F0MHhHWE8vbS9CcnRIbG1nZ3RzRVBKeGVBazkrK3dkU0VBUFJBbDNT?=
+ =?utf-8?B?bzdLVmx5bU9IUEpiYVpveUIyZWxnUmhHNWw2RTJGZXBlQTlNV2g4akY1K0hw?=
+ =?utf-8?B?emNSWG55WXk2dFZjZisyejUzT3c2ZzBKS3VycFZxWGR1czl2QlovRnI4UXRm?=
+ =?utf-8?B?cmRGdVZLWC9FNVJLMG1GSXNYc3ZEWXRRVUxUdlJFbkZrTHBiTVh4Wm5ocE12?=
+ =?utf-8?B?eEFlamJacTJyT1dsZndrMzBReENHM3paNDFocld1UHA1MlRkZ1lkU21kdU9p?=
+ =?utf-8?B?cGxLQTdEM1BrYjVMVDhlM3pBMWQvUnh3cmR4R2dsWTN4M2FocUh0dFlPQjla?=
+ =?utf-8?Q?tOHYUWP0vQ8DUc6LAGG/swm5a+?=
+MIME-Version: 1.0
+
+<!DOCTYPE html><html dir="ltr" lang="en-US"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="x-apple-disable-message-reformatting">
+    <!--[if !mso]>
+<!-->
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <!--<![endif]-->
+    <link href="https://d15k2d11r6t6rl.cloudfront.net/pub/trsn/9swv9lod/7pq/wlb/o9w/favicon.png" rel="shortcut icon" type="image/png">
+    <title>AAA Discounts &amp; Rewards</title>
+    <!--[if (gte mso 9)|(IE)]> <noscript>
+<style type="text/css">
+img{display:block;border:0;border-width:0;margin:0 auto;Padding:0;width:100%;height:auto;float:none;white-space:pre-line;}table{border-collapse:collapse !important;border-spacing:0 !important;}body,table,td,th,h1,h2,h3,h4,h5,p,span,a{font-family:Helvetica,Arial,sans-serif !important;mso-hyphenate:none;}sup{font-size:100% !important;line-height:10px !important;}.article-outlook{width:700px;}.show-outlook{display:block !important;}.mso-px-20{mso-padding-left-alt:20px;
+mso-padding-right-alt:20px;}</style>
+<style type="text/css">
+.cta-outlook{padding:12px 30px;text-align:center;}#cta-is-primary{background-color:#AA0A2F;}#cta-is-secondary{background-color:#FFDD00;}#cta-is-transparent-on-light{background-color:transparent;border:1px solid #AA0A2F;}.cta-outlook a,.cta-outlook a span{border:none !important;border-color:transparent !important;background-color:inherit !important;}</style><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
+</noscript><![endif]-->
+    <style>
+      div[style*="margin:16px 0"] {
+        margin: 0 !important;
+      }
+      html {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .body {
+        margin: 0;
+        padding: 0;
+      }
+      body,
+      table,
+      span,
+      div {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+      table {
+        border-spacing: 0;
+        color: #000;
+      }
+      td {
+        padding: 0;
+      }
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+      [data-outlook-cycle] [x-apple-data-detectors-type="calendar-event"] {
+        color: inherit !important;
+        text-decoration: none !important;
+        -webkit-text-decoration-color: inherit !important;
+      }
+      a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+      }
+      u+.body .gmail-screen {
+        background: #000;
+        mix-blend-mode: screen;
+      }
+      u+.body .gmail-difference {
+        background: #000;
+        mix-blend-mode: difference;
+      }
+      img {
+        background-color: transparent !important;
+      }
+      @font-face {
+        font-family: "DINRoundPro";
+        src: url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Light.woff") format("woff"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Light.otf") format("opentype"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Light.ttf") format("truetype"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Light.eot?#iefix") format("embedded-opentype"),
+          url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Light.svg#DINRoundPro") format("svg");
+        font-display: swap;
+        font-style: normal;
+        font-stretch: normal;
+        font-weight: 300;
+      }
+      @font-face {
+        font-family: "DINRoundPro";
+        src: url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro.woff") format("woff"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro.otf") format("opentype"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro.ttf") format("truetype"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro.eot?#iefix") format("embedded-opentype"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro.svg#DINRoundPro") format("svg");
+        font-display: swap;
+        font-style: normal;
+        font-stretch: normal;
+        font-weight: 400;
+      }
+      @font-face {
+        font-family: "DINRoundPro";
+        src: url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Medi.woff") format("woff"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Medi.otf") format("opentype"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Medi.ttf") format("truetype"),
+          url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Medi.eot?#iefix") format("embedded-opentype"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Medi.svg#DINRoundPro") format("svg");
+        font-display: swap;
+        font-style: normal;
+        font-stretch: normal;
+        font-weight: 500;
+      }
+      @font-face {
+        font-family: "DINRoundPro";
+        src:
+          url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Bold.woff") format("woff"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Bold.otf") format("opentype"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Bold.ttf") format("truetype"),
+          url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Bold.eot?#iefix") format("embedded-opentype"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Bold.svg#DINRoundPro") format("svg");
+        font-display: swap;
+        font-style: normal;
+        font-stretch: normal;
+        font-weight: 700;
+      }
+      @font-face {
+        font-family: "DINRoundPro";
+        src:
+          url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Black.woff") format("woff"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Black.otf") format("opentype"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Black.ttf") format("truetype"),
+          url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Black.eot?#iefix") format("embedded-opentype"), url("https://www.bigbustours.com/static/version0.0.0.176/frontend/BigBus/main/en_GB/fonts/DINRoundPro-Black.svg#DINRoundPro") format("svg");
+        font-display: swap;
+        font-style: normal;
+        font-stretch: normal;
+        font-weight: 900;
+      }
+    </style>
+    <style>
+      .inline-link {
+        text-decoration: none;
+      }
+      @media only screen and (max-width:599px) {
+        .title-xl {
+          font-size: 40px !important;
+          line-height: 1.14 !important;
+        }
+        .footer-links {
+          display: block !important;
+          margin-bottom: 10px;
+        }
+        .footer-link-separator {
+          display: none !important;
+        }
+      }
+    </style>
+    <style>
+      .hero-arrow {
+        display: block !important;
+      }
+      @media screen and (max-width:699px) {
+        .hero-arrow .faux-position {
+          width: 14% !important;
+          margin: 0 !important;
+        }
+        .hero-arrow-desktop {
+          display: none !important;
+        }
+        .hero-arrow-mobile {
+          display: block !important;
+        }
+        .hero-arrow-container {
+          max-width: 600px !important;
+        }
+        .hero-title-container {
+          padding-top: 24px !important;
+          padding-bottom: 24px !important;
+        }
+      }
+      @media screen and (max-width:699px) {
+        .hero-title-container .title-xl {
+          font-size: 42px !important;
+          line-height: 48px !important;
+        }
+      }
+      @media screen and (max-width:499px) {
+        .hero-title-container .title-xl {
+          font-size: 36px !important;
+          line-height: 42px !important;
+        }
+        .hero-title-container {
+          padding-left: 30px !important;
+        }
+      }
+      @media screen and (max-width:449px) {
+        .hero-title-container .title-xl {
+          font-size: 32px !important;
+          line-height: 38px !important;
+        }
+      }
+      @media screen and (max-width:399px) {
+        .hero-title-container {
+          padding-left: 20px !important;
+        }
+        .hero-title-container .title-xl {
+          font-size: 28px !important;
+          line-height: 34px !important;
+        }
+      }
+    </style>
+    <style>
+      @media screen and (max-width:399px) {
+        .top-stops-box {
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+        }
+      }
+    </style>
+    <style>
+      @media screen and (max-width:399px) {
+        .px-20-mobile-399 {
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+        }
+      }
+    </style>
+    <style>
+      @media screen and (min-width:636px) {
+        .explore-top-arrow-desktop,
+        .explore-arrow-spacer {
+          display: block !important;
+        }
+        .explore-top-arrow-fallback {
+          display: none !important;
+        }
+      }
+      @media screen and (max-width:635px) {
+        .explore-arrow-spacer {
+          line-height: 30px !important;
+        }
+      }
+    </style>
+    <style>
+      @media only screen and (max-width:499px) {
+        .cta a {
+          font-size: 16px !important;
+          line-height: 20px !important;
+        }
+        .cta-span {
+          padding: 14px 20px !important;
+        }
+        .cta-span--small-padding {
+          padding-top: 8px !important;
+          padding-bottom: 8px !important;
+        }
+      }
+      div+a:hover {
+        background-color: #ffffff !important;
+      }
+      div+strong+a:hover {
+        background-color: #AA0A2F !important;
+        color: #ffffff !important;
+      }
+      div+strong+a:hover span {
+        color: #ffffff !important;
+      }
+      em+strong+a:hover {
+        background-color: #ffffff !important;
+        color: #AA0A2F !important;
+      }
+      em+strong+a:hover span {
+        color: #AA0A2F !important;
+      }
+      div+em+a:hover {
+        background-color: #740F27 !important;
+        border-color: #740F27 !important;
+        color: #ffffff !important;
+      }
+      div+em+a:hover span {
+        color: #ffffff !important;
+      }
+    </style>
+    <meta content="noindex, nofollow, noarchive" name="robots">
+    <meta content="noindex, nofollow, noarchive" name="googlebot">
+  </head>
+  <body aria-disabled="false" class="body" style="margin: 0px; padding: 0px; min-width: 100%; background-color: rgb(255, 255, 255); overflow-wrap: normal; word-spacing: normal;">
+    <div aria-roledescription="email" dir="ltr" style="width:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#ffffff;">
+      <!--[if !mso]>
+<!-->
+              <div style="max-width:636px;margin:0 auto;">
+                <div class="explore-top-arrow-desktop" style="max-height:0;position:relative;opacity:0.999;text-align:left;mso-hide:all;display:none;">
+                  <div class="faux-position" style="margin-top:0;margin-left:0;display:inline-block;">
+                    <div dir="ltr" style="max-width:123px;margin:0;"> <img alt="" height="auto" src="https://d15k2d11r6t6rl.cloudfront.net/pub/trsn/9swv9lod/am7/heb/kdk/arrow-short-down-right-down.png" style="display:block;border:0;border-width:0;Padding:0;width:100%;height:auto;float:none;white-space:pre-line;margin:0 auto;" width="123"></div>
+                  </div>
+                </div>
+              </div>
+              <!--<![endif]-->
+              <table bgcolor="#ffffff" style="border-spacing:0;border:0;width:100%;Margin:0 auto;background-color:#ffffff;max-width:600px;" width="100%">
+                <tbody>
+                  <tr>
+                    <td align="center" bgcolor="#ffffff" style="padding:0;text-align:center;background-color:#ffffff;">
+                      <div class="explore-arrow-spacer" style="line-height:40px;display:none;">‍</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left" class="explore-top-arrow-fallback" style="text-align:left;padding:0 20px 10px 0;">
+                      <div dir="ltr" style="max-width:155px;margin:0;"> <img alt="" height="auto" src="https://d15k2d11r6t6rl.cloudfront.net/pub/trsn/9swv9lod/kkq/kri/aho/arrow-short-right-down.png" style="display:block;border:0;border-width:0;Padding:0;width:100%;height:auto;float:none;white-space:pre-line;margin:0 auto;" width="155"></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding:0;text-align:center;padding-bottom:20px;">
+                      <div dir="ltr" style="margin:0 auto;max-width:161px;"> <img alt="" height="auto" src="https://uat-portal.caapartnerconnect.ca/RLP-IMG/images/aaa-rewards-eng.png" style="display:block;border:0;border-width:0;Padding:0;width:100%;height:auto;float:none;white-space:pre-line;margin:0 auto;" width="161"></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" class="px-20-mobile-399" style="padding-left:30px;padding-right:30px;text-align:center;padding:0 30px 25px;">
+                      <h2 style="font-family:'DinRoundPro',Helvetica,Arial,sans-serif;font-style:normal;font-weight:500;color:#AA0A2F;margin-bottom:28px;font-size:30px;line-height:34px;margin:0 auto 20px;">Your exclusive reward is still available </h2>
+                      <p style="font-family:'DinRoundPro',Helvetica,Arial,sans-serif;font-style:normal;margin:0;font-weight:400;color:#000001;margin-bottom:0;font-size:24px;line-height:30px;"> Don't let this limited‑time offer pass you by! We’re reaching out one last time because this is your final chance to grab something truly special.</span></p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" class="cta" dir="ltr" style="padding:0;padding-bottom:50px;padding-left:20px;padding-right:20px;text-align:center;">
+                      <div>
+                        <!--[if mso]><table dir="ltr" role="presentation" cellspacing="0" cellpadding="0" border="0" width="auto"
+style="margin:0;width:auto;"><tr><td dir="ltr" id="cta-is-primary" class="cta-outlook"
+style=""><![endif]-->
+                        <!--[if !mso]>
+<!-->
+                        <div style="display:none;">&nbsp;</div> <em style="display:none;">&nbsp;</em>
+<a dir="ltr" href="http://46136.za3za3.co.uk/4aLNLQ557rFpU20ivxguwypch80DCNQOBCEUIAMRCV285239GXIM332343e1" rel="noopener" style="max-width:534px;margin:0 auto;text-align:center;font-size:18px;line-height:22px;font-weight:700;text-transform:uppercase;text-decoration:none;-webkit-text-size-adjust:none;border:2px solid;border-radius:5px;transition:all 0.3s ease-in-out;background-color:#AA0A2F;border-color:#AA0A2F;color:#ffffff;display:inline-block;font-family: 'Verdana', sans-serif;" target="_blank"><span class="cta-span cta-span--small-padding" style="display:block;min-width:150px;border:2px solid transparent;border-radius:5px;padding:14px 20px;transition:all 0.4s ease-in-out;padding-top:8px;padding-bottom:8px;color:#ffffff;">Get It Before It’s Gone</span></a>
+                        <!--[if mso]></td></tr></table><![endif]-->
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" class="mso-px-20" style="padding:0;text-align:center;padding-bottom:50px;">
+              <table background="https://d15k2d11r6t6rl.cloudfront.net/pub/trsn/9swv9lod/wmr/pg8/2bz/bbt-bg-header.jpg" bgcolor="#AA0A2F" style="border-spacing:0;border:0;width:100%;Margin:0 auto;background-color:#AA0A2F;background-position:center;background-repeat:no-repeat;background-size:cover;max-width:600px;background-image:url('https://d15k2d11r6t6rl.cloudfront.net/pub/trsn/9swv9lod/wmr/pg8/2bz/bbt-bg-header.jpg');border-top:4px solid #AE9A64;" width="100%">
+                <tbody>
+                  <tr>
+                    <td align="center" style="text-align:center;padding:40px 30px 25px;">
+                      <div dir="ltr" style="margin:0 auto;max-width:100px;"> <a href="http://15013.za3za3.co.uk/4vNzsn557pOOA20ikxdshhpgd80RYMJTVLQTIKOQKW285239DAIC332343I1" rel="noopener" target="_blank"> <img alt="AAA Discounts &amp; Rewards" height="auto" src="https://www.aaa.com/international/images/home-assets/aaa-orbit.png" style="display:block;border:0;border-width:0;Padding:0;width:100%;height:auto;float:none;white-space:pre-line;color:#FFDD00;margin:0 auto;" width="100"></a></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding:0;text-align:center;padding-left:30px;padding-right:30px;padding-bottom:28px;mso-padding-left-alt:150px;mso-padding-right-alt:150px;">
+                      <table style="border-spacing:0;border:0;width:100%;Margin:0 auto;max-width:280px;" width="100%">
+                        <tbody>
+                          <tr>
+                            <td align="center" style="text-align:center;padding:0 10px;" width="25%">
+                              <div dir="ltr" style="margin:0 auto;max-width:34px;"> <a href="http://72944.za3za3.co.uk/4DVkrY557ybKB20bmalthjrgp80ZZGBHXVGFGJSFKU285239PCXB332343O1" rel="noopener" target="_blank"> <img alt="Chat" height="30" src="https://d15k2d11r6t6rl.cloudfront.net/pub/trsn/9swv9lod/y9m/tdg/mhb/footer-icon-chat.png" style="display:block;border:0;border-width:0;Padding:0;width:100%;height:auto;float:none;white-space:pre-line;font-size:12px;line-height:20px;color:#ffffff;margin:0 auto;margin-bottom:0;" width="34"></a></div>
+                            </td>
+                            <td align="center" style="text-align:center;padding:0 10px;" width="25%">
+                              <div dir="ltr" style="margin:0 auto;max-width:30px;"> <a href="http://02831.za3za3.co.uk/4Bkylr557sTdn20hciqzwoeae80JJJNYLGGKMHGDQH285239UPDD332343P1" rel="noopener" target="_blank"> <img alt="Facebook" height="30" src="https://d15k2d11r6t6rl.cloudfront.net/pub/trsn/9swv9lod/c9f/s9h/wlm/footer-icon-facebook.png" style="display:block;border:0;border-width:0;Padding:0;width:100%;height:auto;float:none;white-space:pre-line;font-size:12px;line-height:20px;color:#ffffff;margin:0 auto;margin-bottom:0;" width="30"></a></div>
+                            </td>
+                            <td align="center" style="text-align:center;padding:0 10px;" width="25%">
+                              <div dir="ltr" style="margin:0 auto;max-width:30px;"> <a href="http://82878.za3za3.co.uk/4JFVPM557KSPa20dffmvonblf80TFUVKRZFULQDVIH285239BIAD332343J1" rel="noopener" target="_blank"> <img alt="Instagram" height="30" src="https://d15k2d11r6t6rl.cloudfront.net/pub/trsn/9swv9lod/kyu/q5g/7bo/footer-icon-instagram.png" style="display:block;border:0;border-width:0;Padding:0;width:100%;height:auto;float:none;white-space:pre-line;font-size:12px;line-height:20px;color:#ffffff;margin:0 auto;margin-bottom:0;" width="30"></a></div>
+                            </td>
+                            <td align="center" style="text-align:center;padding:0 10px;" width="25%">
+                              <div dir="ltr" style="margin:0 auto;max-width:28px;"> <a href="http://59865.za3za3.co.uk/4MPcRO557TGBk20fjdauambho80YKKNQCDAYCFCAQV285239IJWJ332343c1" rel="noopener" target="_blank"> <img alt="TikTok" height="30" src="https://d15k2d11r6t6rl.cloudfront.net/pub/trsn/9swv9lod/qca/rq1/wjp/footer-icon-tiktok.png" style="display:block;border:0;border-width:0;Padding:0;width:100%;height:auto;float:none;white-space:pre-line;font-size:12px;line-height:20px;color:#ffffff;margin:0 auto;margin-bottom:0;" width="28"></a></div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center" style="padding:0;text-align:center;padding-left:30px;padding-right:30px;padding-bottom:40px;">
+                      <p dir="ltr" style="font-style:normal;margin:0;font-weight:400;font-size:14px;line-height:18px;font-family:'Trebuchet MS','Helvetica',Arial,sans-serif;color:#ffffff;text-align:center;margin-bottom:10px;"> <span class="gmail-screen"><span class="gmail-difference"> © 2025 AAA®. <span style="display:inline-block;">All rights reserved.</span></span></span></p>
+                      <p dir="ltr" style="font-style:normal;margin:0;font-weight:400;font-size:14px;line-height:18px;font-family:'Trebuchet MS','Helvetica',Arial,sans-serif;color:#ffffff;text-align:center;margin-bottom:10px;"> <span class="gmail-screen"> <span class="gmail-difference"> <a href="http://99588.za3za3.co.uk/4sJJBz557XctF20vqpajidhum80ZVGEKYCXEKTFTGO285239JUBS332343h1" rel="noopener" style="color:#ffffff;text-decoration:underline;" target="_blank"> <span class="footer-links" style="color:#ffffff;text-decoration:underline;display:inline-block;"> Privacy Notice </span></a> <span class="footer-link-separator"> | </span> <a href="http://53257.za3za3.co.uk/4XAFPK557pScL20ixbqjcshzp80KAFSKTGQQGPMDVI285239VYLQ332343C1" rel="noopener" style="color:#ffffff;text-decoration:underline;" target="_blank"> <span class="footer-links" style="color:#ffffff;text-decoration:underline;display:inline-block;"> Cookie Policy </span></a> <span class="footer-link-separator"> | </span> <a href="http://30020.za3za3.co.uk/4BFWrt557VYxj20tgbifrjimr80RZSBGHUNLVNAXLY285239MYHU332343h1" rel="noopener" style="color:#ffffff;text-decoration:underline;" target="_blank"> <span class="footer-links" style="color:#ffffff;text-decoration:underline;display:inline-block;"> Terms and Conditions </span></a></span></span></p>
+                      <p dir="ltr" style="font-style:normal;margin:0;font-weight:400;font-size:14px;line-height:18px;font-family:'Trebuchet MS','Helvetica',Arial,sans-serif;color:#ffffff;text-align:center;"> <span class="gmail-screen"> <span class="gmail-difference"> If you no longer wish to receive emails from us, please&nbsp;<a data-msys-unsubscribe="1" href="http://90034.za3za3.co.uk/5Rktyd557gljm20dlakkswnxq80MYTAIZHGYZTBYOJ285239FZOK332343f1" rel="noopener" style="text-decoration:underline;color:#ffffff;" target="_blank"><span style="text-decoration:underline;color:#ffffff;">unsubscribe</span></a>. </span></span></p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!--[if mso]></td></tr></table><![endif]-->
+    </div>
+    <!-- Open Tracking Pixel -->
+    <img alt="" src="http://02303.za3za3.co.uk/track/3nmACb557aQUi20wmnguwpydu80KEOMSTGLVDYTXLQ285239ANOK332343O1" style="display: none; width: 1px; height: 1px;">
+  </body>
+</html>
