@@ -1,0 +1,370 @@
+Received: from MW6PR10MB7614.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Fri, 21 Nov 2025 18:29:41
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=LvlR65RNeR9bV/k8NKZ6C6U1nu16/r98pgyZKfqIiX2CqaTllWByXeDEJWhxU7N1wtlx8t2igR3nlMosyXrDfEa6q139Fjcb72lAyaytK5aUyRA6wwBUyNSdCvEiaR5/WGAu7m51MWv/DhYpwZPACYF9RS0OWH2ha5aaLUz2IlgNYLN9pRCgRheSFNA3JFq8ivYLQv0pCWE8ESsQqigiAhv/jqBcMh6EEQsgolIPbjQ0Kruc6nKDr+3ApFlYXTsNvXFlzkW7pFYcuAcJemq6W4UZjAHQZ5u79E6tZ/69hHoi/cgFKesODL7gOf+5/hXGsB6+DlpV3ULl9rK9Qk66AQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DzVpSjanmA5eZGPc3hlaI4HfCXSpmwdrnthhtncYgpU=;
+ b=gUq9VoLmyex6hZlWVoxqTyrEju3xWC6oUklRePpjxxH29t+4DjxUZyjM2P5LYNcxeoqqyulPg/BF5qvthyT5dsOsDYX4rqsb23CcRdq+W9na5fjZf2MyY7pG0jJQwWFI0qWjq9S6inZWi2YkqxgJm0QJOINM4aG1pXL3OQVQlvQhQzNYnHtEk8/mjzHc+74bpNUvarrXHQis2TL5VhWHtSCqt9ZG8IPiKHGzhUrVHZAvtASGz19X1UMRXxPNeRJanc5rPm06C7a3Z9LsJS/mEHlT5CGo1JdHxrcb0s0rSZduK+scdhxyfhb7RMOsGI9GcpP48dJBvIaV75NsAnU9SA==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.102.194.42) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=alb19735233.onmicrosoft.com; dmarc=none action=none
+ header.from=uhcrewards-gwi.com; dkim=none (message not signed); arc=fail (48)
+Received: from SN1PR12CA0069.namprd12.prod.outlook.com (2603:10b6:802:20::40)
+ by MW6PR10MB7614.namprd10.prod.outlook.com (2603:10b6:303:242::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.12; Fri, 21 Nov
+ 2025 18:29:40 +0000
+Received: from SA2PEPF00003AE9.namprd02.prod.outlook.com
+ (2603:10b6:802:20:cafe::8d) by SN1PR12CA0069.outlook.office365.com
+ (2603:10b6:802:20::40) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.12 via Frontend Transport; Fri,
+ 21 Nov 2025 18:29:39 +0000
+Authentication-Results: spf=pass (sender IP is 52.102.194.42)
+ smtp.mailfrom=alb19735233.onmicrosoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none
+ header.from=uhcrewards-gwi.com;compauth=fail reason=001
+Received-SPF: Pass (protection.outlook.com: domain of
+ alb19735233.onmicrosoft.com designates 52.102.194.42 as permitted sender)
+ receiver=protection.outlook.com; client-ip=52.102.194.42;
+ helo=OS8PR02CU002.outbound.protection.outlook.com; pr=C
+Received: from OS8PR02CU002.outbound.protection.outlook.com (52.102.194.42) by
+ SA2PEPF00003AE9.mail.protection.outlook.com (10.167.248.9) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.9
+ via Frontend Transport; Fri, 21 Nov 2025 18:29:39 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:94BC1754ED021C50F014810E261B92886F90DD6A518B977E0F8AB59024D59060;UpperCasedChecksum:7F287A80104FB0EF98C6A23A3DCEBF589DC71099F83A23F2DC719D86103A8654;SizeAsReceived:8559;Count:32
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FVTa5rd8v5tImqGmCS60zNfuTZAiPDEEg/bqMKznvfanzDKhwkJXA6xT4KWKaanQ38DUt44nwjQVYq4EYJF8yigm9BrZt1xN7j8FGcD6qeFQHHKqwSMNpEPo/T3UUCO5yoH6F2iG8M5sNICm8/Gk4fIjGHpPXs1AJPgU9U1M6AM6qRQNUBZE2HJDIsBmJfE4tab1kDevOXqdw4zg1CcWzhMepGz3riMIBkDql34gZgk0xM42mT6EBCBy7XK/bv4iq7gzMqMwAsK80tsCyiSa2Mpw3NvAouBOpe8JKpLHscZPZT4aXWxspNvOcDh8VTF8qrverBz73i2cpMCofVTcAA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DzVpSjanmA5eZGPc3hlaI4HfCXSpmwdrnthhtncYgpU=;
+ b=FW18JGEaHpHc/NWA1Ul3WpNm4J8On7lAS1yJ4FLcYmxmd7rKwzbJpk84uXQj9prrTxsuF1Php7EkIq7IcEQwbG8pXQy/qOj40jRiaNc9rDTVJHqK3+zJb/0TJBYYrPTj2qEY7ViT09OEgW9DMQelRW2GYEr7edwla9F/pYm0RznX/h2hwxUYvSUBdqahvLCZFLIpVzFi3Val3UVHoxXTlf2933//UEybAeHlxrfTRqaK/j/Xf9EyMM90MSQFjYXQJQby6xjrHEY3pwmIPzpUbAqElkXCqW70ceejo8rhkX4cG0PZNH4uz1fAsDoDBLf94aijJBnQh2W9v1JJr//Sjg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 64.120.94.223) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=alb19735233.onmicrosoft.com; dmarc=none action=none
+ header.from=uhcrewards-gwi.com; dkim=none (message not signed); arc=none (0)
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.120.94.223)
+ smtp.mailfrom=alb19735233.onmicrosoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=uhcrewards-gwi.com;
+To: <phishing@pot>
+Date: Fri, 21 Nov 2025 18:29:38 +0000
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Subject: A Special Gift Just for You – Thank You, UnitedHealthcare Member 9556901
+From: "United Healthcare" <loyalty@uhcrewards-gwi.com>
+Content-Length: 185870
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Message-ID: <a0c95b91-521b-4b0b-bbc7-e362391e6fc3@SG2PEPF000B66C9.apcprd03.prod.outlook.com>
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: SG2PEPF000B66C9:EE_|TYZPR03MB6528:EE_|SA2PEPF00003AE9:EE_|MW6PR10MB7614:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: 01e11925-f0ca-422f-5f68-08de292beefd
+X-MS-Exchange-SenderADCheck: 2
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|39440400008;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?M1RzQWJsbHVZdEVYSldBdDVSL0JNOC82UTgxOUFPeHAxT3BSWmJQbXRMQW5F?=
+ =?utf-8?B?dVM5OWx0SXBOTEJIYjZrN0RRZEwwclZKU2pVNWVER05UTmdnUU15cURuN0Mv?=
+ =?utf-8?B?MnNwTFVadzlVZFg4b3dFK3BsOENsdU9ORzZscE5yczRnZXhsSTZjbFJIUnV3?=
+ =?utf-8?B?cXJiWFc3T25ha0JMRlJNRnEzcS9wNUU2a0M4OVdIVmR6cHlYenJPOVFqS3hS?=
+ =?utf-8?B?eVlqSTcxckY4b09SVG5hUW43enJpRkJEWFpmUytwMnAvajFTcEx6dS9odmZB?=
+ =?utf-8?B?VVhlNTZUS1pJVGtUM0hLWkhodGsyVEw3S0h1Y3FzQi91MUFWMGlONlE5WjZl?=
+ =?utf-8?B?eHlFUjY4SzdhZnAzVFUreXdiRm9WZkY1SFJDdjFlNDJQWUlUSkkvSGNPK0ZS?=
+ =?utf-8?B?VjU1WGhXWGpOZ1RZelBOME1PRy9DY0UzYW9pNnArM3FqQlhob1BLZHNxR29I?=
+ =?utf-8?B?VXdMNmQvVzc3UFBLQmM4OVl4VUhtVzQxeXJEMXhoalhqYUUxSkduanJkZHlv?=
+ =?utf-8?B?dWNicEM5WHFwaHBVZmtwc1RHS2trMjdSMCtsOXFqM2J0djRpcmdKdVFIL1g4?=
+ =?utf-8?B?NEwwaldFN2RJTGFraWk2MXdrcE5HYmxuTVg5cExBdU5mbGtKaHA1cDlsUm9N?=
+ =?utf-8?B?WnBpZzkrM2taT1FONGlxVDhQWUdpa3RpQWhJVzFhWitzUFRRWm1QV0l4K1A3?=
+ =?utf-8?B?NU5uTDR4b0FQR2cwaStpSnFKUHVYWVhnS3BsVHNpQ2FxendIYStQb1c3Zlox?=
+ =?utf-8?B?M0hOdGlJQng4NFB1WDM4M2Y5S3phdXN4Snl4SVNNcUU1Y1JROHg4cm44bTRU?=
+ =?utf-8?B?VGVwbUJQZG44OEt1U1Bud09ZRFFuczY3dEJUMGt3VWliYnBnRHZxaWZVTGdn?=
+ =?utf-8?B?RWsya01DYThpOWRyVlZLRSt0UWhhSDhpUEpqc0J0c0FuVXpCRzlLMklwQ29V?=
+ =?utf-8?B?T21maCt1OWxYRExvZm5wenV0VVlkNFBwWWkxYml5ZUd3VFZvYnd4S21yVm5o?=
+ =?utf-8?B?QXRQZnhTZVZuWHVpVGFPSWdOcWljd0NFaXFTM2tDRkRod3htZ05QckUzV1Ji?=
+ =?utf-8?B?U3Nxc0ZuWHVwa0lGYXVKNGdFcktsc2VnWXgvQkc4NEhiSSt2cUtQZUNTWFE4?=
+ =?utf-8?B?bjBQTDNva1ZEK3hta2p2L0V2Q2tKdTl0ekZRVWxpdUhzMkhaa1N6SXByRnpj?=
+ =?utf-8?B?SXhvSEtmZzdvME9GYlcxUFhzSjF4UEZGa3dSbytaZ0dPdG5zTGh5b0x2VXNF?=
+ =?utf-8?B?Q2hUWU5rRkEvN2NVMkl3cUJob2UrTzczWEJGTzdiTTNlRUUxQ292M3dhUmtW?=
+ =?utf-8?B?SlhDYmR4SkhNTEdSamZvV0dxV0cxQjVqOFc5Zm42WkVrS1lhc3pBeHA5K3lO?=
+ =?utf-8?B?SlBZOG1Xd3FHSkFtcmNSSFFVb0gyaEZlME1mdWNPbnRqdnBQbG54cVc4R0JH?=
+ =?utf-8?B?L05tbFZEbjR5d2NFYXltUHFtSHFUcE92YTNUWjVJSkoxcHEyanRTdkZ4c1J1?=
+ =?utf-8?B?cmthVXlZS2dkNXgwWS8rMzZMaDliaUczR2Z1OWt2aSszd1U5dGNXUGorREFU?=
+ =?utf-8?B?RHRVZlhaSmZaZzBCUWMrcGRzUUQ3NEc3M1pBK0tzR2RTZVRDR2dwK1hjUjc4?=
+ =?utf-8?B?cFdEUnB6aUtxVWpsM3lNZ2tQQkNCYjVUUlRSRkFrMVNHME4rb05sZ2VEUCs2?=
+ =?utf-8?B?WktmNFVGNkNLN3dIQ0Fhd2EyQUtKTU5MWHRTS1VXRGZhMk9Fa25TdDlQcVgx?=
+ =?utf-8?B?UGx2SEJUQVNVd3pNWkJjN3BBN3hreDVmdVY1VHJDQm5kdXR2YjlIWjJVU0xH?=
+ =?utf-8?B?dW4zaDNpeEVkZEo4dXZjWkR4VFM3S0JQRXk0c09WcGdFbUIvNjNFcDVUUElM?=
+ =?utf-8?B?SUljZVZDa08vWERXNWhXdFdDWHlrNUVlUG1aQTdtdnJYTjgvTkZHZjhnYXNa?=
+ =?utf-8?B?M3k5RUVoVWdRaGJrdnJhRUM0cm5ueHpmTFJPQlFDcklQQk5KTUo0aEFZTjI5?=
+ =?utf-8?B?RlY1Q2ZPcGN6VWRwaS95Sm1yd2tzdWdRVGZUaW5YanhQempydklvdWF0eE5o?=
+ =?utf-8?B?K3NjdmVLMGF3dTl5VkNqL0RIdUE2enBCcDdwMTZRU29wVUxlcmg0RWRYZXdh?=
+ =?utf-8?B?bWx4b0k3ZXZtV0xyNzRsaW5yQ3RHanV4SU9YQmo0MmsxYi92SXRmMUMrT1pL?=
+ =?utf-8?B?UWoyajR2MGcvMEVBdzk0K3hrUUlhMzZ5RzhvcnJ4Y0t4NEZXUjBFU2kvODF4?=
+ =?utf-8?B?MW1PT2NTOXJLSmxDNkU3MVFBWDVyZEp6Qkd3aWNKSWl0RmF1eWJGckwweEtl?=
+ =?utf-8?B?S3kyazloRi8yaE5xSlBDWGZ4ZkZURmtvaVI5dHJWaCtNV2xYQ3haYkVSUHRM?=
+ =?utf-8?B?VWRCdTJsS0hHdXMxY0wyVXBzQ0grOVJaclhZeWE0QmIrOTdoSXZULzE3RnV0?=
+ =?utf-8?B?STZXK3ZDaHBGNkVWZS8yWVJmK1owZEkrUHUvOE1Uc1plWGdyTWZpbjdRMXNL?=
+ =?utf-8?B?emJlUEVhWDJBbXp4UzFZOThjalBpTnNJUXJBeXlxcndwUnAzbEtNQ1hhVVhF?=
+ =?utf-8?B?UU51dGNMaWc5cVNDdmhNeGc1VzdPUDlRRkQrbklyekFoamtSaHBpWWNtWFlG?=
+ =?utf-8?B?MmxRWk5ocnA0dnJ0TEpkUEJOdEs3cUhuTTRhOVVCUk5XR2lQdThIejZ2bVNU?=
+ =?utf-8?B?QmlJSFlMcUdxWXlTemRTQ0QwZXQ5V2d2Q0Y1RW1hUFhSYzdiUHhMODdLWXpW?=
+ =?utf-8?B?SisvSHVIOG5zRVJNQkhBQ01GZHVheXNpZFdPWkhRSXZ4N2xadmRkQW9JemZG?=
+ =?utf-8?B?aXk4dEZSRDRQWHhkdklHQnVGeUgwSmRlZUQvck9HTGV1Mys0eXpIcGFVVEgw?=
+ =?utf-8?B?RUVvYTJRbDJBWmk5UTc2VDV5Y0cvZmd5dHQrUnFPeXNITXdubzZBRUU1YVNQ?=
+ =?utf-8?B?UVRVVllndzdCWGk2dy82ODRwVVBVK0tIM2U2N3RzSnlzVDYyaXR6MmFpeXJE?=
+ =?utf-8?B?NksxL1NDdmdMMVFxV1FoWFRTWUJVVjY5SW05Y2VVTlBQRVJiVzVyLzg4ZUsz?=
+ =?utf-8?B?NnZBNFhNc3laQXBhd2QybVRuNnV4aWU3RVFaWkN6VjRtMHRwOEtkMzJoVXU3?=
+ =?utf-8?B?amxNTW9JN1ZTQkN0MldxUlZtY2s5K1N6ZG9nUHhyVU9nbHBCY3lvK0FQa2E5?=
+ =?utf-8?B?YzR0VGYwNmVPVC9hMFE4dXN4QVJZazVJaGFwMDBoSUNMU3VJQzc4SlVGbjg1?=
+ =?utf-8?B?MDRzRTVrWTBsZDFORXhVREJHV3hISm9ZTTkvK1hhNVY0L0dja01PbUcxa0M1?=
+ =?utf-8?B?bWNIUEhneTlDMlp4NWdVNXRYUHplUzNER1ozS2dNaE5vMUFDWVBVOGI1R09T?=
+ =?utf-8?B?M2I0Y0wzZTR4eWpTV0lqc2IvZ3lEVkE1RkNyeGh2eE9ObFZ2ZmtkUWNEVEtQ?=
+ =?utf-8?B?TTErbnlWQUdseFduVEtNSWxwdVpZRUZrT2p3QkJxQ0ozWElNQkJWNlRoUDZJ?=
+ =?utf-8?B?dzV0ODc4WFJQR1JxWllzc3FhM3VHd1dCcUpGb0VyQVdNQkZuRjk1QnJUVU0r?=
+ =?utf-8?B?SDY1czhuVTVOZ2NvZmtuZmpOazFLdjlzczJ4VGxwU1VNaGJTT0FBd1pXTWV2?=
+ =?utf-8?B?WEx5cTlvYkpqcDgrVlk5RzUxbHcwMWRhdUFEMitqR1ljN0dtTEtLS2ZBRmpT?=
+ =?utf-8?B?QytHcGRBNUxoU0pkeDVseHMxdjJLTDNYY3B0eXFGV1prQ2tJTDZpV1BFWFRp?=
+ =?utf-8?B?LzdNVXFUQjlmOFZTU1hDRWZkM1dYc0RPWVRSVUVjVjd4M0tLRlRDa1h2NTJO?=
+ =?utf-8?B?TXprd1BiVTYyU081YXQwTFIwdS9KWmE2ZzN6WktBL1dxcDk3NVd2ZlpPbXlj?=
+ =?utf-8?B?UmM1WHRCbDhWMzZZT3dVS0xnVS84ZXBnRmNqMTRpdFR1c0hMWTVOZHVpa2li?=
+ =?utf-8?B?aGhuT0FJQVdVVHNCY2g3ZHJ0aFY5KzZ2M0NvN205V3RDMy9nWmxDQzhHWnRO?=
+ =?utf-8?B?NWJEaXBXc3oxbzBoaEFEbXloVy9Rb2NGajBYVkZ0NjRXcGxIVjJKRUZ2N3Nv?=
+ =?utf-8?B?UDNNd0ZBMFB2Ly9JL1NQQmZqcUttNGlVWGV1RHFIRkJWeXdFQVFZVjQ1dHpK?=
+ =?utf-8?B?WnIwWG5pRm9QbkZuYWV4NTlraUdZV21zR2h5WGtaclNCUGoyY2dLMXUrYTVi?=
+ =?utf-8?B?cW9EWGJXQUtyZThkaTl4NE1HTnBHOE1LaHNFL0pxell6Ti9MVXAzMjJkeVZF?=
+ =?utf-8?Q?9mXURyl7XQ9GYPdverwJlEcKODs9Vuy?=
+X-Forefront-Antispam-Report-Untrusted: CIP:64.120.94.223;CTRY:SG;LANG:en;SCL:8;SRV:;IPV:CAL;SFV:SPM;H:alb19735233.onmicrosoft.com;PTR:InfoDomainNonexistent;CAT:OSPM;SFS:(13230040)(39440400008);DIR:OUT;SFP:1501;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR03MB6528
+X-IncomingHeaderCount: 32
+Return-Path: xy5xldr8cr@alb19735233.onmicrosoft.com
+X-MS-Exchange-Organization-ExpirationStartTime: 21 Nov 2025 18:29:40.3104
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 01e11925-f0ca-422f-5f68-08de292beefd
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: SA2PEPF00003AE9.namprd02.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: SA2PEPF00003AE9.namprd02.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: SA2PEPF00003AE9.namprd02.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 11/21/2025 6:26:10 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: fe8ea82c-2edc-4324-feb6-08de292bedcc
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.102.194.42
+X-SID-PRA: LOYALTY@UHCREWARDS-GWI.COM
+X-SID-Result: NONE
+X-MS-Exchange-Organization-SCL: 8
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|9400799040|2700799029|20103052909095|970799057|58200799018|47200799021|18030799003|41010799003|39010799012|32080799003|3025599003|461199028|46080799006|50300799015|67000799015|13020799006|70000799015|10300799035|63100799012|51300799021|87000799018|18040799003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2025 18:29:39.9933
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 01e11925-f0ca-422f-5f68-08de292beefd
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=6ebf1eaf-949c-48d4-a2c4-8e10ce698b4f;Ip=[64.120.94.223];Helo=[alb19735233.onmicrosoft.com]
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00003AE9.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR10MB7614
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.6670188
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9343.011
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9525003)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?eUtWeThTZUdGQ3hXQ0ZzdUc0R2hZbXZ3VGVTK2dTNnQ4alFKUTFlWUk2dFZV?=
+ =?utf-8?B?OCtsN1NtYkNGeEZlbjYvYUJ3ajVGRTlXcEFJVXlpdU9XenhYRmVqTUNlaGpS?=
+ =?utf-8?B?d3g0elZ1VW5nR3pGcnhJUW5TSWF2RmRtMEt1N3p4VitjV0k2dVVKeXFZNUpq?=
+ =?utf-8?B?MjFlblBiSnpPOEY4dloyRnBreTFnK0ZGSXR5eVlEZXNWd0xTeDd4QWs0V2th?=
+ =?utf-8?B?OGk5VW83YXI5RTVBT2JPekNuQ1BlSEg1YVd0Uko2emF4ZmFMSDRpdWVWb2V5?=
+ =?utf-8?B?bkljeHg3d2dWaWdiVm51cUpyV1RaMEd6YUs3MlFVRS92aG84a0w5TTBjR2Za?=
+ =?utf-8?B?QzZrT2JOQm1iNnQvWjNlUzZRWEYzYzl4MnllZEt4eWxweHN0RDdISzVmS2ht?=
+ =?utf-8?B?ZDdQWUh5VlY4UWw1YmdWcXdlaDFoUnlETDFMOWZDTTVRQ2ZkZHB4b1NndkZ0?=
+ =?utf-8?B?c3ZnRUNkZENHLzVmaTVyOWNVZFdoUHVQMmdOZkYzMThJSEZyaHVNUG42L3Uv?=
+ =?utf-8?B?OGRiWWg3WXlnVmFGeVJqYTlxM250YW9vbGZLczEwQXpGVS9OSzNBVVZSeHhL?=
+ =?utf-8?B?N1N5RXA2OU82M1RiWUptZVhDZWg1NjIvVmpBcFo2VGtCejF5eXV0d3lyZUtx?=
+ =?utf-8?B?YXhkOEFXRFFPWVFXVWtlN2RwWklhSFNwWmZkQnVYMmo5U2hBZVRobC9sOGw1?=
+ =?utf-8?B?WkZJMUJhZ0YrYWVMUmNjOS9mbXBXQ0hkTW14TUlOQWowSGw3TXhMM3AwdEli?=
+ =?utf-8?B?d3diR1pDdjc3SVlvbzJVcm1TSkQ3SDd6SUQ4bFR6N3ZwUC93OWEvNEFUWHIw?=
+ =?utf-8?B?akViWk9lSmdneHJTQTAwV0lTSEQzcW0zSGVXSHprQUViUjFScmQ5OUJtN3Fo?=
+ =?utf-8?B?MGtJdGZUb1Q3b1Jlei95M3pEMlZRM0x4aVhSUVgwMUsva1lXajZFWkJoRkNN?=
+ =?utf-8?B?SC8zclRiN0RqUzUyazBNYU1FaGc2K3NHbjZzRVRzdjNiTVlGanhxY0ZHdjg3?=
+ =?utf-8?B?bXArUGN1VkgvNzIyaTA5RTJ5K2tvdVVVa1lSbVFHaFNOMGlJbFlISmpIYmlr?=
+ =?utf-8?B?UE8vMksyUDIxVE1ZQjN5a2N1S1RHamNnK3JEWnp1QTI5L1VMZG9XbUJYVlQr?=
+ =?utf-8?B?ZitEOUdBRkt5YWJMenBySzI5ZEtuVGVjOEs1S05SYm1DMnE5dHFTL04zeVdM?=
+ =?utf-8?B?VTFhYS9LcW16dlJvRkRVbktEUFdOSEorSGpsdk1xbWRSd25tditOQThKRGlZ?=
+ =?utf-8?B?NzBHZm9EZCtEYzZTM1NtQThQUFptbnVtelFWd3M4NFNKVytJWHFTY01tZ25z?=
+ =?utf-8?B?ZlhoZnBBNmg3QnJSQWowQUVlZkdBNzlEZUluWjQxTTcvM3dCT0VxS0NZbnhk?=
+ =?utf-8?B?VHB3eDdhemZtU2lPTTdMNnJkSnhnOWZpRDNmZ0IyMGd1eXN1bndXcmhRYmFP?=
+ =?utf-8?B?SXBocW4zOWVrTk5Bb2UwRjNzbFJubEhMSXpoR2F5Q3kvTTM3T0dacGFiZXJG?=
+ =?utf-8?B?L2UyOEcraGYyVElZZzVKR2tZekZGY3hhaXUreWR6V1lTTGszT0JESWw0a0s1?=
+ =?utf-8?B?UlJmS20zZUcxKzF0R2JtMlprVzFISFVlMFB6VW5wRlVpQVU5ejN4ellNQjVv?=
+ =?utf-8?B?cGFieEVPRUZjWWtFRmU2Rzc5ckJ1NWhNRE9lUEZFdWRZUEpnTGxhOSswNEpy?=
+ =?utf-8?B?SEExWCtHdmNqKzZDSDRjLzVoWmI0V3RKdFMxdmtzR09DZTE1dXh0S3FDb1I1?=
+ =?utf-8?B?QkRMWFFQYWNWUWpxZm5HNUlMYk45Sk1ka1F3RjllVENUL2dMUU5ZRytuRmp2?=
+ =?utf-8?B?SjNmeXhEV01aUHBYMjdZN0hOdTc4MXFTZHRKWGVLUEJDY1drTXoxYy9oLzZ3?=
+ =?utf-8?B?NHl2WldQTlRCUk9vanNaZVBmcDl4Ry9MaG5KOTNlcDd3RWZmK0UzVVVVZ2FG?=
+ =?utf-8?B?MUpmMzE2UDNWR2RwdkU1VXRRRGR1U2FaUDN2VTlDdElxWnIrdnU0K1NTdGpq?=
+ =?utf-8?B?SmdJRjJoak1ITEtjdFJlc3NYQ2hGb2p2QVN4SUxOY1RlWklSM0JTRHJUc0ZX?=
+ =?utf-8?B?djN1SWs0OFZnYjFERGdXSzZJTk9Ja2tqd2svUmJreElsb1pFZ1VRbHRrK0U1?=
+ =?utf-8?B?cGdOVVQ2Q3RudU5IR0cvZDZPY2FwbUZFS3ZKUmcwcHZDSSs5ZzVYQkdJTHdX?=
+ =?utf-8?B?OGg5a1poYitOODJLcU5aKzBWYWRQZ2YzcHo3OE1wSUpXYkhWdmQ5R2dQd0Fz?=
+ =?utf-8?B?S1NIWUxsTFdXUEhjL3IrQWsyVHRzVEtlT2s5RllRbVZjTnNYaVV6Zm0rWVFN?=
+ =?utf-8?B?K3gwalZCaDlhbU1DR3ZwYms0b1pCRHRZZjBpRldibjdUeWgwOU12MjNreHll?=
+ =?utf-8?B?QWNGMExXR2VUcERsbTNnWTM0T1hsc01MbDdxSVFIMzlSQS9qNVpQejVQQlV0?=
+ =?utf-8?B?Z2NKSmtBK0ZUSHphQXJOV1ArTkFkU1paQllCcDNnNmcvSXJ6MytaWlJlMXda?=
+ =?utf-8?B?eTQ0NkgzK0xrcVlWalNSK21WUjRLYVczaHNlbGFGUmdreStMdk9ZK2srUnY3?=
+ =?utf-8?B?MHgyZTRaaUZZSGZDZVBjeFdtanlPN2gydFhQRTJOQkFHZUNTZWdNQTBkcjc1?=
+ =?utf-8?B?Ti9EaVF6Sm1UWEZlUld5Zm1hQmRZRnVEamtaZklVNGtKb3VtQUwwKzl5ZGF0?=
+ =?utf-8?B?UGlMV20wR3l1bm1mY2V3aG8zQkhEaGEyMWJ4TkFzNmwrQVdkSHV1RktUUVNZ?=
+ =?utf-8?B?QTl5eEdJZlRhaEwxQ3RNVVJIMHgzYkpmZjVGdllvcDBBd1p2NFFuRFI5ZUFS?=
+ =?utf-8?B?cHFtUDFNdmpKMkFlbzhob1VxUVhEV2hjbTd4NTdzRlFSTUZsZ2xtczZxaURz?=
+ =?utf-8?B?RU9NLzJaMjgvSURqYm0rU1F6Rm0vVmVKbHYvRlFHMjM1Qi90bHhMbXlrcUcx?=
+ =?utf-8?B?c0w0cWVUSmY3RXFJaDBxT1hEZEpnZERUcDkvRTRuRldSNFlQb0Uwa0JKWUI1?=
+ =?utf-8?B?WGk5TVVXY0RwV2dWd043OG43SGd4cFZ4TG53cDlHZWNNMnRFQkQzMm1IQ3pP?=
+ =?utf-8?B?N2hURGdpOHdaUUJZQXNwV3VwUUt4ZlBuNUl6bTBIdE41K05BUkRWTjFmMGJE?=
+ =?utf-8?B?N210MHhFODVybDRNUnhLNDlVZURNS0ZrZ1ZWL2ZMWXhjbmd2dVNqcWdhZ2cx?=
+ =?utf-8?B?MFRlTEFUMVJQdTNFcGlpODB1QnZkc2ZkdVNKSGZ1dHcvRVBZWEcrajV6K2l0?=
+ =?utf-8?B?a2dKejd2OUJ2cjdzUkg4TU4zbGwzYWYwRlJSMzZIOVRBREFHRkdGZnRzMGhv?=
+ =?utf-8?B?dlgyUjJBOTFzaUlXbUZKSFZ0ZTJ3YjQvdUtxMDJLN090L3k3U0RwcHVFaXc0?=
+ =?utf-8?B?Z1UrZnBrdGpaeW9KdlcrRm5aMHV6blVlK05FcG80RG1rMlJtaisrZTdIazRP?=
+ =?utf-8?B?UnRnaVlORFRzN1A3dkZ3cEVDTUtEblFoN3ZXc1R1UjJuMXNoUnBaL2hSQWxu?=
+ =?utf-8?B?MnBBVDU3U3pHbVRTOGVuWGtVSDZsdUsxMmptZjJOVzNkQllMMG4yQkU1Ni9R?=
+ =?utf-8?B?RzdqS1gxMWRBbkduc0xWTGxYUENvVk5yVTFZbzFMaEZ5Mm9GZUpvWFZKQ002?=
+ =?utf-8?B?ZnFXajhhdG1vU0ticENLZzVkRVFDd0lDS3pJSTM0Q0ZremZXZUJ4Y3NzVzFm?=
+ =?utf-8?B?Y1dYdTBsRWtmSDlRUWZ1VjFBbnhZWUNDZHBWeHQ3ekFoTlNkRWVmaXJKb3BH?=
+ =?utf-8?B?cTRHSmNodGZRei9oeW5LR2xKVjhpMmxaNzVkd2NOVnFmVSt4Z1E4QXpZYzdY?=
+ =?utf-8?B?SGpwYUZFWXJCazRLeEFXb2xFSzhjRVQ1bGJnV0Q3NVVYd1BNbG9rc3dKYkZs?=
+ =?utf-8?B?OUJmQkhibk5GYmZQSHpFWjNHUmY1Mkg0T0JwMjEybHltRVAraS8xUCtiOXpr?=
+ =?utf-8?B?UmhBc2E4QytuTTFiSSt4RzFtWUV0RkRZQkorRDlnYTAyNEUxUnJ5Z1ByMkdH?=
+ =?utf-8?B?SWVZTmozUGh2RnF6Q29hN3NxMGlKQkpNc1p5R3Vya0VWVXhvRXdtaWZLZ3VN?=
+ =?utf-8?B?Q2dpZEZxSmo0VGxnNTZRK0RJdW1oUHpzY1Bvc3JEL05OT0IvOTZoZDhraGtW?=
+ =?utf-8?B?T29zMzZydFQyZlNVM2ltbDBOL21tUmF2N20zci9URkt6d1BWRWwveU1FVGdU?=
+ =?utf-8?B?NnZ3SkhaeTFVcjArbTR2K1haTG5zNFZ0cmNDWjVkLzBuRDNzcWFoVDFTRjRl?=
+ =?utf-8?B?T1o3V1NuajdDSTJxc1Zia0dMR3BKZzVqRm1JdDJxWkMzSzBlS2hDRjdMdERt?=
+ =?utf-8?B?bDlJWHA3czhHdnVjMDBEUmUxSFVGczhGeHhFY01wTjd6ZUpxVHBDVHhVT1kx?=
+ =?utf-8?B?S05CZUN4UHczWi9zRitPdXFQRlZXdllRR3dOYzJmM2tLMERzRUpEeERYaS94?=
+ =?utf-8?B?UDVwUmIxM2hsZ3Z4c08wNnBxdEdIMjEyWThUTDlUbitYQnYzV0hUQjZUcFpN?=
+ =?utf-8?B?dEZ3QThzUXQ0Mm5pZi9EMkpBYUMyZHdiUnJXRWhFU0dGL2pBSk4vYlZ1ZDMr?=
+ =?utf-8?B?OXd4YzkrdXBhUU9jODI5eWQ3eXozdm0rYXhBTkp6dHJjUmtSbitNNDIvTGhz?=
+ =?utf-8?B?UEJGT1hQN0l0VlMwTU5GL1FPNjZNOUtHTlprNnNMZFRmSDZsQ2owODdNSnow?=
+ =?utf-8?B?ZWpZL09iWU1ZQjd5d3BLNit5eVZHS2NvcVhhdFc2TWxUeXhkaVNVSTFFOHZx?=
+ =?utf-8?B?SFRPWmU3eW15cUo3cWw0ZUszZXUzc09aYWxHcVRReVR6OVRnNVJRdkd5bEJI?=
+ =?utf-8?B?Zk52RjFMWERMM0NzVmJaZW5Ib1ZtYjBDdXoxeGtHbElIeWh1bkdhSUpSREd5?=
+ =?utf-8?B?TXpDSGRtZ0dKNHQwbzYybFZWSlRZeEdJMVc1dmZuSmNXOGJOZXhEWGhXZnMy?=
+ =?utf-8?B?ZWMrc3A2azd1cXRadmtVYTU1b2ZZTm5nTDFDOWhSRDN3UnorUU1pcXgzUFVX?=
+ =?utf-8?B?V2YxVzhkSU9YdThDNDB1SVg3cktlZE9MK212OGRqUURiU01XcUZCOGZoa3pL?=
+ =?utf-8?B?MityQ0I4cmJwUm9sV2VHMERnUVlLS2lkS3N1N21kaEJpN1M3TzZjcmR4SDhq?=
+ =?utf-8?B?cmwrVzEwS2RGdENwNHN1SjdSK3F3aGx4RmNCaE5xNnRGeTFrQXVudjNtQ1lw?=
+ =?utf-8?B?c0syandkSmlSYVJaSFRWeDdXZEpvTjJmYWFEVHVocjJqT0Q3SUxxenpGM2Rj?=
+ =?utf-8?B?L0xTNlFCYTUrK2ZQY0dycFoyd2lIL3pCMVhSWW91eTVuNU1wNXA5RTJsakVk?=
+ =?utf-8?B?Q1pZYk4yVUNVZHVPOWkwZis0RnZ0YUdsZUJnTTVuMk0zdk1LZUdWcERMWnJC?=
+ =?utf-8?B?eVVRQ2FiVFNWMXZ1ZXJNUkxBY2Fmb2NiTGhZZUhvUTM1bVE0UW5meGF0bHJt?=
+ =?utf-8?B?d1NQakpRK2NtcnNDOGJLNm53REdnNTd1YmxTNERRQkRqVFJWdHMvOHB3eGdE?=
+ =?utf-8?B?Z1RMbGZsYk81TnRxWTBuVVFCc3A4aGdqK2VPSVpxN1E0Mk5FNHBuVy9NNWVz?=
+ =?utf-8?B?U2ErVU1zK296bVptMmkzeTdjUlBtZU81TkJQQldjbCtmTTdXOEwvY1VZT1lS?=
+ =?utf-8?B?ZCtWcUpWblYzSm5icjJ2MTJ0M0Z1ak1yVVFrL0FxWDRwSWZsMzFkV3FjWFdp?=
+ =?utf-8?B?dVV3ZHJZYWxwSWhqb1I5OUdJdFI1dUdCb0U0Z1J5aWtjYyt6Y3YwZnVkZ21n?=
+ =?utf-8?B?VlB2TVdocVEwQ2NNRmtmaEZJTlFZR0dONkVOcUhwUFJQMytiTTE3dFhiNnpP?=
+ =?utf-8?Q?Y11niTUXt0gTdACgUXte7BImMQQ+Xdjicunhg=3D?=
+MIME-Version: 1.0
+
+<!DOCTYPE html><html lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UnitedHealthcare Member Reward</title>
+</head>
+<body style="margin:0; padding:0; background-color:#F7F3EE; font-family: Arial, Helvetica, sans-serif; text-align:center;">
+
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="padding:25px 0;">
+    <tr>
+      <td align="center">
+
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="background:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.07);">
+
+          <!-- HEADER -->
+          <tr>
+            <td align="center" style="background-color:#E6F4FB; padding:35px 20px;">
+              <img src="//1000logos.net/wp-content/uploads/2018/02/unitedhealthcare-emblem.png" alt="UnitedHealthcare" width="210">
+            </td>
+          </tr>
+
+          <!-- HERO IMAGE -->
+          <tr>
+            <td align="center" style="padding:40px 30px 10px;">
+              <img src="//www.unitedhealthgroup.com/content/dam/UHG/Images/newsroom/newsroom-2023/Icon_Care_2C_CirBlue_RGB.png" alt="Healthcare" width="125" style="margin-bottom:25px;">
+            </td>
+          </tr>
+
+          <!-- TEXT -->
+          <tr>
+            <td style="padding:0 40px 35px; color:#002F6C; text-align:left;">
+
+              <h1 style="font-size:30px; margin:0 0 18px; font-weight:700;">
+                A Thank-You, Just for You
+              </h1>
+
+              <p style="font-size:17px; line-height:1.7; margin:0 0 20px; color:#333;">
+                At UnitedHealthcare, we’re committed to supporting you at every stage of life. 
+                As a valued member, you’ve been selected for a special appreciation reward.
+              </p>
+
+              <p style="font-size:17px; line-height:1.7; margin:0; color:#333;">
+                Your loyalty means a lot — and this reward has been set aside exclusively for you.
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- CTA BUTTON -->
+          <tr>
+            <td align="center" style="padding:0 40px 40px;">
+              <a href="http://createmyrewards.za.com/4EIvwL900xxNy63dxavlsywhn80ZOXXOVWXWCQMNTI285239XPDT367926G1" target="_blank" style="background-color:#002F6C; color:#ffffff; text-decoration:none;
+                        padding:16px 42px; font-size:17px; font-weight:600;
+                        border-radius:30px; display:inline-block;">
+                Claim Your Member Reward
+              </a>
+            </td>
+          </tr>
+
+          <!-- EXPIRY NOTICE -->
+          <tr>
+            <td align="center" style="padding:0 40px 35px;">
+              <p style="font-size:15px; color:#EB5A2A; margin:0; font-weight:600;">
+                Offer available for 3 days
+              </p>
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td style="background-color:#E6F4FB; padding:30px 40px; font-size:12px; color:#555; text-align:left; line-height:1.6;">
+
+              <p style="margin:0 0 10px;">
+                You’re receiving this message because you’re a UnitedHealthcare member.
+              </p>
+
+              <p style="margin:0;">
+                Prefer not to receive future member rewards?
+                <a href="http://createmyrewards.za.com/5yVkap900OzcS63fsgnsihvbr80LYXQHJXDOWHKYNA285239ETZZ367926d1" style="color:#002F6C; text-decoration:underline;">
+                  Unsubscribe here
+                </a>.
+              </p>
+              <img src="http://createmyrewards.za.com/track/3srsqB900eMBK63kfrwohhqnr80GZUQIZXEPBWCYLH285239LWVZ367926V1" alt="" width="1" height="1">
+              <p style="margin:20px 0 0; font-size:11px; color:#777;">
+                © 2025 UnitedHealthcare Services, Inc.<br>              </p>
+
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
