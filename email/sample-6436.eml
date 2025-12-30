@@ -1,0 +1,435 @@
+Received: from DS4PPF072D269AC.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Wed, 3 Dec 2025 01:31:58
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=kzpZuQSa55V0Gd66K4cU5E8WG5OTHiVJG1qq4lo6/M1j9fJejDLD4/MnaKAC1RGZ+U5aZ0RprRP/1/mb9mYvoTZwJ0ufUXGJEVm/KOwLrg+TkKcnPdFPu4IFwU7Yx0jjnGQf1DOWob7xSsTwfTlbfVOZWrfm5FBdbxiJ1F9WwM61mRNYfJJxpicN+Au1KsyBLF2n5iIhjqF7WlGxNEC4tRRdlXdNJVzjrzM/HeVj6HUfo35e8B/ZxaEAlcHDlTTmidzo136XVVK0l9VjxRbgUMKVvJLpbpeNAMKPKwSMPeGDRe8zlso3uWuMm9fX9T+zMM1k8XvAQlIBuk3i0IyDsg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=S3UkJMsRTWMtUDFlhtY1MOTMuFC6iC07HTDOnTAvPlA=;
+ b=WrbCO749RZvpeXU4QQG99sHn+rtTTD7681+iOEfTNkpPaenGAZx55uJY7XtjVE3KAIwaAR9f7W2yo7Wg4KOnyhCNIOpndr1zi5ZBsP616Wm5aPJ59MHfdjCdIweUwL5JNm5bfOf86awq2R72/qwVyw7p4OVtfZH3oub8U6sE+v0YM0b5Yrf89SmDUdceuDZxPnSCYFNzj96YVG/VceY6AuMpa57mtyc6yap2gFJZyNMMPbgK+UZBW1+9pSw6eMd0SuYkesRpZ8gP3VNJgGb2XKazytu8CqLIiLOv6TbRg5eKSYg+di9ndQnD3anGxGO9tkuHxhRev/j/55zjIO0XHA==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.102.202.62) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=dav20643799.onmicrosoft.com; dmarc=none; dkim=none (message not
+ signed); arc=fail (48)
+Received: from BN9PR03CA0446.namprd03.prod.outlook.com (2603:10b6:408:113::31)
+ by DS4PPF072D269AC.namprd10.prod.outlook.com (2603:10b6:f:fc00::d05) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.9; Wed, 3 Dec
+ 2025 01:31:57 +0000
+Received: from BN3PEPF0000B070.namprd21.prod.outlook.com
+ (2603:10b6:408:113:cafe::67) by BN9PR03CA0446.outlook.office365.com
+ (2603:10b6:408:113::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9366.17 via Frontend Transport; Wed,
+ 3 Dec 2025 01:31:56 +0000
+Authentication-Results: spf=pass (sender IP is 52.102.202.62)
+ smtp.mailfrom=dav20643799.onmicrosoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=;
+Received-SPF: Pass (protection.outlook.com: domain of
+ dav20643799.onmicrosoft.com designates 52.102.202.62 as permitted sender)
+ receiver=protection.outlook.com; client-ip=52.102.202.62;
+ helo=SEYPR02CU001.outbound.protection.outlook.com; pr=C
+Received: from SEYPR02CU001.outbound.protection.outlook.com (52.102.202.62) by
+ BN3PEPF0000B070.mail.protection.outlook.com (10.167.243.75) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9412.0
+ via Frontend Transport; Wed, 3 Dec 2025 01:31:56 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:12A830F1BA3B21A9C2E060BE760434C5CED624ADECFC64292C648DE446920DB8;UpperCasedChecksum:A2E52A4FFDF5448FBF117AB6212912216181EBAD3071D060082F9FE8A546D81D;SizeAsReceived:8692;Count:35
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JWVHfS1cAzAdf8n7WzyoF8basncOZ7pfhjqrQIMKuxcE4I/XpGKqaw3lI1bUHxD/qNkW2Eo7dSsKe/BwoCxLxwPwlfAz8qndLSNwp/OsnOkMCCASv/IR11dSowLIQbCe9XMJVSSeKjpwnorQHwgo1qe/4fOd0VX3HC1iHBY215DdQLSgtBpZoy/LteuDMUPrm83GubYGO6mfatMDzdfQ/JrQ5KuAEVVJmpVKa1oDQW7huatDwlnqxhM61h1A3UjFB2Ic6tGLTWU8Gq1YmcuNhzHf7kM/suzZ6flMwpl6m0JV09jROUYFoYDflE9jNFccKYGwjpD14f3O2WjgpSaxTw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=S3UkJMsRTWMtUDFlhtY1MOTMuFC6iC07HTDOnTAvPlA=;
+ b=rNuf4+pU37RUIeEPROuSJ6w+7xjvjbjEcVmyIlVVipArymghNYc+dPFCHenAjkauJPPJMTA4gR2K2oYnV9O75pXwOsXZygdLS+tcYDx02ft9Tg+/WrOV7cHgK+LdYon59PDEgGvY95VNIrYPk2O4tJcNqUgOcZ+rkoOwFEnkoR7AcdV9bukdkVVZx5UIngchM6jet8+cv06xwSfRmfmICjLYzEcKn3YBuI6Qj/St/ZMFMOk94RdkFXewU/aAsLBasI7KrARwVZHLpIB/mN2QhufQIkNB1mqRPGeMSnrg51BHNF9nnJq/8zt5NTgwoCwmswvqgiqXpxkFyDttClo4sw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 184.107.178.51) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=dav20643799.onmicrosoft.com; dmarc=none; dkim=none (message not
+ signed); arc=none (0)
+Received: from TY4P286CA0081.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:36d::13)
+ by TYPPR06MB8134.apcprd06.prod.outlook.com (2603:1096:405:384::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.17; Wed, 3 Dec
+ 2025 01:31:53 +0000
+Received: from TY2PEPF0000AB84.apcprd03.prod.outlook.com
+ (2603:1096:405:36d:cafe::3a) by TY4P286CA0081.outlook.office365.com
+ (2603:1096:405:36d::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9366.17 via Frontend Transport; Wed,
+ 3 Dec 2025 01:32:01 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 184.107.178.51)
+ smtp.mailfrom=dav20643799.onmicrosoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=;
+Received-SPF: Fail (protection.outlook.com: domain of
+ dav20643799.onmicrosoft.com does not designate 184.107.178.51 as permitted
+ sender) receiver=protection.outlook.com; client-ip=184.107.178.51;
+ helo=dav20643799.onmicrosoft.com;
+Received: from dav20643799.onmicrosoft.com (184.107.178.51) by
+ TY2PEPF0000AB84.mail.protection.outlook.com (10.167.253.9) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9388.8 via Frontend Transport; Wed, 3 Dec 2025 01:31:53 +0000
+Date: Wed, 3 Dec 2025 01:31:53 +0000
+To: <phishing@pot>
+Subject: Überwachen Sie Ihr Zuhause mit VistaFocus
+Content-Transfer-Encoding: 8bit
+From: "VistaFocus Deutschland" <2j69hqc07ujd@bck6qaucupay.com'>
+Content-Type: text/html; charset="UTF-8"
+Message-ID: <d7e50b41-7ee9-49a4-a6a0-98b69d7f88c9@TY2PEPF0000AB84.apcprd03.prod.outlook.com>
+Return-Path: s3hpx5cm0rsr@dav20643799.onmicrosoft.com
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: TY2PEPF0000AB84:EE_|TYPPR06MB8134:EE_|BN3PEPF0000B070:EE_|DS4PPF072D269AC:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: 219a20a8-813a-4da6-7e2a-08de320bbf5c
+X-MS-Exchange-SenderADCheck: 2
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|39440400008;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?aDlHMWdUcnNOSHV4bStMdFpmb3VQMHNUYVZ2SWZVdFNFd24wZEZURUlhSDVV?=
+ =?utf-8?B?V2dKSkFyZ3hnNTBKNlFuYUE0RlBEbHdkbjR4dVdpSXFEbXROcGI5dVdoMksr?=
+ =?utf-8?B?ZnFDTk5Sb2l5L1Q4MGNwUXBhaUZpUldWV0JkL1QrRFhDOTU1ajFqbHBsZXAx?=
+ =?utf-8?B?OUlodXhCYUJwd1M1RFBOTzVBTG8rYUVyZlF3YVVrRU0ySjFsUG83RUl3SUM0?=
+ =?utf-8?B?M3V1bkg3UERTL3dMbXdIS256UXZtdEJsaTRNVFpvWFJ3a1hEZWVMY2w4bXRI?=
+ =?utf-8?B?NEpSZklTdXcrUW11SUR3Uk5iT1kxS3orZS9yK3NZcXZNL3IvQTVvalRxa2pQ?=
+ =?utf-8?B?OG1jMDJIcEdPeGxabURtU0ttRU1hUkZoZUpYRW1VQUtySWthNDRlLzFvTnpq?=
+ =?utf-8?B?SXR2SWYxNjBPWG9sRE9JN0YwYWd6Q2l4SmJjbTA4WFJRU0lCS21BVTBDcEVW?=
+ =?utf-8?B?SDV6cDQvMStGV3l5eEtISEhCbi9EcW9ySkJLSmJaYnFHbTVDS2JQSzdDdEo3?=
+ =?utf-8?B?ZVptWjk0VGU4STMzZm1YMU4vNXBIaVRDdjNIUi96MzlQYnJYcnoyS29ka01D?=
+ =?utf-8?B?TXlUN2JqbGJyUXEvaEx5NzIwUjF6YmZGK3g5S2dQKzM5cjBVb0ZUUU40UUx0?=
+ =?utf-8?B?RFFXT0xmdHJqWm9BZmNiUzhibWtlVHExZmdwMnhLRmlaREFpWlV4UVNWUTV1?=
+ =?utf-8?B?ZE9aK1RxdkVyT20zamZCNEhqeGg2N1FFcVNBeXBCQXhseWo2dWNHSlNzOU0w?=
+ =?utf-8?B?VG5pTU5YaW9HaTJPWDlSMTV0VmRyMnlsVE1nV1ZRS1JtTnFuYzcvR3FuYVh1?=
+ =?utf-8?B?ZjVTdlBkaldhalN4R3dYNHdEbzZmc0xZNEt0OGNKcUczdXBPSEI5Mi9JODZ1?=
+ =?utf-8?B?WFNqNm1vMlRnaUt6N0toM2dVVmlMUG9rem81WHcrUmZqbW5NakRTWDJFRU1x?=
+ =?utf-8?B?QkZCT1Nkc1hQUWVWY2Z4T0hnY0VVRWxieUtBN2hyanJTKzNMcmY3bjN2cE0w?=
+ =?utf-8?B?eFQwcVJOYXRIbWI3cCtuRXR5Q2Q4ODFHWTZ3ajJVVGZBbTJGOGZQa1QxRW16?=
+ =?utf-8?B?S3ZNS0dhLzFRTWp3YkQ3b0tSV2UxMTRSZ3RPb0tJRFRDZis4cWNOOHFUaGtj?=
+ =?utf-8?B?TlJaWk51TGdGam56NkVaN0IxVlo0MzBCUlkzRHVnQ0hCdi9GSEd3a3NzbXIz?=
+ =?utf-8?B?dkl3S0srNmVxMStNblRPRkcreDBlaWVGWFV3NENHa2IrTHIxZUVLNi9OcFF5?=
+ =?utf-8?B?U3JPM2xFK1g2TkFlNWR5eDZkTW1tYytPZlhBcG5uYVRGdnZsbEtNVnpmcSs4?=
+ =?utf-8?B?K1ZHVkU2NDJzVlhKMU1rM25QNXpXWTlDNGNGQ1hsT0RNOEJ4aWpJdjF3RlV2?=
+ =?utf-8?B?SXJ2N3dPQ3lTS0x5b2ZsTkh4cEJNam40MFFVR1hvNkp5NzJrM0xjVFVnV1hF?=
+ =?utf-8?B?MXhwdmVJb2srSmxVb1o1a3kxUVl4b2ovc21hSVJjai8vR3NncTk4b2xpUDUx?=
+ =?utf-8?B?Tko2ckdtZEUxaE0yZnpOclY3YlZ1QW5pcnZ3MFNmc2pWTUw1bklNSzFEaGwz?=
+ =?utf-8?B?ZTRQWnQxTDlaWEJURUtwdjFzK1dWaVNJVEFZSG1TMXgyRDJxcWV0WkVsUllP?=
+ =?utf-8?B?eGtLVWJIalFsOUJ0TTYzdVByWWlWYnJ4eDF2Y2R2cy9qZ0Vqc2ZacUdFanNh?=
+ =?utf-8?B?Y2NhSjZ0dHRiYnN6di8zL2NXdDgxV1hSa2ZFMVB1d3dkNS8vbk1BdWo4ekUv?=
+ =?utf-8?B?QXFlOTFsNHlRK3BoN3JqUk5wb0NUMnN5RkNIVll6WjhNa1dyUmFpR0JDWWFG?=
+ =?utf-8?B?VW5zZ2pGT0pyNndyRHAzSDQxV1RZcmVGVWJ3ekFTOVBkNzFYbnNXcGdrbUV0?=
+ =?utf-8?B?WEd3U0VESXJlU1lHcDFoaElEWmc4RTFkeW1ZV2F5bzBGMldNWS84Z1FKOEF2?=
+ =?utf-8?B?cmdad05QY0hiOE50dk85Z1FVREVqSC90QVZDaDhQSTZMT3dZWE92WThLZWdS?=
+ =?utf-8?B?UzQrWUMveXNrK3NYazBtNUxEQTUzamczQk9ISFFZUUNuZ3ozRnV1VS8rbW1B?=
+ =?utf-8?B?anJPRWs4WUJDMjZ6T2U1QVR1OGQ4VlpMc0ZmUDhpTEUxQU96TDBZOGZ4RE1S?=
+ =?utf-8?B?bjA2UGxCTXBpQ3R5cGlxaUg1MTRXWnZsSllpQzlNZlArN2tGWXZpMmI1WlVZ?=
+ =?utf-8?B?T2VNOTlheE5HR3B4aHVpL1orOVVnM1EySnh4WGl5THhmRnZyYUN4cVRPcURq?=
+ =?utf-8?B?dGpXNXVPSzdJTmUxWC9YWmNpYjBkUTRqcXpvVEVpTE9FdnIyTXcrNDNmdVZj?=
+ =?utf-8?B?NjVuMERBNk9UVE1RL0tPdGErakFadnhoRFF0dmVFRVZCQk9mODc1K1FFb2lz?=
+ =?utf-8?B?OWpBVUFJQlQxMnlianZleGh0SXBuVi9iVUp5RE12U0tBVERXTDRvbVJ3T1Rx?=
+ =?utf-8?B?RlFCT2ZrSmZZZjMzVVRMOUlOZGNYOTNLZ2FzWm0wRkIzeXkvVFp6MTRDTEdR?=
+ =?utf-8?B?My9kaVRsNXBDZmdNbGVzUWlSTzIrcFpXL3Q3UzVXSTN6RysyQ1ZUWVRsY3lW?=
+ =?utf-8?B?MDQ0Z3dWMkJXZWZwNy84dUNsaEJ1MjhrNVZpRldTYmFzNUlLOFNhU1lBMzFN?=
+ =?utf-8?B?MzF3QmgvQW94cGFPMzRtU25iN3BvYjhUTDFuNDkweVFNQ2M0RXFLakNCcWlG?=
+ =?utf-8?B?WU5STzlIT2ZGQTdoUXc2RnNEbHhHRnE3OWVsbmlQeHgyR1BURURRelBCdTY5?=
+ =?utf-8?B?R21ia201S0FyUTE4Y2NmU1pRaUZwYkVXbng5a3RVWUNqSXQzYzFnd3F6MjQz?=
+ =?utf-8?B?bjdJMkZxOVlEZlFoeVorT29RMlQ5b0txZHMrQS8yMUx0TWV3V3FGNS92Z3Zw?=
+ =?utf-8?B?aDJHblA4VUtiZTN0dWk4aDZOU25rNWlqc1B0WVBqWlBBVlRFSU9yYm5rT1RZ?=
+ =?utf-8?B?TnVBYXNVaTJPMHdjS2lVbEZSc0V3TDJKd3JNK2tYNWttbUZ5YktZZVRINnhO?=
+ =?utf-8?B?cWQrTGphQmorSnF5emViSFFYdGw2bmtleFVsekovdEZOVWx5OHNhbzhBTlZj?=
+ =?utf-8?B?RGt4ODVCS0JDU2g0TlQ1aDg4NTZ3SHQxZ2Q4cEI3NUppTXdVTXlhcVhpWTE2?=
+ =?utf-8?B?bUp5WHNDNmd0aW05TDdyeFhiL0pRbUJHcUVZUVB5cUV6dTNsZmpaSWJ0dXEy?=
+ =?utf-8?B?QWVRT1kxUjJTLzNlQVVXVEpkRU9uMmROZktwSFdrUE9DZUZ3U2F0RDNmQWNW?=
+ =?utf-8?B?dnZHYUFKcmIvMDVnWlVPNmZqdnRkODZFRWE0cHhwMUhLbUsyayt6OXU0NWZy?=
+ =?utf-8?B?TmRqZmxrWnh5aVlPUVlYL2RaVDYwek9UU1hmVWhtRkx3eVVZM3ZNbUJvUW5w?=
+ =?utf-8?B?djZaWXNnUWF2RWdWd01vdTZtNGlzM1hML0NLdUVYdnVhcm5NdkN2MDVmb1Zt?=
+ =?utf-8?B?SExHYVdvakVHMGJhS0dxNHlZejZHTXk3dzFDK0lkbGdsUytBdVRudmdnWTNw?=
+ =?utf-8?Q?Ft4miJpvgpD2Y1glouVuojtROIYanihGlsWTJA=3D?=
+X-Forefront-Antispam-Report-Untrusted: CIP:184.107.178.51;CTRY:CA;LANG:de;SCL:9;SRV:;IPV:CAL;SFV:SPM;H:dav20643799.onmicrosoft.com;PTR:InfoDomainNonexistent;CAT:OSPM;SFS:(13230040)(39440400008);DIR:OUT;SFP:1501;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYPPR06MB8134
+X-IncomingHeaderCount: 35
+X-MS-Exchange-Organization-ExpirationStartTime: 03 Dec 2025 01:31:56.9727
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 219a20a8-813a-4da6-7e2a-08de320bbf5c
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: BN3PEPF0000B070.namprd21.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: BN3PEPF0000B070.namprd21.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: BN3PEPF0000B070.namprd21.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 12/3/2025 1:23:33 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 0b20e57a-38d7-4d49-3ee5-08de320bbd89
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.102.202.62
+X-SID-Result: NONE
+X-MS-Exchange-Organization-SCL: 9
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|70000799015|58200799018|47200799021|18030799003|13020799006|67000799015|50300799015|39010799012|46080799006|9800799015|51300799021|87000799018|63100799012|6010799018|32080799003|461199028|3025599003|20103052909095|1680799066|9000799056|9400799040|10300799035|26120799003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Dec 2025 01:31:56.5098
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 219a20a8-813a-4da6-7e2a-08de320bbf5c
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=1d31344c-6867-46b4-8cd9-c648af87295e;Ip=[184.107.178.51];Helo=[dav20643799.onmicrosoft.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B070.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PPF072D269AC
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.6661048
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9388.003
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90002001)(91000020)(91036095)(91040095)(9050020)(9055020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10010005)(10005027)(9540006)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?U0NHbW1Fd3NyM1hFbEhTa3BBODZzMmc2U1JHbkdBTml1YnhPV2tpdDk1Mkhi?=
+ =?utf-8?B?bmV0ZFUwRjJyM2ZMR0NWYUZtTWgzR3dZdFFrSHk4YVJsRzB6ald6NXhEdTB2?=
+ =?utf-8?B?Z0Z4SkhKTm1HRkZiL1pRQm5SZ0RoL3JxMFl5U01BZmYwSEY0S2VCTTlTbDBq?=
+ =?utf-8?B?dmc4dmptWDkzSkZBTjRFSkNXekJQZmpma1VxaEptOWFqZ2RnNk4vRXo4Z29P?=
+ =?utf-8?B?am1mMjA2UERCMWhJZTFuUWJtblMvSjd5UzBQaisyRjh3cDlCWEd6OUlEcGV5?=
+ =?utf-8?B?RWRKR3hMMTN3aHJmUWVGem9yeTZnZ3NqNUNvTmJKYUY0UzdKckRuT2tlRldC?=
+ =?utf-8?B?aDF6ditTRkRCMVRZUFlPbFdhWUx5djJSN1E1a2QvWkp0NVFtSU5DaGdvd1RL?=
+ =?utf-8?B?cmdZS3ZFcnJnQjliWEhpNnVhUzV5OXR6Wk5QV25aWTlldTVMVFRyYTR5MlNs?=
+ =?utf-8?B?ZmNENnp6SlIxU2VIaVgxY2JLaE9GUHVYeTlJeG9qdG5jM3g1VmtCVC9FZ2pT?=
+ =?utf-8?B?SDhvSTJvV0hEVWlxL1NPUUU2M0tWTUNxdDNOMjFqL3FWMWd1VW9ITzR0RzUy?=
+ =?utf-8?B?T3F3bVlxZ3lQVGpvWW4vVFpRQUpyamRnd2VqTFhucDRzZjlMQmY4YjhXcDBl?=
+ =?utf-8?B?MUFWcEFBSVBCWXhPOU1nMkZPQytLbFkvY1BUS3hXQWhQb0YvWGVKQkdHaGt1?=
+ =?utf-8?B?V2xXd2JnbXhwSHc2UzhaRzRBMTFJM05BWThrYlNBUklEL2hLVUpndGJiUlZt?=
+ =?utf-8?B?UktkRy9MWTZqb0J6L0ZMekRxVjQ5UXlmZEtSNUVrQkIwRkZwdE03TjFMRnpE?=
+ =?utf-8?B?QVNtRmJIampWei94Nk5mclNOUWFmODc5M2QrZ3VoSWxUWnFTY2NBbGlqZEZh?=
+ =?utf-8?B?d2E5eldpeG92NWNFdUJaQmJvTlV3TlNWNk55b1l0Y3hNZHlkVkxHVDVHc1RT?=
+ =?utf-8?B?bURGaW9idUt0QUZQbzhycGpPUUVaeWUzYUhhWktLWXRqZllhT2UwdmZoWG1k?=
+ =?utf-8?B?Y1UxdG5rVzlMQVJIQWtnZ3NwTk4vYURRbUFYMXlpVmoyZURSVHNYb3lnMlZz?=
+ =?utf-8?B?MUVlYVJVVmxlOXNjaFFnMnFOY3VSQkJjRm9xRVpmNGNnVUdkUzZmL05CZms2?=
+ =?utf-8?B?amViM0NWT0FCai9SUXNhejVTUDlwQ2RDajU5bVNEUGxXVjdKb1E3eUgvK2Mr?=
+ =?utf-8?B?NkIvdk9NSExuaHZMRjFlU0pUK3did09ySytCL0ZYeHM3dlptRVdJNGFHMUlj?=
+ =?utf-8?B?WmI2YmhLcWd1UENrSVl6NGdwdE1xV0xlbmNyRmlsWTdEbm5GcTUwc1F3M1RX?=
+ =?utf-8?B?eWJEZHRMbFdYUlgvWXMwQi9TRnlsVktnZmxwYmgzSjlIMXpUOHFuUXJMZSt3?=
+ =?utf-8?B?bW15WXpqZmJiRXpnUGE0UFBzeElyVk01Nyt3NjAzZWdXZUx2aW5xMlIzSUpL?=
+ =?utf-8?B?azY0aStZNDNSYm9VaEVySTFPdFhpMDRZS3pQc2ZnZVNSbCs1N1piUGVCa0dW?=
+ =?utf-8?B?RDkzT1VXcmNmc0htZ2VSV09NenNISHJjYVRxTjVkaDJmWktBRUF4eUdvVHNG?=
+ =?utf-8?B?Z0YyOUtJazZVMDE2aE03YXI0a212b2xpMnlFRkYzM2VNNmZhYWF2US8yVnQ2?=
+ =?utf-8?B?dmEyMWsrRGthTFJmeThEOHkxdHpsN0J4S0I1RE5YOWZudk9ZdmllUjJiT256?=
+ =?utf-8?B?ZW5OVGdWd1A1anpEd3JsMjlsdXJucmRXVnRzNGQvbmx1MUFtZWlNTkwxMlpo?=
+ =?utf-8?B?ZVJhV3VVc2NGUHNBdnBBcGs0bUlnbGRmb3V3RVhaV0daV3J3TjI3ZkM5SnhV?=
+ =?utf-8?B?R09RRWRWeHBrTHdPK0JLYWdtWlp4YzRPcjBvaWtZN2ZpWkV3aVI4Ykdab2RG?=
+ =?utf-8?B?dUY2eDRiUWI1THNxZjR3SWUxblhzUGxLS1kzOFlmWmp0aGtlZERFT0hlVWk0?=
+ =?utf-8?B?V1VyM1lHNlZnc2p4U2J2bGtoZGdBcFhSRkZTei83Unl0VEM1WEdpNDQrM2w3?=
+ =?utf-8?B?bmVLUXgvWkVhODNHcXFibW1jaU1FMDM0RXFhVzFvZHdmYk95NFlDMndKUVZV?=
+ =?utf-8?B?Mjc2c3lLdE9EWE5jY2tNb0Z0U001VlpieG9IZ0N5RWhXeG82dDVnR0xCWC95?=
+ =?utf-8?B?TjNXa1NNRjJCNldTZ3pSNXgreWRJZ0x3Ym9yTTVQS2tHL1pBTFlOMlVKTlFC?=
+ =?utf-8?B?N01nRkl6VDJLOGxZVTVCOUg1L2xqK0loZmVQYTY0b3RIdUJwRVVUREVPblVh?=
+ =?utf-8?B?S2NEb2JOWDhvSnpQRHZaQm15Nk1SNU9aN0V3V1ErOHlqU2VNOXVmT3pmM2ky?=
+ =?utf-8?B?TTlLdVBUeTVHc0UwUlBONyswd0Z4NEtiYmNpYW9TQ0JTTG91UGJkZSszK1Y4?=
+ =?utf-8?B?MC9Kc1o4Z0xjUTU4K0dtSGpJRXl6VTUwUFhlaFprY3ZWVE1nSVptWlV0VFU0?=
+ =?utf-8?B?STM1ckVsRWZjUXNMT3JvbytzN25hbFN3V1F2aGViMUlOeGtSU3N5ZmZaTVB5?=
+ =?utf-8?B?MTMyemVsTzJBdUtiT2luNnZhNEZFa05HaCs2a1l3bmQxaUNycDV6QmM5clR6?=
+ =?utf-8?B?QS9zMEUzM3R6Nm50bitRVTIrbjlXM0pKMGhQaVlta09mZEJEblhpempYTjcr?=
+ =?utf-8?B?TENFQkxTWkVmMlFtbTQvTk9VTlhTaE1IM3RHOG9pcFUyWms3eWJjVTlDL1lm?=
+ =?utf-8?B?Wms5OVplYlFwcjhWUVZPZ2NndEV6Z3pJUFFBakRYeUZSNGhhMEtvMDJDTEVV?=
+ =?utf-8?B?MFkvRGRmdEd6VFpiYUJuQUV5RXBtUzJ2eGhSRE1pZFJzWEtjTGpJZFlBQjN5?=
+ =?utf-8?B?RURTb3RuUWZVUjVrVm1PRGM5Ri9Ca1ZSeXVKaVJMdTVBemI2WnlqUVl6UXpn?=
+ =?utf-8?B?cmcxbUQ4RzdHZmZlbk1RQWJ4c2xVbVJheXBLeTl4enlYS2ZPQSt6UkhvcmNQ?=
+ =?utf-8?B?ak9VVGJ6ODVuV1VOZERqOXZKSFpJRWhLdlpHTnJNQmRDUVVQUFZrV2VFdXRP?=
+ =?utf-8?B?b3NncFlxTDZrejYrWUNLcXdGRk5qNXdPekhrK2NYNTkxRjdSNVZPeFd0eWNt?=
+ =?utf-8?B?aThRWkJWUDlpdy9CL1AvN1BQZ2dQamxTV05LYllSek1Xc2lCR2FDY2hZMUYy?=
+ =?utf-8?B?QTYxZ3pGMFNyM3NIOUpESzZ4Wk5FeEdIVENSVU40cXZ3U3N2R2xqVlJrWTF2?=
+ =?utf-8?B?MHpwVUdnUUZwN1A0aW81eHFxUmdLTjcvU3RkR3RlYTE5ZlhTKzVLT1ZGakhK?=
+ =?utf-8?B?N1laK1BraUtnSjBNemd6Q2dlM0pjaEIrdFRqWE8yWDZHS2dUOFV0V3d1cC81?=
+ =?utf-8?B?ZkM2ZFRJM1N1REZMQlZjdzdFVHF6dlRKTFhCMXFNYnBQdUk4TWZqOWdLdDh4?=
+ =?utf-8?B?bW5wdStDdHJkcUgxN0JEa2pKTTFIbWwrN2dpdGU1RkRHWWlscGRCUldaa1pv?=
+ =?utf-8?B?S3pZMnV4R3hsUWU1VmNIQkFXTlp0MjlTSlRuOHhUd1BNYVdLZ0FiV3hSYXFV?=
+ =?utf-8?B?NHZPdTMwZlhTazhOVTBKK0FrNE9rd0NOVlJxQW1oc0hGY0pRQi9QY0xqQ3VR?=
+ =?utf-8?B?azFlOVVGdmJMOUZYd1Ftd1VVUmtoU3pSWU44eDNCdExuWmpIWnlLdzdwZ2p4?=
+ =?utf-8?B?SERUaUlkUjJwZnpaOTVBTnpuUE0xbHdrUEN0cDFXZm5UMmd5cjU2QUFJRHla?=
+ =?utf-8?B?cGZNVTVHT3czQUR0em51K1crYjJsenIzbjNQb1paVWhkVS91NjMxeW92c1Jj?=
+ =?utf-8?B?ZEsvZlJDYVRoRjViM0NYSjRqclpWdE1HZEx0SkFiZXRQb0xSZEd5REFYQW1t?=
+ =?utf-8?B?dTlMREhGU2k4ajJsUWNZMS9nSXR1UlB4NHpLL1k4RHJhK0FIbFNFLzBjbTVz?=
+ =?utf-8?B?UGU1UDM1RjBSOXZaMHN6Qy8rTG9nVHpKU0d0M3IwSWcwUTJoRGZLWmVYMU9Z?=
+ =?utf-8?B?WlNiKzBuTHhsYVh5SXpyNDdhaHVHQlNmRjVqL0V5cHBscFh3ZWM2UTVwSjRB?=
+ =?utf-8?B?dlBnSVVhNlFzdFZJZk1wSDVOS1FUWlFaRFVOUEtGY25tUSt3aitHbGF6VXVB?=
+ =?utf-8?B?dGlDUjlXb3FSTk5JMEpIL0R5OG1PeW5RSG9jSU9ubDF4TlZ2SGtObW40ZEsz?=
+ =?utf-8?B?ZHgwN1YrbFlURllLV3l0M1lWSVZISENhVGVtZ1Z4ditjZ3ZZUDB3bkxsUEdN?=
+ =?utf-8?B?c09xY0lxWG93V3dLVUVEdVlUMUN0emF0dzRRbU1FYUR0WU1xZU1HMEx4dUhB?=
+ =?utf-8?B?RUFhcndPMEI0UWV3eDlFNytOeW83czc4K1lMVXdmZDlEaHhRc252MVVKREpY?=
+ =?utf-8?B?dUliT0tCN3daSHpyTk8wTkp2MWJ6WHY3ZVRUOUE1SG1tNmNCWFEwOXFXeFNS?=
+ =?utf-8?B?OEpQbHpBME1HTzhoQlhqK3Fab250SjJ4N3RiNGxtL2w4cGRBZG1kdmxVMzJk?=
+ =?utf-8?B?ZVJzU1FyU0grOGtGbzh0dnNsQ0VHbUgyMDhZSzBTY1VNT1A0bnpsR09kdUZK?=
+ =?utf-8?B?ak94bGorYTJNdTdrM2k5bU1oUjBSdzZaTHNaTGh2OTU2bzNhRUNlZkRiNU5C?=
+ =?utf-8?B?QWM2YzQwSTZ5RkxkREJDQ2JBNjRZL3FCZkw0VmRteVVLQTdDUkF2Wi93eFZl?=
+ =?utf-8?B?S2QveTM5TGVBTHhScmQrMHl2blBTTVphc3pMdXdBdnZ4UDAzWDR6TUk3NDgz?=
+ =?utf-8?B?MWMxbGZ5Q2xLbFZoMFc3Ym5sdExjNUx1SzZYR3I5aFJGZldtc3NGVEFxRnhD?=
+ =?utf-8?B?aXpuVTNTYXE2ekdqQT09?=
+MIME-Version: 1.0
+
+<!doctype html><html lang="de"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>VistaFocus – Schützen Sie Ihr Zuhause mit Vertrauen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { margin:0; padding:0; background:#f6f7f9; font-family:Arial, Helvetica, sans-serif; }
+    img { border:0; outline:none; text-decoration:none; display:block; max-width:100%; height:auto; }
+    a { text-decoration:none; }
+
+    .wrapper { width:100%; padding:20px 12px; }
+    .container {
+      width:100%;
+      max-width:500px;
+      margin:0 auto;
+      background-color:#19265A;
+      border-radius:12px;
+      border:1px solid #0f1a3a;
+      overflow:hidden;
+    }
+
+    .section { padding:28px 24px; }
+    .center { text-align:center; }
+    .mb-0 { margin-bottom:0; }
+    .mb-12 { margin-bottom:12px; }
+    .mb-16 { margin-bottom:16px; }
+    .mb-24 { margin-bottom:24px; }
+
+    .label { font:12px/1.2 Arial, sans-serif; color:#fff; text-transform:uppercase; letter-spacing:.08em; }
+    h1 { font:28px/1.2 Arial, sans-serif; color:#ffffff; margin:0 0 10px; }
+    h2 { font:20px/1.3 Arial, sans-serif; color:#ffffff; margin:0 0 10px; }
+    h3 { font:16px/1.3 Arial, sans-serif; color:#ffffff; margin:0 0 6px; }
+    p  { font:15px/1.6 Arial, sans-serif; color:#e0e0e0; margin:0 0 14px; }
+
+    .btn-wrap { text-align:center; }
+    .btn {
+      display:inline-block;
+      padding:16px 26px;
+      border-radius:8px;
+      font:16px/1.2 Arial, sans-serif;
+      background-color:#5029E3;
+      color:#ffffff;
+      font-weight:bold;
+    }
+    .btn:hover { opacity:0.9; }
+
+    .feature-list { margin:20px 0; }
+    .feature-item {
+      font:15px/1.6 Arial, sans-serif;
+      color:#ffffff;
+      margin-bottom:8px;
+      padding-left:24px;
+      background: url('data:image/svg+xml;utf8,<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><circle cx="6" cy="6" r="6" fill="%23FFFFFF"/></svg>') no-repeat left center;
+    }
+
+    .steps-table { width:100%; border-collapse:collapse; margin-top:20px; }
+    .steps-table td {
+      vertical-align:top;
+      padding:12px;
+      background-color:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:8px;
+      margin-bottom:10px;
+    }
+    .step-number {
+      font:24px/1 Arial, sans-serif;
+      color:#ffffff;
+      font-weight:bold;
+    }
+    .step-desc {
+      font:14px/1.5 Arial, sans-serif;
+      color:#e0e0e0;
+      margin-top:4px;
+    }
+
+    .footer { padding:20px; text-align:center; color:#cccccc; background:#0f1a3a; border-top:1px solid #19265A; font:12px/1.6 Arial, sans-serif; }
+    .footer a { color:#5029E3; text-decoration:underline; }
+
+    @media (max-width:540px) {
+      .section { padding:20px; }
+      h1 { font-size:24px; }
+      h2 { font-size:18px; }
+      .steps-table td { display:block; width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="500" class="container" cellspacing="0" cellpadding="0" border="0">
+
+            <!-- Logo / Header -->
+            <tr>
+              <td class="section center">
+                <div class="label">Anzeige</div>
+                <div style="height:8px;"></div>
+                <!-- White background block for visibility -->
+                <div style="display:inline-block; background:#fff; padding:10px 14px; border-radius:8px;">
+                  <img src="https://686.efuserassets.com/686/offers/18159/c/51823/assets/logo.svg" alt="VistaFocus Logo" width="160">
+                </div>
+              </td>
+            </tr>
+
+            <!-- Hero / Main CTA -->
+            <tr>
+              <td class="section center">
+                <h1>Sichern Sie Ihr Zuhause. Gewinnen Sie Ruhe und Sicherheit.</h1>
+                <p class="mb-16">VistaFocus ist Ihre All-in-One-Sicherheitskamera mit Nachtsicht, Bewegungsalarmen und einfacher Einrichtung.</p>
+                <div class="btn-wrap">
+                  <a class="btn" href="https://adrenergico.com/4Zwaee1093VLUr189xxedtrvljk489HCFEYJYFLUJASTK3789197GBRW11272K14" target="_blank">Jetzt VistaFocus sichern</a>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Features -->
+            <tr>
+              <td class="section">
+                <h2 class="center">Warum VistaFocus?</h2>
+                <div class="feature-list">
+                  <div class="feature-item">phishing@pot0p HD-Auflösung Tag &amp; Nacht</div>
+                  <div class="feature-item">Automatische Nachtsicht</div>
+                  <div class="feature-item">Echtzeit-Bewegungsalarme</div>
+                  <div class="feature-item">Kompakte &amp; magnetische Befestigung</div>
+                  <div class="feature-item">Steuerung per App (iOS &amp; Android)</div>
+                </div>
+              </td>
+            </tr>
+
+            <!-- How It Works / Steps -->
+            <tr>
+              <td class="section">
+                <h2 class="center">3 einfache Schritte zur Einrichtung</h2>
+                <table role="presentation" class="steps-table" cellspacing="0" cellpadding="0" border="0">
+                  <tr>
+                    <td width="33%">
+                      <div class="step-number">1</div>
+                      <div class="step-desc">Platzieren Sie VistaFocus mit der Magnetbasis oder dem Klebestreifen.</div>
+                    </td>
+                    <td width="33%">
+                      <div class="step-number">2</div>
+                      <div class="step-desc">Laden Sie die VistaFocus-App herunter und scannen Sie den QR-Code.</div>
+                    </td>
+                    <td width="33%">
+                      <div class="step-number">3</div>
+                      <div class="step-desc">Erhalten Sie Benachrichtigungen und sehen Sie Live-Bilder von überall.</div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Secondary CTA -->
+            <tr>
+              <td class="section center">
+                <div class="btn-wrap mb-12">
+                  <a class="btn" href="https://adrenergico.com/4wnpqD1093LgAW189ujpurfhdjq489HPLEJYZBVYUBDQB3789197XMFE11272L14" target="_blank">Rabatt jetzt sichern</a>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Footer / Unsubscribe -->
+            <tr>
+              <td class="footer">
+                Sie erhalten diese Nachricht, weil Sie VistaFocus-Angebote abonniert haben.<br>
+                <a href="https://adrenergico.com/5TAizC1093UAsm189wamddtfhvi489ZHXZJKXMZUGXCNJ3789197AQPZ11272H14" target="_blank">Abmelden</a>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>
