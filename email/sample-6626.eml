@@ -1,0 +1,900 @@
+Received: from SJ0PR10MB6431.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Fri, 28 Nov 2025 21:55:35
+ +0000
+Received: from BLAPR03CA0171.namprd03.prod.outlook.com (2603:10b6:208:32f::31)
+ by SJ0PR10MB6431.namprd10.prod.outlook.com (2603:10b6:a03:486::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.16; Fri, 28 Nov
+ 2025 21:55:34 +0000
+Received: from BN2PEPF000044A9.namprd04.prod.outlook.com
+ (2603:10b6:208:32f:cafe::ab) by BLAPR03CA0171.outlook.office365.com
+ (2603:10b6:208:32f::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9366.15 via Frontend Transport; Fri,
+ 28 Nov 2025 21:55:33 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.208.52)
+ smtp.mailfrom=linyal.xyz; dkim=pass (signature was verified)
+ header.d=linyal-xyz.20230601.gappssmtp.com;dmarc=bestguesspass action=none
+ header.from=linyal.xyz;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of linyal.xyz designates
+ 209.85.208.52 as permitted sender) receiver=protection.outlook.com;
+ client-ip=209.85.208.52; helo=mail-ed1-f52.google.com; pr=C
+Received: from mail-ed1-f52.google.com (209.85.208.52) by
+ BN2PEPF000044A9.mail.protection.outlook.com (10.167.243.103) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9388.8
+ via Frontend Transport; Fri, 28 Nov 2025 21:55:33 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:52EAEB79DF0ABA767DC99F680C8E4FCA909D97B9CB6AAD48BC09B2BE98258A9B;UpperCasedChecksum:EE2F606E44A93F1CB239FCDDDBE9A532EDDFE5171B85B499DAEABCB60531EC84;SizeAsReceived:3403;Count:22
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-6418738efa0so3842610a12.1
+        for <phishing@pot>; Fri, 28 Nov 2025 13:55:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linyal-xyz.20230601.gappssmtp.com; s=20230601; t=1764366933; x=1764971733; darn=hotmail.com;
+        h=to:subject:message-id:date:mime-version:list-unsubscribe:sender
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=b5q9GPprvWmEQQbsAqxH6w8ZBUbRaIi3wWXbnag+5Do=;
+        b=e/Y8FySBHHwJv1OH2gVe0L0gGm80WUmIvxaJ/002EzcqmM6tib166gk0HG5IqIJvGR
+         85OWSVXkvZm2h6U599cWxpYYQGrbZGdp/XjHGQcgXOzo0QSIe5GSkOAiTlKU1/w9Dfpw
+         F7NmuDp/It0wEdY+3uJOpNqkLAc3ONP45a1w5oAfPiPl4rG23MLtlRD4YtgkEDz359NC
+         fus/Y7XWV9Wo0CwEBpxjVQSGPm8BxLAreuPVG0qKz/P/nGaPd4FWfzFXHqlF4bLs96Jc
+         uzaxYBBDy8CvBHkHFjMYpRj+2ScFfLKZ0+tPTjP2YG95AvQbFjabEaDT1KOnJdPVAF/d
+         1ypQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764366933; x=1764971733;
+        h=to:subject:message-id:date:mime-version:list-unsubscribe:sender
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=b5q9GPprvWmEQQbsAqxH6w8ZBUbRaIi3wWXbnag+5Do=;
+        b=se+FzHGulgesJRkFwkBi5keGx3SVkIwz6XPXH5yd1OfvWiBgQc8mFtOQvBwCfyHpBe
+         VfQyiiXxPBtq8HuPNX2rr3pYt3uoLMAoajj1TdMNseztQIPupnKGK35CyHW1TcdFctn/
+         +GLkVqYX1CMnZwNpMcPO+jXjc1FEvR3peDAvXDiRH/IOK4qtJ+/MJdjO23rEBQo3VgHL
+         bY9yHS0jAT4hJxEwzT9g3hHrc44MNzk7mgnxIuc/e+OQrwSMJYWIMBcNoM3hQA+e3O3O
+         GcriHZyPai6hbvmdL+m6heqvecJ3Ix9Wurps0+7xNBWYnn9FU+9WcdirFv6XSWKtXJTj
+         knFQ==
+X-Gm-Message-State: AOJu0YyhmZIZBQvix2AA9EwxEAGn3T55lF/lvIK/Exg4XdQx+rUJGLkW
+	dLQujO7vFsMct2DZWfXekvSAyDmNxjwhHsanDaNaOanPTUE6Wu8SdEw7+03aovODip+4syCip59
+	UjJbjwP/K0bsZkQ1OIzLda842CeafVP81wAko+qXHh+L4GJf3FmETkg==
+X-Gm-Gg: ASbGncu80cBJVfad6G0hfED/wX1vxJPW8ku7hwivkk8K/q0o5qJZEo0DkMCvY5ugPQG
+	rQl93I3QrixanRQ8GteiBWQ4QqVAIxzJ56CvJraBhPAunhIw/r1j7ahQAiVtFgBtGAHczG4yqVG
+	STXIs/ssdgeyTBO2dIXpzx8blGbzDlax7mipnhMX9ApgWSEYKUJGwo69bo6abalfr/1teD4DVTT
+	yYvAcYLCh0xX7yG1qaoVa+aLQZ2nuS0olM+sNcBtJfNop2KLy0OzYL/o0AxKuTRe9ubNg6VxA==
+X-Google-Smtp-Source: AGHT+IFaBXFKMO/RK0qOVVfqpZP5JsewRa6qQnJuw4HLFS+bXXzJtw1x2l+KfGxg0sWogPbMlmY8wsqzhMy/326szAw=
+X-Received: by 2002:a05:6402:1471:b0:640:fb13:6b8 with SMTP id
+ 4fb4d7f45d1cf-64555be1d75mr29288826a12.22.1764366932792; Fri, 28 Nov 2025
+ 13:55:32 -0800 (PST)
+Received: from 272423864845 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 28 Nov 2025 13:55:32 -0800
+Received: from 272423864845 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 28 Nov 2025 13:55:32 -0800
+From: lewis.larry@linyal.xyz
+Sender: <Lewis.Larry@linyal.xyz>
+List-Unsubscribe: 9.WKBYYHORAMRQB@luxyinbox.site
+X-IncomingHeaderCount: 10
+Return-Path: lewis.larry@linyal.xyz
+Date: Fri, 28 Nov 2025 13:55:32 -0800
+X-Google-Sender-Auth: _PMNsxyODwcMM2WWizLrx9RL3WQ
+X-Gm-Features: AWmQ_bmv060bKQ6xFO6yamjzujfbRDLY9o7IIjCx8RcuVzb2oMfz1VnHTQ6dDDg
+Message-ID: <CADR=a5K30s=iNEhYB9J-kCnFae4-n5AaaN4cSjjvoUTgjUGUwQ@mail.gmail.com>
+Subject: =?UTF-8?Q?=F0=9F=91=91_Claim_Your_500=25_Royal_Bonus_=2B_50_Free_Spins_on_?=
+	=?UTF-8?Q?Gonzo=E2=80=99s_Quest=21?=
+To: phishing@pot
+Content-Type: multipart/alternative; boundary="00000000000048628b0644aeb0fe"
+X-IncomingHeaderCount: 22
+X-MS-Exchange-Organization-ExpirationStartTime: 28 Nov 2025 21:55:33.4097
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 94b8a871-e403-4d8c-fe39-08de2ec8dae6
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF000044A9:EE_|SJ0PR10MB6431:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource: BN2PEPF000044A9.namprd04.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 11/28/2025 9:33:39 PM
+X-MS-Office365-Filtering-Correlation-Id: 94b8a871-e403-4d8c-fe39-08de2ec8dae6
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 209.85.208.52
+X-SID-PRA: LEWIS.LARRY@LINYAL.XYZ
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|84100799003|3025599003|30140799003|46080799006|29080799003|9400799040|1680799066|42200799015|461199028|9000799056|9020799016|970799057|20103052909095|33080799003|10300799035|56000799018|2700799029|32080799003|3217299011|3151999006|32040799009|4001999021|56899033|1370799030|1380799030|1360799030|1602099012|18301999012|18025499012|440099028|4302099013|3412199025|22015499006|18021999003|30041999003|2406899039|4006899015|2006899018|3306899015;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Nov 2025 21:55:33.3421
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 94b8a871-e403-4d8c-fe39-08de2ec8dae6
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044A9.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB6431
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.3398746
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9366.012
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9560006)(10180024)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?UE9KZ0dqQkdLNjBrL2h6K29EWW1uQ2E5cmtzZFc1cTFzdi9lZDNHczhxS3Bm?=
+ =?utf-8?B?bXZYWnNFSHFlVGRvektjSGsyaUN3TWU1TENmYVEwaG1oZVNKQ3Z2NGdtTVdu?=
+ =?utf-8?B?NDJpcWdrVnFYdlI0V25LQWxnSHpQNW81M3JCakVTd0hGOG1mdDBxb2phZDBT?=
+ =?utf-8?B?QnlscW03eVEvbHBreldOaUErT0J3ZTh5aEtBa29iMWlmZC9CSEphaG01Ti9D?=
+ =?utf-8?B?cG5BeUJxeVdvMWwvdnNxOVRMMjJFQTNiTFZ3bmRuNjVaTTR3djc3K3F1bnJx?=
+ =?utf-8?B?U1hMT3JPamt0TXdLK25EcmZiQm5oYWlySitPTDgrODN1TW80Y3I3WDdnNXRD?=
+ =?utf-8?B?eDgyOUtEVTg0TmpEZ1pNN24rK0FwKzFaNVIyNDMzMHdNNVpKQlI1bXc5bVhZ?=
+ =?utf-8?B?a1MwT3h2MmRuUlJ4QWtEcVI1TnB2WTJXam01cFdJMkpxd0RvZnJ0cThGQlhl?=
+ =?utf-8?B?ZmphcEtsZWVCakR2RDRYUEYrMTEvY2pPeDYzQitWQUFIRk9SZXpxaWM3WWRQ?=
+ =?utf-8?B?RldyelNVd2FPYkhkcHpEVXVDbXU5aWxSS0pzMXVTaGFZVXBtSGdOOWtVRWNT?=
+ =?utf-8?B?OHN2WUhFd2JlbnB5VGdhdVNSK3g3S1hGMlQ4L29YdUVwbmxGcDJaV0djbjZZ?=
+ =?utf-8?B?eFNVVHg0d2toVXFVMi8wOVQ1ZlpPK3ltdUl3TDFYbmhsWERJaXRMeUwyWGgy?=
+ =?utf-8?B?c0ZFbEdzeEhkRW16YW1JakJGYU5oK2U2U1lMQWZNYjNEdHdSNmJpd0Q0N1cw?=
+ =?utf-8?B?V2phMmxQRW01dWRXNkd5VlRvTEZkOEJTeEVrbWpWTHplNFdVb2xNZ3QwWEZY?=
+ =?utf-8?B?NTNzRnlHRHpVMnd4RjV3cjBSdXc0Rk84MjA2QUlGcEZTSWpTNWV5eGNYOVFQ?=
+ =?utf-8?B?RnB5ZXBIL2UwVnlUQ1VKUFhLck1ZK0tsWDdVWFZmNlp5enFjVVl6QVc2TUFO?=
+ =?utf-8?B?RHJhNGZzNDhEeUxYUStQcnB1Mmg0cENDSG5OTGN3bVd0Q0tFdnBBK2p1WjhP?=
+ =?utf-8?B?V0dFSWxVbFBabmwyVkdnUjR4dXAzUVRmNGQ5ekVhMXIzZUIwSUZoR2NhUWVI?=
+ =?utf-8?B?cktiTWVZZWkwN2dCL1pHdDBjR3gyeXdSZHNlL2JGU1RVL0g3UEdoLy9tSm56?=
+ =?utf-8?B?YUh3Z2I0NE9sNGEwaTBWVUZrSnlvdUNNUzNva1BaMm44eWEzZTlPc2lXL0cv?=
+ =?utf-8?B?TCtTK1g4SjNFWXFiUHU3blNqNUtBcHpaQXhUZWtxOFpoS0VCQVdmVlB2NVUr?=
+ =?utf-8?B?NHdKZ21aU1FMczBPYzFVTEZxeTNLSWlIMjZpWlAycDU4Y091OWtpUldTZ2ti?=
+ =?utf-8?B?ZHhVZi9qdjA3WjhOM2RPZVRxUHFPeUNRU2dncFVoOVM5azBCMzBxUEF0Y21j?=
+ =?utf-8?B?bTlScFkvTVJJNHUwaFNURGFMbjdsQlVkQ01NTmtlamxtZHdiS04xYlVsQTNM?=
+ =?utf-8?B?WHVZVjNxd3ByNWtJSXJoVFN3cktHUExOcFhxUzJhSnpOdHVSTWk5aVhsTzg1?=
+ =?utf-8?B?cGtSais0MnpuSy9jNm5yRXQ2NXF0VURyUXkzeG13SFpCK1lqVXhyK0kwWDl3?=
+ =?utf-8?B?L1hDRzJPWU1QYldEVk10T1U1aFFYNjgvT3psUTZBL2VqRXZmek1BZW5kNml0?=
+ =?utf-8?B?bGEzd2drMkIyVFIvN0dNUTlSeGhmcEk4L1FKWWdVMVM0dWY3dXZ3RlBYNys5?=
+ =?utf-8?B?djBiSFg3UUdldmRuZG5wOWpnTmJxMGFpSHRlNVdZVXNjdnZiWGhUcVhmZjN6?=
+ =?utf-8?B?V3lSbFZOU3BHa1d4NDN3NWRSdkhtcDVqUGxpNzRidDlCc2NjOUU1WFBpb2xJ?=
+ =?utf-8?B?TWp5aTIzZ1N0d2pOMmxvTEgrZmhFc2NlNXZaUTRlYmtrTDk2eTNOVWxFUldO?=
+ =?utf-8?B?TUhkSlR1RUJQMHlsRTVWKzI4RVAyRzNuK1NYN01FT1BEODVhbDhYY2FOVUZE?=
+ =?utf-8?B?Z1BRNWRkVnYwS0tOUXliUWRPdURDS1pVSTdPUkVkckZHSWEzRU1zbnpPVTBX?=
+ =?utf-8?B?MUszVlFBTm9wN0JDS25ySlpGaU5zN05VcVVxY2F0Zitlejd2bjlZL2tCc3Fh?=
+ =?utf-8?B?WTBreWRkUlBVUTNZK2ZMaUJ5YTBsWlNDYzdxTnM3bnNlSU9rZnBVLzdDd0sy?=
+ =?utf-8?B?Z1Q2WFRHYUJtL2o0MnFqQmxTczFrck1kMzBoYXBVK1l3cTRzbG15MWhZSS9q?=
+ =?utf-8?B?T01GclQ3WkhucDByeWVXbVkwMWUxeTBrSWo0SnJTMWVhVGV5WWV4eFFNNkxO?=
+ =?utf-8?B?VGp4WDB3dkRGSUFkVVNoY0xMTEZhL2ZjM2wxYjA4T0N0MFZTemd5R3hOM0pZ?=
+ =?utf-8?B?a0lBazE5K0lBRVRBWTVUZjQ4c1JkSUk2bGhpYXhJZjM4ZGcyblVKd2lJWGpR?=
+ =?utf-8?B?ZDY3MHBqT09HMUUyME1WaVAvOUhCQk1vbjU5djMxWXk5eWJILzVRS2RGYmlO?=
+ =?utf-8?B?SGQ1STVTOG00eEVBK1d2a2ZvODBnbHVmcEZCbkV0WnFneFJqUHZSWlIwOWhH?=
+ =?utf-8?B?aldVbk80ekxqMnV2b3FLMlNvMHAyanp2YTAzRWtBNGJ3OG93WjBlWkZ5d1dY?=
+ =?utf-8?B?Y0NFaWFpNllWUU1CUi9RdzJQcnl2TzlteEUyUWRUczZxVHVUbFdYRkZBdkwv?=
+ =?utf-8?B?dnpIRWFUNDhUNkZpS3hkYTVscE4xSDkzS2FrdjZPaUNjODVQcHFzWk0xWmdz?=
+ =?utf-8?B?WHJ2bGJkZDMxVkhlV2J5UEJBNXhvQTRJUU4rQXhxMGIxOHZtcXgxTDZ5MjlY?=
+ =?utf-8?B?QUNrdjdTWjNZNXlGRHhhMFhWWnlPSkR6RGdsbnNaN1U1Ym9SM3p1V3NIdlNz?=
+ =?utf-8?B?M1V5NWl5L1k0alAySmRndWxqQUVHekUySHRsZ3paQ1psZ3ZNMWlhQ1Y2K0FC?=
+ =?utf-8?B?WUlmVU00ZXJ5L3lQdEpUdlpqMzlEYXRQMHZhL0F2OXNFeCtkM3BIMTNRVGQw?=
+ =?utf-8?B?bTJ3ZHlKV0xyZy9FaVJVdkthYytiSTZ5Nm5HaUVSdWx3cndCd1Z1Rkx4SVgr?=
+ =?utf-8?B?RUNPYzlzc0prcWo2M0ZaMnVWTGZMUnVwM1pqVEJNTVNpTzBUcVNZQ25tc3Uw?=
+ =?utf-8?B?QjcxcWF5OHR1RUxRVllYem9xNFRRWmMyM2pFY3gzUE5yaDlLOUJQNk1HcGFJ?=
+ =?utf-8?B?L0NUdlVHeFlzcklyVXJ5Y0phaXRNNjFGcFdxWlozWW83SHhXYnJaZFhWTlhs?=
+ =?utf-8?B?b3pVT3FzWkpxYm1xTG9rNlFhcG51M0lXSTdhTktQMDZMaHVWTXRJZVN4enZ3?=
+ =?utf-8?B?TUwvRU9tTmRJcXU5RnVxOWhkOERTQ04zS0VFeDZTRVg5R0NEY2Q3ajZob043?=
+ =?utf-8?B?Z0E4L0xkbm9uSEV2c0VaYnluRjFlYXVwWlhzTHduYkVPKy8yOTJQdTdiSTZp?=
+ =?utf-8?B?ZzNhNjdlSzZ1QUx2RmZYcW1mZzBSMStZeStFQnVwaDJEekUrZkxCNlQrR0h0?=
+ =?utf-8?B?eVVnUmt1Yml3NmFsT3BSOGJ5ZStuRkt5K0tpaVRJQW9hcXJTTVZ3NGNVNmoz?=
+ =?utf-8?B?czcrVlRRY2xIYU1GTncyb1BITnZpYVlVYVg2TXB4dXB0UVJ3Z1ZDR1NBaXY5?=
+ =?utf-8?B?YTlNOVdnUHRhcG1TREV2R0dOTlhaR3l0YTZTcDJkQWNIUE9IQU9ReGxSd0Ri?=
+ =?utf-8?B?SkovS0VQZXJtRDZJUEpYaVV6K01UQTdpQ2FWN0RUODcyNnE1QkFaam5EQkpx?=
+ =?utf-8?B?bmY0VmlLUWhHZ0hmRm9mVUVIRHBlWVRjT0Rvb1pWWTFVcUJ2VVFTd1hKR0gv?=
+ =?utf-8?B?Rnd3Y3g1NlMzdHRFajMrM0d1bjNGS3QzT2UzN0htQm8rYmt1dGpwMGFjQmMx?=
+ =?utf-8?B?clpyZVBnWDNjU0Jwa1FhclBxcC9DQ2hYbVlXSHh4RzFxZFNabE9CeWhmTjhD?=
+ =?utf-8?B?R2tZQUFJSnVLcjA1SWEvN0FVZXQxVE5rU3RJZkVrRVZPdDBHNVVtaXU1TW4r?=
+ =?utf-8?Q?OLxlxK2CwDAhlQIkqFEKq5L/FYMtXgXX8pwgHzdi9z0=3D?=
+MIME-Version: 1.0
+
+--00000000000048628b0644aeb0fe
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+The crown is waiting! 500% bonus + 50 Free Spins on Gonzo's Quest
+<http://perfecto.sa.com/4NWgGl4815mOSW289cidruqwbgq84PPBVOMCQVTDWFPD26106EN=
+PU491883C12>
+
+* All Hail the Biggest Bonus in the Kingdom! *
+Join Now
+<http://perfecto.sa.com/4ggQwo4815xnpi289anrqpozxnx84UEBFZHPODYUJRJX26106NK=
+IH491883S12>
+
+*Use Bonus Code : KING1*
+<http://perfecto.sa.com/4ovPnF4815jRKM289cccczleuit84GOZBWDNNPSUPRDA26106SM=
+KJ491883Y12>
+
+Hi phishing@pot,
+
+Welcome to *King's Chip*, where the reels are your loyal subjects and every
+spin is a royal decree of fun.
+
+Start your reign in style:
+
+Deposit =E2=82=AC/=C2=A3/$20+ using code *KING1 *and enjoy a majestic *500%=
+ bonus + 50
+Free Spins on Gonzo's Quest!*
+
+But that's just the beginning of your royal journey=E2=80=A6
+
+Your full welcome package is fit for a king =E2=80=94 up to =E2=82=AC/=C2=
+=A3/$7,000!
+
+Spin like royalty, win like royalty=E2=80=A6 and remember - even the smalle=
+st chip
+can lead to a crown-sized fortune.
+Claim My Royal Bonus
+<http://perfecto.sa.com/4IfQXV4815jEeE289gkzfifyotx84CCBQWNMSSHDPQPT26106MT=
+QZ491883H12>
+
+*Minimum deposit =E2=82=AC/=C2=A3/$ 20
+*Free Spins are on Gonzo's Quest
+*Up to 1 bonus redemptions
+*=C2=A320 is equivalent to =E2=82=AC20 or $20
+*Max bonus amount =E2=82=AC/=C2=A3/$ 2500
+*Terms & Conditions apply
+*Questions? Contact us 24/7*
+<http://perfecto.sa.com/4ELLnW4815ivHK289mluqbkpsjm84NSHGXSWZLXAVOCV26106CQ=
+RG491883Y12>
+<http://perfecto.sa.com/4xagOp4815SdgN289oaldwxtscq84XJIVEAOXIQDACDO26106WJ=
+EH491883p12>
+
+LIVE DEALER
+<http://perfecto.sa.com/4Snwzw4815JIXQ289pyuuqnwnon84DSXBCZHUVSVYSDQ26106ZD=
+OQ491883k12>
+All Promotions
+<http://perfecto.sa.com/4mmpNw4815WOAg289mhckxxlivr84EUELZIUDQHSMFRX26106AX=
+YK491883b12>
+We at King's Chip are committed to enhancing your gaming experience and
+ensuring you have the best chance to win. We're here to support you and our
+dedicated customer support team is just a click away. If you have any
+questions, concerns, or simply want to chat with our friendly support
+agents, don't hesitate to reach out. You can easily get in touch with us
+through the "Contact Support" option on our website, and we'll be more than
+happy to assist you.
+
+Please remember that you are receiving this email because you signed up to
+King's Chip. If you ever wish to stop receiving our emails and updates, you
+can do so by clicking the "unsubscribe" link below. We respect your
+preferences, and your gaming experience with us is always our top priority.
+
+At Kings Chip, we advocate responsible gaming practices. Gambling is
+allowed only for individuals aged 18 and above. We encourage you to play
+responsibly, set limits, and seek help if you ever feel that your gaming
+habits may be becoming a concern. Your safety and enjoyment are paramount,
+and we're here to support you in every way we can.Thank you for choosing
+Savanna Wins for your gaming entertainment
+Terms and Condition
+<http://perfecto.sa.com/4OboXG4815CpYN289lpjjfvqbdk84FNNSZZBRFKJMUHS26106NA=
+KI491883f12>
+Responsible Gaming
+<http://perfecto.sa.com/4fDITG4815vIeO289fvwpfnpzkw84WSXCPZNVVUQIULJ26106BD=
+CI491883H12>
+Banking
+<http://perfecto.sa.com/4yVxgm4815MjNv289pklpgdzagt84XAVEOJCDEHQPJWM26106MR=
+TH491883c12>
+If you wish to unsubscribe and no longer receive these emails, you can do
+so by clicking here
+<http://perfecto.sa.com/5Pvyib4815ctkv289prrkdzetda84WUMTNFOIWFURRIQ26106CD=
+QE491883W12>
+Or write to: 792 Benson Street, Eau Claire, WI, Wisconsin, 54701 Or Click
+here
+<http://perfecto.sa.com/6mwZSf4815lYse289whaiqxidfc84ZPAAJVILKTHTMRN26106SX=
+FN491883B12>
+All rights reserved to King's Chip =C2=AE
+
+--00000000000048628b0644aeb0fe
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html class=3D"sg-campaigns"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1,=
+ minimum-scale=3D1, maximum-scale=3D1">
+
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3DEdge">
+
+
+
+<style type=3D"text/css">
+body, p, div {
+font-family: arial,helvetica,sans-serif;
+font-size: 14px;
+}
+body {
+color: #000000;
+}
+body a {
+color: #006837;
+text-decoration: none;
+}
+p { margin: 0; padding: 0; }
+table.wrapper {
+width:100% !important;
+table-layout: fixed;
+-webkit-font-smoothing: antialiased;
+-webkit-text-size-adjust: 100%;
+-moz-text-size-adjust: 100%;
+-ms-text-size-adjust: 100%;
+}
+img.max-width {
+max-width: 100% !important;
+}
+.column.of-2 {
+width: 50%;
+}
+.column.of-3 {
+width: 33.333%;
+}
+.column.of-4 {
+width: 25%;
+}
+ul ul ul ul  {
+list-style-type: disc !important;
+}
+ol ol {
+list-style-type: lower-roman !important;
+}
+ol ol ol {
+list-style-type: lower-latin !important;
+}
+ol ol ol ol {
+list-style-type: decimal !important;
+}
+@media screen and (max-width:480px) {
+.preheader .rightColumnContent,
+.footer .rightColumnContent {
+text-align: left !important;
+}
+.preheader .rightColumnContent div,
+.preheader .rightColumnContent span,
+.footer .rightColumnContent div,
+.footer .rightColumnContent span {
+text-align: left !important;
+}
+.preheader .rightColumnContent,
+.preheader .leftColumnContent {
+font-size: 80% !important;
+padding: 5px 0;
+}
+table.wrapper-mobile {
+width: 100% !important;
+table-layout: fixed;
+}
+img.max-width {
+height: auto !important;
+max-width: 100% !important;
+}
+a.bulletproof-button {
+display: block !important;
+width: auto !important;
+font-size: 80%;
+padding-left: 0 !important;
+padding-right: 0 !important;
+}
+.columns {
+width: 100% !important;
+}
+.column {
+display: block !important;
+width: 100% !important;
+padding-left: 0 !important;
+padding-right: 0 !important;
+margin-left: 0 !important;
+margin-right: 0 !important;
+}
+.social-icon-column {
+display: inline-block !important;
+}
+}
+</style>
+
+
+</head>
+<body>
+<center class=3D"wrapper">
+<div class=3D"webkit">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" clas=
+s=3D"wrapper" bgcolor=3D"#FFFFFF">
+<tr>
+<td valign=3D"top" bgcolor=3D"#FFFFFF" width=3D"100%">
+<table width=3D"100%" role=3D"content-container" class=3D"outer" align=3D"c=
+enter" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+<tr>
+<td width=3D"100%">
+<table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+<tr>
+<td>
+
+<table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" styl=
+e=3D"width:100%;max-width:600px" align=3D"center">
+<tr>
+<td role=3D"modules-container" style=3D"padding:0px 0px 0px 0px;color:#0000=
+00;text-align:left" bgcolor=3D"#210C42" width=3D"100%" align=3D"left"><tabl=
+e class=3D"module preheader preheader-hide" role=3D"module" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"display:none!impo=
+rtant;opacity:0;color:transparent;height:0;width:0">
+<tr>
+<td role=3D"module-content">
+<p>The crown is waiting! 500% bonus + 50 Free Spins on Gonzo's Quest</p>
+</td>
+</tr>
+</table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"ce=
+nter" width=3D"100%" role=3D"module" style=3D"padding:0px 0px 0px 0px" bgco=
+lor=3D"#210C42">
+<tbody>
+<tr role=3D"module-content">
+<td height=3D"100%" valign=3D"top"><table width=3D"580" style=3D"width:580p=
+x;border-spacing:0;border-collapse:collapse;margin:0px 10px 0px 10px" cellp=
+adding=3D"0" cellspacing=3D"0" align=3D"left" border=3D"0" bgcolor=3D"" cla=
+ss=3D"column column-0">
+<tbody>
+<tr>
+<td style=3D"padding:0px;margin:0px;border-spacing:0"><table class=3D"wrapp=
+er" role=3D"module" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"font-size:6px;line-height:10px;padding:10px 10px 10px 10px" va=
+lign=3D"top" align=3D"center">
+
+<a href=3D"http://perfecto.sa.com/4NWgGl4815mOSW289cidruqwbgq84PPBVOMCQVTDW=
+FPD26106ENPU491883C12">
+
+
+
+
+<img class=3D"max-width" border=3D"0" style=3D"display:block; color:#000000=
+; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size=
+:16px; max-width:30% !important; width:30%; height:auto !important;" src=3D=
+"http://cdn.mcauto-images-production.sendgrid.net/6a583904b7e21994/213c29b5=
+-d436-4ba3-826a-18ae3bd7866d/600x235.png">
+
+
+
+<img class=3D"max-width" border=3D"0" style=3D"display:block; color:#000000=
+; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size=
+:16px; max-width:30% !important; width:30%; height:auto !important;" src=3D=
+"//cdn.mcauto-images-production.sendgrid.net/6a583904b7e21994/213c29b5-d436=
+-4ba3-826a-18ae3bd7866d/600x235.png">
+
+
+
+
+
+
+
+</a></td>
+</tr>
+</tbody>
+</table><table class=3D"module" role=3D"module" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:18px 18px 18px 18px;line-height:20px;text-align:inheri=
+t;background-color:210c42" height=3D"100%" valign=3D"top" bgcolor=3D"210C42=
+"><div><div style=3D"font-family:inherit;text-align:center"><span style=3D"=
+color:#ffffff;font-size:20px"><strong> All Hail the Biggest Bonus in the Ki=
+ngdom! </strong></span></div><div></div></div></td>
+</tr>
+</tbody>
+</table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"mo=
+dule" role=3D"module" style=3D"table-layout:fixed" width=3D"100%">
+<tbody>
+<tr>
+<td align=3D"center" class=3D"outer-td" style=3D"padding:0px 0px 0px 0px" b=
+gcolor=3D"">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"button-css=
+__deep-table___2OZyb wrapper-mobile" style=3D"text-align:center">
+<tbody>
+<tr>
+<td align=3D"center" bgcolor=3D"#F2D022" class=3D"inner-td" style=3D"border=
+-radius:6px;font-size:16px;text-align:center;background-color:inherit"><a s=
+tyle=3D"background-color:#f2d022;border:3px solid #f2d022;border-color:#f2d=
+022;border-radius:20px;border-width:3px;color:#ffffff;display:inline-block;=
+font-weight:400;letter-spacing:0px;line-height:normal;padding:10px 10px 10p=
+x 10px;text-align:center;text-decoration:none;border-style:solid;font-size:=
+20px" href=3D"http://perfecto.sa.com/4ggQwo4815xnpi289anrqpozxnx84UEBFZHPOD=
+YUJRJX26106NKIH491883S12" target=3D"_blank">Join Now</a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table><table class=3D"module" role=3D"module" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:10px 5px 10px 5px;line-height:20px;text-align:inherit;=
+background-color:210c42" height=3D"100%" valign=3D"top" bgcolor=3D"210C42" =
+role=3D"module-content"><div><div style=3D"font-family:inherit;text-align:c=
+enter"><span style=3D"color:#ffffff;font-size:20px"><strong>Use Bonus Code =
+: KING1</strong></span></div><div></div></div></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"ce=
+nter" width=3D"100%" role=3D"module" style=3D"padding:0px 0px 0px 0px;box-s=
+izing:border-box" bgcolor=3D"#210C42">
+<tbody>
+<tr role=3D"module-content">
+<td height=3D"100%" valign=3D"top"><table width=3D"600" style=3D"width:600p=
+x;border-spacing:0;border-collapse:collapse;margin:0px 0px 0px 0px" cellpad=
+ding=3D"0" cellspacing=3D"0" align=3D"left" border=3D"0" bgcolor=3D"" class=
+=3D"column column-0">
+<tbody>
+<tr>
+<td style=3D"padding:0px;margin:0px;border-spacing:0"><table class=3D"wrapp=
+er" role=3D"module" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"font-size:6px;line-height:10px;padding:0px 0px 0px 0px" valign=
+=3D"top" align=3D"center">
+
+<a href=3D"http://perfecto.sa.com/4ovPnF4815jRKM289cccczleuit84GOZBWDNNPSUP=
+RDA26106SMKJ491883Y12">
+
+
+
+
+<img class=3D"max-width" border=3D"0" style=3D"display:block; color:#000000=
+; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size=
+:16px; max-width:100% !important; width:100%; height:auto !important;" src=
+=3D"http://cdn.mcauto-images-production.sendgrid.net/717eca0f7fde3e42/357ff=
+732-1af9-4d1c-8d92-9d67a042e53b/948x447.png">
+
+
+
+<img class=3D"max-width" border=3D"0" style=3D"display:block; color:#000000=
+; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size=
+:16px; max-width:100% !important; width:100%; height:auto !important;" src=
+=3D"//cdn.mcauto-images-production.sendgrid.net/717eca0f7fde3e42/357ff732-1=
+af9-4d1c-8d92-9d67a042e53b/948x447.png">
+
+
+
+
+
+
+</a></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"ce=
+nter" width=3D"100%" role=3D"module" style=3D"padding:0px 10px 0px 10px;box=
+-sizing:border-box" bgcolor=3D"#210C42">
+<tbody>
+<tr role=3D"module-content">
+<td height=3D"100%" valign=3D"top"><table width=3D"580" style=3D"width:580p=
+x;border-spacing:0;border-collapse:collapse;margin:0px 0px 0px 0px" cellpad=
+ding=3D"0" cellspacing=3D"0" align=3D"left" border=3D"0" bgcolor=3D"" class=
+=3D"column column-0">
+<tbody>
+<tr>
+<td style=3D"padding:0px;margin:0px;border-spacing:0"><table class=3D"modul=
+e" role=3D"module" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:10px 10px 18px 10px;line-height:22px;text-align:inheri=
+t;background-color:#210c42" height=3D"100%" valign=3D"top" bgcolor=3D"#210C=
+42"><div><div style=3D"font-family:inherit;text-align:inherit"><span style=
+=3D"font-size:16px;color:#ffffff">Hi phishing@pot,</span></div>
+<div style=3D"font-family:inherit;text-align:inherit"><br></div>
+<div style=3D"font-family:inherit;text-align:inherit"><span style=3D"font-s=
+ize:16px;color:#ffffff">Welcome to </span><span style=3D"font-size:16px;col=
+or:#ffffff"><strong>King's Chip</strong></span><span style=3D"font-size:16p=
+x;color:#ffffff">, where the reels are your loyal subjects and every spin i=
+s a royal decree of fun. <br>
+<br>
+Start your reign in style:<br>
+<br>
+Deposit =E2=82=AC/=C2=A3/$20+ using code </span><span style=3D"font-size:16=
+px;color:#ffffff"><strong>KING1 </strong></span><span style=3D"font-size:16=
+px;color:#ffffff">and enjoy a majestic </span><span style=3D"font-size:16px=
+;color:#ffffff"><strong>500% bonus + 50 Free Spins on Gonzo's Quest!</stron=
+g></span><span style=3D"font-size:16px;color:#ffffff"><br>
+<br>
+But that's just the beginning of your royal journey=E2=80=A6<br>
+<br>
+Your full welcome package is fit for a king =E2=80=94 up to =E2=82=AC/=C2=
+=A3/$7,000! <br>
+<br>
+Spin like royalty, win like royalty=E2=80=A6 and remember - even the smalle=
+st chip can lead to a crown-sized fortune.<br>
+</span></div><div></div></div></td>
+</tr>
+</tbody>
+</table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"mo=
+dule" role=3D"module" style=3D"table-layout:fixed" width=3D"100%">
+<tbody>
+<tr>
+<td align=3D"center" bgcolor=3D"" class=3D"outer-td" style=3D"padding:0px 0=
+px 0px 0px">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"wrapper-mo=
+bile" style=3D"text-align:center">
+<tbody>
+<tr>
+<td align=3D"center" bgcolor=3D"#F2D022" class=3D"inner-td" style=3D"border=
+-radius:6px;font-size:16px;text-align:center;background-color:inherit">
+<a href=3D"http://perfecto.sa.com/4IfQXV4815jEeE289gkzfifyotx84CCBQWNMSSHDP=
+QPT26106MTQZ491883H12" style=3D"background-color:#f2d022;border:3px solid #=
+f2d022;border-color:#f2d022;border-radius:20px;border-width:3px;color:#ffff=
+ff;display:inline-block;font-size:20px;font-weight:400;letter-spacing:0px;l=
+ine-height:normal;padding:10px 10px 10px 10px;text-align:center;text-decora=
+tion:none;border-style:solid" target=3D"_blank">Claim My Royal Bonus</a>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table><table class=3D"module" role=3D"module" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:5px 0px 5px 0px" role=3D"module-content" height=3D"100=
+%" valign=3D"top" bgcolor=3D"">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"center" wi=
+dth=3D"100%" height=3D"2px" style=3D"line-height:2px;font-size:2px">
+<tbody>
+<tr>
+<td style=3D"padding:0px 0px 2px 0px" bgcolor=3D"#eeeeee"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table><table class=3D"module" role=3D"module" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:5px 18px 18px 18px;line-height:22px;text-align:inherit=
+" height=3D"100%" valign=3D"top" bgcolor=3D""><div><div style=3D"font-famil=
+y:inherit;text-align:inherit"><span style=3D"color:#cacaca;font-size:14px">=
+*Minimum deposit =E2=82=AC/=C2=A3/$ 20<br>
+*Free Spins are on Gonzo's Quest<br>
+*Up to 1 bonus redemptions<br>
+*=C2=A320 is equivalent to =E2=82=AC20 or $20<br>
+*Max bonus amount =E2=82=AC/=C2=A3/$ 2500<br>
+*Terms &amp; Conditions apply</span></div><div></div></div></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table><table class=3D"module" role=3D"module" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:18px 0px 18px 0px;line-height:22px;text-align:inherit;=
+background-color:#210c42" height=3D"100%" valign=3D"top" bgcolor=3D"#210C42=
+" role=3D"module-content"><div><div style=3D"font-family:inherit;text-align=
+:center"><a href=3D"http://perfecto.sa.com/4ELLnW4815ivHK289mluqbkpsjm84NSH=
+GXSWZLXAVOCV26106CQRG491883Y12"><span style=3D"font-size:24px;color:#f2d022=
+"><u>Questions? Contact us 24/7</u></span></a></div><div></div></div></td>
+</tr>
+</tbody>
+</table><table class=3D"wrapper" role=3D"module" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"font-size:6px;line-height:10px;padding:0px 8px 0px 8px" valign=
+=3D"top" align=3D"center">
+
+<a href=3D"http://perfecto.sa.com/4xagOp4815SdgN289oaldwxtscq84XJIVEAOXIQDA=
+CDO26106WJEH491883p12">
+
+
+
+<img class=3D"max-width" border=3D"0" style=3D"display:block; color:#000000=
+; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size=
+:16px; max-width:100% !important; width:100%; height:auto !important;" src=
+=3D"http://cdn.mcauto-images-production.sendgrid.net/6a583904b7e21994/641a3=
+866-3e9f-46ae-9309-3e26440b4213/488x150.png">
+
+
+<img class=3D"max-width" border=3D"0" style=3D"display:block; color:#000000=
+; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size=
+:16px; max-width:100% !important; width:100%; height:auto !important;" src=
+=3D"//cdn.mcauto-images-production.sendgrid.net/6a583904b7e21994/641a3866-3=
+e9f-46ae-9309-3e26440b4213/488x150.png">
+
+
+
+
+</a></td>
+</tr>
+</tbody>
+</table><table class=3D"module" role=3D"module" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:0px 0px 0px 0px" role=3D"module-content" height=3D"100=
+%" valign=3D"top" bgcolor=3D"">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"center" wi=
+dth=3D"100%" height=3D"10px" style=3D"line-height:10px;font-size:10px">
+<tbody>
+<tr>
+<td style=3D"padding:0px 0px 10px 0px" bgcolor=3D"#210C42"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table><table class=3D"module" role=3D"module" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:18px 0px 18px 0px;line-height:22px;text-align:inherit"=
+ height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-content"><div><=
+div style=3D"font-family:inherit;text-align:center"><a href=3D"http://perfe=
+cto.sa.com/4Snwzw4815JIXQ289pyuuqnwnon84DSXBCZHUVSVYSDQ26106ZDOQ491883k12">=
+<span style=3D"font-size:18px;color:#f2d022">LIVE DEALER</span></a></div>
+<div style=3D"font-family:inherit;text-align:center"><a href=3D"http://perf=
+ecto.sa.com/4mmpNw4815WOAg289mhckxxlivr84EUELZIUDQHSMFRX26106AXYK491883b12"=
+><span style=3D"font-size:18px;color:#f2d022">All Promotions</span></a></di=
+v><div></div></div></td>
+</tr>
+</tbody>
+</table><table class=3D"module" role=3D"module" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:18px 18px 18px 18px;line-height:22px;text-align:inheri=
+t;background-color:#210c42" height=3D"100%" valign=3D"top" bgcolor=3D"#210C=
+42" role=3D"module-content"><div><div style=3D"font-family:inherit;text-ali=
+gn:center"><span style=3D"color:#ffffff">We at King's Chip are committed to=
+ enhancing your gaming experience and ensuring you have the best chance to =
+win. We're here to support you and our dedicated customer support team is j=
+ust a click away. If you have any questions, concerns, or simply want to ch=
+at with our friendly support agents, don't hesitate to reach out. You can e=
+asily get in touch with us through the &quot;Contact Support&quot; option o=
+n our website, and we'll be more than happy to assist you.<br>
+<br>
+Please remember that you are receiving this email because you signed up to =
+King's Chip. If you ever wish to stop receiving our emails and updates, you=
+ can do so by clicking the &quot;unsubscribe&quot; link below. We respect y=
+our preferences, and your gaming experience with us is always our top prior=
+ity.<br>
+<br>
+At Kings Chip, we advocate responsible gaming practices. Gambling is allowe=
+d only for individuals aged 18 and above. We encourage you to play responsi=
+bly, set limits, and seek help if you ever feel that your gaming habits may=
+ be becoming a concern. Your safety and enjoyment are paramount, and we're =
+here to support you in every way we can.Thank you for choosing Savanna Wins=
+ for your gaming entertainment</span></div><div></div></div></td>
+</tr>
+</tbody>
+</table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"ce=
+nter" width=3D"100%" role=3D"module" style=3D"padding:0px 0px 0px 0px" bgco=
+lor=3D"#210C42">
+<tbody>
+<tr role=3D"module-content">
+<td height=3D"100%" valign=3D"top"><table width=3D"186" style=3D"width:186p=
+x;border-spacing:0;border-collapse:collapse;margin:0px 10px 0px 0px" cellpa=
+dding=3D"0" cellspacing=3D"0" align=3D"left" border=3D"0" bgcolor=3D"" clas=
+s=3D"column column-0">
+<tbody>
+<tr>
+<td style=3D"padding:0px;margin:0px;border-spacing:0"><table class=3D"modul=
+e" role=3D"module" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:18px 0px 18px 0px;line-height:22px;text-align:inherit;=
+background-color:#210c42" height=3D"100%" valign=3D"top" bgcolor=3D"#210C42=
+" role=3D"module-content"><div><div style=3D"font-family:inherit;text-align=
+:center"><a href=3D"http://perfecto.sa.com/4OboXG4815CpYN289lpjjfvqbdk84FNN=
+SZZBRFKJMUHS26106NAKI491883f12"><span style=3D"color:#f2d022">Terms and Con=
+dition</span></a></div><div></div></div></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table><table width=3D"186" style=3D"width:186px;border-spacing:0;border-c=
+ollapse:collapse;margin:0px 10px 0px 10px" cellpadding=3D"0" cellspacing=3D=
+"0" align=3D"left" border=3D"0" bgcolor=3D"" class=3D"column column-1">
+<tbody>
+<tr>
+<td style=3D"padding:0px;margin:0px;border-spacing:0"><table class=3D"modul=
+e" role=3D"module" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:18px 0px 18px 0px;line-height:22px;text-align:inherit"=
+ height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-content"><div><=
+div style=3D"font-family:inherit;text-align:center"><a href=3D"http://perfe=
+cto.sa.com/4fDITG4815vIeO289fvwpfnpzkw84WSXCPZNVVUQIULJ26106BDCI491883H12">=
+<span style=3D"color:#f2d022">Responsible Gaming</span></a></div><div></div=
+></div></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table><table width=3D"186" style=3D"width:186px;border-spacing:0;border-c=
+ollapse:collapse;margin:0px 0px 0px 10px" cellpadding=3D"0" cellspacing=3D"=
+0" align=3D"left" border=3D"0" bgcolor=3D"" class=3D"column column-2">
+<tbody>
+<tr>
+<td style=3D"padding:0px;margin:0px;border-spacing:0"><table class=3D"modul=
+e" role=3D"module" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:18px 0px 18px 0px;line-height:22px;text-align:inherit"=
+ height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-content"><div><=
+div style=3D"font-family:inherit;text-align:center"><a href=3D"http://perfe=
+cto.sa.com/4yVxgm4815MjNv289pklpgdzagt84XAVEOJCDEHQPJWM26106MRTH491883c12">=
+<span style=3D"color:#f2d022">Banking</span></a></div><div></div></div></td=
+>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table><table class=3D"module" role=3D"module" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:18px 0px 18px 0px;line-height:22px;text-align:inherit;=
+background-color:#210c42" height=3D"100%" valign=3D"top" bgcolor=3D"#210C42=
+" role=3D"module-content"><div><div style=3D"font-family:inherit;text-align=
+:center"><span style=3D"color:#ffffff">If you wish to unsubscribe and no lo=
+nger receive these emails, you can do so by
+<a href=3D"http://perfecto.sa.com/5Pvyib4815ctkv289prrkdzetda84WUMTNFOIWFUR=
+RIQ26106CDQE491883W12" style=3D"color:#f2d022">clicking here</a> Or write t=
+o:
+792 Benson Street, Eau Claire, WI, Wisconsin, 54701 Or <a href=3D"http://pe=
+rfecto.sa.com/6mwZSf4815lYse289whaiqxidfc84ZPAAJVILKTHTMRN26106SXFN491883B1=
+2" style=3D"color:#f2d022">Click here</a> </span></div><div></div></div></t=
+d>
+</tr>
+</tbody>
+</table><table class=3D"module" role=3D"module" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout:fixed">
+<tbody>
+<tr>
+<td style=3D"padding:18px 0px 18px 0px;line-height:22px;text-align:inherit;=
+background-color:#210c42" height=3D"100%" valign=3D"top" bgcolor=3D"#210C42=
+" role=3D"module-content"><div><div style=3D"font-family:inherit;text-align=
+:center"><span style=3D"font-size:18px;color:#ffffff">All rights reserved t=
+o King's Chip =C2=AE</span></div><div></div></div></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table><img src=3D"http://perfecto.sa.com/track/3tqmii4815sBiG289ckhrpjgta=
+w84NJACHMFMNPNBHLX26106SLSG491883Y12">
+</div>
+</center>
+</body>
+</html>
+
+--00000000000048628b0644aeb0fe--
