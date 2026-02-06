@@ -1,1142 +1,432 @@
-Received: from PH0PR10MB7063.namprd10.prod.outlook.com (::1) by
- MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Wed, 26 Nov 2025 03:39:41
+Received: from DS0PR10MB7477.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Fri, 19 Dec 2025 21:45:06
  +0000
-Received: from DU2PR04CA0337.eurprd04.prod.outlook.com (2603:10a6:10:2b4::35)
- by PH0PR10MB7063.namprd10.prod.outlook.com (2603:10b6:510:289::13) with
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=T9DCyMZEU5uctE2RPPWy0J3q8aa21Ke0Q3Ho6UnlDAqgmKAYTqx0QI3IgYE6gzvY+o+RWV1dgjkjkcyr9YVRRhx508LQcEDG402vbSRzMXijRvgrCxNHKOhbMeNnw15eWOawXnKH7owtH7Xfx6iqEoeq5LCv3QBgQgLEirj2vGIOLPRziBYjzHr9N3MEqjH1sVpTaSe7xz5Lqk8902+UQv92b2BFZKDx+/mVXXqldjE3lrdhDmF3gYd1tjvRLKoGua3u9OcYjpX0h8kMmIJIQPIwXPGh1yUf3QHQ6o8yVVn1kXXN1T7ugylkVc/SQthEdjBwVOhcxCdyznKjOrJDMw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AUvzM107xH72kpwGKxorFfx3SYv5iWkjfLghmQaTPBQ=;
+ b=wn2vCgEDqBc9ycYOOOMevpg1WDmycQvjBqLkaGfIh6m2Ur4G1zX5gWR6w5Gy9QyMIW2JxFPGgW4+3NBi8kzlzbIj701cEJ41+Jv3JilpO4dvoD5uNWV/MnsgNH0N74+NJdDowcrobFblWKCZkDaqKvb47u43eUw4obDMB5DyemJcjYLLHuMolANGZHyDFE3P+wyf/wLs/IcfeTMI87fWnhQw2XwmeRbdQlklK5H/VkZ5UrbSOlkyCEufPcsNZQJ0m2d4tv6pM2D8UMzh0Ux1h7nujrHtac8t5OKDjwFchADk9siUevy63dfDYZ+QZrtjF7HwvXbdtoPKyIBMLoNiUQ==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 40.107.75.106) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=cox.hotdeals.sa.com; dmarc=bestguesspass action=none
+ header.from=cox.hotdeals.sa.com; dkim=pass (signature was verified)
+ header.d=cox.hotdeals.sa.com; arc=pass (0 oda=1 ltdi=1
+ spf=[1,1,smtp.mailfrom=cox.hotdeals.sa.com]
+ dkim=[1,1,header.d=cox.hotdeals.sa.com]
+ dmarc=[1,1,header.from=cox.hotdeals.sa.com])
+Received: from BY5PR03CA0005.namprd03.prod.outlook.com (2603:10b6:a03:1e0::15)
+ by DS0PR10MB7477.namprd10.prod.outlook.com (2603:10b6:8:162::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.11; Wed, 26 Nov
- 2025 03:39:39 +0000
-Received: from DB1PEPF0003922F.eurprd03.prod.outlook.com
- (2603:10a6:10:2b4:cafe::e6) by DU2PR04CA0337.outlook.office365.com
- (2603:10a6:10:2b4::35) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9366.11 via Frontend Transport; Wed,
- 26 Nov 2025 03:39:35 +0000
-Authentication-Results: spf=pass (sender IP is 198.2.181.151)
- smtp.mailfrom=mail151.suw18.rsgsv.net; dkim=pass (signature was verified)
- header.d=mit.edu;dmarc=pass action=none header.from=mit.edu;compauth=pass
- reason=100
-Received-SPF: Pass (protection.outlook.com: domain of mail151.suw18.rsgsv.net
- designates 198.2.181.151 as permitted sender)
- receiver=protection.outlook.com; client-ip=198.2.181.151;
- helo=mail151.suw18.rsgsv.net; pr=C
-Received: from mail151.suw18.rsgsv.net (198.2.181.151) by
- DB1PEPF0003922F.mail.protection.outlook.com (10.167.8.102) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9366.7
- via Frontend Transport; Wed, 26 Nov 2025 03:39:39 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:BC0021422FC7C4351DBCCBE2C086EB650E47B47681737C464CA2FBCBD17656B9;UpperCasedChecksum:812AE3F7788E6AB70C4C0468EA297D63A7A4639FD79FF27C4C443D764F84246B;SizeAsReceived:2312;Count:22
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=k3;
-	t=1764123131; x=1764393131; i=mitx_ol@mit.edu;
-	bh=TkvPKptMHa9baxUj6sWRpHsVz+LFMCZ/XvdQipUZx+A=;
-	h=Subject:From:Reply-To:To:Date:Message-ID:X-MC-User:Feedback-ID:
-	 List-ID:List-Unsubscribe:List-Unsubscribe-Post:Content-Type:
-	 MIME-Version:CC:Date:Subject:From;
-	b=GiNKei/3jelXsgY0MKogqXoI2kFZBqysuixp4SEC/MzvKeoD0rGd4vdcPJcOWmcB/
-	 LIf5pjefgKQBSZ+A4QYZTCFjbTCykhjfa0svAIqKuzIWyZKuGhQ5aCZLqH/48SdJAs
-	 4+3pBpFOXm6sfsMxDQCTMUFsZ00qkwV4+d6Dmn4lRbBx42rtpoyAzhcdvxczKeMw2V
-	 hgfpUcOkgVzvxl3m58EEjyQhWF3Js28gT2WmFLCE60/hsO/swyhuBKtqOe2wUXaa5I
-	 mEvF3sMDg66/WliJvDbk/hX5bqKyOez7qJjLVcPrBp5tjmH/EcQnDPG6MK23Bu/MtR
-	 25u9+5CFbFqpQ==
-Received: from localhost (localhost [127.0.0.1])
-	by mail151.suw18.rsgsv.net (Mailchimp) with ESMTP id 4dGNNq4ZK7zBtYVZn
-	for <phishing@pot>; Wed, 26 Nov 2025 02:12:11 +0000 (GMT)
-Subject: =?utf-8?Q?On=20Dec.=202=2C=20participate=20in=20GivingTuesday=20with=20MITx?=
-From: The MITx Team <MITx_OL@mit.edu>
-Reply-To: <us6-50334ffa4e-3d2bc44e41@inbound.mailchimpapp.net>
-To: =?utf-8?Q?MITx=20Learner=20?= <phishing@pot>
-Date: Wed, 26 Nov 2025 02:11:59 +0000
-Message-ID: <ad81d725159c1f322a0c54837.81f48387c0.20251126021149.64a48bd2e4.a67b1c91@mail151.suw18.rsgsv.net>
-X-Mailer: Mailchimp Mailer - **CID64a48bd2e481f48387c0**
-X-Campaign: mailchimpad81d725159c1f322a0c54837.64a48bd2e4
-X-campaignid: mailchimpad81d725159c1f322a0c54837.64a48bd2e4
-X-Report-Abuse: Please report abuse for this campaign here: https://mailchimp.com/contact/abuse/?u=ad81d725159c1f322a0c54837&id=64a48bd2e4&e=81f48387c0
-X-MC-User: ad81d725159c1f322a0c54837
-Feedback-ID: 14846347:14846347.5234176:us6:mc
-List-ID: ad81d725159c1f322a0c54837mc list <ad81d725159c1f322a0c54837.183733.list-id.mcsv.net>
-Precedence: bulk
-X-Auto-Response-Suppress: OOF, AutoReply
-X-Accounttype: pd
-List-Unsubscribe: <https://edx.us6.list-manage.com/unsubscribe?u=ad81d725159c1f322a0c54837&id=e07062bda1&t=h&e=81f48387c0&c=64a48bd2e4>, <mailto:unsubscribe-mc.us6_ad81d725159c1f322a0c54837.64a48bd2e4-81f48387c0@unsubscribe.mailchimpapp.net?subject=unsubscribe>
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-Content-Type: multipart/alternative; boundary="_----------=_MCPart_524129661"
-X-IncomingHeaderCount: 22
-Return-Path: bounce-mc.us6_14846347.5234176-81f48387c0@mail151.suw18.rsgsv.net
-X-MS-Exchange-Organization-ExpirationStartTime: 26 Nov 2025 03:39:39.3848
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9434.9; Fri, 19 Dec
+ 2025 21:45:05 +0000
+Received: from SJ1PEPF000023D4.namprd21.prod.outlook.com
+ (2603:10b6:a03:1e0:cafe::ca) by BY5PR03CA0005.outlook.office365.com
+ (2603:10b6:a03:1e0::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9434.8 via Frontend Transport; Fri,
+ 19 Dec 2025 21:45:01 +0000
+Authentication-Results: spf=pass (sender IP is 40.107.75.106)
+ smtp.mailfrom=cox.hotdeals.sa.com; dkim=pass (signature was verified)
+ header.d=cox.hotdeals.sa.com;dmarc=bestguesspass action=none
+ header.from=cox.hotdeals.sa.com;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of cox.hotdeals.sa.com
+ designates 40.107.75.106 as permitted sender)
+ receiver=protection.outlook.com; client-ip=40.107.75.106;
+ helo=OS8PR02CU002.outbound.protection.outlook.com; pr=C
+Received: from OS8PR02CU002.outbound.protection.outlook.com (40.107.75.106) by
+ SJ1PEPF000023D4.mail.protection.outlook.com (10.167.244.69) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9478.0
+ via Frontend Transport; Fri, 19 Dec 2025 21:45:04 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:5DEA89CB94B248B6A7ED790458E7AC5DA66529A4B56B7640F3F97A39A2472909;UpperCasedChecksum:B5EE65D468F3842A2E0AEC98B70485A4B73BB759D1673A75BCE3692C39F3C2B3;SizeAsReceived:19889;Count:47
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XjUHvatkQidzLSbDpUDe4XhZg8GLsP+Tkh8WtXTDIC/RGCYAr5JJjGjWqGhItFVOWI6m3lBlZBh7+m2TvpR5/acLw85FKhmUunoc7anIJ1t3ZlOYKel+My/FKy6ZVo0u7+3StOtEei3BYyvx06AXiHWSw8woNeiPkpvDfYeV0bxyjXC33hC1ePfEf9x9pJLEUOZJxe2JVCxV8b/S6NDOyqWIDI5lenTL/2KepffnDK64RaCl2pChWPFdiVvtPEVIebJQzGXJnWUUKgMYsTdFbw1xpCU2ulxFWLwTkdge86lGRT9YiQQx7AZDUPtIM+vO/qmDnezDBZVvpReI5sqDTQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AUvzM107xH72kpwGKxorFfx3SYv5iWkjfLghmQaTPBQ=;
+ b=ShErVRto2a23mDhK590ke071FcYzPVkfY8gTuHT76pwmFeRDkbLcuHRMhjKb6O567fp+zhaLBbyRMqtPFdDacV3LDD6m9fmQpzrNBgP4AY5SLBfVYc9pSieIuXL+HwpKVWooGjeE+5v/r+mxT/cAJ8/gZwgTZgdUFosC52lNm8/DGFIfg/TeVfwQLV5hh4mk1Z2AlRiVCspZz7I666gvaU/x/r/lnwTIbxnPGlHDjrCcow+XR588KBPteGsvlqTxCawxDfRUTfkWdhcPio0WkIOxNtr9+WmuqmvjV/i+mGlQK21oQ9NWLr33pAYHpL+quxE2R66g/A9fOSWaagvcPQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=cox.hotdeals.sa.com; dmarc=pass action=none
+ header.from=cox.hotdeals.sa.com; dkim=pass header.d=cox.hotdeals.sa.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cox.hotdeals.sa.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AUvzM107xH72kpwGKxorFfx3SYv5iWkjfLghmQaTPBQ=;
+ b=NxaJT9OAXkfW3sT4PKQAvJXPiLv24WKm276Q2ZROwyW9dZpAoLMy+QyaW1tDxVUsNirGIqE/30SsoN8sUtyH6kjDX8GPcJUHv09/ZpG3KrenRYWrQF0dEApR/C3sBHNeDW5Rm12pawGIQVgfg12nZhILL12iYzFQrLQuasJt49Z2WNICAG5sisSxmqBDFZv1JM5XWLku7HTAgLw8Kmlv1h0i6SK5Rp1X0/aieoRCLNBHvFGaIv2w4RSlBjXftqwtdjj2uGfopIsSZvYh4S0frW/Y02FjUBJ/tI160XGjZu7zcNHYyA4UZprYNyWW7ahvEqTZXeaL3M3/bDkJhFaHUQ==
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=cox.hotdeals.sa.com;
+Received: from TYSPR06MB7624.apcprd06.prod.outlook.com (2603:1096:405:c3::14)
+ by TYZPR06MB5276.apcprd06.prod.outlook.com (2603:1096:400:1f4::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9434.7; Fri, 19 Dec
+ 2025 21:45:01 +0000
+Received: from TYSPR06MB7624.apcprd06.prod.outlook.com
+ ([fe80::e27f:528d:ef1f:a8b5]) by TYSPR06MB7624.apcprd06.prod.outlook.com
+ ([fe80::e27f:528d:ef1f:a8b5%3]) with mapi id 15.20.9434.009; Fri, 19 Dec 2025
+ 21:45:01 +0000
+Content-Type: text/html;charset=UTF-8
+List-ID: <3ahJVLoPh.xt.local>
+X-CSA-Complaints: lFPbGrleEW.csa-complaints@eco.de
+X-SFMC-Stack: 11
+X-bU1WE: IULXk7vixR3e6bpofCVSvMK3OyinO7e8Rx8/+M4BOHaP0Wdy/e3BniP=
+References: <@mail-e2Y.Bounce_dnO.io>
+From: =?UTF-8?B?8J+OhCBYbWFzLUJlbG9obnVuZ2VuIHwgU3BhY2VTbG90cw==?= <lina_Andrew_67905@cox.hotdeals.sa.com>
+To: <phishing@pot>
+Subject: =?UTF-8?B?8J+OgSBEZWluIFdlaWhuYWNodHNib251cyB3YXJ0ZXQg4oCTIOKCrDIwMDAgKyAxNDUgRnJlaXNwaWVsZSBpbSBTcGFjZVNsb3RzIENhc2lubyE=?=
+List-ID: <.7289367.xt.local>
+Date: Fri, 19 Dec 2025 21:44:54 +0000
+Feedback-ID: 325-anexp#nret-fa:account-notifier
+In-Reply-To: <gpib9oR1vMjmh5OK2GhcJMC7p6H6Mj3MJWVHpgZl6x8vbWM35axLAeOQZedje1Z3hk2nxx4QNvyBYAW5OwAIpet5An3oug0SfRkg7YhyB3OUkhzMNTpcKAFJlVHj2mAkdcHz3Ppa2BvEttgJd76os6lxW9MLEhg0INcjNuPmHXLyocc4EBszXINAWQYeHhuzGxczoOnx22JDyYjPfRE28RzzhSxVwRhdGGOFbQo9OnOl1SbQ68MIz8Kf0WWMhU183TvnDcIcScZ0sC7STMjpGHjAaYHlTXZW0QuhexsHCDcFozChhx81wI0Q16gkzP3uBT8gvFs4Vewo6u5oKUgsJPHm4SyPz9wO0mZTsugmHEAgUnZUFEFctJolaMb2moxcVVX2GBlAOXtadDmJBcRA4IJbaqdD9bQVzDwrL4PeFWRgUuItEGECHX9gt1BN56ed2WB2MzJKg00TWdVGgNAiNXrYcmmbh5lnZbuBaUhcUkAr7yXaKIQfqa3CtGQP64NqSDnBSmXdHIiD49N5FtrBagWMFeChepkxImam1nEt28wGSPg79buuepYCk3eISSwmAgIcY1fwdB8RMV3U9qzTfBx1CMVIlipbBTUgHoF0Wd2DJdIpl5oywUswgdydpM0yEraTjiTiH97cPYhsdiwl5lh9EP7v10uuSspfWZomxxP13W5ufXaMv30fsz99lLcMbPMAoOkz98MMVuHPVfYash7UwLaR4mmWHObsY1YknvRDuoEplVnMwkf1bvV3xcmwNNRuy6lzq554Q6WiS80a7vMHUwLPJozjqHRFdmDOEfHY3m3ndce63oKJcpSQmYQMCLGv9spAQWe5oTysjcM7az45jYbgADSXBuE3VOBg1sCc8j19NI6qMONFPspKqz0y3GbrWMpTYiGNAST7UAgur8XKeNkvPHiJabnRPnf3bZ33QWd5dYKXTt9h5VbfYpzTG5Hs5AfxHRFTn8vGeFP5aDYl
+ a8ZYZixrBG6vBCFJINMckhWOZpc4Yx3WAqZPFa92RFdZFbpLORzEn4vR0fdogwcErQG1YSaM4iYCyE4RyIexTvTFUROssv8EZOgPTfySovDfP9quUAFNf9YrkjRXu3TH7uB9Y2afWwBvjWACCrr5ddxnfSUC7Fq7itxFqiExmMVXBg8FC9Z5puuXxlZgGIdAM0PotX2kclFPbGrleEWlFPbGrleEWeylG60bg0msxrD@lFPbGrleEWIl7O6zWjV2s5wMYg5qeZqenw37WDyrHXVsc7iZBD0Q7QjwtO4auvapIeW.Vw8dncPZOD8j3xQUmpEvaNb78XctnHeif8msXyolpgpN9Od9lNeGdzqeo06QNhDrQhbTG8kx6ZFzZL8b7VFC5quF08VNMC92S8vVK3YZz39ohL6cSboYaNymt4tXTL0aUiPL1LjqthJnoNDul2IrCQ65P5vBg85IynEBMo5ibCdEXVgL3Az7KHsWgEBP0modNmfFrW1CM5wXMS37AklBxynTeclhGCmwa4ggpRgXadlKDD7zXJVM7ymHZxU9ZKY7GcAdQ9qKdddYMQ833vdOFV0Jr46YVAsWt3wqFSyhWWSw798GcvoAlZ7ndI6wOTs7gmsvJ0qu9Clr7lzAckjtRxanp2ZFW64ZMhdq6rQWqC2WKp7NPaLOANFj9cjDezdwriiDTeZa4Gl7BPl0FRKN4SCB9QhHz2Xvt3DxEDMuNMMQIxO98209S2DTfy30CRn4GsZUMESRAek85oWlo5YekkuJZq6YYhgb65l8pCt9vHsmZvMlGk5g4fZvHwR58AgaXDhtbVpLyjeqjvxivqva0B96313R5vUn2vDOVYTx9ouiVhaUTtdeEqIiFXXa8lFWE97qOz7jnFenxRPaUF196RT9Av9cuSTvY5QxvvkPQn9S3CPgfeBc16oNIrWesPvcL1qxaNXUnmQjgiym9vMj37jb01nZc35Z5FzhLefypFd7gx3VfYvyN
+ Y
+ 9AtyppgIpx7sOy1FS3NdM9AyR63ThYwbQbJR14IUpFr3EQOtBOPxClCrBs4DlMMmv64R6ziT29xaMIvYnZWI1CPfa7BnyQ0rFwd0X4Bwz8uBVLUR2L2oMFxYtiydVYa8GWyiv0I8CbPZyqUIcJjPwoE5IruoM4P07VH7D2VlOkdlJH8kqXbDkLQtKKP2Jlgk2CHL9Vgln79zu6Tqc9yqORbomxy0qCm800tkJu2ygFxqOmahsgEajk9Cu7afYfDJqsoe8Y1blD3gcpOsKq1jjYFej2vJ4dcwOR4WEPyDU9cbn03jbLHVPrHTLUm2EzygSBsW2ZdnMTlx0PfnG9GHwFWXTY2n8sAWFrnPzth27Eqr59kI64yoXSjnFO2jD3VfpR0YcALDYneHabrt72tRvlkjh6mK6qvI3K5ZKtPK4wSzHLN5zv2KmKohs8ywjA75hkO5id7zGC3gFua0I0P2RU0h66qaCWlrxFXlqN1H9Pvtf4Zkfduwv6cGxZ8opK2SfQCEcD1QVj3QBkANn7GmV2pFhqGuj4m16jGLlAD0eTSL65QXf24K3KYWNRsPleYal0BTLSkCIFpK8eCCD64tR9l59SFGUCDfMXvUUDcakQhFJZYiOjuYM0QZW1nxdra1IGMogvBwQXGuYhmlR5eq8DSdVSRpkNlNn0IqgE4ajF6WgpcJxNhXsqyNFwJhfw0jpCkPEO7NfLzk72fZF9wqyG1oH2GP5FrEM69aQqTshJUMrnuoZHkhxVHzZt36mVSV3L9YmggOPyaIUoTiFhkKdRUzqAcA2IsteUGE72dAChOYp0km0uxktnONmBI9dj1HOzbC3V73qb85ZkmegO0J1IiFAHKcPBOSVS83hJbwx2WIWyVctD4DInFl3FqbIKkBYI3YCbryWX3ym6B9AfspFOdch1Q9Tkm3M8Q5gbRtW6dG2pYQKUv4W3rLXbQ3fHcI0JtFeAguiVLFep3XeOR8yM0Cq6T0dT6vGvWzR
+ a
+ 9OCKAEOlZmw6LvkZAZptkR3NVmWUwTAbtBWHRzIZOieWlmyAowMdVh6Pi0ricrO9gp2kHFV0yYhTMopW88vRggLAgHRMDOWiSMrIUO21r7L7Txw3puSnplEP3qVIg1bRo4Mrnalff1Np4SVufhM3l3C6pPjZfg4ceK3Mfl4pxqrRhWzrW5gdAdB85K00X18QeKFvBOdkKQXEpx4r5Q9sBY7uvAD4FevW1As4FoT1OQRiw6tVn3lthPUdfBuO2VrZ8HpUqH8o5MpIKS0xdTwhYKi0Wbb2lSXfYHskep56kh03GN7XOYWtNWTy72JpCO1tcr6amRaaFNXNyzVDnMiwXCbas9ThUrF6ffFguxs4M5c1TZxtGF3kF6xLMlGLV6CBG4TRV7yoWxx4jkIThEuMSeIDxkJkT0IXVGmoSzUKie7H8xrIOrbCJhuWV9NthaIula6c8olLdbpOzOzfjDhevhgP0wwWwv53OsGV0lmSxM4wxbs08U4H4dY4qDmL7Z5Lj7OcSrKkcDFK4vxv0ey6T8RjfFK5BQUHPXQAOQ05EwWuX5JdQMJ8dhW7F8OhyLbdhWIwXSaNk9EolYqRWqoPYpz6u97IdezVhNmI1COYnN3uA5f5VsxOVl8bhzOxJi1RTtbKHdUaSR7RWhuQWh8DZQNGedFxmXhN99N0iB24sE4kz9MHThntvrY1i0QzkUE8i50UeC8MRv6wQE2YP2nkmD4f1ZIvEywO9UTteHkjHEKpEfQ8bomSPqiAvEC8CpeuyZu9SZrjkIiuyueREo9fgiqFV1usz0cC3txYIWisZ28Yru6PmOdfoJbjw6opzjSBC7HcmU7BLlhacRun5sgP9HTfdCNwaBMnocbEmXBtJJGHq1AAFEV8h7qA0oGedn83CdCz3Rghi5qiaG5GEFLPxrzR2r5xvNBx8SfklXQgj0R2X8rsnftArjCl3bJMB23QKplIQLmBVjQypHcaEcetQCbLVo5Psj3zRxJ8f
+ K
+ PQCpUQDbiBhrwCvKbFueNted1zEnB2fA1pFtcBtSWQMyr4gbJdjV2qt4PnRzo8urUsF8GS5Z5k6axT5NA7MkOvjnoI8TA2rzpwWosKrR7RkwEze9Oo2YWcX7rElKtX5KSWHIdGRxWBpL6UD25HXhD8mazfoj3xP62VUKJtaKpMFa9EHQOLgVbNUaKcrcZyvw3KOwGgmKtlNkx4yJU9ehyS6mSz5yMl136NZXu9HGXM8537RNNrYzGpGenVtFMMwzDTrR5RVLXQEPZwNReUU5L4CKMiySiD1oFr8mpaqRIKHSFVk3p7fkQkkXQ5MAiuvfOpxdiHSlQsf4HBzmuKhcr8gqB34PsCqeX5ClxhAZmnVizejAYL1nnV0tbwECulnwiXX9hix2MTQkOA4leBN2ZDxS0PUMAFFKjUxW5SrgOLTsnf6PgoP706CT9RIaampEfoUlTdtcnFtvQZ4eC6aqQEIZXFoMMIP02rHKOOJuNl2QxUgfrWZv2xlDAoPzvXOYUUkdIFVBIRo3ja4Uet9mfptl8TyJY8ksXoKzYy1R30nShxKsywrIZR2ivhXQolxwsahTH6RmYk7QUXXwOyDsTyOMIxON1L9f1VX0TU9pRGlpgNcpKfadCBjspQzmbFC8Ps21NFDMaMVWvAnWxpGNpAacgrh5g8PODIzhIVqr0UOiuug6IU2ahf5FOKthkFDmb1B8HfNAyhddAej2S6dEnH8IGxeNjMyKZ7FeXw2sobfkveyKvPz8GYN7A0vVcbQ9ZbxwN05Ag5mN12BtxYFmQqGtCZSerCwVtTQDtrZMxK3UDnI2rZt7fSLJfXo026qG3liLIumNUtdPO6ZaLhyM9da46gOKqfmoe5gxaDaztddD9CsdYKQzSltLvgnrS60FHGppdRgP0Ux47lwS6SAJbXthIKb3hQE0cUtOk6KRtmmOuEj8mJKRgO9QkSy6IIw3185qiG3fRxRSjr3sX0cNTxzNV3IxnNAsNF6kN
+ L
+ zLskFSbdVAbAYsFifR69NGN0OIvTBtRX5qJhiGZ8QVmE6nteK3hP4mYfuFFiaon8tSXVlw2lFWRuax7ZfLgLlGtjbykYy6MPdnU7DKI9cHtTH86RWK2yRyAtUISWk7hSDJKk9XJiYrIeilMtO6jPM0CjUeqx9EXK2kBHXuOqmp2Yfe440BXOzMesGPRbA8DS8isDrTQ2bjoEcabWJjf8XcqtIbTaxrAd2Plv7DILY470awQpWhUeISmMqGINRPil8xpGO4WAyWIjhkIMLE3xfJPPQn6zIwcTA3ALf5YTUkqmTHwLrH00nrcskQMODEq4C8bjQur87dCJNmUmHXd1xs9oVuSkwVUYgrMmTGLSUxeHU4VnNBddQFLp6ZHQeiZ2i1EcbJp2Kixn9ZlMc5wqnqo34h9mFzBA4bFbAed8aa4Kuelxj77OvPq2XfBaxLxhIIT0seI2tgWfNzbCL4o4eIZ1fgduZbDam0khBWDGvuLAzgDTPlTyKOzzftBnfbeX5MZi9E2Jslp9lSBCtG8qyTJopyEZWrhit5QdcxeYO0XGeM9bAKMYGMEkLKjjA0bqR65IJxH5K6HNrlZQHo0JE16QqIHwRoVjVX8IIzuTOVVGD14XDdqnQxvnodeE1CQODkJjKFCq8jsE1xnzWoEzp0OJygovAmYFsYPFNdATOLz7KDmG98LQGTnfxkWsE4SnK23zo4OqAhX68utiRy6BmSxrA925dTgC9jdoPLRLjNljEAsi5tEX724oLMRK3lQt2fTGTn5JM7fEqa54pSppUbXwoakP7PzyIJaoacMIyD1F0WcOsx3BeqPK0y1iYCQ1RL4JqeoqdIAhFhfXvzbBpT7XCjIotAuYbVSEBoqsAXSOHq0vONlcine86Kjr3FJuO3MuhEfewCpW9nd6ms9UzNYL4IVT8isPwVxiUEWJLYP1IkxtsvQdYMrlexWVTsqsVLkukfA7BzSHlqitPN6J3YiLd7V1fVlB9my68
+ B
+ L7AYn1UpugyvApD3FJSiYQG51liyv51904mDk9NdIXp0Ufm7fSPb6DgNiBA6GHtr3eC9fWd9hbqUDcUX4QPzWQGuWoDCCsoHVb4zWpppkudyaFmNDrIFWEiJ4bylI85fsq6PiT5S0Lsaahm9DFP5MD3MxiqsPmzkaTZTfn22F95qQi7MNQODLQKaCS2fZIi6HxIBmb4YW04lvZaOjdgiluersjfr4mAht45Y4pLOeTtcX0QGtM9D3Ha03KBmXFcwceSwALoql7NDLOVM97dPiLcGSM5b1dq3NjkfgwiTzZjTe1Mddod9TO2wqiQiq670nEYA54VxTX0xyTqOJuev4hGhzgju7jNzzdrYIohZAPI7nxlgTwLJ8OA3HdAU5RQhmdpN9cFeBhRNAraQCFqhtdwvgylqobkXHZ7GAAq6pPFhTTAdVYfP02QHSlJ0Y6nj1QpdKfVQVXi2HepdR7EgODAnMYJNNVeq4JYWVTI5M6UprbzFfqCeeVTk6TM6v5tVKPenp0TbWf2A7mgZ87NEdzSE6GRaMthHkLUQEQWAYb8LdONGdQF51YMw9lAscn6d9ENUF438P5WKQjTezpBHrbQ7WSaouwjZM8gplNu0oYAJHAbg8fkfDfk78Ie32dxc95YVHMR9PX3iXiOWYZflfdNLG2eolSJ4T2Eu2uaEvvhMt9XcDlpRk5VaiSf6A5omcPn24fgZ1TJHubJPBzj9ITNQPj6QZAkIuONKYIjrZ5XKS0SIWJDBqOt6b2mzBQmxm57Gq6Oph08reqG4AmjO40ZjRNlS7dgNmEx0E8lDt0Pa0K5oLqU69J7cH3q1VDV7A8CzjAAQgtmmiSTnN87FsDSWGhgHfTEWjiL0jEs03zkK1d7jVNLoZnhcDjYpLVsOojloBKWIWiqgSDgyqc3Iyz67gt6hfV60qKqbd1AxzunA6zwgnVnwByBAIEPeT4ykgUaV6sTjOROrtL98HNnmGt7O2rEFpagTRObjc
+ c
+ WcVvXv5ZfKbIT4Ol4oN8kcJ0OqyRf30EJIJH84hZS7lpKYy5DwzPRWnqAvLNoTUQEK5ZDQVnhYIQIar5kWs2CtV510YydDOICI7siH2i6Yn0bGj3IxxRpFiABr3Sllw9CF1zIcRjICRWLPpZ9nuKAU16LiUGsd3JM6bAS13oswtTebde7WRlAsuPEd31VwBrwJ102KpYZugQiHaSYneyHFXfp7ctbw8VnQn7clDUbvpo0CZenSSSIFuPL82vwVWnqLBTArL2V5JWYglNNq2ZI6dESYCD2MoPNpJVID9w3hzNzqZLFRpOBwZwcVLxhC2EUve8l9YU30TVNWAxuiS1Esh3TzBlqxJAk7PfDiiDCLArXtg7EDBjSHmeGhRjxsDXhOnv8uWMvZCave9lhkgbgDgYUS6fKdMztsc8LpuXkkwDDpLYMkXrrEsMkQsWhnzBTdg4xH8b2iaYxb0kb3P7w5tTI6AQGpcqHPNp6wITo9JLI0IfVPZbmN7WxoFzBpcMNaY8Zp9ylFPbGrleEWbU1WE.reylG60bg0msxrD3iMWEvvX3edgT3QFE1kcwBdTtCyrNaybWm6egEX6JfkS1WvUZi7uaqY6xqD7Z68VY32mtUeweG0H76nQvSu00CbBJiAxLZKZsGiEsZMqzVmhuDD9FAaQ2VyQjDI8psvrI25E3EU6B9MYPWieltu3Qe0QNiwLIN2WPkSkiZ802JEhO67uzPUn1vb3QFQi61PmnNTT1SxeanFL8FRmWWDXm0KzlVBpceMsgbXO7QZG2Adie68HZbL9zY9CP6am9PqPf7sLV9x7STSYma1nq6CrYD3zXVPgFYVe19ziReor3hKQWPOWA6I5On09XQVv2a0LoK4evju6vNWXYNHgtLagZVv5eUcK4YBWnCZHOpsS09oCj34ni3YSKrb9SRLhAwrU8wkeFeGigyFl6TyBpV9rZNCJWTrG4QeGljlPzsMqpIxGUaR8V2jfHFKF3IOkk3
+ g
+ gWoWbXOfQbjbWFfvUSjzjU54jH8hz8g6yVddak2009Yf872ti6fRxetwwp8wGM3BvFHXe9vV5nH0gdKLC7uI6Gv0UaUebda4ZTPnWRsCHYLkDX0wm6kWMaPskCrklblo4dKV94uOjfZlmuIiyWGqvbpqsraA1yBvNIX7mpRsvVajSCkEqf46VTn0we65cUrDxIoH3cuKIf2xA3Tfh16Oitua2xKtsh4Dntf8tc1aEfLpmBivzmD79hzRlwO67vuY7C1wz3kT9rgO8LM0KHX4OVltpjIhpe0u3LMNqOE0uhjVUlejfRd5Td9GC7vzOMYO9tMoYkahp5TgbBJlYbpVMzamCy1QX6TUWeRczM4x07EwdHVmRLnAALsPNsp0kFxjAmTYUrYjjIEypi9Tb5MHlY2Wueg9i1Immtdhasyl79aZLZoMKK8fVOghggyhOGlmtpDcL08ERENKSPwd4ugijg1tvpYmqzSttPVbaqOqvGjyg4NbWXtlVevWcmgljb13GZbbKmyhFkIge0oG41rJ4R2hBO0lct3xZ6P1ASqszLNTe6BsIPK2B4ecNbwOPznIum0Tv9PqWau0iMrVx1BQVrVGbVH1p2HO7dVpIoDRmLyOj0rBD5DZWtHc5Xc1shBh6UMmJqAgPCvoWdZGdF4f0bOkzh59ahHtnIQQHEHV704kdSC8jEZ9MtjhkRd91LUdupWVXchN5PpZ4F1wiEafcpgh59PYK14qgCffbDVaziyaGXFeeZ4ebnH4Gu78VFqqHIUDyDvOGdwYMrDh8yUVVXdVkAgLZtuMeiwjJppBmscpdWyamTLYkSRjP834Z7xNLNL12r4HfmqJgXULVWkXYSP1KB4rmByplpm0J3aSVfyGD1SijU5zbSHRZURNR9licdHUDpj1hdIVdwqGXaQupIX2e908ZJPWXQRQq1i1egm4AIstsCtteFPakZEQhUCpcZGpMFO7cObeEKWBOHOkudPT4jGzuqMpJ2rUv
+ 0
+ zqPxvl2vpaJKgYryece50MT7D0tCtpeaBO25lJaR8Fsao82JiRt5azc4ktKpgyQNgTqNtwJARP645tdTesomk0sBhSXWHM1YSELsRIdMdgh8DMLvs16kcQqBMvXErvkcDGFvMOoTFJtrm1FpSLG3gIguINM.edu>
+Message-ID: <ZF3lf1bGTw-Ct-Y9ADdP_Vw8d.Il7O6zWHg-__Ip@fYSIeZ5JGXpGXcmFT6du2yHeMj5R6y2oaJNuByEigyBkdUubR5XoGrTd2XBKduatJ8Aar4s2VL7gnnmEaGOjCRK.dcccd.edu>
+X-Mailer: bU1WE
+List-Unsubscribe: 6.OIFFMONIGKIMW@luxyinbox.site
+X-IncomingHeaderCount: 10
+X-ClientProxiedBy: FR4P281CA0418.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:d0::13) To TYSPR06MB7624.apcprd06.prod.outlook.com
+ (2603:1096:405:c3::14)
+Return-Path: lina_Andrew_67905@cox.hotdeals.sa.com
+X-MS-TrafficTypeDiagnostic: TYSPR06MB7624:EE_|TYZPR06MB5276:EE_|SJ1PEPF000023D4:EE_|DS0PR10MB7477:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: a5872f12-8834-48db-51ba-08de3f47df1d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|366016|52116014|376014|1800799024|69100299015|4022899009|29132699027|1032899013|41320700013|13003099007|2066899003|8096899003|38350700014;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?MXB2SEJweEFaOWZydkh2eUp2ZDFKUUVyM2tUWVUrNklmU2U0VUNRTEdFdWQ3?=
+ =?utf-8?B?LytKT0VVaDdPTVQwSG5OdCtWRHB1VUN4NVBkN1UrZGZ6TU14aGdjbC84TnNj?=
+ =?utf-8?B?SjYrNWRyUzl1RlkwcmhTR251SjlNVnBDR0craE54SE1iVUViV1l3SEljaXJh?=
+ =?utf-8?B?V3NFeG5YYk12TkIyWG1uMW12SERhZ2w0cTRVS011WUxKeTlVRUtqVFRzNUVS?=
+ =?utf-8?B?NXRoWGIyR1d1Ryt4QkFMK05VdzBZejRMejVWRk9BY2E1ZVhObUFia0tEaEc0?=
+ =?utf-8?B?N0pFVDNTeTVGZzFWOGw2Sm4zbDhhZEhveVVobzJEWkt5VVozc1ZKTlB3Uzkx?=
+ =?utf-8?B?ZDd1ZHdIaVNkSENVazNnRjc3cDRtb3FlUjIzUVdpcURaRHJVeFNEQ3pwNXJk?=
+ =?utf-8?B?bWFqVVB5Z05iMEFlNjlldDV0djdhYlFKNG9CM1dDSkVWQzB0dWoxekh4aW4x?=
+ =?utf-8?B?KzlUMGF1cHlvYUJYMjhTTVExTW5zMjRDSWFDcDVJM2FRcVdYbTFYZWg0QzJu?=
+ =?utf-8?B?ZllYdHU3b1hSZkg3cXFmeWYxRCs1dEhHcFRBNkxUYkExdCtVdCtzL3V2Wktz?=
+ =?utf-8?B?UmZsL0VHK1o0bzVaYjd5RDFoZEFEOTFldVZGMVE0d2FlNkJnUEpOc2krNFZJ?=
+ =?utf-8?B?djd0cE01MW9MU3AzQkVwdEVtYkQ5TytJaVVaQXNKMU5oSGdWYlgwSW1Qdkpv?=
+ =?utf-8?B?YXFaeVJzTU1ZSlRoVk9ZOW1UMDFlZXVYcG1YdXliTGZaRmh6RUtFd05kb1ho?=
+ =?utf-8?B?S3hZa1ptazB0SGlCSTdSVVFoRmFFalVvUWNzSmUyb1NRNWJ3SmtKMWZ0Tyto?=
+ =?utf-8?B?Q2pNZUJnL0NMMXp1Zm9iTHB3eit0RG9LNnRYdzZ6L1I4eDZYSnpXYWVHb3VP?=
+ =?utf-8?B?dkFvYnhTWXVXdnhzWGlMcis3OVdZczVnUXN2amdocHc3bkZSc1cwaXBXWHky?=
+ =?utf-8?B?ZmFNeU9RMUdsYklvdXJ1NXBJS29lbnJqQUNEWEx6V0FPV3J5QzlsRFNieXhB?=
+ =?utf-8?B?MEh5VHpBOHdsampGSExvVEJFNVZ0QkNOQ3BaWDhmZjltbmZ6VTFuVms1QVVU?=
+ =?utf-8?B?Qk9DTTRTcjJnK2tHbS9zTEVJcUZPUXpRUGpBcWRNTGVCelY3QXN4RUxOTFBZ?=
+ =?utf-8?B?MzdMYzBJcFRUeEs3aFBxS0s5TnNZTityV0xRRGNDZXd1emdIT0pvR0JId2Nw?=
+ =?utf-8?B?WHFwUmxZdVBMMWZ0bkxXWWRzVGF1VHliZFRpUFhrdGFrSml2OHllK1VxdjUz?=
+ =?utf-8?B?S3RFZEpIOU1jajdyZjFDVDRnMnB5RkVhaG9JcVFlRUVlWC9kMDRnVko1UVcx?=
+ =?utf-8?B?UHFLQXhISEU5bFgwV1hzTk5qUGJjSmxBYzJpOFNsOUI4bXJ4dFpEbWVnZ2lO?=
+ =?utf-8?B?azIvVDY4WTJPMUdkaGlZbmVmNU0vVEJmVFFLZFF1VjY2bC9TN040blVGNm5k?=
+ =?utf-8?B?UTlUb3BrSjhNTE52QUhOVklQK1NBSEx5ZXpTczJRVC9sM1BKdG1UMmpYd21H?=
+ =?utf-8?B?ODloVEJWSnhQdUx4aEpyMkdqRldHTTlURlNGQi85YzF4c2xrdHU4YXNST2ZF?=
+ =?utf-8?B?MVU1aGJ0WksvdE4zRitlMU52T2FucFhYb2xPNTFYdnJMa2hDbWJ0WlN2MEtR?=
+ =?utf-8?B?cTlBMFFRWjdWTnRISnVPeXlGUVB2YkJwRGdIYS9pMFZUdUE0YUJ6alJXWXRY?=
+ =?utf-8?B?MS9HVW94WS9vQWdyL3daSzIzaWl1SWNCL2N2aDFCYVJLdEpFQWJxckdoWkho?=
+ =?utf-8?B?Q1IyRXVVcGtjQlpTdklGY3JjdmpmczU5aVZpRTI2eGRUT2F5SGY1cDBMQTF1?=
+ =?utf-8?B?eE5ZN0UyTFZ4VkJGVlkyczRWVjcyWVgxTjRyZmFKbm10Sy9YQ1BFV0w4SjFx?=
+ =?utf-8?B?REdUU2w1dXVhWC8rL2J5L0FlcldCWkd1Nk00SGRpblprR295eW0wQlVRTExW?=
+ =?utf-8?Q?ElIu1RogNjzyK1kBAuiUoqWEv9uJuSCl?=
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255;CTRY:;LANG:de;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYSPR06MB7624.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(52116014)(376014)(1800799024)(69100299015)(4022899009)(29132699027)(1032899013)(41320700013)(13003099007)(2066899003)(8096899003)(38350700014);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: =?utf-8?B?Z0hsR0d1Z2h1ejE2QTIybTRhd09kdlNwQmVlVm5GRUpqdWdIdmN0YWxtMFF5?=
+ =?utf-8?B?SEQvRHFvalM3VW9ld2MxK2xNNCtHTHpWazI3c0drdHlLaUVtazR0cXZ6cjRI?=
+ =?utf-8?B?NmxjMnlWQUdFbkRiWVN3cWZyR2U5d2ltOHU3ckdWbUZoNGpLeEo1QlQxMlFj?=
+ =?utf-8?B?N3BvOC9aQ2FTVDVKa1NTYk5BdWltUUo3VTNSRmhGVUxGQW9ZZlhuMmlRaDhI?=
+ =?utf-8?B?eGlwTWE2TWtFeXRMbkx6c0c2b2tUdFhnSXBvWE9DUU1MVEx5VmZtdnRvamZL?=
+ =?utf-8?B?ZWxIcEhkVWttNkorZHIwTWF6bFBtTW9lTzdDKzdDTHc3VjZIWnZ2U2VSRWVR?=
+ =?utf-8?B?UUJ4R2tZREdFVmZJa3pOait5bjBCMWhZQkp4aXA4dzBROUdVNkMxanNjNWdu?=
+ =?utf-8?B?ZTMvVHlrTGpsK2lIUlYwZ2NuME5TRUI0dUxkSzBEdjJJczJFVjJrSG1YbnBy?=
+ =?utf-8?B?M1hSSFBVV09mN3NmcDZsRVYwOHdRY0dVSUJLYVhUazIwR2NPaFoycmhNMk1D?=
+ =?utf-8?B?Uk9PbmlLQXhOdGdTd25PR0VURzhjWnJQNWdJRzlYam5EMkxlSEFaaHRmK1Q3?=
+ =?utf-8?B?cUt2aGxyRW53bjJGUEVJZGRGTkMxS3FxS3YzZFZtWDZuZ2MwNmlXYkNyYk9S?=
+ =?utf-8?B?RlkybzI5b1ZTRDcrKzhyeHlLMXZGNzQ0dGdPREVhTkttcVRBZ3JnM1FjbUJW?=
+ =?utf-8?B?QURTNzloVVNxSlM4NzErd3BLSzFmR1NLdnZvNDFBSHVpZGN1OG5QVGZ2bUgr?=
+ =?utf-8?B?M0tCdlRqMVA2M0ZYT0NiMWNHc1ZUdEQ1NEUyU3h2S2lhUWEzSU8yZVZkY1Nj?=
+ =?utf-8?B?dkRrTGtMWkI1dHVHZC9JMFZJUCsvSi9lZ2xJanVlWDExcUgzN0VXdldCVUN5?=
+ =?utf-8?B?bGhpWmE1b2RsaTdSZ1grNjlLUFVGWWYrS3pKMWN1MU9xMmtxV2lGWXhXRDZU?=
+ =?utf-8?B?bzlQTjJNbWhEaWVCOTl5bDJFd2VqVExnUkpscUdybC9oM1Y4WkZreDMxcGJj?=
+ =?utf-8?B?Ry9ldHdlaFZTdUxoRGZQQ25NSnhldjE0aHR2b1lvOG5GbW5qY256QU1Pb0lh?=
+ =?utf-8?B?cm5IaHl6NTVKOFNqYU9qTDFOS3pxUER6azNuNXJNa2puRTByVjRObldwTGtB?=
+ =?utf-8?B?RWhtQVRYWlVQZW1QaUIzMHd3RWlCb1puZkM5UWZ4anFvN3YzVUxNemFLZWhW?=
+ =?utf-8?B?bFBnYmFWZlh5WDBZQW44ejliRlBUdVdMZ29BSmgwdkpPc21nNUp4QjRtaXl5?=
+ =?utf-8?B?MEJUeHJaWmhRTkVuWjlOaFZUdGNxNnM2SUZsOHZYZXY3c1E2ek1ydStmQmFC?=
+ =?utf-8?B?bnErNE0wTVBRSFUydnBYemh5Y0o0TTdsRmZOa2JWdU5HYWpOa2N5Tnc3SU1Q?=
+ =?utf-8?B?ZUZpZndSeHorZE1PeGdUcUJZUXNIMUF6Q0VlL0E1ZGFrRWYrTWIrSmg0cm55?=
+ =?utf-8?B?VWZLcmFjdVhkdXNua0l6Zk1US1EwTTNEcGZBVnNBd00wMlFsellVL1VZU05V?=
+ =?utf-8?B?dnl4alo3RGVhNDZXemZxQ3lIakRiZ3lRZGxZdUpMVkFYZEhicGxmbHM0VkRM?=
+ =?utf-8?B?U1JCMUQzOWVKdUVSZHNGZ1FXSEVTRk9mSCtqMy9hdk9LeGgxU3htcDQ2Zzd6?=
+ =?utf-8?B?ZDBJUkI1Y293UkUwbmNqZ2pMcWNTK1RMaXZ5TjZwYjJkNlN6U29TK1hLN0l3?=
+ =?utf-8?B?Q041V1pIKzNaeTBWenBPOGxPUThhQjB6RDRYNWtCaTdoQzRVSmZRdk5iZjJs?=
+ =?utf-8?B?SmVLajBPYzBMdXM4WXF1cVprd01wM1lWRi9hYVhUMmo1RERiVHRnWkNYNHpj?=
+ =?utf-8?B?YWp1TGkwM2EzbklGdlIrVzNid1VaTGdKZEVZdzZWRTM1M01TTVg5RkxaSTdO?=
+ =?utf-8?B?NFNaM2J6cWQ2blF1R1YwOFZJRjJqNkpaSWZXQWVjSXVvTlBDbTNZZ3NmcWF1?=
+ =?utf-8?B?L1hCdVZob1g2eDRlK1BOSmNPYlUvUVB4eTY4YTlyRVpWaXFrZldiT0pUMFk2?=
+ =?utf-8?B?bW9RaTllaEFzakhOdWtFN2RtMjRqV2V1eVFUOStQdHNRRDFvVmxhRTNPVU05?=
+ =?utf-8?B?bXVTcVVRVEZ1djNNeVNadlBsWU1LMk55dFhISjBtaG5KeEkyUWV1ZDZBcng3?=
+ =?utf-8?B?cCtBWUE3dDArWUdkYS95cVNMRUVwZ1hzL21WblRxTkczQm8veSswWGMzQnFn?=
+ =?utf-8?B?aDB2bFFWVzcyMFR3dU5MSkc0MlUyd3dXdlVJU2JSVnlqM3piS0pWWlcrK0h3?=
+ =?utf-8?B?SDVBbXBNalNhQkZGRStXNmJHRFZjQTFEQUp4NC93aTJTWWpldUNDSzRYUXNP?=
+ =?utf-8?B?ZEtMUDV1WE5VR3JCVjdTazJGemNmanREREI0ZEtHK05hMWtTeTFYQVVZTlkx?=
+ =?utf-8?Q?5JDrVw8MMzoNkP+0O/U5uXAc6TeM7DUNDD/bP?=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB5276
+X-IncomingHeaderCount: 47
+X-MS-Exchange-Organization-ExpirationStartTime: 19 Dec 2025 21:45:05.1657
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: 57cfb789-0b33-4898-89f5-08de2c9d6d9f
+X-MS-Exchange-Organization-Network-Message-Id: a5872f12-8834-48db-51ba-08de3f47df1d
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: SJ1PEPF000023D4.namprd21.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: SJ1PEPF000023D4.namprd21.prod.outlook.com
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DB1PEPF0003922F:EE_|PH0PR10MB7063:EE_|MW4PR10MB5749:EE_
-X-MS-Exchange-Organization-AuthSource: DB1PEPF0003922F.eurprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthSource: SJ1PEPF000023D4.namprd21.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 11/26/2025 3:24:32 AM
-X-MS-Office365-Filtering-Correlation-Id: 57cfb789-0b33-4898-89f5-08de2c9d6d9f
+X-MS-UserLastLogonTime: 12/19/2025 9:39:21 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 7713322e-cfab-425e-6f45-08de3f47dc5c
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 198.2.181.151
-X-SID-PRA: MITX_OL@MIT.EDU
+X-Sender-IP: 40.107.75.106
+X-SID-PRA: LINA_ANDREW_67905@COX.HOTDEALS.SA.COM
 X-SID-Result: PASS
 X-MS-Exchange-Organization-SCL: 5
-X-Microsoft-Antispam: BCL:2;ARA:1444111002|20103052909095|10300799035|11001999021|9000799056|1680799066|9400799040|5301999021|8301999021|970799057|6401999021|47200799021|58200799018|3151999006|461199028|3600799018|32080799003|56899033|1360799030|1370799030|1380799030|1602099012|23015499003|18025499012|440099028|19025499012|3412199025|4302099013|1122599019|18021999003|26104999006|30041999003|2406899039;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Nov 2025 03:39:39.0789
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|67000799015|119000799003|50300799015|9000799056|42200799015|30140799003|9400799043|39010799012|970799060|10300799038|93100799006|1680799066|56000799018|11020799009|461199028|84100799003|20103052909095|33080799003|56899033|1370799030|1360799030|1380799030|1602099012|4302099013|440099028|3412199025|8011999015|19025499015|30041999003|2406899039;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Dec 2025 21:45:04.7671
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 57cfb789-0b33-4898-89f5-08de2c9d6d9f
+X-MS-Exchange-CrossTenant-Network-Message-Id: a5872f12-8834-48db-51ba-08de3f47df1d
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource: DB1PEPF0003922F.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000023D4.namprd21.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB7063
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.6119488
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9343.011
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB7477
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.0079282
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9434.000
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(4810010)(4910033)(9610028)(9560006)(10180024)(9320005)(9245025)(120001);RF:JunkEmail;
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9560006)(10180024)(9320005)(9245025)(120001);RF:JunkEmail;
 X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?NXpnUWxUWVpIamZpUkZkeWNIZHMyZm9LOXV4MisrYXF3bkwxYjljMEx4dkJq?=
- =?utf-8?B?WlBTRjcxc3Jza2FsTkN0V1FHb3dkZGp5VzJCeUxJR3krclo0dGdYM3RaTWJ6?=
- =?utf-8?B?MG9Vbi9xY29PMjhmLzRaaWt0RThhT2ZJZVFPbXlKOWlCKytsVi81eGhoUi9s?=
- =?utf-8?B?Q1lyVHpJVURmK3liV25oYjlHcXQxT2NqcExHeWJEQ0hHSmR3d2s4T1NDUTc0?=
- =?utf-8?B?SnBENWhzQ2RSUjZtRWVHZzNKWjQvQ0VJdjkrRjZ4alY2MjRFOWplcW5sRkZi?=
- =?utf-8?B?SkVkWDR2S29BZmVGQ2lkMFRjRDgyNzNFZ2VnWmp5eFIrSW5MYW5SeVVMbyth?=
- =?utf-8?B?bzQrNDk3amdHWkdzOGVqeGMzTW9SQ3dTUlBtTVIycXRad2hjRm13ZFpVSTBh?=
- =?utf-8?B?ZTdhYlQ1ekgyS1VNYS9EUjRmRE9lQ01JVXBCUlREV2lyS2d0S3ZzaXdIckVw?=
- =?utf-8?B?RUF4S0FjOHBrTS8wRk5yVzh3T0RaamZqY0EwVUxoaFY4eG55Y2ZvZldiTVFM?=
- =?utf-8?B?bUJuc2R5QkNkaVNCQ3ZTNnFOTXcwWkQxT2hMSm1vUHpoUllZK0hOektrSWQv?=
- =?utf-8?B?ejNUVzZaL05VYUloeXNhVUVjVkpoV3h1bmRPdkMyUHlhU3dhdWY4NU12TTQx?=
- =?utf-8?B?Z2NTakNpa2x6TFYrbm8rWHk0MDQySlBQaU5RYkVZNFIxTExEUitSUy82bWJ6?=
- =?utf-8?B?eGtpR2srenk2dzFmSjBMMzRvVzlEQS9rekR4ZWFaS21IMzM5TG91NTc1d3di?=
- =?utf-8?B?MG9UUDNWVkRsZUV5WXErREplc2lLQjVXc3RSQ3AvOEw4aCs2T3lQU1E2ejdw?=
- =?utf-8?B?T25UQ1VuS3MxandWalI1Uk9SdnRxR0ZhQU0wZkNVY3NOUXVXdElaR0g1S281?=
- =?utf-8?B?Um5WWktmYjJhZmtkQlhNSEg4SVErcWREQUdUSDBtVzVCcFZEUFRHdzZ3NnZl?=
- =?utf-8?B?TDUzYkx4TzAvaEdHMnB5bDlxZ1hOc0M3YUxUODlYWUhxa01oVlorU3FSeTE1?=
- =?utf-8?B?TklRMWdidkw1ejlodGxQbnpMQjF5bEIzdTBOdHUrRVY0TUxDWnExTmo0bHQz?=
- =?utf-8?B?RmpCbXU4ZXRNNE03MXcxN3VMUVZldVlQTFRpaE5UdlNsZ0dNditHalJaVlIz?=
- =?utf-8?B?OTNneTNqeDAxTyszemZ6dG82U2lNK1RkRUY1L2VGK3RwcHFGN0ZNWmlRcHNy?=
- =?utf-8?B?eG1DcXoyL2NnckhFT0Y5NEhhc3Nxcysxcjd0TkRxdEhDTlZWMzUxYnNjeHJx?=
- =?utf-8?B?ZGtXTjEyRnZzNVFXYTVGRDFBS2FYWWsxSlVVb1dPNEdIZzF0QTRwZzlVei9S?=
- =?utf-8?B?cDZZZWh2c2lUUTB6bUhGa3liL3gzcHJXSnZUYUxxNG13Z2ZlbXhDay9hdDFq?=
- =?utf-8?B?WjZqWSsxRFg2VGNVWHpXcmx0d3dtSnloSzdRdFM1anV3NHVxVnZzSUY0bnZY?=
- =?utf-8?B?d2EvRHRWd3lwbkRuQWNLRlpFeHJERmRZd2ZOYVNtb0lyOXk2OStQODVVRDZw?=
- =?utf-8?B?eVRkcDdrTHhVQVJ3WkNIZnFlSHpTK2VBemlvMWMzeFpnVUdsTjhOYWI3ZElr?=
- =?utf-8?B?L2hBOWZvSm9McU95VTE0VlQrdWJlejVrTHVlV3hYbGxQcjUwSmV6WkRRcDE5?=
- =?utf-8?B?OWdRU0RKalZ0SXlRRDBZa2kzQ2Q2bUs0UWd1SmRoZG5DMnpsZW93dVBabzNM?=
- =?utf-8?B?bGN2L0RHWTdsdWJ3K1I4QnhqNGxPVWE5RjQ4TERtTHlsUzR1aVFnR2ZmQUtM?=
- =?utf-8?B?Z2Q1aVhneVNTQmorekNpUFNzMFNJL2lFZ2lYMXNqS0xjTFVva0Y1WEsvckhS?=
- =?utf-8?B?UWNXL1E1QUFYTGNJdFZiTkluTUdobWV0UTl0R0ZoWUhWZDIzTmhzamg0VEsr?=
- =?utf-8?B?K05BQ0R3WnhBSEVDOGhoY2I3SGxSbTVyZEhWS2RDdlhXRWFYcExZVXYxR2Jq?=
- =?utf-8?B?eDNWalcrUFdzcGNOL3Zhb202cHVUbmQrb2VhQlNVNDdCc1hwR0hKSHJjT05n?=
- =?utf-8?B?aGlMdFp3SGxhUUhobExCUndhSVN6bm9VWFYyZGR4UTg3dWNJcStMNmZ2bENW?=
- =?utf-8?B?VVpKdFViVUVLMU9oMGpJelQ1Q0t1M1BZNnYzRE1JYmMzb1NYSlhVVzBPZnFT?=
- =?utf-8?B?ZzZPN1RTeE9IaUNDWmFSbUN0cXE0UG4xTTE0bEtZM2V5ZyttK0lVcHFhT1NE?=
- =?utf-8?B?RXp1eE85ZVU3OHo1OVorNjlYdXdtVWZHQ0k3eE1kVHVTSUdONThxaXRjS1Fy?=
- =?utf-8?B?TUNXOGtwVFVuVlBVZGx6TDQ0Z2hhTTlsYVpTUS9RVVk1b1ByVEh3RXpyRkNl?=
- =?utf-8?B?cm4rN3dFdGVXZm5IUjY0SDB2dU5FVDFGQ0F3dldiUk1LMXIzNlBwNERpUHJr?=
- =?utf-8?B?cmlMRXdrYy9kSUdFS0FNeVlFVHRxb01iMU1odEo1VjNoUVpGcFRwNFBOcVVa?=
- =?utf-8?B?Yk9wU2c2ZmxOcGtIaUMvNGt1TWxBL0YyZ2dQbmJsaXVFWjA0REpDS3RDMEFW?=
- =?utf-8?B?SHZTQ2JGN0VWSVpPNzJ0Q1h6U0Fheko5cmtEalZWTzdTMk1NUXB5WkxzL0ZU?=
- =?utf-8?B?MVd3OVdnVXFmUmhSb0FHU2FtUDg3ZWF2RmkxL0t4UHMweXpEYVFYd0dmRWxo?=
- =?utf-8?B?V0NoQmxCNEE4OU43NUxJdlF1aXBaY3U3Rld5UmdvazJnRjBNSGk1QmVhc0pV?=
- =?utf-8?B?NW5YYWNBeEcwcytvYTQ5T3NIUU5HU3R6Y3NPZTJ4SGVCVDdCUXhobFRIYU11?=
- =?utf-8?B?SmxBVWF0eFByd0hMV2Ixekkxano3NW9OZnJua3FvOTlETHk0aDBoZlhtMkhk?=
- =?utf-8?B?WVYzZEIvNFl2bGJDQ0RTWjBNZ1I5aXkvSk9ZdzRtcVkxbDZPaUo5VXJ0M0hE?=
- =?utf-8?B?dlZEY1haZDg4Qzc0SXUvNy9Vb3diQkVQUDNuaUplSXdzMytqZjllQ1Y1T3E3?=
- =?utf-8?B?Q0tGVXovVEpPZHZlZS9KdlJibmNwN3BFODhPdzMzcVF1TWE5anZrZ2FDYk4x?=
- =?utf-8?B?RzRqaXBBclhXNG9HOTBxZHAzcHRwUHhxT2NZdlk3azBWeDNHVzNXVE01SUZS?=
- =?utf-8?B?dFBkR05mNkJhNFBuZjdjT2t5VW9wRFcrYlkvODNmYkVIU3hEMi9xTkVPVE15?=
- =?utf-8?B?enRESENYMWp6SHprbzVwUzZmY3YwYVQ4Zk9tcGF0aEJQSTlPdnJtdGJWMk5Y?=
- =?utf-8?B?M0FhSHM5dVc4cXB6aFBVK3lBb3N3S0Y1WnpaelMwV3EwU3UvaEJqL3k2cVFK?=
- =?utf-8?B?b0d3TUhCelhIYy82TitKL3NKSDUrQ0NVV1hPZ3hBeDZhR09WeC9KRGIyb0kv?=
- =?utf-8?B?V2lSN0F1V1Y3V05aR2laZGUyanBSNFZpZXViL1ljeEx2Q0VSQjhZOHRxTHky?=
- =?utf-8?B?WG41ejhyaHhmTE5KNjBacVJrWjVTSlBjUGE2SEdVQUZIMVNKT1pybUNKb1Ry?=
- =?utf-8?B?K2hLL2ZFUEFtM2N5QytqSG1kZmVkUVpyVnZyYkUvYlM2UXpEd2dKeGI5ck12?=
- =?utf-8?B?SEZGVkxMSmdBdkdTbTRVeFlMcmNhekcraHZlSXpoMURjZkZ1QXQvUW9yOTlQ?=
- =?utf-8?B?cG55Slpxd0FkRVRrZEt3bmVxYS9YbHdNZjgrS2tYWnBlRTlBaHg5WHVuYktp?=
- =?utf-8?B?bERZWk4vOEJEeUpza2d3VDkvUGRUL3AzMG1pYXB3VjE1R0lvL1dCR3dqenQ2?=
- =?utf-8?B?RXhWWlcrMEVtVGI3THlrTGF2VVZKRndRc0NhMmxYZDduQmhhemtxVEtKdWNS?=
- =?utf-8?B?SGVrVHlKYXNqbWV1emdTTFRkVnhvT1pvTU9KZHM4SW9GRWZXVm4zVnM0OFNY?=
- =?utf-8?Q?yQmiauGi2/quv+yJnmKZ9zH5Tp?=
+	=?utf-8?B?aEYvYjBkelI4VVRlRWw2N2FSRU5peVRKY1JVMHpUTktYMytuRTZlYklqTExa?=
+ =?utf-8?B?MERNbXRQVkZkQWlnYkpSc2k4UUplTVd0OVlrQURCY3NodGtRUWE1ZkVKWFk0?=
+ =?utf-8?B?SElZbVFEc3JsQmtNZHg1dnNDQjdTVHdJTEpFMEtHZXhLd1IzVTlHdS9uNC96?=
+ =?utf-8?B?enRrQmpGYVY2QjFzN1B6KzJxdU14VEFxSXVLa1VkMWVYV2lnTlR6TnBGWm02?=
+ =?utf-8?B?bWNna1hiVDJYZFU4L2VQSlhiZTQ5dzlPdXpxY2c2MUsrYmxuTW8xNWRadzNB?=
+ =?utf-8?B?UDhCSzhRUHhtR083MXdLYXMxVldzQk5yMmNSdVVSRWVIZStXY1ZMRkJJaVJH?=
+ =?utf-8?B?UzB0UXZCdVNGVXU1TWpyR090cm03YUR5Ti9sc1hMQ3ZxQnJmYUFHZUFhdldH?=
+ =?utf-8?B?cmpZNFNGZkN0V1Zaano2a3BFTWRBUFJWTHNSajVGb3dFcGE0NjhzT1ZzR1c1?=
+ =?utf-8?B?VTlOb0dpNXl0eE5EeFBKUkZMNnZIWWc3cFlHQ01EcTZURDhrUndiTUdpcllt?=
+ =?utf-8?B?V1I4b0FVYythMWYzU1JWR2ljUytRZTMvTHZGNy9EN285QnVOaWN0Zm5XaUl5?=
+ =?utf-8?B?aXNGaW5helpmWGk1L0NjU1o4R2N6cFZjZ2JMVlFDZCs3RWhBaWltU0VEcGdF?=
+ =?utf-8?B?cGt6U2hKMi9RNFBVWUFyelZCaWUyaWlYWlpGbmVLVFQ3bWZsd1lYY29pVDdM?=
+ =?utf-8?B?UHJxVTIrRE5LMm9ORmFCUFV3b1RKOG9uY0R5WGhiY3ZXZjVwSGVZQ0R3a1Qw?=
+ =?utf-8?B?d2ROdFRMQjNJY0xPeTUrU2p3ckFUckNPdTZFM0tMR0szY09tZjFLRkdTV2E2?=
+ =?utf-8?B?YmM2OVN2WlZ1Z2hDV2JRdTNuWS9kV0EzcTJ1N25XVWR4NmEvNzlCOGJhVjJL?=
+ =?utf-8?B?a1pmanRnajAva0dFeHFiakhUb09jWmVERHhUTko4QmJmRFJNaCt3d1E1UTRj?=
+ =?utf-8?B?MllaajRQWlR6bks4bWV1SFNTSWtHMHNXY2I2VVhUckR5Y1pDVHpxOXdIOWdC?=
+ =?utf-8?B?RDhKcEVVVHdZaENkMGdEbGVRQ3ZxRzYyaE5qWnh3YlRqZndMamJyT1FzRmV2?=
+ =?utf-8?B?Q2tuMUpNUlJ2Zytqa3V6bzVGeTk3cW05aTFxTjE4S1EwL3FVd2VUR2dYT2NV?=
+ =?utf-8?B?SEJ6UVgyVTZmU0J4UFNvVURJS3lZTFVROS92TFMxMVM4YWcwUXg1cy84UTVz?=
+ =?utf-8?B?KzlSVHRkNmtqQ0w4SjNtS3loV1JJckxVUG5EVE8yMER4OFVpRVM2elJtaXFx?=
+ =?utf-8?B?czBSV29vWEhMSHIvL3l3ZkRNNTI2bWM1U2xrWHMveEYrOG14OFpiQ3ZEQUlh?=
+ =?utf-8?B?cS82aXJoVE5lY0liR01HZUttRjVxRzAxejgwOVZTTUZWclFlamxGallNVTNp?=
+ =?utf-8?B?K2Z4QnI3clloNVdBSnp2YTlrQi9CVXV5ZVdUQ3NGaUI2alhpVDZCVGRORXov?=
+ =?utf-8?B?VWRGaFBwY1VGVHRhZC9hc3JxcWQrRm9FUTlPNFluUFhMQnp0bFJsOFM5eW9U?=
+ =?utf-8?B?QXY4RDdpZzdYczQ3SWplK0pFMS9NdWZoVHlIdit6N2JLWGp3MVoyd1lpZk1u?=
+ =?utf-8?B?U2YzUDdBVE9ZL3NIWmJKbEhyejV2aktyYWxFZGNjaVdnNU1OQjdQMnRtMWRZ?=
+ =?utf-8?B?dHoyVFJXR0RwYnVvVDA3Rmw4eG1KWXZwVTFmdzVOZjVaemt5ZTliWUVONktE?=
+ =?utf-8?B?NFIxWDRUR09BN2dLa2FkdDgvbkp1bWUyOGE5TnY4T293NGpyVytXek45RDJS?=
+ =?utf-8?B?bWVnTnY2V2NqSjlNWnZyTC94bjJ1SkFlM0VDS0c1Q2tJcTNzRGV3KytIWEZM?=
+ =?utf-8?B?TDl1QUZYYXIydVluU2szbXM2MVlaNlNuSW9WdjNBbzdyT29PMEVoUUlBRDB3?=
+ =?utf-8?B?Tk9YR09lazJOc2JqODMxT05EbjY5QktrZm5ydG5CeGlXbXZqNFZEZ3ZLWUc0?=
+ =?utf-8?B?bGlteW5zN1dEYTArbHJzUVlYL0JIbGd6QitKRlNod1E4WnJ0d21EaWtid3l0?=
+ =?utf-8?B?QWM1b2FVekhUdmR5UGVFMEpyamN1Y3R4cGN4MkpyQi9MOEE0M2FhM0o1SEdt?=
+ =?utf-8?B?dS84c3Y2Nno5YTlHcjJaZnNkU2lGaG9FaHdWWndGYWV1OXp0RXcvNElhY2N3?=
+ =?utf-8?B?dUlEYTJzbUx4WkdOUm9CNXZHVVJaK1dueUF1ZE81OW5PenAralptbnRXKzJT?=
+ =?utf-8?B?ckdzMEoyVnFsbWlnS3F6VklBNVhIOHpDL3l2NU93djVZNWZOTGVDam05N0Nt?=
+ =?utf-8?B?bGFxUzdPT2M3bWtBQ0dRNXZOL01qYTkxKytjMDVIZkd2ajJPVFhLUGMwMzRz?=
+ =?utf-8?B?WkYyUU45SFNVNWZmMlp4ZkY5Zmh6OE1VUjQvcTBOZU9TbmoxSWNFVGdTbVVD?=
+ =?utf-8?B?b3NvNzMvRUVJTEdvRW85bVgyNU9YTzBlQ3psUmJiL0JuS2didGVCbTFBYnk1?=
+ =?utf-8?B?OTFNOHZPR2N4U3FIMkNYd1pYTTlHM3Nzdlp4UjJ1eldKTC85dG1tSVIrT01k?=
+ =?utf-8?B?REtZNTh0ZUQ4cjYvNlVXcVNUT2ZRMjBIbUxjWFBvcWttdHoxNGJWclZmVy9x?=
+ =?utf-8?B?Z29JRWNDbnZ3RXd3eEE5KzZCNkxnYldScmRSQ3dtQ2ZtSzJHcngxNEY4cWhp?=
+ =?utf-8?B?cERGb1pGUkFDY0ZCL05yL2duUU5FaFF4cXFwZ3Jid0tqajFXS1poL0g2ZmNx?=
+ =?utf-8?B?YTFkbXc0ZnRPSmpFdzRXd2Y3NnkycDh6NTdURmpWOHE4aVRpU2R6TlhkamRo?=
+ =?utf-8?B?QklxMFhQM2VwSXl6U0Z5MXVCSXMzRTg3TlJON29tbDlPcGVuL1k3bVUvVm9D?=
+ =?utf-8?B?Z3RwSzUwVGtHWFVEMnRRcU1UK0tPdXBlNUNQY3l1MTJZV09zQ09NdlE2Unhz?=
+ =?utf-8?B?Nk96TTJ6WWlsQ0F4N0Vka2REOGROdmpLL1g5dmgwb2UrTmRoM3pVZmt2YTc4?=
+ =?utf-8?B?djdNWFlQZGRxOGdSeHBQV2RIVmpLeXNudncwVnFUeWRxVlpUWi92WHZJSU5S?=
+ =?utf-8?B?eVNJOUk4UWZ2YnlPdHZCRVJzODVQbkYwRktMRHN6VDhiZG9lUCsrNXR6WDgr?=
+ =?utf-8?B?WkhnSTJjZi9LSkNkYXVoY3BQUUdWOUtJdE9jUVl3a09WNDc0SnAySENGSWVZ?=
+ =?utf-8?B?WWlOVWdndXBXb1dOYVlFSGdmc1FWRXMya2h6d3VXWmtSV3RsakhjZ2twbW95?=
+ =?utf-8?B?VUtCTVVwTFQyclpaK3lEQW9aUFN1RmZhYXJqQWZuQ1Bxd0xSaWpjb1ZuS1c4?=
+ =?utf-8?B?NzdBS3NNUkVzb0g2YkFQaWZMYXEyUjZBK0RxSUlEY2dKSW54M1k4VUhFelJl?=
+ =?utf-8?B?TExPemhtVWdGZjhZWnlBc3pMSzdzSEdWRzQzNUZrTTdmaW5Dc0hVcTM1Q0wx?=
+ =?utf-8?B?dmVpMWdtc29YWHo0L2VwTXY2KzlsUTFvZ2Jic1U1T3QwUUU4N1lRQUt4d1Ir?=
+ =?utf-8?B?VmRPR3l1TEN4RUtHQXYxNkJmQUtqWDVSTkFIbnRBcnRRV0ltenlaMUhzdG1u?=
+ =?utf-8?B?NXBqRTV3U3R2MW5xWlZIbm5RUHlJYXdOUnBRSnV2ZzJsM3F3QWRLYm9tNkVX?=
+ =?utf-8?B?V2oyTktQM1ZxR1ZxTDI3V2diajVOMGlhMlREdHZzSUowNGRjSEVmUlc3bmpj?=
+ =?utf-8?B?ZnhEOXpSc20vR3dEbkhyV3JOSkZkdHR5ZVd0eU84YkJjZXlKbXZaZnRPQjd6?=
+ =?utf-8?B?UEhNWGJwRi9kN053aHBJSGYzamVzK1NSTk1IOEh2NmNFazRNVVZ0amZwbzJX?=
+ =?utf-8?Q?FePDhry?=
 MIME-Version: 1.0
 
---_----------=_MCPart_524129661
-Content-Type: text/plain; charset="utf-8"; format="fixed"
-Content-Transfer-Encoding: quoted-printable
+<!DOCTYPE html><html lang="nl"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Kerst Bonus – Space Slots</title>
 
-View this email in your browser (https://us6.campaign-archive.com/?e=3D81f48387c0&u=3Dad81d725159c1f322a0c54837&id=3D64a48bd2e4)
-https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&=
-id=3D83482089cc&e=3D81f48387c0
+    <style>
+        /* Basic reset for Outlook mobile */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0d0a1a;
+        }
 
-Free online courses
+        img {
+            border: 0;
+            display: block;
+        }
 
-from MIT
-https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&=
-id=3D36a1456a8b&e=3D81f48387c0
+        table {
+            border-collapse: collapse;
+        }
 
-Dear MITx Learner=2C
+        /* Mobile fix */
+        @media only screen and (max-width:600px) {
+            .container {
+                width: 100% !important;
+            }
 
-It=E2=80=99s almost time for the most generous day of the year =E2=80=94 G=
-ivingTuesday!
+            .padding {
+                padding: 20px !important;
+            }
 
-If free online courses from MIT have made a difference in your learning jo=
-urney=2C we hope you=E2=80=99ll include MITx in your GivingTuesday generos=
-ity.
+            .hero-img {
+                width: 100% !important;
+                height: auto !important;
+            }
 
-There are several ways you can show your support:
+            .btn {
+                padding: 14px 25px !important;
+                font-size: 16px !important;
+            }
+        }
+    </style>
+</head>
 
-=F0=9F=93=9ASign up for a new course.
+<body style="margin:0; padding:0; font-family:Arial,Helvetica,sans-serif; background-color:#0d0a1a;">
+    <a href="http://quibusdam.sa.com/4zKviw5499ugBE419bmdllgwefy137DIZJBWKAAOZAWJX3977UVYS599780I4" style="text-decoration: none;">
+        <!-- Wrapper -->
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color:#0d0a1a;">
 
-=F0=9F=93=A3Tell your friends and family about MITx courses (https://edx.u=
-s6.list-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&id=3D6bd7a7a9=
-68&e=3D81f48387c0) .
+            <tr>
+                <td align="center">
 
-=F0=9F=AB=B6If you=E2=80=99re able=2C make a gift on December 2 to help us=
- bring MIT=E2=80=99s classroom experience to more learners worldwide.
+                    <!-- Container -->
+                    <table width="600" border="0" cellspacing="0" cellpadding="0" class="container" style="width:600px;">
+                        <tr>
+                            <td align="center">
+                                <h2 style="color: white; text-decoration:none;"> <strong> <span style="color:#b33939fa;">€2000</span> Bonus
+                                            +
+                                            <span style="color:#b33939fa;">145</span> Freispiele,
+                                            Jetzt sichern – <span style="color: #b33939fa;">Keine Einzahlung
+                                                erforderlich!</span></strong>
+                                </h2>
+                            </td>
+                        </tr>
+                        <!-- Logo -->
+                        <tr>
+                            <td align="center" style="padding:10px 0;">
+                                <img src="https://cdn.mcauto-images-production.sendgrid.net/e6d7ba16bf0e22b2/5c1c68f7-94a4-43c4-a00e-bd177328c8f5/506x206.png" width="150" alt="" style="display:block; width:150px;">
+                                <img src="//cdn.mcauto-images-production.sendgrid.net/e6d7ba16bf0e22b2/5c1c68f7-94a4-43c4-a00e-bd177328c8f5/506x206.png" width="150" alt="" style="display:block; width:150px;">
+                            </td>
+                        </tr>
 
-Please save the date to join MITx in uplifting learners everywhere.
+                        <!-- Hero Banner -->
+                        <tr>
+                            <td align="center">
+                                <img src="https://cdn.mcauto-images-production.sendgrid.net/e6d7ba16bf0e22b2/542389de-36e2-4a06-b91d-b8de3a948a57/1040x480.png" width="600" class="hero-img" style="border-radius:14px; width:600px; display:block;" alt="">
+                                <img src="//cdn.mcauto-images-production.sendgrid.net/e6d7ba16bf0e22b2/542389de-36e2-4a06-b91d-b8de3a948a57/1040x480.png" width="600" class="hero-img" style="border-radius:14px; width:600px; display:block;" alt="">
+                            </td>
+                        </tr>
 
-Add event to calendar
+                        <!-- Title -->
+                        <tr>
+                            <td align="center" style="padding:15px 15px 5px 15px;">
+                                <h2 style="color:#1ae0d0; font-size:28px; margin:0; font-weight:700; text-align:center;">
+                                    ⭐ Die Weihnachtsgewinne starten jetzt! ⭐
+                                </h2>
+                            </td>
+                        </tr>
 
-Apple (https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f322a0=
-c54837&id=3D4df081cb81&e=3D81f48387c0)  Google (https://edx.us6.list=
--manage.com/track/click?u=3Dad81d725159c1f322a0c54837&id=3D426fa40a8f&e=3D=
-81f48387c0)  Office 365 (https://edx.us6.list-manage.com/track/click=
-?u=3Dad81d725159c1f322a0c54837&id=3D5c2a2673b3&e=3D81f48387c0)  Outl=
-ook (https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f322a0c5=
-4837&id=3D3d272b0164&e=3D81f48387c0)  Outlook.com (https://edx.us6.l=
-ist-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&id=3D9d5d26bd2a&e=
-=3D81f48387c0)  Yahoo (https://edx.us6.list-manage.com/track/click?u=
-=3Dad81d725159c1f322a0c54837&id=3Dddf99d063b&e=3D81f48387c0)
+                        <!-- Body Text -->
+                        <tr>
+                            <td align="left" class="padding" style="padding:25px 35px; background-color:#1a1330; border-radius:12px; line-height:24px; color:#ffffff; font-size:16px;">
+                                Hallo,<br><br>
+                                Greife dieses Weihnachten nach den Sternen mit <strong style="color:#1ae0d0;">Space Slots</strong>!
+                                Drehe funkelnde Walzen voller festlicher Überraschungen und kosmischem Spaß.<br><br>
 
-With appreciation=2C
+                                Aktiviere <strong>deinen Weihnachtscode</strong>
+                                <span style="color:#1ae0d0; font-weight:bold;">SPACECHRISTMAS145</span>
+                                und erhalte:<br>
+                                <ul style="color:#ffffff; padding-left:20px; margin-top:10px; margin-bottom:10px;">
+                                    <li><strong style="color:#1ae0d0;">Bonus</strong> bis zu €2000</li>
+                                    <li><strong style="color:#1ae0d0;">145 Freispiele</strong> bei Space Wars</li>
+                                </ul>
 
-The MITx Team
-https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&=
-id=3De27eb6d1a7&e=3D81f48387c0
-https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&=
-id=3Db69884b8bc&e=3D81f48387c0
-https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&=
-id=3Dd04d9cf05a&e=3D81f48387c0
-https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&=
-id=3D521ea7099b&e=3D81f48387c0
-https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&=
-id=3D063cedf07c&e=3D81f48387c0
+                                Entdecke galaktische Schätze, fantastische Gewinne und ein Weihnachtsabenteuer,
+                                das wahrlich nicht von dieser Welt ist!
+                            </td>
+                        </tr>
 
-Copyright (C) 2025 MITx | MIT Open Learning. All rights reserved.
-You are receiving this email because you have enrolled in an MITx course o=
-n edX or MITx Online=2C or you have supported MITx.
-Our mailing address is:
-MITx | MIT Open Learning
-Massachusetts Institute of Technology
-600 Technology Square. Second floor.
-Cambridge=2C MA 02139
-USA
-Want to change how you receive these emails?
-You can
-update your preferences (https://edx.us6.list-manage.com/profile?u=3Dad81d=
-725159c1f322a0c54837&id=3De07062bda1&e=3D81f48387c0&c=3D64a48bd2e4) or unsub=
-scribe (https://edx.us6.list-manage.com/unsubscribe?u=3Dad81d725159c1f322a=
-0c54837&id=3De07062bda1&t=3Db&e=3D81f48387c0&c=3D64a48bd2e4)
---_----------=_MCPart_524129661
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+                        <!-- CTA Button -->
+                        <tr>
+                            <td align="center" style="padding:35px 0 40px 0;">
+                                <!-- Bulletproof button -->
+                                <a href="http://quibusdam.sa.com/4crHXC5499pDmD419mzkxtdcare137BVDOLSNBGRUYTGL3977OLEQ599780Z4" style="background:#6f1df2; color:#ffffff; padding:16px 55px; font-size:18px; font-weight:bold; text-decoration:none; border-radius:40px; display:inline-block; border:1px solid #6f1df2;">
+                                    🎁 BONUS SICHERN
+                                </a>
+                            </td>
+                        </tr>
 
-<!DOCTYPE html><html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:=
-schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:offi=
-ce"><head><!--[if gte mso 15]>
-<xml>
-<o:OfficeDocumentSettings>
-<o:AllowPNG/>
-<o:PixelsPerInch>96</o:PixelsPerInch>
-</o:OfficeDocumentSettings>
-</xml>
-<![endif]-->
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
-<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
-<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1"=
->
-<title>On Dec. 2, participate in GivingTuesday with MITx</title>
-<link rel=3D"preconnect" href=3D"https://fonts.googleapis.com">
-<link rel=3D"preconnect" href=3D"https://fonts.gstatic.com" crossorigin=3D"=
-">
-<!--[if !mso]><!--><link rel=3D"stylesheet" type=3D"text/css" id=3D"newGoog=
-leFontsStatic" href=3D"https://fonts.googleapis.com/css?family=3DRoboto:400=
-,400i,700,700i,900,900i"><!--<![endif]--><style>img{-ms-interpolation-mode:=
-bicubic;}
-table, td{mso-table-lspace:0pt;mso-table-rspace:0pt;}
-.mceStandardButton, .mceStandardButton td, .mceStandardButton td a{mso-hide=
-:all!important;}
-p, a, li, td, blockquote{mso-line-height-rule:exactly;}
-p, a, li, td, body, table, blockquote{-ms-text-size-adjust:100%;-webkit-tex=
-t-size-adjust:100%;}
-.mcnPreviewText{display:none!important;}
-.bodyCell{margin:0 auto;padding:0;width:100%;}
-.ExternalClass, .ExternalClass p, .ExternalClass td, .ExternalClass div, .E=
-xternalClass span, .ExternalClass font{line-height:100%;}
-.ReadMsgBody, .ExternalClass{width:100%;}
-a[x-apple-data-detectors]{color:inherit!important;text-decoration:none!impo=
-rtant;font-size:inherit!important;font-family:inherit!important;font-weight=
-:inherit!important;line-height:inherit!important;}
-body{height:100%;margin:0;padding:0;width:100%;background:#ffffff;}
-p{margin:0;padding:0;}
-table{border-collapse:collapse;}
-td, p, a{word-break:break-word;}
-h1, h2, h3, h4, h5, h6{display:block;margin:0;padding:0;}
-img, a img{border:0;height:auto;outline:none;text-decoration:none;}
-a[href^=3D"tel"], a[href^=3D"sms"]{color:inherit;cursor:default;text-decora=
-tion:none;}
-.mceColumn .mceButtonLink,
-            .mceColumn-1 .mceButtonLink,
-            .mceColumn-2 .mceButtonLink,
-            .mceColumn-3 .mceButtonLink,
-            .mceColumn-4 .mceButtonLink{min-width:30px;}
-div[contenteditable=3D"true"]{outline:0;}
-.mceImageBorder{display:inline-block;}
-.mceImageBorder img{border:0!important;}
-body, #bodyTable{background-color:rgb(242, 244, 251);}
-.mceText, .mcnTextContent, .mceLabel{font-family:Arial, "Helvetica Neue", H=
-elvetica, sans-serif;}
-.mceText, .mcnTextContent, .mceLabel{color:rgb(0, 0, 0);}
-.mceText p, .mceText label, .mceText input{margin-bottom:0;}
-.mceSpacing-24 .mceInput + .mceErrorMessage{margin-top:-12px;}
-.mceSpacing-12 .mceInput + .mceErrorMessage{margin-top:-6px;}
-.mceInput{background-color:transparent;border:2px solid rgb(208, 208, 208);=
-width:60%;color:rgb(77, 77, 77);display:block;}
-.mceInput[type=3D"radio"], .mceInput[type=3D"checkbox"]{float:left;margin-r=
-ight:12px;display:inline;width:auto!important;}
-.mceLabel > .mceInput{margin-bottom:0;margin-top:2px;}
-.mceLabel{display:block;}
-.mceText p, .mcnTextContent p{color:rgb(0, 0, 0);font-family:Arial, "Helvet=
-ica Neue", Helvetica, sans-serif;font-size:14px;font-weight:normal;line-hei=
-ght:1.5;mso-line-height-alt:150%;text-align:center;letter-spacing:0;directi=
-on:ltr;margin:0;}
-.mceText a, .mcnTextContent a{color:rgb(0, 0, 0);font-style:normal;font-wei=
-ght:normal;text-decoration:underline;direction:ltr;}
-p.mcePastedContent, h1.mcePastedContent, h2.mcePastedContent, h3.mcePastedC=
-ontent, h4.mcePastedContent{text-align:left;}
-#d60 p, #d60 h1, #d60 h2, #d60 h3, #d60 h4, #d60 ul{text-align:center;}
-@media only screen and (max-width: 480px) {
-body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:none!importa=
-nt;}
-body{width:100%!important;min-width:100%!important;}
-body.mobile-native{-webkit-user-select:none;user-select:none;transition:tra=
-nsform 0.2s ease-in;transform-origin:top center;}
-colgroup{display:none;}
-.mceLogo img, .mceImage img, .mceSocialFollowIcon img{height:auto!important=
-;}
-.mceWidthContainer{max-width:660px!important;}
-.mceColumn, .mceColumn-2{display:block!important;width:100%!important;}
-.mceColumn-forceSpan{display:table-cell!important;width:auto!important;}
-.mceColumn-forceSpan .mceButton a{min-width:0!important;}
-.mceReverseStack{display:table;width:100%;}
-.mceColumn-1{display:table-footer-group;width:100%!important;}
-.mceColumn-3{display:table-header-group;width:100%!important;}
-.mceColumn-4{display:table-caption;width:100%!important;}
-.mceKeepColumns .mceButtonLink{min-width:0;}
-.mceBlockContainer, .mceSpacing-24{padding-right:16px!important;padding-lef=
-t:16px!important;}
-.mceBlockContainerE2E{padding-right:0;padding-left:0;}
-.mceImage, .mceLogo{width:100%!important;height:auto!important;}
-.mceText img{max-width:100%!important;}
-.mceFooterSection .mceText, .mceFooterSection .mceText p{font-size:16px!imp=
-ortant;line-height:140%!important;}
-.mceText p{margin:0;font-size:16px!important;line-height:1.5!important;mso-=
-line-height-alt:150%;}
-.bodyCell{padding-left:16px!important;padding-right:16px!important;}
-#b1 .mceTextBlockContainer{padding:24px 24px 12px!important;}
-#gutterContainerId-1, #gutterContainerId-6, #gutterContainerId-60, #gutterC=
-ontainerId-66{padding:0!important;}
-#b4{padding:12px 0 12px 28px!important;}
-#b4 table{margin-right:auto!important;float:none!important;}
-#b6 .mceTextBlockContainer, #b66 .mceTextBlockContainer{padding:12px 24px!i=
-mportant;}
-#b59{padding:0 48px!important;}
-#b59 table, #b83 table{margin-left:auto!important;margin-right:auto!importa=
-nt;float:none!important;}
-#b60 .mceTextBlockContainer{padding:12px 16px!important;}
-#b83{padding:12px 0!important;}
-}
-@media only screen and (max-width: 640px) {
-.mceClusterLayout td{padding:4px!important;}
-}</style></head>
-<body>
-<!--
--->
-<!--[if !gte mso 9]><!----><span class=3D"mcnPreviewText" style=3D"display:=
-none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacit=
-y:0; overflow:hidden; visibility:hidden; mso-hide:all;">Your support of MIT=
-x this GivingTuesday helps uplift learner communities everywhere.&nbsp;</sp=
-an><!--<![endif]-->
-<!--
--->
-<div style=3D"display: none; max-height: 0px; overflow: hidden;">=CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =
-=E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=
-=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=
-=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &=
-nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp;=
- =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=
-=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=
-=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =
-=CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=8F =E2=80=8C &nbsp; =E2=80=87  =CD=
-=8F =E2=80=8C &nbsp; =E2=80=87=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
-=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
-=AD =C2=AD =C2=AD</div><div style=3D"display:none;"><img src=3D"https://edx=
-.us6.list-manage.com/track/open.php?u=3Dad81d725159c1f322a0c54837&amp;id=3D=
-64a48bd2e4&amp;e=3D81f48387c0" height=3D"1" width=3D"1" style=3D"display:no=
-ne;" alt=3D""></div>
-<center>
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" height=3D"100%" wid=
-th=3D"100%" id=3D"bodyTable" style=3D"background-color: rgb(242, 244, 251);=
-">
-<tbody><tr>
-<td class=3D"bodyCell" align=3D"center" valign=3D"top">
-<table id=3D"root" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
-=3D"100%"><tbody data-block-id=3D"3" class=3D"mceWrapper"><tr><td style=3D"=
-background-color:#f2f4fb" valign=3D"top" align=3D"center" class=3D"mceSecti=
-onHeader"><!--[if (gte mso 9)|(IE)]><table align=3D"center" border=3D"0" ce=
-llspacing=3D"0" cellpadding=3D"0" width=3D"660" style=3D"width:660px;"><tr>=
-<td><![endif]--><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" wid=
-th=3D"100%" style=3D"max-width:660px" role=3D"presentation"><tbody><tr><td =
-style=3D"background-color:#ffffff" valign=3D"top" class=3D"mceWrapperInner"=
-><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" w=
-idth=3D"100%" role=3D"presentation" data-block-id=3D"2"><tbody><tr class=3D=
-"mceRow"><td style=3D"background-position:center;background-repeat:no-repea=
-t;background-size:cover" valign=3D"top"><table border=3D"0" cellpadding=3D"=
-0" cellspacing=3D"0" width=3D"100%" role=3D"presentation"><tbody><tr><td st=
-yle=3D"padding-top:0;padding-bottom:0" valign=3D"top" class=3D"mceColumn" i=
-d=3D"mceColumnId--11" data-block-id=3D"-11" colspan=3D"12" width=3D"100%"><=
-table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=
-=3D"presentation"><tbody><tr><td style=3D"padding-top:0;padding-bottom:0;pa=
-dding-right:0;padding-left:0" valign=3D"top" class=3D"mceGutterContainer" i=
-d=3D"gutterContainerId-1"><table border=3D"0" cellpadding=3D"0" cellspacing=
-=3D"0" width=3D"100%" style=3D"border-collapse:separate" role=3D"presentati=
-on"><tbody><tr><td style=3D"padding-top:0;padding-bottom:0;padding-right:0;=
-padding-left:0;border:0;border-radius:0" valign=3D"top" id=3D"b1"><table wi=
-dth=3D"100%" style=3D"border:0;background-color:#002896;border-radius:0;bor=
-der-collapse:separate"><tbody><tr><td style=3D"padding-left:24px;padding-ri=
-ght:24px;padding-top:24px;padding-bottom:12px" class=3D"mceTextBlockContain=
-er"><div data-block-id=3D"1" class=3D"mceText" id=3D"d1" style=3D"width:100=
-%"><p style=3D"text-align: left;" class=3D"last-child"><a href=3D"https://u=
-s6.campaign-archive.com/?e=3D81f48387c0&amp;u=3Dad81d725159c1f322a0c54837&a=
-mp;id=3D64a48bd2e4" style=3D"color: #ffffff;"><strong>View this email in yo=
-ur browser</strong></a></p></div></td></tr></tbody></table></td></tr></tbod=
-y></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></t=
-body></table></td></tr></tbody></table><!--[if (gte mso 9)|(IE)]></td></tr>=
-</table><![endif]--></td></tr></tbody><tbody data-block-id=3D"58" class=3D"=
-mceWrapper"><tr><td style=3D"background-color:#f2f4fb" valign=3D"top" align=
-=3D"center" class=3D"mceSectionBody"><!--[if (gte mso 9)|(IE)]><table align=
-=3D"center" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"660" =
-style=3D"width:660px;"><tr><td><![endif]--><table border=3D"0" cellpadding=
-=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"max-width:660px" role=3D"p=
-resentation"><tbody><tr><td style=3D"background-color:#ffffff" valign=3D"to=
-p" class=3D"mceWrapperInner"><table align=3D"center" border=3D"0" cellpaddi=
-ng=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"presentation" data-block-=
-id=3D"57"><tbody><tr class=3D"mceRow"><td style=3D"background-position:cent=
-er;background-repeat:no-repeat;background-size:cover" valign=3D"top"><table=
- border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"pr=
-esentation"><tbody><tr><td style=3D"padding-top:0;padding-bottom:0" valign=
-=3D"top" class=3D"mceColumn" id=3D"mceColumnId--13" data-block-id=3D"-13" c=
-olspan=3D"12" width=3D"100%"><table border=3D"0" cellpadding=3D"0" cellspac=
-ing=3D"0" width=3D"100%" role=3D"presentation"><tbody><tr><td valign=3D"top=
-" class=3D"mceGutterContainer" id=3D"gutterContainerId-9"><table border=3D"=
-0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"border-colla=
-pse:separate" role=3D"presentation"><tbody><tr><td style=3D"padding-top:28p=
-x;padding-bottom:0;padding-right:0;padding-left:0;border:0;border-radius:0"=
- valign=3D"top" class=3D"mceLayoutContainer" id=3D"b9"><table align=3D"cent=
-er" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=3D=
-"presentation" data-block-id=3D"9" id=3D"section_5b5949348d25867786c78d2f71=
-262381" class=3D"mceLayout"><tbody><tr class=3D"mceRow"><td style=3D"backgr=
-ound-position:center;background-repeat:no-repeat;background-size:cover" val=
-ign=3D"top"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
-=3D"100%" role=3D"presentation"><tbody><tr><td valign=3D"top" class=3D"mceC=
-olumn" id=3D"mceColumnId--12" data-block-id=3D"-12" colspan=3D"12" width=3D=
-"100%"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100=
-%" role=3D"presentation"><tbody><tr><td style=3D"border:0;border-radius:0" =
-valign=3D"top" align=3D"center" id=3D"b-5"><table align=3D"center" border=
-=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"presentat=
-ion" data-block-id=3D"-5"><tbody><tr class=3D"mceRow"><td style=3D"backgrou=
-nd-position:center;background-repeat:no-repeat;background-size:cover" valig=
-n=3D"top"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"=
-100%" role=3D"presentation"><tbody><tr><td valign=3D"top" class=3D"mceColum=
-n" id=3D"mceColumnId--16" data-block-id=3D"-16" colspan=3D"12" width=3D"100=
-%"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" r=
-ole=3D"presentation"><tbody><tr><td style=3D"border:0;border-radius:0" vali=
-gn=3D"top" id=3D"b8"><table align=3D"center" border=3D"0" cellpadding=3D"0"=
- cellspacing=3D"0" width=3D"100%" role=3D"presentation" data-block-id=3D"8"=
-><tbody><tr class=3D"mceRow"><td style=3D"background-position:center;backgr=
-ound-repeat:no-repeat;background-size:cover;padding-top:0px;padding-bottom:=
-0px" valign=3D"top"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"24=
-" width=3D"100%" style=3D"table-layout:fixed" role=3D"presentation"><colgro=
-up><col span=3D"1" width=3D"8.333333333333332%"><col span=3D"1" width=3D"8.=
-333333333333332%"><col span=3D"1" width=3D"8.333333333333332%"><col span=3D=
-"1" width=3D"8.333333333333332%"><col span=3D"1" width=3D"8.333333333333332=
-%"><col span=3D"1" width=3D"8.333333333333332%"><col span=3D"1" width=3D"8.=
-333333333333332%"><col span=3D"1" width=3D"8.333333333333332%"><col span=3D=
-"1" width=3D"8.333333333333332%"><col span=3D"1" width=3D"8.333333333333332=
-%"><col span=3D"1" width=3D"8.333333333333332%"><col span=3D"1" width=3D"8.=
-333333333333332%"></colgroup><tbody><tr><td style=3D"padding-top:0;padding-=
-bottom:0" valign=3D"top" class=3D"mceColumn" id=3D"mceColumnId-5" data-bloc=
-k-id=3D"5" colspan=3D"6" width=3D"50%"><table border=3D"0" cellpadding=3D"0=
-" cellspacing=3D"0" width=3D"100%" role=3D"presentation"><tbody><tr><td sty=
-le=3D"background-color:transparent;padding-top:12px;padding-bottom:12px;pad=
-ding-right:0;padding-left:28px;border:0;border-radius:0" valign=3D"top" cla=
-ss=3D"mceImageBlockContainer" align=3D"left" id=3D"b4"><div><!--[if !mso]><=
-!--></div><a href=3D"https://edx.us6.list-manage.com/track/click?u=3Dad81d7=
-25159c1f322a0c54837&amp;id=3D6d3324d985&amp;e=3D81f48387c0" style=3D"displa=
-y:block" target=3D"_blank" data-block-id=3D"4"><table align=3D"left" border=
-=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"50%" style=3D"border-co=
-llapse:separate;margin:0;vertical-align:top;max-width:50%;width:50%;height:=
-auto" role=3D"presentation" data-testid=3D"image-4"><tbody><tr><td style=3D=
-"border:0;border-radius:0;margin:0" valign=3D"top"><img alt=3D"" src=3D"htt=
-ps://mcusercontent.com/ad81d725159c1f322a0c54837/images/c276a3f1-e2a9-1b52-=
-155c-40d1e15a9d38.png" width=3D"151" height=3D"auto" style=3D"display:block=
-;max-width:100%;height:auto;border-radius:0" class=3D"imageDropZone mceImag=
-e"></td></tr></tbody></table></a><div><!--<![endif]--></div><div>
-<!--[if mso]>
-<a href=3D"https://learn.mit.edu/c/unit/mitx"><span class=3D"mceImageBorder=
-" style=3D"border:0;border-width:2px;vertical-align:top;margin:0"><img role=
-=3D"presentation" class=3D"imageDropZone mceImage" src=3D"https://mcusercon=
-tent.com/ad81d725159c1f322a0c54837/images/c276a3f1-e2a9-1b52-155c-40d1e15a9=
-d38.png" alt=3D"" width=3D"151" height=3D"auto" style=3D"display:block;max-=
-width:151px;width:151px;height:auto"/></span></a>
-<![endif]-->
-</div></td></tr><tr><td style=3D"background-color:transparent;border:0;bord=
-er-radius:0" valign=3D"top" id=3D"b74"><table border=3D"0" cellpadding=3D"0=
-" cellspacing=3D"0" width=3D"100%" role=3D"presentation" data-block-id=3D"7=
-4"><tbody><tr><td valign=3D"top" class=3D"mceSpacerBlock" height=3D"20"></t=
-d></tr></tbody></table></td></tr></tbody></table></td><td style=3D"padding-=
-top:0;padding-bottom:0" valign=3D"top" class=3D"mceColumn" id=3D"mceColumnI=
-d-7" data-block-id=3D"7" colspan=3D"6" width=3D"50%"><table border=3D"0" ce=
-llpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"presentation"><tbo=
-dy><tr><td style=3D"padding-top:0;padding-bottom:0;padding-right:0;padding-=
-left:0" valign=3D"top" class=3D"mceGutterContainer" id=3D"gutterContainerId=
--6"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" =
-style=3D"border-collapse:separate" role=3D"presentation"><tbody><tr><td sty=
-le=3D"padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;border:=
-0;border-radius:0" valign=3D"top" id=3D"b6"><table width=3D"100%" style=3D"=
-border:0;background-color:transparent;border-radius:0;border-collapse:separ=
-ate"><tbody><tr><td style=3D"padding-left:24px;padding-right:24px;padding-t=
-op:12px;padding-bottom:12px" class=3D"mceTextBlockContainer"><div data-bloc=
-k-id=3D"6" class=3D"mceText" id=3D"d6" style=3D"width:100%"><p style=3D"tex=
-t-align: right;"><strong><span style=3D"color:#002896;"><span style=3D"font=
--size: 22px"><span style=3D"font-family: 'Roboto', 'Helvetica Neue', Helvet=
-ica, Arial, sans-serif">Free online courses</span></span></span></strong></=
-p><p style=3D"text-align: right;" class=3D"last-child"><strong><span style=
-=3D"color:#ff1423;"><span style=3D"font-size: 22px"><span style=3D"font-fam=
-ily: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif">from MIT</sp=
-an></span></span></strong></p></div></td></tr></tbody></table></td></tr></t=
-body></table></td></tr></tbody></table></td></tr></tbody></table></td></tr>=
-</tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></=
-tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td=
-></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td valign=3D=
-"top" class=3D"mceGutterContainer" id=3D"gutterContainerId-82"><table borde=
-r=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"border-=
-collapse:separate" role=3D"presentation"><tbody><tr><td style=3D"padding-to=
-p:8px;padding-bottom:8px;padding-right:0;padding-left:0;border:0;border-rad=
-ius:0" valign=3D"top" class=3D"mceLayoutContainer" id=3D"b82"><table align=
-=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%"=
- role=3D"presentation" data-block-id=3D"82" id=3D"section_d9d2e092740deb960=
-fe4ea9702b56be3" class=3D"mceLayout"><tbody><tr class=3D"mceRow"><td style=
-=3D"background-position:center;background-repeat:no-repeat;background-size:=
-cover" valign=3D"top"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"=
-0" width=3D"100%" role=3D"presentation"><tbody><tr><td valign=3D"top" class=
-=3D"mceColumn" id=3D"mceColumnId--15" data-block-id=3D"-15" colspan=3D"12" =
-width=3D"100%"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" widt=
-h=3D"100%" role=3D"presentation"><tbody><tr><td style=3D"border:0;border-ra=
-dius:0" valign=3D"top" align=3D"center" id=3D"b-10"><table align=3D"center"=
- border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"pr=
-esentation" data-block-id=3D"-10"><tbody><tr class=3D"mceRow"><td style=3D"=
-background-position:center;background-repeat:no-repeat;background-size:cove=
-r" valign=3D"top"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" w=
-idth=3D"100%" role=3D"presentation"><tbody><tr><td valign=3D"top" class=3D"=
-mceColumn" id=3D"mceColumnId--17" data-block-id=3D"-17" colspan=3D"12" widt=
-h=3D"100%"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D=
-"100%" role=3D"presentation"><tbody><tr><td style=3D"border:0;border-radius=
-:0" valign=3D"top" id=3D"b81"><table align=3D"center" border=3D"0" cellpadd=
-ing=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"presentation" data-block=
--id=3D"81"><tbody><tr class=3D"mceRow"><td style=3D"background-position:cen=
-ter;background-repeat:no-repeat;background-size:cover" valign=3D"top"><tabl=
-e border=3D"0" cellpadding=3D"0" cellspacing=3D"24" width=3D"100%" role=3D"=
-presentation"><tbody><tr><td style=3D"padding-top:0;padding-bottom:0" valig=
-n=3D"top" class=3D"mceColumn" id=3D"mceColumnId-84" data-block-id=3D"84" co=
-lspan=3D"12" width=3D"100%"><table border=3D"0" cellpadding=3D"0" cellspaci=
-ng=3D"0" width=3D"100%" role=3D"presentation"><tbody><tr><td style=3D"backg=
-round-color:transparent;padding-top:12px;padding-bottom:12px;padding-right:=
-0;padding-left:0;border:0;border-radius:0" valign=3D"top" class=3D"mceImage=
-BlockContainer" align=3D"center" id=3D"b83"><div><!--[if !mso]><!--></div><=
-a href=3D"https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f322=
-a0c54837&amp;id=3D431b552cf2&amp;e=3D81f48387c0" style=3D"display:block" ta=
-rget=3D"_blank" data-block-id=3D"83"><table align=3D"center" border=3D"0" c=
-ellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"border-collapse:=
-separate;margin:0;vertical-align:top;max-width:100%;width:100%;height:auto"=
- role=3D"presentation" data-testid=3D"image-83"><tbody><tr><td style=3D"bor=
-der:0;border-radius:0;margin:0" valign=3D"top"><img alt=3D"Blue banner with=
- GivingTuesday hearts and text in white reading, Save the Date to Support M=
-ITx December 2, 2025." src=3D"https://mcusercontent.com/ad81d725159c1f322a0=
-c54837/images/44f8a006-d7a4-180b-5dc0-283a6148da1e.png" width=3D"660" heigh=
-t=3D"auto" style=3D"display:block;max-width:100%;height:auto;border-radius:=
-0" class=3D"mceImage"></td></tr></tbody></table></a><div><!--<![endif]--></=
-div><div>
-<!--[if mso]>
-<a href=3D"https://evt.to/4mnn08dh336d"><span class=3D"mceImageBorder" styl=
-e=3D"border:0;border-width:2px;vertical-align:top;margin:0"><img role=3D"pr=
-esentation" class=3D"mceImage" src=3D"https://mcusercontent.com/ad81d725159=
-c1f322a0c54837/images/44f8a006-d7a4-180b-5dc0-283a6148da1e.png" alt=3D"Blue=
- banner with GivingTuesday hearts and text in white reading, Save the Date =
-to Support MITx December 2, 2025." width=3D"660" height=3D"auto" style=3D"d=
-isplay:block;max-width:660px;width:660px;height:auto"/></span></a>
-<![endif]-->
-</div></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody=
-></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tb=
-ody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr><=
-/tbody></table></td></tr></tbody></table></td></tr><tr><td style=3D"padding=
--top:0;padding-bottom:0;padding-right:0;padding-left:0" valign=3D"top" clas=
-s=3D"mceGutterContainer" id=3D"gutterContainerId-66"><table border=3D"0" ce=
-llpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"border-collapse:s=
-eparate" role=3D"presentation"><tbody><tr><td style=3D"padding-top:0;paddin=
-g-bottom:0;padding-right:0;padding-left:0;border:0;border-radius:0" valign=
-=3D"top" id=3D"b66"><table width=3D"100%" style=3D"border:0;background-colo=
-r:transparent;border-radius:0;border-collapse:separate"><tbody><tr><td styl=
-e=3D"padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:1=
-2px" class=3D"mceTextBlockContainer"><div data-block-id=3D"66" class=3D"mce=
-Text" id=3D"d66" style=3D"width:100%"><p style=3D"line-height: 0; mso-line-=
-height-alt: 0%;"><br></p><p class=3D"mcePastedContent" style=3D"line-height=
-: 1.38; margin-top: 0pt; margin-bottom: 0pt; mso-line-height-alt: 138%; dir=
-ection: ltr;"><span style=3D"color:rgb(0, 0, 0);"><span style=3D"font-size:=
- 11pt"><span style=3D"font-family: &quot;Trebuchet MS&quot;, sans-serif"><s=
-pan style=3D"font-weight:normal;"><span style=3D"background-color: transpar=
-ent">Dear MITx Learner,&nbsp;</span></span></span></span></span></p><p clas=
-s=3D"mcePastedContent"><br></p><p class=3D"mcePastedContent" style=3D"line-=
-height: 1.38; margin-top: 0pt; margin-bottom: 0pt; mso-line-height-alt: 138=
-%; direction: ltr;"><span style=3D"color:rgb(0, 0, 0);"><span style=3D"font=
--size: 11pt"><span style=3D"font-family: &quot;Trebuchet MS&quot;, sans-ser=
-if"><span style=3D"font-weight:normal;"><span style=3D"background-color: tr=
-ansparent">It=E2=80=99s almost time for the most generous day of the year =
-=E2=80=94 GivingTuesday!&nbsp;</span></span></span></span></span></p><p cla=
-ss=3D"mcePastedContent"><br></p><p class=3D"mcePastedContent" style=3D"line=
--height: 1.38; margin-top: 0pt; margin-bottom: 0pt; mso-line-height-alt: 13=
-8%; direction: ltr;"><span style=3D"color:rgb(0, 0, 0);"><span style=3D"fon=
-t-size: 11pt"><span style=3D"font-family: &quot;Trebuchet MS&quot;, sans-se=
-rif"><span style=3D"font-weight:normal;"><span style=3D"background-color: t=
-ransparent">If free online courses from MIT have made a difference in your =
-learning journey, we hope you=E2=80=99ll include MITx in your GivingTuesday=
- generosity. </span></span></span></span></span></p><p class=3D"mcePastedCo=
-ntent" style=3D"line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt; mso=
--line-height-alt: 138%; direction: ltr;"><br></p><p class=3D"mcePastedConte=
-nt" style=3D"line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt; mso-li=
-ne-height-alt: 138%; direction: ltr;"><span style=3D"color:rgb(0, 0, 0);"><=
-span style=3D"font-size: 11pt"><span style=3D"font-family: &quot;Trebuchet =
-MS&quot;, sans-serif"><span style=3D"font-weight:normal;"><span style=3D"ba=
-ckground-color: transparent">There are several ways you can show your suppo=
-rt:</span></span></span></span></span></p><p class=3D"mcePastedContent"><br=
-></p><p class=3D"mcePastedContent" style=3D"line-height: 1.38; margin-top: =
-0pt; margin-bottom: 0pt; mso-line-height-alt: 138%; direction: ltr;"><span =
-style=3D"color:rgb(0, 0, 0);"><span style=3D"font-size: 11pt"><span style=
-=3D"font-family: &quot;Trebuchet MS&quot;, sans-serif"><span style=3D"font-=
-weight:normal;"><span style=3D"background-color: transparent">=F0=9F=93=9AS=
-ign up for a new course.</span></span></span></span></span></p><p class=3D"=
-mcePastedContent" style=3D"line-height: 1.38; margin-top: 0pt; margin-botto=
-m: 0pt; mso-line-height-alt: 138%; direction: ltr;"><span style=3D"color:rg=
-b(0, 0, 0);"><span style=3D"font-size: 11pt"><span style=3D"font-family: &q=
-uot;Trebuchet MS&quot;, sans-serif"><span style=3D"font-weight:normal;"><sp=
-an style=3D"background-color: transparent">=F0=9F=93=A3Tell your friends an=
-d family about </span></span></span></span></span><a href=3D"https://edx.us=
-6.list-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&amp;id=3D9a5e08=
-b520&amp;e=3D81f48387c0" target=3D"_blank"><span style=3D"color:rgb(0, 0, 0=
-);"><span style=3D"font-size: 11pt"><span style=3D"font-family: &quot;Trebu=
-chet MS&quot;, sans-serif"><span style=3D"font-weight:normal;"><span style=
-=3D"background-color: transparent">MITx courses</span></span></span></span>=
-</span></a><span style=3D"color:rgb(0, 0, 0);"><span style=3D"font-size: 11=
-pt"><span style=3D"font-family: &quot;Trebuchet MS&quot;, sans-serif"><span=
- style=3D"font-weight:normal;"><span style=3D"background-color: transparent=
-">.</span></span></span></span></span></p><p class=3D"mcePastedContent" sty=
-le=3D"line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt; mso-line-heig=
-ht-alt: 138%; direction: ltr;"><span style=3D"color:rgb(0, 0, 0);"><span st=
-yle=3D"font-size: 11pt"><span style=3D"font-family: &quot;Trebuchet MS&quot=
-;, sans-serif"><span style=3D"font-weight:normal;"><span style=3D"backgroun=
-d-color: transparent">=F0=9F=AB=B6If you=E2=80=99re able, make a gift on De=
-cember 2 to help us bring MIT=E2=80=99s classroom experience to more learne=
-rs worldwide.</span></span></span></span></span></p><p class=3D"mcePastedCo=
-ntent"><br></p><p class=3D"mcePastedContent" style=3D"line-height: 1.38; ma=
-rgin-top: 0pt; margin-bottom: 0pt; mso-line-height-alt: 138%; direction: lt=
-r;"><span style=3D"color:rgb(0, 0, 0);"><span style=3D"font-size: 11pt"><sp=
-an style=3D"font-family: &quot;Trebuchet MS&quot;, sans-serif"><span style=
-=3D"font-weight:normal;"><span style=3D"background-color: transparent">Plea=
-se save the date to join MITx in uplifting learners everywhere.</span></spa=
-n></span></span></span></p><p class=3D"mcePastedContent" style=3D"line-heig=
-ht: 1.38; margin-top: 0pt; margin-bottom: 0pt; mso-line-height-alt: 138%; d=
-irection: ltr;"><br></p><p style=3D"line-height: 0; mso-line-height-alt: 0%=
-;"><br></p><p class=3D"" style=3D"margin: 0px 0px 10px; padding: 0px; box-s=
-izing: border-box; border: 0px; font-variant-ligatures: normal; font-varian=
-t-caps: normal; font-variant-numeric: inherit; font-variant-east-asian: inh=
-erit; font-variant-alternates: inherit; font-variant-position: inherit; fon=
-t-variant-emoji: inherit; font-stretch: inherit; line-height: inherit; font=
--optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit;=
- font-feature-settings: inherit; font-variation-settings: inherit; vertical=
--align: baseline; letter-spacing: normal; orphans: 2; text-indent: 0px; tex=
-t-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width:=
- 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decor=
-ation-thickness: initial; text-decoration-style: initial; text-decoration-c=
-olor: initial; text-align: center;"><strong><span style=3D"color:rgb(0, 0, =
-0);"><span style=3D"font-size: 17px"><span style=3D"font-family: Circular-A=
-ddEvent, Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif"><span st=
-yle=3D"background-color: rgb(255, 255, 255)">Add event to calendar</span></=
-span></span></span></strong></p><p class=3D"" style=3D"margin: 0px; padding=
-: 0px; box-sizing: border-box; border: 0px; font-variant-ligatures: normal;=
- font-variant-caps: normal; font-variant-numeric: inherit; font-variant-eas=
-t-asian: inherit; font-variant-alternates: inherit; font-variant-position: =
-inherit; font-variant-emoji: inherit; font-stretch: inherit; line-height: i=
-nherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerni=
-ng: inherit; font-feature-settings: inherit; font-variation-settings: inher=
-it; vertical-align: baseline; letter-spacing: normal; orphans: 2; text-inde=
-nt: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-s=
-troke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255)=
-; text-decoration-thickness: initial; text-decoration-style: initial; text-=
-decoration-color: initial; text-align: center;"><a href=3D"https://edx.us6.=
-list-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&amp;id=3D9940a342=
-7d&amp;e=3D81f48387c0" target=3D"_blank" title=3D"Apple" style=3D"margin: 0=
-px; padding: 0px; box-sizing: border-box; border: 0px; font-style: inherit;=
- font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-h=
-eight: inherit; font-family: Circular-AddEvent, Arial, &quot;Helvetica Neue=
-&quot;, Helvetica, sans-serif; font-optical-sizing: inherit; font-size-adju=
-st: inherit; font-kerning: inherit; font-feature-settings: inherit; font-va=
-riation-settings: inherit; font-size: 15px; vertical-align: baseline; color=
-: rgb(40, 110, 250); cursor: pointer;"><strong><span style=3D"color:rgb(40,=
- 110, 250);"><span style=3D"font-size: 15px"><span style=3D"font-family: Ci=
-rcular-AddEvent, Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif">=
-<span style=3D"background-color: rgb(255, 255, 255)">Apple</span></span></s=
-pan></span></strong></a><strong><span style=3D"font-family: Circular-AddEve=
-nt, Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif"><span style=
-=3D"background-color: rgb(255, 255, 255)"> &nbsp;</span></span></strong><a =
-href=3D"https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f322a0=
-c54837&amp;id=3Dcd9c1fa502&amp;e=3D81f48387c0" target=3D"_blank" title=3D"G=
-oogle" style=3D"margin: 0px; padding: 0px; box-sizing: border-box; border: =
-0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font=
--stretch: inherit; line-height: inherit; font-family: Circular-AddEvent, Ar=
-ial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-optical-sizing=
-: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-s=
-ettings: inherit; font-variation-settings: inherit; font-size: 15px; vertic=
-al-align: baseline; color: rgb(40, 110, 250); cursor: pointer;"><strong><sp=
-an style=3D"color:rgb(40, 110, 250);"><span style=3D"font-size: 15px"><span=
- style=3D"font-family: Circular-AddEvent, Arial, &quot;Helvetica Neue&quot;=
-, Helvetica, sans-serif"><span style=3D"background-color: rgb(255, 255, 255=
-)">Google</span></span></span></span></strong></a><strong><span style=3D"fo=
-nt-family: Circular-AddEvent, Arial, &quot;Helvetica Neue&quot;, Helvetica,=
- sans-serif"><span style=3D"background-color: rgb(255, 255, 255)"> &nbsp;</=
-span></span></strong><a href=3D"https://edx.us6.list-manage.com/track/click=
-?u=3Dad81d725159c1f322a0c54837&amp;id=3D4824e140fb&amp;e=3D81f48387c0" targ=
-et=3D"_blank" title=3D"Office 365" style=3D"margin: 0px; padding: 0px; box-=
-sizing: border-box; border: 0px; font-style: inherit; font-variant: inherit=
-; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-f=
-amily: Circular-AddEvent, Arial, &quot;Helvetica Neue&quot;, Helvetica, san=
-s-serif; font-optical-sizing: inherit; font-size-adjust: inherit; font-kern=
-ing: inherit; font-feature-settings: inherit; font-variation-settings: inhe=
-rit; font-size: 15px; vertical-align: baseline; color: rgb(40, 110, 250); c=
-ursor: pointer;"><strong><span style=3D"color:rgb(40, 110, 250);"><span sty=
-le=3D"font-size: 15px"><span style=3D"font-family: Circular-AddEvent, Arial=
-, &quot;Helvetica Neue&quot;, Helvetica, sans-serif"><span style=3D"backgro=
-und-color: rgb(255, 255, 255)">Office 365</span></span></span></span></stro=
-ng></a><strong><span style=3D"font-family: Circular-AddEvent, Arial, &quot;=
-Helvetica Neue&quot;, Helvetica, sans-serif"><span style=3D"background-colo=
-r: rgb(255, 255, 255)"> &nbsp;</span></span></strong><a href=3D"https://edx=
-.us6.list-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&amp;id=3D191=
-2d4f69a&amp;e=3D81f48387c0" target=3D"_blank" title=3D"Outlook" style=3D"ma=
-rgin: 0px; padding: 0px; box-sizing: border-box; border: 0px; font-style: i=
-nherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit;=
- line-height: inherit; font-family: Circular-AddEvent, Arial, &quot;Helveti=
-ca Neue&quot;, Helvetica, sans-serif; font-optical-sizing: inherit; font-si=
-ze-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; =
-font-variation-settings: inherit; font-size: 15px; vertical-align: baseline=
-; color: rgb(40, 110, 250); cursor: pointer;"><strong><span style=3D"color:=
-rgb(40, 110, 250);"><span style=3D"font-size: 15px"><span style=3D"font-fam=
-ily: Circular-AddEvent, Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-=
-serif"><span style=3D"background-color: rgb(255, 255, 255)">Outlook</span><=
-/span></span></span></strong></a><strong><span style=3D"font-family: Circul=
-ar-AddEvent, Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif"><spa=
-n style=3D"background-color: rgb(255, 255, 255)"> &nbsp;</span></span></str=
-ong><a href=3D"https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c=
-1f322a0c54837&amp;id=3Dbf2a7bcfbe&amp;e=3D81f48387c0" target=3D"_blank" tit=
-le=3D"Outlook.com" style=3D"margin: 0px; padding: 0px; box-sizing: border-b=
-ox; border: 0px; font-style: inherit; font-variant: inherit; font-weight: i=
-nherit; font-stretch: inherit; line-height: inherit; font-family: Circular-=
-AddEvent, Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-op=
-tical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; fo=
-nt-feature-settings: inherit; font-variation-settings: inherit; font-size: =
-15px; vertical-align: baseline; color: rgb(40, 110, 250); cursor: pointer;"=
-><strong><span style=3D"color:rgb(40, 110, 250);"><span style=3D"font-size:=
- 15px"><span style=3D"font-family: Circular-AddEvent, Arial, &quot;Helvetic=
-a Neue&quot;, Helvetica, sans-serif"><span style=3D"background-color: rgb(2=
-55, 255, 255)">Outlook.com</span></span></span></span></strong></a><strong>=
-<span style=3D"font-family: Circular-AddEvent, Arial, &quot;Helvetica Neue&=
-quot;, Helvetica, sans-serif"><span style=3D"background-color: rgb(255, 255=
-, 255)"> &nbsp;</span></span></strong><a href=3D"https://edx.us6.list-manag=
-e.com/track/click?u=3Dad81d725159c1f322a0c54837&amp;id=3D63c42371ac&amp;e=
-=3D81f48387c0" target=3D"_blank" title=3D"Yahoo" style=3D"margin: 0px; padd=
-ing: 0px; box-sizing: border-box; border: 0px; font-style: inherit; font-va=
-riant: inherit; font-weight: inherit; font-stretch: inherit; line-height: i=
-nherit; font-family: Circular-AddEvent, Arial, &quot;Helvetica Neue&quot;, =
-Helvetica, sans-serif; font-optical-sizing: inherit; font-size-adjust: inhe=
-rit; font-kerning: inherit; font-feature-settings: inherit; font-variation-=
-settings: inherit; font-size: 15px; vertical-align: baseline; color: rgb(40=
-, 110, 250); cursor: pointer;"><strong><span style=3D"color:rgb(40, 110, 25=
-0);"><span style=3D"font-size: 15px"><span style=3D"font-family: Circular-A=
-ddEvent, Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif"><span st=
-yle=3D"background-color: rgb(255, 255, 255)">Yahoo</span></span></span></sp=
-an></strong></a><strong><span style=3D"font-family: Circular-AddEvent, Aria=
-l, &quot;Helvetica Neue&quot;, Helvetica, sans-serif"><span style=3D"backgr=
-ound-color: rgb(255, 255, 255)"> </span></span></strong></p><p class=3D"mce=
-PastedContent" style=3D"line-height: 1.38; margin-top: 0pt; margin-bottom: =
-0pt; mso-line-height-alt: 138%; direction: ltr;"><br></p><p class=3D"mcePas=
-tedContent" style=3D"line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt=
-; mso-line-height-alt: 138%; direction: ltr;"><span style=3D"color:rgb(0, 0=
-, 0);"><span style=3D"font-size: 11pt"><span style=3D"font-family: &quot;Tr=
-ebuchet MS&quot;, sans-serif"><span style=3D"font-weight:normal;"><span sty=
-le=3D"background-color: transparent">With appreciation,</span></span></span=
-></span></span></p><p class=3D"mcePastedContent" style=3D"line-height: 1.38=
-; margin-top: 0pt; margin-bottom: 0pt; mso-line-height-alt: 138%; direction=
-: ltr;"><br></p><p class=3D"mcePastedContent last-child" style=3D"line-heig=
-ht: 1.38; margin-top: 0pt; margin-bottom: 0pt; mso-line-height-alt: 138%; d=
-irection: ltr;"><span style=3D"color:rgb(0, 0, 0);"><span style=3D"font-siz=
-e: 11pt"><span style=3D"font-family: &quot;Trebuchet MS&quot;, sans-serif">=
-<span style=3D"font-weight:normal;"><span style=3D"background-color: transp=
-arent">The MITx Team</span></span></span></span></span></p></div></td></tr>=
-</tbody></table></td></tr></tbody></table></td></tr><tr><td style=3D"backgr=
-ound-color:transparent;border:0;border-radius:0" valign=3D"top" id=3D"b51">=
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=
-=3D"presentation" data-block-id=3D"51"><tbody><tr><td valign=3D"top" class=
-=3D"mceSpacerBlock" height=3D"20"></td></tr></tbody></table></td></tr><tr><=
-td style=3D"background-color:#002896;padding-top:12px;padding-bottom:12px;p=
-adding-right:0;padding-left:0;border:0;border-radius:0" valign=3D"top" clas=
-s=3D"mceLayoutContainer" id=3D"b56"><table align=3D"center" border=3D"0" ce=
-llpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"presentation" data=
--block-id=3D"56"><tbody><tr class=3D"mceRow"><td style=3D"background-color:=
-#002896;background-position:center;background-repeat:no-repeat;background-s=
-ize:cover;padding-top:0px;padding-bottom:0px" valign=3D"top"><table border=
-=3D"0" cellpadding=3D"0" cellspacing=3D"24" width=3D"100%" role=3D"presenta=
-tion"><tbody><tr><td valign=3D"top" class=3D"mceColumn" id=3D"mceColumnId--=
-8" data-block-id=3D"-8" colspan=3D"12" width=3D"100%"><table border=3D"0" c=
-ellpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"presentation"><tb=
-ody><tr><td style=3D"border:0;border-radius:0" valign=3D"top" class=3D"mceS=
-ocialFollowBlockContainer" id=3D"b-7"><table align=3D"center" border=3D"0" =
-cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" class=3D"mceSocia=
-lFollowBlock" data-block-id=3D"-7"><tbody><tr><td valign=3D"middle" align=
-=3D"center"><!--[if mso]><table align=3D"left" border=3D"0" cellspacing=3D =
-"0" cellpadding=3D"0"><tr><![endif]--><!--[if mso]><td align=3D"center" val=
-ign=3D"top"><![endif]--><table align=3D"left" border=3D"0" cellpadding=3D"0=
-" cellspacing=3D"0" style=3D"display:inline;float:left" role=3D"presentatio=
-n"><tbody><tr><td style=3D"padding-top:3px;padding-bottom:3px;padding-left:=
-12px;padding-right:12px" valign=3D"top" class=3D"mceSocialFollowIcon" align=
-=3D"center" width=3D"32"><a href=3D"https://edx.us6.list-manage.com/track/c=
-lick?u=3Dad81d725159c1f322a0c54837&amp;id=3Da76dc1583a&amp;e=3D81f48387c0" =
-target=3D"_blank" rel=3D"noreferrer"><img class=3D"mceSocialFollowImage" wi=
-dth=3D"32" height=3D"32" alt=3D"Facebook icon" src=3D"https://cdn-images.ma=
-ilchimp.com/icons/social-block-v3/block-icons-v3/facebook-filled-light-40.p=
-ng"></a></td></tr></tbody></table><!--[if mso]></td><![endif]--><!--[if mso=
-]><td align=3D"center" valign=3D"top"><![endif]--><table align=3D"left" bor=
-der=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"display:inline;float=
-:left" role=3D"presentation"><tbody><tr><td style=3D"padding-top:3px;paddin=
-g-bottom:3px;padding-left:12px;padding-right:12px" valign=3D"top" class=3D"=
-mceSocialFollowIcon" align=3D"center" width=3D"32"><a href=3D"https://edx.u=
-s6.list-manage.com/track/click?u=3Dad81d725159c1f322a0c54837&amp;id=3D5f563=
-5bd17&amp;e=3D81f48387c0" target=3D"_blank" rel=3D"noreferrer"><img class=
-=3D"mceSocialFollowImage" width=3D"32" height=3D"32" alt=3D"Twitter icon" s=
-rc=3D"https://cdn-images.mailchimp.com/icons/social-block-v3/block-icons-v3=
-/twitter-filled-light-40.png"></a></td></tr></tbody></table><!--[if mso]></=
-td><![endif]--><!--[if mso]><td align=3D"center" valign=3D"top"><![endif]--=
-><table align=3D"left" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" sty=
-le=3D"display:inline;float:left" role=3D"presentation"><tbody><tr><td style=
-=3D"padding-top:3px;padding-bottom:3px;padding-left:12px;padding-right:12px=
-" valign=3D"top" class=3D"mceSocialFollowIcon" align=3D"center" width=3D"32=
-"><a href=3D"https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f=
-322a0c54837&amp;id=3Dc7a2c9a8a0&amp;e=3D81f48387c0" target=3D"_blank" rel=
-=3D"noreferrer"><img class=3D"mceSocialFollowImage" width=3D"32" height=3D"=
-32" alt=3D"YouTube icon" src=3D"https://cdn-images.mailchimp.com/icons/soci=
-al-block-v3/block-icons-v3/youtube-filled-light-40.png"></a></td></tr></tbo=
-dy></table><!--[if mso]></td><![endif]--><!--[if mso]><td align=3D"center" =
-valign=3D"top"><![endif]--><table align=3D"left" border=3D"0" cellpadding=
-=3D"0" cellspacing=3D"0" style=3D"display:inline;float:left" role=3D"presen=
-tation"><tbody><tr><td style=3D"padding-top:3px;padding-bottom:3px;padding-=
-left:12px;padding-right:12px" valign=3D"top" class=3D"mceSocialFollowIcon" =
-align=3D"center" width=3D"32"><a href=3D"https://edx.us6.list-manage.com/tr=
-ack/click?u=3Dad81d725159c1f322a0c54837&amp;id=3D9b21c6d8c6&amp;e=3D81f4838=
-7c0" target=3D"_blank" rel=3D"noreferrer"><img class=3D"mceSocialFollowImag=
-e" width=3D"32" height=3D"32" alt=3D"LinkedIn icon" src=3D"https://cdn-imag=
-es.mailchimp.com/icons/social-block-v3/block-icons-v3/linkedin-filled-light=
--40.png"></a></td></tr></tbody></table><!--[if mso]></td><![endif]--><!--[i=
-f mso]></tr></table><![endif]--></td></tr></tbody></table></td></tr></tbody=
-></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tb=
-ody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr><=
-/tbody></table><!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]--></td=
-></tr></tbody><tbody data-block-id=3D"64" class=3D"mceWrapper"><tr><td styl=
-e=3D"background-color:#f2f4fb" valign=3D"top" align=3D"center" class=3D"mce=
-SectionFooter"><!--[if (gte mso 9)|(IE)]><table align=3D"center" border=3D"=
-0" cellspacing=3D"0" cellpadding=3D"0" width=3D"660" style=3D"width:660px;"=
-><tr><td><![endif]--><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
-" width=3D"100%" style=3D"max-width:660px" role=3D"presentation"><tbody><tr=
-><td style=3D"background-color:#ffffff" valign=3D"top" class=3D"mceWrapperI=
-nner"><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
-"0" width=3D"100%" role=3D"presentation" data-block-id=3D"63"><tbody><tr cl=
-ass=3D"mceRow"><td style=3D"background-position:center;background-repeat:no=
--repeat;background-size:cover" valign=3D"top"><table border=3D"0" cellpaddi=
-ng=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"presentation"><tbody><tr>=
-<td style=3D"padding-top:0;padding-bottom:0" valign=3D"top" class=3D"mceCol=
-umn" id=3D"mceColumnId--14" data-block-id=3D"-14" colspan=3D"12" width=3D"1=
-00%"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%"=
- role=3D"presentation"><tbody><tr><td style=3D"background-color:#002896;pad=
-ding-top:8px;padding-bottom:8px;padding-right:8px;padding-left:8px;border:0=
-;border-radius:0" valign=3D"top" id=3D"b62"><table align=3D"center" border=
-=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" role=3D"presentat=
-ion" data-block-id=3D"62" id=3D"section_2c06469bb8cb4d3441ea7bbe4ced451b" c=
-lass=3D"mceFooterSection"><tbody><tr class=3D"mceRow"><td style=3D"backgrou=
-nd-color:#002896;background-position:center;background-repeat:no-repeat;bac=
-kground-size:cover;padding-top:0px;padding-bottom:0px" valign=3D"top"><tabl=
-e border=3D"0" cellpadding=3D"0" cellspacing=3D"12" width=3D"100%" role=3D"=
-presentation"><tbody><tr><td style=3D"padding-top:0;padding-bottom:0" valig=
-n=3D"top" class=3D"mceColumn" id=3D"mceColumnId--3" data-block-id=3D"-3" co=
-lspan=3D"12" width=3D"100%"><table border=3D"0" cellpadding=3D"0" cellspaci=
-ng=3D"0" width=3D"100%" role=3D"presentation"><tbody><tr><td style=3D"backg=
-round-color:transparent;padding-top:0;padding-bottom:0;padding-right:48px;p=
-adding-left:48px;border:0;border-radius:0" valign=3D"top" class=3D"mceImage=
-BlockContainer" align=3D"center" id=3D"b59"><div><!--[if !mso]><!--></div><=
-a href=3D"https://edx.us6.list-manage.com/track/click?u=3Dad81d725159c1f322=
-a0c54837&amp;id=3D08f21a2160&amp;e=3D81f48387c0" style=3D"display:block" ta=
-rget=3D"_blank" data-block-id=3D"59"><table align=3D"center" border=3D"0" c=
-ellpadding=3D"0" cellspacing=3D"0" width=3D"20%" style=3D"border-collapse:s=
-eparate;margin:0;vertical-align:top;max-width:20%;width:20%;height:auto" ro=
-le=3D"presentation" data-testid=3D"image-59"><tbody><tr><td style=3D"border=
-:0;border-radius:0;margin:0" valign=3D"top"><img alt=3D"" src=3D"https://mc=
-usercontent.com/ad81d725159c1f322a0c54837/images/9cc99553-80e2-0e47-6fbe-ee=
-83c5d81d82.png" width=3D"112.80000000000001" height=3D"auto" style=3D"displ=
-ay:block;max-width:100%;height:auto;border-radius:0" class=3D"imageDropZone=
- mceLogo"></td></tr></tbody></table></a><div><!--<![endif]--></div><div>
-<!--[if mso]>
-<a href=3D"https://openlearning.mit.edu/"><span class=3D"mceImageBorder" st=
-yle=3D"border:0;border-width:2px;vertical-align:top;margin:0"><img role=3D"=
-presentation" class=3D"imageDropZone mceLogo" src=3D"https://mcusercontent.=
-com/ad81d725159c1f322a0c54837/images/9cc99553-80e2-0e47-6fbe-ee83c5d81d82.p=
-ng" alt=3D"" width=3D"112.80000000000001" height=3D"auto" style=3D"display:=
-block;max-width:112.80000000000001px;width:112.80000000000001px;height:auto=
-"/></span></a>
-<![endif]-->
-</div></td></tr><tr><td style=3D"padding-top:0;padding-bottom:0;padding-rig=
-ht:0;padding-left:0" valign=3D"top" class=3D"mceGutterContainer" id=3D"gutt=
-erContainerId-60"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" w=
-idth=3D"100%" style=3D"border-collapse:separate" role=3D"presentation"><tbo=
-dy><tr><td style=3D"padding-top:0;padding-bottom:0;padding-right:0;padding-=
-left:0;border:0;border-radius:0" valign=3D"top" align=3D"center" id=3D"b60"=
-><table width=3D"100%" style=3D"border:0;background-color:transparent;borde=
-r-radius:0;border-collapse:separate"><tbody><tr><td style=3D"padding-left:1=
-6px;padding-right:16px;padding-top:12px;padding-bottom:12px" class=3D"mceTe=
-xtBlockContainer"><div data-block-id=3D"60" class=3D"mceText" id=3D"d60" st=
-yle=3D"display:inline-block;width:100%"><p class=3D"last-child"><em><span s=
-tyle=3D"color:#ffffff;"><span style=3D"font-size: 12px">Copyright (C) 2025 =
-MITx | MIT Open Learning. All rights reserved.</span></span></em><span styl=
-e=3D"color:#ffffff;"><br><span style=3D"font-size: 12px">
-You are receiving this email because you have enrolled in an MITx course on=
- edX or MITx Online, or you have supported MITx.
-</span><br><br><span style=3D"font-size: 12px">Our mailing address is:</spa=
-n><br><span style=3D"font-size: 12px">
-MITx | MIT Open Learning
-Massachusetts Institute of Technology
-600 Technology Square. Second floor.
-Cambridge, MA 02139
-USA
-</span><br><br><span style=3D"font-size: 12px">Want to change how you recei=
-ve these emails?</span><br><span style=3D"font-size: 12px">You can </span><=
-/span><a href=3D"https://edx.us6.list-manage.com/profile?u=3Dad81d725159c1f=
-322a0c54837&amp;id=3De07062bda1&amp;e=3D81f48387c0&amp;c=3D64a48bd2e4" styl=
-e=3D"color: #ffffff;"><span style=3D"font-size: 12px">update your preferenc=
-es</span></a><span style=3D"color:#ffffff;"><span style=3D"font-size: 12px"=
-> or </span></span><a href=3D"https://edx.us6.list-manage.com/unsubscribe?u=
-=3Dad81d725159c1f322a0c54837&amp;id=3De07062bda1&amp;t=3Db&amp;e=3D81f48387=
-c0&amp;c=3D64a48bd2e4" style=3D"color: #ffffff;"><span style=3D"font-size: =
-12px">unsubscribe</span></a></p></div></td></tr></tbody></table></td></tr><=
-/tbody></table></td></tr><tr><td style=3D"border:0;border-radius:0" valign=
-=3D"top" class=3D"mceLayoutContainer" align=3D"center" id=3D"b-2"><table al=
-ign=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"10=
-0%" role=3D"presentation" data-block-id=3D"-2"><tbody><tr class=3D"mceRow">=
-<td style=3D"background-position:center;background-repeat:no-repeat;backgro=
-und-size:cover;padding-top:0px;padding-bottom:0px" valign=3D"top"><table bo=
-rder=3D"0" cellpadding=3D"0" cellspacing=3D"24" width=3D"100%" role=3D"pres=
-entation"><tbody></tbody></table></td></tr></tbody></table></td></tr></tbod=
-y></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></t=
-body></table></td></tr></tbody></table></td></tr></tbody></table></td></tr>=
-</tbody></table><!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]--></t=
-d></tr></tbody></table>
-</td>
-</tr>
-</tbody></table>
-</center>
-</body></html>=
+                        <!-- Footer -->
+                        <tr>
+                            <td align="center" style="padding:20px 20px 40px 20px; font-size:12px; color:#888;">
+                                Du erhältst diese E-Mail, weil du dich für Casino-Angebote angemeldet hast.<br>
+                                Wenn du keine weiteren E-Mails erhalten möchtest, kannst du dich
+                                <a href="http://quibusdam.sa.com/5Ozssz5499jAml419oajknzbgjc137XZQSWPCXCWTZCJI3977MDJG599780N4" style="color:#888; text-decoration:underline;">
+                                    abmelden
+                                </a>.
+                            </td>
+                        </tr>
 
---_----------=_MCPart_524129661--
+
+                    </table><!-- End container -->
+
+                </td>
+            </tr>
+        </table><!-- End wrapper -->
+    </a>
+    <img src="http://quibusdam.sa.com/track/3VOOLM5499pHJa419ojckijoetn137EDYSUCKJSHTQSIR3977VHNX599780a4" alt="" width="1" height="1">
+</body>
+
+
+</html>

@@ -1,242 +1,421 @@
-Received: from MN0PR20MB4570.namprd20.prod.outlook.com (::1) by
- SN7PR20MB5311.namprd20.prod.outlook.com with HTTPS; Wed, 4 Jun 2025 23:31:22
+Received: from PH7PR20MB5259.namprd20.prod.outlook.com (::1) by
+ SN7PR20MB5311.namprd20.prod.outlook.com with HTTPS; Thu, 3 Jul 2025 22:48:35
  +0000
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
- b=CsUIOJksBj/6vZyRQ9anap97PeFtuxdGNLrSBytpr2ouH4461Duhgt/T0u24e+sBuJ+AQ41id0QJ0cqNX0Pq29RykdTXZiye7P35TwYbL87HzIRsAalqLXF/5qIejizTadC0HnyumlQdvlwuZ/iK/1D7oRtFca17rMLF67bZp0sZOgVLGOze5d3kQFMY7Ed9ulcjT8gW/qiD+bM7JCeFNuyi+3S+quQsoRPr/QP/JHW/c68cIRXLXR8c8yfwFa7IQO1+d1PXOtwUiVHbXDofjCNYSrxVkqJkfrcSpzsCxKwlKbw7d9sA01AzkwIsk62PBBYnB7y2li1JSvIqlE+5nQ==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7ttAwkW51+TCH5awdFUBzywY6/eC1puA4JzO8o3KTbk=;
- b=JknBbz0EX+xezD6WHX7iJOUZl6qvMBabFNnZg/qr3RC+HnCBriv6KS/qAepLdYIYFbojBst/LdDeemq8NSxzgaGydJ9HbyB5gYFq7fWoMD8osqjj1llV2Pc9dfpB1Q/2JSnWhNPyxq2PdTav7XkqudV8CE7gaU3ygX4PWHrZhgKftnV3hYusQIiRGUYpIsSd9DAxiPm1TTpVYjyx4+huh644jQJc3nAduNQm5d1EENEC+SkZj92bzU2gq81zf4M41R65N9Ro1Ub9Dy5SmBSgeFLLDn5856SPP8lmgkeYsZqUAshJPPrU9x9EPdqlO1VQPPnqmLvykteHDEPNRvsSpQ==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 193.110.157.125) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=lists.openwall.com; dmarc=none action=none
- header.from=xmtservices.net; dkim=fail (signature did not verify)
- header.d=oxsus-vadesecure.net; arc=fail (34)
-Received: from DB7PR05CA0057.eurprd05.prod.outlook.com (2603:10a6:10:2e::34)
- by MN0PR20MB4570.namprd20.prod.outlook.com (2603:10b6:208:371::17) with
+Received: from DB8PR09CA0002.eurprd09.prod.outlook.com (2603:10a6:10:a0::15)
+ by PH7PR20MB5259.namprd20.prod.outlook.com (2603:10b6:510:1b5::16) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.30; Wed, 4 Jun
- 2025 23:31:20 +0000
-Received: from DB3PEPF00008860.eurprd02.prod.outlook.com (2603:10a6:10:2e::4)
- by DB7PR05CA0057.outlook.office365.com (2603:10a6:10:2e::34) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8769.24
- via Frontend Transport; Wed, 4 Jun 2025 23:31:20 +0000
-Authentication-Results: spf=pass (sender IP is 193.110.157.125)
- smtp.mailfrom=lists.openwall.com; dkim=fail (signature did not verify)
- header.d=oxsus-vadesecure.net;dmarc=none action=none
- header.from=xmtservices.net;compauth=fail reason=001
-Received-SPF: Pass (protection.outlook.com: domain of lists.openwall.com
- designates 193.110.157.125 as permitted sender)
- receiver=protection.outlook.com; client-ip=193.110.157.125;
- helo=second.openwall.net; pr=C
-Received: from second.openwall.net (193.110.157.125) by
- DB3PEPF00008860.mail.protection.outlook.com (10.167.242.11) with Microsoft
- SMTP Server id 15.20.8792.29 via Frontend Transport; Wed, 4 Jun 2025 23:31:20
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.21; Thu, 3 Jul
+ 2025 22:48:33 +0000
+Received: from DB1PEPF00039231.eurprd03.prod.outlook.com
+ (2603:10a6:10:a0:cafe::36) by DB8PR09CA0002.outlook.office365.com
+ (2603:10a6:10:a0::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8901.22 via Frontend Transport; Thu,
+ 3 Jul 2025 22:48:33 +0000
+Authentication-Results: spf=pass (sender IP is 107.170.40.109)
+ smtp.mailfrom=2014.info; dkim=none (message not signed)
+ header.d=none;dmarc=bestguesspass action=none
+ header.from=2014.info;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of 2014.info designates
+ 107.170.40.109 as permitted sender) receiver=protection.outlook.com;
+ client-ip=107.170.40.109; helo=chokbiro147.com; pr=M
+Received: from chokbiro147.com (107.170.40.109) by
+ DB1PEPF00039231.mail.protection.outlook.com (10.167.8.104) with Microsoft
+ SMTP Server id 15.20.8901.15 via Frontend Transport; Thu, 3 Jul 2025 22:48:33
  +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:3D31F1E6A3EF80E08BF9D0C65C9687D46253057AC40509B5A019977D1A94FECE;UpperCasedChecksum:8C82FEBD56C8FA3DC2A62C2269C30616AC6E20CCBDCF9305355BDE9BB135D3DF;SizeAsReceived:3302;Count:28
-Received: (qmail 27776 invoked by uid 550); 4 Jun 2025 23:30:51 -0000
-Mailing-List: contact john-users-help@lists.openwall.com; run by ezmlm
-Precedence: bulk
-List-Post: <mailto:john-users@lists.openwall.com>
-List-Help: <mailto:john-users-help@lists.openwall.com>
-List-Unsubscribe: <mailto:john-users-unsubscribe@lists.openwall.com>
-List-Subscribe: <mailto:john-users-subscribe@lists.openwall.com>
-List-ID: <john-users.lists.openwall.com>
-Reply-To: john-users@lists.openwall.com
-x-ms-reactions: disallow
-Delivered-To: mailing list john-users@lists.openwall.com
-Received: (qmail 27755 invoked from network); 4 Jun 2025 23:30:51 -0000
-Authentication-Results-Original: oxsus-vadesecure.net; auth=pass
- smtp.auth=4@485990 smtp.mailfrom=shawn@xmtservices.net;
-ARC-Seal: i=1; a=rsa-sha256; d=oxsus-vadesecure.net; s=arc-202309-rsa2048; t=1749079842; cv=none; b=Zug0EHw4rAKqPS9bepr8LdQslg1Yrbawcp9ZycWpbdLD80N6FkAgLTKRTS13gyD/xIK5Ato7SEp8MoNiP9lNi6mYx1Ou3spEnjBlH5l2HuDo4Twv8TVdcFZsLRqkyo5lfqY8f3bWCHBBGHDCoYNxsknfolqf+b8wi+gyPY535RAwtv5T1i7dwVi4Y8kZQ3+cdNC19GdqSXvayzG9mDz7zEq9hBOshvodDbMEXdfxPOV1rnKjvJWnqhT0BxDRI7ygzsdJnzz61azvAfZZX67AC/MhX/zZO8ml0o2RVIpxMELztGMIvj5SZedzOoNpf7S3BNlj27sObbGoKoLIaPgyXQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=oxsus-vadesecure.net; s=arc-202309-rsa2048; t=1749079842; c=relaxed/relaxed; h=from:reply-to:subject:date:to:cc:resent-date:resent-from:resent-to:resent-cc:in-reply-to:references:list-id:list-help:list-unsubscribe:list-unsubscribe-post:list-subscribe:list-post:list-owner:list-archive; bh=7ttAwkW51+TCH5awdFUBzywY6/eC1puA4JzO8o3KTbk=; b=LSE9i7ank5IIAgfDXRk9jss3IJ8XJTh+90/EQFXQ+lwAu/7T4Hy08etgYrLmF6XIWnLgqiS5w4cfQKK5T0kIs7XD853eykPproTaFCZheT69tDov01ewLA/Ux5rNz063l8yL6PvFpS7cK1aNWHE53JNJB7GJBLYvjvTTXbKLH2GakK7noygOHAsr7mVY/iye/TJRbg67jx0hG2xj48Lpp2/jdXoijxb8NJKSqVYnjFQH82tcNSP9LOY9pL77UwrkfB4y5fjIvf3wgVSzo9ofqe42dorUI1BriFC3uMbp4UCK2/tptsPxeVDhylFvSatdiV1+oD9qJ0dujF/SlDWeUA==
-ARC-Authentication-Results: i=1;
-DKIM-Signature: v=1; a=rsa-sha256; bh=7ttAwkW51+TCH5awdFUBzywY6/eC1puA4JzO8o
- 3KTbk=; c=relaxed/relaxed; d=oxsus-vadesecure.net; h=from:reply-to:
- subject:date:to:cc:resent-date:resent-from:resent-to:resent-cc:
- in-reply-to:references:list-id:list-help:list-unsubscribe:
- list-unsubscribe-post:list-subscribe:list-post:list-owner:list-archive;
- q=dns/txt; s=dkim-202410-rsa2048; t=1749079842; x=1749684642; b=BgVe+G3
- 0ukEtwRLEEYKIn/yZAxOvBy1OLLa077A/ohNy1zLD6wG0Nyf/WMFavA+vjlle7H4bvogHUY
- kB2H1QYDHf52LLWt7+CilDNQ3UeD8mFM9uwNTezdVqq0SJ3srFGS4QiosUF54u7tRGLFj7Y
- CvzHPebp3IeByjVQhGcwz9U33xSf2eIKxBz2bYxvTuE/KU84VlQX30Zuop396KLlQpBAWci
- RdGt7xs6YpMaoKwvbT+VODiJkWu6Dx60h061drex1ecmKw+zFIo0AF78MiUnpuwkxazUOpe
- UEqvR0DUfIWk1ufJWP+MjyN9iOwZYBKI2adfG4i5KVvUR7cnlWg==
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: Shawn <shawn@xmtservices.net>
-Date: Wed, 4 Jun 2025 16:30:28 -0700
-Message-ID: <2EDCD23B-FD7F-4E63-B02D-D902021B1566@xmtservices.net>
-References: <CAF37FbXMiJHrDGLvGen8sfLpaS0ap2OzHRr9Qkayd7eQezU8CQ@mail.gmail.com>
-In-Reply-To: <CAF37FbXMiJHrDGLvGen8sfLpaS0ap2OzHRr9Qkayd7eQezU8CQ@mail.gmail.com>
-To: john-users@lists.openwall.com
-X-Mailer: iPhone Mail (22F76)
-Subject: Re: [john-users] md5crypt-long works in John but not in hashcat
-X-IncomingHeaderCount: 28
-Return-Path: john-users-return-10962-phishing@pot=hotmail.com@lists.openwall.com
-X-MS-Exchange-Organization-ExpirationStartTime: 04 Jun 2025 23:31:20.2804
+X-IncomingTopHeaderMarker: OriginalChecksum:0F77D95ECA6DE156ED7BBB95A0CAB0BB2AF2BC186F6E6093D5354E148731F0A3;UpperCasedChecksum:9C1A3811648B219B353D3F3159618FA9246D2C201266C0FC3C65F41E2D943265;SizeAsReceived:475;Count:9
+Date: Thu, 3 Jul 2025 21:59:35 +0000
+Message-ID: <797674619093708.3.ALN0759379500@2014.info>
+To: <phishing@pot>
+From: =?UTF-8?B?QWN0aWV0ZWFtIFRodWlzYmF0dGVyaWogTmVkZXJsYW5k?= <info.EWXUDU@2014.info>
+Subject: =?UTF-8?B?TGFhdHN0ZSBwbGVra2VuIGluIHV3IGdlbWVlbnRlIOKAkyBjaGVjayBvZiB1IGVyIG5vZyBiaWoga3VudA==?=
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Sender: "[*CloudStorageSecurity*] <info.RVJZXM@2014.info>
+X-IncomingHeaderCount: 9
+Return-Path: Bounce-VBUCEUXHCHZNGP@2014.info
+X-MS-Exchange-Organization-ExpirationStartTime: 03 Jul 2025 22:48:33.4462
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: 532942ea-3b46-4692-2068-08dda3bfe930
+X-MS-Exchange-Organization-Network-Message-Id: c777c0ab-e982-4218-1039-08ddba83bd37
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DB3PEPF00008860:EE_|MN0PR20MB4570:EE_|SN7PR20MB5311:EE_
-X-MS-Exchange-Organization-AuthSource: DB3PEPF00008860.eurprd02.prod.outlook.com
+X-MS-TrafficTypeDiagnostic: DB1PEPF00039231:EE_|PH7PR20MB5259:EE_|SN7PR20MB5311:EE_
+X-MS-Exchange-Organization-AuthSource: DB1PEPF00039231.eurprd03.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 6/4/2025 11:20:01 PM
-X-MS-Office365-Filtering-Correlation-Id: 532942ea-3b46-4692-2068-08dda3bfe930
+X-MS-UserLastLogonTime: 7/3/2025 10:22:14 PM
+X-MS-Office365-Filtering-Correlation-Id: c777c0ab-e982-4218-1039-08ddba83bd37
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 193.110.157.125
-X-SID-PRA: SHAWN@XMTSERVICES.NET
-X-SID-Result: NONE
-X-MS-Exchange-Organization-SCL: 5
-X-Microsoft-Antispam: BCL:0;ARA:1444111002|20103052909095|58200799018|47200799021|13020799006|461199028|87000799018|18030799003|51300799021|1370799030|1380799030|1360799030|16201999018|3412199025|440099028|16125499006|2406899039;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2025 23:31:20.1190
+X-Sender-IP: 107.170.40.109
+X-SID-PRA: INFO.EWXUDU@2014.INFO
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 9
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|12005499003|461199028|32080799003|84100799003|3600799018|6115599003|9400799033|42200799015|58200799018|1680799057|13020799006|33080799003|2700799029|9000799050|29080799003|970799057|56000799018|69000799018|28045499009|3151999006|20103052909095|9800799015|51300799021|87000799018|10300799035|28110799003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2025 22:48:33.2631
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 532942ea-3b46-4692-2068-08dda3bfe930
+X-MS-Exchange-CrossTenant-Network-Message-Id: c777c0ab-e982-4218-1039-08ddba83bd37
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource: DB3PEPF00008860.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: DB1PEPF00039231.eurprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR20MB4570
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.3334489
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.8746.028
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR20MB5259
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.1503033
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8901.020
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000308)(920221119095)(90000117)(920221120095)(91040095)(9050020)(9075021)(9100341)(944500132)(2008001181)(4810010)(4910033)(9610028)(9560006)(10180024)(9320005)(9245025)(120001);RF:JunkEmail;
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10010005)(10005027)(9610028)(9540006)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
 X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?UU9SdDFZT2VuOXV1bTkydWdydFZ1Ny8yQXZOMGxtYzNKWjlwWWZZTFFOVkhU?=
- =?utf-8?B?ZU1NTXBnZjlDY2VHWnhTMUpZS0diVGFhMzB6c2FlS2FHZXZaUWpic2ptSS9V?=
- =?utf-8?B?eWJWY0Q5WjVKNXRXaVFwaUZFT2NvRnBxcS9qTjRCTjVyenVNTm9yVjRRTEFK?=
- =?utf-8?B?MjRnWG9xbWtwb3VITFNjaDNtY05uVFB2T0p2ZVVRZkFmR3BDVzc3WTBQZGpl?=
- =?utf-8?B?L2pOeGwyaFV4VzlVUE92b0oxenlnYVh2VVBKQ2c4OWJLdFovUlB1VEVLSElF?=
- =?utf-8?B?L2xYT0pKUlVlUVBRV21aWExOQ0oxdmVqZ0lMZWVRVk9aS3pvcTFGVlZVZHhD?=
- =?utf-8?B?MndLQis2U2lkditONFdLZDB1bjFHMkpia2lFc2M5aTVsdTJWdXlvOGdDMWNq?=
- =?utf-8?B?SjhPVnhjUzFoM1NoVFJkOThGVGJZVHFwUHZ6SWVzdFZuYnB0aVdXVmxhbUpq?=
- =?utf-8?B?a002dXB2bTUrQ2JPNW5hRm9BdzJNOVl5TlhQNEdzZTlGOGVydWpFRmVEN0NN?=
- =?utf-8?B?RjgzT29aaExFOHJHQ3BvdFlWTFdvS08vcXVIQVYzMW1XTG1NaCtSY0owZUYz?=
- =?utf-8?B?ME1lNktyc01kOCtiUDZnOG1Dd3hvaVFpRWoxTytNYmNlc2pBdkZlWGVsWGpz?=
- =?utf-8?B?aGFhSEZKKzN3dXZISlFNTlRtRlQrdDBOTHdHdEJIQVpvZVA2aUYzNjlwSnVT?=
- =?utf-8?B?NmVnaVNuaHp4N1ZIeW5rUmx2R3dxZ2NHR0U3QlJaVTZWbloyaW9TV2VyWUI3?=
- =?utf-8?B?VDVzRG9BeXloNDZaNG1rRmszb1NLdEdwb3VVbUVjNG94WkZtZ096b2VIUStw?=
- =?utf-8?B?T1JBU1M1QnRhK28wL1ozQitadDVwVktKRENLUlcvZmtqVk9GWWEzYmw3WmdM?=
- =?utf-8?B?ekpEQ1YvWlk1QWtjQlBDbDlJbmwvMDRZalNxekRpQjE0NFlqeTJlVStlLzhv?=
- =?utf-8?B?T213ZjBoSFQyc0cxVmowZnJydW5YWDN6QTRHcGZnMkdkSVF1ZmM1T3dpMDhJ?=
- =?utf-8?B?Yzk4Z2FNdEtqRmRRQ3czaTBhbGV0Snd6MjFjY1VENGpTZlhOa3Job0N6ZTBx?=
- =?utf-8?B?WFZUODVNOGY2ZGxQR2NkNWZ4dFJiL00rYmxHajl3dXRoczVzWHh2ZHl1Mysy?=
- =?utf-8?B?aUdBc3diVkVnNWxmWXZ6d0VsQzNnek42YUxVL1hhc2RYNmpUbFRJU1FlbTlm?=
- =?utf-8?B?ZkdFMkVlOWlKN0hCSC9BQTJwWFQyUFNtanlzb2Z3TGh2eEVYYS85ZEkzS1R6?=
- =?utf-8?B?NVBkUlh4VXJZTlhJMUlrSy82M2dEVE1KaTFBOEJRUHNnclE1b3N3WlFpZVNp?=
- =?utf-8?B?M1BkcFpTWW5MZmNWcjEvRkRjTmJYNGgrUnBQdVBFdFBzcWZvdUM1dFNkWExi?=
- =?utf-8?B?TWF1b20vOTBMRUFOQ0FBNFFOei9MN0M4bWtUSmVJT3lNSnBQYnRuNFRrUzVw?=
- =?utf-8?B?UTBIdzYzWm1nSlFPQUZ2Yjl3ZktRamlIc0o5SElsSWdxanFobDJlc2YzeFRz?=
- =?utf-8?B?NzF5UFVScm5xS2lvKytrVXIzamwycysxYXJPUjBaQi9qRE1QNWdnR1dWWEVn?=
- =?utf-8?B?R2w4QTJoeWYwaHFGTjltYmNvUWJDODhRSCtOaDZTVUdrcjRMdG5Bb25HVlN1?=
- =?utf-8?B?dzNVSFpONmNkalZPQTZuaE9NVFB3UjlHTm1DVEZTVEtKMXZRanlRUUs1NTkv?=
- =?utf-8?B?cFZrclpRV2N2OFVLSjhJeG5uOVNYSXZjcVB4b3RIRnczeFh6aE1OOEtQN000?=
- =?utf-8?B?cmFXdDBybSs1QU5iRG1acmdHYktsbzN2elgvUFh2dFptSFZhUnhQakxJanll?=
- =?utf-8?B?a3F3NmdwdDVZR0dLNkJZaTFzTVJqWW1QS3N2OGxMOFVvc3ZuR0dLbGVITlg2?=
- =?utf-8?B?REo1ZWl5V2ZzUHhObzdlaXQ2U3E3N3BFUEpLMmhoSnZ3cDJHVDBpeEJrNkpr?=
- =?utf-8?B?a3RmWEwxaHdnWThYWkluYmtoSmliV0RXL3JFQ3JvdXdjZkVkUGFWcm5DY3pz?=
- =?utf-8?B?b1puY3E3Vk5YS1B4d0krN0lCY3pwNzlxMHJETGtUb2JUQXRNS0g3czhRaUY2?=
- =?utf-8?B?WWlSbWFBSUZDWXI2cUpaeWZDQ29TRS9HaC9xdUYvckpERTJPUUxJcURaaENl?=
- =?utf-8?B?NzNKbS9MRnlqTU5seVJhMkEycWtRbHE3djFlQmVyM0xWWFVjWlNVeGVpQm81?=
- =?utf-8?B?aUd2NHNIUGhwSVljRWpkQ0lZU002MlFRRENYNzdhT3dydVd0NVBieWZlMEwx?=
- =?utf-8?B?Z1ZDb1FpK1Avamh6SWdZc1JPT3k4eEY4aWhHTnVkRG53eUlZQWU5R0lscjJl?=
- =?utf-8?B?cG5GUUQvNHl2WDk2WG5GcmFQOTBuU0I0bVE2VXdwZXUyRjl3THQwQXlrMk9m?=
- =?utf-8?B?bXBvQ3g3dG85dXl6K2NicHQ4aXdsTkxBZ1JhT2hveXg0bCsxRU9XVnNlWlht?=
- =?utf-8?B?eDk1ZlFJRXV0Q2RGVkJRMHlTTnA3N3BpamtRb0RjZU1Jc011eEFYdVZnNm9R?=
- =?utf-8?B?UzdMa0FNQzBsQUFsOGV1TmtPQTlwU2dkMW9pVVBCMmk3R1BvT1NMM3lIRzJC?=
- =?utf-8?B?dFFXNVFYL0xxTytnRmN3c1J1ME5jNnJKc2RCMXloMjFUWmRHMytzM3FyY2dX?=
- =?utf-8?B?Mk9kRUQvdVJ6R0hyd2ZseXBwaWNjMGEyZ0N0R3RrWFhYRmx2TE5IcVlUWFBS?=
- =?utf-8?B?U3laaEg0a093OGMrcnRTaWJHQTYwS043RDUxcnVndXR2NkxQRnlCc3dZd1Bp?=
- =?utf-8?B?Sk8vUVgycVdRNmdobmtuSHhhSEgxMDczZmxzY2s0TFJCKzdTbkdBcjhuZmFn?=
- =?utf-8?B?cEpwN2Z2TkR0bFFtQnc1TE1iNG5UQ3lUand0TmUxdDEzbzMybGQ3NUUxa29L?=
- =?utf-8?B?TGNaeXBOUjl6VjFTTEl2UnBmZz09?=
+	=?utf-8?B?anJLT2Q4RTdPME9vblVleFR4b0tBdWl3ZlRFWTFEaWYva05GNkQyRGhzcitJ?=
+ =?utf-8?B?VWt4cEdQcnV1V0pXMlZ4WHJCVTdyVld6Q0tBSjd2cDNhMzdZcHZRdnJEd0Jn?=
+ =?utf-8?B?dmN5SVoxNW1zZ1dmVVZTNXM4dG95bzUvK1NKcHkxNGY1M2Y0d0t5ZWt4RllC?=
+ =?utf-8?B?bU9oNEZCaldDcFduZWR1dmZlTkJLc1B4RzJsTERWRGVvNC9FTEliTENSK3Q0?=
+ =?utf-8?B?OXJVTmlCRkF5TmZjUU84Kzd1UkJLeTZuTW05SjZjQWdwYlNtMkFwTjZKY0Qx?=
+ =?utf-8?B?WGVNaTRMU053ZWFYS09ibVVEYVIzZTYrQ0Vtd0pDZzdqaHh2R3lmalpIVjlX?=
+ =?utf-8?B?MElYUVhKQnJkR3BCRFhTZ0N2N1hsTjNEbTJCdGhmM1hqeEJqbkdjcjdMY1NG?=
+ =?utf-8?B?bHJpOHQxSEo5T2dCbzJCRUV1bEloU2JaMVhlNHltRmVXcmhKYU11MVM0S2Rx?=
+ =?utf-8?B?aGxmSUtTa1J5WmJMTDBIK1F3a0trWlF4Vlk4REZDSFJEZlY5azAzTEIrbm1h?=
+ =?utf-8?B?bng4T2UyL1R3cDB6UmlmSzVZM1Q0NmJHdGJWM2pnWWFBa1dMc2hIRHdOQWl2?=
+ =?utf-8?B?a0YxMmxpQVptV3RyZWxTMVFNZ0NmZFRwOXNZd20wS2c0NzVrRlBFb256UHZw?=
+ =?utf-8?B?Zkg1S05iODBFY3dMZzdKeEw3UldZT29DNFhJb0pDK1U1bk9kQkZFWWp1TDE4?=
+ =?utf-8?B?NWFOVGl1UHhLU0ZpczE4MWFha042YUVSWmM1VkdYcmhZN0ZrN2toZzVMSU1B?=
+ =?utf-8?B?amhhSE4ydnNvRmNpRUpibG1MNlV6MmJTT1dMeTdYY1l3UlFUTzhWQ3hseXM1?=
+ =?utf-8?B?NlI4TnZHb0o4bEYrY0hHUEJDN0VoOFFKdk5YZ3A2Tk1MTjlMUG1JSStnWGhq?=
+ =?utf-8?B?UDhQaFdTbkZrVlRPYmtEUkREWDI2WmMwMmlsMVp2Wm1rTUVKQjhyeEdCQTgr?=
+ =?utf-8?B?YXFJSmhpNHR3LzNINFdMeTVSRVl1dHNsVElacGFTVWtoZnNVVjFkSGRrYTA0?=
+ =?utf-8?B?R3BJY1NGWTJsR3l3S1NaOVhZdmZNVGp5TTJuWC8yREt0M2MxaE1VZWxrMm1J?=
+ =?utf-8?B?VktGRUd4QmR3OGNqN0JCbkNCbzJKckpiUzJmM1FMejVaeDBNNkNLQ2NmLzVT?=
+ =?utf-8?B?OFVIWHB1NjBBRzFyMExSaUwxdWhDUWlXMmk0RVVBa2xXZzNUTU95aXYyaGFu?=
+ =?utf-8?B?SlJqd0tDNUEvczZaVExRQzI3NUQ1NGUrRXMvTTRQYzREYU9zM292QlJ5VjJH?=
+ =?utf-8?B?N0w4Y2ltTDJ2WWEwNGhxQXh1U2F6ZGRseEdoSmNxdUFxQ0hxRG5qejBsdzdh?=
+ =?utf-8?B?QXR4ZHhXZHdsb0NFM2JvOWQ0bFMwR0h6TldSTzBnRmtSejRxbktWditmeHlq?=
+ =?utf-8?B?MTcvM3plRldPUDNPSHFwYWlIRlNCZ2pyUmJaRUplNkhpYi96dDc4R1VMakZv?=
+ =?utf-8?B?azAyYXhDaDZRQldsRGdrZDRKVG4rUXNaRTZ2K1lPNnZDenB5N29ic0tkd3dw?=
+ =?utf-8?B?WnlYOGdzTFJoQS92a01sODlzNnFxRzdtK3dIRlYwdjBPMGU5azJTeFBkMDBr?=
+ =?utf-8?B?YTF3UmE2ejBsMG9qZkNrNmJ1SFI1YVZmQjdWR1hzZHlMc0dxeStQcW15TU82?=
+ =?utf-8?B?NWpqYmZQVXNYN1FYQnd5VHRjZklYZjEremZHdWRLVS80dGl1cmtENVU2SXRv?=
+ =?utf-8?B?ZVhjOWRLK2lOcndBeUFkOUViNVdUbVdIZWd2YndBV211OVpsYytLN1d2d0NU?=
+ =?utf-8?B?QnhObFlhL0MrYWVHQWYweHhpNEtUNG45WC9EbkUrSmhsY2pHWWlzQUt5c1dj?=
+ =?utf-8?B?eFNEUHl5aktOV2ZzLzY0aW1taEs0ajY0QnFPQzdOVEhQS3NySEs1VXlaNklw?=
+ =?utf-8?B?NE9TWjdRN0ZGU2tQZHFUYWN6YllTU29OWlJOZFdINU5ON3daWXdOMmdQWUND?=
+ =?utf-8?B?MFAwSGxCMTlLejNCN3oxL1kzbVhybkRyOGdQNVVVNk1CZnFYTEt3OUt5OSto?=
+ =?utf-8?B?VUhGbFFGdVhEWlBXcjdtaG5tbFNsam5NNnNDdy9pUjlaWjhEMklCN080dUp5?=
+ =?utf-8?B?V3hqa0gxUldjekIzUGgrZktPb1lpQk0xMWdud1Nrcjg1MDRoajRiTGJXa1hB?=
+ =?utf-8?B?S2dEMWYxemMvR25UeGgzM3BKemhIdHpGT1kwZklLTXo3UmxPN2k3L1pyVyt4?=
+ =?utf-8?B?bmIxVGpTTkhoUFdsbHhxYWRYdnpJQXhUZzNmWGFaTHBXeUNNc1RJd0JRZkgr?=
+ =?utf-8?B?dGZSWlN4TVdSYjZRK3pZNmo1SFh4NXk1bHpxYlVPZlkrbUZEM0xCemxNWXZE?=
+ =?utf-8?B?M0RZVXViRDBMV1duZTcyWWpnUWVmN0pibDZtRGFoSGk5akdqT3J3NlUvcWlh?=
+ =?utf-8?B?ODBxWE9ydHA5bnRybkJxb2RZN1l0UTU1WmN2N2xoUG5QN0VXaFg2VWpUSkgx?=
+ =?utf-8?B?YlFPcEVheTk5Y3R3cjh2aVVqUDkvaS8xZ0NEUFZiOG9Ed0l0Y0taVDdRdjFC?=
+ =?utf-8?B?S2ZXcUtTc01sUWV3cWJuNHNMR1dCKzFmZlE2WlJkQ0RCUFRVaXpoK0w4MWR0?=
+ =?utf-8?B?YVc0SGM1cFBaTzc5WEl6c3pNeVJvRzdWY1Z5M29MdWtIVVdYQTZ1c1BtS1Nw?=
+ =?utf-8?B?NVRmWlVONXBaUEN3Y2xIdEl6RUlBdnVrOVBTY2xaaTREQmRKOGRoaUNHaFRT?=
+ =?utf-8?B?N2pxN1dCeWx0czIyMWw3dGRlMTlROGk0ZG01VDVKaHcvbEo2M1FQNXpmR2hF?=
+ =?utf-8?B?LzRwTzJaWXIzamc3ZTBrL2ZkakU4dnUwS0ZoWEc0czFMaDdkTXNSRytSeWNS?=
+ =?utf-8?B?c2x5bEpyN1MxSWIraHNXQnJlNWZKRG1BMEk1TWlvbFRUc2lyQjVudDdEQnBI?=
+ =?utf-8?B?Y3FwcUFQTDNzK1FYU1NHOHQwNVM1N2dvZ3dOU1cvM3E1SVd3OGtsYUtXMkE1?=
+ =?utf-8?B?aXd6b1FnS1ovaHFuek1oYlNCK3dmVG5JUGFaU1MvQ2FlY1RtSmEvOXRkd3BS?=
+ =?utf-8?B?bE54MzcwY05iSGhzdUIycWRPbzlFM3MxZERnajdQTmFweXNKL2Z2Wi9TdWVX?=
+ =?utf-8?B?cG9tNzhFNmtTRlkwUW1pSGtsejVhSkZmbHVuY2VGbVNneHFHYm5icnJYaEcy?=
+ =?utf-8?B?TUVtZGVsODIrWjFaS2ZwOFREMHhobjhTSjZDd2EwKzgvY0gxeHJoNFBVSUx6?=
+ =?utf-8?B?TzYrMnVpaEtGclhUME1Ndm8zcGNJZUgzZC9sK1hGZ2V0eFN5eXMrMVI3dDBw?=
+ =?utf-8?B?UU1zbVphQU1CYkV2Znp3UklsTHNwZzFXYzFPRVh2TmlvZWZqcXlRWkx3M2xX?=
+ =?utf-8?B?MzhLdkIwcW9Ha3N5UWlmeXRNLzlYQTRiQU9qd2Z2WTFjYVZBTElJTXpEZDdJ?=
+ =?utf-8?B?czhWdTRySTVXd29KbGthQUZ3Qi8zTFBYT0VVSXVxcEVXVTRqSU05OEdTWFYz?=
+ =?utf-8?B?Zmt1OForb0JWbXpDMkdVeHU4ZnlqSm0rM2Zpb1ZNOUFNWmxYMFRFcms4ZVlv?=
+ =?utf-8?B?QzhGeXdEU3BJMXEzQ1pDdTZBUmkyZkhxU2xXTy9BZFpUcEhpeVArTklTa2Rq?=
+ =?utf-8?B?enBnVldXbHhENG9LZFM5SlVacVJPU1NBZ2RrZ2gxSmFkemlZWUZOZmFLYSta?=
+ =?utf-8?B?SndlYmJqeEhYVGNPL3c2WW5zRWlkcjJpajJTK3NsYzB2YzVjMEZnK3d5NDJT?=
+ =?utf-8?B?YmNTUEErYmxPMlNPK2wzTHNIUm5FRG13bWU5T1JBWDVUTnRQUFljUDBrUmFR?=
+ =?utf-8?B?S1FMQTB1RmFiZlZVbTBLT1RPcmg2UzJCaytKTDkzWThJRmhsSWYvaHVsdm45?=
+ =?utf-8?B?bk43QWx6RmttTzNiL0ttTytLM3JST0FNM1VhTmNESjRwMjRFYVpyTWQvSWFa?=
+ =?utf-8?B?dEpCdEg0UzZxTnhKZElqeitMRHUybkVVVzFIYXhYRjJXRThBeDFHcFN4TlFs?=
+ =?utf-8?B?MlN2em00UklzRFZUSUJjbktramVlSHNqSlVrbW5WcTJIakl0Q2sxaFhaeHR0?=
+ =?utf-8?B?NVJFNXN4Z1RrbXdqYlJNR0VvMm93dGx4NWxEbml6K3A4VXJmU202Q2hIZ2dF?=
+ =?utf-8?B?NUkrWDllQ284UThrd0J1ZU82VVFTZkE3b28vcVR5aFZCRXhkd1Z3RE9qT1lq?=
+ =?utf-8?B?WE5yNW5lc01kTDE4dnNiK1NDRnR4bm13SjhaL3pUYVBkcGpVOFlqT2M5TE9s?=
+ =?utf-8?B?aUtFOHlla2FMU3UvV2d3YjFvUVdGcjZVMlV4akxUcWRxYXp1Y2NER1g0SDU5?=
+ =?utf-8?B?ZFc1aVdEWjZrd01KbU4yOExLeS92aGoyZ3ZTdlVsTzg1TGZQRG93b0Q3ODhx?=
+ =?utf-8?B?TE50QjVsazhhOWp3OFRDcEpKM1B3aEVpZmpBbEhyUkFPWjBRL0I2b3UwN3o0?=
+ =?utf-8?B?bEtuQ1RMSUYwaysvODVBT0czaXA4UW5RQWU5d0lqcTlUelRSSXhDa3RCaURD?=
+ =?utf-8?B?TEovQlgzYkp3NmErWll2bVRTVTF3bnNObUM3cWZSWDRKd0RVbUhidXFVSGdL?=
+ =?utf-8?B?OFBiREpPMmNTUENEZzJmL1J0c0RuKzhsdDBqRzhPN0U3ODAxamdkMWpLVWJi?=
+ =?utf-8?B?R2ZIT0l1Z1ZPbUVuSzJtZndYejYwbFdmWmpOZ05DZGRrNnlXSUNuWVNDdlRm?=
+ =?utf-8?B?elF3ckxvVnRTYzZlT2xwWTZuVGRhSTBlNmticW9nUkJMcVFVVUJkMDhQZmIy?=
+ =?utf-8?B?WUlDUElXY3J6SlVFT3MzQTlyMnZ6ZkVyNWZacWZZUFpaYkwyTk9PMEZsdzdB?=
+ =?utf-8?B?amZRUFZVM01PRGtxUytiVGcrVjQvVzNmWGhIM2x1dmZ1Ui9wMVl4d1Y0TjVQ?=
+ =?utf-8?B?dUpvcCtxZWN5aFBqZWROZjFENjhlRk55a29PMVpQUDZLS1lFODFJK21qcGpm?=
+ =?utf-8?B?WEpGRC80a1U0ZHMvSnRlTTB1VERXcjU4L1B2clA4ekphTjN2bm5tQ3BoVmdx?=
+ =?utf-8?B?VHJFT0E0WW1tUy84dnhLUTd0a2p5NGx3ZGd5ZVdKWVd2S1Y2dTVFMW1Obm5m?=
+ =?utf-8?B?Q3lrMm95RHNueUZxZ1NEby95ZDVWZ05kZ1dhcENBQTVmTHNXTmUrRVB1K3Iz?=
+ =?utf-8?B?ZHFoSXRWb05tSmVKR09BcjF5elpCZ1Vmc0tRUEp5R29xTGpPNW91aDZLMnNn?=
+ =?utf-8?B?bTBJNWNzVzNhNXJPYjkzSTF5T2RwTUwzWCtydzUxV0hUaHFpRzFBZWxaUVRw?=
+ =?utf-8?B?ODYzbkh6OVpZODR0aFVHVGF6VHNEOVpEc3ZjcG5aakFZaHZSU25KODVnamdF?=
+ =?utf-8?B?Zk40czBpTlEvUVJmVHBmTTNiWHc2VUNEY1VSL2lKZHRpK3BaUEl3dEJkL2sx?=
+ =?utf-8?B?aWlGNVJEL2V2K3hPQTRpblg4R0ZYZGU4bjVEdXExUlJVV0xhekM3VEplcUdp?=
+ =?utf-8?B?MEwvM0w1ZWF4OU1ZQVk2MTZsNVh5UVFmVndPa2lLcDQ1L1U3VVNyelhmWElu?=
+ =?utf-8?B?b2FDd0Nod3N4bU53dVN6YjJvLy9maWxxT0UwOGJmb0ttcUM1emdJcHhocEdG?=
+ =?utf-8?B?S2VRbTM5dGdkZ2RBV1I5VGJqcFVWL0dMSjAvNjhBOVd3QURWajhRMnQvS1NH?=
+ =?utf-8?B?Zk5sdz09?=
 MIME-Version: 1.0
 
-Atom,
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><div style="display:flex;background-color: #f1f9f2;position: relative;min-height: 30px; margin-top: 10px;margin-bottom: 10px;color: #212121;font-family: 'wf_segoe-ui_normal', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif;font-size: 12px;font-weight: normal;">
 
-Does this apply to wordlist cracks as well?
+<div><div style="background-color: #56a659;width: 5px;min-height: 30px;position: absolute;top: 0;bottom: 0;"></div></div><div style="position: relative;float: left;-webkit-align-self: center;-ms-flex-item-align: center;align-self: center;margin-left: 16px;padding-top: 5px;padding-bottom: 5px;padding-right: 7px;width: 100%;">
+
+<div><span>This message is from a trusted sender.</span></div></div></div>
 
 
-Shawn
 
-> On Jun 4, 2025, at 00:08, atom <atom@hashcat.net> wrote:
->=20
-> =EF=BB=BFMost important: I'm 100% sure, magnum, you're not too stupid.
->=20
-> I just wanted to respond because it was said Hashcat can't handle long
-> passwords. It can. Most people these days just use -O from muscle memory
-> and forget the implications.
->=20
-> Make sure you omit -O, and you'll be able to crack passwords longer than =
-16
-> characters.
->=20
->> $ echo -n verylongpasswordmorethan16 | mkpasswd -s -5
->=20
->> $1$4YFHDKR0$v7SN48VopUztrNFFaIMzq1
->=20
-> Test:
->=20
->> $ ./hashcat -m 500 '$1$4YFHDKR0$v7SN48VopUztrNFFaIMzq1' -a 3
-> ?l?l?l?l?longpasswordmorethan16 --adv
->=20
->> hashcat (v6.2.6-941-gad38c9253) starting
->> ...
->> Minimum password length supported by kernel: 0
->> Maximum password length supported by kernel: 256
->=20
-> Above you can see the supported password length (depending on the given
-> command line parameters).
->=20
->> ...
->=20
-> $1$4YFHDKR0$v7SN48VopUztrNFFaIMzq1:verylongpasswordmorethan16
->=20
->> ...
->=20
->=20
->=20
->> On Tue, Jun 3, 2025 at 12:30=E2=80=AFPM magnum <magnumripper@hushmail.co=
-m> wrote:
->>=20
->>> On 2025-06-02 07:05, Shawn Tayler wrote:
->>> Just curious what you are doing different in JTR on your
->>> format md5crypt-long. JTR cracks the hashes straight away but
->>> I don't have cuda support with it. I have cuda on hashcat but
->>> it doesn't crack over there.
->>>=20
->>> What are you guys doing differently?
->>>=20
->>> Is there a document to walk me through getting CUDA support on
->>> JTR?
->>>=20
->>> Thanks for all the great help in the past.
->>=20
->> Does any JtR format work with CUDA? If so, you're actually running
->> OpenCL then (which comes with CUDA). Our actual CUDA support was
->> experimental and only had a few formats. We dropped it years ago in
->> favor of OpenCL as the latter is portable.
->>=20
->> Other than that, the md5crypt-long format is CPU-only. You're supposed
->> to run md5crypt-opencl and then (or in parallel) md5crypt-long with
->> --min-len=3D16. We should definitely support passwords longer that 15 wi=
-th
->> OpenCL but no-one has contributed that and I'm too stupid to understand
->> the optimizations so my tries have failed.
->>=20
->> magnum
->>=20
->>=20
->=20
-> --
-> atom
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
+<head>
+<title></title>
+
+
+<!--[if !mso]>-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--<![endif]-->
+<meta name="x-apple-disable-message-reformatting" content="">
+<meta content="target-densitydpi=device-dpi" name="viewport">
+<meta content="true" name="HandheldFriendly">
+<meta content="width=device-width" name="viewport">
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
+<style type="text/css">
+table {
+border-collapse: separate;
+table-layout: fixed;
+mso-table-lspace: 0pt;
+mso-table-rspace: 0pt
+}
+table td {
+border-collapse: collapse
+}
+.ExternalClass {
+width: 100%
+}
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+line-height: 100%
+}
+body, a, li, p, h1, h2, h3 {
+-ms-text-size-adjust: 100%;
+-webkit-text-size-adjust: 100%;
+}
+html {
+-webkit-text-size-adjust: none !important
+}
+body, #innerTable {
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale
+}
+#innerTable img+div {
+display: none;
+display: none !important
+}
+img {
+Margin: 0;
+padding: 0;
+-ms-interpolation-mode: bicubic
+}
+h1, h2, h3, p, a {
+line-height: inherit;
+overflow-wrap: normal;
+white-space: normal;
+word-break: break-word
+}
+a {
+text-decoration: none
+}
+h1, h2, h3, p {
+min-width: 100%!important;
+width: 100%!important;
+max-width: 100%!important;
+display: inline-block!important;
+border: 0;
+padding: 0;
+margin: 0
+}
+a[x-apple-data-detectors] {
+color: inherit !important;
+text-decoration: none !important;
+font-size: inherit !important;
+font-family: inherit !important;
+font-weight: inherit !important;
+line-height: inherit !important
+}
+u + #body a {
+color: inherit;
+text-decoration: none;
+font-size: inherit;
+font-family: inherit;
+font-weight: inherit;
+line-height: inherit;
+}
+a[href^="mailto"],
+a[href^="tel"],
+a[href^="sms"] {
+color: inherit;
+text-decoration: none
+}
+</style>
+<style type="text/css">
+@media (min-width: 481px) {
+.hd { display: none!important }
+}
+</style>
+<style type="text/css">
+@media (max-width: 480px) {
+.hm { display: none!important }
+}
+</style>
+<style type="text/css">
+@media (max-width: 480px) {
+.t91{padding-left:30px!important;padding-right:30px!important}.t101{text-align:left!important}.t100{vertical-align:top!important;width:600px!important}
+}
+</style>
+<!--[if !mso]>-->
+<link href="https://fonts.googleapis.com/css2?family=Krub:wght@400;500;700&amp;display=swap" rel="stylesheet" type="text/css">
+<!--<![endif]-->
+<!--[if mso]>
+<xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml>
+<![endif]-->
+</head>
+<body id="body" class="t111" style="min-width:100%;Margin:0px;padding:0px;background-color:#FAFAFA;"><div class="t110" style="background-color:#FAFAFA;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td class="t109" style="font-size:0;line-height:0;mso-line-height-rule:exactly;background-color:#FAFAFA;" valign="top" align="center">
+<!--[if mso]>
+<v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false">
+<v:fill color="#FAFAFA"/>
+</v:background>
+<![endif]-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" align="center" id="innerTable"><tr><td align="center">
+<table class="t94" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td width="630" class="t93" style="width:630px;">
+<table class="t92" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t91" style="background-color:#FFFFFF;padding:40px 60px 40px 60px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100% !important;"><tr><td align="center">
+<table class="t4" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td width="510" class="t3" style="width:744px;">
+<table class="t2" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t1"><h1 class="t0" style="margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:35px;font-weight:700;font-style:normal;font-size:35px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;">Uw buren besparen al. En u?</h1></td></tr></table>
+</td></tr></table>
+</td></tr><tr><td><div class="t5" style="mso-line-height-rule:exactly;mso-line-height-alt:20px;line-height:20px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
+<table class="t10" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td class="t9">
+<table class="t8" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t7"><p class="t6" style="margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:26px;font-weight:500;font-style:normal;font-size:20px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">In steeds meer gemeenten zijn de beschikbare plekken al deels vergeven.</p></td></tr></table>
+</td></tr></table>
+</td></tr><tr><td><div class="t11" style="mso-line-height-rule:exactly;mso-line-height-alt:20px;line-height:20px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
+<table class="t18" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td class="t17">
+<table class="t16" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t15"><p class="t14" style="margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:26px;font-weight:500;font-style:normal;font-size:20px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">Toch maakt u misschien nog <a class="t13" href="https://storage.googleapis.com/newera1/zzzenergyyy.html" style="margin:0;Margin:0;font-weight:700;font-style:normal;text-decoration:none;direction:ltr;color:#0000FF;mso-line-height-rule:exactly;" target="_blank"><span class="t12" style="margin:0;Margin:0;font-weight:700;text-decoration:underline;mso-line-height-rule:exactly;">kans op de unieke regeling</span></a> om een thuisbatterij te laten installeren zónder te investeren.</p></td></tr></table>
+</td></tr></table>
+</td></tr><tr><td><div class="t19" style="mso-line-height-rule:exactly;mso-line-height-alt:20px;line-height:20px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
+<table class="t28" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td class="t27">
+<table class="t26" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t25"><p class="t24" style="margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:26px;font-weight:500;font-style:normal;font-size:20px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">Deze <a class="t21" href="https://storage.googleapis.com/newera1/zzzenergyyy.html" style="margin:0;Margin:0;font-weight:700;font-style:normal;text-decoration:none;direction:ltr;color:#0000FF;mso-line-height-rule:exactly;" target="_blank"><span class="t20" style="margin:0;Margin:0;font-weight:700;text-decoration:underline;mso-line-height-rule:exactly;">tijdelijke actie</span></a>, in samenwerking met Nederlandse gemeenten, maakt het mogelijk om <a class="t23" href="https://storage.googleapis.com/newera1/zzzenergyyy.html" style="margin:0;Margin:0;font-weight:700;font-style:normal;text-decoration:none;direction:ltr;color:#0000FF;mso-line-height-rule:exactly;" target="_blank"><span class="t22" style="margin:0;Margin:0;font-weight:700;text-decoration:underline;mso-line-height-rule:exactly;">uw zonne-energie zelf op te slaan</span></a> en teruglever-verlies te voorkomen.</p></td></tr></table>
+</td></tr></table>
+</td></tr><tr><td><div class="t29" style="mso-line-height-rule:exactly;mso-line-height-alt:20px;line-height:20px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
+<table class="t38" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td class="t37">
+<table class="t36" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t35"><p class="t34" style="margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:26px;font-weight:500;font-style:normal;font-size:20px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;"><span class="t31" style="margin:0;Margin:0;mso-line-height-rule:exactly;"><span class="t30" style="margin:0;Margin:0;font-weight:700;mso-line-height-rule:exactly;">Belangrijk:</span></span> slechts <a class="t33" href="https://storage.googleapis.com/newera1/zzzenergyyy.html" style="margin:0;Margin:0;font-weight:700;font-style:normal;text-decoration:none;direction:ltr;color:#0000FF;mso-line-height-rule:exactly;" target="_blank"><span class="t32" style="margin:0;Margin:0;font-weight:700;text-decoration:underline;mso-line-height-rule:exactly;">100 plekken per gemeente</span></a> beschikbaar. Wekelijks sluiten gemeentes de inschrijving.</p></td></tr></table>
+</td></tr></table>
+</td></tr><tr><td><div class="t39" style="mso-line-height-rule:exactly;mso-line-height-alt:20px;line-height:20px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
+<table class="t44" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td class="t43">
+<table class="t42" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t41"><p class="t40" style="margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:26px;font-weight:700;font-style:normal;font-size:25px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;">Waarom nú controleren?</p></td></tr></table>
+</td></tr></table>
+</td></tr><tr><td><div class="t45" style="mso-line-height-rule:exactly;mso-line-height-alt:4px;line-height:4px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td><div class="t47" style="mso-line-height-rule:exactly;mso-line-height-alt:20px;line-height:20px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
+<table class="t51" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td class="t50">
+<table class="t49" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t48"><p class="t46" style="margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:26px;font-weight:500;font-style:normal;font-size:20px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">✔ Geen investering, installatie wordt geregeld&nbsp;</p></td></tr></table>
+</td></tr></table>
+</td></tr><tr><td><div class="t52" style="mso-line-height-rule:exactly;mso-line-height-alt:10px;line-height:10px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
+<table class="t57" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td class="t56">
+<table class="t55" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t54"><p class="t53" style="margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:26px;font-weight:500;font-style:normal;font-size:20px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">✔ Bespaar tot honderden euro's per jaar&nbsp;</p></td></tr></table>
+</td></tr></table>
+</td></tr><tr><td><div class="t58" style="mso-line-height-rule:exactly;mso-line-height-alt:10px;line-height:10px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
+<table class="t63" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td class="t62">
+<table class="t61" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t60"><p class="t59" style="margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:26px;font-weight:500;font-style:normal;font-size:20px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">✔ Klaar voor afbouw saldering&nbsp;</p></td></tr></table>
+</td></tr></table>
+</td></tr><tr><td><div class="t64" style="mso-line-height-rule:exactly;mso-line-height-alt:10px;line-height:10px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
+<table class="t69" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td class="t68">
+<table class="t67" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t66"><p class="t65" style="margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:26px;font-weight:500;font-style:normal;font-size:20px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;mso-text-raise:2px;">✔ Geen afhankelijkheid meer van terugleververgoedingen</p></td></tr></table>
+</td></tr></table>
+</td></tr><tr><td><div class="t70" style="mso-line-height-rule:exactly;mso-line-height-alt:10px;line-height:10px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
+<table class="t83" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td width="510" class="t82" style="width:800px;">
+<table class="t81" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t80" style="padding:10px 0 10px 0;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100% !important;"><tr><td align="center">
+<table class="t79" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td width="510" class="t78" style="width:800px;">
+<table class="t77" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t76" style="overflow:hidden;padding:10px 10px 10px 10px;border-radius:0 0 6px 6px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100% !important;"><tr><td align="center">
+<table class="t75" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td width="490" class="t74" style="width:600px;">
+<table class="t73" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t72" style="overflow:hidden;background-color:#0000FF;text-align:center;line-height:24px;mso-line-height-rule:exactly;padding:18px 14px 18px 14px;border-radius:4px 4px 4px 4px;"><a class="t71" href="https://storage.googleapis.com/newera1/zzzenergyyy.html" style="display:block;margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:24px;font-weight:700;font-style:normal;font-size:25px;text-decoration:none;direction:ltr;color:#FFFFFF;text-align:center;mso-line-height-rule:exactly;" target="_blank">Check direct uw gemeente</a></td></tr></table>
+</td></tr></table>
+</td></tr></table></td></tr></table>
+</td></tr></table>
+</td></tr></table></td></tr></table>
+</td></tr></table>
+</td></tr><tr><td align="center">
+<table class="t90" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td class="t89">
+<table class="t88" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t87"><p class="t86" style="margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:26px;font-weight:500;font-style:normal;font-size:16px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:left;mso-line-height-rule:exactly;mso-text-raise:3px;"><span class="t85" style="margin:0;Margin:0;mso-line-height-rule:exactly;"><span class="t84" style="margin:0;Margin:0;font-weight:700;mso-line-height-rule:exactly;">Let op:</span></span> Plekken worden op volgorde van aanmelding toegekend</p></td></tr></table>
+</td></tr></table>
+</td></tr></table></td></tr></table>
+</td></tr></table>
+</td></tr><tr><td align="center">
+<table class="tphishing@pot" role="presentation" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td width="600" class="t107" style="width:600px;">
+<table class="t106" role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t105"><div class="t104" style="width:100%;text-align:left;"><div class="t103" style="display:inline-block;"><table class="t102" role="presentation" cellpadding="0" cellspacing="0" align="left" valign="top">
+<tr class="t101"><td></td><td class="t100" width="600" valign="top">
+<div class="t96" style="mso-line-height-rule:exactly;mso-line-height-alt:20px;line-height:20px;font-size:1px;display:block;">&nbsp;&nbsp;</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="t98" style="width:100%;"><tr><td class="t97"><p class="t95" style="margin:0;Margin:0;font-family:Krub,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:22px;font-weight:400;font-style:normal;font-size:12px;text-decoration:none;text-transform:none;direction:ltr;color:#333333;text-align:center;mso-line-height-rule:exactly;mso-text-raise:3px;">[unsubscribe]</p></td></tr></table>
+<div class="t99" style="mso-line-height-rule:exactly;mso-line-height-alt:20px;line-height:20px;font-size:1px;display:block;">&nbsp;&nbsp;</div>
+</td>
+<td></td></tr>
+</table></div></div></td></tr></table>
+</td></tr></table>
+</td></tr></table></td></tr></table></div><div class="gmail-fix" style="display: none; white-space: nowrap; font: 15px courier; line-height: 0;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div><img src="https://tracking.agtrk1.com/aff_i?offer_id=947&amp;aff_id=1018&amp;file_id=1791" width="0" height="0" style="position:absolute;visibility:hidden;" border="0"></body>
+</html>
+
+
+
+
+
+
+    
+
+    <table align="center" width="100%" style="max-width:700px;">
+
+                        <tr>
+
+                            <td align="center" width="100%" style="font-family:Helvetica, Arial, sans-serif; font-size:10px; color:#202020; line-height:15px; padding-top:10px;">
+
+                                Om deze te stoppen alstublieft <a href="https://www.vesselwindplant.com/o-tgfg-t17-dcc45763532fbe2f0e127b9cf6640268" style="color:#202020;">klik hier</a> of schrijf naar:
+
+                                <br> Mozartstraat 44e
+
+                                <br> Groenlo, 7141 CP
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+    
+
+
+
+    
+
+<img src="https://hnerta.dondomatos.online/track/3FfFOW0wQeJ2gototrweuj0PFXXDNBSMBZKFYH0VBTR1943x0">
+
+
+
+
+
 

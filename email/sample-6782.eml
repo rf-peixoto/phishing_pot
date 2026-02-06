@@ -1,496 +1,918 @@
-Received: from SA1PR10MB997582.namprd10.prod.outlook.com (::1) by
- MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Mon, 19 Jan 2026 21:04:31
+Received: from DS0PR10MB7295.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Sat, 24 Jan 2026 05:13:22
  +0000
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=ml5edR+d996KCaiSEoq0bFfIJrfqxtlC2ZoBdl79xLF71Gmx7RUrFiDyeVS+ak6KsZiL2p8RmCRBmqLY22UHo0JiK6pguDByOR3g2dACpaKOe13RMqeRtPdVMbdaDS1J8NgYEmbsXGtNJdCqtL0McsVMpHkbbuAjpu8UvvF0nxMh/+e3LTAnAFdxPAOiDbZrtACgvA+upuFcpPAR8/xIwBdIooWwAIWPWcrTHRwLHFIrNHDFxGoJbL8XaeTcvxVHoVuow5HLn9BGCRxsIkQ58OavkCrK48uU9YQl6mKhtiw1jbjcXvKexV9fxAPC3alE0dCmWdfCmlGXYZHOaQVHjA==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DGPSyZKsh0PE13NeL6D54N4/m3E4sQ7VJXcP5AYuJM0=;
- b=NCth6iqTir9mpM+7fdcIbcpFhvkqZOmZuRAPpDufA4VSK2zShpH+ZO9bfoBlHBnExhiE4rZ98dLQO0ZJbBg5igXTV9wurDqFqDShIBMu+JJWYbF+z+mF3fV5BvpoujLwf6LoH0DfTeSvv8wJig1TD4IpBTswjYX6HErzzpIWptGx+1FjK3t5KWO2hqjAVrmV2iOO1Fyz+3YHiSBQIxDpqa+8isDRNjFiIAMmIloNKytOmqlysiqm0bUdUVosX+z2Ejl4kZQkNlNJ3fsdNbBKcaKV8o4Hu7Bv1+3xoQkFrNh9TOZeYeldF6UCbhZVJHYMH73+rOssDetog/4BY1N8Iw==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=none (sender ip is
- 74.125.82.169) smtp.rcpttodomain=hotmail.com smtp.mailfrom=shcms.org;
- dmarc=none action=none header.from=shcms.org; dkim=pass (signature was
- verified) header.d=shcms-org.20230601.gappssmtp.com; arc=pass (0 oda=0
- ltdi=1)
-Received: from SJ0PR03CA0137.namprd03.prod.outlook.com (2603:10b6:a03:33c::22)
- by SA1PR10MB997582.namprd10.prod.outlook.com (2603:10b6:806:4b4::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.12; Mon, 19 Jan
- 2026 21:04:30 +0000
-Received: from MWH0EPF000971E5.namprd02.prod.outlook.com
- (2603:10b6:a03:33c:cafe::1d) by SJ0PR03CA0137.outlook.office365.com
- (2603:10b6:a03:33c::22) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9520.12 via Frontend Transport; Mon,
- 19 Jan 2026 21:04:28 +0000
-Authentication-Results: spf=none (sender IP is 74.125.82.169)
- smtp.mailfrom=shcms.org; dkim=pass (signature was verified)
- header.d=shcms-org.20230601.gappssmtp.com;dmarc=none action=none
- header.from=shcms.org;
-Received-SPF: None (protection.outlook.com: shcms.org does not designate
- permitted sender hosts)
-Received: from mail-dy1-f169.google.com (74.125.82.169) by
- MWH0EPF000971E5.mail.protection.outlook.com (10.167.243.73) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.4
- via Frontend Transport; Mon, 19 Jan 2026 21:04:29 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:97027215D66CCBD15678A6188E9B92322BE16485A0EE565AF1E07ACADE66A6CB;UpperCasedChecksum:B5E100DC9EB8298BD59ACD1AE2BBCD1DCDAC8EC62CE078D2C8D206D33E9DA356;SizeAsReceived:4714;Count:26
-Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-2b6f85470b6so316886eec.1
-        for <phishing@pot>; Mon, 19 Jan 2026 13:04:29 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768856669; cv=none;
-        d=google.com; s=arc-20240605;
-        b=TkNvXex6QykQvzRAIDm0Xr6AHQAFO/QSu0+LCecfrYxhqRdAIgFJeBj6tJYt9FNf6I
-         MW2RDtMHTLB97MsvJp+J7bQ37sFbR/q0FcLGLG3PRS8IS7pVElS5e9yb4SjWA18y2jW8
-         RB04u3PU/ad8FPmHZbjzSs1V9TxffJmxTZbsX7DlJRC+olKE8e4qvnyTYMGegMrOIK6m
-         KN7ay5Adls2ymA+lIuL5NZ/ZDna0r5lZUQD3tNAl3RgFhsemh40oadTA4yXrK8Yq4wxK
-         DNynVJ76Wn7yXwHwGmRNlNwRtG/pVZRlcwWLvVBIZkytOgmvJ3rISTTLK+Y0jDW2OhUw
-         LkoQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:list-id:precedence
-         :campaignid:references:from:dkim-signature;
-        bh=DGPSyZKsh0PE13NeL6D54N4/m3E4sQ7VJXcP5AYuJM0=;
-        fh=VbFDEea6iR3sDpWDQFhcfDTscGgVjuc0hnoI28r5V3M=;
-        b=hKXnhau97Fvxqk1cJTgvFvINXC60F6DfyHNRhhf7ZgIyyYB9Rn932w+LmCUQbGtzyf
-         f4hb6JQN+Z1Q5vZ/bQ6POgwx1StHe6iLdENZMeB/4Ta4iYm6bp+Hwx48m7ZmyZYsChh0
-         GxxKItoi/6u/wmQp8t2T/OJMlat+fEPLIpYoMkMu+dFIjDGzkmBkfFtAYZAke+rhrw7j
-         ZNa94XrzIUvsLJOJNgW9uNjpvjOdRJLPCoChAtuxxBpmSmjXtfPKIGDT+D42pCU7TiuX
-         +jZ2X8ipDKXUm5sDOcZ2oHhdKMxF8IuvsVTSY3Wild8DM22s+iJCo4tTKQd4rGUixCi9
-         Pm3g==;
-        darn=hotmail.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+Received: from SA0PR12CA0006.namprd12.prod.outlook.com (2603:10b6:806:6f::11)
+ by DS0PR10MB7295.namprd10.prod.outlook.com (2603:10b6:8:f7::5) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9542.11; Sat, 24 Jan 2026 05:13:20 +0000
+Received: from SN1PEPF00036F3E.namprd05.prod.outlook.com
+ (2603:10b6:806:6f:cafe::9a) by SA0PR12CA0006.outlook.office365.com
+ (2603:10b6:806:6f::11) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.11 via Frontend Transport; Sat,
+ 24 Jan 2026 05:12:58 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.222.70)
+ smtp.mailfrom=pro13-e9dba.firebaseapp.com; dkim=pass (signature was verified)
+ header.d=firebaseapp.com;dmarc=permerror action=none
+ header.from=pro13-e9dba.firebaseapp.com;compauth=pass reason=111
+Received-SPF: Pass (protection.outlook.com: domain of
+ pro13-e9dba.firebaseapp.com designates 209.85.222.70 as permitted sender)
+ receiver=protection.outlook.com; client-ip=209.85.222.70;
+ helo=mail-ua1-f70.google.com; pr=C
+Received: from mail-ua1-f70.google.com (209.85.222.70) by
+ SN1PEPF00036F3E.mail.protection.outlook.com (10.167.248.22) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9564.3
+ via Frontend Transport; Sat, 24 Jan 2026 05:13:20 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:5CB93D422CF25309FE21795CEE44B96B25FC7631C8AC0D84C7F0B34C862D0BB9;UpperCasedChecksum:936CD727C411124C0067BB39FBB2638C596273A5A836CE7F5BDA2CB67A1548A3;SizeAsReceived:2416;Count:13
+Received: by mail-ua1-f70.google.com with SMTP id a1e0cc1a2514c-93f65d0a94eso3191521241.2
+        for <phishing@pot>; Fri, 23 Jan 2026 21:13:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=shcms-org.20230601.gappssmtp.com; s=20230601; t=1768856668; x=1769461468; darn=hotmail.com;
-        h=cc:to:subject:message-id:date:mime-version:list-id:precedence
-         :campaignid:references:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DGPSyZKsh0PE13NeL6D54N4/m3E4sQ7VJXcP5AYuJM0=;
-        b=W5Xa8x/CPiPfh2i0NRkxh+ge3aP0fJJUWyWv/u83uqKScyRGwVyVH1fE+QGZ2AmSmy
-         M2hVFoW3uy1ZNCzIivs05W0DOUAE9kACQZwklkUnUlCu+FLUsUGIain1JoE93JqB9Eli
-         BncBpVCkuUcSPg8tzKEjOow67jDUFnyXkGOkkcwJU/4qLtbqWGl1rwPB7I2tccKnEZa9
-         h/RbjBRD0G9jIIaj03N2wttsleSolTwcsf5WatgywWbsiFQ0qwHTV1q/bv5Ac8cihWFh
-         rXZ/qGDgpeKfLCsqivkzr3E/6RJwYLhogkN8DzK3RnWgP3LxD3nkPV2ebiJ12OIC2VHx
-         tJ3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768856669; x=1769461469;
-        h=cc:to:subject:message-id:date:mime-version:list-id:precedence
-         :campaignid:references:from:x-gm-gg:x-gm-message-state:from:to:cc
+        d=firebaseapp.com; s=20230601; t=1769231600; x=1769836400; darn=hotmail.com;
+        h=to:from:subject:date:message-id:reply-to:mime-version:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DGPSyZKsh0PE13NeL6D54N4/m3E4sQ7VJXcP5AYuJM0=;
-        b=O4hfe+KDyKBplDmv38e+LlJkGjtQQ8l8LpDKCEgLwKY7KbuEr/gdsLU2Roh3o7GGcy
-         EvBlz0J6iBVOoktXX5HX+iyUI+hRb33JtRG7/IPao3BAsk6eqRndh/0L4PrRSqVi+vCY
-         OW9kV+sVLI8omt6KTELNeyfLG47ehuAWorO5RyD5ubl+PpoNzEjFGncfeMR/xdcAdA0H
-         Ei1ldQgzv7/IPZ6rMckN5b6Q2YqmZ/ffOXys2/DtPJju0tNADCnpNC89c2KmF0wmTurF
-         KtS4GY6dxzJngKJF7Awqvi3/jchhfknw/sZ+HntdGYqxFXnbo+T07Zev6XqnrcZvElfk
-         CFAg==
-X-Gm-Message-State: AOJu0YxBRjESWXzx8XIdIX2PIrD9Y6j0hc4pAjqBpBVaOZy27JPNU6TH
-	/FYMM6h0GObXq+r4XadM5jI2WznBf1CbAVutxVRuhSMxnjFZpOQbrR34v2kyje6KpyKf8CnX7Wu
-	HZb6VOtfDxcsiGwYQKviWDSi8wC6PLwyo/nTcK3Afof0SXCmWUJ57kA==
-X-Gm-Gg: AZuq6aKwbqLjaZLxrQu0yzXfPI171Vrtvl+8Ek0LLmRBtrNULbX4j5Ks4B1ES0m36ID
-	d0EOwtWds6i/QVi3NakGNd9UeBK7fCLQwvyLQFlqowiQ8Z7ZCYJnKcNGf9zZQ0p69o+nl0RUsbb
-	2Jnof9YptGo6DxxjbrIXh8oVdhLdpqKBnqj/x7v/mLmm5FQNo2adDkm3voE/N1sLr209NZpmsY6
-	YVg1iZ0JjrnCd/qdJNnnb0Bi2vtBJ1BNYmjWMbKUCE2Xaq7T149rYR0iv8lXgaOtk93Myrjyxvh
-	dEkl0Kj6rYrtk1prZ/ugng==
-X-Received: by 2002:a05:7301:650c:b0:2b0:1607:6d02 with SMTP id
- 5a478bee46e88-2b6b4149ff3mr9337098eec.31.1768856668581; Mon, 19 Jan 2026
- 13:04:28 -0800 (PST)
-Received: from 77463558223 named unknown by gmailapi.google.com with HTTPREST;
- Mon, 19 Jan 2026 13:04:28 -0800
-Received: from 77463558223 named unknown by gmailapi.google.com with HTTPREST;
- Mon, 19 Jan 2026 13:04:28 -0800
-Return-Path: blake.mitchell1@shcms.org
-From: Your Bonus Inside <blake.mitchell1@shcms.org>
-References: <@mail-50376042908.>
-campaignid: 396278
-Precedence: bulk
-List-ID: <7202588.xt.local>
-X-Campaign: 14325632/664478813/378514960662
-Date: Mon, 19 Jan 2026 13:04:28 -0800
-X-Gm-Features: AZwV_QjWtu-LUAK9jyF1v-iNkt222q7VicPCklBCur_mtdCDZsd_djI7p58udNU
-Message-ID: <CAM2OO+=kXm41paepEVsSumH8Qw1Y2qM5ZU3t6T9-aUbp1VHNeQ@mail.gmail.com>
-Subject: Bonus Pandido No Deposit Required !$7500
+        bh=GX3o3BVeI1bVelvpik1XbxXQvI/WAxF3HSu+8wltvLE=;
+        b=UniAXmgXrO375Xa25OBuoXyj6HESwmrBw2SSVSvzgAbFI69pOex59obvSl2t0HKKUN
+         D3Rbg4Jz6WKoyuPaYeMgKq/X8/0/XGaGjxgJzNQY5hp8aIUfUjsR85lr75VVhdMe6E1C
+         YAp4dIacQg6frY2WkLW0lvoUV39c8mfAAIets4mij0QezLmVxg61Gv0TWjjBTWDdbagR
+         v9JBsr7zwgGEAgVWeCzeM0YF5d0O1wxTs/aKc9oUrx4yHaxQ5Wro92Z+VGlikpVtEoxh
+         nxw1emDrjTJs0jJXYE79O+uIaC3aqhsVN0HWr/BO2ssO9+ZzmDap0JRbNrt0XT31dOSl
+         S2Ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769231600; x=1769836400;
+        h=to:from:subject:date:message-id:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GX3o3BVeI1bVelvpik1XbxXQvI/WAxF3HSu+8wltvLE=;
+        b=HwIgylMp10ivUHNY0lYyTwmcvkaKwc0yQSjgehu83I1K0eJa9PkLc2Qj9krGMKhoA3
+         WPGldgdZP0Lft03hEgeNo+8zONJw9udrvnQW7aavsGooO5loEIrGWfJD94kflgQXliG+
+         gtXpIod84Yr4Fs4ruyINy4AAAsrJ4cV7u8FXcgbfnBmya7lAonjKJkyRBEOJtqAVQYDu
+         NfGUwpkZ4s0rLjZphSduhsdcAXDV47xSvJ+flPtk7Ojdmbjcel6rhydm9DSTmhKTCb4f
+         1FX5QP3CUDVkTu7hr3hLBfbIrKxyrggaJN1uVeXyLQpfeZ4hH7uB0VVITr+zm5mhnbCT
+         9ZIQ==
+X-Gm-Message-State: AOJu0YyyZde3dRnimKrI+p7pRGQi/MuiDNQpvW0PkWoPFaWuBa+8YPTA
+	3IRcos61n9ceri4DU6owVGi6AezRvCPMDrSaB+Im6xdYpkPSHOyKbx24c005CHchvuduLoZE/5a
+	RBEtUQORHSA==
+X-Received: by 2002:a05:6102:32d3:b0:5f5:4cda:76b1 with SMTP id
+ ada2fe7eead31-5f5584d55edmr935892137.1.1769231599937; Fri, 23 Jan 2026
+ 21:13:19 -0800 (PST)
+Reply-To: b.plutpard@outlook.fr
+Message-ID: <0000000000000a2e4b06491b55b8@google.com>
+Date: Sat, 24 Jan 2026 05:13:19 +0000
+Subject: =?UTF-8?B?NDAwJSBCb251cyArIDUwIEZyZWUgU3BpbnMg4oCUIE1ha2UgWW91ciBGaXJzdCBXaXNoIA==?=
+	=?UTF-8?B?4pyo8J+nnuKAjeKZgu+4jw==?=
+From: Golden Wishes <noreply@pro13-e9dba.firebaseapp.com>
 To: phishing@pot
-Cc: "blake.mitchell1@shcms.org" <blake.mitchell1@shcms.org>
-Content-Type: multipart/alternative; boundary="00000000000063ba290648c40962"
-X-IncomingHeaderCount: 26
-X-MS-Exchange-Organization-ExpirationStartTime: 19 Jan 2026 21:04:29.4437
+Content-Type: multipart/alternative; boundary="0000000000000a2e3506491b55b5"
+X-IncomingHeaderCount: 13
+Return-Path: noreply@pro13-e9dba.firebaseapp.com
+X-MS-Exchange-Organization-ExpirationStartTime: 24 Jan 2026 05:13:20.2450
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: 3aphishing@pot531-90af-47a5-e108-08de579e561d
+X-MS-Exchange-Organization-Network-Message-Id: 5497a5d0-6db3-4d61-fe02-08de5b074a49
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000971E5:EE_|SA1PR10MB997582:EE_|MW4PR10MB5749:EE_
-X-MS-Exchange-Organization-AuthSource: MWH0EPF000971E5.namprd02.prod.outlook.com
+X-MS-TrafficTypeDiagnostic: SN1PEPF00036F3E:EE_|DS0PR10MB7295:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource: SN1PEPF00036F3E.namprd05.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 1/19/2026 9:02:23 PM
-X-MS-Office365-Filtering-Correlation-Id: 3aphishing@pot531-90af-47a5-e108-08de579e561d
+X-MS-UserLastLogonTime: 1/24/2026 5:09:48 AM
+X-MS-Office365-Filtering-Correlation-Id: 5497a5d0-6db3-4d61-fe02-08de5b074a49
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 74.125.82.169
-X-SID-PRA: BLAKE.MITCHELL1@SHCMS.ORG
-X-SID-Result: NONE
-X-MS-Exchange-Organization-SCL: 9
-X-Microsoft-Antispam: BCL:8;ARA:1444111002|46110799009|1131999016|3025599003|9000799056|48050799006|42200799015|84100799003|22090799003|68400799013|9400799043|970799060|10300799038|21090799003|1680799066|46080799006|32080799006|3151999006|461199028|33080799003|6100799021|30140799006|56000799018|20103052909095|119000799006|27045499008|18040799003;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jan 2026 21:04:29.4053
+X-Sender-IP: 209.85.222.70
+X-SID-PRA: NOREPLY@PRO13-E9DBA.FIREBASEAPP.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 8
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|3025599003|87000799018|970799060|46080799006|51300799021|58200799021|9800799015|69000799018|20103052909095|3151999006|9400799043|9000799056|1680799066|461199028|10300799038|13020799006|70000799015|45200799018|4001999021|9020799016|2700799029|18040799003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jan 2026 05:13:20.2199
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3aphishing@pot531-90af-47a5-e108-08de579e561d
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5497a5d0-6db3-4d61-fe02-08de5b074a49
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000971E5.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF00036F3E.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB997582
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.4626737
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9520.006
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB7295
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.0846314
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9542.003
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9710001)(9610028)(9520007)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9525003)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
 X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?N2FxSkx5N2pXYmRBQzBLcFRLRDVLb25hVnVMMmNucTlSK1JSeEtUVGNBUk1H?=
- =?utf-8?B?NWtZb3NmQnpOeEkzMFk2Y2phODVRdXlXazNhK05lczMxcDFORythcnZ4LzFI?=
- =?utf-8?B?c2QvMklmeWJnL1ovYXdzM0c0TSswSWNnaVFTOFZ4TG9XNmhLeGJraFhVRmlQ?=
- =?utf-8?B?dUJOWUVUL0VEVHdUVnh2aWdQTk1pU0xLZ0JOa1JqcWxKU3NhbUN5ZUd0dmdq?=
- =?utf-8?B?bGJWWXNTYkZVbG5lYlp2VE5BWnRMWmRyWlRHVWJKM0dYeXF5Unl1Z0htaHhN?=
- =?utf-8?B?TmVWMVZNNFNlTld3YmUwUTJ3aEFCUnVzZXJhVkF6TitpR3M5SnFMVnVUOTJn?=
- =?utf-8?B?M0sxcnVqZ3NsajNXbXZLcHUvT3BOSXBrSHdoSVA4ejVPQ205M1lTTUYvWFpl?=
- =?utf-8?B?VEkrL3BTQXhsZmhPemg2a3NtdGtOOFNoalhVWmQxMm03cW9nanl3Z09mZkta?=
- =?utf-8?B?VWVTOHhibU5yejU3dEdycU40cmkwOVFGTTFRbDdGZFZUL0V0OGVQNFRPTVQ4?=
- =?utf-8?B?b2xMQk1DNnRjd1lWWHBSbytlY2RQYUMydjB6ZVdqd3ZNS2ZnVHR1czdnd082?=
- =?utf-8?B?ZFhBWDhDSHVqL0Job0ovZkVrYTF4enVtYW9CUWx6anZWd1ludjJzcEFDUk90?=
- =?utf-8?B?M3BRR3Q2WmkxaHpiVHpDS084KzFvNTU3WlhrZXltMHNSNllzOXVYcnRlTy9w?=
- =?utf-8?B?ZXdieXVRdTBxTy9uRklCUzAvRHE1SklVUE1DdStWd25OU0N4aGEyeWtubnVh?=
- =?utf-8?B?WWtsVmRCY3JuUUpvTFg1TGRGeGNhelljb3JzcnFWKzY4NkJrNFZxdWFQNE5L?=
- =?utf-8?B?Ukc3eGdwZ3Q2RG1tbzF2UTJKUjZROXJrWHc5cmhWbGNQN2prc1Z5bGJuTWhs?=
- =?utf-8?B?VnZyOE5TclhJTXpqVEszRUw0czc4L0M3L1N2TnpLbkpFYWtuTVpBT3ZxM0lE?=
- =?utf-8?B?d3dOVjVpT2ltOFRRWkQzUFlOMVdEb0JTZ2VLbWJLTlV5L2lnS2ZwVlROYnRo?=
- =?utf-8?B?WmNUd2YzVDVKMzIyR3lROEI5dWVLODVhNGdLL09acEdHbk1UNk1sWmFqRFNp?=
- =?utf-8?B?NnlKOENaVWl2a29sbjcyUGZaZHUrV2I5WXIzT1pPRTJDR3NBSi9NWGt0TENu?=
- =?utf-8?B?SlVvNXFqb1FxTGc2NEV1SVpFR1lLL2t2WlZvMDVWdjZnR1VBRmtvOTVaL3VL?=
- =?utf-8?B?RWVOdTROTGZqUVNFWjNhTHJrRW9jQW44cnZTYTRYM0g0TGZINHQyRm9DdkIx?=
- =?utf-8?B?ekFNaUhOM3dUaStDL1JOdWNjNGQ0ZEZTanhDaGdJQ3ZFNS9URTk4bjRtcklO?=
- =?utf-8?B?SHNFUklJNm03UjhJL2p0d2JsQW9wUi9CeGNtZUo0R3VHdFdPcHRDc3BZUll0?=
- =?utf-8?B?MkxVRGsxcFVUMEg4bEJ1NFFhUEswNisvZkFrWldsczRLTGhvejRncmlmR0M4?=
- =?utf-8?B?NmpBN2VoaXZXamNuaDVmeDI1WjI5aVFYSU9kOWl1c2piZ0NmVnIvYzMyYmJQ?=
- =?utf-8?B?YUhiVnFqZ1cyRm9nazg2dVF0ZEhuMXgrOXovejl0U2JVdy9naWJRSHVMVXZ0?=
- =?utf-8?B?UVYxcGV5b2VDUFBsaHJIZWlBNWhWTmFQWjhoRGlrZkQ2YWU0V3RUNTNLRWVz?=
- =?utf-8?B?d21POGV2dWVHNW11UjlPZ2ZSdXpMS3RjVlpVeFdSUXNhQTFIVmhxVEpjNll5?=
- =?utf-8?B?aUpjaGVDcHZKMlhHVGNHd3A2WFFsV09nNVdkcFpubW8yYk9QSFJVeXpOcEhj?=
- =?utf-8?B?OHZSZ3N5dXRTSys3M1ViUmNGdS8vc2YrOWVCUTVNU0d1eDl2aVJhZGtBUlRQ?=
- =?utf-8?B?blhnVXIrTDk2QWxkem1XblBLcUtEK0tTRityMUI1dWlGN3gzSEZJZE5ZTnR1?=
- =?utf-8?B?R1ZnempTck95cnhoNlZUMXJSM2g3Y2E5WXJqVUlMR2M0RWlBTDIyYyt3Z2J1?=
- =?utf-8?B?S0RiVVF5WGgwUE5CZDNEVzBXajJkME5XRWFtQ1o2Y3ZOVGtpa0MySHJJV2Nm?=
- =?utf-8?B?TjlvVjYyeCtoYUdiS0xKUWhUV2VORXVGcmNjUGx5aDh1cDdJbnR2Q3l6cWRN?=
- =?utf-8?B?VTkvWngwV1h2THVPQ0ovN1FSc1p2R2VPVGtQbXJrTmZoVXUwakZmZ1pRQUd5?=
- =?utf-8?B?TWI1dWhqakJnZlFiZTFhb2RkVzFYQnN3M0Z4VGVFeTMyMi9XZDZDODJQaUln?=
- =?utf-8?B?dEx1dGM0M3B2bFNaYWJwck8vUVZVbmk2MjVpUEtBZGVLcWJ3VEpwS2NZK0FS?=
- =?utf-8?B?VmRPa3ZsOWZKMlJGUlRTTUZaTW5tQzN1TjR3TVN6RUVwWFJLeFRQcXBWcnNH?=
- =?utf-8?B?NzNKTTBJMGZ0OWJ6S3NjRVlKVVFKWUlyaEs2Z0JEclY1WVljUGxpV3VVdnlT?=
- =?utf-8?B?TGJXeFJQYnhWZ2R0SnFpTDJ1Snc2VnpBWThwN3J6cms3ZTRsU0dUdVVLODE3?=
- =?utf-8?B?QXlIYzhEYlRFeFcxNmMwY0J4aFZFbnpzWS94SlgrK2M4a3BzZ3hWWEFPU0M0?=
- =?utf-8?B?SVk4NGNELy9RNy9PTUlkT3RoZldaamx2eWpuUklqaU16TDRneVI5TDEvanNO?=
- =?utf-8?B?WU9UUUJTQk5CN0FwWGNCajhrLy9EdGpTMFFCdXBlQXU2eHA3WmZ1MnE3LzE0?=
- =?utf-8?B?SmdRUVJBMjViOWFpZHhwQU14cSsyU0E5ejk1clFSd0dDc2hXeFZFK05GN2xa?=
- =?utf-8?B?d0pTdUtHeVhiaXJ0MGRqNmJIT3lBc1BVSVVaZkpjNHpRY3ZFOWFNcTVYYzRn?=
- =?utf-8?B?SG5pdnFWTVgwRnVHbld6em5wcXVXMGJIWEN2aWVOb1h5U2ZQWlJERlZpK3Yy?=
- =?utf-8?B?R3l4Qjc4NkJVcU03SHhUVXJGZjIrdFR2Z3lkbWU0K0lPaWVFazYrSkRWWGtZ?=
- =?utf-8?B?QlpXQVA1NEcyZ1p1VTY0dy9NUGQrVHBhUlFHU2hRbXJOWGZGN2I1V25Hc1dL?=
- =?utf-8?B?OStEUUlRRWZOQVczY2lzZ3J5bStaZitKY3JIdjh2ZW1PbXc4RXpjTzI4Q2dU?=
- =?utf-8?B?eFpWTjk5RmFuTjdWWVJKRjU5UldNNW1CU0pZQm1paXU3MXk1TVd2VkFNakpi?=
- =?utf-8?B?NG5nTXpobEMzUzU1SHJDVFRIMHhtY0kyV3lDTVVmU3FKUWdqM3BCZnEyRk0z?=
- =?utf-8?B?SVAxMHVkdzVnd044eEdHYWUwOEpyTFhaTXhpRjNIYUpSK1NSZUNrTkRJcExQ?=
- =?utf-8?B?RDlmUnZkeWxUNkNzTFI3UG1jWXh6eXRZWjV2UGtsTit2NkRaY1N5U0FQL09k?=
- =?utf-8?B?K0FrYk13S0NJdWZoMHNLMUFnalJJaGxMWUJPbFZoVTBsWjRIbkZmcGljaHdR?=
- =?utf-8?B?NmdaVDV6VjN6TjNvVkVOMXBNVGx1Y2s2YmllWHB1OGtkdFFmWjRTSXBZZ2hl?=
- =?utf-8?B?R2Z2TlZDRC93N1h3Rm8wckRqVVhzTUFoQWpGRFNGeHNjc0MyL0NZMHdwU05S?=
- =?utf-8?B?cW5XOWY1SCsyMHlOMGszYk56aENsQzBUNklDTjZkQ2ZEdzg4ZS9yTTNGNVIx?=
- =?utf-8?B?dndvZ2o0MjRYZjR6Y1FqYy9kZDNYSnJLS29Mb1A0clNMVmk1TWlVcWNuS1hr?=
- =?utf-8?B?emFQNWt2UkFha3dFdzJjMVFLSlMrdlFBWUFONzdLeG80SG9vWWV2Tk9IMGN0?=
- =?utf-8?B?SHJDV0lHVHdOM3NSMndFT2tINVNGaExiN3kzV05Vd05UeVFocGJHcVBHZzY1?=
- =?utf-8?B?MVNGL1I0dUdCR2JsdGpPYU9USHBXSzVqWkF6V3ZMMXVCSnJuRlBqeVQ4bkRi?=
- =?utf-8?B?WVR6MXh6OGt5NW1iUGxpK25RSWtuMTRHcEJaakloQjhtcmoxRmRXU1NtUFJE?=
- =?utf-8?B?Um5Zd2tVNGdycjd6V2U2d1l4TDY0T0RpZk9FeWhFamhWd2FmdU1rcGp1Z1pl?=
- =?utf-8?B?Um1MdTNzSGJiaGNFWXNxWTdMUmQ4SktJWHdlRGtrdFFId2NQbVEyZENqQ2NX?=
- =?utf-8?B?TjlsR1dOVWk0cjRnS29ZOWkvQlhFYllwOUYwS3BxYjJpWm52ZVloUmwwMCtM?=
- =?utf-8?B?QTBDb1VEU3JXYVlqeFhBU1lvNFNZS3ZtTTl3clRMY2pBMWR0ZndvblVsYms3?=
- =?utf-8?B?TEdOOUJrY0ZNL0VHdE1JM2ttN3FxbmdFcUhnZ09TWU9oWXRjREN2ZTlXNnR1?=
- =?utf-8?B?b2s2a1ZsQk5rTDFRd3ZFQk1DV0hQWUdxRFovcURCZEFpY0o1bGlnVEtVbUlq?=
- =?utf-8?B?SVN2T0pLUW54YnA3bWx1WXRZSUpKNllMVXN2aHFPMVdwYW9vMVQwQ3QvdVp4?=
- =?utf-8?B?NWZBcmt3OFplYVoxNzJtaTN6M2tjM0VzRlpkMnl4WjFiUmM2cjZIWDZ6aElR?=
- =?utf-8?B?bGZBTGtDd2d3WWpCSEVRbDAxazVIVEtlSWtXOEo0WEgrb24xWURwZTlJcHc2?=
- =?utf-8?B?ZndhS2REUlNWSStYeVJUdWJKZVdFUWZWcWhXdlJlcmFadk5LSlJhKzFyY3h2?=
- =?utf-8?B?UVl3Ny9jNXZhMmZDRGw5SzFwcG84dGllTWFPK05iKzMxUHVpVGtBUWVBUFhR?=
- =?utf-8?B?bEZnNGFMQXhHb2FwMVdHVTJIdkpaK2xQNElFTjdhcVVzeG5LeDBzUFB1UE54?=
- =?utf-8?B?U0VzNThpeFBpSXRVR0RGeHhOMEZOMExUWmREL2YyQXVVWGE4VkN2dWhvVVVn?=
- =?utf-8?B?akRxNnBtS3lDc1FTQ0RKSjFsQk1aelREVWc0S21QN29DR2ZhQkJ6bGNJSGQv?=
- =?utf-8?B?UFNEOUlpMjBTQXRUdVFkcUZyZ3Zzd3kvazNrdXY1UWpXYkVRTDUrOWJ4Wnl2?=
- =?utf-8?B?M2d1VTl6bnNKZ0RudWcxYUdOdTJISEk5Yy9QMnpQUncwZUUyWDhpaDNzVGF4?=
- =?utf-8?B?aUNId05Oc29sWEN4YzdtVERBRTdRVHFNbEZDMXNKQVN0bEZHTlp3ZDRobFpx?=
- =?utf-8?B?MCtTcmdnLzhsMVNCK3pZRjJTT0kycWxJVE04K2xqLzF3QUl2VFFyRFBHMksv?=
- =?utf-8?B?Z0tPTUw0MDhSMzNzcWx2RVY0UHJSN2xURjFpMzlqSm90NUZ0L3FRNnlxcDZi?=
- =?utf-8?B?LzN6MTVhSFozZ0lMVnNGSzcwTmI3bGtpRW9xRFZRVDhpMmVvR09ZRmRYRlVz?=
- =?utf-8?B?MXF5T0RlQkdTMktmOUxIUXZPNi9PZ1J6UzhHaVFYbVZFVHZKUXdvSkQvNUQx?=
- =?utf-8?B?UGFHNnozL0dVU3JPUm01bWtPU2JVWFVFWnQ3Z1E1MFd1ejhiVzM3T3Vxay8x?=
- =?utf-8?B?OE03aCtrYlNGVjkwaFR6UXNkOHJqNXMyUEpJUG1DajY5TXBoVE94OFRCUDRZ?=
- =?utf-8?B?VUNXYm1qeE5qdGVnckF0SW5tSkovKzlwYTEva0tiWVY2T0RTckN1WHo2RVEr?=
- =?utf-8?B?Y0tacmVJbjU3b2crZHk1cmFuWERlcnEvb0ZVOEIySmFLVUgwOE5paUh6WndW?=
- =?utf-8?B?NUJwbFF2OHlnZGNJOEJxYmZXRmFLNWNVYUdOTUxlek9KbjNkQnFmeTVhQk5x?=
- =?utf-8?B?dFdDOUtlOGY3R0diblZhZGZwZXh4amlEaVNhTzVYTDFWV1dqdGZKWk9wMGJT?=
- =?utf-8?B?b0hnRFNaL2tray9lT0RIbWxPcjVicndqYVJEams4YWQ3YmllT2owNjd0ZkFT?=
- =?utf-8?B?UXVQYUlkdFVOR0NxaERWSkVoQVl1Vy81NDZXZzJTdWpjajRaLzNJRlJSWGcz?=
- =?utf-8?B?RlZkbEM2TDhKNjdGM0VuaXFwUHlOdy95WExYNUFVQzNkVGIxZFJlb1doNksr?=
- =?utf-8?B?dTJRSzRBL2tYNjhkZkN6Z1RqZmpIM3lUSmJzaStqUUovNC91VDdKRTQ0WVhI?=
- =?utf-8?B?eHpRUFhENFRFTnFLNlp4UnNBME9ud0JWUG1uRmlDV3YyTTlCcFhEVzEyZENi?=
- =?utf-8?B?K01oSlc3QlhRNFNZT0Vaa0liVmlsVTZ5WGFxUFVOeDBDN3p0dSs5L3hFN0pF?=
- =?utf-8?B?ZFFYVmdJNGxuV1M2YlByeXZEMzBMbUNQNzlUSUUwckNMalpQNDQ3YW02WlNG?=
- =?utf-8?B?ZFBSVkhkZ2VTTzdtYmNBWXRTQ2RVRklycUl4bmpXcGpYSzUyT0dOa1YrWFlQ?=
- =?utf-8?B?djg3V0c4Ri82c0dKVysrTFRFcGd0ZXFyMi9IZHVjUHJDVmtxVHZ5MlpMaTU2?=
- =?utf-8?B?VjV1THE2TWdUUDJEeS9Sc2xhRWI3Sis2MEtqK2gvMXUxdzVXdWJncTBVODZo?=
- =?utf-8?Q?yqXLGP8aKCzy+mz3TUf813m9W?=
+	=?utf-8?B?TzFkUUtLUlBmMC9OdmNQeTVpWGlRQUpHT1p2eG5FcjFDNXdjU1BjTXIrcEhW?=
+ =?utf-8?B?a3Q4QjluTkkvbW1CRzdJSDh4NnUwNTUvM3ZHT3R6M2c0b2RPVG5aTFpZNit5?=
+ =?utf-8?B?VEIxdWxFR210a3JoajR3WEhJNjBJS1ZNRkNBbkxpQ0wrcGRmZ0dVSkxodFZ6?=
+ =?utf-8?B?T1I5aTduVHZwRXhrTFhHL1pRSlRqRG04VjloTTVKZThLS0JBZmdwcVcxdzlD?=
+ =?utf-8?B?dnVhUERNMURoQkpGZEtYeWk4M3VZSm1RQVhma2J1dVNFeGVKWWVjbWxQd3VQ?=
+ =?utf-8?B?eGpaejZ6UnJRV3BKZVdLd2VhTE41S0V2dURJSTBscDBvVFFnSlB4VUJqanFh?=
+ =?utf-8?B?QXFHMjROQkhNalJtMFNKUXhpQjNyajNidG51NFRQbVNtTGZGcCtOVytrODlV?=
+ =?utf-8?B?TG1QaytKeUkvU3BIdXQ0cytyN2srNzNUcmlObU9pbGxFUHJBc0t1OHgvVnZv?=
+ =?utf-8?B?MXQ1QTg0WUVRS1lDNCtrRDVyTExkeXRvM2psYWEzQlg5Qi85bS9QRy9LdFQw?=
+ =?utf-8?B?bWN6RXcwdDB3ZEsyQzg1Y01IbXRuT3hIMS90VXJVVFMrMUI0MU9PWGFJRXlJ?=
+ =?utf-8?B?NHpVMFRCdWtFVVU0V0JhQ055VmgzMUY5aUUrN2JnZVFvT0c4cjdDSWsyU1d1?=
+ =?utf-8?B?QkdKQ0E4cE9oL0EySGpSU2FPRHI2aWlDM2NubmxLQWNtOGJNajFyVTJyRy8w?=
+ =?utf-8?B?YkpFSjBIZU5COFg2RS80NDRMVlhDeGpKKy9HRGtMYjBycjdJTWJqQU95WWNi?=
+ =?utf-8?B?TnhDUmk4Z2hMTVhjRDJGd25wQlpWRWJicFcvUDQ0NVIvRy9acytBekpHWjVm?=
+ =?utf-8?B?UTJ6aDFjWEZPdmF4K2YxYUlHbE9rQUpXNDZnZDdxTTJWVUJXdC8xU3dLRjdk?=
+ =?utf-8?B?UHMzWmdML05La0diRVNKZnNzQk5sOERNR3dPd3h2dUFWL3JHcHVDaXJUVE1S?=
+ =?utf-8?B?cDVobndFbG8zMDhXRmdmU1FDT2JjdXZ3VW96TDNwK002TUUwZkpxeCt5NC81?=
+ =?utf-8?B?ZnRRblpBbnZ1dFVhc3EwVXhROHhmNzdHMnVWdFY5dHpQNUVMRS8xQVdCMTRN?=
+ =?utf-8?B?YVc2Tmt4QVEvWVQyZ2tHd0E1Q3ZZSXpaZS9wM0NlS2dwcGpOdkJDQjMxZm1Q?=
+ =?utf-8?B?S0VaeSs4TDFmRnlBUFQ3YlZiUUU4cGFKbmZKOVVncVE0UFRMaHZWYTRTTXVR?=
+ =?utf-8?B?M1hVOTdWaWl6OEFhejBuVk1lMXd2YkZ6YTBoT0xUL3FPK0FJSUMxaWFCZXVY?=
+ =?utf-8?B?aHZrU1dZNTRRUTUxVGt1cml6MCtkc0JMSkVITE5kV1B3RXczVzVIdkNUQlRt?=
+ =?utf-8?B?S2EydkRKK1dsUEtyamlBOVkrL09yaGp3Z0Q3NFhVWmo5aUtrcW9rR29nQ0pQ?=
+ =?utf-8?B?ejMvQmpsc0FpL0Jqb1R3VzFyWDlaMkduZkYzNmNCVWZmN3FJR0RwKzZPSXZI?=
+ =?utf-8?B?a0tVTVdYazFPdVd6WW55VTF6WDJuWndxOTFqNVFqVFcvK3lKaGg4dkR2bmFt?=
+ =?utf-8?B?Vy9PekxUU28xY0NRWndkZHRQQ201R0xqY1E0Y1BXdWtNSVlaTlZ6QmRuMGNu?=
+ =?utf-8?B?MTNHby82TkUxRU5JUU5QUHplRWk3b2ovYmJITXRHNFpwQWkrY1BLQVhCUUhN?=
+ =?utf-8?B?ZERtL1B0OGRJbDRUTENYRGdlTldPU1oxSHRJaitqMkx1eFZ6SEVzRlNheFdE?=
+ =?utf-8?B?ZXNlSnl3RmxaTUYyZXY4Z0VhZlZjcko0RTFKRGJNK2hKOEpjQ0NJbjNDYlpE?=
+ =?utf-8?B?OWk3Mlp1ek94bjlFRnc5ZzUzSjZZVkxxczFJeTI5V0pqb1Q4TGhkd1piUnc0?=
+ =?utf-8?B?V0RMbmNyUnBEYkdIUmxVWWtuU2JDcGsxbWlXeEVRUmJFTVVGTmNsOHFVTnNX?=
+ =?utf-8?B?ZWpNWWJFeGpsUmVvM1hoRGY1d0g0RlVqWFVNZFZLYmx1VDdTOERRSElXZW9U?=
+ =?utf-8?B?QWVDejN3cXY5R3BXa3lxc05ZZXdabWFBdytqRzJaczBmclFMbHpLOFdMNzdm?=
+ =?utf-8?B?NmpWVEtqN2Era2p6aTRNZ3RsOVJxd2oza1oyVENQMWd2bHJLMTJOZFpqclln?=
+ =?utf-8?B?ejRYQkp6clN0TFlVRVZLR3hpWXFJTWVKQk9MeTJIcDUzY1hGaGMwdE8yOUhK?=
+ =?utf-8?B?amIxUWhoYXhFTlY2VkJ4eTdpQ2FEMVBDVFZ3VlVIVVVUNUpneXpKc1oyWmli?=
+ =?utf-8?B?Y0g0b1BZa2xJQkU1ZUkrQ1NNZVo2cVNwZ2ZPZmNRTVg2N1QvTlY5YVBsNENh?=
+ =?utf-8?B?N0doNnROYjcxdnNTMU11WTUrVlRmVE50ZlBjbjRBaDYzMnhzdVpBT0pBdGly?=
+ =?utf-8?B?VStkWkhZNEtQbTVYQWRGVnJhaFUxeWp6NEs1OWRFWTFWRXQ0OTc0WDZEc29t?=
+ =?utf-8?B?cmJnS0I0dWx5c3ZMZHZxaHB1Vlo0V293b3dPYm1Fd3A4S2VWamYxWmVSREdn?=
+ =?utf-8?B?UnQwK3ZJV2FDZ21oUVljTG42MlQ1cDVTTHgrUDRXUzl0VEphbW1EWjR0VDBF?=
+ =?utf-8?B?bHU0UVNJL2NGMGsvY01TVWRuWjNnMFZXOGFiMVc4ZHczbXV5OWxBOTZqaUtD?=
+ =?utf-8?B?aG9zTTBBQk1mSWVkbS9iRUNRanJma1pBcm5EN0NueUhlczd1M2o1ckRjdThF?=
+ =?utf-8?B?U1JZK3IxbnJXNFU2cTVGaFNWVjdYRXo2UUNlUVBHY0FxdDB0NjRIZ2V1RzV0?=
+ =?utf-8?B?V3dIK2EzbkVNUGszai9xM2RYaW1SSmQyb0lxeGl1VmduaFZteUY2KzIrUlpq?=
+ =?utf-8?B?UW9SVGZVaWFMcEsyWXM4NU1qUEF1bzlkeXZhNHRWZkFKbUtZc3ZjNTlNSjhy?=
+ =?utf-8?B?ajVaNHVISW44WCtEeHFNeG1CUnlSL3F1L0pqOXFrZXRBbmNYMHByS3lzdlZv?=
+ =?utf-8?B?YVpzcXdoR0YzQWdud0R1N1dxanljUEhnMWw4WHYyUnd3OGo4WFNXQmpnb1F3?=
+ =?utf-8?B?R3Nqek1xWGtQNUFiZHloalJMT3laYmFxWndSelJ5SDVWai9tUFhzVjdwMitV?=
+ =?utf-8?B?bEdGMm9RU1F6MVRiaS9QUGtZUndEakpJT3RDczdrUXpJMlVmMmZPcm9PMVAw?=
+ =?utf-8?B?R1pNNGp3QUFoL0NHbHlRY05mSFZsbTJGaUVhN0Jkb0dBcThIaXRuVVF1SlJU?=
+ =?utf-8?B?T2NJbWVaK1p3SThmbEEzSy9kbnNTeTdoc1hjUG1YUHBCSndhcXUzSGRNcjR5?=
+ =?utf-8?B?NnZQa1hkeU5rMlNKVGhneld2OGZkdjdYcGlaVWs3MTRuKys0ZGpKd1ZTcGJ2?=
+ =?utf-8?B?T3ozcDZDbHhOMm05K1BWVXhsNXc1d1l3MkdWOExEajZEblFWWUEveFQzZDBH?=
+ =?utf-8?B?NW00U2JTRGdFSTJ3OGhHdGozQmxRWStzdG5PS2NMb2ZBR0o1eXhQak9RSmRG?=
+ =?utf-8?B?SGZtVUx6K2tWQU9QOFFhTTRHRjZzVEkydHdPc092UURidkl3cWsrRFZFeXpK?=
+ =?utf-8?B?czZ4RHAzWlcxZjJNdjFvaE5zVU41OWVNaGJzMkxDQ09MM084L1VuK1h5WVpk?=
+ =?utf-8?B?dGhaZE94bUZBZXpxdVVRMDVBcjhISEJkVnNHa2ZFajNFdElqT0FWS0N5bk0v?=
+ =?utf-8?B?SFdzNVRscHZ2cnNMNjZRdnVZTzVXdHl4Umc2RXZjdXcvNnkxNGRRekMyTlZ3?=
+ =?utf-8?B?VEJqeEhPVmYzK2xQVUVpdW9jWmVGV3gya0N3R2F1TTVtYlVlZ0Y2YVU2THpx?=
+ =?utf-8?B?bHhEVDdINXNHTkdscmZtNzBLeWNRNnlIVXM0WEJqVFpuaXpRSzJoZ2hXZ2hs?=
+ =?utf-8?B?ejc4SUN3Rkc0aVgycUMrVHZhQzcyZTdwZXJJeDhVRmk1azlRQnpNa2pVMUY4?=
+ =?utf-8?B?V0w3TVVLSUNwVzRib3J5UEFPM2w3akNxYkhiTGNDRXJYVkhiWTRwbHhhazR5?=
+ =?utf-8?B?aHFwdDE5Zno1TEt5bEFzYVZGMkdGMzQvU1dqSkoyWkpXSjNpY0wwYnRyYnhi?=
+ =?utf-8?B?Q1ptZWhGUFVPNTZjSnNRN2JQSTc0d1RkZGIzQzBsRnNGYjV2Yi9nVWNESit2?=
+ =?utf-8?B?UDlBaWlKeHBpdUQ2MUc1UkhlZXRFWHFrcU1pUEU3emU4M0Era1BNeHYzOWUy?=
+ =?utf-8?B?ejlLUHpLc0hBdGIwQmZIWVpLZTZIcmRNVVQ3ZCtSRlA0R2NrMGQxOFlodS84?=
+ =?utf-8?B?TGx3VjB5MExWYzRrV2E2dkI5aGJoTVZYWFp5bDEwd3ZzTi84ZmZNckVCTFJV?=
+ =?utf-8?B?aWZUZUp1d0FiN3dRUjZQK0UySUN0c2orNldGT20xUDgvYlg4WkdtSUxjVEdu?=
+ =?utf-8?B?VGE3VmluTDgxd21UQ0Qzd05taTA5WjFyeFBRbmJSUUFvbitOaTJ4M2ZQaWNE?=
+ =?utf-8?B?UFRHZzJYa1ZZOWNDQWV5MFNuaW1kdmVwOGhUR1V6MEpmcW51ekhsdEF0MEZh?=
+ =?utf-8?B?UTdtRHpSci9kdzV0WGtiVXBDaHJWSVEvT0g3d3JHajA2U0plRGZhREJkRjdX?=
+ =?utf-8?B?MU1ncGdNaDI2WGptWXIzZGk4eUphaGFrTUpXdjBUV2d3SUNCZG11ZFZDOTBj?=
+ =?utf-8?B?Uy9Xd1VJMjRFOFYrckdUaDE5WHh3NWxjVUNZdU8vd0oyZE9ILzU0ZE1QeDRP?=
+ =?utf-8?B?Rjg2VEpkRVR2aUhhTkNJM0JvZ0tBNU0vMnhYcE9LZDNxSEhMc0NlK3pMOGtj?=
+ =?utf-8?B?cXdqekQzbGhQNUVLT3FrWXJhZlFVSGtTY3VOMmxCV243Ump2YnBVUm03WTQx?=
+ =?utf-8?B?Z1lPODJJRjJIMFNzUEJlMU5BOVZQSlBYSlFFRjM0L3BLcjlzY3grYUE1WWZT?=
+ =?utf-8?Q?WgBY6XhAXRwKF+FZ98d5FCIgES09S/YJts=3D?=
 MIME-Version: 1.0
 
---00000000000063ba290648c40962
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--0000000000000a2e3506491b55b5
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+Content-Transfer-Encoding: base64
 
- Spinfin
-<https://canadianshopping.net/index.php?search=3D4&d16746&tuhct=3D471-109&l=
-m=3D37692BNOR914559&sd=3D7&page=3DfEJ7xlDhUpw9ILE>
-[image: Exclusive Welcome Offer] [image: Exclusive Welcome Offer]
-<https://canadianshopping.net/index.php?search=3D4&d16746&ubgwz=3D471-109&l=
-m=3D37692MDUP914559&sd=3D7&page=3D26B8AO807HQYmYE>
-READY TO WIN BIG?
-<https://canadianshopping.net/index.php?search=3D4&d16746&iaygt=3D471-109&l=
-m=3D37692CVTX914559&sd=3D7&page=3DuKZ5O3euGkRIc1l>
-
-Grab a 100% Bonus up to $750 and spin your way to the top!
-
-=E2=80=A2Fast Withdrawals: Your wins, delivered instantly
-
-=E2=80=A2Play on the Go: Fully mobile-optimized fun
-
-=E2=80=A2*200 Free Spins:* On the most popular slot!
-Hit the Big Prize
-<https://canadianshopping.net/index.php?search=3D4&d16746&xajoo=3D471-109&l=
-m=3D37692WMAL914559&sd=3D7&page=3DkMv2DTIw8kefZTd>
-
-Offer only applies to new players. Gambling is a leisure activity. Whether
-you or someone you know choose to gamble, it is important to understand
-that gambling comes with potential risks. Pay attention to signs like an
-urgent need to keep gambling, growing frequency of gambling, borrowing
-money for the activity or unhappy feeling because of it. Playing smart and
-safe is very important, and if you see addiction signs, do not hesitate to
-ask for help.
-
-
-
-
-
-
-
-
-<http://canadianshopping.net/rd/index.php?search=3D5&d16746&hqvqy=3D471-109=
-&lm=3D37692YCYD914559&sd=3D7&page=3DJXOQoDIaFU129TA>
-
---00000000000063ba290648c40962
+WW91ciBuZXh0IGJpZyB3aW4gaXMgb25lIHdpc2ggYXdheSENCg0KDQoNCg0KR2V0IEJvbnVzDQoN
+Cg0KDQrinKggWW91ciBNYWdpYyBDYXJwZXQgUmlkZSBTdGFydHMgSGVyZSDinKgNCg0KDQpIaSAs
+DQoNCg0KDQpJbiB0aGUgaGVhcnQgb2YgdGhlIGRlc2VydCBsaWVzIGEgZ29sZGVuIG9hc2lzIG9m
+IGphY2twb3RzIGFuZCBteXN0ZXJ5Lg0KQSBwbGFjZSB3aGVyZSBjYXJwZXRzIGZseSwgY29pbnMg
+cG91ciwgYW5kIHlvdXIgbHVjayBzaGluZXMgYnJpZ2h0ZXIgdGhhbiAgDQpldmVyLg0KDQpUaGF0
+IHBsYWNlIGlzIEFsYWRkaW4ncyBHb2xkIOKAlCBhbmQgeW91ciBpbnZpdGF0aW9uIGhhcyBqdXN0
+IGFycml2ZWQuDQoNCvCfqoQgVXNlIGNvZGUgQUxHMSBvbiB5b3VyIGZpcnN0IGRlcG9zaXQgdG8g
+dW5sb2NrOg0K4pyoIDQwMCUgQm9udXMNCuKcqCA1MCBGcmVlIFNwaW5zIG9uIEJpZyBCYXNzIEJv
+bmFuemENCg0KSXQncyB3aWxkLCBpdCdzIGdvbGRlbiwgaXQncyBzbGlnaHRseSBtYWdpY2FsLg0K
+U2/igKYgd2hhdCdzIHlvdXIgZmlyc3Qgd2lzaCBnb2luZyB0byBiZT8iDQoNCg0KTWFrZSBZb3Vy
+IEZpcnN0IFdpc2gNCg0KDQoNCiogTWluaW11bSBkZXBvc2l0IOKCrC/Coy8kIDIwDQoqRnJlZSBT
+cGlucyBhcmUgb24gQmlnIEJhc3MgQm9uYW56YQ0KKlVwIHRvIDEgYm9udXMgcmVkZW1wdGlvbnMN
+CirCozIwIGlzIGVxdWl2YWxlbnQgdG8g4oKsMjAgb3IgJDIwDQoqTWF4IGJvbnVzIGFtb3VudCDi
+gqwvwqMvJCAxMDAwDQoqVGVybXMgJiBDb25kaXRpb25zIGFwcGx5DQoNCg0KUXVlc3Rpb25zPyBD
+b250YWN0IHVzIDI0LzcNCg0KDQpMSVZFIERFQUxFUg0KDQpBbGwgUHJvbW90aW9ucw0KDQoNCkF0
+IEFsYWRkaW4ncyBHb2xkLCBvdXIgbWlzc2lvbiBpcyB0byBlbnJpY2ggeW91ciBnYW1pbmcgam91
+cm5leSBhbmQgZ2l2ZSAgDQp5b3UgdGhlIGJlc3QgcG9zc2libGUgY2hhbmNlIGF0IHN0cmlraW5n
+IGl0IGx1Y2t5LiBXaGV0aGVyIHlvdSBoYXZlIGEgIA0KcXVlc3Rpb24sIG5lZWQgYXNzaXN0YW5j
+ZSwgb3IganVzdCBmZWVsIGxpa2UgY2hhdHRpbmcgd2l0aCBvbmUgb2Ygb3VyICANCmZyaWVuZGx5
+IHN1cHBvcnQgdGVhbSBtZW1iZXJzLCB3ZSdyZSBhbHdheXMgY2xvc2UgYnkuIFNpbXBseSBjbGlj
+ayDigJxDb250YWN0ICANClN1cHBvcnTigJ0gb24gb3VyIHdlYnNpdGUgYW5kIG91ciBkZWRpY2F0
+ZWQgdGVhbSB3aWxsIGJlIGhhcHB5IHRvIGhlbHAuDQpZb3UncmUgcmVjZWl2aW5nIHRoaXMgbWVz
+c2FnZSBiZWNhdXNlIHlvdSByZWdpc3RlcmVkIHdpdGggQWxhZGRpbidzIEdvbGQuICANCklmIHlv
+dSdkIHByZWZlciBub3QgdG8gaGVhciBmcm9tIHVzIGluIHRoZSBmdXR1cmUsIHlvdSBjYW4gdW5z
+dWJzY3JpYmUgYXQgIA0KYW55IHRpbWUgYnkgY2xpY2tpbmcgdGhlIGxpbmsgYmVsb3cuIFdlIHJl
+c3BlY3QgeW91ciBwcmVmZXJlbmNlcyBhbmQgYXJlICANCmNvbW1pdHRlZCB0byBtYWtpbmcgeW91
+ciBleHBlcmllbmNlIHdpdGggdXMgc21vb3RoIGFuZCBlbmpveWFibGUuDQoNCkF0IEFsYWRkaW4n
+cyBHb2xkLCB3ZSBzdHJvbmdseSBzdXBwb3J0IHJlc3BvbnNpYmxlIGdhbWluZy4gT3VyIHNlcnZp
+Y2VzIGFyZSAgDQpvbmx5IGF2YWlsYWJsZSB0byBwbGF5ZXJzIGFnZWQgMTggYW5kIG92ZXIuIFdl
+IGVuY291cmFnZSB5b3UgdG8gc2V0IGxpbWl0cywgIA0Kc3RheSBpbiBjb250cm9sLCBhbmQgc2Vl
+ayBoZWxwIGlmIG5lZWRlZC4gWW91ciB3ZWxsLWJlaW5nIGlzIGltcG9ydGFudCB0byAgDQp1cywg
+YW5kIHdlJ3JlIGhlcmUgdG8gc3VwcG9ydCB5b3UgZXZlcnkgc3RlcCBvZiB0aGUgd2F5Lg0KDQpU
+aGFuayB5b3UgZm9yIGJlaW5nIHBhcnQgb2YgdGhlIEFsYWRkaW4ncyBHb2xkIGFkdmVudHVyZS4N
+Cg0KDQpUZXJtcyBhbmQgQ29uZGl0aW9uDQoNCg0KUmVzcG9uc2libGUgR2FtaW5nDQoNCg0KQmFu
+a2luZw0KDQoNCk5vdCBhIGZhbj8gVW5zdWJzY3JpYmUNCg0KDQpBbGwgcmlnaHRzIHJlc2VydmVk
+IHRvIEFsYWRkaW4ncyBHb2xkIMKuDQoNCg0K
+--0000000000000a2e3506491b55b5
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<html><head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd"><html data-editor-version=3D"2" class=3D"=
+sg-campaigns" xmlns=3D"http://www.w3.org/1999/xhtml"><head>
 <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
-<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
-0">
-<meta name=3D"x-apple-disable-message-reformatting">
-<title>Spinfin</title>
-<style type=3D"text/css">
-/* GLOBAL STYLES */
-body { margin: 0; padding: 0; -webkit-text-size-adjust: 100%; -ms-text-size=
--adjust: 100%; background-color: #F0F0F0; }
-table, td { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rsp=
-ace: 0pt; }
-img { border: 0; line-height: 100%; outline: none; text-decoration: none; -=
-ms-interpolation-mode: bicubic; display: block; max-width: 100%; }
-a { text-decoration: none; color: #00A6B2; } /* Cyan Blue */
+      <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scal=
+e=3D1, minimum-scale=3D1, maximum-scale=3D1">
+      <!--[if !mso]><!-->
+      <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3DEdge">
+      <!--<![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:AllowPNG/>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+      <![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+  <style type=3D"text/css">
+    body {width: 600px;margin: 0 auto;}
+    table {border-collapse: collapse;}
+    table, td {mso-table-lspace: 0pt;mso-table-rspace: 0pt;}
+    img {-ms-interpolation-mode: bicubic;}
+  </style>
+<![endif]-->
+      <style type=3D"text/css">
+    body, p, div {
+      font-family: arial,helvetica,sans-serif;
+      font-size: 14px;
+    }
+    body {
+      color: #000000;
+    }
+    body a {
+      color: #1188E6;
+      text-decoration: none;
+    }
+    p { margin: 0; padding: 0; }
+    table.wrapper {
+      width:100% !important;
+      table-layout: fixed;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    img.max-width {
+      max-width: 100% !important;
+    }
+    .column.of-2 {
+      width: 50%;
+    }
+    .column.of-3 {
+      width: 33.333%;
+    }
+    .column.of-4 {
+      width: 25%;
+    }
+    ul ul ul ul  {
+      list-style-type: disc !important;
+    }
+    ol ol {
+      list-style-type: lower-roman !important;
+    }
+    ol ol ol {
+      list-style-type: lower-latin !important;
+    }
+    ol ol ol ol {
+      list-style-type: decimal !important;
+    }
+    @media screen and (max-width:480px) {
+      .preheader .rightColumnContent,
+      .footer .rightColumnContent {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent div,
+      .preheader .rightColumnContent span,
+      .footer .rightColumnContent div,
+      .footer .rightColumnContent span {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent,
+      .preheader .leftColumnContent {
+        font-size: 80% !important;
+        padding: 5px 0;
+      }
+      table.wrapper-mobile {
+        width: 100% !important;
+        table-layout: fixed;
+      }
+      img.max-width {
+        height: auto !important;
+        max-width: 100% !important;
+      }
+      a.bulletproof-button {
+        display: block !important;
+        width: auto !important;
+        font-size: 80%;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .columns {
+        width: 100% !important;
+      }
+      .column {
+        display: block !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .social-icon-column {
+        display: inline-block !important;
+      }
+    }
+  </style>
+      <!--user entered Head Start-->
+    <!--End Head user entered-->
+    </head>
+    <body>
+      <center class=3D"wrapper" data-link-color=3D"#1188E6" data-body-style=
+=3D"font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; =
+background-color:#FFFFFF;">
+        <div class=3D"webkit">
+          <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"=
+100%" class=3D"wrapper" bgcolor=3D"#FFFFFF">
+            <tr>
+              <td valign=3D"top" bgcolor=3D"#FFFFFF" width=3D"100%">
+                <table width=3D"100%" role=3D"content-container" class=3D"o=
+uter" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+                  <tr>
+                    <td width=3D"100%">
+                      <table width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0">
+                        <tr>
+                          <td>
+                            <!--[if mso]>
+    <center>
+    <table><tr><td width=3D"600">
+  <![endif]-->
+                                    <table width=3D"100%" cellpadding=3D"0"=
+ cellspacing=3D"0" border=3D"0" style=3D"width:100%; max-width:600px;" alig=
+n=3D"center">
+                                      <tr>
+                                        <td role=3D"modules-container" styl=
+e=3D"padding:0px 0px 0px 0px; color:#000000; text-align:left;" bgcolor=3D"#=
+161127" width=3D"100%" align=3D"left"><table class=3D"module preheader preh=
+eader-hide" role=3D"module" data-type=3D"preheader" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"display: none !important;=
+ mso-hide: all; visibility: hidden; opacity: 0; color: transparent; height:=
+ 0; width: 0;">
+    <tr>
+      <td role=3D"module-content">
+        <p>Your next big win is one wish away!</p>
+      </td>
+    </tr>
+  </table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"=
+center" width=3D"100%" role=3D"module" data-type=3D"columns" style=3D"paddi=
+ng:0px 0px 0px 0px;" bgcolor=3D"#161127" data-distribution=3D"1">
+    <tbody>
+      <tr role=3D"module-content">
+        <td height=3D"100%" valign=3D"top"><table width=3D"580" style=3D"wi=
+dth:580px; border-spacing:0; border-collapse:collapse; margin:0px 10px 0px =
+10px;" cellpadding=3D"0" cellspacing=3D"0" align=3D"left" border=3D"0" bgco=
+lor=3D"" class=3D"column column-0">
+      <tbody>
+        <tr>
+          <td style=3D"padding:0px;margin:0px;border-spacing:0;"><table cla=
+ss=3D"wrapper" role=3D"module" data-type=3D"image" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout: fixed;" data=
+-muid=3D"07b28112-332e-499d-a606-9b68ae6d956b">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:10px 10px 10p=
+x 10px;" valign=3D"top" align=3D"center">
+         =20
+        <a href=3D"https://statesthestates.com/?a=3D1287&amp;oc=3D25149&amp=
+;c=3D65524&amp;m=3D3&amp;s1=3D"><img class=3D"max-width" border=3D"0" style=
+=3D"display:block; color:#000000; text-decoration:none; font-family:Helveti=
+ca, arial, sans-serif; font-size:16px; max-width:40% !important; width:40%;=
+ height:auto !important;" width=3D"232" alt=3D"" data-proportionally-constr=
+ained=3D"true" data-responsive=3D"true" src=3D"http://cdn.mcauto-images-pro=
+duction.sendgrid.net/6a583904b7e21994/d7e51086-7102-429a-8a78-ea586390e7ee/=
+601x195.png">
+        <img class=3D"max-width" border=3D"0" style=3D"display:block; color=
+:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; f=
+ont-size:16px; max-width:40% !important; width:40%; height:auto !important;=
+" width=3D"232" alt=3D"" data-proportionally-constrained=3D"true" data-resp=
+onsive=3D"true" src=3D"//cdn.mcauto-images-production.sendgrid.net/6a583904=
+b7e21994/d7e51086-7102-429a-8a78-ea586390e7ee/601x195.png">
+        </a></td>
+      </tr>
+    </tbody>
+  </table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+module" data-role=3D"module-button" data-type=3D"button" role=3D"module" st=
+yle=3D"table-layout:fixed" width=3D"100%" data-muid=3D"usQbMPyYxR9bNEgbXET7=
+L">
+                                                                           =
+                     <tbody>
+                                                                           =
+                         <tr>
+                                                                           =
+                             <td align=3D"center" class=3D"outer-td" style=
+=3D"padding:0px 0px 0px 0px;" bgcolor=3D"">
+                                                                           =
+                                 <table border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" class=3D"button-css__deep-table___2OZyb wrapper-mobile" style=
+=3D"text-align:center">
+                                                                           =
+                                     <tbody>
+                                                                           =
+                                         <tr>
+                                                                           =
+                                             <td align=3D"center" bgcolor=
+=3D"#7f4aff" class=3D"inner-td" style=3D"border-radius:6px; font-size:16px;=
+ text-align:center; background-color:inherit;"><a style=3D"background-color=
+:#7f4aff; border:5px solid #7f4aff; border-color:#7f4aff; border-radius:16p=
+x; border-width:5px; color:#FFFFFF; display:inline-block; font-weight:400; =
+letter-spacing:0px; line-height:normal; padding:5px 5px 5px 5px; text-align=
+:center; text-decoration:none; border-style:solid; font-size:20px;" href=3D=
+"https://paramatise.com/?a=3D1287&amp;oc=3D25149&amp;c=3D65524&amp;m=3D3&am=
+p;s1=3D" target=3D"_blank">Get Bonus</a></td>
+                                                                           =
+                                         </tr>
+                                                                           =
+                                     </tbody>
+                                                                           =
+                                 </table>
+                                                                           =
+                             </td>
+                                                                           =
+                         </tr>
+                                                                           =
+                     </tbody>
+                                                                           =
+                 </table><table class=3D"module" role=3D"module" data-type=
+=3D"text" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" s=
+tyle=3D"table-layout: fixed;" data-muid=3D"w6JHT87zW1XzxEtGqbMk6u.1" data-m=
+c-module-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:10px 5px 10px 5px; line-height:20px; text-alig=
+n:inherit; background-color:#161127;" height=3D"100%" valign=3D"top" bgcolo=
+r=3D"#161127" role=3D"module-content"><div><div style=3D"font-family: inher=
+it; text-align: center"><span style=3D"color: #ffffff; font-size: 20px"><st=
+rong>=E2=9C=A8 Your Magic Carpet Ride Starts Here =E2=9C=A8</strong></span>=
+</div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table></td>
+        </tr>
+      </tbody>
+    </table></td>
+      </tr>
+    </tbody>
+  </table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"=
+center" width=3D"100%" role=3D"module" data-type=3D"columns" data-version=
+=3D"2" style=3D"padding:0px 0px 0px 0px; box-sizing:border-box;" bgcolor=3D=
+"#161127" data-distribution=3D"1">
+                                                                <tbody>
+                                                                    <tr rol=
+e=3D"module-content">
+                                                                        <td=
+ height=3D"100%" valign=3D"top"><table width=3D"600" style=3D"width:600px; =
+border-spacing:0; border-collapse:collapse; margin:0px 0px 0px 0px;" cellpa=
+dding=3D"0" cellspacing=3D"0" align=3D"left" border=3D"0" bgcolor=3D"" clas=
+s=3D"column column-0">
+      <tbody>
+        <tr>
+          <td style=3D"padding:0px;margin:0px;border-spacing:0;"><table cla=
+ss=3D"wrapper" role=3D"module" data-type=3D"image" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout: fixed;" data=
+-muid=3D"451b256c-625c-4a2a-ac28-17a95281d2e5">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:0px 0px 0px 0=
+px;" valign=3D"top" align=3D"center">
+         =20
+        <a href=3D"https://statesthestates.com/?a=3D1287&amp;oc=3D25149&amp=
+;c=3D65524&amp;m=3D3&amp;s1=3D"><img class=3D"max-width" border=3D"0" style=
+=3D"display:block; color:#000000; text-decoration:none; font-family:Helveti=
+ca, arial, sans-serif; font-size:16px; max-width:70% !important; width:70%;=
+ height:auto !important;" width=3D"420" alt=3D"" data-proportionally-constr=
+ained=3D"true" data-responsive=3D"true" src=3D"http://cdn.mcauto-images-pro=
+duction.sendgrid.net/6a583904b7e21994/e21d668a-f8eb-47de-b0fd-0a183a3052e9/=
+800x386.jpg">
+        <img class=3D"max-width" border=3D"0" style=3D"display:block; color=
+:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; f=
+ont-size:16px; max-width:70% !important; width:70%; height:auto !important;=
+" width=3D"420" alt=3D"" data-proportionally-constrained=3D"true" data-resp=
+onsive=3D"true" src=3D"//cdn.mcauto-images-production.sendgrid.net/6a583904=
+b7e21994/e21d668a-f8eb-47de-b0fd-0a183a3052e9/800x386.jpg">
+        </a></td>
+      </tr>
+    </tbody>
+  </table></td>
+        </tr>
+      </tbody>
+    </table></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table><table =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"center" width=3D"=
+100%" role=3D"module" data-type=3D"columns" data-version=3D"2" style=3D"pad=
+ding:0px 10px 0px 10px; box-sizing:border-box;" bgcolor=3D"#161127" data-di=
+stribution=3D"1">
+                                                                <tbody>
+                                                                    <tr rol=
+e=3D"module-content">
+                                                                        <td=
+ height=3D"100%" valign=3D"top"><table width=3D"580" style=3D"width:580px; =
+border-spacing:0; border-collapse:collapse; margin:0px 0px 0px 0px;" cellpa=
+dding=3D"0" cellspacing=3D"0" align=3D"left" border=3D"0" bgcolor=3D"" clas=
+s=3D"column column-0">
+      <tbody>
+        <tr>
+          <td style=3D"padding:0px;margin:0px;border-spacing:0;"><table cla=
+ss=3D"module" role=3D"module" data-type=3D"text" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout: fixed;" data=
+-mc-module-version=3D"2019-10-22" data-muid=3D"gmDerJ2yyGpua7hSpXzBQu">
+                                                                           =
+                     <tbody>
+                                                                           =
+                         <tr>
+                                                                           =
+                             <td style=3D"padding:10px 10px 18px 10px; line=
+-height:22px; text-align:inherit; background-color:#161127;" height=3D"100%=
+" valign=3D"top" bgcolor=3D"#161127"><div><div style=3D"font-family: inheri=
+t; text-align: inherit"><span style=3D"font-size: 16px; color: #ffffff">Hi =
+,</span></div>
+<div style=3D"font-family: inherit; text-align: inherit"><br></div>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"fon=
+t-size: 16px; color: #ffffff">In the heart of the desert lies a golden oasi=
+s of jackpots and mystery.<br>
+A place where carpets fly, coins pour, and your luck shines brighter than e=
+ver.<br>
+<br>
+That place is Aladdin=E2=80=99s Gold =E2=80=94 and your invitation has just=
+ arrived.<br>
+<br>
+=F0=9F=AA=84 Use code </span><span style=3D"font-size: 16px; color: #ffffff=
+"><strong>ALG1</strong></span><span style=3D"font-size: 16px; color: #fffff=
+f"> on your first deposit to unlock:<br>
+=E2=9C=A8 </span><span style=3D"font-size: 16px; color: #ffffff"><strong>40=
+0% Bonus</strong></span><span style=3D"font-size: 16px; color: #ffffff"><br=
+>
+=E2=9C=A8</span><span style=3D"font-size: 16px; color: #ffffff"><strong> 50=
+ Free Spins on Big Bass Bonanza</strong></span><span style=3D"font-size: 16=
+px; color: #ffffff"><br>
+<br>
+It=E2=80=99s wild, it=E2=80=99s golden, it=E2=80=99s slightly magical.<br>
+So=E2=80=A6 what=E2=80=99s your first wish going to be?&quot;<br>
+</span></div><div></div></div></td>
+                                                                           =
+                         </tr>
+                                                                           =
+                     </tbody>
+                                                                           =
+                 </table><table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" class=3D"module" data-role=3D"module-button" data-type=3D"button" ro=
+le=3D"module" style=3D"table-layout:fixed;" width=3D"100%" data-muid=3D"usQ=
+bMPyYxR9bNEgbXET7L.1">
+      <tbody>
+        <tr>
+          <td align=3D"center" bgcolor=3D"" class=3D"outer-td" style=3D"pad=
+ding:0px 0px 0px 0px;">
+            <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"wrapper-mobile" style=3D"text-align:center;">
+              <tbody>
+                <tr>
+                <td align=3D"center" bgcolor=3D"#7f4aff" class=3D"inner-td"=
+ style=3D"border-radius:6px; font-size:16px; text-align:center; background-=
+color:inherit;">
+                  <a href=3D"https://statesthestates.com/?a=3D1287&amp;oc=
+=3D25149&amp;c=3D65524&amp;m=3D3&amp;s1=3D" style=3D"background-color:#7f4a=
+ff; border:5px solid #7f4aff; border-color:#7f4aff; border-radius:20px; bor=
+der-width:5px; color:#FFFFFF; display:inline-block; font-size:20px; font-we=
+ight:400; letter-spacing:0px; line-height:normal; padding:10px 10px 10px 10=
+px; text-align:center; text-decoration:none; border-style:solid;" target=3D=
+"_blank">Make Your First Wish</a>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table><table class=3D"module" role=3D"module" data-type=3D"divider" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"tab=
+le-layout: fixed;" data-muid=3D"teDsis4kXkv66c7u1HbnVc">
+                                                                           =
+                     <tbody>
+                                                                           =
+                         <tr>
+                                                                           =
+                             <td style=3D"padding:5px 0px 5px 0px;" role=3D=
+"module-content" height=3D"100%" valign=3D"top" bgcolor=3D"">
+                                                                           =
+                                 <table border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" align=3D"center" width=3D"100%" height=3D"1px" style=3D"line-=
+height:1px; font-size:1px;">
+                                                                           =
+                                     <tbody>
+                                                                           =
+                                         <tr>
+                                                                           =
+                                             <td style=3D"padding:0px 0px 1=
+px 0px;" bgcolor=3D"#eeeeee"></td>
+                                                                           =
+                                         </tr>
+                                                                           =
+                                     </tbody>
+                                                                           =
+                                 </table>
+                                                                           =
+                             </td>
+                                                                           =
+                         </tr>
+                                                                           =
+                     </tbody>
+                                                                           =
+                 </table><table class=3D"module" role=3D"module" data-type=
+=3D"text" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" s=
+tyle=3D"table-layout: fixed;" data-mc-module-version=3D"2019-10-22" data-mu=
+id=3D"9iQPNXaz13XWLTu2vM16Xj">
+                                                                           =
+                     <tbody>
+                                                                           =
+                         <tr>
+                                                                           =
+                             <td style=3D"padding:5px 18px 18px 18px; line-=
+height:22px; text-align:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D=
+""><div><div style=3D"font-family: inherit; text-align: inherit"><span styl=
+e=3D"color: #cacaca; font-size: 14px">* Minimum deposit =E2=82=AC/=C2=A3/$ =
+20<br>
+*Free Spins are on Big Bass Bonanza<br>
+*Up to 1 bonus redemptions<br>
+*=C2=A320 is equivalent to =E2=82=AC20 or $20<br>
+*Max bonus amount =E2=82=AC/=C2=A3/$ 1000<br>
+*Terms &amp; Conditions apply</span></div><div></div></div></td>
+                                                                           =
+                         </tr>
+                                                                           =
+                     </tbody>
+                                                                           =
+                 </table></td>
+        </tr>
+      </tbody>
+    </table></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table><table =
+class=3D"module" role=3D"module" data-type=3D"text" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout: fixed;" dat=
+a-muid=3D"aa0f352f-8a98-4206-b4ae-8aa958c2da89" data-mc-module-version=3D"2=
+019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px; line-height:22px; text-alig=
+n:inherit; background-color:#161127;" height=3D"100%" valign=3D"top" bgcolo=
+r=3D"#161127" role=3D"module-content"><div><div style=3D"font-family: inher=
+it; text-align: center"><a href=3D"https://statesthestates.com/?a=3D1287&am=
+p;oc=3D25149&amp;c=3D65524&amp;m=3D3&amp;s1=3D"><span style=3D"font-size: 2=
+4px; color: #f2d022"><u>Questions? Contact us 24/7</u></span></a></div><div=
+></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"wrapper" role=3D"module" data-type=3D"image" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"26b0d10a-d83b-4f7d-bd26-d030aec36e39.1">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:0px 8px 0px 8=
+px;" valign=3D"top" align=3D"center">
+         =20
+        <a href=3D"https://statesthestates.com/?a=3D1287&amp;oc=3D25149&amp=
+;c=3D65524&amp;m=3D3&amp;s1=3D"><img class=3D"max-width" border=3D"0" style=
+=3D"display:block; color:#000000; text-decoration:none; font-family:Helveti=
+ca, arial, sans-serif; font-size:16px; max-width:100% !important; width:100=
+%; height:auto !important;" width=3D"600" alt=3D"" data-proportionally-cons=
+trained=3D"true" data-responsive=3D"true" src=3D"http://cdn.mcauto-images-p=
+roduction.sendgrid.net/6a583904b7e21994/c0c3fabe-3653-4a4e-8acb-b36808c7a19=
+1/488x150.png">
+        <img class=3D"max-width" border=3D"0" style=3D"display:block; color=
+:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; f=
+ont-size:16px; max-width:100% !important; width:100%; height:auto !importan=
+t;" width=3D"600" alt=3D"" data-proportionally-constrained=3D"true" data-re=
+sponsive=3D"true" src=3D"http://cdn.mcauto-images-production.sendgrid.net/6=
+a583904b7e21994/c0c3fabe-3653-4a4e-8acb-b36808c7a191/488x150.png">
+        </a></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"divider" bor=
+der=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table=
+-layout: fixed;" data-muid=3D"f6d36156-163e-4cd3-9ea9-0727d6a68090">
+    <tbody>
+      <tr>
+        <td style=3D"padding:0px 0px 0px 0px;" role=3D"module-content" heig=
+ht=3D"100%" valign=3D"top" bgcolor=3D"">
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"=
+center" width=3D"100%" height=3D"10px" style=3D"line-height:10px; font-size=
+:10px;">
+            <tbody>
+              <tr>
+                <td style=3D"padding:0px 0px 10px 0px;" bgcolor=3D"#161127"=
+></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"d3d1c76f-abc9-47f0-a64d-c5cdaba841dd" data-mc-mo=
+dule-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px; line-height:22px; text-alig=
+n:inherit; background-color:#161127;" height=3D"100%" valign=3D"top" bgcolo=
+r=3D"#161127" role=3D"module-content"><div><div style=3D"font-family: inher=
+it; text-align: center"><a href=3D"https://paramatise.com/?a=3D1287&amp;oc=
+=3D25149&amp;c=3D65524&amp;m=3D3&amp;s1=3D"><span style=3D"font-size: 18px;=
+ color: #f2d022">LIVE DEALER</span></a></div>
+<div style=3D"font-family: inherit; text-align: center"><a href=3D"https://=
+statesthestates.com/?a=3D1287&amp;oc=3D25149&amp;c=3D65524&amp;m=3D3&amp;s1=
+=3D"><span style=3D"font-size: 18px; color: #f2d022">All Promotions</span><=
+/a></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"aa0f352f-8a98-4206-b4ae-8aa958c2da89.1.1" data-m=
+c-module-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 18px 18px 18px; line-height:22px; text-al=
+ign:inherit; background-color:#161127;" height=3D"100%" valign=3D"top" bgco=
+lor=3D"#161127" role=3D"module-content"><div><div style=3D"font-family: inh=
+erit; text-align: center"><span style=3D"color: #ffffff">At Aladdin=E2=80=
+=99s Gold, our mission is to enrich your gaming journey and give you the be=
+st possible chance at striking it lucky. Whether you have a question, need =
+assistance, or just feel like chatting with one of our friendly support tea=
+m members, we're always close by. Simply click =E2=80=9CContact Support=E2=
+=80=9D on our website and our dedicated team will be happy to help.<br>
+You're receiving this message because you registered with Aladdin=E2=80=99s=
+ Gold. If you'd prefer not to hear from us in the future, you can unsubscri=
+be at any time by clicking the link below. We respect your preferences and =
+are committed to making your experience with us smooth and enjoyable.<br>
+<br>
+At Aladdin=E2=80=99s Gold, we strongly support responsible gaming. Our serv=
+ices are only available to players aged 18 and over. We encourage you to se=
+t limits, stay in control, and seek help if needed. Your well-being is impo=
+rtant to us, and we're here to support you every step of the way.<br>
+<br>
+Thank you for being part of the Aladdin=E2=80=99s Gold adventure.</span></d=
+iv><div></div></div></td>
+      </tr>
+    </tbody>
+  </table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"=
+center" width=3D"100%" role=3D"module" data-type=3D"columns" style=3D"paddi=
+ng:0px 0px 0px 0px;" bgcolor=3D"#161127" data-distribution=3D"1,1,1">
+    <tbody>
+      <tr role=3D"module-content">
+        <td height=3D"100%" valign=3D"top"><table width=3D"186" style=3D"wi=
+dth:186px; border-spacing:0; border-collapse:collapse; margin:0px 10px 0px =
+0px;" cellpadding=3D"0" cellspacing=3D"0" align=3D"left" border=3D"0" bgcol=
+or=3D"" class=3D"column column-0">
+      <tbody>
+        <tr>
+          <td style=3D"padding:0px;margin:0px;border-spacing:0;"><table cla=
+ss=3D"module" role=3D"module" data-type=3D"text" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout: fixed;" data=
+-muid=3D"177cf9d5-9bfd-4986-98f3-8bfba219449b" data-mc-module-version=3D"20=
+19-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px; line-height:22px; text-alig=
+n:inherit; background-color:#161127;" height=3D"100%" valign=3D"top" bgcolo=
+r=3D"#161127" role=3D"module-content"><div><div style=3D"font-family: inher=
+it; text-align: center"><a href=3D"https://statesthestates.com/?a=3D1287&am=
+p;oc=3D25149&amp;c=3D65524&amp;m=3D3&amp;s1=3D"><span style=3D"color: #f2d0=
+22">Terms and Condition</span></a></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table></td>
+        </tr>
+      </tbody>
+    </table><table width=3D"186" style=3D"width:186px; border-spacing:0; bo=
+rder-collapse:collapse; margin:0px 10px 0px 10px;" cellpadding=3D"0" cellsp=
+acing=3D"0" align=3D"left" border=3D"0" bgcolor=3D"" class=3D"column column=
+-1">
+      <tbody>
+        <tr>
+          <td style=3D"padding:0px;margin:0px;border-spacing:0;"><table cla=
+ss=3D"module" role=3D"module" data-type=3D"text" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout: fixed;" data=
+-muid=3D"55813213-8ae1-43c4-a752-adaa46fa74b4" data-mc-module-version=3D"20=
+19-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px; line-height:22px; text-alig=
+n:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-cont=
+ent"><div><div style=3D"font-family: inherit; text-align: center"><a href=
+=3D"https://statesthestates.com/?a=3D1287&amp;oc=3D25149&amp;c=3D65524&amp;=
+m=3D3&amp;s1=3D"><span style=3D"color: #f2d022">Responsible Gaming</span></=
+a></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table></td>
+        </tr>
+      </tbody>
+    </table><table width=3D"186" style=3D"width:186px; border-spacing:0; bo=
+rder-collapse:collapse; margin:0px 0px 0px 10px;" cellpadding=3D"0" cellspa=
+cing=3D"0" align=3D"left" border=3D"0" bgcolor=3D"" class=3D"column column-=
+2">
+      <tbody>
+        <tr>
+          <td style=3D"padding:0px;margin:0px;border-spacing:0;"><table cla=
+ss=3D"module" role=3D"module" data-type=3D"text" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-layout: fixed;" data=
+-muid=3D"4ef058e9-3f60-4518-9a37-d0df7d00b655" data-mc-module-version=3D"20=
+19-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px; line-height:22px; text-alig=
+n:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-cont=
+ent"><div><div style=3D"font-family: inherit; text-align: center"><a href=
+=3D"https://statesthestates.com/?a=3D1287&amp;oc=3D25149&amp;c=3D65524&amp;=
+m=3D3&amp;s1=3D"><span style=3D"color: #f2d022">Banking</span></a></div><di=
+v></div></div></td>
+      </tr>
+    </tbody>
+  </table></td>
+        </tr>
+      </tbody>
+    </table></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"aa0f352f-8a98-4206-b4ae-8aa958c2da89.1.1.2" data=
+-mc-module-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px; line-height:22px; text-alig=
+n:inherit; background-color:#161127;" height=3D"100%" valign=3D"top" bgcolo=
+r=3D"#161127" role=3D"module-content"><div><div style=3D"font-family: inher=
+it; text-align: center"><span style=3D"color: #ffffff">Not a fan? </span><a=
+ href=3D"https://storage.googleapis.com/lasttimeover/dupplicatemonadatbsscf=
+h.html#[sunsb]"><span style=3D"color: #f2d022"><u>Unsubscribe</u></span></a=
+></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"aa0f352f-8a98-4206-b4ae-8aa958c2da89.1.1.1" data=
+-mc-module-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 0px 18px 0px; line-height:22px; text-alig=
+n:inherit; background-color:#161127;" height=3D"100%" valign=3D"top" bgcolo=
+r=3D"#161127" role=3D"module-content"><div><div style=3D"font-family: inher=
+it; text-align: center"><span style=3D"font-size: 18px; color: #ffffff">All=
+ rights reserved to Aladdin's Gold =C2=AE</span></div><div></div></div></td=
+>
+      </tr>
+    </tbody>
+  </table></td>
+                                      </tr>
+                                    </table>
+                                    <!--[if mso]>
+                                  </td>
+                                </tr>
+                              </table>
+                            </center>
+                            <![endif]-->
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </center>
+    </body>
+  </html>=
 
-/* MOBILE STYLES */
-@media screen and (max-width: 600px) {
-.full-width-table { width: 100% !important; }
-.main-content { padding: 20px 15px 30px !important; }
-.cta-button { padding: 14px 25px !important; font-size: 18px !important; }
-.header-text { font-size: 32px !important; }
-}
-</style>
-</head>
-
-<body style=3D"margin:0;padding:0;background-color:#f0f0f0;font-family:sans=
--serif">
-
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" styl=
-e=3D"min-width:100%;background-color:#070915">
-<tr>
-<td align=3D"center" style=3D"padding:0">
-
-<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" wi=
-dth=3D"600" class=3D"full-width-table" style=3D"max-width:600px;border:soli=
-d #f5bf29 2px">
-<tr>
-<td align=3D"center" style=3D"padding:0;background-color:#ffffff;border-rad=
-ius:4px">
-
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" styl=
-e=3D"background-color:#191c3f">
-<tr>
-<td align=3D"center" style=3D"padding:30px 0">
-<a href=3D"https://canadianshopping.net/index.php?search=3D4&amp;d16746&amp=
-;tuhct=3D471-109&amp;lm=3D37692BNOR914559&amp;sd=3D7&amp;page=3DfEJ7xlDhUpw=
-9ILE" target=3D"_blank" style=3D"display:inline-block">
-<img alt=3D"" src=3D"https://imgprom.com/wp-content/uploads/Pandido_logo.pn=
-g" border=3D"0" style=3D"display: inline-block !important; width: 240px; fo=
-nt-size: 0; line-height: 0; -ms-interpolation-mode: bicubic; max-width: 100=
-%; border: none;">
-</a>
-</td>
-</tr>
-</table>
-
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
-<tr>
-<td align=3D"center" style=3D"padding:0">
-<a href=3D"https://canadianshopping.net/index.php?search=3D4&amp;d16746&amp=
-;olknf=3D471-109&amp;lm=3D37692ZRNS914559&amp;sd=3D7&amp;page=3DWALmljEx5Wz=
-gzoD" target=3D"_blank" style=3D"display:block">
-<img src=3D"https://imgprom.com/wp-content/uploads/Pandido.gif" alt=3D"Excl=
-usive Welcome Offer" width=3D"600" style=3D"display: block; border: 0; widt=
-h: 100%; max-width: 600px; height: auto;"><a href=3D"https://canadianshoppi=
-ng.net/index.php?search=3D4&amp;d16746&amp;ubgwz=3D471-109&amp;lm=3D37692MD=
-UP914559&amp;sd=3D7&amp;page=3D26B8AO807HQYmYE" target=3D"_blank" style=3D"=
-display:block">
-<img src=3D"//imgprom.com/wp-content/uploads/Pandido.gif" alt=3D"Exclusive =
-Welcome Offer" width=3D"600" style=3D"display: block; border: 0; width: 100=
-%; max-width: 600px; height: auto;">
-</a>
-</a></td>
-</tr>
-</table>
-
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" styl=
-e=3D"background-color:#191c3f;background:linear-gradient(#191c3f,#011b40)">
-<tr>
-<td class=3D"main-content" style=3D"padding:30px 40px 40px;text-align:cente=
-r">
-
-<h2 style=3D"font-family:Arial,sans-serif;font-weight:900;font-size:36px;li=
-ne-height:1.2;color:#ffffff;margin:0 0 10px;text-transform:uppercase">
-<a href=3D"https://canadianshopping.net/index.php?search=3D4&amp;d16746&amp=
-;iaygt=3D471-109&amp;lm=3D37692CVTX914559&amp;sd=3D7&amp;page=3DuKZ5O3euGkR=
-Ic1l" target=3D"_blank" style=3D"display:block">
-<span style=3D"color:#f5bf29">READY TO WIN BIG?</span></a>
-</h2>
-<p style=3D"font-family:Arial,sans-serif;font-weight:700;font-size:20px;lin=
-e-height:28px;color:#e6707e;margin:0 0 25px">
-Grab a 100% Bonus up to $750 and spin your way to the top!
-</p>
-
-<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" wi=
-dth=3D"100%" style=3D"max-width:400px;margin-bottom:30px">
-<tr>
-<td style=3D"padding:10px 0;text-align:left;font-family:'Segoe UI',sans-ser=
-if;font-size:16px;color:#ffffff">
-<p style=3D"margin:0 0 8px 0"><span style=3D"color:#e6707e;font-size:20px;l=
-ine-height:1;padding-right:5px">=E2=80=A2</span>Fast Withdrawals: Your wins=
-, delivered instantly</p>
-<p style=3D"margin:0 0 8px 0"><span style=3D"color:#e6707e;font-size:20px;l=
-ine-height:1;padding-right:5px">=E2=80=A2</span>Play on the Go: Fully mobil=
-e-optimized fun</p>
-<p style=3D"margin:0 0 8px 0"><span style=3D"color:#e6707e;font-size:20px;l=
-ine-height:1;padding-right:5px">=E2=80=A2</span><strong style=3D"color:#f5b=
-f29">200 Free Spins:</strong> On the most popular slot!</p>
-</td>
-</tr>
-</table>
-
-<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
-le=3D"presentation">
-<tr>
-<td align=3D"center" style=3D"border-radius:6px">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%">
-<tr>
-<td align=3D"center" style=3D"border-radius:6px;background-color:#e6707e;pa=
-dding:15px 45px">
-<a href=3D"https://canadianshopping.net/index.php?search=3D4&amp;d16746&amp=
-;xajoo=3D471-109&amp;lm=3D37692WMAL914559&amp;sd=3D7&amp;page=3DkMv2DTIw8ke=
-fZTd" target=3D"_blank" class=3D"cta-button" style=3D"font-size:18px;font-w=
-eight:bold;line-height:1;font-family:Arial,sans-serif;color:#ffffff;text-de=
-coration:none;display:inline-block;text-transform:uppercase;letter-spacing:=
-1px">
-Hit the Big Prize
-</a>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-
-</td>
-</tr>
-</table>
-
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" styl=
-e=3D"background-color:#191c3f;background:linear-gradient(#011b40,#001027)">
-<tbody>
-<tr style=3D"vertical-align:top" valign=3D"top">
-<td class=3D"divider_inner" style=3D"word-break:break-word;vertical-align:t=
-op;min-width:100%;padding-top:20px;padding-right:0px;padding-bottom:10px;pa=
-dding-left:0px;border-collapse:collapse" valign=3D"top">
-<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" cl=
-ass=3D"divider_content" height=3D"0" role=3D"presentation" style=3D"table-l=
-ayout:fixed;vertical-align:top;border-spacing:0;border-collapse:collapse;wi=
-dth:90%;border-top:1px solid #a5d2ff;height:0px" valign=3D"top" width=3D"20=
-%">
-<tbody>
-<tr style=3D"vertical-align:top" valign=3D"top">
-<td height=3D"0" style=3D"word-break:break-word;vertical-align:top;border-c=
-ollapse:collapse" valign=3D"top"><span></span></td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-<tr>
-<td align=3D"center" style=3D"padding:20px 40px">
-<div style=3D"font-family:'Segoe UI',sans-serif;font-size:10px;line-height:=
-16px;color:#a5d2ff;text-align:center">
-<p style=3D"margin:0 0 10px 0">
-Offer only applies to new players. Gambling is a leisure activity. Whether =
-you or someone you know choose to gamble, it is important to understand tha=
-t gambling comes with potential risks. Pay attention to signs like an urgen=
-t need to keep gambling, growing frequency of gambling, borrowing money for=
- the activity or unhappy feeling because of it. Playing smart and safe is v=
-ery important, and if you see addiction signs, do not hesitate to ask for h=
-elp.
-</p>
-</div>
-</td>
-</tr>
-</table>
-
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-</body><center><br><br><br><br><br><br><br><br>
-
-<a href=3D"http://canadianshopping.net/rd/index.php?search=3D5&amp;d16746&a=
-mp;hqvqy=3D471-109&amp;lm=3D37692YCYD914559&amp;sd=3D7&amp;page=3DJXOQoDIaF=
-U129TA"><img src=3D"https://i.imgur.com/XKLT0Qe.png"></a>
-<img src=3D"http://canadianshopping.net/track/index.php?search=3D3&amp;d167=
-46&amp;indep=3D471-109&amp;lm=3D37692ZXQM914559&amp;sd=3D7&amp;page=3DffHdD=
-t8S7oVtQ7M" width=3D"1" height=3D"1" border=3D"0">
-</center>
-</html>
-
---00000000000063ba290648c40962--
+--0000000000000a2e3506491b55b5--

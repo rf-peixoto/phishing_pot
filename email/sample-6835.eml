@@ -1,603 +1,493 @@
-Received: from DS4PPFAEF42CAE1.namprd10.prod.outlook.com (::1) by
- MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Fri, 23 Jan 2026 06:32:05
- +0000
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=TVbdpfkfVz92VuMdJcG/dmPJUJ9SjtnRnfFUihY4G1h0ilZsQ24wzqvKoqQAi9/Uv9/y5AbWM+W5ZMtBClhd6IJ7Nkl+Y74c48gINj7tgzZ66xtLmqR3+GWFuwjPTFInJiVMTwrcIa5j4uwFMEoWKIPPqanMSaxU4QGH1dJ9aICG4Vbx+UX4iCpxpzPakTWiS3F9jHY155nof1AHuf5x9BzjNE+ATAN3k7D1u27G+9My0Qz02oYZ8kKOSgGJSWnao5sFSjUnvYChx/wUF5/G6y33xuMsSl9EvGpWq+A3GS83RhH0ookeNhiwpsXGexEf+8IJ5DBEVE4hQMeIxvzkvw==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hncXmlT4/8Uo9UruvKFjYtO2YDl6fWkdxsear7DrVjo=;
- b=bEbkx+/8zVfC65RxLtawEDvzUYDH6U9Cb3NdQjZL9A45zJQGgDI/Icpdm6choOeBBtU+W5v9zfo44kPi8GAIKEjIVQYen+NixoJAPBxqGiFavgVkhCxOvdku/3K1/8/FQASaAn09asi0QQqF85sK+6etJva/c98lLVKmHTgc/r9VJvD9btcpE4zLpZuofvpEmqkcyM8IPkPxUY/Twq5YopAbY1ujkFOa+SH7KZ4yXh98SY5k/MBnTlEB/uycTbFnA+b3fjWp92N7givRxwziivUXYsKZT/LbPPkqR//7Gspdir/bXRUaZD8+v6AQCRdymeG3c4J7CNfdAdDx1LkNhA==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=none (sender ip is
- 209.85.167.65) smtp.rcpttodomain=hotmail.com smtp.mailfrom=shcms.org;
- dmarc=none action=none header.from=shcms.org; dkim=pass (signature was
- verified) header.d=shcms-org.20230601.gappssmtp.com; arc=pass (0 oda=0
- ltdi=1)
-Received: from DS7PR05CA0041.namprd05.prod.outlook.com (2603:10b6:8:2f::8) by
- DS4PPFAEF42CAE1.namprd10.prod.outlook.com (2603:10b6:f:fc00::d40) with
+Received: from MN2PR10MB4318.namprd10.prod.outlook.com (2603:10b6:208:1d8::20)
+ by MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Wed, 28 Jan 2026
+ 09:53:47 +0000
+Received: from SJ0PR03CA0073.namprd03.prod.outlook.com (2603:10b6:a03:331::18)
+ by MN2PR10MB4318.namprd10.prod.outlook.com (2603:10b6:208:1d8::20) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.11; Fri, 23 Jan
- 2026 06:32:03 +0000
-Received: from CY4PEPF0000EE31.namprd05.prod.outlook.com
- (2603:10b6:8:2f:cafe::fc) by DS7PR05CA0041.outlook.office365.com
- (2603:10b6:8:2f::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9564.3 via Frontend Transport; Fri,
- 23 Jan 2026 06:31:59 +0000
-Authentication-Results: spf=none (sender IP is 209.85.167.65)
- smtp.mailfrom=shcms.org; dkim=pass (signature was verified)
- header.d=shcms-org.20230601.gappssmtp.com;dmarc=none action=none
- header.from=shcms.org;
-Received-SPF: None (protection.outlook.com: shcms.org does not designate
- permitted sender hosts)
-Received: from mail-lf1-f65.google.com (209.85.167.65) by
- CY4PEPF0000EE31.mail.protection.outlook.com (10.167.242.37) with Microsoft
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.16; Wed, 28 Jan
+ 2026 09:53:45 +0000
+Received: from SJ1PEPF00002311.namprd03.prod.outlook.com
+ (2603:10b6:a03:331:cafe::6a) by SJ0PR03CA0073.outlook.office365.com
+ (2603:10b6:a03:331::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9564.7 via Frontend Transport; Wed,
+ 28 Jan 2026 09:53:43 +0000
+Authentication-Results: spf=pass (sender IP is 192.30.252.207)
+ smtp.mailfrom=github.com; dkim=pass (signature was verified)
+ header.d=github.com;dmarc=pass action=none
+ header.from=github.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of github.com designates
+ 192.30.252.207 as permitted sender) receiver=protection.outlook.com;
+ client-ip=192.30.252.207; helo=out-24.smtp.github.com; pr=C
+Received: from out-24.smtp.github.com (192.30.252.207) by
+ SJ1PEPF00002311.mail.protection.outlook.com (10.167.242.165) with Microsoft
  SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9564.3
- via Frontend Transport; Fri, 23 Jan 2026 06:32:03 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:5B1D30821F801D7FEBDA9F1DBB3E914CB4352D726AA76687B3D4660FDEA71648;UpperCasedChecksum:9ECCF7F63B1CC2E60F930C8C5F2F61779A052B6513D274D614A87321635C2F9C;SizeAsReceived:4741;Count:26
-Received: by mail-lf1-f65.google.com with SMTP id 2adb3069b0e04-59b77f2e43aso38phishing@pot58e87.1
-        for <phishing@pot>; Thu, 22 Jan 2026 22:32:03 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769149923; cv=none;
-        d=google.com; s=arc-20240605;
-        b=NBmI1qcztWXNhioJkwGR5P9BOw4ImAzh5d8N1vi1cfE7gKUpO6LiBiCu58u+XrH3j4
-         RK2Jli0+7X/1HMngWliGaYuCjylgv3qBvUKLB9pWlXtDiylwd7NXf0QUvmvg1a/39QCk
-         Bnh/j89ChL5g4Wsis3FWbe577XcLx8ICsR8L3aDwAb0dbNnEqSNfyvRxtcSIhP7m6xL5
-         /D8PbswaDHu1+oB4gQJKiCelTZoEf0PCf7nD6JdB/kb+IQOLOv6cjz9eHqyMJm38O0yc
-         pBPy1xBeTda4/GG4v05g/uwlWaAK93NqsB97DzD9EBuaeXXZ4k3bNQiIC3Asb1bfMwIr
-         gxVg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:mime-version:list-id:precedence
-         :campaignid:references:from:dkim-signature;
-        bh=hncXmlT4/8Uo9UruvKFjYtO2YDl6fWkdxsear7DrVjo=;
-        fh=LiNHQcrfL/StRi9EsxsBq8fz3cxnNt14ItgKLMCdMGs=;
-        b=fe54b5hMx3LjOMFH5ta92RyDxUCTqpbUP7tzjZ7wvA5jml8fqco8cHAkjyL7RvM4b3
-         Jao58URhxbSplbNcRGrva8oxVCij793ylISEXMpzy7oNEZmxEvJdsW6H7DAHhb/g6sbR
-         7pFAaE2JB6mzyu8jg3z3Km+NM/0pv9MIqSIKNMSGr9RpeQ4Pn4c6NzCJpM51ULm30Mhj
-         cmJF02lnewaOIXUZdlCOQm0KDPBO32Vg57Aq9cLlA3Uh3/jbS4E6sMS9DeAKbW6O9zPi
-         iFLvh/FZQSvzHqbW6GqX5N1GcVP4pT/FUGrSEG1hXAOsWGQwpth2e4pqdKgPwaFv/LHo
-         8bjA==;
-        darn=hotmail.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=shcms-org.20230601.gappssmtp.com; s=20230601; t=1769149923; x=1769754723; darn=hotmail.com;
-        h=cc:to:subject:message-id:date:mime-version:list-id:precedence
-         :campaignid:references:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hncXmlT4/8Uo9UruvKFjYtO2YDl6fWkdxsear7DrVjo=;
-        b=z+3Fx4+P7T7EUYw1t2RrQgHvX4BqMlLFyjGWht7wznuJ1xkaOOmHQ83CqnTa4H+XRN
-         z+bJwbP5iwrmMLa7lWDTku2d9YdLzZ/pex6RtLDCCE0SAsl2uoVv5TAKQbqNqbbo6m/+
-         1nnRFT2mPsuwd9+2iEDxmccZlrT1zIioIR9fPwI2oPdWzSRXj7qXCN79fo3xRtoBRc/T
-         1hxmSy8yNaSkbJdl3hgowNIp05lrSAbLUzkh69r+UbAHdGh3qMPBj/VzNsqS3HZNfUUJ
-         aSyvvo/PKWfH4l0Nt0hSRcF+IiX8RJV2fgPGH3jxtuxNQ10KqS2MUE4X8JuY/o/ae1GA
-         VyNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769149923; x=1769754723;
-        h=cc:to:subject:message-id:date:mime-version:list-id:precedence
-         :campaignid:references:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hncXmlT4/8Uo9UruvKFjYtO2YDl6fWkdxsear7DrVjo=;
-        b=WdAumPwyh7x+lM6PK6T4dacIxgznKBMt8iE8Py+31aI3qpu0BBTTaR/K/wYiSrJFZp
-         z7BbTAPGo7IFBPixakKrRHcZl5ZFNb8gYcAe73Xnf3lcinDjFYYLIoROMQnobAJRTNoZ
-         430kLFEYxHltH5pjl8s9R+LMnRk1G2U1bqrumRP/AJvhAxtgymWk0L/YBOmwv3B6dBCV
-         /vBKez4kAYieErTj1jyaclyuZD/4QELB0LJM61M9FMlhZo1N0dhuiuVZInv9yQsg9typ
-         msBhf36Yb5GRT3V4Ai2PvdkcrtsZVMfTSJWYwCH7k3iNxrXSvse7EXMBPYzd2jJWatHj
-         8HfA==
-X-Gm-Message-State: AOJu0YxyFE29YQQHDGTlERC0z2ktE3V0zt3wB5bWR3HGzPk5NDIi3JKD
-	CvYKE+9PhiQfOSinmFSaTPf2DUba0100OcaZ8VE3rj4VuWGIldEvwFuM4FqBwZRircLU09z7Kqh
-	7LUrK8O0WybL2VJwBB1ukwZGC7M1lIhe4FKJBefEbT9l2lXSd6BmTEBU1r+k=
-X-Gm-Gg: AZuq6aIqOql7KEKJeWYqWFmOaGzdbQUJ7IciHATelhfAn5BFWGIvNUaCkl9DUI6iE6Y
-	YsfO+NnWcLpS+MTLnz2DpDYasrDpCnrk0D7B4M0YB1RvyJv2TGCJQ7RMVDytaH2sjU6cF6KFBfZ
-	adneCZ+7zkrDnBvhV+P71icSpBEGc2ElUvSe0Nu2B7WCugqWFoRfLCXGWQtppIcp9KpTdfa5wlI
-	eH+ESiZ7medNbq0LAJ92zukeiH0bcLPumKJ+UiNN8eSBiHL2U6RRpsF3qvD3E96vzT2
-X-Received: by 2002:ac2:5b90:0:b0:59b:7804:f149 with SMTP id
- 2adb3069b0e04-59dd7d23e06mr1479450e87.17.1769149922913; Thu, 22 Jan 2026
- 22:32:02 -0800 (PST)
-Received: from 77463558223 named unknown by gmailapi.google.com with HTTPREST;
- Fri, 23 Jan 2026 07:32:02 +0100
-Received: from 77463558223 named unknown by gmailapi.google.com with HTTPREST;
- Fri, 23 Jan 2026 07:32:02 +0100
-Return-Path: finley.rodriguez1@shcms.org
-From: =?UTF-8?B?Q0FTSU5PIFJFV0FSRFPwn6SRcm9kcmlnby1mLXDwn6SR?= <finley.rodriguez1@shcms.org>
-References: <@mail-64471760750.>
-campaignid: 286055
-Precedence: bulk
-List-ID: <7202588.xt.local>
-X-Campaign: 26954511/454168987/839096706250
-Date: Fri, 23 Jan 2026 07:32:02 +0100
-X-Gm-Features: AZwV_QhpFpf1_9ohaNeH6-XOpX06Bd8wGyhx0uBUdTsi7kQbZt1FmqbAzDjlWS0
-Message-ID: <CAPZnRT5SFox8ELD45cSMPkxYQfNEf=Efk_aj3GPOzCtYnTAN2g@mail.gmail.com>
-Subject: Claim Your Bonus: $750 + 200 Free Spins + 1 Bonus Crab
-To: phishing@pot
-Cc: "finley.rodriguez1@shcms.org" <finley.rodriguez1@shcms.org>
-Content-Type: multipart/alternative; boundary="000000000000b5bb8f06490850f2"
-X-IncomingHeaderCount: 26
-X-MS-Exchange-Organization-ExpirationStartTime: 23 Jan 2026 06:32:03.5786
+ via Frontend Transport; Wed, 28 Jan 2026 09:53:45 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:3000D8EB5721C0B9C4A9D55840554ED733D19E0755B6AD384AB29DCED50403B7;UpperCasedChecksum:9989090A68ABA20AA473E9FC3F2B21A2548E2314061F4AADE56384B63B38E0CF;SizeAsReceived:1605;Count:23
+Received: from github.com (hubbernetes-node-ffed476.ac4-iad.github.net [10.52.141.31])
+	by smtp.github.com (Postfix) with ESMTPA id 9C16F64066D
+	for <phishing@pot>; Wed, 28 Jan 2026 01:53:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1769594024;
+	bh=JRec0DrHu8LCpWp/mtSAz+hkioQ776TKWQ29gE4Icag=;
+	h=Date:From:Reply-To:To:Cc:Subject:List-ID:List-Archive:List-Post:
+	 From;
+	b=WIR5SQIpx2Q6Q2R5+T4YdFXie9Unb1R8cQTktVWlkhaud5k4ZW1rxTZJ997IIYEHf
+	 j2s5CHo3FEPx++qGi12y/Nk+Ck96eeZOJtBqioupcuFCwwXDOQYXQ0Xu6FQLS4Wm2c
+	 FBOv5iRXOMNgxdCwMHy8cIPioGloKiCG5WbW4A6M=
+Date: Wed, 28 Jan 2026 01:53:44 -0800
+From: Dogan Can Bakir <notifications@github.com>
+Reply-To: projectdiscovery/nuclei <noreply@github.com>
+To: projectdiscovery/nuclei <nuclei@noreply.github.com>
+Cc: Subscribed <subscribed@noreply.github.com>
+Message-ID: <projectdiscovery/nuclei/releases/280632518@github.com>
+Subject: [projectdiscovery/nuclei] Release v3.7.0 - v3.7.0
+Content-Type: multipart/alternative;
+	boundary="--==_mimepart_6979dca8984be_cf11184623f"; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Precedence: list
+X-GitHub-Sender: dogancanbakir
+X-GitHub-Recipient: rf-peixoto
+X-GitHub-Reason: subscribed
+List-ID: projectdiscovery/nuclei <nuclei.projectdiscovery.github.com>
+List-Archive: https://github.com/projectdiscovery/nuclei
+List-Post: <mailto:noreply@github.com>
+X-GitHub-Notify-Platform: newsies
+X-Auto-Response-Suppress: All
+destinations: phishing@pot
+X-GitHub-Recipient-Address: phishing@pot
+X-IncomingHeaderCount: 23
+Return-Path: noreply@github.com
+X-MS-Exchange-Organization-ExpirationStartTime: 28 Jan 2026 09:53:45.6295
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: a58100f3-0d59-43a3-bdc3-08de5a491f33
+X-MS-Exchange-Organization-Network-Message-Id: 93f96ca5-ecef-4035-eb0a-08de5e5320a6
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE31:EE_|DS4PPFAEF42CAE1:EE_|MW4PR10MB5749:EE_
-X-MS-Exchange-Organization-AuthSource: CY4PEPF0000EE31.namprd05.prod.outlook.com
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00002311:EE_|MN2PR10MB4318:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource: SJ1PEPF00002311.namprd03.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 1/23/2026 6:26:27 AM
-X-MS-Office365-Filtering-Correlation-Id: a58100f3-0d59-43a3-bdc3-08de5a491f33
+X-MS-UserLastLogonTime: 1/28/2026 9:37:17 AM
+X-MS-Office365-Filtering-Correlation-Id: 93f96ca5-ecef-4035-eb0a-08de5e5320a6
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 209.85.167.65
-X-SID-PRA: FINLEY.RODRIGUEZ1@SHCMS.ORG
-X-SID-Result: NONE
-X-MS-Exchange-Organization-SCL: 9
-X-Microsoft-Antispam: BCL:8;ARA:1444111002|3025599003|21090799003|22090799003|84100799003|20103052909095|1680799066|9020799016|30140799006|32080799006|6100799021|48050799006|970799060|46080799006|9000799056|42200799015|46110799009|9400799043|27045499008|119000799006|22065499019|32040799009|56000799018|68400799013|33080799003|461199028|1131999016|18040799003;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jan 2026 06:32:03.5612
+X-Sender-IP: 192.30.252.207
+X-SID-PRA: NOTIFICATIONS@GITHUB.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:1;ARA:1444111002|10300799038|9400799043|8900799020|32060799003|461199028|20103052909095|68400799013|1602099012|1360799030|1370799030|1380799030|56899033|3412199025|440099028|4302099013|30041999003|2406899039;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jan 2026 09:53:45.4498
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a58100f3-0d59-43a3-bdc3-08de5a491f33
+X-MS-Exchange-CrossTenant-Network-Message-Id: 93f96ca5-ecef-4035-eb0a-08de5e5320a6
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE31.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00002311.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PPFAEF42CAE1
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.5884910
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9542.003
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR10MB4318
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.5111003
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9564.000
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9710001)(9610028)(9520007)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
-X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+	wl:1;pcwl:1;ucf:0;jmr:0;ex:0;auth:1;dest:I;OFR:TrustedSenderList;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90012020)(91020020)(91040095)(9050020)(9100341)(944500132)(4810010)(4910033)(9575002)(10195002)(9439006)(9310011)(9220031)(120001);
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0xO1NDTD0tMQ==
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?OTI3M1l5MkpZajRwY1ZhTjBVK0k3V1Q1MW5PUll3VFRTRlY1NituS3BQcCtz?=
- =?utf-8?B?c0FxQ2FCVDUwMHluSHlRSjVuS29OWXFDcmNCZ1NvbFE1RFhvenZnbUdINDBS?=
- =?utf-8?B?aHhYNmNwcHk1MmY4WVFOSU1JdU5nZlpzYmFGVEhMY3lzQ2tqQlJtTmppMklx?=
- =?utf-8?B?ODNpTjJYYkl3M05wc1dZTjJTZ3pCaXFHMjFhSDVLRmpHQzFYWmYwM2pINU9j?=
- =?utf-8?B?S0tmN241UWVacGtrWFI5RE4zRjc0c0FVSWhpMTdnL1c1Y2pTV2NBRmVPU3RN?=
- =?utf-8?B?Ni9CUmlvZ0dPZytsOFlJbTU5Vy9uN0JHV3FkQ2ZxbWJNTjFPR3RQRW5NZlRj?=
- =?utf-8?B?OGt4OXRnQ3JqSXJDaUp4VnY1Qmd4SUdlaHRubjRESkExZFMvT0RTMGoybEhi?=
- =?utf-8?B?RUJUdXpLek9ILzZnZ09yZWJyYmFnVzlGRVRIQ3RlN2tMQm9PL3N1SlhZQVVQ?=
- =?utf-8?B?Y1dvVmV5SEVPMEJNMFF0WmNCamhnTUZOQUtHRjJBQU1PQTZqMkFJeXVFLzRP?=
- =?utf-8?B?aDNFVFZRc2FvdGNadEYyOGowbnlUVWlTdWIvbVYyZitaMkpQbmpBRTg0K05P?=
- =?utf-8?B?YXpxVkRaZktWSnRzZXJNTjlhU3ZoV2d6NUp4R25Ia0EvbTVsV1ZnMkdYbXll?=
- =?utf-8?B?OFhUYk1TK0d4dTI1aG9zc0dxbFpWYktPUk41TnhKOS9KMDVQckdIL21zUEs4?=
- =?utf-8?B?OEhoQ1NCNjh6WDlUNjVSZ09GdnZhSTJId2F0N01kVTBpOW5TWSt2azlCUjRk?=
- =?utf-8?B?TzNncXd0aUpaTmRlUW5Gb3ZBSUxISFk1UWtvR2JWd3pnbWdyWmdXMGp6bmpJ?=
- =?utf-8?B?YUlKTktHVm84Y0pHQjVib2xzU296ZG5VRGQrdjZCN29FS2hVWFVpbXpYSWIy?=
- =?utf-8?B?Ly9ZTW1JekU3MEVya1ZjR2FvLzdIcXNibk13T0o3M3FmdFlKSUJ0dEZld2tO?=
- =?utf-8?B?UkxOcDMyTjBuRnFyS0lVZnRPemgrSG0yeGtiMTFBZlduVkxEeGxlS1ZWOWlR?=
- =?utf-8?B?dmduaHB5LzdBd1VleTh4WGFBanBLWGJYL0phMk93SHNXMXErSjJRanRhWmhu?=
- =?utf-8?B?eGJHSnVKUUlLVTVSOVVOSHZyOXJwcHpBbWpkYlRSSWpYQ04yR2t4d082YVIx?=
- =?utf-8?B?MXB5U1dwWUQ4U2dyMjZsa1liZHlrUzVPZEtJYzRINFNweHJvWEhsMWJuMkxV?=
- =?utf-8?B?eXEyMHl2cWVqMG8ramRzMVVsdGVTcWgrQnBWcEZXRTJZRzJ2VzJSYmJ3Zjd3?=
- =?utf-8?B?Rk1zeVpaRzk5TW03WStMN2djRHdzdTNGRkdqN1oya2FlZCtUZ29WYXhYek9J?=
- =?utf-8?B?SXlLdVlXaHRqWngybzdBVkZNMmJkVVdIazdBWk5PTG9jZTAwbGxVeHlKWGRq?=
- =?utf-8?B?U2xPOHhCWjZKLzVrdE4yZ00rQW9TSHgxK2Nmc2lPdnl2d245NE80NmZFZVpu?=
- =?utf-8?B?bVhOYU9qaGJPU0RualE1d2I0NWlEamFqNjdyaXg3RDJ6YTVOTVNybk5kdytn?=
- =?utf-8?B?K283MkRsTU5jeGI4MXJsc0w1cXR6N2ZPSEVpZVM2Zkp5NGRTZFBUMUE4TjZN?=
- =?utf-8?B?VWJiZUxVMmV6dlN1QlZBdmpsTkEwNmNITFRtUUpRN1J2aW5kZDgxNTJnUnhV?=
- =?utf-8?B?RmhWbkZHMnYzK3ZBVmg4dFQxZjduTDNnbTdaSVBSeUFmLytGOVREVHZ4bEVR?=
- =?utf-8?B?ZWRuMWQxU3dUdzVBWXgrU2FmR01jVGFZSU5nZmN4cDl6RHpkK0lkWUx6Snp2?=
- =?utf-8?B?TjBZbDhSemsxWld6Uy9BUk5Hc1g5NHk5M2VUbGNMYUVzT3VkOXVJVjFwS2Jk?=
- =?utf-8?B?SG1rR1BVQkNoYjFVVTlYUEs4aUN5STlmcFlDMCtIczk4ZTJwZ2lVYW5JMEpJ?=
- =?utf-8?B?Uk54NEtmck00c2lSdHlSVVlZMWh3RVNkK3kwVzU1SlBtNk41dTNSL3BLR3Ni?=
- =?utf-8?B?OE9MNU5ZMXRFelk2S1V4UXdlbmZmaENMUlRma2wrZ2xmQkxRUlp2S0xCejBB?=
- =?utf-8?B?d21aUlV5d0plWkdxSGtNaXVxdUtYNWt5NHUyaXRoN29YTnlLQXF0SlFBbGNr?=
- =?utf-8?B?d0dVUisreWc0eStYenY4ckdReTlESHNJZGM3UVdKN0Q4NjVtWkR1b2l3SFdM?=
- =?utf-8?B?cGw2QldJWVRyODBVWURKRnFyNDF1OHQzbTVld3VBSFpXSVluK3duS09kS1BU?=
- =?utf-8?B?WkllTW1kWTFzeTN4ZDFpcHFUNGJyOGt4T1lmb0RjYklsUmJTNTErNkpvYml2?=
- =?utf-8?B?OW5mWnVmNnJ6V2tYUm5aU3oyd0VaVDlVUnlRd1BTMDhQMVVsRG9LS1V6VGZQ?=
- =?utf-8?B?ZDRMY1hUcnVVaTBUb1AvWE9PcnBDd2xoNGNET1IyWFdGaUFOVVJ2RVlkek8z?=
- =?utf-8?B?cCtOa2l2U01NdEJVREovQU9lYUQ4TlFNUkMxWTRlcVZiS1BqR3pIbGU5UHNn?=
- =?utf-8?B?Q2dXQThad0pBeXg1QU9oTTRnVWFDVCs0NG8rL2tWa3JpdlVZOXVodzlscitD?=
- =?utf-8?B?VTdVclVCVFI1c1Q0MzNlUG11YlFKSUFscHZXQk93UGpDMnp3T1FoZzJ1V1Jr?=
- =?utf-8?B?dXQvK2hSRStEbFl0ZmFwWVc3VVQ2WmRaL0FGdS96T1JISnpiSDBLWHFoaXFI?=
- =?utf-8?B?NUxQcndjUUFTNTFscVgrSDZGQm5GU1IraElyLzdWemdUWlYrWGk3UkYvNHVE?=
- =?utf-8?B?ekxFM0ltamVCYzUwQTc5L0NxQmtnUUR2ZkV2ODRJT2oxeGo2MkMvTjd5NnF4?=
- =?utf-8?B?emdVUG5xc2dra0FFZmk2emlpbTFpaGIxUzZiQkhUYWlpa2ZYMFdJK1d3ZDdu?=
- =?utf-8?B?ejVVbWp4WklwR1NBQVJWd2pUNVJReXNGVko2UXhJYkh5UmlnUmRMeS9rWGVW?=
- =?utf-8?B?MG1tZzRPVStFV3h3elZZQ25BQTUwSDBMS0E5aEIwNC80elAwbWhmR2gxT2Mx?=
- =?utf-8?B?NGxEcVoyMzg5TkNaUDZVR3FSemkvNDhBcWhuODI1WGNCSWlXYk5QTWlUZU45?=
- =?utf-8?B?UzhYQk9yYzRkeUd2Zm0wUlNJMTNoRUUyR3RMZDBsNGN5aXNjNjcyaFVQaHFr?=
- =?utf-8?B?ZEZUcXdmYlZMRkFocTdFN2hRSU9NaUEvZmgvQmpRS0RQck93Qks1Vm82TmZG?=
- =?utf-8?B?SzZkb3gxYXlPM2kxWDhDYkZGRTkweXQyREoxVkhoY0U4bjl6NEJEYVBEbzJM?=
- =?utf-8?B?eU9pSENmd2tEamFSM05YeHZkWHZ3Nk5YWnl6a3RGTVR2RVQ5a2wrcUQzQkVZ?=
- =?utf-8?B?Z3pKNkpaUS9Fd3JKS0ZnbnpYTlpjSDFacSs0MXM1UjZsaGhVUkM2VUFaMTk4?=
- =?utf-8?B?QllXdDJZaGE0TmF6WEgwRnJvU3EzNzAvVDdpMmswdjlOOGNaNW45QldCK0VD?=
- =?utf-8?B?MGNsTXNWaDdJcGY4UHlwS3ZTbGF3bjRZNlQzVk5MTk5sTXFYOTI4cXZMQWVK?=
- =?utf-8?B?TjRBSVEzMDFPaWFTVHdZNWFvblYyZnRUZDRsazRqTVpLVXU5a01Eb1N4M0dH?=
- =?utf-8?B?RUZ0QmdCNkxrU0duN2pIVW10VDZmenBMbm1jekh1aUlJOTU0TTVYUUlEbU5h?=
- =?utf-8?B?ZmNmazcxL1NIR1VXYTFwdzgrV1QvczQxaHhldHIya2pCSmhvMXdXY3hlZkcw?=
- =?utf-8?B?aEMyUFJ2enpwVkpuMyszaHo1K3RrblpOSnM2b2N4YjFsSDErVUdtSFVib0NX?=
- =?utf-8?B?WnhrcEUrT0Q0OC8zOC9GM1djdDIwb1lPMGIxLzBXQlV1UkVEWHUwVFlUOTB5?=
- =?utf-8?B?OXJjcDVDNXVWY2pRalJZNVY5TmsxUno2dWJIYnJQVEhhd2dIUENJZkhaUldX?=
- =?utf-8?B?MjdRNExwU2dNYW1OSEswcnV3a2VlY3djcGIyemVVR2swRUVmeUJRVmpjd3JQ?=
- =?utf-8?B?RmkreFlOOGcySHRvZHNWTDRybE4yV05NQ2xrVEJTaC81Wm8vams4cWl2aWVn?=
- =?utf-8?B?NG03OGlEcndLcTJacDg3SFl5QUpScFJDR1B6MXd3ZU05YzdlSmR2VkpmSnQy?=
- =?utf-8?B?ejliRTZ4bWYvK0FjTHVEbFVEZ1FHZjRYdGRMOTdqUktVNVRHWlc5MWR0YTJM?=
- =?utf-8?B?eHR5REVXSVYrU2hmcWUrY2ZMQmVXVHEzZ3J6VU9XZElsaUJ2VVdZd2hNRmFF?=
- =?utf-8?B?c2IzRThieWZwOGtzVEtmaGh6RDZsNG4zMitSRE9XamV4bFlibmdNQjlKV1hS?=
- =?utf-8?B?eUZIZXRvYWE2d016bDZkQytMbktuK2NXVTNaZFY2YWNDMFk3d1ZoeVh0ODBO?=
- =?utf-8?B?UHZhMURseXRWWHZGQi9wY0RmN2JZUis5MGdlZEVLWXhpZjhpdzRXdWVydzY0?=
- =?utf-8?B?RlFYVWJTV3dwbkdtTDNUNE10bWh6cmZKVG5KU01hbnpBTkdaNDV0RHlkR2Rj?=
- =?utf-8?B?c2hZMVA1TVAvaURjUU15d0JQVHJBV1NvaXYzK2doTDd5YXJXVTJRRUtTcWxy?=
- =?utf-8?B?Yk9ndTF6RTgyb0FJdGh0ajRVYUh1NnRmcnl2b2pLTHFmeEkvcDV2MFpET1JT?=
- =?utf-8?B?U1ljTXNqTUg4eEptN2hUSUx0bDg4M255MFd5QXdHM2RlcDF3MnFDUW1WNzVp?=
- =?utf-8?B?UzBYaXh6dkQrWDBIajV6VVRuemE0WVZob3VUM1pxQVJRcTI4QWV6K29lV1lD?=
- =?utf-8?B?K2JrRy8vL3h6TTJkaTFJY1pacHlkQ1ZGVndOdENndzRqS0p4bE1aa3VFYW5J?=
- =?utf-8?B?VFlDNHlLbDZsblRmY2d3WFd3dGpUR256YWFLT05FamxnVDRqbDJPcWV0Z1Zv?=
- =?utf-8?B?QUQ1cDU5LzNpWElKK1dkR1RWc1pmL1I4SFNGbUtQazhMdk1qMU5kQXZNVHFr?=
- =?utf-8?B?RHgwTUZmeWdrVWdRWWZkRUt2SDR1RTBpMDVnRW5xWkVRTVFxMms0L2tHNHhK?=
- =?utf-8?B?UUR4M055Vlc3WS9QZU5xS2hSUjJCU3RJdW1Mcjd4R0ZtbkRHeW42YkJVck1k?=
- =?utf-8?B?bVRLQ0c3aWJFZHZRRXprV212bFpoRXJ6NC9GQ0dPREVld05XZEdjbDczL05I?=
- =?utf-8?B?YjVaV2FxZUNHYXd2VGV2cVFhQ3ZtcDdNanJ0cG80VHBFTm9uV25tWE5JOEVm?=
- =?utf-8?B?dzFFN0p3VzE3UXhaR1QvR2V4cHV4OS8wUHF6TmtGOW5BcWR2VUVWdXBhZjY5?=
- =?utf-8?B?SG9VQzJwQmdnbmpQbjBMSU1lM3Y5cXNVWTRTUXBJdnpzeWR2MFV3TSs4OFR6?=
- =?utf-8?B?R252NXduWU13SHJDcHlrK3Y3MFJ6MkxuT1RlVDI0YXlCay84MjE0Vjh1Qmhh?=
- =?utf-8?B?TE14K2NIS3lya3pLb1R0UnJDVEs4VTcvaS9velZQQklFVFI2dWRvUUczSzhW?=
- =?utf-8?B?eWNkbWh6TTVUY1dMellLZFUrKytwdDBPcXBoR01Gc1VPcHV6L2EyYkZpZ01N?=
- =?utf-8?B?QTdvdURsR3hJODBHS2IxNjFVWGYrc2dDbUtmSVB5YWxZWnUwY1N6VWdhSmlu?=
- =?utf-8?B?Qyt3YTFpTDZ6eDJUdmtJeGpHMkxGSENoS3NzT3dtclkyNG12NzgwK2tpcG5F?=
- =?utf-8?B?TnAyRGRPWnpObjdmQTJWdEJCV0hHZUxlRnRyTkVabWVJaHF5MkZrbGRPZDlk?=
- =?utf-8?B?M1ZHNzcrOVU5RHNlNVVJaXlpV2g0YlQ1TGkzR2dzNTJQREZhSEpPdnBEN3JU?=
- =?utf-8?B?dmFhUDdpaWFLeUs5ak9DVTRLWGJybVE9PQ==?=
+	=?utf-8?B?bUJrQ3pjdmN2elprcUJqVkNlekZKR3BrMktuMGhpU2FiQmUwckRRUy80d1hQ?=
+ =?utf-8?B?T0w0Y252THZ5ME4xUTZUa3lmZnlXOUVHOFlqbE5YY3hFUXBmencrME9IOG1t?=
+ =?utf-8?B?VEEzRU9BOXM4WktFUFBoZ2VmOU9Qc1VkL05QQ2NOSVllRGRSWUExZ25ucUpX?=
+ =?utf-8?B?YWdPaDJyS1huT05TYWlMZXdnRXpNQ3JVWGt5ZEZyYVVKRkRXcnBRNC8rOUpJ?=
+ =?utf-8?B?WjhWRHhxVUxiVWkrWFRZempNMnR4N2RSYjdnTDEvMW9qMm4zNFdXekpTNzVp?=
+ =?utf-8?B?eHA3S1F6V3BMaXlNc1BsNHY2RFNZU1FiSHRBNnYzNVhiNDhSZG1ENWxBT2Rj?=
+ =?utf-8?B?bXhzVlo2QndEaHRLVExLSmRYWHVJS1ZiZnA1cExra1dtN1NNdFVvS1NqdDVC?=
+ =?utf-8?B?My9vak5PemxCdlYzWWk1Rmh5dE9LamVQbURHMlEyQmVUSjJrS0dvTDh5YUll?=
+ =?utf-8?B?M2xQNjdrb3pUemhRS3kxRU96dlVVMXhhMUFRQTRFMVNPZHFmQ3BSa3hFbjBB?=
+ =?utf-8?B?U3RTampvWjJ3MVcyVFM2QU9ZYWZ3Q1BaTXg4T0VuQlVCODMyL0E4WVdXMnM3?=
+ =?utf-8?B?a2VjbC83SFlXY2tsVEZzOHp6bUxRSXBSZnRBTjBLZno3VXhscEtRcnc1YnNH?=
+ =?utf-8?B?OEtxNnU3ZDR0V29QYWJ4UHZYd29kYjA1M3RrQ3R5SUNjby95dmYxc1plbjRs?=
+ =?utf-8?B?ZFNrWThINHhQdncxaVNSbWxaODBzY1Q4NVdlREZKYTI1MmoyVnZSR3dBZFZV?=
+ =?utf-8?B?RHlta0JSN1d0L1c5REFiVkFHV1hOTUtkWUFLVW5GUjgvWEJWTWx1SFc1eEVG?=
+ =?utf-8?B?U1pqRW03SjFwUzJBNEV1eHJlQis0UUg4SVBUcW5RUVhWVzVSNmV4VVY3WnM3?=
+ =?utf-8?B?Q3pabHkwdklLcEJpbm5jVzJtSnhmdXdmUnlUbjlsTWRzcjRIaU1vaEtvR2tJ?=
+ =?utf-8?B?WjkwYXVITzNRY0ZSVzVKeVJTTXkxOGlMSlZBSE9PUVppWmJzK1JDd0lUUy9h?=
+ =?utf-8?B?azE4TWVzVVB2ejlrYmMyWStveDd4Ymk4WHlrL2twTGkxOStQVFJrZURrQWsy?=
+ =?utf-8?B?YUtoTlhvWFFjUUE5ZFFUUGpMTlpHbDhidGd4NFYwOVQ4UE5BVjl3M1BXNWtl?=
+ =?utf-8?B?K29FdXpTdGg4QVZMQkRwS25tMWRHWWQvV2hKdnhsNXJTV0JsQXFlMFM5Vzdm?=
+ =?utf-8?B?aWdMUklSMGcrZU5yVGxGWERUejY2Z3NqdCt6OEJmTTMrV0o3VVhqNjZVRGVJ?=
+ =?utf-8?B?U1RTKzBkZ3RFMlNVTUdJVWFMUzA3blVPY0VveEx0QmcxYnM5QjRoQjRGczhY?=
+ =?utf-8?B?U1VKQWhWZzFLbFRDNTBWdEg4ZXQveTBicTc1UjkwbFk0ODZaTjN6Rld1UDN2?=
+ =?utf-8?B?czZPN3FuTE44M29Gd1FWbEFJVCtvMm1MeWdjNE1hZGRMejlWcUtvTEdZVlFE?=
+ =?utf-8?B?VW0xSDY3WnpMaElDcVE2VmFLMVFxYklLL014eHF3V1EvQkJKTGdvSHhZejhB?=
+ =?utf-8?B?elI3YXl4dS8zdUdlaG5GSzFEQ1lZc0NEaHdhN0FHWGVtbU5xYkdSaTBSMXhz?=
+ =?utf-8?B?OGdaOFdjNjZ4R2JVTjlGRVcxZFEvYUV5d1FPWDJWNUFQSWQ3Nk9lQVdZVitF?=
+ =?utf-8?B?dFcxbVBoZVZRVmUxQ2ovQVozOEdtNXYrYkhUZkVPLzl5UnBUUEdibTBsd0w3?=
+ =?utf-8?B?YjlEaWVSbEVxcnhGdmdUbWpRdWdENFdwOTNlZCtkcXVLUmJFQ0l6d3pNcVZM?=
+ =?utf-8?B?Tm12cVR4dkovOGtacHNaWXpleTdTK09iTWl2a3RuTlNPcmRYaHN2TnVmdGVB?=
+ =?utf-8?B?VzYvUkFqQVpuNlRDSER1djBkWkdvN1I2Vmc5QkI5TlMza0ZiUTNSbmJHbW02?=
+ =?utf-8?B?WGJZTnVNeHcyTnptOWtGK3BydnZFWkkvSzM4OE5YUDlSanc0Y25za2FtTGMx?=
+ =?utf-8?B?WUlZT0RrOEQzL2JXTDBuQXY2aXhYTGRJNUZ1Vjl0MlQvcHp6c09BOGNvbEVk?=
+ =?utf-8?B?SzJFZUR2VUJxdUxDaDVvWVJUZnR6MnJVcUh3Um1BOERJQ1BIUGMxOUNFalFD?=
+ =?utf-8?B?bVBEdE1iSFBWUTJzWlI0OFpITnpDdGJROW8weFpxUE5CQWFubVA2Q2NYUVNw?=
+ =?utf-8?B?SDVtYjVqTUxCdmlON3Y5M2lva281YkszOENEY3Q2T2ZrN3JJNk5QYmtmM2tS?=
+ =?utf-8?B?QlgvTjJhd0VESjM2TlU3S1JLWnJNdmhuWUk4RmIrRWwyekNBaVM3VjVsaE5E?=
+ =?utf-8?B?aXp4ZTJxS2lYWHRWL0VFcHpoZUNsMGV4UWd2VjBGNkk0N2xYdGJOUlB0RS9L?=
+ =?utf-8?B?SkZXMFNUNFZWNXpNeXpBWWdIWlN2Qno3WXlQZHBjSHhlWDNPTjdKUmtndWl6?=
+ =?utf-8?B?ZFFvS0VjcitOR25XZG02M1d5ZmwxRU5HM1QyaWk1RWJLUFVzMkFON01GOTlo?=
+ =?utf-8?B?cndnUlBwUUo4TXU3MmRYdWZLeUtnY3czVnpYaHhEREFrMUpmamlKYko0dWxP?=
+ =?utf-8?B?NmxVV3dGd2RGeFU2WlI4L2I2ZzlNdjBxaWRoMWtlTHl1RTRnbWJyazQvT3Vm?=
+ =?utf-8?B?NEUzYTI5dlQ4MWovQlpXczdvcXA0Z2tnYTk5VC8zaHh4ZDEveE9GMW15aTd4?=
+ =?utf-8?B?TldWNmFaT3lxZm5lUkpINnRFdGlkd2hDbDIyWVh0RnBPbUtwb2pnNU9mc3VK?=
+ =?utf-8?B?U3VldlhnbGZxVnZzZjBDa3RFNkZ2MGVJNHRnVy9GSE1vMmlGeFhPaGtCSXVm?=
+ =?utf-8?B?WGtkYkhvYTNvZEFQc2NRcWp5d1F0MDJQVm1QTEpKaEpXeHV2TW82dUFxOVhB?=
+ =?utf-8?B?bUVnSUNnYlZRWnFmV3h0b3RmRFh2aG1nb1BWaDllcXUyM1l2dnpvZ2hMYlVY?=
+ =?utf-8?B?UVMvbEI0b0hTSmd3M1RjT1IyWXFrdWFkWU5hcHZuZHNKZzZBRk1UL0k1Kzhv?=
+ =?utf-8?Q?1AgAoMInY+fqBkEi?=
 MIME-Version: 1.0
 
---000000000000b5bb8f06490850f2
+----==_mimepart_6979dca8984be_cf11184623f
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
- Oceanspin
-100% up to $750 + 200 free spins
-<https://linktrshop.net/index.php?search=4&d16903&egbsj=341-109&lm=37692ZRDH922506&sd=7&page=KVNVwI41Oem5FbC>
-Hit the Jackpot
-<https://linktrshop.net/index.php?search=4&d16903&jjvbp=341-109&lm=37692XOAL922506&sd=7&page=2d6DUZs3QzfG972>
+## What's Changed
 
-Step into the Action at Oceanspin!
-<https://linktrshop.net/index.php?search=4&d16903&lievc=341-109&lm=37692NICH922506&sd=7&page=OX0d5Wg1cq8B0v0>
-Are you ready to explore a world where every spin brings new excitement?
-Oceanspin is here to offer you a unique gaming experience that stands out
-from the rest.
+### =F0=9F=8E=89 New Features
+* Added `cdp-endpoint` option to allow users to specify a WebSocket endpo=
+int for control in headless mode by @dwisiswant0 in https://github.com/pr=
+ojectdiscovery/nuclei/pull/5786
+* Added RSYNC module by @Mzack9999 in https://github.com/projectdiscovery=
+/nuclei/pull/6410
 
-Even as a fresh name in the scene, its approach is making waves. See for
-yourself what makes it special!
+### =F0=9F=90=9E Bug Fixes
+* Fixed resume file path condition by @dogancanbakir in https://github.co=
+m/projectdiscovery/nuclei/pull/6784
+* Fixed race condition regression by @dwisiswant0 in https://github.com/p=
+rojectdiscovery/nuclei/pull/6748
+* Fixed duplicate log spam for permanent errors by @dwisiswant0 in https:=
+//github.com/projectdiscovery/nuclei/pull/6697
+* Fixed `ExecutionId` initialization in `DefaultOptions` function by @dog=
+ancanbakir in https://github.com/projectdiscovery/nuclei/pull/6598
+* Fixed handling full URLs in unsafe raw requests by @dwisiswant0 in http=
+s://github.com/projectdiscovery/nuclei/pull/6589
+* Fixed segfault in workflow parsing with global-matchers templates by @d=
+wisiswant0 in https://github.com/projectdiscovery/nuclei/pull/6774
+* Fixed logging update summary table to stderr by @ayuxsec in https://git=
+hub.com/projectdiscovery/nuclei/pull/6769
+* Fixed sanitizing host when target has host port by @knakul853 in https:=
+//github.com/projectdiscovery/nuclei/pull/6759
+* Fixed interactsh matching with `payloads` by @dwisiswant0 in https://gi=
+thub.com/projectdiscovery/nuclei/pull/6778
+* Fixed passing template variables to TCP inputs pre-compilation by @doga=
+ncanbakir in https://github.com/projectdiscovery/nuclei/pull/6776
 
-Enjoy incredible welcome rewards and daily surprises designed to elevate
-your play.
+### Other Changes
+* Replaced seh-msft/burpxml with utils package by @dogancanbakir in https=
+://github.com/projectdiscovery/nuclei/pull/6763
+* Removed genproto replace directives from go.mod by @ehsandeep in https:=
+//github.com/projectdiscovery/nuclei/pull/6608
+* Improved telnet login and added crypto by @Mzack9999 in https://github.=
+com/projectdiscovery/nuclei/pull/6419
+* Added Turkish README and enhanced CONTRIBUTING.md by @bahattinyunus in =
+https://github.com/projectdiscovery/nuclei/pull/6740
+* Refactored WithNetworkConfig and WithInteractshOptions to be used by Ne=
+wThreadSafeNucleiEngineCtx by @meme-lord in https://github.com/projectdis=
+covery/nuclei/pull/5972
+* Improved cache template signature verification performance by @dwisiswa=
+nt0 in https://github.com/projectdiscovery/nuclei/pull/6779
 
-*Start with a fantastic 100% up to $750 + 200 FS to kickstart your journey!*
 
-With a huge selection of slot and live games, there's always something
-thrilling to discover.
+## New Contributors
+* @bahattinyunus made their first contribution in https://github.com/proj=
+ectdiscovery/nuclei/pull/6740
+* @promalert made their first contribution in https://github.com/projectd=
+iscovery/nuclei/pull/6756
+* @ayuxsec made their first contribution in https://github.com/projectdis=
+covery/nuclei/pull/6769
 
-Take your shot at the Oceanspin Wheel and see where luck takes you!
+**Full Changelog**: https://github.com/projectdiscovery/nuclei/compare/v3=
+.6.2...v3.7.0
 
-Treasure Awaits
-<https://linktrshop.net/index.php?search=4&d16903&ekfwj=341-109&lm=37692CTQX922506&sd=7&page=42p9gaN9ufyJkrl>
+-- =
 
-<https://linktrshop.net/index.php?search=4&d16903&cczii=341-109&lm=37692DPLN922506&sd=7&page=0CzJUxnauiKqU9L>
-Offer only applies to new players. Gambling is a leisure activity. Whether
-you or someone you know choose to gamble, it is important to understand
-that gambling comes with potential risks. Pay attention to signs like an
-urgent need to keep gambling, growing frequency of gambling, borrowing
-money for the activity or unhappy feeling because of it. Playing smart and
-safe is very important, and if you see addiction signs, do not hesitate to
-ask for help.
-<http://linktrshop.net/rd/index.php?search=5&d16903&ybgqe=341-109&lm=37692YKOH922506&sd=7&page=rWLnLo4zgCaZDY1>
+View it on GitHub:
+https://github.com/projectdiscovery/nuclei/releases/tag/v3.7.0
+You are receiving this because you are subscribed to this thread.
 
---000000000000b5bb8f06490850f2
+Message ID: <projectdiscovery/nuclei/releases/280632518@github.com>=
+
+----==_mimepart_6979dca8984be_cf11184623f
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<html lang=3D""><head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><m=
-eta name=3D"vwport" content=3D"width=3Ddevice-width">
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><p=
+></p>
+<h1><a href=3D"https://github.com/projectdiscovery/nuclei/releases/tag/v3.7=
+.0">v3.7.0</a></h1><p style=3D"font-size:small;-webkit-text-size-adjust:non=
+e;">Repository: <a href=3D"https://github.com/projectdiscovery/nuclei">proj=
+ectdiscovery/nuclei</a> =C2=B7 Tag: <a href=3D"https://github.com/projectdi=
+scovery/nuclei/tree/v3.7.0">v3.7.0</a> =C2=B7 Commit: <a href=3D"https://gi=
+thub.com/projectdiscovery/nuclei/commit/4a8b83f977078e4adc3594e30e4b7458da7=
+a57a1">4a8b83f</a> =C2=B7 Released by: <a href=3D"https://github.com/doganc=
+anbakir">dogancanbakir</a></p>
 
-<meta name=3D"x-apple-disable-message-reformatting">
-<meta name=3D"color-scheme" content=3D"light dark">
-<meta name=3D"supported-color-schemes" content=3D"light dark">
+<h2>What's Changed</h2>
+<h3>=F0=9F=8E=89 New Features</h3>
+<ul>
+<li>Added <code>cdp-endpoint</code> option to allow users to specify a WebS=
+ocket endpoint for control in headless mode by <a class=3D"user-mention not=
+ranslate" data-hovercard-type=3D"user" data-hovercard-url=3D"/users/dwisisw=
+ant0/hovercard" data-octo-click=3D"hovercard-link-click" data-octo-dimensio=
+ns=3D"link_type:self" href=3D"https://github.com/dwisiswant0">@dwisiswant0<=
+/a> in <a class=3D"issue-link js-issue-link" data-error-text=3D"Failed to l=
+oad title" data-id=3D"2624080660" data-permission-text=3D"Title is private"=
+ data-url=3D"https://github.com/projectdiscovery/nuclei/issues/5786" data-h=
+overcard-type=3D"pull_request" data-hovercard-url=3D"/projectdiscovery/nucl=
+ei/pull/5786/hovercard" href=3D"https://github.com/projectdiscovery/nuclei/=
+pull/5786">#5786</a></li>
+<li>Added RSYNC module by <a class=3D"user-mention notranslate" data-hoverc=
+ard-type=3D"user" data-hovercard-url=3D"/users/Mzack9999/hovercard" data-oc=
+to-click=3D"hovercard-link-click" data-octo-dimensions=3D"link_type:self" h=
+ref=3D"https://github.com/Mzack9999">@Mzack9999</a> in <a class=3D"issue-li=
+nk js-issue-link" data-error-text=3D"Failed to load title" data-id=3D"33399=
+28922" data-permission-text=3D"Title is private" data-url=3D"https://github=
+.com/projectdiscovery/nuclei/issues/6410" data-hovercard-type=3D"pull_reque=
+st" data-hovercard-url=3D"/projectdiscovery/nuclei/pull/6410/hovercard" hre=
+f=3D"https://github.com/projectdiscovery/nuclei/pull/6410">#6410</a></li>
+</ul>
+<h3>=F0=9F=90=9E Bug Fixes</h3>
+<ul>
+<li>Fixed resume file path condition by <a class=3D"user-mention notranslat=
+e" data-hovercard-type=3D"user" data-hovercard-url=3D"/users/dogancanbakir/=
+hovercard" data-octo-click=3D"hovercard-link-click" data-octo-dimensions=3D=
+"link_type:self" href=3D"https://github.com/dogancanbakir">@dogancanbakir</=
+a> in <a class=3D"issue-link js-issue-link" data-error-text=3D"Failed to lo=
+ad title" data-id=3D"3838262512" data-permission-text=3D"Title is private" =
+data-url=3D"https://github.com/projectdiscovery/nuclei/issues/6784" data-ho=
+vercard-type=3D"pull_request" data-hovercard-url=3D"/projectdiscovery/nucle=
+i/pull/6784/hovercard" href=3D"https://github.com/projectdiscovery/nuclei/p=
+ull/6784">#6784</a></li>
+<li>Fixed race condition regression by <a class=3D"user-mention notranslate=
+" data-hovercard-type=3D"user" data-hovercard-url=3D"/users/dwisiswant0/hov=
+ercard" data-octo-click=3D"hovercard-link-click" data-octo-dimensions=3D"li=
+nk_type:self" href=3D"https://github.com/dwisiswant0">@dwisiswant0</a> in <=
+a class=3D"issue-link js-issue-link" data-error-text=3D"Failed to load titl=
+e" data-id=3D"3778140227" data-permission-text=3D"Title is private" data-ur=
+l=3D"https://github.com/projectdiscovery/nuclei/issues/6748" data-hovercard=
+-type=3D"pull_request" data-hovercard-url=3D"/projectdiscovery/nuclei/pull/=
+6748/hovercard" href=3D"https://github.com/projectdiscovery/nuclei/pull/674=
+8">#6748</a></li>
+<li>Fixed duplicate log spam for permanent errors by <a class=3D"user-menti=
+on notranslate" data-hovercard-type=3D"user" data-hovercard-url=3D"/users/d=
+wisiswant0/hovercard" data-octo-click=3D"hovercard-link-click" data-octo-di=
+mensions=3D"link_type:self" href=3D"https://github.com/dwisiswant0">@dwisis=
+want0</a> in <a class=3D"issue-link js-issue-link" data-error-text=3D"Faile=
+d to load title" data-id=3D"3727604722" data-permission-text=3D"Title is pr=
+ivate" data-url=3D"https://github.com/projectdiscovery/nuclei/issues/6697" =
+data-hovercard-type=3D"pull_request" data-hovercard-url=3D"/projectdiscover=
+y/nuclei/pull/6697/hovercard" href=3D"https://github.com/projectdiscovery/n=
+uclei/pull/6697">#6697</a></li>
+<li>Fixed <code>ExecutionId</code> initialization in <code>DefaultOptions</=
+code> function by <a class=3D"user-mention notranslate" data-hovercard-type=
+=3D"user" data-hovercard-url=3D"/users/dogancanbakir/hovercard" data-octo-c=
+lick=3D"hovercard-link-click" data-octo-dimensions=3D"link_type:self" href=
+=3D"https://github.com/dogancanbakir">@dogancanbakir</a> in <a class=3D"iss=
+ue-link js-issue-link" data-error-text=3D"Failed to load title" data-id=3D"=
+3608161049" data-permission-text=3D"Title is private" data-url=3D"https://g=
+ithub.com/projectdiscovery/nuclei/issues/6598" data-hovercard-type=3D"pull_=
+request" data-hovercard-url=3D"/projectdiscovery/nuclei/pull/6598/hovercard=
+" href=3D"https://github.com/projectdiscovery/nuclei/pull/6598">#6598</a></=
+li>
+<li>Fixed handling full URLs in unsafe raw requests by <a class=3D"user-men=
+tion notranslate" data-hovercard-type=3D"user" data-hovercard-url=3D"/users=
+/dwisiswant0/hovercard" data-octo-click=3D"hovercard-link-click" data-octo-=
+dimensions=3D"link_type:self" href=3D"https://github.com/dwisiswant0">@dwis=
+iswant0</a> in <a class=3D"issue-link js-issue-link" data-error-text=3D"Fai=
+led to load title" data-id=3D"3591704524" data-permission-text=3D"Title is =
+private" data-url=3D"https://github.com/projectdiscovery/nuclei/issues/6589=
+" data-hovercard-type=3D"pull_request" data-hovercard-url=3D"/projectdiscov=
+ery/nuclei/pull/6589/hovercard" href=3D"https://github.com/projectdiscovery=
+/nuclei/pull/6589">#6589</a></li>
+<li>Fixed segfault in workflow parsing with global-matchers templates by <a=
+ class=3D"user-mention notranslate" data-hovercard-type=3D"user" data-hover=
+card-url=3D"/users/dwisiswant0/hovercard" data-octo-click=3D"hovercard-link=
+-click" data-octo-dimensions=3D"link_type:self" href=3D"https://github.com/=
+dwisiswant0">@dwisiswant0</a> in <a class=3D"issue-link js-issue-link" data=
+-error-text=3D"Failed to load title" data-id=3D"3828548511" data-permission=
+-text=3D"Title is private" data-url=3D"https://github.com/projectdiscovery/=
+nuclei/issues/6774" data-hovercard-type=3D"pull_request" data-hovercard-url=
+=3D"/projectdiscovery/nuclei/pull/6774/hovercard" href=3D"https://github.co=
+m/projectdiscovery/nuclei/pull/6774">#6774</a></li>
+<li>Fixed logging update summary table to stderr by <a class=3D"user-mentio=
+n notranslate" data-hovercard-type=3D"user" data-hovercard-url=3D"/users/ay=
+uxsec/hovercard" data-octo-click=3D"hovercard-link-click" data-octo-dimensi=
+ons=3D"link_type:self" href=3D"https://github.com/ayuxsec">@ayuxsec</a> in =
+<a class=3D"issue-link js-issue-link" data-error-text=3D"Failed to load tit=
+le" data-id=3D"3816888652" data-permission-text=3D"Title is private" data-u=
+rl=3D"https://github.com/projectdiscovery/nuclei/issues/6769" data-hovercar=
+d-type=3D"pull_request" data-hovercard-url=3D"/projectdiscovery/nuclei/pull=
+/6769/hovercard" href=3D"https://github.com/projectdiscovery/nuclei/pull/67=
+69">#6769</a></li>
+<li>Fixed sanitizing host when target has host port by <a class=3D"user-men=
+tion notranslate" data-hovercard-type=3D"user" data-hovercard-url=3D"/users=
+/knakul853/hovercard" data-octo-click=3D"hovercard-link-click" data-octo-di=
+mensions=3D"link_type:self" href=3D"https://github.com/knakul853">@knakul85=
+3</a> in <a class=3D"issue-link js-issue-link" data-error-text=3D"Failed to=
+ load title" data-id=3D"3790124844" data-permission-text=3D"Title is privat=
+e" data-url=3D"https://github.com/projectdiscovery/nuclei/issues/6759" data=
+-hovercard-type=3D"pull_request" data-hovercard-url=3D"/projectdiscovery/nu=
+clei/pull/6759/hovercard" href=3D"https://github.com/projectdiscovery/nucle=
+i/pull/6759">#6759</a></li>
+<li>Fixed interactsh matching with <code>payloads</code> by <a class=3D"use=
+r-mention notranslate" data-hovercard-type=3D"user" data-hovercard-url=3D"/=
+users/dwisiswant0/hovercard" data-octo-click=3D"hovercard-link-click" data-=
+octo-dimensions=3D"link_type:self" href=3D"https://github.com/dwisiswant0">=
+@dwisiswant0</a> in <a class=3D"issue-link js-issue-link" data-error-text=
+=3D"Failed to load title" data-id=3D"3832269830" data-permission-text=3D"Ti=
+tle is private" data-url=3D"https://github.com/projectdiscovery/nuclei/issu=
+es/6778" data-hovercard-type=3D"pull_request" data-hovercard-url=3D"/projec=
+tdiscovery/nuclei/pull/6778/hovercard" href=3D"https://github.com/projectdi=
+scovery/nuclei/pull/6778">#6778</a></li>
+<li>Fixed passing template variables to TCP inputs pre-compilation by <a cl=
+ass=3D"user-mention notranslate" data-hovercard-type=3D"user" data-hovercar=
+d-url=3D"/users/dogancanbakir/hovercard" data-octo-click=3D"hovercard-link-=
+click" data-octo-dimensions=3D"link_type:self" href=3D"https://github.com/d=
+ogancanbakir">@dogancanbakir</a> in <a class=3D"issue-link js-issue-link" d=
+ata-error-text=3D"Failed to load title" data-id=3D"3829085975" data-permiss=
+ion-text=3D"Title is private" data-url=3D"https://github.com/projectdiscove=
+ry/nuclei/issues/6776" data-hovercard-type=3D"pull_request" data-hovercard-=
+url=3D"/projectdiscovery/nuclei/pull/6776/hovercard" href=3D"https://github=
+.com/projectdiscovery/nuclei/pull/6776">#6776</a></li>
+</ul>
+<h3>Other Changes</h3>
+<ul>
+<li>Replaced seh-msft/burpxml with utils package by <a class=3D"user-mentio=
+n notranslate" data-hovercard-type=3D"user" data-hovercard-url=3D"/users/do=
+gancanbakir/hovercard" data-octo-click=3D"hovercard-link-click" data-octo-d=
+imensions=3D"link_type:self" href=3D"https://github.com/dogancanbakir">@dog=
+ancanbakir</a> in <a class=3D"issue-link js-issue-link" data-error-text=3D"=
+Failed to load title" data-id=3D"3804099663" data-permission-text=3D"Title =
+is private" data-url=3D"https://github.com/projectdiscovery/nuclei/issues/6=
+763" data-hovercard-type=3D"pull_request" data-hovercard-url=3D"/projectdis=
+covery/nuclei/pull/6763/hovercard" href=3D"https://github.com/projectdiscov=
+ery/nuclei/pull/6763">#6763</a></li>
+<li>Removed genproto replace directives from go.mod by <a class=3D"user-men=
+tion notranslate" data-hovercard-type=3D"user" data-hovercard-url=3D"/users=
+/ehsandeep/hovercard" data-octo-click=3D"hovercard-link-click" data-octo-di=
+mensions=3D"link_type:self" href=3D"https://github.com/ehsandeep">@ehsandee=
+p</a> in <a class=3D"issue-link js-issue-link" data-error-text=3D"Failed to=
+ load title" data-id=3D"3626623960" data-permission-text=3D"Title is privat=
+e" data-url=3D"https://github.com/projectdiscovery/nuclei/issues/6608" data=
+-hovercard-type=3D"pull_request" data-hovercard-url=3D"/projectdiscovery/nu=
+clei/pull/6608/hovercard" href=3D"https://github.com/projectdiscovery/nucle=
+i/pull/6608">#6608</a></li>
+<li>Improved telnet login and added crypto by <a class=3D"user-mention notr=
+anslate" data-hovercard-type=3D"user" data-hovercard-url=3D"/users/Mzack999=
+9/hovercard" data-octo-click=3D"hovercard-link-click" data-octo-dimensions=
+=3D"link_type:self" href=3D"https://github.com/Mzack9999">@Mzack9999</a> in=
+ <a class=3D"issue-link js-issue-link" data-error-text=3D"Failed to load ti=
+tle" data-id=3D"3346298463" data-permission-text=3D"Title is private" data-=
+url=3D"https://github.com/projectdiscovery/nuclei/issues/6419" data-hoverca=
+rd-type=3D"pull_request" data-hovercard-url=3D"/projectdiscovery/nuclei/pul=
+l/6419/hovercard" href=3D"https://github.com/projectdiscovery/nuclei/pull/6=
+419">#6419</a></li>
+<li>Added Turkish README and enhanced CONTRIBUTING.md by <a class=3D"user-m=
+ention notranslate" data-hovercard-type=3D"user" data-hovercard-url=3D"/use=
+rs/bahattinyunus/hovercard" data-octo-click=3D"hovercard-link-click" data-o=
+cto-dimensions=3D"link_type:self" href=3D"https://github.com/bahattinyunus"=
+>@bahattinyunus</a> in <a class=3D"issue-link js-issue-link" data-error-tex=
+t=3D"Failed to load title" data-id=3D"3765639442" data-permission-text=3D"T=
+itle is private" data-url=3D"https://github.com/projectdiscovery/nuclei/iss=
+ues/6740" data-hovercard-type=3D"pull_request" data-hovercard-url=3D"/proje=
+ctdiscovery/nuclei/pull/6740/hovercard" href=3D"https://github.com/projectd=
+iscovery/nuclei/pull/6740">#6740</a></li>
+<li>Refactored WithNetworkConfig and WithInteractshOptions to be used by Ne=
+wThreadSafeNucleiEngineCtx by <a class=3D"user-mention notranslate" data-ho=
+vercard-type=3D"user" data-hovercard-url=3D"/users/meme-lord/hovercard" dat=
+a-octo-click=3D"hovercard-link-click" data-octo-dimensions=3D"link_type:sel=
+f" href=3D"https://github.com/meme-lord">@meme-lord</a> in <a class=3D"issu=
+e-link js-issue-link" data-error-text=3D"Failed to load title" data-id=3D"2=
+778002512" data-permission-text=3D"Title is private" data-url=3D"https://gi=
+thub.com/projectdiscovery/nuclei/issues/5972" data-hovercard-type=3D"pull_r=
+equest" data-hovercard-url=3D"/projectdiscovery/nuclei/pull/5972/hovercard"=
+ href=3D"https://github.com/projectdiscovery/nuclei/pull/5972">#5972</a></l=
+i>
+<li>Improved cache template signature verification performance by <a class=
+=3D"user-mention notranslate" data-hovercard-type=3D"user" data-hovercard-u=
+rl=3D"/users/dwisiswant0/hovercard" data-octo-click=3D"hovercard-link-click=
+" data-octo-dimensions=3D"link_type:self" href=3D"https://github.com/dwisis=
+want0">@dwisiswant0</a> in <a class=3D"issue-link js-issue-link" data-error=
+-text=3D"Failed to load title" data-id=3D"3837100094" data-permission-text=
+=3D"Title is private" data-url=3D"https://github.com/projectdiscovery/nucle=
+i/issues/6779" data-hovercard-type=3D"pull_request" data-hovercard-url=3D"/=
+projectdiscovery/nuclei/pull/6779/hovercard" href=3D"https://github.com/pro=
+jectdiscovery/nuclei/pull/6779">#6779</a></li>
+</ul>
+<h2>New Contributors</h2>
+<ul>
+<li><a class=3D"user-mention notranslate" data-hovercard-type=3D"user" data=
+-hovercard-url=3D"/users/bahattinyunus/hovercard" data-octo-click=3D"hoverc=
+ard-link-click" data-octo-dimensions=3D"link_type:self" href=3D"https://git=
+hub.com/bahattinyunus">@bahattinyunus</a> made their first contribution in =
+<a class=3D"issue-link js-issue-link" data-error-text=3D"Failed to load tit=
+le" data-id=3D"3765639442" data-permission-text=3D"Title is private" data-u=
+rl=3D"https://github.com/projectdiscovery/nuclei/issues/6740" data-hovercar=
+d-type=3D"pull_request" data-hovercard-url=3D"/projectdiscovery/nuclei/pull=
+/6740/hovercard" href=3D"https://github.com/projectdiscovery/nuclei/pull/67=
+40">#6740</a></li>
+<li><a class=3D"user-mention notranslate" data-hovercard-type=3D"user" data=
+-hovercard-url=3D"/users/promalert/hovercard" data-octo-click=3D"hovercard-=
+link-click" data-octo-dimensions=3D"link_type:self" href=3D"https://github.=
+com/promalert">@promalert</a> made their first contribution in <a class=3D"=
+issue-link js-issue-link" data-error-text=3D"Failed to load title" data-id=
+=3D"3787486620" data-permission-text=3D"Title is private" data-url=3D"https=
+://github.com/projectdiscovery/nuclei/issues/6756" data-hovercard-type=3D"p=
+ull_request" data-hovercard-url=3D"/projectdiscovery/nuclei/pull/6756/hover=
+card" href=3D"https://github.com/projectdiscovery/nuclei/pull/6756">#6756</=
+a></li>
+<li><a class=3D"user-mention notranslate" data-hovercard-type=3D"user" data=
+-hovercard-url=3D"/users/ayuxsec/hovercard" data-octo-click=3D"hovercard-li=
+nk-click" data-octo-dimensions=3D"link_type:self" href=3D"https://github.co=
+m/ayuxsec">@ayuxsec</a> made their first contribution in <a class=3D"issue-=
+link js-issue-link" data-error-text=3D"Failed to load title" data-id=3D"381=
+6888652" data-permission-text=3D"Title is private" data-url=3D"https://gith=
+ub.com/projectdiscovery/nuclei/issues/6769" data-hovercard-type=3D"pull_req=
+uest" data-hovercard-url=3D"/projectdiscovery/nuclei/pull/6769/hovercard" h=
+ref=3D"https://github.com/projectdiscovery/nuclei/pull/6769">#6769</a></li>
+</ul>
+<p><strong>Full Changelog</strong>: <a class=3D"commit-link" href=3D"https:=
+//github.com/projectdiscovery/nuclei/compare/v3.6.2...v3.7.0"><tt>v3.6.2...=
+v3.7.0</tt></a></p>
 
-<title>Oceanspin</title>
+=E2=80=94<p>This release has 2 assets:</p><ul><li>Source code (zip)</li><li=
+>Source code (tar.gz)</li></ul><p>Visit the <a href=3D"https://github.com/p=
+rojectdiscovery/nuclei/releases/tag/v3.7.0">release page</a> to download th=
+em.</p>
 
-<style type=3D"text/css">
-/* RESET STYLES */
-..wrapper {
--webkit-box-shadow: 0px 0px 51px #DBAD0D, 0px 0px 8px #DBAD0D;
--moz-box-shadow: 0px 0px 51px #DBAD0D, 0px 0px 8px #DBAD0D;
-box-shadow: 0px 0px 51px #DBAD0D, 0px 0px 8px #DBAD0D;
-box-shadow: 0px 0px 20px #DBAD0D, 0px 0px 8px #DBAD0D;
-border-radius: 0px;
+<p style=3D"font-size:small;-webkit-text-size-adjust:none;color:#666;">=E2=
+=80=94<br>You are receiving this because you are watching this repository.<=
+br><a href=3D"https://github.com/projectdiscovery/nuclei/releases/tag/v3.7.=
+0">View it on GitHub</a> or <a href=3D"https://github.com/projectdiscovery/=
+nuclei/unsubscribe_via_email/AMAXO5MGKZ5U23KYKKHLBL34JCBKRANCNFSM4DYRUCZQ">=
+unsubscribe</a> from all notifications for this repository.<img src=3D"http=
+s://github.com/notifications/beacon/AMAXO5JUFQAREOP5TCVBZ5L4JCBKRA5CNFSM6AA=
+AAACTE4LBX2WGG33NNVSW45C7OR4XAZNHKJSWYZLBONS2UY3PNVWWK3TUL5UWJTQQXIOMM.gif"=
+ height=3D"1" width=3D"1" alt=3D""></p>
+<script type=3D"application/ld+json">[
+{
+"@context": "http://schema.org",
+"@type": "EmailMessage",
+"potentialAction": {
+"@type": "ViewAction",
+"target": "https://github.com/projectdiscovery/nuclei/releases/tag/v3.7.0",
+"url": "https://github.com/projectdiscovery/nuclei/releases/tag/v3.7.0",
+"name": "View Release"
+},
+"description": "View this Release on GitHub",
+"publisher": {
+"@type": "Organization",
+"name": "GitHub",
+"url": "https://github.com"
 }
-img {
-font-size: 0;
-line-height: 0;
-display: block;
-border: none;
--ms-interpolation-mode: bicubic;
-max-width: 100%;
 }
+]</script>=
 
-body {
-font-family: sans-serif;
--webkit-font-smoothing: antialiased;
-margin: 0;
-padding: 0;
--ms-text-size-adjust: 100%;
--webkit-text-size-adjust: 100%;
-}
-
-table {
-border-collapse: separate;
-mso-table-lspace: 0pt;
-mso-table-rspace: 0pt;
-}
-
-
-/* FOR DARKMODE */
-
-/* :root {
-color-scheme: light dark;
-supported-color-schemes: light dark;
-} */
-
-/* @media (prefers-color-scheme: dark) {
-
-}
-
-[data-ogsc] {
-
-}
-
-[data-ogsb] {
-
-} */
-</style>
-
-
-
-
-</head>
-<body style=3D"font-family:sans-serif;margin:0;padding:0"><div style=3D"dis=
-play:none;max-height:0px;overflow:hidden">
-</div>
-<div style=3D"display:none;max-height:0px;overflow:hidden">
-</div>
-<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
-e=3D"background-color:#00070d;border-collapse:separate">
-<tbody>
-<tr>
-<td align=3D"center">
-<table class=3D"wrappe" width=3D"600" border=3D"0" cellpadding=3D"0" backgr=
-ound=3D"" cellspacing=3D"0" style=3D"min-width: 600px; max-width: 600px; ba=
-ckground-color: #002339 !important; background-position: bottom center !imp=
-ortant; background-size: cover !important; background-repeat: no-repeat !im=
-portant; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace=
-: 0pt;padding-bottom: 30px;border: solid 3px #148E93;background: linear-gra=
-dient(#002339,#002339,#00111D)">
-<tbody>
-<tr>
-<td align=3D"center" style=3D"padding-top:0px">
-<div style=3D"display:none;overflow:hidden;float:left;width:0px;max-height:=
-0px;max-width:0px;line-height:0px">
-</div>
-<a href=3D"https://linktrshop.net/index.php?search=3D4&amp;d16903&amp;egbsj=
-=3D341-109&amp;lm=3D37692ZRDH922506&amp;sd=3D7&amp;page=3DKVNVwI41Oem5FbC" =
-target=3D"_blank" style=3D"display:block;text-decoration:none">
-<table width=3D"600" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" backg=
-round=3D"https://imgprom.com/wp-content/uploads/Oceanspin.png" style=3D"min=
--width: 600px; background-position: top center !important; background-size:=
- 100% auto !important; background-repeat: no-repeat !important; border-coll=
-apse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-<tbody>
-<tr>
-<td colspan=3D"3" align=3D"center" style=3D"padding-top:525px">
-<table width=3D"600" border=3D"0" background=3D"https://imgprom.com/wp-cont=
-ent/uploads/Oceanspin_BG.png" cellpadding=3D"0" cellspacing=3D"0" style=3D"=
-background-repeat: no-repeat !important; background-size: 100% 100% !import=
-ant; background-position: center !important; border-collapse: separate; mso=
--table-lspace: 0pt; mso-table-rspace: 0pt;">
-<tbody>
-<tr>
-<td align=3D"center" style=3D"padding:30px 70px">
-<span style=3D"font-size:40px;text-transform:uppercase;font-weight:900;colo=
-r:#ffcd10;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana=
-,'sans-serif';line-height:1.1;display:block!important">100% up to $750</spa=
-n>
-<span style=3D"font-size:40px;text-transform:uppercase;font-weight:900;colo=
-r:#ffffff;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana=
-,'sans-serif';line-height:1.1;display:block!important">+ 200 free spins</sp=
-an>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</a>
-<br>
-<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"460" bgcol=
-or=3D"#DB196D" style=3D"background-size:100% 100%!important;border-radius:2=
-0px;background-position:center!important;border-collapse:separate">
-<tbody><tr>
-<td align=3D"center" valign=3D"middle" style=3D"padding:25px 0">
-<a href=3D"https://linktrshop.net/index.php?search=3D4&amp;d16903&amp;jjvbp=
-=3D341-109&amp;lm=3D37692XOAL922506&amp;sd=3D7&amp;page=3D2d6DUZs3QzfG972" =
-style=3D"font-size:30px;text-decoration:none;text-transform:uppercase;font-=
-weight:700;color:#ffffff;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuc=
-het MS',Verdana,'sans-serif';line-height:1;display:block!important">Hit the=
- Jackpot</a>
-</td>
-</tr>
-</tbody></table>
-<br>
-<br>
-<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"550" style=
-=3D"min-width:550px;background-position:top center!important;border-radius:=
-20px;background-size:100% 100%!important;background-repeat:no-repeat!import=
-ant;border-collapse:separate;border:3px solid #148e93">
-<tbody>
-<tr>
-<td align=3D"center" style=3D"padding-top:25px"></td>
-</tr>
-<tr>
-<td align=3D"center" valign=3D"middle" style=3D"padding:0 17px">
-<a href=3D"https://linktrshop.net/index.php?search=3D4&amp;d16903&amp;lievc=
-=3D341-109&amp;lm=3D37692NICH922506&amp;sd=3D7&amp;page=3DOX0d5Wg1cq8B0v0" =
-target=3D"_blank" style=3D"display:block;text-decoration:none">
-<span style=3D"font-size:28px;font-weight:900;color:#ffffff;font-family:Seg=
-oe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana,'sans-serif';line-height=
-:1.3;display:block!important;color:#ffcd10">Step into the Action at Oceansp=
-in!</span></a>
-</td>
-</tr>
-<tr>
-<td align=3D"center" style=3D"padding:30px 30px 30px">
-<span class=3D"" style=3D"font-size:20px;font-weight:400;color:#ffffff;font=
--family:Segoe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana,'sans-serif';=
-line-height:1.5;display:block!important">Are you ready to explore a world w=
-here every spin brings new excitement?<br>Oceanspin is here to offer you a =
-unique gaming experience that stands out from the rest.<br><br>
-Even as a fresh name in the scene, its approach is making waves. See for yo=
-urself what makes it special!<br><br>
-Enjoy incredible welcome rewards and daily surprises designed to elevate yo=
-ur play.<br><br>
-<strong style=3D"color:#ffcd10">Start with a fantastic 100% up to $750 + 20=
-0 FS to kickstart your journey!</strong><br><br>
-With a huge selection of slot and live games, there's always something thri=
-lling to discover.<br><br>
-Take your shot at the Oceanspin Wheel and see where luck takes you!
-</span>
-</td>
-</tr>
-</tbody>
-</table>
-<br><br>
-<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"460" bgcol=
-or=3D"#DB196D" style=3D"background-size:100% 100%!important;border-radius:2=
-0px;background-position:center!important;border-collapse:separate">
-<tbody><tr>
-<td align=3D"center" valign=3D"middle" style=3D"padding:25px 0">
-<a href=3D"https://linktrshop.net/index.php?search=3D4&amp;d16903&amp;ekfwj=
-=3D341-109&amp;lm=3D37692CTQX922506&amp;sd=3D7&amp;page=3D42p9gaN9ufyJkrl" =
-style=3D"font-size:30px;text-decoration:none;text-transform:uppercase;font-=
-weight:700;color:#ffffff;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuc=
-het MS',Verdana,'sans-serif';line-height:1;display:block!important">Treasur=
-e Awaits</a>
-</td>
-</tr>
-</tbody></table>
-<br><br>
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"560" style=
-=3D"background-size:100% 100%!important;border:solid 3px #148e93;border-rad=
-ius:20px">
-<tbody>
-<tr>
-<td align=3D"center" style=3D"">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:540p=
-x;min-width:540px;max-width:540px;border-collapse:separate">
-<tbody>
-<tr>
-<td valign=3D"middle" align=3D"center">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:280p=
-x;border-collapse:separate">
-<tbody>
-<tr>
-<td align=3D"center" valign=3D"middle">
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr>
-<td valign=3D"middle" align=3D"center" style=3D"padding-top:0px">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-col=
-lapse:separate">
-<tbody>
-<tr>
-<td valign=3D"middle" align=3D"center" style=3D"padding-top:10px">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:540p=
-x;min-width:540px;max-width:540px;padding-top:15px;padding-bottom:15px;back=
-ground-size:cover!important;border-collapse:separate">
-<tbody>
-<tr>
-<td valign=3D"middle" align=3D"center">
-<a href=3D"https://linktrshop.net/index.php?search=3D4&amp;d16903&amp;cczii=
-=3D341-109&amp;lm=3D37692DPLN922506&amp;sd=3D7&amp;page=3D0CzJUxnauiKqU9L" =
-style=3D"display:inline-block!important">
-<img alt=3D"" src=3D"https://imgprom.com/wp-content/uploads/Oceanspin_logo.=
-png" border=3D"0" style=3D"display: inline-block !important; width: 200px; =
-font-size: 0; line-height: 0; -ms-interpolation-mode: bicubic; max-width: 1=
-00%; border: none;"></a>
-</td>
-</tr>
-</tbody></table>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:540p=
-x;min-width:540px;max-width:540px;border-collapse:separate">
-<tbody>
-<tr>
-<td valign=3D"middle" align=3D"center">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"min-width:=
-540px;max-width:540px;border-collapse:separate">
-<tbody>
-<tr>
-<td valign=3D"middle" align=3D"center" style=3D"padding-top:10px;padding-bo=
-ttom:0px">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:540p=
-x;max-width:540px;min-width:540px;border-collapse:separate">
-<tbody>
-<tr>
-<td valign=3D"middle" align=3D"center" style=3D"padding-top:0px;padding-bot=
-tom:20px">
-<span style=3D"font-size:11px;line-height:1.1;font-weight:400;color:#ffffff=
-;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana,'sans-se=
-rif';text-align:center;display:block;margin:0">Offer only applies to new pl=
-ayers. Gambling is a leisure activity. Whether you or someone you know choo=
-se to gamble, it is important to understand that gambling comes with potent=
-ial risks. Pay attention to signs like an urgent need to keep gambling, gro=
-wing frequency of gambling, borrowing money for the activity or unhappy fee=
-ling because of it. Playing smart and safe is very important, and if you se=
-e addiction signs, do not hesitate to ask for help.</span>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</body><center>
-<br>
-
-<a href=3D"http://linktrshop.net/rd/index.php?search=3D5&amp;d16903&amp;ybg=
-qe=3D341-109&amp;lm=3D37692YKOH922506&amp;sd=3D7&amp;page=3DrWLnLo4zgCaZDY1=
-"><img src=3D"https://i.imgur.com/M4p7bLp.png"></a>
-<img src=3D"https://linktrshop.net/track/index.php?search=3D3&amp;d16903&am=
-p;jcwxs=3D341-109&amp;lm=3D37692XIVH922506&amp;sd=3D7&amp;page=3DSd36ydazol=
-mGwZh" width=3D"1" height=3D"1" border=3D"0">
-</center>
-</html>
-
---000000000000b5bb8f06490850f2--
+----==_mimepart_6979dca8984be_cf11184623f--

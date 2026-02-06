@@ -1,877 +1,305 @@
-Received: from PH7PR10MB6156.namprd10.prod.outlook.com (2603:10b6:510:1f3::18)
- by MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Fri, 26 Sep 2025
- 03:34:22 +0000
-ARC-Seal: i=3; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=QFgYzjEc0rUfZk4Uvm0kQ+1OdL23srtNPDpV+STFZosBCV9CyOnx6F04fqYMbSw9+ZCvJjraVKEE2Mp3c9op0EcpvWSsziI4VO4kzZ2mrZ6SGax9afDrqZPJciPfS0JgDm5ZTSlYE3cYsE70W5yFcaclL57mh0oOe0cu0T1BaBdy9jIx/O5Gx9+i71eECo8C1iYpBRY8K9toGAm1PT6P4z7EB3SaKzlzLIMBCRpRbwZkHKYDVAE6UXDlVxAWGZUH+OGxfQwFzr2I5mUt84fhz6qVvKMa4+Qo3mz+qACmUnM11pfnVyqKSfWWrYj+AiTQnEHGy287X3p1LnimMHcW5g==
-ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wbApDBPIcBEV57d7qWhRDt0Gh83pxOijT+q2ChQzsTs=;
- b=hMLg2hfXqiFy2ZFFDNG9vOtFUQVnqXfL55Ti8IeQY05RosXetUP91WbTMGpLcToWYumqjirbEazIQI7d2tVerwqEYEnTR0oPytrsLYoC9/6+1bpbBaK9j0iLmoNtNe7o5v8wYIhuVGZUWpJlQ4CbSSYJCtOlS8rFffMDnVZq5FlHyiY5w73HXVbDt9D0lI76xiKc9hv3LsBhqn5agCtPmfu2ROSgWP4lUQ7I4Vrx3tptNDw2dSoWJ2BKMXIrZ3xlIh+IFcz9x8wlQLX0GMPHAQKFu3Hm+Hb7Zrgovxb/V/hG6JKgrik584lTeZzqIe3F1e2UU2mr3FcfffXGZaQEcA==
-ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=pass (sender ip is
- 209.85.208.49) smtp.rcpttodomain=hotmail.com smtp.mailfrom=gmail.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=frame.io;
- dkim=pass (signature was verified) header.d=frame.io; dkim=pass (signature
- was verified) header.d=amazonses.com; arc=pass (0 oda=1 ltdi=1
- spf=[1,2,smtp.mailfrom=010001998415f7d1-8d08dd9e-785b-4135-826c-82ca7edd1c20-000000@notifications.email.frame.io]
- dkim=[1,2,header.i=@frame.io] dmarc=[1,2,header.from=frame.io])
-Received: from AS9PR06CA0131.eurprd06.prod.outlook.com (2603:10a6:20b:467::6)
- by PH7PR10MB6156.namprd10.prod.outlook.com (2603:10b6:510:1f3::18) with
+Received: from SJ0PR10MB4512.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Mon, 3 Nov 2025 03:23:14
+ +0000
+Received: from BYAPR11CA0052.namprd11.prod.outlook.com (2603:10b6:a03:80::29)
+ by SJ0PR10MB4512.namprd10.prod.outlook.com (2603:10b6:a03:2dc::20) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.19; Fri, 26 Sep
- 2025 03:34:20 +0000
-Received: from AM3PEPF0000A790.eurprd04.prod.outlook.com
- (2603:10a6:20b:467:cafe::e) by AS9PR06CA0131.outlook.office365.com
- (2603:10a6:20b:467::6) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9160.10 via Frontend Transport; Fri,
- 26 Sep 2025 03:34:19 +0000
-Authentication-Results: spf=pass (sender IP is 209.85.208.49)
- smtp.mailfrom=gmail.com; dkim=pass (signature was verified)
- header.d=frame.io;dkim=pass (signature was verified)
- header.d=amazonses.com;dmarc=pass action=none
- header.from=frame.io;compauth=pass reason=100
-Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates
- 209.85.208.49 as permitted sender) receiver=protection.outlook.com;
- client-ip=209.85.208.49; helo=mail-ed1-f49.google.com; pr=C
-Received: from mail-ed1-f49.google.com (209.85.208.49) by
- AM3PEPF0000A790.mail.protection.outlook.com (10.167.16.119) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9160.9
- via Frontend Transport; Fri, 26 Sep 2025 03:34:18 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:52D0DB9C25B9D4C6E5544F33F3B478EFA9E80C728F631E8B356B0B9B045770D4;UpperCasedChecksum:545CFAED47FD42B5F963528A74BBB388F0B5642B3FB35CDF9878E553D5403769;SizeAsReceived:8837;Count:34
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-62fc14af3fbso724228a12.3
-        for <phishing@pot>; Thu, 25 Sep 2025 20:34:18 -0700 (PDT)
-ARC-Seal: i=2; a=rsa-sha256; t=1758857658; cv=pass;
-        d=google.com; s=arc-20240605;
-        b=NxTxr4cY5zWSVzltJUwGDWHAcCbpzngczxTOcORnKNM/YpRIkeADYEFF7Ub/DLSREG
-         TmTrNhXU/uM5FAb+hUP3XIo14WNj1bmOJuA+p3DXoL3OGM8Y3vLc7qBKjs4zzSe/7bG3
-         dazd1bJPvT/y/knJae0r18u4r9EpTzULAXsIHGvUrbJp4vEqWAnrw4YepsxIADOfN/qL
-         iMTrujviPE5NB9sGNTA12fvMvH5UXA/UTHWF566j9kZkwL4wgaSu9PKzCPuDCmnJ/1hZ
-         bs01PHS+1bFUIK0abjbs4RTS8z9uNI4Ordcge43/tzcySFMRwDSmf7kT7Y7vsfUlNJzq
-         3sAQ==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=feedback-id:message-id:date:content-transfer-encoding:mime-version
-         :subject:to:from:dkim-signature:dkim-signature:delivered-to;
-        bh=wbApDBPIcBEV57d7qWhRDt0Gh83pxOijT+q2ChQzsTs=;
-        fh=LZwigkm/+u2bb0FjETNvdQnZobpxsFKmv3QpR/MtpSY=;
-        b=hzXtxgwGkvcJDdNv+RPOCCzUcNhupFx4b2SNG376njZ8eeXrMcw7uIsev23p8xU7dY
-         UdMGTCoIyecyRdG6aKDGuEIi89sZ7cM+cF8dWnGqlTRQOTnxYOyIv/yF9z/9uh1phB5H
-         2Uyn71W2LtH/9uQIsWa/ypvYeUbWD+TMJXMPo9J3cE3YQLQablV6ROtmhEAa7m4C3GNu
-         5BqjJCXZG8CHcxwu7cMdTsVF8jzigiAB/sAqDidrGtuDciZgICkRNmwLmKtgo/zml2sj
-         FV8rEsav72FuR+H/wd1xq78A8oZB60k4zEc2FeamQ5ooXBB0eFYridIqXNzPVrpJy5jD
-         /2IA==;
-        darn=hotmail.com
-ARC-Authentication-Results: i=2; mx.google.com;
-       dkim=pass header.i=@frame.io header.s=goigs5t7jgjfu4z37cnx7z6tpqqsauhn header.b=rJPRjCb9;
-       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=LoC0X0Ke;
-       spf=pass (google.com: domain of 010001998415f7d1-8d08dd9e-785b-4135-826c-82ca7edd1c20-000000@notifications.email.frame.io designates 54.240.9.32 as permitted sender) smtp.mailfrom=010001998415f7d1-8d08dd9e-785b-4135-826c-82ca7edd1c20-000000@notifications.email.frame.io;
-       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=frame.io
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758857658; x=1759462458;
-        h=feedback-id:message-id:date:content-transfer-encoding:mime-version
-         :subject:to:from:dkim-signature:dkim-signature:delivered-to
-         :x-forwarded-for:x-forwarded-to:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wbApDBPIcBEV57d7qWhRDt0Gh83pxOijT+q2ChQzsTs=;
-        b=p7Eltw6hsDFce2eEV21mvRcReL7HRdE3XFw/trKywo6Y/+4ly1ge+QMXjKeWWT4il4
-         Hlaw+6wGKgM+/PH6lJ3/u0MVUYBq6QZcTbVTHEEycHbPJKfeuXJQPjLSkkE0wBN1r3zJ
-         8F36lLPMniyzgKHH2Y8rGR/fp6Ux/X5R43ogsnKwK4WVpRcaVV7JkidUeJZshVa4oBnE
-         knnm5NWG2V+I/wN/5X+opUL3uPv+9M/x9MWc3nWnE2n+8Xrkch9OIzA+Vu0tkoq7xioB
-         BtFoOyPBCbJXHnYcp2dHNryzph1hWz+OTPZOJ3nmeqUzj0gcANnOkOV+7mAqjRn27aOv
-         FVkg==
-X-Forwarded-Encrypted: i=2; AJvYcCXSdRnIwJM9bw9EsIKXcuFSv8LJqs9yi3Zb6+Jm4U+z5VjywBA8xZ994DMecbDgvmD38nFPhbM1iOLhbQ==@hotmail.com
-X-Gm-Message-State: AOJu0YyCDfZm/OJCrC7S5MwaQAGkQQWbgoGSn8AjOEBFErSCtz9TqkJX
-	JVo/qVFdZoFV1E7gOB4f7b0XZKm9vcnAWdOg4xnc76mgD4rI63ZANGCnbxA/D9umNCDrABbgkF4
-	KRlDkh7raLdKmjIfUHo9GHP/llF1JAkIDy7hnr0+zAnkO7mSCW/eU8TLKpH6iog==
-X-Received: by 2002:a17:907:3f93:b0:b2a:7f08:23d5 with SMTP id a640c23a62f3a-b34bc67bddemr582925966b.63.1758857658535;
-        Thu, 25 Sep 2025 20:34:18 -0700 (PDT)
-X-Forwarded-To: phishing@pot
-X-Forwarded-For: phish.me.again@gmail.com phishing@pot
-Delivered-To: phish.me.again@gmail.com
-Received: by 2002:a98:a107:0:b0:243:c5e1:2c65 with SMTP id j7csp315702eic;
-        Thu, 25 Sep 2025 20:34:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHS0PEqMo5OoDlKBZkSpAj7glKBZr9sweif6I2cZyq4nYmjQrrTOyA5VjGMM0EMK9Sa9X/Y
-X-Received: by 2002:ac8:5a4c:0:b0:4b7:ad70:238b with SMTP id d75a77b69052e-4dacdce08c8mr64241821cf.32.1758857656953;
-        Thu, 25 Sep 2025 20:34:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1758857656; cv=none;
-        d=google.com; s=arc-20240605;
-        b=D/AT+YVwK0gHMT710ReA9rU1jeMuUfs2pt9cIRGS2DeLc+xX9Fndo9C21QArAX0A0n
-         T6i8y4xk/I2vVq2uMOMtfNs423KOYfaX3s2bkG+MUcc7X4T5AX1xWHYPht0p73W8f2cF
-         ff8G7fDt2diaO9XHQ5ZHRaaH6E9vhgqlXKubYiKEgPnUTvinYHLDSxv2FhKxe4cjojSk
-         iPacgOHhK2m6f+in8ehOAmBpBeFD4znJU8C/tk4IvXnOaz44QZqIKbjdoF5i0RsJjC2R
-         84YJIvshubVclWg+3P7RB33VZ8U4MraiWEPVf+5kZpkjH13SX0tX/VnCdcaxITewdvSa
-         QGOQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=feedback-id:message-id:date:content-transfer-encoding:mime-version
-         :subject:to:from:dkim-signature:dkim-signature;
-        bh=wbApDBPIcBEV57d7qWhRDt0Gh83pxOijT+q2ChQzsTs=;
-        fh=gsr5LIoRBEJ7GEowr0DGV2hp7UKUuOQ8Vn1Yij6IecI=;
-        b=SXSNsBYbJocKkCZVUbopF53VRdvqtn19yTznAYN/jcFX15j26pH+0/Jvte3UcLlDEG
-         MzBcCSvTsmaB0wR9pkNkT1fgFWEhMWoSA8RNhU4eRY72mWQ99zDhRMRCW1Twomm+F2dW
-         x6w9uJMFkB/nqgQxv10Iu4JPwB7hB5HnvUzHESb5a7uwWCTlRHhP51Y09uHEcVnCFd9K
-         YO7cfhPe0/5yXY3wQ2xoT7bhT2rt76JXZ2LfpKQk4pWltDNlQ9KoM5fqFq1gwrnVMF2+
-         RlrD2eCnIkY+MW6eHLsOtxXVL6hCesc0Kta54c1ad7WsH9uzofa43PE2Txx0Huo96feN
-         P7hA==;
-        dara=google.com
-ARC-Authentication-Results: i=1; mx.google.com;
-       dkim=pass header.i=@frame.io header.s=goigs5t7jgjfu4z37cnx7z6tpqqsauhn header.b=rJPRjCb9;
-       dkim=pass header.i=@amazonses.com header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=LoC0X0Ke;
-       spf=pass (google.com: domain of 010001998415f7d1-8d08dd9e-785b-4135-826c-82ca7edd1c20-000000@notifications.email.frame.io designates 54.240.9.32 as permitted sender) smtp.mailfrom=010001998415f7d1-8d08dd9e-785b-4135-826c-82ca7edd1c20-000000@notifications.email.frame.io;
-       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=frame.io
-Return-Path: phish.me.again+caf_=phishing@pot=hotmail.com@gmail.com
-Received: from a9-32.smtp-out.amazonses.com (a9-32.smtp-out.amazonses.com. [54.240.9.32])
-        by mx.google.com with ESMTPS id d75a77b69052e-4db0a2fd972si15446661cf.262.2025.09.25.20.34.16
-        for <phish.me.again@gmail.com>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Sep 2025 20:34:16 -0700 (PDT)
-Received-SPF: pass (google.com: domain of 010001998415f7d1-8d08dd9e-785b-4135-826c-82ca7edd1c20-000000@notifications.email.frame.io designates 54.240.9.32 as permitted sender) client-ip=54.240.9.32;
-Authentication-Results-Original: mx.google.com;       dkim=pass
- header.i=@frame.io header.s=goigs5t7jgjfu4z37cnx7z6tpqqsauhn
- header.b=rJPRjCb9;       dkim=pass header.i=@amazonses.com
- header.s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw header.b=LoC0X0Ke;       spf=pass
- (google.com: domain of
- 010001998415f7d1-8d08dd9e-785b-4135-826c-82ca7edd1c20-000000@notifications.email.frame.io
- designates 54.240.9.32 as permitted sender)
- smtp.mailfrom=010001998415f7d1-8d08dd9e-785b-4135-826c-82ca7edd1c20-000000@notifications.email.frame.io;
-       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=frame.io
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=goigs5t7jgjfu4z37cnx7z6tpqqsauhn; d=frame.io; t=1758857656;
-	h=Content-Type:From:To:Subject:MIME-Version:Content-Transfer-Encoding:Date:Message-ID;
-	bh=GhLkKHDGMQvOyRqerHUi76kO5y4COpUSAkNQzfUzKzk=;
-	b=rJPRjCb98OwA8yfduptQ3Dyd3ytITz3UHgANwMCQPcIvLwHIq8tXO/vY5h2ro5JI
-	X2YBEkNl0KAhQw+0zHuXBPFLpkcTVMToOLR/ijH5GeKLH9zRZJrvSLmgRN3jZo9x4Bd
-	jeIlHdZIXBixKugX+u6sQNiUulqD6lSX0/WxOc2zmemjdwngptkO0iAxX99y4pCeIQf
-	c64rwlwrhy8X7B16hXfOugg6BgLuCpmnrUvk4oxk2Dsec9rHfMsGc/c5XeQB95kWVfZ
-	3QVJl8YPJYwlQ/Tj+MkwYRXvGnk+EVnjt5wCQKnSXhoEHNgUIPh23WrdSTLchPS/2x3
-	QNJS6Aq9Sw==
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1758857656;
-	h=Content-Type:From:To:Subject:MIME-Version:Content-Transfer-Encoding:Date:Message-ID:Feedback-ID;
-	bh=GhLkKHDGMQvOyRqerHUi76kO5y4COpUSAkNQzfUzKzk=;
-	b=LoC0X0Ke6JcZmAzlOkKH5ZuS1SiUigrQKpDpSFXsV9K4NBG7owwyBW8BsyoUOZHD
-	zKwuj333jZfB84rx8KCj8m/hge82oDndrGBzhUsQu9/KfzYVdq794tO1DqCWn7LwtZ9
-	8Ks9ZNTIXx5iMfsGUyJhfbSvQRDKpXEJVLlKZL0c=
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.16; Mon, 3 Nov
+ 2025 03:23:13 +0000
+Received: from CO1PEPF000066E7.namprd05.prod.outlook.com
+ (2603:10b6:a03:80:cafe::4) by BYAPR11CA0052.outlook.office365.com
+ (2603:10b6:a03:80::29) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9275.16 via Frontend Transport; Mon,
+ 3 Nov 2025 03:23:12 +0000
+Authentication-Results: spf=pass (sender IP is 66.231.87.35)
+ smtp.mailfrom=bounce.email-biolifeplasma.com; dkim=pass (signature was
+ verified) header.d=email-biolifeplasma.com;dkim=pass (signature was verified)
+ header.d=s1.y.mc.salesforce.com;dmarc=pass action=none
+ header.from=email-biolifeplasma.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of
+ bounce.email-biolifeplasma.com designates 66.231.87.35 as permitted sender)
+ receiver=protection.outlook.com; client-ip=66.231.87.35;
+ helo=mta.email-biolifeplasma.com; pr=C
+Received: from mta.email-biolifeplasma.com (66.231.87.35) by
+ CO1PEPF000066E7.mail.protection.outlook.com (10.167.249.9) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9298.6 via Frontend Transport; Mon, 3 Nov 2025 03:23:12 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:D2DD3CE0B6B09F036A634DD9B8D5D3817EBE1D05E3F61109958810CB636E8E3F;UpperCasedChecksum:15EA03835944389C0C3A5FB3F106A4C90BAFC0B3615DA5B0207D2A1392DA7E2D;SizeAsReceived:2370;Count:16
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=200608; d=email-biolifeplasma.com;
+ h=From:To:Subject:Date:List-Unsubscribe:List-Unsubscribe-Post:MIME-Version:
+ Reply-To:Message-ID:Content-Type:Content-Transfer-Encoding;
+ i=infos@email-biolifeplasma.com;
+ bh=cwM0LHwAr3PMtKpXGFNjGpbD3RdiNvuHVDTmH1pk5jQ=;
+ b=wvFCbz9j8481Yep79CyctWBj8u3XwqZg0B+szuzyRigCCJaYQPI//6lIYSIEMHBa8pow/ZS7gRmC
+   i6fN9ivnO62ldYtniEyYSNC2EBEb46PIoF83nDpbESN6VY1NT0dcgSrfMcMjx7ZS5byBlPDBNA5U
+   qXw74XZGgGsk2EWzFN8=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=fbldkim1; d=s1.y.mc.salesforce.com;
+ h=From:To:Subject:Date:List-Unsubscribe:MIME-Version:Reply-To:Message-ID:
+ Content-Type:Content-Transfer-Encoding;
+ bh=cwM0LHwAr3PMtKpXGFNjGpbD3RdiNvuHVDTmH1pk5jQ=;
+ b=caxhpSUldNXAkZso+ckxA338kxKlzpUTAnss55G0Leh1Y9p6PRWqgLhRR0xTGYQdH//BRlm+oJ1r
+   1ekn4pHRkyX+fZEj5D+lEzozS4KwgrTwgdpLOZDjqstRZ4oq2KVeymK0YxzktkTKWLJ3c04Amkuu
+   Ml3xlLIOzeBathS1MULQoygWPAopEzs8nPZ/naIqNiIdWDPIs6LC4XNNXBnjun1k85V1nFErjcB/
+   OHNfDb4WM8OKZmb2HkZGMravDuXL7Iq9Ee/M06zXxiYgMu1Pr5M4Ak5XGibijB8Wmwq/1QjBJcDZ
+   xp7TDlG/kmr3MsZvzScYXtz3OmU7X1bYhORoKw==
+Received: by mta.email-biolifeplasma.com id h10g222fmd4i for <phishing@pot>; Sun, 2 Nov 2025 12:00:29 +0000 (envelope-from <bounce-23298016_HTML-329129482-47150086-524001800-39655@bounce.email-biolifeplasma.com>)
+From: "Asterdex" <infos@email-biolifeplasma.com>
+To: <phishing@pot>
+Subject: Claim Your rewards:
+Date: Sun, 02 Nov 2025 06:00:29 -0600
+List-Unsubscribe: <https://click.email-biolifeplasma.com/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiI1MjQwMDE4MDAiLCJzIjoiMzI5MTI5NDgyIiwibGlkIjoiMjMyOTgwMTYiLCJqIjoiNDcxNTAwODYiLCJqYiI6IjM5NjU1IiwiZCI6IjEwMTkyIn0.vk3EICtKO9lnMsaRVJtrqEUJ4uSSXDnjrkkyjhEgxTU>, <mailto:leave-fc4c1673776d0c7d74121f2d205921-fe2717727c650674711c72-fe6010777461047d7d12-fe3b11727164047c7d1470-fef31779736101@leave.email-biolifeplasma.com>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Reply-To: "BioLife Plasma Services" <reply-fe6010777461047d7d12-23298016_HTML-329129482-524001800-39655@reply.email.biolifeplasma.com>
+X-SFMC-Stack: 1
+x-job: 524001800_47150086
+Message-ID: <1451ad54-9974-4eeb-8e12-16f7304885a8@ind1s01mta730.xt.local>
 Content-Type: text/html;
-	 charset="utf-8"
-From: "foster clotilde (via Frame.io)" <notifications@frame.io>
-To: phish.me.again@gmail.com
-Subject: =?UTF-8?Q?foster_clotilde_shared_=E2=80=9CSECURE_DOCUMENT=E2=80=9D_with_y?=
- =?UTF-8?Q?ou?=
-X-fio-account-id: 30473665-fad8-4d87-8517-20fda470419c
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 26 Sep 2025 03:34:16 +0000
-Message-ID: <010001998415f7d1-8d08dd9e-785b-4135-826c-82ca7edd1c20-000000@email.amazonses.com>
-Feedback-ID: ::1.us-east-1.9v1sMeGGVqhPBMWp1gOkewA2CDxrnJyNjUf3GYUx6wA=:AmazonSES
-X-SES-Outgoing: 2025.09.26-54.240.9.32
-X-IncomingHeaderCount: 34
-X-MS-Exchange-Organization-ExpirationStartTime: 26 Sep 2025 03:34:18.9768
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-IncomingHeaderCount: 16
+Return-Path: bounce-23298016_HTML-329129482-47150086-524001800-39655@bounce.email-biolifeplasma.com
+X-MS-Exchange-Organization-ExpirationStartTime: 03 Nov 2025 03:23:13.1892
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: feeb45ed-3720-4c11-6787-08ddfcad9372
+X-MS-Exchange-Organization-Network-Message-Id: e628c5da-3c4e-49f3-c76a-08de1a88524d
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM3PEPF0000A790:EE_|PH7PR10MB6156:EE_|MW4PR10MB5749:EE_
-X-MS-Exchange-Organization-AuthSource: AM3PEPF0000A790.eurprd04.prod.outlook.com
+X-MS-TrafficTypeDiagnostic: CO1PEPF000066E7:EE_|SJ0PR10MB4512:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource: CO1PEPF000066E7.namprd05.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 9/26/2025 2:51:13 AM
-X-MS-Office365-Filtering-Correlation-Id: feeb45ed-3720-4c11-6787-08ddfcad9372
+X-MS-UserLastLogonTime: 11/3/2025 3:09:58 AM
+X-MS-Office365-Filtering-Correlation-Id: e628c5da-3c4e-49f3-c76a-08de1a88524d
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 209.85.208.49
-X-SID-PRA: NOTIFICATIONS@FRAME.IO
+X-Sender-IP: 66.231.87.35
+X-SID-PRA: INFOS@EMAIL-BIOLIFEPLASMA.COM
 X-SID-Result: PASS
-X-MS-Exchange-Organization-SCL: 1
-X-Microsoft-Antispam: BCL:4;ARA:1444111002|2phishing@pot0799006|1680799066|3217299011|58200799018|9020799016|5301999021|9400799040|10300799035|68400799013|20103052909095|47200799021|16002599021|12005499003|970799057|9000799056|11001999021|3151999006|28045499009|461199028|40110799003|22000799015|440099028|4302099013|3412199025|18021999003|18042799006|21101999018|1122599019|1360799030|1380799030|1370799030|3801999012|1602099012|56899033;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Sep 2025 03:34:18.9736
+X-MS-Exchange-Organization-SCL: 8
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|3151999006|3600799018|970799057|1680799066|2700799029|9000799056|9400799040|8900799020|58200799018|47200799021|13020799006|461199028|20103052909095|10300799035|56899033|1380799030|1360799030|1370799030|1602099012|22015499006|3412199025|4302099013|440099028|18021999003|1122599019|26104999006|30041999003|6406899015|2406899039;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2025 03:23:12.9620
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: feeb45ed-3720-4c11-6787-08ddfcad9372
+X-MS-Exchange-CrossTenant-Network-Message-Id: e628c5da-3c4e-49f3-c76a-08de1a88524d
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource: AM3PEPF0000A790.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000066E7.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB6156
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.3031597
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9137.005
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB4512
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.4086048
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9275.015
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:1;jmr:0;ex:0;auth:1;dest:C;OFR:CustomRules;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9575002)(10195002)(9320005)(120001);
-X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0xO1NDTD0z
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9525003)(10145025)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?Y2tYVnVsdGNEY3EydXNWSnd4MldmRitRQTZkcXFPdHNiVXg2VWZ1SWdSRlhy?=
- =?utf-8?B?cWMyNlIwRGZsTnpOODN1aTYvT1ByTUN2SjI3OUlmYTFjbHV6YVdkQkphT01V?=
- =?utf-8?B?SG80VDN2WHo3OFNSdlJpODcyMGdlQ2NEYkRsY0dqK3dyQXFERGs1QXN5bWZl?=
- =?utf-8?B?SnErLzJTdExmeU0rdXJCVUVDc1hEOXczaGtubFFBb2xNWmw1REpFVStJZ28x?=
- =?utf-8?B?cHBsSzBqb0NzQ1ZkUnBYQUFweHlMVG95Vjc3ZWxrRVRMUEV1WnplcW5jY0x2?=
- =?utf-8?B?SkVXTU13akI3U3VXNzArYzhjcTVINnM5Q3dTTXpsNXplK24zdDFVRXNYeEZX?=
- =?utf-8?B?bTRORHZrQk9YaVdST2g4SU44aEFQcURsQ2VqM3ZrNjc1SGd4aTNmM0wxejcr?=
- =?utf-8?B?OTVEa0ZJRXdZa0FUVVNzWGJ6U3l4R2dycjFKNWUzdE5Wd3V2RzZUZEFOK0J1?=
- =?utf-8?B?S3RoNkdWWVVHa1pjS2FwWk9wWkRzd05NSWxVNkIvZHFzRng2WW40d1Jnd2Rw?=
- =?utf-8?B?TjExbm9nRWhIRUZxYUErNkdzQ2x4U3IxMElLNHdmZFE1RndNMWphR2srUnJC?=
- =?utf-8?B?Wmp0blV1ZVBGL3hkM3VoOVZXbWMyTHFWWDFvcDdWaXk2b1g5QXphSVlNVDNa?=
- =?utf-8?B?Y2tvYzVjQ09SUnpPaDhiY2pGWm04SG9NVUpGWU1mL2wyMmd4RGZGS0h3WThw?=
- =?utf-8?B?d2o3R09Ha0dUZHlnTkFGb21wVXdFREE5bnBoWlVLcTVjdU9MNnYxZjAxbXdn?=
- =?utf-8?B?dms1SzdqVllzTDkzZEIrbU16aU1VY05hQU5BckIwT1plQ1pjYWtySEZNVUVE?=
- =?utf-8?B?VWVDcUtPRzFQcGYrM21pRmczSDhFLzQ5OEhDVDVYNDcyaStuWUVrUnR3dXlM?=
- =?utf-8?B?ZnUwOGIxNkNYK1NHbG4vUThyS3ZxQWpTaXZxdm44N2x6NDdLSW5aS3Z2cXJW?=
- =?utf-8?B?NTlyUUZuZ0N1NUpoRnYxS0JrV0RhdlZBTkhVenJIZUtSNlY0WFNxc3VBWlpT?=
- =?utf-8?B?YWJnaUdVL3RLWW9iY1VVaFJOSzg3MlQrY3d0eDZrelZHT2I3MUtxcnJqNXRV?=
- =?utf-8?B?VHFkaDUxN2c3Ui9lZ2krSWd2YWZ0R0NIR2JTelJyaE9RcVV6R3gwT1dhMCtp?=
- =?utf-8?B?ajhpMW9MbVU3bEs5S3VlYUVlN0VKYWpJQXE1czlZVm54VU16Q2FXbmYwc3pn?=
- =?utf-8?B?Z2c4OWd0N29DdEFyQlh0bHZIWDU1Ykh3RjU4a3NIbjFLOGtGTHpXemllQ2dX?=
- =?utf-8?B?RE5VM0sxcG1ya1hmZGVRYTU2bmJEZWs1c1pCYUVrNVVmUm94Q3ZlVnIyaG9h?=
- =?utf-8?B?RnJPdmJkL1d6UzhpTEJtbXR2cVg0cGxkYmQvZ3NhSWpPVmY5dUliVFdkVW16?=
- =?utf-8?B?aC9qb0o1ZU1NUHFBWmgzcW9CY01pREFBMFJ0bkRHYWpUSTY2YWRkWktHYmVR?=
- =?utf-8?B?aWlPYVlNdnE5Qy9oZm85UzRQSzVwczlVc09qeGVmOUh2T280cmlrdFdVNkRU?=
- =?utf-8?B?ZkI4ZEtQbnRXMWRselgzMjgzeVV6R01VdFJOU0JmcmRwU0xVNjBEWEV2Z25s?=
- =?utf-8?B?Q1ZXSjBpVjVKczZJYUVPSGFkWFhJSW9SOFh5MWRGS20zNFErMlNRN2VDeUxM?=
- =?utf-8?B?RktpL1NkY296ekpFQTJ6dWJzRG9WZCtaeG5FL1hZeGpqeE0yZFhtU29JL0sr?=
- =?utf-8?B?eXZMa2UxNGtNaHZWMnQ2NHhhTk9FVGJxUlNDSEJldjFtNThub2o1WjFuNk1K?=
- =?utf-8?B?U0dLenJqSGxydUNzZ1RicUJHZG5iVTgrYXJyaWVERmJacEo2ZkhjMUVrcjl6?=
- =?utf-8?B?MVhUM3JDTW5UYVkvT2xpWm5YaUQyUHlBQzNFYmJob0MxQTBvcTNEMFJ4TFZx?=
- =?utf-8?B?aGRKMytKUzJkQldVSzRKcHU4T1NzdHNGTklJT3lXZkR3MlhwT25EbndMZ2lQ?=
- =?utf-8?B?dDRPYjhkTkUvQ1dFZUREd0drUGdaVEJYLzZwQWxlMlZSNEx0WURaYzZSUDZV?=
- =?utf-8?B?Y3ZoQktzM05JbyszTFFQQmlyL2ZrUndDR1pDVk5WVTdncVVGbWpDTVplMkVL?=
- =?utf-8?B?dTZrNno0SXVoSDJzbWpvV1FpSHFRWXBGdnlqWEJVUXZHWkFwd1hJT296dnBZ?=
- =?utf-8?B?Q0lNcW51NVdhZCtaenpsd2ZFN3FwcUNQL3pGZUwyMGlrQTlyZmxwTXJuUEhC?=
- =?utf-8?B?SjJJbTBtTmdrRE5TMkhmK3o3ZWQ5S0tKcGFDYVZWUSt2YjdSaFU3RDNYYm8w?=
- =?utf-8?B?MHllRHo4SkNBdnI4eEF2NGRUTFVKenhRT09NSFhFMmhXVFJtMUZvbFlleDdR?=
- =?utf-8?B?Q0IvblJDeUR5cWRiOFhmTDk2VnlQRXpZOUlmRHdkRVc1QnRNNGsyMm5QY2lM?=
- =?utf-8?B?eU5ib0xEMnRnMnkzVlVLWGdBdmVuQWozanJ5M050WHgzZTg1eWo1TjgvSmJE?=
- =?utf-8?B?RFk4Um1pV01lVTZhaGlDaHpuRUtlVDRxcnVyOHQxajJhVlc5UEEveE1lR0NC?=
- =?utf-8?B?bEdMYkxSRjBnWkxZdmlSSExZWWtJYTNoY1gzdHNoeXFYM0dPRlF6ZTE4UGV2?=
- =?utf-8?B?SFQzK3ZYamRmdWM2TkFEZXFMYldyOW9wbVVWd3IzcE1iV3NmWnBBbTg5ZHN1?=
- =?utf-8?B?UDZLTUd5RDJDM0krZ1c4czhQdTk1Y252b1JrMHNYUklFZThsajA4TnA5Ylcr?=
- =?utf-8?B?VU53a282bXI1SisySWc4R2hEVDdPMlh4cllJT2dsRmVWbEpLQkxESnMrMWtU?=
- =?utf-8?B?dnFtQlFNM0pvSUcvQUVXa001NmtycmdIRGxaUWsvYWtrMXE4UlBsZ2kxS093?=
- =?utf-8?B?ZTlTM2d6Qm9TMjJNbTRTOEtzaGprMjV5WWpsdlJkR2ZsU0ZHRm16MTdTblZT?=
- =?utf-8?B?YVhQSHR1Y2dUQWI4bGNDWUpUR3BkSGpKdWNkQ01TeGNVQU8vdXdaM2JGeTR1?=
- =?utf-8?B?L1phUzdyWUtvMWhQNmdmYVl5azA1R0xMRDBKQmdDZ3k5dnU1eXJld2ZxVzU3?=
- =?utf-8?B?bWhZS3BmUjlFV282dWZieEF4ellBaEE3K3kwMEE4M0p0VDlMUE5JLzRvVlZk?=
- =?utf-8?B?L05QeWNneWQvbkU0RlhaeTRqS216ZU9xREM3VW5UWXdwMjV0UkI2SmJ5ZEhC?=
- =?utf-8?B?elZGTk1tb3dwUzNzSXFEODZkRExHcytxU2k0T3J2L0Y4TmpRZ0s5TG56b1NU?=
- =?utf-8?B?S2R6RTJvVlpkNWZmcnpvZGgzb1YvSTVLcnZXVURlZFFYNGFrVDZ2ZFQzeTdS?=
- =?utf-8?Q?9GzlwhkbKynBCDiGfIXXboZDhM=3D?=
+	=?us-ascii?Q?GkndtW7rsFoWaljP2Xl3p4xPmrRs1e6KBf/tO28SFWQNunJemXPucq4iUmSG?=
+ =?us-ascii?Q?b958LyYNXMqiOGelC3ZAh3QCPMWafAx96CiA9OEFAUq4rWMZcwaW0nHWJVDK?=
+ =?us-ascii?Q?d/6wAsmy9i2VLGnz+fFFjGGGMcMp4JrEA+23fAYCMgUKzdivsbeGEDIWw2DX?=
+ =?us-ascii?Q?GPQv0VuWJl9Dnj0RkSd43I8hUIIeg2Bxp7Fl+SWeJf+sy0upa3WZVilm6u3N?=
+ =?us-ascii?Q?69nM4K5tmZF0WDGfBVLp6xHkOcymPwOGcAmU3Rl5TKp3V0jj+LIHVwrrkHqx?=
+ =?us-ascii?Q?+xw+6EdmFSFN+vLflhfgm5wyZkAP/AIpm7NUOj0fLPsb+7nQRebpshsf2e/k?=
+ =?us-ascii?Q?rNqp5+gOmpbv/02fdQ6BOBA9EzIlEPM7g4uVdkd9exA7xIi/qjR6EkunsWAO?=
+ =?us-ascii?Q?qlAawoQNGMCtKEykwxbHB6cy5kTUd9zD2tHKahGO0FZaYfSEisgR2Lrz3ndJ?=
+ =?us-ascii?Q?p7ztc8tLuoJz8qGHLtyGSueJ9ppMWe+HJEkxVqmaBzdS7IwmEc7BoPEIXwgS?=
+ =?us-ascii?Q?UcOenQbX/0pS3OXfZppj2CNXJivxwAIYzx9iXR0W2ccP+bbYzhbmQDUK1A4o?=
+ =?us-ascii?Q?RRnxKfIOGT4omSfvOReNjhF6On4EAvqbityx9KxoU7KeFg94jnmN+T/W8tDd?=
+ =?us-ascii?Q?X+2hUAmIfRRop+6NweL+iJ0C0go/JJmxKG58eM4VFiWb1vW8rp7XSS4tXxwH?=
+ =?us-ascii?Q?DFNYHwd+jUNwdvPtjsNtrISNlh7o0/4O1JUzif3fVZUe1yr4ie1tEiCw9b9t?=
+ =?us-ascii?Q?NrF4IF+QWtMD78IsJ0BK8DGUYnK7q9U1GEiT4DEOtFbw2D0Qc7ZycTK4fNr4?=
+ =?us-ascii?Q?wSN658xvWnVVGpKyBUPunmC0X1WqpPiUT/alFamHUPU9tsGIveRNmRnGPw9k?=
+ =?us-ascii?Q?1jD8mGkde3JIkGWsPflj6RfRU2ifMaH15XWriCVhNg2j4SZAKzSlfIXEae8x?=
+ =?us-ascii?Q?6scyCvWg7CyXjGFbLaEeZlGXgN/yj+OR+opyWKTvo/mUr7BSV0HgQEWFzWb4?=
+ =?us-ascii?Q?WgF2LcP+WB1OC/Rmt6EmnYKo+A2pCurf9N4AU7RiUlMW+mayA9cvu4bOnVld?=
+ =?us-ascii?Q?DlJkCJm8hjo2LwMOtJvnGePSFYM0JaJQLIDC3UpGk9AvHPPXVd/cFb4BEx7R?=
+ =?us-ascii?Q?7g9hhpMcMN1IA+2GLgLxjegTQrKf/ihoutMJ6X6KGNj6RWmpO8OBSrJG2yhM?=
+ =?us-ascii?Q?HUIgcdm7X0QHfyenFJzyIvWE4c4S1ctsZ6tu157tURCDv62/ObYAu+kLrkVM?=
+ =?us-ascii?Q?B9CTZSS2MJoR8OOpFXJDtR+M3xc89gUe9N7NOAQIvfAIujNvRzwBjI7ONIA5?=
+ =?us-ascii?Q?qOsOIJoONLaAEkPBWUhjP9Lzig8QpJ0lvjCViiFjsUq00hBR8qBs2Hhtn8Bq?=
+ =?us-ascii?Q?U8mCQvyFr9zyV56Vf1RpDwuwhsDOPyTMWp1Ww2f24fyyBXK3PQL6wjfHsPlo?=
+ =?us-ascii?Q?GxECUSfh3eQ9ZRKPSGoGFxomcfip3B8YKWkXNuEle0Wg+jggOHsXswfoBcNG?=
+ =?us-ascii?Q?iQd/fB8Y0oXeyeIXVB6MKpA8Xtz/0FHwOvZqekBfZVzWs0oZwrwIzhkAY2j7?=
+ =?us-ascii?Q?7ifXgQYOqQo1xHN/oPWKwdXjf1Wn7RFve4YKjlL1yrVUX6vzMFBw9dLxXNUQ?=
+ =?us-ascii?Q?nitoOkKmU3Q2eI0y8Oc7zftorI2w1i4qD84I2Omb3AYDIhA57vrf7hfgPZCN?=
+ =?us-ascii?Q?TpxFg8ozOo2fbstGzPh81lMJjmAxu2BOP0nCD+v62Vx5DO8dgxND0f/t8T2V?=
+ =?us-ascii?Q?LvbMqA7drpza89KQ0N+razWRSXYqWzOz2VV3BuL/qRt5wDsKpEqmrRxO1Gr7?=
+ =?us-ascii?Q?4YdSXM6oFmW66FZHWsqmHTwRCNEkz7SNVecon4k6XFm+ynmvtgDH3RyXeDGY?=
+ =?us-ascii?Q?0OeXez/bIFdmX1fco7dJsLvC5AsYkewavy57XrbfGEYjOM/jpllgX2rIowu9?=
+ =?us-ascii?Q?DSN42LQOCPmHCaCjdb2ajLUtTcw3DX6ErePm5eIpcujHoBK6zo2zIrA+BP6X?=
+ =?us-ascii?Q?G6x7+VNGMg/A9qvSybAkVWn9VdAKzlNTFhg79t5UQBaAApNJDwWqCFpCB6O8?=
+ =?us-ascii?Q?4vwCr86Fb9wnyBhMSMHYm/WXq25ty9KjoVzgP7+0NK0afTmjkupNgv62ULbR?=
+ =?us-ascii?Q?JSqvjClu2imxVSUgY648tRn1M2hWOLTy+9EEGF7b/D7RQrxxhU0YiiiWfbBK?=
+ =?us-ascii?Q?6GRkzx+gGv81tuwLWuhBz6LNHhoM/UDP5evycmw4AbeEks+Bg1p0ag3EokxS?=
+ =?us-ascii?Q?fEE1DLAkdfu84VEWC5ku+Ms1lAX9WON2coam9iBDQ4nc8J29ebqwdUKS01sx?=
+ =?us-ascii?Q?2AQvHW9/A8DJvCSg/eap14AwlHRu+TMf+gTP33P5XPUWIlxj03V2N1jXSBeo?=
+ =?us-ascii?Q?ZlFnYxmsRlmzcPDa6nXWl1A5ZTrpB/hRPZOpfcmudh7orgMiHFNuqY63BgpH?=
+ =?us-ascii?Q?KDs3/3lAo8Ir6xxIwoHHcrKcUNe1IVV3VlnG9RWO+6aoR7c90w0f2NMcchk+?=
+ =?us-ascii?Q?PynKR0cbW92QK+XrjM19z2H/Kt3w0r1kkrreVxNVQ98DeEkZMQCEm4wkA/j2?=
+ =?us-ascii?Q?n+q43iWSdjZbS6N4gblRSW2XTwKGpyTO7x6RthN/TfYe6Xs5VL5Vf6x1vMwn?=
+ =?us-ascii?Q?gJY0NBN+wo409OM/jVBCF8jfT4sjYVg9G98X6WEtJbokX14DNWbxwaxx9VRo?=
+ =?us-ascii?Q?M2pQeGSLp9uyyQuOHF4L2K1R8ZpEuqpm0UEeNd228azjX+KvUCkdQ0dEA6tp?=
+ =?us-ascii?Q?0XkN32XRHQwFCj+wohAb5gODxp2FTMPi81fnzNlsJ85Wxbxpwqnsuc5zc3N7?=
+ =?us-ascii?Q?8hFbfg9yXaoZL4n1+3WBLGKaasieY2TCRp7KmiFBXj3CkxuwTty+N7M8D9pb?=
+ =?us-ascii?Q?ElPc71/IWAM6m3X80GPT8/NO/RphXC0mEN9YXmnLaINirUqv0c01w0JEmiiF?=
+ =?us-ascii?Q?5MHot0t2ID3Y8Mv2GAiTyiH6dvP7pZxBfMpemuGBpYtCtOxcMMnp1QZr7ath?=
+ =?us-ascii?Q?+ibk8fYprpE/UuJFjFBJb9b14yKgw0XzseInjfeG0TrFi6UU7qC2sQL6Y89U?=
+ =?us-ascii?Q?IyFTatoqbZojW3jO5XjtJzFpz4ILu3xhcXjJgnxD3PVx8hV5c7WuHMVApXj/?=
+ =?us-ascii?Q?y+3vnYQZTP/mIKNCIwn4nZhHAYFOoBxBhQ=3D=3D?=
 MIME-Version: 1.0
 
-<!doctype html><html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:=
-schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:offi=
-ce"><head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><t=
-itle></title><!--[if !mso]><!--><meta http-equiv=3D"X-UA-Compatible" conten=
-t=3D"IE=3Dedge"><!--<![endif]--><meta name=3D"viewport" content=3D"width=3D=
-device-width, initial-scale=3D1">=0A=
-<style type=3D"text/css">=0A=
-#outlook a { padding: 0; }=0A=
-body { margin: 0; padding: 0; -webkit-text-size-adjust: 100%; -ms-text-size=
--adjust: 100%; }=0A=
-table, td { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rsp=
-ace: 0pt; }=0A=
-img { border: 0; height: auto; line-height: 100%; outline: none; text-decor=
-ation: none; -ms-interpolation-mode: bicubic; }=0A=
-p { display: block; margin: 13px 0; }=0A=
-</style>=0A=
-<!--[if mso]>=0A=
-<noscript>=0A=
-<xml>=0A=
-<o:OfficeDocumentSettings>=0A=
-  <o:AllowPNG/>=0A=
-  <o:PixelsPerInch>96</o:PixelsPerInch>=0A=
-</o:OfficeDocumentSettings>=0A=
-</xml>=0A=
-</noscript>=0A=
-<![endif]-->=0A=
-<!--[if lte mso 11]>=0A=
-<style type=3D"text/css">=0A=
-.mj-outlook-group-fix { width:100% !important; }=0A=
-</style>=0A=
-<![endif]-->=0A=
-<style type=3D"text/css">@media only screen and (min-width:480px) { .mj-col=
-umn-per-100 { width:100% !important; max-width:100%; } .mj-column-px-140 { =
-width:140px !important; max-width:140px; } .mj-column-px-18 { width:18px !i=
-mportant; max-width:18px; } .mj-column-px-248 { width:248px !important; max=
--width:248px; }  }</style><style media=3D"screen and (min-width:480px)">.mo=
-z-text-html .mj-column-per-100 { width:100% !important; max-width:100%; } .=
-moz-text-html .mj-column-px-140 { width:140px !important; max-width:140px; =
-} .moz-text-html .mj-column-px-18 { width:18px !important; max-width:18px; =
-} .moz-text-html .mj-column-px-248 { width:248px !important; max-width:248p=
-x; } </style><style type=3D"text/css">@media only screen and (max-width:479=
-px) {=0A=
-                table.mj-full-width-mobile { width: 100% !important; }=0A=
-                td.mj-full-width-mobile { width: auto !important; }=0A=
-            }=0A=
-            </style><style type=3D"text/css">a {=0A=
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif !importa=
-nt;=0A=
-      }=0A=
-      .brand-grey-50-link {=0A=
-        color: #6a6b83 !important;=0A=
-        text-decoration: none !important;=0A=
-      }=0A=
-      .transactional .notification-header-wrapper {=0A=
-        padding-bottom: 24px !important;=0A=
-      }=0A=
-      .black-link {=0A=
-        color: #000 !important;=0A=
-        text-decoration: none !important;=0A=
-      }=0A=
-      .purple-link {=0A=
-        color: #6972FB !important;=0A=
-        text-decoration: none !important;=0A=
-      }=0A=
-      .digest .notification-header-container > div {=0A=
-        font-size: 16px !important;=0A=
-        line-height: 120% !important;=0A=
-        letter-spacing: -0.08px !important;=0A=
-      }=0A=
-      .transactional .notification-header-container > div, .title {=0A=
-        font-size: 28px !important;=0A=
-        line-height: 112% !important;=0A=
-        letter-spacing: -0.28px !important;=0A=
-      }=0A=
-      .body-wrapper {=0A=
-        margin: auto !important;=0A=
-        max-width: 100% !important;=0A=
-      }=0A=
-      .body-container .quote {=0A=
-        padding: 12px !important;=0A=
-        background-color: #f5f5f8 !important;=0A=
-        border-radius: 12px !important;=0A=
-      }=0A=
-      .digest .notification-header-wrapper {=0A=
-        width: 89% !important;=0A=
-        max-width: 89% !important;=0A=
-      }=0A=
-      .footer-manage-email-preferences {=0A=
-        width: 165px !important;=0A=
-      }=0A=
-      .footer-button { width: 140px !important; }=0A=
-      .footer-button a, .footer-manage-email-preferences a {=0A=
-        color: #4f5167 !important;=0A=
-        font-size: 12px !important;=0A=
-        line-height: 133% !important;=0A=
-      }=0A=
-      .footer-logo { width: 18px !important; }=0A=
-      .footer-copyright { width: 248px !important; }=0A=
-      .cta table { width: 100% !important; }=0A=
-      .cta a {=0A=
-        color: #fff !important;=0A=
-        font-size: 16px !important;=0A=
-        font-weight: 600 !important;=0A=
-        line-height: 142% !important;=0A=
-      }=0A=
-      .header {=0A=
-        font-size: 18px !important;=0A=
-        line-height: 112% !important;=0A=
-      }=0A=
-      .header-container {=0A=
-        width: 89% !important;=0A=
-        max-width: 89% !important;=0A=
-      }=0A=
-      .header-copy {=0A=
-        padding-right: 8px !important;=0A=
-        vertical-align: middle !important;=0A=
-        color: #5b53ff;=0A=
-        font-size: 16px;=0A=
-        line-height: 22px;=0A=
-      }=0A=
-      .disable-notifications-table {=0A=
-        text-align: left !important;=0A=
-      }=0A=
-      .disable-notifications-row {=0A=
-        display: inline-block !important;=0A=
-        padding-top: 8px !important=0A=
-      }=0A=
-      .disable-notifications-copy {=0A=
-        color: #6a6b83 !important;=0A=
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif !importa=
-nt;=0A=
-      }=0A=
-      .body-container, .body-container .purple-link, .body-container .quote=
-, .disable-notifications-copy {=0A=
-        font-size: 15px !important;=0A=
-        line-height: 140% !important;=0A=
-        letter-spacing: 0px !important;=0A=
-      }=0A=
-      .body {=0A=
-        margin: 0px auto !important;=0A=
-        padding: 0 24px !important;=0A=
-      }=0A=
-      .vertical-align-middle {=0A=
-        vertical-align: middle !important;=0A=
-      }=0A=
-      .thumb {=0A=
-        display: block !important;=0A=
-        width: 100px !important;=0A=
-        padding-left: 34px !important;=0A=
-        padding-top: 12px !important;=0A=
-      }=0A=
-      .avatar-column {=0A=
-        width: 24px !important;=0A=
-      }=0A=
-      .avatar-fallback {=0A=
-        border-radius: 50% !important;=0A=
-      }=0A=
-      .avatar-fallback > div {=0A=
-        width: 24px !important;=0A=
-        height: 24px !important;=0A=
-        line-height: 24px !important;=0A=
-      }=0A=
-      .chip-container {=0A=
-        border-radius: 100px !important;=0A=
-        display: inline-block !important;=0A=
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif !importa=
-nt;=0A=
-        padding: 8px 12px !important;=0A=
-        vertical-align: middle !important;=0A=
-      }=0A=
-      .chip-container .chip-text {=0A=
-        display: inline-block !important;=0A=
-        font-size: 16px !important;=0A=
-        line-height: 22px !important;=0A=
-        vertical-align: middle !important;=0A=
-      }=0A=
-      .chip-avatar {=0A=
-        border-radius: 50% !important;=0A=
-        display: inline-block !important;=0A=
-        font-size: 13px !important;=0A=
-        height: 20px !important;=0A=
-        vertical-align: middle !important;=0A=
-        width: 20px !important;=0A=
-      }=0A=
-      .chip-avatar-fallback {=0A=
-        background-color: #ee44ff !important;=0A=
-        border-radius: 50% !important;=0A=
-        display: inline-block !important;=0A=
-        font-size: 9px !important;=0A=
-        height: 20px !important;=0A=
-        line-height: 20px!important;=0A=
-        padding: 0px !important;=0A=
-        text-align: center !important;=0A=
-        vertical-align: middle !important;=0A=
-        width: 20px !important;=0A=
-      }.avatar img {=0A=
-        width: 24px !important;=0A=
-        height: 24px !important;=0A=
-      }=0A=
-      a {=0A=
-        color: inherit !important;=0A=
-        text-decoration: none !important;=0A=
-        font-size: inherit !important;=0A=
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif !importa=
-nt;=0A=
-        font-weight: inherit !important;=0A=
-        line-height: inherit !important;=0A=
-      }=0A=
-      .header {=0A=
-        font-size: 18px !important;=0A=
-        line-height: 112% !important;=0A=
-      }=0A=
-      .cta a {=0A=
-        color: #fff !important;=0A=
-        font-size: 16px !important;=0A=
-        font-weight: 600 !important;=0A=
-        line-height: 142% !important;=0A=
-      }=0A=
-      .footer-button a, .footer-manage-email-preferences a {=0A=
-        color: #4f5167 !important;=0A=
-        font-size: 12px !important;=0A=
-        line-height: 133% !important;=0A=
-      }=0A=
-      .purple-link {=0A=
-        color: #6972FB !important;=0A=
-        text-decoration: none !important;=0A=
-        font-size: 15px !important;=0A=
-        line-height: 140% !important;=0A=
-        letter-spacing: 0px !important;=0A=
-      }=0A=
-      .desktop-inline-block {=0A=
-        display: none !important;=0A=
-      }=0A=
-      @media only screen and (min-width: 480px) {=0A=
-        .avatar-column {=0A=
-          width: 32px !important;=0A=
-        }=0A=
-        .avatar img {=0A=
-          width: 32px !important;=0A=
-          height: 32px !important;=0A=
-        }=0A=
-        .avatar-fallback > div {=0A=
-          width: 32px !important;=0A=
-          height: 32px !important;=0A=
-          line-height: 32px !important;=0A=
-        }=0A=
-        .cta table {=0A=
-          width: auto !important;=0A=
-        }=0A=
-        .title {=0A=
-          font-size: 34px !important;=0A=
-          letter-spacing: -0.18px !important;=0A=
-        }=0A=
-        .thumb {=0A=
-          display: inline-block !important;=0A=
-          width: 100px !important;=0A=
-          padding-left: 0px !important;=0A=
-          padding-top: 0px !important;=0A=
-        }=0A=
-        .desktop-inline-block {=0A=
-          display: inline-block !important;=0A=
-        }=0A=
-        .digest .notification-header-wrapper {=0A=
-          width: 420px !important;=0A=
-          max-width: 420px !important;=0A=
-        }=0A=
-        .digest .notification-header-container > div {=0A=
-          font-size: 18px !important;=0A=
-          line-height: 133% !important;=0A=
-          letter-spacing: -0.18px !important;=0A=
-        }=0A=
-        .transactional .notification-header-container > div {=0A=
-          font-size: 34px !important;=0A=
-          line-height: 112% !important;=0A=
-          letter-spacing: -0.68px !important;=0A=
-        }=0A=
-        .body-container, .body-container .purple-link, .body-container .quo=
-te, .disable-notifications-copy {=0A=
-          font-size: 16px !important;=0A=
-          line-height: 142% !important;=0A=
-        }=0A=
-        .header {=0A=
-          font-size: 22px !important;=0A=
-          line-height: 120% !important;=0A=
-        }=0A=
-        .header-container {=0A=
-          width: 432px !important;=0A=
-          max-width: 432px !important;=0A=
-        }=0A=
-        .disable-notifications-table {=0A=
-          text-align: right !important;=0A=
-        }=0A=
-      }</style><meta name=3D"format-detection" content=3D"telephone=3Dno"><=
-meta name=3D"format-detection" content=3D"date=3Dno"><meta name=3D"format-d=
-etection" content=3D"address=3Dno"><meta name=3D"format-detection" content=
-=3D"email=3Dno"></head><body style=3D"word-spacing:normal;background-color:=
-#f0f0f7;"><div class=3D"body transactional" style=3D"background-color:#f0f0=
-f7;"><img height=3D"1" src=3D"https://api.frame.io/v2/email/track_open?toke=
-n=3DeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiMzA0NzM2NjUtZm=
-FkOC00ZDg3LTg1MTctMjBmZGE0NzA0MTljIiwiYWNjb3VudF91c2VyX2lkIjpudWxsLCJlbWFpb=
-F9hZGRyZXNzIjoicGhpc2gubWUuYWdhaW5AZ21haWwuY29tIiwiZW1haWxfaWQiOiI1MTMyYjZh=
-OS1jOTk3LTRlNDAtOTc5My0zODkxOGM3Y2NkZDIiLCJlbWFpbF90eXBlIjoidHJhbnNhY3Rpb25=
-hbCIsIm5vdGlmaWNhdGlvbl90eXBlIjoic2hhcmVfcmV2aWV3ZXJfYWRkZWQiLCJ1c2VyX2lkIj=
-pudWxsfQ.dy3dHvN6p7T_0dUu8Uotez37E1fbXLXMxXLbB83isBU" style=3D"height: 1px;=
- width: 1px;" width=3D"1"><!-- start frameLogo --><!--[if mso | IE]><table =
-border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" alig=
-n=3D"center" width=3D"600" style=3D"width:600px;"><tr><td style=3D"line-hei=
-ght:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--><div style=
-=3D"margin:0px auto;max-width:600px;"><table border=3D"0" cellpadding=3D"0"=
- cellspacing=3D"0" role=3D"presentation" align=3D"center" style=3D"width:10=
-0%;"><tbody><tr><td style=3D"direction:ltr;font-size:0px;padding:46px 0px;p=
-adding-bottom:24px;text-align:center;"><!--[if mso | IE]><table border=3D"0=
-" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><td style=
-=3D"vertical-align:top;width:600px;"><![endif]--><div class=3D"mj-outlook-g=
-roup-fix mj-column-per-100" style=3D"font-size:0px;text-align:left;directio=
-n:ltr;display:inline-block;vertical-align:top;width:100%;"><table border=3D=
-"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%=
-" style=3D"vertical-align:top;"><tbody><tr><td align=3D"left" class=3D"fram=
-e-logo-testid" style=3D"font-size:0px;padding:0px;word-break:break-word;"><=
-table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation=
-" style=3D"border-collapse:collapse;border-spacing:0px;"><tbody><tr><td sty=
-le=3D"width:104px;"><a href=3D"https://frame.io/" target=3D"_blank"><img al=
-t=3D"Frame.io logo" height=3D"25" src=3D"https://frameio-static-assets.s3.a=
-mazonaws.com/email-assets/frame-logo.png" width=3D"104" style=3D"border:0;d=
-isplay:block;outline:none;text-decoration:none;height:25px;width:100%;font-=
-size:13px;"></a></td></tr></tbody></table></td></tr></tbody></table></div><=
-!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></=
-div><!--[if mso | IE]></td></tr></table><![endif]--><!-- end frameLogo --><=
-!-- start card --><!--[if mso | IE]><table border=3D"0" cellpadding=3D"0" c=
-ellspacing=3D"0" role=3D"presentation" bgcolor=3D"white" align=3D"center" w=
-idth=3D"600" class=3D"transactional-card-test-target-outlook" style=3D"widt=
-h:600px;"><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height-ru=
-le:exactly;"><![endif]--><div class=3D"transactional-card-test-target" styl=
-e=3D"background:white;background-color:white;margin:0px auto;border-radius:=
-18px;max-width:600px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D=
-"0" role=3D"presentation" align=3D"center" style=3D"background:white;backgr=
-ound-color:white;width:100%;border-radius:18px;"><tbody><tr><td style=3D"di=
-rection:ltr;font-size:0px;padding:32px;text-align:center;"><!--[if mso | IE=
-]><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentat=
-ion"><tr><td width=3D"600px"><![endif]--><!--[if mso | IE]><table border=3D=
-"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" align=3D"cent=
-er" width=3D"536" style=3D"width:536px;"><tr><td style=3D"line-height:0px;f=
-ont-size:0px;mso-line-height-rule:exactly;"><![endif]--><div style=3D"margi=
-n:0px auto;max-width:536px;"><table border=3D"0" cellpadding=3D"0" cellspac=
-ing=3D"0" role=3D"presentation" align=3D"center" style=3D"width:100%;"><tbo=
-dy><tr><td style=3D"direction:ltr;font-size:0px;padding:0px;text-align:cent=
-er;"><!--[if mso | IE]><table border=3D"0" cellpadding=3D"0" cellspacing=3D=
-"0" role=3D"presentation"><tr><td class=3D"notification-header-wrapper-outl=
-ook" style=3D"vertical-align:top;width:536px;"><![endif]--><div class=3D"mj=
--outlook-group-fix mj-column-per-100 notification-header-wrapper" style=3D"=
-font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-a=
-lign:top;width:100%;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"=
-0" role=3D"presentation" width=3D"100%" style=3D"vertical-align:top;"><tbod=
-y><!-- start notificationHeader --><tr><td align=3D"left" class=3D"notifica=
-tion-header-container notification-header-wrapper-testid" style=3D"font-siz=
-e:0px;padding:0px;word-break:break-word;"><div style=3D"font-family:-apple-=
-system, BlinkMacSystemFont, sans-serif;font-size:13px;font-weight:600;line-=
-height:1;text-align:left;color:#000;">=0A=
-=0A=
-=0A=
-=0A=
-foster clotilde =0A=
-=0A=
-=0A=
-=0A=
-(fost<span style=3D"font-size:0;line-height:0;">=C2=AD</span>erclo<span sty=
-le=3D"font-size:0;line-height:0;">=C2=AD</span>tilde<span style=3D"font-siz=
-e:0;line-height:0;">=C2=AD</span><span>@</span>gmai<span style=3D"font-size=
-:0;line-height:0;">=C2=AD</span>l.com<span style=3D"font-size:0;line-height=
-:0;">=C2=AD</span>)=0A=
-=0A=
-=0A=
-=0A=
- shared =0A=
-=0A=
-=0A=
-=0A=
-            =E2=80=9CSECURE DOCUMENT=E2=80=9D=0A=
-=0A=
-=0A=
-</div></td></tr><!-- end notificationHeader --></tbody></table></div><!--[i=
-f mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><=
-!--[if mso | IE]></td></tr></table><![endif]--><!--[if mso | IE]></td></tr>=
-<tr><td width=3D"600px" class=3D"body-wrapper-outlook"><![endif]--><!--[if =
-mso | IE]><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"p=
-resentation" align=3D"center" width=3D"536" class=3D"body-wrapper-outlook" =
-style=3D"width:536px;"><tr><td style=3D"line-height:0px;font-size:0px;mso-l=
-ine-height-rule:exactly;"><![endif]--><div class=3D"body-wrapper" style=3D"=
-margin:0px auto;max-width:536px;"><table border=3D"0" cellpadding=3D"0" cel=
-lspacing=3D"0" role=3D"presentation" align=3D"center" style=3D"width:100%;"=
-><tbody><tr><td style=3D"direction:ltr;font-size:0px;padding:2px 0px;text-a=
-lign:center;"><!--[if mso | IE]><table border=3D"0" cellpadding=3D"0" cells=
-pacing=3D"0" role=3D"presentation"><tr><td style=3D"vertical-align:top;widt=
-h:536px;"><![endif]--><div class=3D"mj-outlook-group-fix mj-column-per-100"=
- style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;=
-vertical-align:top;width:100%;"><table border=3D"0" cellpadding=3D"0" cells=
-pacing=3D"0" role=3D"presentation" width=3D"100%" style=3D"vertical-align:t=
-op;"><tbody> =0A=
-=0A=
-=0A=
-<!-- start quote --><tr><td align=3D"left" class=3D"body-container" style=
-=3D"font-size:0px;padding:0px;word-break:break-word;"><div style=3D"font-fa=
-mily:-apple-system, BlinkMacSystemFont, sans-serif;font-size:13px;line-heig=
-ht:1;text-align:left;color:#181b29;"><div class=3D"quote quote-testid">ESSE=
-NTIAL INVITE (RSVP)</div></div></td></tr><!-- end quote --><!-- start verti=
-calSpacer --><tr><td style=3D"font-size:0px;word-break:break-word;"><div st=
-yle=3D"height:24px;line-height:24px;">=E2=80=8A</div></td></tr><!-- end ver=
-ticalSpacer --><!-- start emailTextWrapper --><tr><td align=3D"left" class=
-=3D"body-container text-wrapper-testid" style=3D"font-size:0px;padding:0px;=
-word-break:break-word;"><div style=3D"font-family:-apple-system, BlinkMacSy=
-stemFont, sans-serif;font-size:13px;line-height:1;text-align:left;color:#18=
-1b29;"><span class=3D"body-container">=0A=
-=0A=
-=0A=
-=0A=
-Please leave your comments and notes in Frame.io.=0A=
-=0A=
-=0A=
-    </span></div></td></tr><!-- end emailTextWrapper --></tbody></table></d=
-iv><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></tabl=
-e></div><!--[if mso | IE]></td></tr></table><![endif]--><!--[if mso | IE]><=
-/td></tr><tr><td width=3D"600px"><![endif]--><!--[if mso | IE]><table borde=
-r=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" align=3D"=
-center" width=3D"536" style=3D"width:536px;"><tr><td style=3D"line-height:0=
-px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--><div style=3D"m=
-argin:0px auto;max-width:536px;"><table border=3D"0" cellpadding=3D"0" cell=
-spacing=3D"0" role=3D"presentation" align=3D"center" style=3D"width:100%;">=
-<tbody><tr><td style=3D"direction:ltr;font-size:0px;padding:0px;padding-top=
-:24px;text-align:center;"><!--[if mso | IE]><table border=3D"0" cellpadding=
-=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><![endif]--> =0A=
-=0A=
-=0A=
-<!--[if mso | IE]><![endif]--><!-- start cta --><!--[if mso | IE]><td style=
-=3D"vertical-align:top;width:536px;"><![endif]--><div class=3D"mj-outlook-g=
-roup-fix mj-column-per-100" style=3D"font-size:0px;text-align:left;directio=
-n:ltr;display:inline-block;vertical-align:top;width:100%;"><table border=3D=
-"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%=
-" style=3D"vertical-align:top;"><tbody><tr><td align=3D"left" vertical-alig=
-n=3D"middle" class=3D"cta cta-testid" style=3D"font-size:0px;padding:0px;wo=
-rd-break:break-word;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"=
-0" role=3D"presentation" style=3D"border-collapse:separate;line-height:100%=
-;"><tbody><tr><td align=3D"center" bgcolor=3D"#5b53ff" role=3D"presentation=
-" valign=3D"middle" style=3D"border:none;border-radius:35px;cursor:auto;mso=
--padding-alt:8px 35px;background:#5b53ff;"><a href=3D"https://next.frame.io=
-/share/f2f767a1-02dd-4c81-9418-3ea3d8577ed6?component_clicked=3Dtransaction=
-al_call_to_action&amp;email_id=3D5132b6a9-c997-4e40-9793-38918c7ccdd2&amp;e=
-mail_type=3Dtransactional&amp;notification_type=3Dshare_reviewer_added" tar=
-get=3D"_blank" style=3D"display:inline-block;background:#5b53ff;color:#fff;=
-font-family:-apple-system, BlinkMacSystemFont, sans-serif;font-size:16px;fo=
-nt-weight:600;line-height:22px;margin:0;text-decoration:none;text-transform=
-:none;padding:8px 35px;mso-padding-alt:0px;border-radius:35px;">=0A=
-Review Now=0A=
-  </a></td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso=
- | IE]></td><![endif]--><!-- end cta --><!--[if mso | IE]></tr></table><![e=
-ndif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table=
-><![endif]--><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tb=
-ody></table></div><!--[if mso | IE]></td></tr></table><![endif]--><div styl=
-e=3D"height:24px;line-height:24px;">=E2=80=8A</div><!-- end card --><div st=
-yle=3D"height:24px;line-height:24px;">=E2=80=8A</div><!-- start footer --><=
-!-- start inviteDisclaimer --><!--[if mso | IE]><table border=3D"0" cellpad=
-ding=3D"0" cellspacing=3D"0" role=3D"presentation" align=3D"center" width=
-=3D"600" style=3D"width:600px;"><tr><td style=3D"line-height:0px;font-size:=
-0px;mso-line-height-rule:exactly;"><![endif]--><div style=3D"margin:0px aut=
-o;max-width:600px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
- role=3D"presentation" align=3D"center" style=3D"width:100%;"><tbody><tr><t=
-d style=3D"direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;te=
-xt-align:center;"><!--[if mso | IE]><table border=3D"0" cellpadding=3D"0" c=
-ellspacing=3D"0" role=3D"presentation"><tr><td width=3D"600px"><![endif]-->=
-<!--[if mso | IE]><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" r=
-ole=3D"presentation" align=3D"center" width=3D"600" style=3D"width:600px;">=
-<tr><td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly=
-;"><![endif]--><div style=3D"margin:0px auto;max-width:600px;"><table borde=
-r=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" align=3D"=
-center" style=3D"width:100%;"><tbody><tr><td style=3D"direction:ltr;font-si=
-ze:0px;padding:0px;padding-bottom:16px;text-align:center;"><!--[if mso | IE=
-]><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentat=
-ion"><tr><td style=3D"vertical-align:top;width:600px;"><![endif]--><div cla=
-ss=3D"mj-outlook-group-fix mj-column-per-100" style=3D"font-size:0px;text-a=
-lign:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;=
-"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentat=
-ion" width=3D"100%" style=3D"vertical-align:top;"><tbody><tr><td align=3D"l=
-eft" class=3D"invite-disclaimer-testid" style=3D"font-size:0px;padding:0px;=
-word-break:break-word;"><div style=3D"font-family:-apple-system, BlinkMacSy=
-stemFont, sans-serif;font-size:12px;font-weight:400;line-height:16px;text-a=
-lign:left;color:#4f5167;">You have received this email because <b>fosterclo=
-tilde@gmail.com</b> invited you to join an account on Frame.io. If you don'=
-t recognize this email, please verify before accepting the invitation. If y=
-ou believe this to be a phishing attempt, please contact Frame.io support.<=
-/div></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><!=
-[endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></tab=
-le><![endif]--><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></=
-tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--><!-- en=
-d inviteDisclaimer --><!--[if mso | IE]><table border=3D"0" cellpadding=3D"=
-0" cellspacing=3D"0" role=3D"presentation" align=3D"center" width=3D"600" s=
-tyle=3D"width:600px;"><tr><td style=3D"line-height:0px;font-size:0px;mso-li=
-ne-height-rule:exactly;"><![endif]--><div style=3D"margin:0px auto;max-widt=
-h:600px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"p=
-resentation" align=3D"center" style=3D"width:100%;"><tbody><tr><td style=3D=
-"direction:ltr;font-size:0px;padding:20px 0;text-align:center;"><!--[if mso=
- | IE]><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pres=
-entation"><tr><td width=3D"600px"><![endif]--><!--[if mso | IE]><table bord=
-er=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" align=3D=
-"center" width=3D"600" style=3D"width:600px;"><tr><td style=3D"line-height:=
-0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]--><div style=3D"=
-margin:0px auto;max-width:600px;"><table border=3D"0" cellpadding=3D"0" cel=
-lspacing=3D"0" role=3D"presentation" align=3D"center" style=3D"width:100%;"=
-><tbody><tr><td style=3D"direction:ltr;font-size:0px;padding:0px;padding-bo=
-ttom:32px;text-align:center;"><!--[if mso | IE]><table border=3D"0" cellpad=
-ding=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><td style=3D"vertica=
-l-align:top;width:600px;"><![endif]--><div class=3D"mj-outlook-group-fix mj=
--column-per-100" style=3D"font-size:0px;text-align:left;direction:ltr;displ=
-ay:inline-block;vertical-align:top;width:100%;"><table border=3D"0" cellpad=
-ding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%" style=3D"=
-vertical-align:top;"><tbody><tr><td align=3D"left" style=3D"font-size:0px;p=
-adding:0px;word-break:break-word;"><div style=3D"font-family:-apple-system,=
- BlinkMacSystemFont, sans-serif;font-size:12px;font-weight:400;line-height:=
-16px;text-align:left;color:#4f5167;"> Frame.io</div></td></tr><tr><td align=
-=3D"left" style=3D"font-size:0px;padding:0px;word-break:break-word;"><div s=
-tyle=3D"font-family:-apple-system, BlinkMacSystemFont, sans-serif;font-size=
-:12px;font-weight:400;line-height:16px;text-align:left;color:#4f5167;"> 345=
- Park Ave. </div></td></tr><tr><td align=3D"left" style=3D"font-size:0px;pa=
-dding:0px;word-break:break-word;"><div style=3D"font-family:-apple-system, =
-BlinkMacSystemFont, sans-serif;font-size:12px;font-weight:400;line-height:1=
-6px;text-align:left;color:#4f5167;"> San Jose, CA 95110 </div></td></tr></t=
-body></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></t=
-r></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--><!-=
--[if mso | IE]></td></tr><tr><td width=3D"600px"><![endif]--><!--[if mso | =
-IE]><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"present=
-ation" align=3D"center" width=3D"600" style=3D"width:600px;"><tr><td style=
-=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-=
--><div style=3D"margin:0px auto;max-width:600px;"><table border=3D"0" cellp=
-adding=3D"0" cellspacing=3D"0" role=3D"presentation" align=3D"center" style=
-=3D"width:100%;"><tbody><tr><td style=3D"direction:ltr;font-size:0px;paddin=
-g:0px;padding-bottom:12px;text-align:left;"><!--[if mso | IE]><table border=
-=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><td cl=
-ass=3D"footer-logo-outlook" style=3D"vertical-align:middle;width:18px;"><![=
-endif]--><div class=3D"mj-outlook-group-fix mj-column-px-18 footer-logo" st=
-yle=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;ver=
-tical-align:middle;width:100%;"><table border=3D"0" cellpadding=3D"0" cells=
-pacing=3D"0" role=3D"presentation" width=3D"100%" style=3D"vertical-align:m=
-iddle;"><tbody><tr><td align=3D"center" class=3D"adobe-logo-testid" style=
-=3D"font-size:0px;padding:0px;word-break:break-word;"><table border=3D"0" c=
-ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"border-co=
-llapse:collapse;border-spacing:0px;"><tbody><tr><td style=3D"width:18px;"><=
-a href=3D"https://www.adobe.com/" target=3D"_blank"><img alt=3D"Adobe logo"=
- height=3D"16" src=3D"https://frameio-static-assets.s3.amazonaws.com/email-=
-assets/adobe-logo.png" width=3D"18" style=3D"border:0;display:block;outline=
-:none;text-decoration:none;height:16px;width:100%;font-size:13px;"></a></td=
-></tr></tbody></table></td></tr></tbody></table></div><!--[if mso | IE]></t=
-d><td class=3D"footer-copyright-outlook" style=3D"vertical-align:middle;wid=
-th:248px;"><![endif]--><div class=3D"mj-outlook-group-fix mj-column-px-248 =
-footer-copyright" style=3D"font-size:0px;text-align:left;direction:ltr;disp=
-lay:inline-block;vertical-align:middle;width:100%;"><table border=3D"0" cel=
-lpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%" style=
-=3D"vertical-align:middle;"><tbody><tr><td align=3D"left" style=3D"font-siz=
-e:0px;padding:0px;padding-left:14px;word-break:break-word;"><div style=3D"f=
-ont-family:-apple-system, BlinkMacSystemFont, sans-serif;font-size:12px;fon=
-t-weight:400;line-height:16px;text-align:left;color:#4f5167;">=0A=
-        =C2=A9 2025 Adobe Inc. All rights reserved.=0A=
-      </div></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></t=
-able><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></t=
-r></table><![endif]--><!--[if mso | IE]></td></tr><tr><td width=3D"600px"><=
-![endif]--><!--[if mso | IE]><table border=3D"0" cellpadding=3D"0" cellspac=
-ing=3D"0" role=3D"presentation" align=3D"center" width=3D"600" style=3D"wid=
-th:600px;"><tr><td style=3D"line-height:0px;font-size:0px;mso-line-height-r=
-ule:exactly;"><![endif]--><div style=3D"margin:0px auto;max-width:600px;"><=
-table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation=
-" align=3D"center" style=3D"width:100%;"><tbody><tr><td style=3D"direction:=
-ltr;font-size:0px;padding:0px;text-align:center;"><!--[if mso | IE]><table =
-border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"><tr>=
-<td style=3D"width:600px;"><![endif]--><div class=3D"mj-column-per-100 mj-o=
-utlook-group-fix" style=3D"font-size:0;line-height:0;text-align:left;displa=
-y:inline-block;width:100%;direction:ltr;"><!--[if mso | IE]><table border=
-=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation"><tr><![end=
-if]-->=0A=
-=0A=
-true=0A=
-      <!--[if mso | IE]><td style=3D"vertical-align:top;width:140px;"><![en=
-dif]--><div class=3D"mj-outlook-group-fix mj-column-px-140 footer-button" s=
-tyle=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;ve=
-rtical-align:top;width:0.23333333%;"><table border=3D"0" cellpadding=3D"0" =
-cellspacing=3D"0" role=3D"presentation" width=3D"100%" style=3D"vertical-al=
-ign:top;"><tbody><tr><td align=3D"left" vertical-align=3D"middle" class=3D"=
-terms-link-testid" style=3D"font-size:0px;padding:0px;word-break:break-word=
-;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presenta=
-tion" style=3D"border-collapse:separate;line-height:100%;"><tbody><tr><td a=
-lign=3D"center" bgcolor=3D"transparent" role=3D"presentation" valign=3D"mid=
-dle" style=3D"border:none;border-radius:3px;cursor:auto;mso-padding-alt:0px=
-;background:transparent;"><a href=3D"http://www.adobe.com/go/terms" target=
-=3D"_blank" style=3D"display:inline-block;background:transparent;color:#4f5=
-167;font-family:-apple-system, BlinkMacSystemFont, sans-serif;font-size:12p=
-x;font-weight:normal;line-height:28px;margin:0;text-decoration:none;text-tr=
-ansform:none;padding:0px;mso-padding-alt:0px;border-radius:3px;">=0A=
-Adobe Terms of Use=0A=
-        </a></td></tr></tbody></table></td></tr></tbody></table></div><!--[=
-if mso | IE]></td><![endif]--><!--[if mso | IE]><td style=3D"vertical-align=
-:top;width:140px;"><![endif]--><div class=3D"mj-outlook-group-fix mj-column=
--px-140 footer-button" style=3D"font-size:0px;text-align:left;direction:ltr=
-;display:inline-block;vertical-align:top;width:0.23333333%;"><table border=
-=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"1=
-00%" style=3D"vertical-align:top;"><tbody><tr><td align=3D"left" vertical-a=
-lign=3D"middle" class=3D"privacy-link-testid" style=3D"font-size:0px;paddin=
-g:0px;word-break:break-word;"><table border=3D"0" cellpadding=3D"0" cellspa=
-cing=3D"0" role=3D"presentation" style=3D"border-collapse:separate;line-hei=
-ght:100%;"><tbody><tr><td align=3D"center" bgcolor=3D"transparent" role=3D"=
-presentation" valign=3D"middle" style=3D"border:none;border-radius:3px;curs=
-or:auto;mso-padding-alt:0px;background:transparent;"><a href=3D"http://www.=
-adobe.com/go/privacy_policy" target=3D"_blank" style=3D"display:inline-bloc=
-k;background:transparent;color:#4f5167;font-family:-apple-system, BlinkMacS=
-ystemFont, sans-serif;font-size:12px;font-weight:normal;line-height:28px;ma=
-rgin:0;text-decoration:none;text-transform:none;padding:0px;mso-padding-alt=
-:0px;border-radius:3px;">=0A=
-Adobe Privacy Policy=0A=
-        </a></td></tr></tbody></table></td></tr></tbody></table></div><!--[=
-if mso | IE]></td><![endif]--><!--[if mso | IE]></tr></table><![endif]--></=
-div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></tab=
-le></div><!--[if mso | IE]></td></tr></table><![endif]--><!--[if mso | IE]>=
-</td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso |=
- IE]></td></tr></table><![endif]--><!-- end footer --></div></body></html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Verti Email</title>
+
+    <style type="text/css">
+      ReadMsgBody{ width: 100%;}
+      .ExternalClass {width: 100%;}
+      .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
+      body {-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;margin:0 !important;}
+      p { margin: 1em 0;}
+      table td { border-collapse: collapse;}
+      img {outline:0;}
+      a img {border:none;}
+      @-ms-viewport{ width: device-width;}
+    </style>
+    <style type="text/css">
+      @media only screen and (max-width: 480px) {
+        .container {width: 100% !important;}
+        .footer { width:auto !important; margin-left:0; }
+        .mobile-hidden { display:none !important; }
+        .logo { display:block !important; padding:0 !important; }
+        img { max-width:100% !important; height:auto !important; max-height:auto !important;}
+        .header img{max-width:100% !important;height:auto !important; max-height:auto !important;}
+        .photo img { width:100% !important; max-width:100% !important; height:auto !important;}
+        .drop { display:block !important; width: 100% !important; float:left; clear:both;}
+        .footerlogo { display:block !important; width: 100% !important; padding-top:15px; float:left; clear:both;}
+        .nav4, .nav5, .nav6 { display: none !important; }
+        .tableBlock {width:100% !important;}
+        .responsive-td {width:100% !important; display:block !important; padding:0 !important; }
+        .fluid, .fluid-centered {
+          width: 100% !important;
+          max-width: 100% !important;
+          height: auto !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        .fluid-centered {
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        /* MOBILE GLOBAL STYLES - DO NOT CHANGE */
+        body { padding: 0px !important; font-size: 16px !important; line-height: 150% !important;}
+        h1 { font-size: 22px !important; line-height: normal !important;}
+        h2 { font-size: 20px !important; line-height: normal !important;}
+        h3 { font-size: 18px !important; line-height: normal !important;}
+        .buttonstyles {
+          font-family:arial,helvetica,sans-serif !important;
+          font-size: 16px !important;
+          color: #FFFFFF !important;
+          padding: 10px !important;
+        }
+        /* END OF MOBILE GLOBAL STYLES - DO NOT CHANGE */
+      }
+      @media only screen and (max-width: 640px) {
+        .container { width:100% !important; }
+        .mobile-hidden { display:none !important; }
+        .logo { display:block !important; padding:0 !important; }
+        .photo img { width:100% !important; height:auto !important;}
+        .nav5, .nav6 { display: none !important;}
+        .fluid, .fluid-centered {
+          width: 100% !important;
+          max-width: 100% !important;
+          height: auto !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        .fluid-centered {
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+      }
+    </style>
+    <!--[if mso]>
+      <style type="text/css">
+          /* Begin Outlook Font Fix */
+          body, table, td {
+              font-family: Arial, Helvetica, sans-serif ;
+              font-size:16px;
+              color:#808080;
+              line-height:1;
+          }
+          /* End Outlook Font Fix */
+      </style>
+    <![endif]-->
+  </head>
+  <body bgcolor="#efefef" text="#181818" style="background-color: #0a0a0a;color: #ffffff;margin: 0px;padding: 20px;-webkit-text-size-adjust:none;line-height: normal;font-size: 16px;font-family:arial,helvetica,sans-serif;">
+    <div style="font-size:0; line-height:0;"><img src="https://click.email-biolifeplasma.com/open.aspx?ffcb10-fe6010777461047d7d12-fdc215787360017f7712757667-fe3b11727164047c7d1470-fe601673776d0c7d7412-fe2717727c650674711c72-fef31779736101&amp;d=10192&amp;bmt=0" width="1" height="1" alt=""></custom></custom></div>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+      <tbody><tr>
+        <td align="center" valign="top">
+          <custom type="header">
+        </custom></td>
+      </tr>
+      <tr>
+        <td align="center">
+          <table cellspacing="0" cellpadding="0" border="0" width="600" class="container" align="center">
+            <tbody><tr>
+              <td>
+                <!-- added the border style here -->
+                <table class="tb_properties border_style" cellspacing="0" cellpadding="0" bgcolor="#151515" width="100%" style="border-radius:20px;">
+                  <!-- end of comment -->
+                  <tbody><tr>
+                    <td align="center" valign="top">
+                      <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tbody><tr>
+                          <!-- added padding here -->
+                          <td class="content_padding" style="padding:10px;border-radius:20px;">
+                            <!-- end of comment -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                              <tbody><tr>
+                                <td align="left" class="header" role="banner" aria-label="header" valign="top">
+                                  <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-bottom: 1px solid #AEAEAE; min-width: 100%; " class="slot-styling"><tbody><tr><td style="padding-bottom: 20px; " class="slot-styling camarker-inner"><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="text-align: center; min-width: 100%; " class="stylingblock-content-wrapper"><tbody><tr><td style="padding-top: 10px; " class="stylingblock-content-wrapper camarker-inner" align="center"><table width="100%" cellspacing="0" cellpadding="0" role="presentation"><tbody><tr><td align="center">
+<img src="https://image.correo.verti.es/lib/fe9913737767057977/m/1/99395953-3f20-4992-918b-24c04e11117c.jpeg" alt="Logo Verti" width="80" style="display: block; width: 80px; text-align: center; padding: 0px;"></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="left" class="" valign="top">
+                                  <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="border-bottom: 1px solid #AEAEAE; min-width: 100%; " class="slot-styling"><tbody><tr><td style="padding-bottom: 20px; " class="slot-styling camarker-inner"><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; " class="stylingblock-content-wrapper"><tbody><tr><td style="padding-top: 10px; padding-right: 10px; padding-left: 10px; " class="stylingblock-content-wrapper camarker-inner"><table cellspacing="0" cellpadding="0" style="width: 100%;"><tbody><tr><td><table cellspacing="0" cellpadding="0" style="width: 100%;"><tbody><tr>
+<td class="responsive-td" valign="top" style="width: 100%;"><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; " class="stylingblock-content-wrapper"><tbody><tr><td class="stylingblock-content-wrapper camarker-inner">
+
+<div style="text-align: center;">Dear user,</div><br>
+<div style="text-align: center;">The S2 distribution is now available. Please sign in to your dashboard to:</div><ul><li>review your eligibility status,</li><li>confirm the amount allocated to you,</li><li>and start the release to your designated wallet.</li></ul><div style="text-align: center;">Before proceeding, verify that your account details are correct and complete any pending verification steps. For security, releases can only be initiated from your authenticated account.</div></td></tr></tbody></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="text-align: left; min-width: 100%; " class="stylingblock-content-wrapper"><tbody><tr>
+<td style="padding-top: 20px; padding-bottom: 20px; " class="stylingblock-content-wrapper camarker-inner" align="left"><table width="100%" border="0" cellspacing="0" cellpadding="5"><tbody><tr><td align="center"><table border="0" cellspacing="0" cellpadding="0"><tbody><tr><td class="innertd buttonblock" align="center" bgcolor="#5D5D5D" style="border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;">
+<a target="_blank" style="text-decoration: none;display: block;background-color: #d4a574;border: 1px solid #d4a574;font-family: Arial, Helvetica, sans-serif;font-size: 16px;color: #FFFFFF;padding: 10px;border-radius: 3px;-moz-border-radius: 3px;-webkit-border-radius: 3px;font-weight:700;" class="buttonstyles" href="https://click.email-biolifeplasma.com/?qs=71d7f2dbecb9dadbf05f6472719e014414022cb5fa1e79ce317e957507638226013c7d758b516c4539b4d84b3057cda507ab7d239f5c8a2c8d232f80c2e2681a" title="">Access Portal</a></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table>
+                                </td>
+                              </tr>
+                              
+                              <tr>
+                                <td align="left" role="contentinfo" aria-label="footer" class="" valign="top">
+                                  <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; " class="slot-styling"><tbody><tr><td style="padding-top: 20px; " class="slot-styling camarker-inner"><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="text-align: center; min-width: 100%; " class="stylingblock-content-wrapper"><tbody><tr><td class="stylingblock-content-wrapper camarker-inner" align="center"><div style="text-align: center;font-size:14px;">This email was sent by asterdex.</div><div style="text-align: center;font-size:14px;">You receive this email because you have subscribed to our newsletter you can: 
+<a href="https://click.email-biolifeplasma.com/?qs=71d7f2dbecb9dadb1cb0f24c0ff9742672f7abb8c9bc25048ee38ea7cc79a114847d8f9c404eff3038969b67e87ed05fba0ff670a4912ba20bb0500e342ae098" target="_blank" style="font-size:14px;color: #1e39f3;text-decoration: none;">Unsubscribe</a>.</div></td></tr></tbody></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; " class="stylingblock-content-wrapper"><tbody><tr><td style="padding-top: 10px; padding-right: 10px; padding-left: 10px; " class="stylingblock-content-wrapper camarker-inner"><div style="text-align: center;"><span style="font-size:14px;"> 2025 All Rights Reserved Asterdex.</span></div>
+</td></tr></tbody></table></td></tr></tbody></table>
+                                </td>
+                              </tr>
+                            </tbody></table>
+                          </td>
+                        </tr>
+                      </tbody></table>
+                    </td>
+                  </tr>
+                </tbody></table>
+              </td>
+            </tr>
+          </tbody></table>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <custom type="footer">
+        </custom></td>
+      </tr>
+    </tbody></table>
+  
+
+</body></html>

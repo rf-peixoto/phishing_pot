@@ -1,906 +1,572 @@
-Received: from PH7PR10MB7phishing@pot.namprd10.prod.outlook.com (::1) by
- MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Wed, 3 Dec 2025 04:58:52
+Received: from SA1PR10MB6366.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Sat, 13 Dec 2025 15:25:35
  +0000
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
- b=fx28XCQVWisrnK+l2AC7Tq2p9KU1S3pwDIYGl8hatKvJ0h07gnu75xwIY7ruTvEnmNd7FjWNFHGuB17/wZfJ5bvD7QHsr+9byNvWnzmM81RM2t8Lvwp/y22MyAOxwbWlu2z9WboTAk2/3+6zEcFL4MYb4MUvWUFwX5QT3rKvygw7dMR26/i0cpq7+d4g7HUpYdtJIez2G++4yJAMwjE2IwcWBJ8K1wDxSgmkdKKo4DUJng/KTRxiyASy+D2TXGlX8A6Un8Q7ZaX8SsGwIV1C5Fp+p7+nyyflLLUtmxTVjua3GqKtPFXwFgc2ADazg8nfPFSHtr/k1xEAtaACYIrSVw==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RVru7d73aJWmpzb0e4SDIYe0jj4mWVwrUbaF9mkro2E=;
- b=Z+r75ilVMsz326BC3AVfJNUCRQtKMNbzklquNTigrorOLai+1es3aCTkus74M0z62mkL7Otu4Kz1xbCuZAVYh1m7zW8gGwFaBk//6dFYqSEhlFCs5MiCLa4yJcpqIxJej43Tuq/LXpoNXqtUwBJQ6A4fmu6HvRYJ+1vjRZkpaDS2yAcOlWSzvcm5p2olHmBvVkDmPlG+y4F08UyeqcZNTjKcac2qm+nB7voDV+lIkPGlxrc4KJYQgd2abDt2Q4mCErWllNJDxTqjaU2UCg/l8lxhhWduhSIr90rEw5emHRQuL0OEFhp5wvEaSXOJ1zTI5hYVmIyPYK1kQPkdytkP7A==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 52.102.171.41) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=che20211698.onmicrosoft.com; dmarc=none; dkim=none (message not
- signed); arc=fail (48)
-Received: from AM8P189CA0002.EURP189.PROD.OUTLOOK.COM (2603:10a6:20b:218::7)
- by PH7PR10MB7phishing@pot.namprd10.prod.outlook.com (2603:10b6:510:27e::10) with
+Received: from BYAPR03CA0030.namprd03.prod.outlook.com (2603:10b6:a02:a8::43)
+ by SA1PR10MB6366.namprd10.prod.outlook.com (2603:10b6:806:256::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.17; Wed, 3 Dec
- 2025 04:58:50 +0000
-Received: from AMS1EPF0000004E.eurprd04.prod.outlook.com
- (2603:10a6:20b:218:cafe::80) by AM8P189CA0002.outlook.office365.com
- (2603:10a6:20b:218::7) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9366.17 via Frontend Transport; Wed,
- 3 Dec 2025 04:58:49 +0000
-Authentication-Results: spf=pass (sender IP is 52.102.171.41)
- smtp.mailfrom=che20211698.onmicrosoft.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=;
-Received-SPF: Pass (protection.outlook.com: domain of
- che20211698.onmicrosoft.com designates 52.102.171.41 as permitted sender)
- receiver=protection.outlook.com; client-ip=52.102.171.41;
- helo=TYPPR03CU001.outbound.protection.outlook.com; pr=C
-Received: from TYPPR03CU001.outbound.protection.outlook.com (52.102.171.41) by
- AMS1EPF0000004E.mail.protection.outlook.com (10.167.16.139) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9388.8
- via Frontend Transport; Wed, 3 Dec 2025 04:58:48 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:7879D55CB6AF0FBE0EADE1FA8B069EC0B58D1C0630AFAA1A6435AD8861FC94CD;UpperCasedChecksum:AE1F58CDF9FDE0F73EF1661A5360591FAB96F87A860162C4DA6D65221A4ED637;SizeAsReceived:8146;Count:35
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ESMDKyo+ziITfRGfjLxoTgk9VQCraZKkwvL0y1m4eZtCa8rcjlHNLdt3ZUYDgi1inKmIl2K9G9rekMobdY5DXism8f4CJyotrwMwO83EsIQH9htPBWVDJuGJgXKC3UdtqjHBzvw+YbpB2ZySXkCztpZS6xOZrj4H/UBDUDN1LN8cvBQK7SM7M/uT1uWqSHqssj6cqDjZknCOEy4nlLXhGcZ2IRDAPC5ZVjUereLmoqLHmeUuEnbxftoZnoUvsHFRz8ROfqG6buOKAaf6CfKZv+cnd1AFo69vFc0BuIKxnAnoQHlndVw15so+M10G0IM3GFmLpKtkdZqGo+DjqbXC3g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RVru7d73aJWmpzb0e4SDIYe0jj4mWVwrUbaF9mkro2E=;
- b=qmK/lBGTtOqsOIdI6DMui4GatUot3h996JGt1/0h2H/3PwAj1neTD9qY3d4ITS8/0Kbc5a2MwP5S9tioJOZsYUcYkIX0Icix/w74t2drIoGxVqPau4LgIH7CV03B8mni36ZYF3LWqqPZ9Qxe6UKZ4ChspmTrwRweiFAumPsiEMhjywtk+AvkiMyl0kcHAxzyxj7NKGa2VC2xLYywhgO6WeBGaOqkm29/89OzLH0C9VYOX36Xivb4OKtfO8mAUI4zGGxB0JMqEXxOooqWv197fYlNXFoflG8XDuxXO8rzsfHwbfACGFDCuHVS5Gwd8ZCeXWf7e01C1/r/PUyersF9sQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 184.107.178.51) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=che20211698.onmicrosoft.com; dmarc=none; dkim=none (message not
- signed); arc=none (0)
-Received: from PS2PR01CA0027.apcprd01.prod.exchangelabs.com
- (2603:1096:300:58::15) by SG2PR03MB6803.apcprd03.prod.outlook.com
- (2603:1096:4:1de::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.17; Wed, 3 Dec
- 2025 04:58:45 +0000
-Received: from OSA0EPF000000CA.apcprd02.prod.outlook.com
- (2603:1096:300:58:cafe::e) by PS2PR01CA0027.outlook.office365.com
- (2603:1096:300:58::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9366.17 via Frontend Transport; Wed,
- 3 Dec 2025 04:58:56 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 184.107.178.51)
- smtp.mailfrom=che20211698.onmicrosoft.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=;
-Received-SPF: Fail (protection.outlook.com: domain of
- che20211698.onmicrosoft.com does not designate 184.107.178.51 as permitted
- sender) receiver=protection.outlook.com; client-ip=184.107.178.51;
- helo=che20211698.onmicrosoft.com;
-Received: from che20211698.onmicrosoft.com (184.107.178.51) by
- OSA0EPF000000CA.mail.protection.outlook.com (10.167.240.56) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9388.8 via Frontend Transport; Wed, 3 Dec 2025 04:58:44 +0000
-Date: Wed, 3 Dec 2025 04:58:44 +0000
-To: <phishing@pot>
-Subject: Sonya Kraus verrät ihr Figur-Geheimnis
-Content-Transfer-Encoding: 8bit
-From: "Fettverbrennungs-Formel" <jon95zkooqcc@r4wbt6mshvx1.com'>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.11; Sat, 13 Dec
+ 2025 15:25:33 +0000
+Received: from CO1PEPF000044F1.namprd05.prod.outlook.com
+ (2603:10b6:a02:a8:cafe::46) by BYAPR03CA0030.outlook.office365.com
+ (2603:10b6:a02:a8::43) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9412.12 via Frontend Transport; Sat,
+ 13 Dec 2025 15:25:33 +0000
+Authentication-Results: spf=fail (sender IP is 149.104.79.135)
+ smtp.helo=almos.vein.hu; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=KingsChip.cd;compauth=fail
+ reason=001
+Received-SPF: Fail (protection.outlook.com: domain of almos.vein.hu does not
+ designate 149.104.79.135 as permitted sender)
+ receiver=protection.outlook.com; client-ip=149.104.79.135;
+ helo=almos.vein.hu;
+Received: from almos.vein.hu (149.104.79.135) by
+ CO1PEPF000044F1.mail.protection.outlook.com (10.167.241.71) with Microsoft
+ SMTP Server id 15.20.9434.6 via Frontend Transport; Sat, 13 Dec 2025 15:25:32
+ +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:5B4D4BA416E90FBF2958D374EC48E2BDEE00A21017C94D1704A2F78E80F93126;UpperCasedChecksum:26668A9C04951005F5522D33377C7C819E509CD3A1873451940D1368419A415A;SizeAsReceived:518;Count:11
 Content-Type: text/html; charset="UTF-8"
-Message-ID: <e8bc316c-f74c-497c-be21-5e1de4bad77a@OSA0EPF000000CA.apcprd02.prod.outlook.com>
-Return-Path: 2kwexr3ved6i@che20211698.onmicrosoft.com
-X-EOPAttributedMessage: 1
-X-MS-TrafficTypeDiagnostic: OSA0EPF000000CA:EE_|SG2PR03MB6803:EE_|AMS1EPF0000004E:EE_|PH7PR10MB7phishing@pot:EE_|MW4PR10MB5749:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6efb0faa-c9cd-4c3c-777b-08de3228a5be
-X-MS-Exchange-SenderADCheck: 2
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|39440400008;
-X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?MWYrTytQbVhMQzd0RWpBR2xTaVZGQWdxUFVhYWx0SFQ3OVdsVFRKYXJFM0RB?=
- =?utf-8?B?Tk1kM2VQdERKMjI0VGFvY2p2TnVhb080a0RZWlFuTm5tN00yaWVxQ1MwSVhl?=
- =?utf-8?B?ZUcvUWVpcW9sanZNNGIwWGROeU1CWGVxbjR1TGhGM3lSWk1UWFJpZDNRYTdh?=
- =?utf-8?B?U1FjNGw0VFVhZHdRK0hqdWZEQ3N1RWdaNWN1TFZqTTZ3TGh1VGJFZk81dzhH?=
- =?utf-8?B?K3B6WnZXaytkcHUvS0dnUmRxRXZtU0ZCZlM3Z0xJdHowUmJNckk1TUx5Q1hE?=
- =?utf-8?B?dEhXUTR4Y05TU254b3grZkhJS28vMld1SENhSFV2bzRPZ1VEV3N0c2RSbHk2?=
- =?utf-8?B?Tjk2ZjFXTm9DZkFKNTFSS2kxOTJXMWtQQ1hSMjVwWWxVNG5ZUHAreW4yNTBR?=
- =?utf-8?B?alo0QXdsQ0hZVkIzSFY1b0pXYXM5am5sRitidTlDMzQrN09aa1dqanF6MWJD?=
- =?utf-8?B?SHZoQTlYZmFXRWdPMSszaEdYYWtneTYzYUxGT3BGSms3YmdHSG8zdzRUSjFI?=
- =?utf-8?B?VEt1TGxjKzNYQzFSM0hGMXRvN3ZyMWw3UDRXc0dvYWhFY0RCTW4zcHBHOG5h?=
- =?utf-8?B?WWphQ2w4MXdxclZhVW85RjZEc1Q3cGNaeDZjZFYxcHRocTNmOFZTT2Vkc20r?=
- =?utf-8?B?Z3Jac1h2ZDhCN1VsMUJuaTQ4RTJuV0tkNDlXY1FraE1qcks2QUNCa1ZYZmJq?=
- =?utf-8?B?dmNOcjhWbHRZd21tMHNsanBLdXR2UjdjQzJDSjRxTzU0dEdNdXd2SzRacVpi?=
- =?utf-8?B?L2ZCNXBGeWJYRnQwUk1vRUo5cmxjTTVmSlVXbDJrRmhMTnd0RHpBaEJsTzRO?=
- =?utf-8?B?bVU5d3J6OVprMjlGbGdMRHpJdjJTNExCcmZjSHd3SnN2ZjBMTFFCOEhqMHk2?=
- =?utf-8?B?UGxYZldPcVc5T0szV1BBcytpemlHZ01qWmhtcGp1bVJ3dVV0S01laGphbmhs?=
- =?utf-8?B?UElRZ1pqVG5jcFJSNE1TLzlzYk9YZUltUzA0VERMaU5Ickd6cHRyRS9LK29h?=
- =?utf-8?B?a1dKMjZ2UXRZR05rdURKWGtFNHI2cVhSaFEvczdZSFYwaGg2MmxVZHJBOFF4?=
- =?utf-8?B?VUJLVzNNWmNIdnRXdjVPVnN1cVZrWWdBemh4R0t1eDVjVW95ZEZxaGVpQnd2?=
- =?utf-8?B?eEdEd0ovR2pibDZFRlQxRmU3Qmc1RmFRK0NsNVlWazY2bldaaVlpdFlTc2hH?=
- =?utf-8?B?eVkrVU9qcUNzRCtNTTVreEk1dnA2Vit3S1A2UmJab0xrUFA3NXJyNkhEeE56?=
- =?utf-8?B?NncwT21UN1pGWmJEQWhKMUduK3U0K1djQWZScEswL1lrcDAxVDJ3enZxZEp1?=
- =?utf-8?B?eUVsNG1kVWFSYjhBK25XTG5NNjlpQ1pDMHhWQjNxaVVDdG5STmkySThBLzZV?=
- =?utf-8?B?Zm1GOXhYZW9LOEViYldENjlaaVVlOFhRYVBKRlJKREc2Y25WN0JKakJuWXNZ?=
- =?utf-8?B?aTZRa21aT1ZXZ3Rya1NiOVl2NG95dzJzK2diWmdkNnpmRjJrZ1p0Q1RyUVBH?=
- =?utf-8?B?VEgwK0MwVW5tS2RxdFNvay9BaXdYSVZPMUl6SGZZNXh6R09IOXhIUlI5N2p1?=
- =?utf-8?B?cHByZENtVTJBcitCZWlwendZdytBYlNNcTBkZlRyK04vbC82TURKZmRGQVpX?=
- =?utf-8?B?WC9qcjhsQkVxQ2d4UWtSUllJUTgxd1VPbWpWaW4xYmt2TjZ2WUZwVFN5NHpW?=
- =?utf-8?B?d0dvdVgzeFV5UFhrR2pEY3UxaGwzakthWE90VUt3R3BXZDB2cG9pcG9CbUN2?=
- =?utf-8?B?eVBlT0RrdndVU3l5bVViV0U4L0VEV1ZxUzg3NmQ3cTYrdUNXeEtKd0VyQm9i?=
- =?utf-8?B?N1JpMzlKUytSTmRCTlN1TEc2Vm9qbTVpdVBhVDZ5cWxRSXpoNHU3dWFETm03?=
- =?utf-8?B?QlZqNFJDZGNmTjI4dllmS3JqM1NtcFdDdUluVnZUcHpxY3RKb3U2MkZGYklH?=
- =?utf-8?B?alVqZmN0S1JtczU5VDAzOFZOaFB0dVozeWdvY0xVSHhNc0MxQnM0ZGJXbk1N?=
- =?utf-8?B?SFY2YWtzdm9ienkraDN6a2pHczRnNXhnVXZldzAxK2JRZjBWOVFYL1B3R0d6?=
- =?utf-8?B?YStNT2I2d0NsMU9jK1h1QjJMYXNQeTBoTll2U0d2R3VMVW9pWVZsSjdwNTJV?=
- =?utf-8?B?WHB1TWxGL0NGWTVZTStkUE5TalplZ0FXYzh1WmtmWWNKbmpiMGswSXUyeVR0?=
- =?utf-8?B?Qm9hWWo2a3dmOXY5OU5mYkdNSEFrK0lKS0Vkd3p5T28rWDhHUllaNDJYbHFy?=
- =?utf-8?B?ZzFmTDBja09XZlZxU1dYNWEzOXFYK3dzVkYxenhIYzFhZWVWbnlaUW5RVWRC?=
- =?utf-8?B?ZkI0dWNkRnZ1MkRKZ2g1NzU0U1hVTDU3aTlPeWsyTVlpazNiQk9BbGVUOE5M?=
- =?utf-8?B?bGx6c01XVUN1am9FUVR5bm1IZGVQYUpKZFdwblVvNGtqL0VIWkd0bE5kY2Qr?=
- =?utf-8?B?UVdSdTBiMWdrai9KUDJiSVQ1ck9EYmdxMEhLcGMvdE5DeS9rUDJUVXp0d0JD?=
- =?utf-8?B?MnhhWVNKZHZxWGZxME92UWIxNitzRnJ5MXlPUWNSM2N5U0diUkdTRmRDZG52?=
- =?utf-8?B?VTUvWWdMaE9pRHAzdWphcXpWd0dHUlhYcHRwOTgyME8yTTBzNDZQR2hWcSt5?=
- =?utf-8?B?VGp2enJONTdCcTJGdU5Mc1pJUE9mRUtlUGRldWF0WlVoYXp6a3E5MTU5YVRk?=
- =?utf-8?B?QjFiS2ErcnZFVzgybHlJL1FxZy9EeW9ZeFl6UVFpRldLWG1ISWNKRG5uZ2Z3?=
- =?utf-8?B?Mkx4M2txZWhNaEhmMzhUVDY3dzRFTVZUVE5MaWZacmZ4U2M5U3R4S0pNUEdU?=
- =?utf-8?B?N3VVbHdublZYcktaTkFLeXpVUElTdTlZMWNNdFIxbkliT3hyWmxGNXBuRGZB?=
- =?utf-8?B?WHdzdmhSOTdPSVpwMGUxTlRPRkdGQnNFSUM1aTUvOWxtb2xUVW5WSmowWFBy?=
- =?utf-8?B?MVFVd1crZzBydVJnUVlTaURzZW5nUTB6YkpmUG02SW9NM3VlVDJTdlhrU1dQ?=
- =?utf-8?B?clVGamdEUEhWS2c3WmpPL3d0TnlnbjBVUnZUcllEZWpXc0kyakttcmYxY3pI?=
- =?utf-8?B?dC8yRUlsZ0dIY0xnPT0=?=
-X-Forefront-Antispam-Report-Untrusted: CIP:184.107.178.51;CTRY:CA;LANG:de;SCL:9;SRV:;IPV:CAL;SFV:SPM;H:che20211698.onmicrosoft.com;PTR:InfoDomainNonexistent;CAT:OSPM;SFS:(13230040)(39440400008);DIR:OUT;SFP:1501;
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR03MB6803
-X-IncomingHeaderCount: 35
-X-MS-Exchange-Organization-ExpirationStartTime: 03 Dec 2025 04:58:49.3992
+Date: Sat, 13 Dec 2025 15:21:29 +0000
+To: <phishing@pot>
+From: =?UTF-8?B?Q2hyaXN0bWFzIEdhbWluZyBSZXdhcmRz8J+OhA==?=<rwardteam@KingsChip.cd>
+Sender: <lexa@lexa.nl>
+Subject: =?UTF-8?B?WG1hcyBPZmZlciBJbnNpZGUg8J+OgSA6IDUwIEZyZWUgU3BpbnMgKyBIdWdlIDUwMCUgQm9vc3Qg=?=
+List-Unsubscribe: 0.LKEGDSZZQTIKQ@luxyinbox.site
+X-IncomingHeaderCount: 10
+Message-ID: <766707033415214.1.JSE8124003890@DB1PEPF000509F8.eurprd02.prod.outlook.com>
+Return-Path: <>
+X-IncomingHeaderCount: 11
+X-MS-Exchange-Organization-ExpirationStartTime: 13 Dec 2025 15:25:33.3410
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: 6efb0faa-c9cd-4c3c-777b-08de3228a5be
+X-MS-Exchange-Organization-Network-Message-Id: 5c5a4d47-92ae-4752-1f02-08de3a5bdb92
+X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: AMS1EPF0000004E.eurprd04.prod.outlook.com
-X-MS-Exchange-Transport-CrossTenantHeadersPromoted: AMS1EPF0000004E.eurprd04.prod.outlook.com
 X-MS-PublicTrafficType: Email
-X-MS-Exchange-Organization-AuthSource: AMS1EPF0000004E.eurprd04.prod.outlook.com
+X-MS-TrafficTypeDiagnostic: CO1PEPF000044F1:EE_|SA1PR10MB6366:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource: CO1PEPF000044F1.namprd05.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 12/3/2025 3:36:41 AM
-X-MS-Office365-Filtering-Correlation-Id-Prvs: d40ceefc-b0f9-4833-a4d5-08de3228a344
+X-MS-UserLastLogonTime: 12/13/2025 2:51:03 PM
+X-MS-Office365-Filtering-Correlation-Id: 5c5a4d47-92ae-4752-1f02-08de3a5bdb92
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 52.102.171.41
+X-Sender-IP: 149.104.79.135
+X-SID-PRA: LEXA@LEXA.NL
 X-SID-Result: NONE
-X-MS-Exchange-Organization-SCL: 9
-X-Microsoft-Antispam: BCL:0;ARA:1444111002|18030799003|6010799018|461199028|39010799012|20103052909095|10300799035|51300799021|13020799006|9800799015|87000799018|32080799003|63100799012|67000799015|70000799015|50300799015|1680799066|9000799056|9400799040|47200799021|58200799018|3025599003|46080799006|26120799003;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Dec 2025 04:58:48.5777
+X-MS-Exchange-Organization-SCL: 8
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|45200799018|22300799015|41010799003|46080799006|9000799056|25000799016|4001999021|9400799040|70000799015|13020799006|29080799003|970799057|1680799066|461199028|3151999006|2700799029|6100799021|26130799006|26400799015|27400799015|69000799018|23070799003|20103052909095|10300799035|51300799021|9800799015|87000799018|1360799030|1370799030|56899033|17301999023|7310799015|1602099012|6022199012|22015499006|20015499003|4302099013|440099028|3412199025|1290799030;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Dec 2025 15:25:32.9992
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6efb0faa-c9cd-4c3c-777b-08de3228a5be
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5c5a4d47-92ae-4752-1f02-08de3a5bdb92
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=433d03a5-c827-4397-8c6e-6b632c29c2e1;Ip=[184.107.178.51];Helo=[che20211698.onmicrosoft.com]
-X-MS-Exchange-CrossTenant-AuthSource: AMS1EPF0000004E.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000044F1.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB7phishing@pot
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:04.0770284
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9388.003
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB6366
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.9963977
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9412.000
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90002001)(91000020)(91036095)(91040095)(9050020)(9055020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10010005)(10005027)(9540006)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
+	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9525003)(10145025)(9320005)(9245025)(120001);RF:JunkEmail;
 X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?Z3ZTOEFEZkFxNzk1MHBUeFg0aWJON0tXNldLa29TWWVxaC85UmRMcGd6K2NE?=
- =?utf-8?B?NFJxT3RVTlMvcEMyUDBlOFFlUWVZWEw0UStCUy94WllEc08yTE1Cc1Z5RXVu?=
- =?utf-8?B?YjRQakRLVElHZzh1RC9XanIxRzc3b0d6WURFcFhPKzFFODRYZUFxek9QVDd1?=
- =?utf-8?B?QlBsQVZWazlQWjBnQnhaVkt6TlA0NU5rMGhzaTJMRmdKSmI1RmMxY3BtWGh2?=
- =?utf-8?B?VG0zSWNNVE14aGFEdmUxWUx4WDdDT1VRZjlHTUh5cmJpYWFsTDF3L0V0M2hS?=
- =?utf-8?B?SlJjait3UnBwbTJUM0RvRXJmUS9KR2o2SDR4azlBWGFaaWR1QjdtSnVOckcz?=
- =?utf-8?B?ZHBUTW1ZVVQzaEJZSWFCb0tlTzFwb1RsRXlFUUNKY0JERGNlOFdkQ1Zpanc0?=
- =?utf-8?B?TzJSWHNYaCt4a0lrSzRXcUp1NjJveDJMTnVSVG82RGEweGprV1YvOWFQOGM5?=
- =?utf-8?B?V3lUdHRMSURLb3FiYmpYcnpWSjRGYUFEZXRTQ1hPc1lrOVNJbWx1bmpQdTNH?=
- =?utf-8?B?UnpyQTVOOHZwc0hOcHlhLzVkRHY0c0d1cWVEeGdVMlNiZkpzd3l1Z3UySlk0?=
- =?utf-8?B?aGdzS0pjMnY5anBZUnRHRStQNUl4ZjI2VVdnUGpZZi9tcUFxbTZtd2wxellB?=
- =?utf-8?B?Wmk4aHpQUk4yVW5LQWtNajZuMDBMQlJScmcrdXoxS3lUZmFMM2hqSHIzaUNB?=
- =?utf-8?B?cGVaZDhiYzR0ZXV5M3lCRGx3NmcxcWpzQ3lMNzNUaTJJeDUzb2hSQkZRVHgr?=
- =?utf-8?B?OHhCS3J1RXRoc0w2c1J3QVh4TmVmUHVxRXJac3lmMEIwdzMxUmhvc2JzWWRU?=
- =?utf-8?B?NU90SzNYRUFodEU2d1pKTkJtSm1hQWRRUXlCWERnU2NzMU1YN21tT2JlUDE0?=
- =?utf-8?B?TGJETVMzOCtJTVY0WDQ1a0FCUHR6WkZtTkorVG1MM2hBMkRPK3RkTmtiRkxq?=
- =?utf-8?B?cEpZZGVSdEd3Q3JKWGlWY0drL09ieGhjWHhENEl4K0J3VXhFNGFtQWZsM1g5?=
- =?utf-8?B?MnFQclY5WlZ4Y3ljNkgzZk1Hcnk2aXB3K0FLK1Y0S3RPR092WGxTTUhJdWYz?=
- =?utf-8?B?R1c0WWIxWWw5VVJ5SndhMlFURFR5NmthbGtBa0RHRmJtMEZ2SG1yYXYwYnkr?=
- =?utf-8?B?ak5lUTFDbmsyZDIrTzlzZzUxS1lGelJPZHJTd1RYdWRsNDNxV2tOYU1xMFZ6?=
- =?utf-8?B?aE9ocnRFOVlnd2FzMk81MlhkdmJHc1Flakx5K1VINHdxU1d2RmQrZ0pFTXkx?=
- =?utf-8?B?aFdMVWhxdG5MVE9CSmpXYjlmckozaWhSdG9XYjluODViOFNHN0sreWlaL0J1?=
- =?utf-8?B?bDMvd3ZyMVI0aTV5OEF4bndGR1pUMUg0cjRIOTkvWm4yaEIwQjFGNzZiL3dj?=
- =?utf-8?B?R3M0cXovVHY1YWxpdE5VU0llL1V3bEZwUER6WExOOFBBQnhqa2JsQk1EZDFW?=
- =?utf-8?B?OHJUOWQ4V3Y0cmgrWUhOR0dHUXZ3MndKN3MvU0orVENjUXAwVklJVUE0ZUIz?=
- =?utf-8?B?aWJKbEJGSzA0ZXc3bzRXRnZwN3p1cmZCQW5sV0lDOUlDcWpHcTd0OVV4L1g3?=
- =?utf-8?B?cGlMelp4aUFJTlVwSW15Y09jTThGb3VQOHVNQ1c0NWo5a0JQc2xOZ3UxaUpi?=
- =?utf-8?B?YWVHa05LbkN2TmFPQlhaUE9MY0hCd0lsOW92eTFVSE5vcll2ZENldnR3encv?=
- =?utf-8?B?LzB0WTgvYWtJQVdSajRHRmkxTVg2QW4yeVNWUkNFNWZNZ25HdVZkWDN5QWZD?=
- =?utf-8?B?YnQ4L3Brck9iVEhBU2FTY1RzVTVLbFF4VWg3M1FjaENOMFdwYnhXZGN1alFM?=
- =?utf-8?B?WThqQnFrajl2L3ZhOFFSd2xLNjJNMG50YW9UclQyNXZTQnpMK0VHRjQ2SG9G?=
- =?utf-8?B?UVV0SWFFWG1vU3Jkbi8wQ2F6emRaN0Z2ZXZEeWlYUHNwODNTRW5vUWYxU1pa?=
- =?utf-8?B?emRCMDlOeDZQYnNkWHZqdExoU2dxRzhvTFppL2djM2pPZ1FhREgwK1cxSlZ6?=
- =?utf-8?B?WGtQR0lMSldBMUhOVlRHVGM5OEZTSXZLQW91ZDlPK1hkbTZzSHY3NG9aeXNa?=
- =?utf-8?B?aEZDSGNudnEzaW03eHZNb3JwSWVqaVdSZW5IQys5MUZIZDVrUDVveHRFRmlx?=
- =?utf-8?B?ZHBTSWk5MU1NTnhDUUgwQjNsb2tjaVByYzE2eW9BampOQkROYmxLQ2tVMFNw?=
- =?utf-8?B?dG5zalU0VFlKcTlwNHJLQmdEcU1UUk02VFh6RWFHVXBITFVYM255ZmNSdm80?=
- =?utf-8?B?dncvMThjSTVXemNucHZQUWZYd3NGdXVHL3A3OWhBalJTcE44UXNHMmpnL242?=
- =?utf-8?B?dE5nY0NEQ2E5dzZCVEpFM1pNVUNUSzlqT1RIRXBtM2dyaWs3OFJnaFJvS2hO?=
- =?utf-8?B?NGE2OHpsRzBwbUdyQ1c0SHFlUE5QR0tOWDNzVzFpOVFISXdZdjczSmtoZ2Qw?=
- =?utf-8?B?ZzkxM1NXcG04NkhIVU1JTEdwTDNHM1pZZXlma3Y4SVZISmFDRE5NZjdzc0xU?=
- =?utf-8?B?dW9sM0lwZXRORyt2bDZzMTFYRjE2UXJqS0tBbitaS3dXZ2FvbkJTRHI2VlEy?=
- =?utf-8?B?cFp0ZDhBY20xSkRrTkQ3Zi9BMkI2MU9yVnNIMlJOOXNQOXFyNFhTNXB6MnRL?=
- =?utf-8?B?TXpvamZzOTVBL0M3UU9mRUtrZ25YTzVHR0JLR2M5SVd1MStjcG9MTStiSlpF?=
- =?utf-8?B?QStXb21zNmx6ZzdlYXVHUGpaTTVLNk5lL2VuQ2R6MFBtWUNpcE50K0dvSFA1?=
- =?utf-8?B?eEFYR2V5S3BRWmdxblg4RGJmTmpGZWhMd1JmOC9GSXM3U0tkaFJMMkVMbmN3?=
- =?utf-8?B?eFh2QTViTjhVWkhHR3phUmdvQnZ1S3U3V3I5NExsaXU2TXFxbmlpNnhBVTNz?=
- =?utf-8?B?S1FHQUFhdmpKc28vV3ZlU0s0VmZjblEyUWRMaWxMM1p3bTR0VGhGQjNOTEx1?=
- =?utf-8?B?RUxKQXI3ZzhpanBCOTdhMkNQajlVTFEvb1BMQnVzTHVFeTN6Vk1wYWRoTVFk?=
- =?utf-8?B?YzlLK2RzSEsrRitRa3hhbE54bERLQW8wRldmS0drMUcyay9WQmRhd2wyR3F1?=
- =?utf-8?B?eHA0c09wSzZYaTVOMVZqQWdmVThhZWZGajhLOGdlYnNUazFKd2Z0SW16ZzFj?=
- =?utf-8?B?SGdLQndnT3VRbW5Ldkd3N2prNXBRS1BjOHVTRXluZFJBNGNUUWttZGR2R3dC?=
- =?utf-8?B?eWlyUXpBSjVyQ01EY0wwTmppTU1UYTJQYk1GenFlV1NDbEdlcGJkQXZHdjdy?=
- =?utf-8?B?ZnN6Nm1tbDBoNW9Rb1JxTGRaRWxqbzlMeVlTbkRkcmROWms2RjNaUzZ6dXY0?=
- =?utf-8?B?cXVMUzNUQytYWGpiOVhObEgrL0V0a0U2bHgwVk8xbWxDQWtOYmZiNkpVTWQr?=
- =?utf-8?B?ZFBZZVlJVm5sd0RPd2JBVUhsQ1Fsdjdkb0g1Zm9qWm5ZUnBiNGpaeGNRRy94?=
- =?utf-8?B?SEl6QXRPTE1YeHA5VWl4Z2RRMTdrYlloeGhrNzQxMUNYZEhlUmlRRnpDbGlO?=
- =?utf-8?B?R3M3WC80L1pNWkNlaFpQR0xqUm9vL3hNbUdIRzF0K2hBSlljNmR6TjNJelNk?=
- =?utf-8?B?aHNVZ2FCU3MyNk96clVPdVRZdEZwNXRUN3VmbmVoTWxzaWZiU0hzang4ZHJi?=
- =?utf-8?B?a21xbWd6WDE4TVZMVG1OSVFlcTYyMDAySi9BMTlvYVdMVlhXdTBiUG5Sbksy?=
- =?utf-8?B?VUFtTGJkUXhqbTZyVTJtVk5iblpGbk9YTHBsdHZLdmVsMHFKN1ZCaUNnVXVS?=
- =?utf-8?B?aGozRkxzclBHQStEU215dFRVNmgwc3YxM3VCN256Z1lIRm1RZ08wZk5VMzJh?=
- =?utf-8?B?UlgxMjFzMUtsTjZjTjZaYTZ4Rjd5L2ozTVFzaDZDUXdEZEF1QWs5SFc0Z1Fq?=
- =?utf-8?B?cSswbEdLMUh3OTFMcmVrcStPN2VZMmt4TXVHcFc5Z0l2OTJsRVJWb0liNjVM?=
- =?utf-8?B?MHY0TWMrTEJITkNmVE82M2hjTHhxbUhPVTRCY1E0RUZ2ZDJoeWZNT1BLbG5a?=
- =?utf-8?B?dkZEdmFCenlUT3huVlJzRVZHYWo4dkNyYndCaFBHRnhKWTZSanBxanBSNmtj?=
- =?utf-8?B?ZEFtQWVVMC9UaUZSM0k4clZhUmUxVTlTRHF4b1JxTldOUm1DRU9hS0tnVS91?=
- =?utf-8?B?aUlYM2ZkMnF4NkNES01NdDNiOVcxNExKTWN2cjFoZHNob3ZHUDArODdONmRJ?=
- =?utf-8?B?VGZ3K2ltQ2NqWUJEV0UwRDRYQUlZZDcrcnZHOS96REtsTWZpS0R1aUhaOUNt?=
- =?utf-8?B?eUVianZETmRkRWVRLy80Wmt5dmJNMXR6cXFGV29yNW1ZK05oeFFZU09mZFBT?=
- =?utf-8?B?ajdmNnpMR3c9PQ==?=
+	=?utf-8?B?cC85NFN4VDBZTWhIeEI1Umc0RlFUc0RwdFRZRlJjQ1ZxSWNwM3J3QmtRVEJY?=
+ =?utf-8?B?aDVCdm8vb3RWRUJwRDg3b3pCQWRieWNVMm1uSG1SbzVXRlJiQVREL2R0TzU2?=
+ =?utf-8?B?REhIbndSZ29BejE4VmZIcmRERThwdUkwWFBIUVVPVVdhV281NTFKdGtxaDJF?=
+ =?utf-8?B?KzJYSmJZMGZhYU9QVGcwanllQXJQWWZKRVAwOUVYcWE4aFVOUFgzaEl2N3JO?=
+ =?utf-8?B?ekIxNXU2Q0JveXFjbFp6MHlxK1lFejMrQ1FRTCsxOHBVVkRUQ0tYcHpLVWhP?=
+ =?utf-8?B?VEdOWWFSNE56Q1M2UzFIVS93ekEwSWZKNkdVblBxMXVPYmRiUWtVYTJEWjkv?=
+ =?utf-8?B?L0tQVWcyWUVMUDFySm5QQlE5Mm9JUlh0ckh5SkdGMEJ3WnRGenIxQ0lWVjhX?=
+ =?utf-8?B?MXgyWmo0OUk4K2U2VkU3MCtoNU1PN1ZsRjVhTlljK09JQUNtQTY2YnJiQmhL?=
+ =?utf-8?B?THdzYmRhYVhKaHpvVDNGdXA4Z3JpcTU3cnNZR05KRkZKV1ZLOElXcThLZlVt?=
+ =?utf-8?B?TjlkM0t1YXo4Y2kwdklLOU9naTJVaDVmRllZNFNxbmZ3aVc0M2N5Q0xYN05X?=
+ =?utf-8?B?d2VqNE4wWkZrdkNFYnUxYWJyVnU3UnU0alRNVEtYUWcyL2hHZmhpNkR2c05u?=
+ =?utf-8?B?Z1QvWlVyY0FBUHZITEJXQldDMFhndW5JcFJYNGI3NzQxUzNWYzBLdStCWHVM?=
+ =?utf-8?B?ekM4MldiOVVPQ29na295dzFPTStkNjZRamVZVllkSGdBRVdSaTdRZDhqMHVl?=
+ =?utf-8?B?RHVLejd1TS84NVlHK04vQ2NZZGh3R1RnMGpkblZaQ0pBajJBS2RlQjIrdXh4?=
+ =?utf-8?B?QWNwZW1GZVdzeXBmYWFZalh0aTZYa3k0WU5yMGNkMHE3KzVlNjM2UWNpYXU0?=
+ =?utf-8?B?YnU1bVJUcTFlQnJrVkpoWGVlQVNORDdsYnFtZUt2ajFRVmk0d1BKS2NVTjJr?=
+ =?utf-8?B?OHdzc2VwTGtMbVRaaEVzU0dNZC84aFBYd3FNaWFHS1I1bkVXNGgzWHVmUEk0?=
+ =?utf-8?B?cnNOd1pOQnJ3TGpFU1pNaUZPRHdFQmNGVHhtYm9uTzg3cUhRY1FFQ01Ob3VL?=
+ =?utf-8?B?ZWRLaHA0MGFWblBWdTE3eFk4RDhhQm43dFEyUkhOeWZwakY2WDkwNGRGYWJy?=
+ =?utf-8?B?N1FnaHZ5akFQcUp0cDJSSWJwZG5hNUZtOFh5SkUwTTlRYlQyYTU5Wk5UaVRT?=
+ =?utf-8?B?UDdJOURPcTBRQ1JMTkY1Z29YZ0hJMjVYQWFUNWNvK3NXdWUxdWdUaC9yRVZQ?=
+ =?utf-8?B?SmdGejBRQ0RzelZaaHNOODRsQjlUQWpjZ2hpb3hLcVdEWHAzdUdOUHhmUjlI?=
+ =?utf-8?B?TXJPTENreHlmbU5DM1JnbDNrQ3NYZXdCbWh1L2FSUEc5WW9PQkpMTzJsRWkz?=
+ =?utf-8?B?U0VGVWUzcVkzT1VZR253T3g0aStvOHREUkc0YWE5VU5Ic1pPbkwvU0RPN21E?=
+ =?utf-8?B?QVJiZ0pWUDdVcEY2SWUvL0Z0aTVpWFhwK3JLOUVwRFFEYkQ5d0tpdVd1Z3ps?=
+ =?utf-8?B?bGJxSU1ua0VvWmxVSksvYk80UjJMMWRmS3psQzBiMUtwNjlvS1BjZmExbWZC?=
+ =?utf-8?B?UE9jemlsNW9scVJmTVk1ODdTemhSMnZ5RHNJZldLWkVSVm9HYnF5T21PdmhL?=
+ =?utf-8?B?T1NwYWtIV1lZblBVTm5FRVFVbzdKR0pGdkpRK3ZGN1ZBaXVDdTRpTnNDaURX?=
+ =?utf-8?B?S3NWekduWW5pdStyRFdsYnNrOFk1OWFNaWFQNWZRSEJtT2lWVS9Kc1hPQldG?=
+ =?utf-8?B?K1FiU2I0S3NiZFdRclFmZENmdXY1NllnZnRYSWVSRjZ6WXJPZjhDOC95cml5?=
+ =?utf-8?B?em4wRkNPb1V6eC9YQ2U4Nm9vTUpnbkxPN00ybXJDZnJqRlYvTXVhR21PLysr?=
+ =?utf-8?B?enpVWm5tWTNPdkxxSHdLSUVpU0lFWWpxa2FQeFlJSXlwdzZ5ZmhzV2dWU0Np?=
+ =?utf-8?B?MmhMSlYrTDBtTlVhSkpZVWUxTE9sM0pJR25pbDkyTlpGYnoxb2xDenZHS3Rs?=
+ =?utf-8?B?SUdqdU5rNER0cDdpejBicnAzTnp3U0VjQU5sdm1LSWI5bGNuZGZ5aEFnWHdo?=
+ =?utf-8?B?RlNHOGpkSnR1NTRrNDNid2tIMDBtRnhBN2tqM0JPai93ZExQTnA1WHNjczBh?=
+ =?utf-8?B?VjZ2Tzc0V3I3eE0yTk1aWjNlMUFBcnRtQzN0TzZqSE1rdFFNOGxiaXlHN0Ru?=
+ =?utf-8?B?S2xoaWRld3d3TG9QQjlBN0hPSUZKbHNadkFmdU0yM0VRazF3cWtSUUNtL0M0?=
+ =?utf-8?B?TEk4NE45Z3c1cXlGNjlKakdHY2JwLzZGLytPam9ISkhKR2tDbTBJb2dPOUhr?=
+ =?utf-8?B?elBwTmpNcThqN0tieVNQcjQ5MDNZVVJTdEtMKzRwSnByY0U5UlE0VmJ3eVRY?=
+ =?utf-8?B?eHhtSWI1OStMb2RhVnpqRnJyZHhHdVoxWE5uVkJuOGpMUVBIbHZ3cS8vNC8x?=
+ =?utf-8?B?V2ZCcU95OXBhMEMxWkpnL0RPZnlJanBiMkVOTmllQklFSkxiTVgzVW9CdDhF?=
+ =?utf-8?B?N1NtaE1scHJzVXBlT3lIdkVMN2FWVUpJeXFUeDA4Z2lvWWh3S1Q5S1EwQ0dW?=
+ =?utf-8?B?RHZrN0FOdVpyL2FhMkVDVEFuSy9qWS95ZlJJb3dITGgxQnZRc0RuVnhDL3Jt?=
+ =?utf-8?B?MjJHM0YwMjFnRUlJNlpGOHE1SjJDTWI4R1JpakdxdmFYSmdWejYwcGhTZWNK?=
+ =?utf-8?B?TjUweTNEaHgxUUpCTklwM1FIbDlvS2dTRkJYUjN3bHEyeTdSQTNoVTgrVFE4?=
+ =?utf-8?B?ZzZNNVZYbjdoR3NxMlRHbmJLZ2xVYlNzcjYxUUtXN3QxRVJUMmZwL2dLMHRL?=
+ =?utf-8?B?K3Zka2lnN1NLZVBlbEtsY1lPeWhBWWtvWVM1amIyNW16WkptaEZmN0UvUnFn?=
+ =?utf-8?B?SnFOTzFHMVRDay9KNVFmQ0plTG5ZanNYTTQ1bU9HWWMrSndEWnAzejJGSmhP?=
+ =?utf-8?B?Qy9ZTVlpL21uR0tMNDdGSUtXMVgyOEorWittSm9hUFFKbjNDdnhMV3RLUDNY?=
+ =?utf-8?B?RFZqR3kzcmZJQUtiWGx6ZkNNbHBFWU54VVJLanp4clB5WVZJNWRvbkRmWVZK?=
+ =?utf-8?B?L1ZxRUlyMUVETEhBTTl5c0NPUVpFZkpURVNhWWtRcVBBMFc5eW5RdHlxZG9W?=
+ =?utf-8?B?V01ZWjlLM0Q3ZEtFT0FrR3dLOGUyMUxkbW5PTGNpL3JiZC9NMnNKcnpjWkNv?=
+ =?utf-8?B?WDY2SDRZdTVIdHlmRHovVGp2bFZOTS9zTXJkdUR0VTAzbFVWSUtncWFsMVg0?=
+ =?utf-8?B?cXdwMnA1U0xTVU1xV2xwM3lRVkhXcVNpdko2Q1dPUTY1UjNnWXdqbzMzQTcy?=
+ =?utf-8?B?Ly9HZWw4eGt6dC8yMFdDL3BhM0J4MzlTNE0wL1M4VFhaanhGK01sZDVCVkVH?=
+ =?utf-8?B?ZTRqUnRiVTdYWFJOQ0pQcjY0UHZkS3gwcU9CaktLWXAwRUd5Z0lIRHpRR1lO?=
+ =?utf-8?B?cDhpUFBaVnRYRHA0REt3L21ZcVJvbnlUMFBvZ0dueWVldWQvRHFmNDNHa2lE?=
+ =?utf-8?B?dktJa0IzdEE2VHhLNk9vVWl2RlBEeG1JYXovL204cEV5NjhZNEZ0WEpVVVZL?=
+ =?utf-8?B?SmFNMjZWSHpSQndzR21TelVmSW9VUUs4WS9aTjJ2S2FGY3NyRGQ2YW9kRFg2?=
+ =?utf-8?B?ZDVHbUowVmVhZ3h3aHRnZG1DMXFhRFQ5V1dYRUpURnd4SlNMSElqbDBGNWRl?=
+ =?utf-8?B?djQ5clI3eElVZDZlbUpKeDNxVzFlaGwwVi9lc21kM1U3ZGlUOXdCaUxWZ0h4?=
+ =?utf-8?B?Q3pVT2pFTFlHNGxQZU4yK2QySGVkdG5IWkhLM29VWXdPMlk5VUtGQ1FFU0ND?=
+ =?utf-8?B?Z1ZUcnZqNCtMWjNKUWRPUk4xZ0tMMDE3YUthNjJSeFlZRGhOMWEwSTdoK2JV?=
+ =?utf-8?B?LzJxNzFobkU3VU82RTNEKzRncENwNHNYa2orWXRldm15Qmc5UzlYVVZKUVEy?=
+ =?utf-8?B?a0NQa3J2NW91UWR0K3hBaEpvSk1XTUd0U3JSK3llbXA0ZHRwalJmK0x5a3Bp?=
+ =?utf-8?B?WmNKUFdkM0tBQWQ2RVFFRy9GK05uRUpkcUFTQ21oNEd4NzVscC94NGdxMjBM?=
+ =?utf-8?B?MWtVTTl6bXpzU1Jqb1V4ZFNaa21NQm9PY1RkczFCY0lodVRNeEV0a3Nha0VR?=
+ =?utf-8?B?YjVZeElyUm1TME0ycnVwMFJMVlRKSEVSUnhENWVDenFIUHpkdmFydWNyQ2ZH?=
+ =?utf-8?B?NkJPUURzUkw4b093VndSbm95N0ZhMUFjbm9Tc1Y0djRIVEErWWhPaEg2M1R4?=
+ =?utf-8?B?dFZVQXNSdDJwcllSMmNDZVV0c0NtUkp3Q2NqMSthV090MDN5djg4SW8ya1Ew?=
+ =?utf-8?B?OUw0dUlkMTRDMGxtM2NhSDRSTzFjbVNyM2dScnZTSXZ3d2E1aGxvMFpPNUtI?=
+ =?utf-8?B?YTNYOGtMVERSVkN0N29pVmVCWm8rNWpWZ044T0xYc3EwNnF2a3JLT1BMemti?=
+ =?utf-8?B?VTdla2xqYnRJTjlwR0tsVjVVT0tyam9OMzcrWTdFaVlKbXN1MFJUa3YvNS9Q?=
+ =?utf-8?B?Q3NPNkhiempuNjhLL2tEL29QcXMzYXZWZTZRVHV0TWs1eEtNRHZ6WjRuY0V2?=
+ =?utf-8?B?c3JUYkZzcmIwa2N1WVZqWngydjJ4K0VaYm9xbzJTOTRQL1AwaEVrcFQ0KzBk?=
+ =?utf-8?B?eUdzUTNFcjdQWjJYRzVDcVNPdG0rL0d1ZHRRUWhncm5WeTIyN0ZUbXVzNUFi?=
+ =?utf-8?B?S0EvQWwrVW9FTXNnb0NzTzV5NEVRVUdscUV5Z2UxbnBCQmdYTEhSdkVKTnd1?=
+ =?utf-8?B?QVNQdzJTOXRKMW11QkJiak9VTmVRQ3Awdkt5RGN4SDlQVDJrdDB2eEorR2xX?=
+ =?utf-8?B?cVRwaFdRbW4wUW9yaENucHRNSUNobmpGZTU2dDBDZzh5aC9Kc1RQQXd6ZFNp?=
+ =?utf-8?B?UnVsaHhpZlJVanhsdEs0aWNSL0JWU3BVMVpRYm1jajNNeUV3N2RmNnBzaTBX?=
+ =?utf-8?B?WDBDRGJJT3BkNzJ2Z0F4MXArbFE3MnkrLzhYOW9pcG5WNC9LQjVNSlZHaEtF?=
+ =?utf-8?B?SktzMENIdTZIK1hRZ29WbTQ5SWtXakRqTTdDaFNrV2dmcCtxSm1CMStYVmpV?=
+ =?utf-8?B?bEwyV1l2ejlCeDRZVnR2OHlrSW1rV09uMTRZNzlvZGFaR3F4Z24yRFd3YUhI?=
+ =?utf-8?B?dU5CN3k4a3pGenFud3lDR0h6angrYnJXRzdPYXB5Q3hUa0lUSTBZbm4yTTJX?=
+ =?utf-8?B?TUowOUlLcFliOWdRaUx5M21Ob3doV3VKbUo0QlErTjFaR2k1Z2t1bzYxbEZj?=
+ =?utf-8?B?R3lVc2ZZb0EzbEs0UklENXMxSk92Y2U3MTUzWHd4d2JIMml2WHNuaHRFK3k3?=
+ =?utf-8?Q?yBTZhpcP4WG3A=3D?=
 MIME-Version: 1.0
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><!--[if gte mso 9]>
-<xml>
-  <o:OfficeDocumentSettings>
-    <o:AllowPNG/>
-    <o:PixelsPerInch>96</o:PixelsPerInch>
-  </o:OfficeDocumentSettings>
-</xml>
-<![endif]-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html data-editor-version="2" class="sg-campaigns" xmlns="http://www.w3.org/1999/xhtml"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="x-apple-disable-message-reformatting">
-  <!--[if !mso]><!--><meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
-  <title></title>
-  
-    <style type="text/css">
-      
-      @media only screen and (min-width: 620px) {
-        .u-row {
-          width: 600px !important;
-        }
-
-        .u-row .u-col {
-          vertical-align: top;
-        }
-
-        
-            .u-row .u-col-100 {
-              width: 600px !important;
-            }
-          
-      }
-
-      @media only screen and (max-width: 620px) {
-        .u-row-container {
-          max-width: 100% !important;
-          padding-left: 0px !important;
-          padding-right: 0px !important;
-        }
-
-        .u-row {
-          width: 100% !important;
-        }
-
-        .u-row .u-col {
-          display: block !important;
-          width: 100% !important;
-          min-width: 320px !important;
-          max-width: 100% !important;
-        }
-
-        .u-row .u-col > div {
-          margin: 0 auto;
-        }
-
-
-        .u-row .u-col img {
-          max-width: 100% !important;
-        }
-
-}
-    
-body{margin:0;padding:0}table,td,tr{border-collapse:collapse;vertical-align:top}p{margin:0}.ie-container table,.mso-container table{table-layout:fixed}*{line-height:inherit}a[x-apple-data-detectors=true]{color:inherit!important;text-decoration:none!important}
-
-
-table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: underline; }
-    </style>
-  
-  
-
-<!--[if !mso]><!--><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css"><!--<![endif]-->
-
-</head>
-
-<body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #ffffff;color: #000000">
-  <!--[if IE]><div class="ie-container"><![endif]-->
-  <!--[if mso]><div class="mso-container"><![endif]-->
-  <table role="presentation" id="u_body" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #ffffff;width:100%" cellpadding="0" cellspacing="0">
-  <tbody>
-  <tr style="vertical-align: top">
-    <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-    <!--[if (mso)|(IE)]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color: #ffffff;"><![endif]-->
-    
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: #f9c422">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: #f9c422;" align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:6px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%; text-align: center;"><span style="font-size: 12px; line-height: 16.8px; color: #000000;">Zeitlich begrenztes Angebot: Exklusive Rabatte auf Leava!</span></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-    <!--[if gte mso 9]>
-      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;min-width: 320px;max-width: 600px;">
-        <tr>
-          <td background="https://assets.unlayer.com/projects/270221/1743533318196-475275.jpg" valign="top" width="100%">
-      <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width: 600px;">
-        <v:fill type="frame" src="https://assets.unlayer.com/projects/270221/1743533318196-475275.jpg" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0">
+      <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+      <!--[if !mso]><!-->
+      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+      <!--<![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:AllowPNG/>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
       <![endif]-->
-  
-<div class="u-row-container" style="padding: 0px;background-image: url('https://686.efuserassets.com/686/offers/16606/c/55104/assets/image-5.jpeg');background-repeat: no-repeat;background-position: center top;background-color: #000000">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-image: url('images/image-5.jpeg');background-repeat: no-repeat;background-position: center top;background-color: #000000;" align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
+      <!--[if (gte mso 9)|(IE)]>
+  <style type="text/css">
+    body {width: 600px;margin: 0 auto;}
+    table {border-collapse: collapse;}
+    table, td {mso-table-lspace: 0pt;mso-table-rspace: 0pt;}
+    img {-ms-interpolation-mode: bicubic;}
+  </style>
+<![endif]-->
+      <style type="text/css">
+    body, p, div {
+      font-family: arial,helvetica,sans-serif;
+      font-size: 14px;
+    }
+    body {
+      color: #000000;
+    }
+    body a {
+      color: #006837;
+      text-decoration: none;
+    }
+    p { margin: 0; padding: 0; }
+    table.wrapper {
+      width:100% !important;
+      table-layout: fixed;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    img.max-width {
+      max-width: 100% !important;
+    }
+    .column.of-2 {
+      width: 50%;
+    }
+    .column.of-3 {
+      width: 33.333%;
+    }
+    .column.of-4 {
+      width: 25%;
+    }
+    ul ul ul ul  {
+      list-style-type: disc !important;
+    }
+    ol ol {
+      list-style-type: lower-roman !important;
+    }
+    ol ol ol {
+      list-style-type: lower-latin !important;
+    }
+    ol ol ol ol {
+      list-style-type: decimal !important;
+    }
+    @media screen and (max-width:480px) {
+      .preheader .rightColumnContent,
+      .footer .rightColumnContent {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent div,
+      .preheader .rightColumnContent span,
+      .footer .rightColumnContent div,
+      .footer .rightColumnContent span {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent,
+      .preheader .leftColumnContent {
+        font-size: 80% !important;
+        padding: 5px 0;
+      }
+      table.wrapper-mobile {
+        width: 100% !important;
+        table-layout: fixed;
+      }
+      img.max-width {
+        height: auto !important;
+        max-width: 100% !important;
+      }
+      a.bulletproof-button {
+        display: block !important;
+        width: auto !important;
+        font-size: 80%;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .columns {
+        width: 100% !important;
+      }
+      .column {
+        display: block !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .social-icon-column {
+        display: inline-block !important;
+      }
+    }
+  </style>
+      <!--user entered Head Start-->
+    <!--End Head user entered-->
+    </head>
+    <body>
+      <center class="wrapper" data-link-color="#006837" data-body-style="font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; background-color:#FFFFFF;">
+        <div class="webkit">
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" class="wrapper" bgcolor="#FFFFFF">
+            <tr>
+              <td valign="top" bgcolor="#FFFFFF" width="100%">
+                <table width="100%" role="content-container" class="outer" align="center" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td width="100%">
+                      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td>
+                            <!--[if mso]>
+    <center>
+    <table><tr><td width="600">
+  <![endif]-->
+                                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px;" align="center">
+                                      <tr>
+                                        <td role="modules-container" style="padding:0px 0px 0px 0px; color:#000000; text-align:left;" bgcolor="#210C42" width="100%" align="left"><table class="module preheader preheader-hide" role="module" data-type="preheader" border="0" cellpadding="0" cellspacing="0" width="100%" style="display: none !important; mso-hide: all; visibility: hidden; opacity: 0; color: transparent; height: 0; width: 0;">
     <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:0px 0px 280px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <table role="presentation" height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 0px solid #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+      <td role="module-content">
+        <p>Ready for festive spins and holiday wins?</p>
+      </td>
+    </tr>
+  </table><table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" role="module" data-type="columns" style="padding:0px 0px 0px 0px;" bgcolor="#210C42" data-distribution="1">
     <tbody>
-      <tr style="vertical-align: top">
-        <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-          <span>&nbsp;</span>
+      <tr role="module-content">
+        <td height="100%" valign="top"><table width="580" style="width:580px; border-spacing:0; border-collapse:collapse; margin:0px 10px 0px 10px;" cellpadding="0" cellspacing="0" align="left" border="0" bgcolor="" class="column column-0">
+      <tbody>
+        <tr>
+          <td style="padding:0px;margin:0px;border-spacing:0;"><table class="wrapper" role="module" data-type="image" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="07b28112-332e-499d-a606-9b68ae6d956b">
+    <tbody>
+      <tr>
+        <td style="font-size:6px; line-height:10px; padding:10px 10px 10px 10px;" valign="top" align="center">
+          
+        <a href="http://perfecto.sa.com/4zmaFF5243WFCg414feehtagkoy84NQETVACYRZIGDMC26106CREQ604235k12">
+        <img class="max-width" border="0" style="display:block; color:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size:16px; max-width:30% !important; width:30%; height:auto !important;" width="174" alt="King's Chip" data-proportionally-constrained="true" data-responsive="true" src="http://cdn.mcauto-images-production.sendgrid.net/6a583904b7e21994/213c29b5-d436-4ba3-826a-18ae3bd7866d/600x235.png"><br>
+        <img class="max-width" border="0" style="display:block; color:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size:16px; max-width:30% !important; width:30%; height:auto !important;" width="174" alt="King's Chip" data-proportionally-constrained="true" data-responsive="true" src="//cdn.mcauto-images-production.sendgrid.net/6a583904b7e21994/213c29b5-d436-4ba3-826a-18ae3bd7866d/600x235.png">
+
+        
+        </a></td>
+      </tr>
+    </tbody>
+  </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-mc-module-version="2019-10-22" data-muid="w6JHT87zW1XzxEtGqbMk6u">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td style="padding:18px 18px 18px 18px; line-height:20px; text-align:inherit; background-color:210C42;" height="100%" valign="top" bgcolor="210C42"><div><div style="font-family: inherit; text-align: center"><span style="color: #ffffff; font-size: 20px"><strong>&nbsp; Unwrap Your Xmas Surprise </strong></span></div><div></div></div></td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table><table border="0" cellpadding="0" cellspacing="0" class="module" data-role="module-button" data-type="button" role="module" style="table-layout:fixed" width="100%" data-muid="usQbMPyYxR9bNEgbXET7L">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td align="center" class="outer-td" style="padding:0px 0px 0px 0px;" bgcolor="">
+                                                                                                            <table border="0" cellpadding="0" cellspacing="0" class="button-css__deep-table___2OZyb wrapper-mobile" style="text-align:center">
+                                                                                                                <tbody>
+                                                                                                                    <tr>
+                                                                                                                        <td align="center" bgcolor="#F2D022" class="inner-td" style="border-radius:6px; font-size:16px; text-align:center; background-color:inherit;"><a style="background-color:#F2D022; border:3px solid #F2D022; border-color:#F2D022; border-radius:20px; border-width:3px; color:#FFFFFF; display:inline-block; font-weight:400; letter-spacing:0px; line-height:normal; padding:10px 10px 10px 10px; text-align:center; text-decoration:none; border-style:solid; font-size:20px;" href="http://perfecto.sa.com/4CmMkO5243NmrB414algldkdauz84JHFFVPMKOSJGFCT26106JVPW604235H12" target="_blank">Get Bonus</a></td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="w6JHT87zW1XzxEtGqbMk6u.1" data-mc-module-version="2019-10-22">
+    <tbody>
+      <tr>
+        <td style="padding:10px 5px 10px 5px; line-height:20px; text-align:inherit; background-color:210C42;" height="100%" valign="top" bgcolor="210C42" role="module-content"><div><div style="font-family: inherit; text-align: center"><span style="color: #ffffff; font-size: 20px"><strong>Use Bonus Code : XMAS</strong></span></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table></td>
+        </tr>
+      </tbody>
+    </table></td>
+      </tr>
+    </tbody>
+  </table><table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" role="module" data-type="columns" data-version="2" style="padding:0px 0px 0px 0px; box-sizing:border-box;" bgcolor="#210C42" data-distribution="1">
+                                                                <tbody>
+                                                                    <tr role="module-content">
+                                                                        <td height="100%" valign="top"><table width="600" style="width:600px; border-spacing:0; border-collapse:collapse; margin:0px 0px 0px 0px;" cellpadding="0" cellspacing="0" align="left" border="0" bgcolor="" class="column column-0">
+      <tbody>
+        <tr>
+          <td style="padding:0px;margin:0px;border-spacing:0;"><table class="wrapper" role="module" data-type="image" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="451b256c-625c-4a2a-ac28-17a95281d2e5">
+    <tbody>
+      <tr>
+        <td style="font-size:6px; line-height:10px; padding:0px 0px 0px 0px;" valign="top" align="center">
+          
+        <a href="http://perfecto.sa.com/4SgZFl5243HYYA414bugishnhhp84BOYNGYCITCCJEAH26106WCGR604235p12">
+        <img class="max-width" border="0" style="display:block; color:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size:16px; max-width:70% !important; width:70%; height:auto !important;" width="420" alt="Christmas Big Bass Bonanza" data-proportionally-constrained="true" data-responsive="true" src="http://cdn.mcauto-images-production.sendgrid.net/9ff38570d5a0363e/22323136-8e99-4c12-a73f-cd19a7d4137b/2752x1536.jpg">
+        <img class="max-width" border="0" style="display:block; color:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size:16px; max-width:70% !important; width:70%; height:auto !important;" width="420" alt="Christmas Big Bass Bonanza" data-proportionally-constrained="true" data-responsive="true" src="//cdn.mcauto-images-production.sendgrid.net/9ff38570d5a0363e/22323136-8e99-4c12-a73f-cd19a7d4137b/2752x1536.jpg">
+        <br>
+        
+        </a></td>
+      </tr>
+    </tbody>
+  </table></td>
+        </tr>
+      </tbody>
+    </table></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table><table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" role="module" data-type="columns" data-version="2" style="padding:0px 10px 0px 10px; box-sizing:border-box;" bgcolor="#210C42" data-distribution="1">
+                                                                <tbody>
+                                                                    <tr role="module-content">
+                                                                        <td height="100%" valign="top"><table width="580" style="width:580px; border-spacing:0; border-collapse:collapse; margin:0px 0px 0px 0px;" cellpadding="0" cellspacing="0" align="left" border="0" bgcolor="" class="column column-0">
+      <tbody>
+        <tr>
+          <td style="padding:0px;margin:0px;border-spacing:0;"><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-mc-module-version="2019-10-22" data-muid="gmDerJ2yyGpua7hSpXzBQu">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td style="padding:10px 10px 18px 10px; line-height:22px; text-align:inherit; background-color:#210C42;" height="100%" valign="top" bgcolor="#210C42"><div><div style="font-family: inherit; text-align: inherit"><span style="font-size: 16px; color: #ffffff">Hi phishing@pot,</span></div>
+<div style="font-family: inherit; text-align: inherit"><br></div>
+<div style="font-family: inherit; text-align: inherit"><span style="font-size: 16px; color: #ffffff">The holidays just got a whole lot brighter. Sign up now at King's Chip!<br>
+<br>
+Make your first deposit of €/£/$20 or more using code </span><span style="font-size: 16px; color: #ffffff"><strong>XMAS</strong></span><span style="font-size: 16px; color: #ffffff">, and get a</span><span style="font-size: 16px; color: #ffffff"><strong> 500% bonus + 50 free spins on Christmas Big Bass Bonanza! </strong></span><span style="font-size: 16px; color: #ffffff"><br>
+<br>
+Don't miss your chance to reel in the festive wins - this magical offer is waiting under the tree for YOU.<br>
+</span></div><div></div></div></td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table><table border="0" cellpadding="0" cellspacing="0" class="module" data-role="module-button" data-type="button" role="module" style="table-layout:fixed;" width="100%" data-muid="usQbMPyYxR9bNEgbXET7L.1">
+      <tbody>
+        <tr>
+          <td align="center" bgcolor="" class="outer-td" style="padding:0px 0px 0px 0px;">
+            <table border="0" cellpadding="0" cellspacing="0" class="wrapper-mobile" style="text-align:center;">
+              <tbody>
+                <tr>
+                <td align="center" bgcolor="#F2D022" class="inner-td" style="border-radius:6px; font-size:16px; text-align:center; background-color:inherit;">
+                  <a href="http://perfecto.sa.com/4WIYYB5243ORVK414tmaxoxeyig84LMKFDHXTSUPMAUS26106SZGP604235m12" style="background-color:#F2D022; border:3px solid #F2D022; border-color:#F2D022; border-radius:20px; border-width:3px; color:#FFFFFF; display:inline-block; font-size:20px; font-weight:400; letter-spacing:0px; line-height:normal; padding:10px 10px 10px 10px; text-align:center; text-decoration:none; border-style:solid;" target="_blank"> Unwrap Bonus </a>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table><table class="module" role="module" data-type="divider" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="teDsis4kXkv66c7u1HbnVc">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td style="padding:5px 0px 5px 0px;" role="module-content" height="100%" valign="top" bgcolor="">
+                                                                                                            <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" height="2px" style="line-height:2px; font-size:2px;">
+                                                                                                                <tbody>
+                                                                                                                    <tr>
+                                                                                                                        <td style="padding:0px 0px 2px 0px;" bgcolor="#eeeeee"></td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-mc-module-version="2019-10-22" data-muid="9iQPNXaz13XWLTu2vM16Xj">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td style="padding:5px 18px 18px 18px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor=""><div><div style="font-family: inherit; text-align: inherit"><span style="color: #cacaca; font-size: 14px">* Minimum deposit €/£/$ 20<br>
+*Free Spins are on Christmas Big Bass Bonanza<br>
+*Up to 1 bonus redemptions<br>
+*£20 is equivalent to €20 or $20<br>
+*Max bonus amount €/£/$ 500<br>
+*Terms &amp; Conditions apply</span></div><div></div></div></td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table></td>
+        </tr>
+      </tbody>
+    </table></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="aa0f352f-8a98-4206-b4ae-8aa958c2da89" data-mc-module-version="2019-10-22">
+    <tbody>
+      <tr>
+        <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit; background-color:#210C42;" height="100%" valign="top" bgcolor="#210C42" role="module-content"><div><div style="font-family: inherit; text-align: center"><a href="http://perfecto.sa.com/4oUuzq5243towD414ashefhglca84WLDFQHWEHYBGSEX26106MMNK604235l12"><span style="font-size: 24px; color: #f2d022"><u>Questions? Contact us 24/7</u></span></a></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class="wrapper" role="module" data-type="image" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="26b0d10a-d83b-4f7d-bd26-d030aec36e39">
+    <tbody>
+      <tr>
+        <td style="font-size:6px; line-height:10px; padding:0px 8px 0px 8px;" valign="top" align="center">
+          
+        <a href="http://perfecto.sa.com/4ZAHVQ5243CfEq414ajltogrvpm84DBLSYUGKRTRBRGS26106GCJG604235x12">
+        
+        <img class="max-width" border="0" style="display:block; color:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size:16px; max-width:100% !important; width:100%; height:auto !important;" width="600" alt="Trusted and allowed by" data-proportionally-constrained="true" data-responsive="true" src="http://cdn.mcauto-images-production.sendgrid.net/6a583904b7e21994/641a3866-3e9f-46ae-9309-3e26440b4213/488x150.png"><br>
+        
+         <img class="max-width" border="0" style="display:block; color:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size:16px; max-width:100% !important; width:100%; height:auto !important;" width="600" alt="Trusted and allowed by" data-proportionally-constrained="true" data-responsive="true" src="//cdn.mcauto-images-production.sendgrid.net/6a583904b7e21994/641a3866-3e9f-46ae-9309-3e26440b4213/488x150.png">
+        </a></td>
+      </tr>
+    </tbody>
+  </table><table class="module" role="module" data-type="divider" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="f6d36156-163e-4cd3-9ea9-0727d6a68090">
+    <tbody>
+      <tr>
+        <td style="padding:0px 0px 0px 0px;" role="module-content" height="100%" valign="top" bgcolor="">
+          <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" height="10px" style="line-height:10px; font-size:10px;">
+            <tbody>
+              <tr>
+                <td style="padding:0px 0px 10px 0px;" bgcolor="#210C42"></td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
     </tbody>
-  </table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-    <!--[if gte mso 9]>
-      </v:textbox></v:rect>
-    </td>
-    </tr>
-    </table>
-    <![endif]-->
-    
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: #ffffff">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: #ffffff;" align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:40px 10px 10px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <div style="font-size: 14px; letter-spacing: -1px; line-height: 120%; text-align: left; word-wrap: break-word;">
-    <h1 style="text-align: center;"><span style="font-size: 40px; line-height: 48px;"><strong>Der Wahnsinns-Deal:</strong>&nbsp;jeder in der Jury von „Die Höhle“ unterstützt dieses Produkt!</span></h1>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px 10px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%; text-align: center;"><span style="color: #838282; line-height: 19.6px;">Ein Bericht von Ella Schmitz</span></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:40px 0px 0px;font-family:'Open Sans',sans-serif;" align="left">
-        
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://686.efuserassets.com/686/offers/16606/c/55104/assets/image-1.jpg" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 600px;" width="600">
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px 10px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%; text-align: center;"><span style="font-size: 12px; line-height: 16.8px; color: #838282;">Es war die beliebteste Folge in der langen Geschichte von „Die Höhle“ – das Geschwisterpaar Anna und Janina Martin konnten mit ihrem einzigartigen Produkt die gesamte Jury überzeugen.)</span></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:50px 10px 10px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <div style="font-size: 14px; letter-spacing: -1px; line-height: 110%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 110%; text-align: center;"><span style="font-size: 36px; line-height: 39.6px;"><strong>Ein Investment, das alles verändert hat – und ein Produkt, das die Jury sprachlos machte</strong></span></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:40px 10px 10px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%;"><span style="font-size: 18px; line-height: 25.2px;">Noch nie in der Geschichte der beliebten TV-Show „Die Höhle der Löwen“ war sich die gesamte Jury so einig: Zwei Brüder präsentierten ein Produkt, das nicht nur für Staunen, sondern für Standing Ovations sorgte. Die Investoren zögerten nicht lange – Millionenbeträge wurden angeboten, alle wollten Teil dieses Projekts sein. Und das zurecht: Denn hinter dem Produkt steckt nicht nur wissenschaftliches Know-how, sondern auch ein echtes Anliegen. </span></p>
-<p style="line-height: 140%;">&nbsp;</p>
-<p style="line-height: 140%;"><span style="font-size: 18px; line-height: 25.2px;">Die Brüder, beide mit Hintergrund in Ernährungswissenschaft und Sportmedizin, hatten ein Ziel – eine unkomplizierte, effektive Lösung zur Gewichtsreduktion, die wirkt, ohne den Alltag einzuschränken. Die Idee überzeugte, doch es war das, was danach kam, das alles veränderte: Eine komplette Markenüberarbeitung, neue Verpackung, und ein Produktname, den nun jeder kennt – <strong>Leava</strong>.</span></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:40px 10px 60px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="" style="height:70px; v-text-anchor:middle; width:580px;" arcsize="57%"  stroke="f" fillcolor="#f9c422"><w:anchorlock/><center style="color:#000000;"><![endif]-->
-    <a href="https://adrenergico.com/4tAMDZphishing@pot3RWpt187ocaqsvhqjk489EWMYQQQTCOFDMJQ3789197FJHR11268M14" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #000000; background-color: #f9c422; border-radius: 40px;-webkit-border-radius: 40px; -moz-border-radius: 40px; width:100%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;border-top-style: solid; border-top-width: 0px; border-left-style: solid; border-left-width: 0px; border-right-style: solid; border-right-width: 0px; border-bottom-style: solid; border-bottom-width: 0px;font-size: 18px;">
-      <span style="display:block;padding:24px;line-height:120%;"><p style="line-height: 120%;">Zum löwen-preis sichern!</p></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: #dbdbdb">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: #dbdbdb;" align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:0px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <table role="presentation" height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 0px solid #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+  </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="d3d1c76f-abc9-47f0-a64d-c5cdaba841dd" data-mc-module-version="2019-10-22">
     <tbody>
-      <tr style="vertical-align: top">
-        <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-          <span>&nbsp;</span>
-        </td>
+      <tr>
+        <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content"><div><div style="font-family: inherit; text-align: center"><a href="http://perfecto.sa.com/4AFQRY5243jVBn414rlptcuddtm84PZIRNLJALKEMGDL26106HJQB604235X12"><span style="font-size: 18px; color: #f2d022">LIVE DEALER</span></a></div>
+<div style="font-family: inherit; text-align: center"><a href="http://perfecto.sa.com/4NvbQB5243YESb414unzflxkena84MYJWGIUMKEYRMGC26106IUGK604235t12"><span style="font-size: 18px; color: #f2d022">All Promotions</span></a></div><div></div></div></td>
       </tr>
     </tbody>
-  </table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: #ffffff">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: #ffffff;" align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:60px 10px 10px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <div style="font-size: 14px; letter-spacing: -1px; line-height: 110%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 110%; text-align: center;"><span style="font-size: 44px; line-height: 48.4px;"><strong>Studien, Social Media &amp; echte Geschichten</strong></span></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:40px 0px 0px;font-family:'Open Sans',sans-serif;" align="left">
-        
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://686.efuserassets.com/686/offers/16606/c/55104/assets/image-2.jpg" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 600px;" width="600">
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:40px 10px 10px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%;"><span style="font-size: 18px; line-height: 25.2px;">Was wie ein TV-Märchen klingt, ist längst wissenschaftlich belegt: In klinischen Studien mit über 1800 Teilnehmern wurde nachgewiesen, dass Leava den Fettanteil drastisch reduziert – bei regelmäßiger Einnahme sogar dauerhaft. Nutzer*innen verloren im Durchschnitt <strong>7 bis 8 Kilo pro Monat</strong>, ganz ohne Diät oder Sport.</span></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:40px 0px 0px;font-family:'Open Sans',sans-serif;" align="left">
-        
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://686.efuserassets.com/686/offers/16606/c/55104/assets/image-3.jpeg" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 600px;" width="600">
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:40px 10px 10px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%;"><span style="font-size: 18px; line-height: 25.2px;">Tausende Videos auf TikTok und Instagram zeigen echte Transformationen mit den „blauen Gummies“. Auch Prominente wie Maite Kelly und Sonya Kraus berichten begeistert über weniger Hunger, mehr Energie und ein neues Lebensgefühl. <strong>Leava ist kein Hype – sondern ein Gamechanger.</strong></span></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:40px 10px 60px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="" style="height:70px; v-text-anchor:middle; width:580px;" arcsize="57%"  stroke="f" fillcolor="#f9c422"><w:anchorlock/><center style="color:#000000;"><![endif]-->
-    <a href="https://adrenergico.com/4JkBfephishing@pot3dgLp187tyhwahpgwj489KFBPIXOLKPKJXWU3789197XGYI11268W14" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #000000; background-color: #f9c422; border-radius: 40px;-webkit-border-radius: 40px; -moz-border-radius: 40px; width:100%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;border-top-style: solid; border-top-width: 0px; border-left-style: solid; border-left-width: 0px; border-right-style: solid; border-right-width: 0px; border-bottom-style: solid; border-bottom-width: 0px;font-size: 18px;">
-      <span style="display:block;padding:24px;line-height:120%;"><p style="line-height: 120%;">Ich will Leava ausprobieren!</p></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: #dbdbdb">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: #dbdbdb;" align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:0px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <table role="presentation" height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 0px solid #BBBBBB;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+  </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="aa0f352f-8a98-4206-b4ae-8aa958c2da89.1.1" data-mc-module-version="2019-10-22">
     <tbody>
-      <tr style="vertical-align: top">
-        <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-          <span>&nbsp;</span>
-        </td>
+      <tr>
+        <td style="padding:18px 18px 18px 18px; line-height:22px; text-align:inherit; background-color:#210C42;" height="100%" valign="top" bgcolor="#210C42" role="module-content"><div><div style="font-family: inherit; text-align: center"><span style="color: #ffffff">We at King's Chip are committed to enhancing your gaming experience and ensuring you have the best chance to win. We're here to support you and our dedicated customer support team is just a click away. If you have any questions, concerns, or simply want to chat with our friendly support agents, don't hesitate to reach out. You can easily get in touch with us through the &quot;Contact Support&quot; option on our website, and we'll be more than happy to assist you.<br>
+<br>
+Please remember that you are receiving this email because you signed up to King's Chip. If you ever wish to stop receiving our emails and updates, you can do so by clicking the &quot;unsubscribe&quot; link below. We respect your preferences, and your gaming experience with us is always our top priority.<br>
+<br>
+At Kings Chip, we advocate responsible gaming practices. Gambling is allowed only for individuals aged 18 and above. We encourage you to play responsibly, set limits, and seek help if you ever feel that your gaming habits may be becoming a concern. Your safety and enjoyment are paramount, and we're here to support you in every way we can.Thank you for choosing King's Chip for your gaming entertainment</span></div><div></div></div></td>
       </tr>
     </tbody>
-  </table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-  
-  
-<div class="u-row-container" style="padding: 0px;background-color: #ffffff">
-  <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      <!--[if (mso)|(IE)]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: #ffffff;" align="center"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
-      
-<!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  <!--[if (!mso)&(!IE)]><!--><div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;"><!--<![endif]-->
-  
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:60px 10px 10px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <div style="font-size: 14px; letter-spacing: -1px; line-height: 110%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 110%; text-align: center;"><span style="font-size: 44px; line-height: 48.4px;"><strong>Dein Körper verdient diese Unterstützung</strong></span></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:40px 0px 30px;font-family:'Open Sans',sans-serif;" align="left">
-        
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td style="padding-right: 0px;padding-left: 0px;" align="center">
-      
-      <img align="center" border="0" src="https://686.efuserassets.com/686/offers/16606/c/55104/assets/image-4.png" alt="" title="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 80%;max-width: 480px;" width="480">
-      
-    </td>
-  </tr>
-</table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:40px 10px 10px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%;"><span style="font-size: 18px; line-height: 25.2px;"><strong>Leava </strong>wirkt rund um die Uhr dank seiner einzigartigen Formel:</span></p>
-<p style="line-height: 140%;">&nbsp;</p>
-<p style="line-height: 140%;"><span style="font-size: 18px; line-height: 25.2px;"><span style="color: #f9c422; line-height: 25.2px;">✔</span> Fördert die Fettverbrennung über 24 Stunden</span></p>
-<p style="line-height: 140%;"><span style="font-size: 18px; line-height: 25.2px;"><span style="color: #f9c422; line-height: 25.2px;">✔</span> Reguliert Blutzucker &amp; Hungergefühl</span></p>
-<p style="line-height: 140%;"><span style="font-size: 18px; line-height: 25.2px;"><span style="color: #f9c422; line-height: 25.2px;">✔</span> Kein Verzicht, keine Umstellung nötig</span></p>
-<p style="line-height: 140%;">&nbsp;</p>
-<p style="line-height: 140%;"><span style="font-size: 18px; line-height: 25.2px;">Aktuell ist Leava <strong>nur online erhältlich</strong> – und aufgrund der riesigen Nachfrage häufig ausverkauft. Aber jetzt ist es wieder verfügbar – zum <strong>exklusiven Löwen-Preis</strong>, solange der Vorrat reicht. Hol dir deine Packung noch heute und starte mit echter Unterstützung in deinen neuen Körper.</span></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:30px 0px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <table role="presentation" height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #dbdbdb;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+  </table><table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" role="module" data-type="columns" style="padding:0px 0px 0px 0px;" bgcolor="#210C42" data-distribution="1,1,1">
     <tbody>
-      <tr style="vertical-align: top">
-        <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
-          <span>&nbsp;</span>
-        </td>
+      <tr role="module-content">
+        <td height="100%" valign="top"><table width="186" style="width:186px; border-spacing:0; border-collapse:collapse; margin:0px 10px 0px 0px;" cellpadding="0" cellspacing="0" align="left" border="0" bgcolor="" class="column column-0">
+      <tbody>
+        <tr>
+          <td style="padding:0px;margin:0px;border-spacing:0;"><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="177cf9d5-9bfd-4986-98f3-8bfba219449b" data-mc-module-version="2019-10-22">
+    <tbody>
+      <tr>
+        <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit; background-color:#210C42;" height="100%" valign="top" bgcolor="#210C42" role="module-content"><div><div style="font-family: inherit; text-align: center"><a href="http://perfecto.sa.com/4CMfRb5243Fztc414cowzohbvwy84HYKOPATUWBZNLAE26106BAWI604235s12"><span style="color: #f2d022">Terms and Condition</span></a></div><div></div></div></td>
       </tr>
     </tbody>
-  </table>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
-<div align="center">
-  <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="" style="height:70px; v-text-anchor:middle; width:580px;" arcsize="57%"  stroke="f" fillcolor="#f9c422"><w:anchorlock/><center style="color:#000000;"><![endif]-->
-    <a href="https://adrenergico.com/4tHwhxphishing@pot3JMAA187hfxtacbeae489KULJQHTJQVGIWPA3789197ODNW11268N14" target="_blank" class="v-button" style="box-sizing: border-box;display: inline-block;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #000000; background-color: #f9c422; border-radius: 40px;-webkit-border-radius: 40px; -moz-border-radius: 40px; width:100%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;border-top-style: solid; border-top-width: 0px; border-left-style: solid; border-left-width: 0px; border-right-style: solid; border-right-width: 0px; border-bottom-style: solid; border-bottom-width: 0px;font-size: 18px;">
-      <span style="display:block;padding:24px;line-height:120%;"><p style="line-height: 120%;">Jetzt testen – solange verfügbar!</p></span>
-    </a>
-    <!--[if mso]></center></v:roundrect><![endif]-->
-</div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="font-family:'Open Sans',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 60px;font-family:'Open Sans',sans-serif;" align="left">
-        
-  <div style="font-size: 14px; line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%; text-align: center;"><span style="color: #838282; line-height: 19.6px;">Probiere Leava noch heute aus und erlebe den Unterschied!</span></p>
-  </div>
-
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-  <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-  </div>
-</div>
-<!--[if (mso)|(IE)]></td><![endif]-->
-      <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-    </div>
-  </div>
-  </div>
-  
-
-
-    <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-    </td>
-  </tr>
-  </tbody>
-  </table>
-  <!--[if mso]></div><![endif]-->
-  <!--[if IE]></div><![endif]-->
-</body>
-
-</html>
+  </table></td>
+        </tr>
+      </tbody>
+    </table><table width="186" style="width:186px; border-spacing:0; border-collapse:collapse; margin:0px 10px 0px 10px;" cellpadding="0" cellspacing="0" align="left" border="0" bgcolor="" class="column column-1">
+      <tbody>
+        <tr>
+          <td style="padding:0px;margin:0px;border-spacing:0;"><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="55813213-8ae1-43c4-a752-adaa46fa74b4" data-mc-module-version="2019-10-22">
+    <tbody>
+      <tr>
+        <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content"><div><div style="font-family: inherit; text-align: center"><a href="http://perfecto.sa.com/4vVqJi5243euij414ndrefleidw84GKKZXGQXBUSAAEA26106QIMF604235v12"><span style="color: #f2d022">Responsible Gaming</span></a></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table></td>
+        </tr>
+      </tbody>
+    </table><table width="186" style="width:186px; border-spacing:0; border-collapse:collapse; margin:0px 0px 0px 10px;" cellpadding="0" cellspacing="0" align="left" border="0" bgcolor="" class="column column-2">
+      <tbody>
+        <tr>
+          <td style="padding:0px;margin:0px;border-spacing:0;"><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="4ef058e9-3f60-4518-9a37-d0df7d00b655" data-mc-module-version="2019-10-22">
+    <tbody>
+      <tr>
+        <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content"><div><div style="font-family: inherit; text-align: center"><a href="http://perfecto.sa.com/4rnGzG5243cZfR414mdoiakfxul84RLOKQNNVFXWGHOO26106RODB604235r12"><span style="color: #f2d022">Banking</span></a></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table></td>
+        </tr>
+      </tbody>
+    </table></td>
+      </tr>
+    </tbody>
+  </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="aa0f352f-8a98-4206-b4ae-8aa958c2da89.1.1.2" data-mc-module-version="2019-10-22">
+    <tbody>
+      <tr>
+        <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit; background-color:#210C42;" height="100%" valign="top" bgcolor="#210C42" role="module-content"><div><div style="font-family: inherit; text-align: center"><span style="color: #ffffff">Not a fan? </span><a href="http://perfecto.sa.com/5fLWtE5243KdjV414uexzvnqogq84ISNXBEUWMTNXKIL26106KKVU604235W12"><span style="color: #f2d022"><u>Unsubscribe</u></span></a></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="aa0f352f-8a98-4206-b4ae-8aa958c2da89.1.1.1" data-mc-module-version="2019-10-22">
+    <tbody>
+      <tr>
+        <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit; background-color:#210C42;" height="100%" valign="top" bgcolor="#210C42" role="module-content"><div><div style="font-family: inherit; text-align: center"><span style="font-size: 18px; color: #ffffff">All rights reserved to King's Chip ®</span></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table></td>
+                                      </tr>
+                                    </table>
+                                    <!--[if mso]>
+                                  </td>
+                                </tr>
+                              </table>
+                            </center>
+                            <![endif]-->
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </center>
+    </body>
+<img src="http://perfecto.sa.com/track/3YJFiw5243dRJK414bwxlpkoqlm84LWAYKSRCEMWSJBL26106PIJE604235m12">
+  </html>

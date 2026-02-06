@@ -1,272 +1,918 @@
-Received: from SA2PR10MB4748.namprd10.prod.outlook.com (::1) by
- MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Wed, 10 Dec 2025 10:47:08
+Received: from CH2PR10MB4327.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Wed, 26 Nov 2025 15:49:26
  +0000
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
- b=crrUBZI0ZCEWQmNZImW5n3QVxBPTk4fC0IOtPgiMhwPeDklAWnlAhMuaXAFBVH88+TwhJ1YCt9p6cp8ztVgx6H4CgkOTwuyx2WmqnrhF98Uk7d/NWon48ztrilb3ZVrvnxYVWy43FBAa3AUoL+p5gnkwWpZ/S7gpVDkFii7CBNnuwKDdFzw8kI4p+pKOWtUQmivDYKwdUXVo6Aagtp0M9HuSem5y3zmhjn2JKKCelkWS40+ljK2BhWiTl6ZrV54XAEXlF1lWoKSn+qwIMnzgtsuK2y3w+TyvLdKMKfe2aP2VjoSOrRF/kmxXVtLggspxTD1s8+DZkolsACcZOcu+/g==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QGfsd+dPjJrm3WitbW3ISw+f8BHrC0TT8oB2QbdIuG8=;
- b=xb0g9D+Dor0CxW4SOo0GhYEIuAsW2dogAFZ7YAhjrZ2LbGxoiFXM2432KSKM67xEQ7U9rnet8f6N7b+KxVXOhesl/zL3ZjUqbwnJTJVuUHEyLR9TncNWF53voff7Y9/IxoDGDAYGPAEP0pp67uIWgP8fi0f0xvMGfKNcQRQXvew7OIEziC1y5oiku//mtbFXtgY4VwSAn7Ht39/qlRLE+lVvsJBj09apQC4r0k1gS5CL2bu5lg84/Wkz2eKb7GZXXsh6zXp+1aY0pq5O7fvFUwKLNCZuVQkX557kqFmgHfalF/+0IbRAfLBhSYwJkmIYgkGD0u27gV+AGJiTdAqYEQ==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 52.102.146.17) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=cgbedugt.onmicrosoft.com; dmarc=bestguesspass action=none
- header.from=cgbedugt.onmicrosoft.com; dkim=fail (signature did not verify)
- header.d=cgbedugt.onmicrosoft.com; arc=fail (48)
-Received: from DU2PR04CA0259.eurprd04.prod.outlook.com (2603:10a6:10:28e::24)
- by SA2PR10MB4748.namprd10.prod.outlook.com (2603:10b6:806:112::14) with
+Received: from SJ2PR07CA0001.namprd07.prod.outlook.com (2603:10b6:a03:505::11)
+ by CH2PR10MB4327.namprd10.prod.outlook.com (2603:10b6:610:7b::18) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.9; Wed, 10 Dec
- 2025 10:47:06 +0000
-Received: from DB3PEPF0000885B.eurprd02.prod.outlook.com
- (2603:10a6:10:28e:cafe::31) by DU2PR04CA0259.outlook.office365.com
- (2603:10a6:10:28e::24) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9412.9 via Frontend Transport; Wed,
- 10 Dec 2025 10:47:05 +0000
-Authentication-Results: spf=pass (sender IP is 52.102.146.17)
- smtp.mailfrom=cgbedugt.onmicrosoft.com; dkim=fail (signature did not verify)
- header.d=cgbedugt.onmicrosoft.com;dmarc=bestguesspass action=none
- header.from=cgbedugt.onmicrosoft.com;compauth=pass reason=109
-Received-SPF: Pass (protection.outlook.com: domain of cgbedugt.onmicrosoft.com
- designates 52.102.146.17 as permitted sender)
- receiver=protection.outlook.com; client-ip=52.102.146.17;
- helo=CH1PR05CU001.outbound.protection.outlook.com; pr=C
-Received: from CH1PR05CU001.outbound.protection.outlook.com (52.102.146.17) by
- DB3PEPF0000885B.mail.protection.outlook.com (10.167.242.6) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9388.8
- via Frontend Transport; Wed, 10 Dec 2025 10:47:05 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:3E789DBD6AC30228790011F8C726FB5E03A51F53C85FD97D30845CCF643ECBB8;UpperCasedChecksum:06E47134ED786573CFE9EDCE41281FC847C4CB9F9A8A95599DD1CE344E5A2A0D;SizeAsReceived:8913;Count:37
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=urBMACgms3MwFWp71X0I0ZIUNh3/lX6gacpirXDXz5//YF81LVKv4lr15HXd9gon1asjOrL/VosNF5jedCDClQ4Y7y5GepYWroeBQq0VrVg0mARHVcaAcJnbv67QdPRw5kKEWrJ7yvX/rO0YyWhHlIItst1dWsELhJvtVHhWryzewv4sQ3pn3H5GyfTjV0RYkk+Ui8INIBM+zeLpada3uXOHbfKrJL+QR/wgYybGFrIhe2ICpO3sR2+3QRX5hDMwoF1bp9qHwn85oQqnKfqvvYG8mE+EGRgp/26Z/SzvCFJZ19xBvBZGALijBj/PwGkrCIJKuryS/YWZ4DnklvN6YA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QGfsd+dPjJrm3WitbW3ISw+f8BHrC0TT8oB2QbdIuG8=;
- b=QZTcl0eKaJcNCjWlzcKOkkcB2ixDfK0cHKgd7yPeAaB9nPh7Wjbg7GotRv8F9I3IeSREFekFltkI60t48EDGVvNfdjRfWRHba1Qxg28DhpbnQFG2bsdmPoVl8naLcP/sT9jnAbGVV6AKcA5vZJlG1OzMo5nXQ7hZniA09INyv00KiCgHMm5FD4oceyv1CFAcYINO5DKFRGHyas8m6Z+s+9NMNaAq5+MTSadMhc1Nf4YA/gv+6Q9+Owk4G0GGOoUe49uEH/tSAvWtYB1wdjLVY36clv4aFHYOTex+IrkgGo1fBYgqvQM+Qf11ubRwF3JmX7PY2qMON65ZE5tDV6kOjQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 185.126.114.206) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=cgbedugt.onmicrosoft.com; dmarc=none action=none
- header.from=cgbedugt.onmicrosoft.com; dkim=none (message not signed);
- arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cgbedugt.onmicrosoft.com; s=selector1-cgbedugt-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QGfsd+dPjJrm3WitbW3ISw+f8BHrC0TT8oB2QbdIuG8=;
- b=lDIv7GXg0idz+I4YgQPeOzcRvzwd9DFxVl+rACGRxNr9LC92tPcemp7VfNeQarepTqCQ5lp44L0KXIaT7gLAp1crr4Z181Qdkn02Cc+Rj9w/R7Rrjs/QaCkkZ6TiUJ4aLWWJUG8veB0w8dFx49VYUCL6GCn1TB/aZMZpTQIwCHM=
-Received: from MN0PR05CA0011.namprd05.prod.outlook.com (2603:10b6:208:52c::17)
- by PH7PR19MB7436.namprd19.prod.outlook.com (2603:10b6:510:279::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.7; Wed, 10 Dec
- 2025 10:47:03 +0000
-Received: from MN1PEPF0000ECD7.namprd02.prod.outlook.com
- (2603:10b6:208:52c:cafe::bd) by MN0PR05CA0011.outlook.office365.com
- (2603:10b6:208:52c::17) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9412.8 via Frontend Transport; Wed,
- 10 Dec 2025 10:47:01 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 185.126.114.206)
- smtp.mailfrom=cgbedugt.onmicrosoft.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=cgbedugt.onmicrosoft.com;
-Received-SPF: Fail (protection.outlook.com: domain of cgbedugt.onmicrosoft.com
- does not designate 185.126.114.206 as permitted sender)
- receiver=protection.outlook.com; client-ip=185.126.114.206;
- helo=85.126.114.206.static.m1net.com.sg;
-Received: from 85.126.114.206.static.m1net.com.sg (185.126.114.206) by
- MN1PEPF0000ECD7.mail.protection.outlook.com (10.167.242.136) with Microsoft
- SMTP Server id 15.20.9412.4 via Frontend Transport; Wed, 10 Dec 2025 10:47:02
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.13; Wed, 26 Nov
+ 2025 15:49:24 +0000
+Received: from SJ5PEPF000001CC.namprd05.prod.outlook.com
+ (2603:10b6:a03:505:cafe::11) by SJ2PR07CA0001.outlook.office365.com
+ (2603:10b6:a03:505::11) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9366.13 via Frontend Transport; Wed,
+ 26 Nov 2025 15:49:22 +0000
+Authentication-Results: spf=softfail (sender IP is 176.113.83.243)
+ smtp.mailfrom=telekom.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=telekom.com;
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ telekom.com discourages use of 176.113.83.243 as permitted sender)
+Received: from wkjofkhloh.cz (176.113.83.243) by
+ SJ5PEPF000001CC.mail.protection.outlook.com (10.167.242.41) with Microsoft
+ SMTP Server id 15.20.9366.7 via Frontend Transport; Wed, 26 Nov 2025 15:49:22
  +0000
-Sender: <account-security-noreply@accountprotection.microsoft.com>
-Subject: Sicherheits-PIN bestätigen
-From: "Amazon Visa" <noreplyzinia-236@cgbedugt.onmicrosoft.com>
+X-IncomingTopHeaderMarker: OriginalChecksum:BC52DAF183372396BD482E5C69AC23E2DA99A9BB013700BFCD61C31DFDF55285;UpperCasedChecksum:32B9E17DE8EAB69368267AFC0351EF7E47225C5CFBFC56B877C7C02CF0BED20B;SizeAsReceived:870;Count:10
+Sender: Paypal Guthaben___________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________,<reply@telekom.com> 
+From: Paypal Guthaben. <reply@telekom.com>
 To: <phishing@pot>
+Subject: Wir haben eine Überraschung für unsere Einkäufer!
+Date: Wed, 26 Nov 2025 18:48:55 +0300
 CC: <phishing@pot>
-Content-Type: text/html; charset="UTF-8"
-Date: Wed, 10 Dec 2025 10:40:11 +0000
-Message-ID: <c718b1c5-498e-406d-a06f-349cb24caec9@MN1PEPF0000ECD7.namprd02.prod.outlook.com>
-Return-Path: noreplyzinia-lpdae5j@cgbedugt.onmicrosoft.com
-X-EOPAttributedMessage: 1
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECD7:EE_|PH7PR19MB7436:EE_|DB3PEPF0000885B:EE_|SA2PR10MB4748:EE_|MW4PR10MB5749:EE_
-X-MS-Office365-Filtering-Correlation-Id: 496b667e-845d-48a1-5e24-08de37d975c7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|82310400026|69100299015|61400799027|1032899013|376014|41320700013|32650700017|36860700013|4076899003|8096899003|4523499033;
-X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?Z3V5NjBiRlVRam5HdklCeEN1aThDZzZwM2lDNFU5bXI4Ri9kL1dGWUFxVSt1?=
- =?utf-8?B?Ym9SNnIxS0ozQkROenhYT1J4Mm9yQi9vYVRjenNmeHFGZlRSRDZpSEZVV3lp?=
- =?utf-8?B?NVFhdS9CQnBPZDlxWG1tTDBubllJQzJQZEIyck9aUWxDdU9CNW1rU05Va1BY?=
- =?utf-8?B?dWxZZWVvTFFidGE2c3J0dUJybUViQ0Jmd3VLYVRNZURFVFcvVWVpaEZ0aEdX?=
- =?utf-8?B?NEdPYUdjSTd4WFpUMWtYYTRqamQvUjBEOGQyS09qTUpTNFMwcUdOWkpzVnkw?=
- =?utf-8?B?Mk8yN1ZZT1pheUxZSGF1MExRdlRPenRxRjJpWHZlczJsT2FOTk4vbndXN1d6?=
- =?utf-8?B?SjZkcGtsa1ZtbUJET2luMkpCK0JxRzdOenk1Q1dIQVRKSFNTekVRSm5OeE9i?=
- =?utf-8?B?UUFvTVp2T0RJM3RuKzRWdjJxdUYza2NjYmhMdEdwNkI3RkJDZ1l2Q1JaSHkz?=
- =?utf-8?B?dHJ2SXZDVXFJTEpnakpvd0NiMVh5Nm9vTUZFeWFtSkY1ZE00azlGcWpoVVFa?=
- =?utf-8?B?bjVxcTF6MUt0bW5aRUFCOXlTdFdFbEJwdTYyT0gyS0s3SXRBV3R1eVVDeUJq?=
- =?utf-8?B?TmlNTVNuQVlFUyttdTZ5ekJVU2FSa25QaU1LT25PQWphTWVhV2tBRjFrWE5I?=
- =?utf-8?B?eHdjeGlBTC9GTVYrRGdLUzMxeUM4ZEpMb3d3M21DWWNaY05kQmN6dnRJSkYx?=
- =?utf-8?B?L21mbzhmVEl5aWxZeFo4ZCtLSHM4U0lnQWlMemFPMUlmWFU5WXA5QitMbXVt?=
- =?utf-8?B?K3Z4VDYyb2N3cmNTV1U2R2pUWm9ucnYyekVuNEZpNHdZVGdwYnhiOW1IQzV3?=
- =?utf-8?B?bW93NHlIRVJqdXNnLzlJc202WmNnWUhvNm94UFZMb29mK3hXeGlxcW1xQTk0?=
- =?utf-8?B?L1Rycmx3Ni9mQWQwQml4djVBTEx0Tm5kV1U5ZGFjdmRSNWl3SWxTNTVPMERT?=
- =?utf-8?B?eW1HSHd2UEtEM1k0ZnNxQk5KdVAvYVpxanBnVHhGWEJKVWJOOXhNdjNVUTlX?=
- =?utf-8?B?eUF0eVZVRmVoR1Y0azdRSnh1KzFJaU84aHhtQ0hFNmdNSVBTVnhnSnlmNkRw?=
- =?utf-8?B?ZVRGNUViSXBXcGFVSkZ5MFFhY2dNU3BGSU5RNFRCYnFMSmtzdXl6WHlPTFhH?=
- =?utf-8?B?OCtIZzh5QVZuSDR1VlpJcFpyWDB3WG05NEU5SHRVenhMRkk1T2NOMjFpS1BS?=
- =?utf-8?B?RTRURU5hVWRRUVUzNlFHdXJiWXpraUFkelFpaXUvaWFtS3FkYXpnVnBIR3lE?=
- =?utf-8?B?dko5RWd2VzZvUEI0LzczOHp6Z1hQWVpBOGY1bTdSbGNFaUlhdnRIU3JlN3lF?=
- =?utf-8?B?UU1LdjV2QkgvaHpyU0dyOFhNcjdrYVNEbzFjV3FyaUd6QnNzT3JzaC9qWU42?=
- =?utf-8?B?SE10azBTZEo0K2JqanVWZ0hCQkRDZzVsSmZrR1hoODN1ZGM1cTdheHFWWlpE?=
- =?utf-8?B?Zkc1VEorSjVnZjNOVFV2M0FGZFhzQVRWUURkc1JVbG5zN1g0SXNhNFBYNzlX?=
- =?utf-8?B?Qk9pVzl4RFd3VUxOVGNJdllFRHJiUnJlZUVNdWQ5SFlUbHpQZXV1RmlEUTNO?=
- =?utf-8?B?cG9MZm5OKzRUQkp3dFNkTDQzaVpGU3dUNXhKcENOSldkOXRjU2NrbkpHdndi?=
- =?utf-8?B?N21SSU5sTDdqUzZPTE0vMEt4V3QwRXlZTDE3aE16NThKSDBvZFQ2VmF2Zytq?=
- =?utf-8?B?dEM1THhXUktJZllQS01Td2pEM0dSOWJqTVhjWFlIME9NelZlak5CQ2NsbXov?=
- =?utf-8?B?RzMvMEk4RlQ0TGZjZlo4L1lodWY4TWRqRHZtOTFkUXRXWmkwOWZWblY3R1hk?=
- =?utf-8?B?cEdvKytBYjNSbGo3aTkrdFZqWUhlV3d5Slk2VmhiZHZCKzdoaDh6SHcwQTVk?=
- =?utf-8?B?WUhjNkZHOFpMcHNReW9odGpGNVpqRFgvbFFORWJ6clRSNmNadTlUUUR1cUo4?=
- =?utf-8?B?UzEyVmhmZ2FWZlFqeU5Vckt2M2FhbTZHR2ZZd1ZSRk85Zzh5SXd3TDRvbVpj?=
- =?utf-8?B?Q2FZTkdxVzErSWFWaFJMUFhDVWprMCtoOVdvaXpjU25ZNDRTa3pZdklkZkpD?=
- =?utf-8?B?MmJGNGlrUWZKWDNKTmJBNUFSaStZeUg3aWZ3UWV1TkxFR1BzSHVCM0pENHg0?=
- =?utf-8?B?VGF6a1B6czFYcmpKWHFwdndsUVFLVkt4MzhzSTNkT0NWdEVLK2cvNXZ3NDR0?=
- =?utf-8?B?R0J4Qkp2MXVSNXNmckNIRmhmd3R2OHVzVG5pS0h2RVcyK1JDbUdlSXBrSjJu?=
- =?utf-8?B?WlUxN2RNT1d1dnkrRGJkQmd0aENFOGtqTlVBV2MyNURUeDRJUnFuRDFPYlRq?=
- =?utf-8?B?TUFmbmIzejV5TUEwa084bExUVmUxMWk0MmVIWks5d09mNXFoWG50U2RxUlpN?=
- =?utf-8?B?azg5c0tncHhLK3F2eFBiRTg4SlFWNlM0ZmdiOVh0eWRMR1ZIa2l5bkx3ZGpq?=
- =?utf-8?B?bjRET1JsWGpyY1QrWGF2eXVWSjlFaVRxU3JqTXExR3pPUUVuOXFmcmJkdDFM?=
- =?utf-8?B?aWp2MlpxakNuNHd0WGZzRVhGTlVSNE9ZdFMvdGFKSVgraGxucDhzY29DdmtJ?=
- =?utf-8?B?OXRwcXlkSURWNGZtVXZqbFNjYjdLOEYwc0JYcnhtbFIrT1c3RnREYkVxMjdX?=
- =?utf-8?B?dTdNZ0svaUN1MHZ5amtPL2pXc2ZIL090dFhoODB6UHE2YlkrOTRic29sdkNY?=
- =?utf-8?B?SFpSNjR1NGNlRVV2TVp5RFptSlVYcjA0dCs5UFUvZTBJcEhJaTBqSWdocS9T?=
- =?utf-8?B?VUpmaldPc204N1M5SWFrc2xrMXRFUlN1cVFZVnVrTS9BeWFxWmxVQlpiclpF?=
- =?utf-8?B?eXVjcmFBN0dULzlGNzFGczJkVWU2QlE2ZGRJbk9raEI0bXdHNEhRZmdqVnpl?=
- =?utf-8?B?d0VCTlR3UjhXeTdKYjJkOVZqMUZXdVYxR3N4ZUk1Nkd6VUcrL2xlNU10Uk1i?=
- =?utf-8?B?VS9teWhzVUszejNFMjduay8xRWdQSUVLc1lpRzlHN2podlNnK2UvYlFMWjM5?=
- =?utf-8?B?K0lyMmxYWHp6SW5FcWFkSnFFR1dGTnI1QkVCRzMxeVZENTdJdVF1T0RSMExP?=
- =?utf-8?B?V0hCN3JLUTg3VDlRPT0=?=
-X-Forefront-Antispam-Report-Untrusted: CIP:185.126.114.206;CTRY:UA;LANG:de;SCL:5;SRV:;IPV:CAL;SFV:SPM;H:85.126.114.206.static.m1net.com.sg;PTR:InfoDomainNonexistent;CAT:OSPM;SFS:(13230040)(82310400026)(69100299015)(61400799027)(1032899013)(376014)(41320700013)(32650700017)(36860700013)(4076899003)(8096899003)(4523499033);DIR:OUT;SFP:1501;
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR19MB7436
-X-IncomingHeaderCount: 37
-X-MS-Exchange-Organization-ExpirationStartTime: 10 Dec 2025 10:47:05.6620
+Message-ID: <f3P5ga1.0.0.f3P5ga1.9.f3P5ga1@telekom.com>
+Content-Type: multipart/alternative;
+	boundary="_----------=_1694844911308661"
+X-IncomingHeaderCount: 10
+Return-Path: reply@telekom.com
+X-MS-Exchange-Organization-ExpirationStartTime: 26 Nov 2025 15:49:22.7368
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: 496b667e-845d-48a1-5e24-08de37d975c7
+X-MS-Exchange-Organization-Network-Message-Id: b7b38d9a-a6b9-4568-db3f-08de2d035e88
+X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: DB3PEPF0000885B.eurprd02.prod.outlook.com
-X-MS-Exchange-Transport-CrossTenantHeadersPromoted: DB3PEPF0000885B.eurprd02.prod.outlook.com
+X-MS-Office365-Filtering-p2NotCompliant: true
 X-MS-PublicTrafficType: Email
-X-MS-Exchange-Organization-AuthSource: DB3PEPF0000885B.eurprd02.prod.outlook.com
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001CC:EE_|CH2PR10MB4327:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource: SJ5PEPF000001CC.namprd05.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 12/10/2025 10:15:19 AM
-X-MS-Office365-Filtering-Correlation-Id-Prvs: fd353496-1ec1-468e-8646-08de37d9743a
+X-MS-UserLastLogonTime: 11/26/2025 3:45:20 PM
+X-MS-Office365-Filtering-Correlation-Id: b7b38d9a-a6b9-4568-db3f-08de2d035e88
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 52.102.146.17
-X-SID-PRA: NOREPLYZINIA-236@CGBEDUGT.ONMICROSOFT.COM
-X-SID-Result: PASS
+X-Sender-IP: 176.113.83.243
+X-SID-PRA: REPLY@TELEKOM.COM
+X-SID-Result: FAIL
 X-MS-Exchange-Organization-SCL: 5
-X-Microsoft-Antispam: BCL:0;ARA:1444111002|20103052909095|32080799003|470799035|47200799021|58200799018|461199028|63100799012|10300799035|29080799003|67000799015|15110799015|9400799040|9000799056|1680799066|27045499008|39010799012|26130799006|62400799018|3025599003|16110799025|99000799006|1131999016|970799057|1360799030|1370799030|1380799030|460799366;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Dec 2025 10:47:05.3921
+X-Microsoft-Antispam: BCL:5;ARA:1444111002|13100799027|9400799040|29080799003|1680799066|9000799056|93100799006|6900799012|15120799003|20103052909095|10300799035|32080799003|461199028|68400799013|17070799015;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Nov 2025 15:49:22.3192
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 496b667e-845d-48a1-5e24-08de37d975c7
+X-MS-Exchange-CrossTenant-Network-Message-Id: b7b38d9a-a6b9-4568-db3f-08de2d035e88
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=56513dc3-6ff9-441a-a36d-2a2888f85e11;Ip=[185.126.114.206];Helo=[85.126.114.206.static.m1net.com.sg]
-X-MS-Exchange-CrossTenant-AuthSource: DB3PEPF0000885B.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001CC.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR10MB4748
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.6781245
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9412.000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR10MB4327
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.7114870
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9343.011
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9710001)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+	wl:1;pcwl:1;ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90012020)(91020020)(91040095)(9050020)(9075021)(9100341)(944500132)(2008001181)(4810010)(4910033)(10010005)(10005027)(9710001)(9610028)(9540006)(10103005)(9439006)(9310011)(9215007)(120001);RF:JunkEmail;
 X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?T1dLbi9Ic3c1VzB0ajRaM0VobVVDaStjQVIrS1F5STAzVzBrc1ZBQ0pRNWM2?=
- =?utf-8?B?RCtDSVd4b2NwbnV4aUhWd0tqUnJtbXRjLzVnQzcvSGp0V3VHZmpxR3pXR1ht?=
- =?utf-8?B?ZFkvMGRJM2pacU9JSkY3VUdyclJKMVJURG0xVWpsbkpDM2xOaFlobFJXMEl5?=
- =?utf-8?B?ZzFOSHBleDRQZFpZeFlCU2VSWjlIUFcwbEtLOHpMNDVIZUdBQWp3OHJhZmRT?=
- =?utf-8?B?SjJEZngvRWk1OHArd0p0OXpkelJoSjlvNlpZUzdZZDZXdW0rRFg0aDhjV2VF?=
- =?utf-8?B?MnNmNzNYa0o0R0p3cjIwYTFCSlR6Y0d0UWpIUkx5UzB2aHp5b0ZxS05ab1ZJ?=
- =?utf-8?B?Z0h4Ulp2R3hRbERkaWN3UVBHS0xjbTlCZitKY1ppR1hXT1QrZDZpL3RGNHhm?=
- =?utf-8?B?bEg4Mk96WS9iN3RXMUlMamJ1d0x0VjR3SDRuWDEzQnQySmFmUThHSCtKTXJi?=
- =?utf-8?B?RkJzM0dhVFZ2Ti9xU2gvNnFmaWdDT3lYMFlDOXdZQjJzOEUvK1hlWE9jMG54?=
- =?utf-8?B?MHJpVXhBYzhBcTJ5MU1tb3NVc2dsa3ZqQVVrSFNjSlVkWGozSGVhRlBoODhl?=
- =?utf-8?B?TnRzbDBrQ1FERnJzbFpCYXZjZDNMY1BVWkZBaDVZekdRUnN5VnhFMEwvc2l1?=
- =?utf-8?B?MGNDUkl5RzBLQldWRlJIRVpWdlRzVjEzMHYrUGZuN1M4MUM4NVpPMThoTDRv?=
- =?utf-8?B?eFhqQktSL0hDUk82UHEzVnVOYWo2T1hIRnNoSUpNY3R0ZDBndWxGUVlWb3Nz?=
- =?utf-8?B?WDJGRWxCZXk4ZVF4UkdtMWZqK2RxVnhLaHlZQ2VXSndKY1VyN2pYUDEvb29T?=
- =?utf-8?B?QSsxbHlRUmsyaEQwQlQ0dk1nMkgySzRWSE10c0JITHBZSE0rSnBGM2FuVkF5?=
- =?utf-8?B?K2xONmVPMm5QbjZjbG5Hc21BcHV4Tkp0UmY4YW9YYmF6eEdyVTlhL1Ewc2cy?=
- =?utf-8?B?SGZVSjg1SzhzV0NSTTVBRWRqZDRPU3Q2QS9zWDFHZFRFYjlNRCs1RzB2RzdK?=
- =?utf-8?B?aDNEN2lUQkJFQmU3M0p2Z3pKWHc5SE1TQTV3OFFleTlNWVdnNlRSTFhhSjA4?=
- =?utf-8?B?d3R1MklQWjNtVDd4MTBnZEtBSFd0RWVBbEdObzhFdGxnSmcydG9YL1JUbGI1?=
- =?utf-8?B?amlxK29VcnJxOFpsYVN3OXhkbTdMT1VxVk5QdFlKVGZxZnowRXRWL3VsQnJE?=
- =?utf-8?B?dzRsQ014QWs0NDk1ZVZNczNPT01MSWFadVNQVTFLdjhkS0hjYUkrSG1Nb0R6?=
- =?utf-8?B?VFdSWEtoQ28zMXRtK3FPQnRyQkFEY3VVMDN1M1R2cGI3TWlJSWR0ZEhNR0ph?=
- =?utf-8?B?REdEYTJ0WW14ZC9sR29pbjI5cW9JRWJWVmI0YUYybC9hclZWclNDb3NtTG56?=
- =?utf-8?B?aXJjZnF3VURaUmR6d0duYTYwV2xJdXRtR1NXdExmeTBkcFJsZGxmRXg4WXN3?=
- =?utf-8?B?cWZFRWUwY3EyeGZMalJYWEY3YzZOdjFlMHJFQkZjSjYvSUUvaVQrdkdpWFNk?=
- =?utf-8?B?cjAwZzRvYk05c0RKZmlaTHVZV3V5UlNTWExRMW9DL1ZTeFo3YmRQblRSb09V?=
- =?utf-8?B?ZkFtWUNqeWhjVEZidXI3SnlPUXZOdkgrTk5yUm81cGoveWdpYTA4ZlNhM1hr?=
- =?utf-8?B?OGlsaTlmYkIzQ3lyczFEYVp1Uzh6V24rV3NaOCtITGVEeFI2a09YZHViclVQ?=
- =?utf-8?B?Sjl0OUZKY1FKeFhJck1jWkFNZG9kTndxTGZEOFE3Rk02ZThpanRsSXhBY3k0?=
- =?utf-8?B?UENka1l6MlMxWTlFZEhxYkJlcVA5NVhDclJVV2Eza0pIM2dybVJRejJqdHln?=
- =?utf-8?B?SXJxaGRqR1U2S0xQL2JKeDRaUW9CbGJtSEJVV2Y4a3plNjY5dm1KRzBFN1Nt?=
- =?utf-8?B?ekJFQ2ZyVTRFWTc2WUorOWtCQlA3MEkySWV4ZFhocENRUzlhZEpjVmFmdjAw?=
- =?utf-8?B?SVA2anNJM3d1MzNGOTk5bU5BcThkWUNNaEpiMmZEZUg5bmZOMkc3N3pGMGRC?=
- =?utf-8?B?eXg0WnZhN2pjL09lWWNHSjJRTDhpNUEzT3ViQ1JoZVpuQURRcWpwMUdPT3BZ?=
- =?utf-8?B?bDRtaUJ0eDFmWU1qL3U1UzJvRDBucE5oZ00rV09JODdJVWErcTRKUXh6QzhS?=
- =?utf-8?B?cWZWUVdOcHhoWEx1bktyNm1SeEc0bHBWdjBFZjI1S2J2MmVUM25oditieGV0?=
- =?utf-8?B?SElUS1lXZmZFaXF1dnhBR2xNaUJ4WEhETFJGV0kyeVFTTkFmdG1vZjR4Y1lK?=
- =?utf-8?B?UE9vUlRhVTNXc3BxemtadXZDWFBya2R5cnEzcTV6RmtSODFCVGg4cW5oQzF4?=
- =?utf-8?B?TENxeU9pWkZGRkM2RjlTM2lZa3dYTzNpM01ya3ZDTWZMQzRXUUNndDZreVY2?=
- =?utf-8?B?aWpPd0hQUTBhcksxekRDazRsemswUC9QOHE5S2ZrMGxldDZYZmRHNENQM2JD?=
- =?utf-8?B?RlRVakR4WUkxY3lwZnp6Y3dTRkxkNVN3N3NhYjhxTkRsc21LRGEvdmlMQnVx?=
- =?utf-8?B?QUNxT0YrTnNFR2VjTTRxUmFIbmx4NUZidHJIWnRyL2FRZTN2dzMwTnFJU1Vh?=
- =?utf-8?B?UFhzdmV4NFJhWjJrNHpsZlV3Rm5OcWZtZzNzM20rb2lIQjdXYmVBUzJoNnFE?=
- =?utf-8?B?a0YydnhqVzViWXZORU9qZVVzZmt1dUR6a1RNYTFFNlJZNW4rRUFRS3cyRmtN?=
- =?utf-8?B?SmZLaElOWm5QQmJuelpSN1ZhMXVITjhWak9WZEF5K3V0TXMra3JMOEpFdC9l?=
- =?utf-8?B?Zmw1RGJ3WTN0YlkvbUxySkRCWXZISWZ1bGcrdU9ESEo4a3Iza2J6K2orMEJw?=
- =?utf-8?B?SFBQV1lsSEl2VmhjWDA0TCt0aGh4c29GR1FnZWd0QWRjKytvQ0NXdU42VHRB?=
- =?utf-8?B?UUpwZjdXbEU5Q2N1a1NpeURoemUvOXE5a2N5R2h4VW1BeGwzOGVKcVdIL0Ny?=
- =?utf-8?B?ZWplbkFjUFBpeUQ4Z3hvWE96OS9haU5xdVA0NEdpVkJWZjc3ZkR2YW10Qzdr?=
- =?utf-8?B?TnlxK1FUcGxjWXQ5UXk2dFRkWFJxZ2xFaUtSMDg5ZWkzd0xtd1hVZmlUbTc3?=
- =?utf-8?B?aUJ0RHRRSlg4NjN6ZWc0RWF0RUl5QWdXWUtORVV5RmM3c0VLVmtENFJyWi9v?=
- =?utf-8?B?RVpaTHhlTEVyeVorMlB4V0gydmNFcVhnSUVsV000Qnc2U045ZG9SMDV0eWxz?=
- =?utf-8?B?T3JrbkYwNG5VcWpkTW1DRkdnbmdjQjdkYXV5MDJ5cm1CTFVIdlM0R3p3S3B1?=
- =?utf-8?B?aFYrZC9yK01HUDFmS245ZnJWMTEwSkVDVDF0VnVnQ3ljalpEdTgrTUtmc1Vz?=
- =?utf-8?B?NHVRS0lOZnUvY1BZNjJzNGp0a3h1cHNsZWJGQkk3NGM5TkVqQUhuRFVna2dh?=
- =?utf-8?B?NlF6dUs4eVZlbDY5VEpKeVNmTVp2b1BHcEc4YVdhbUFWeTQ1SHVwZEQ4VFVK?=
- =?utf-8?B?Z1JEY3N0RG9VQm1lai8yU3l5N1duY0ZqWEpSMTR0MlVlRVhSbVJqeWp5N3hC?=
- =?utf-8?B?WVdGTllpdmJwayt1R3V6TVhQcGhHdXZ2L0N1Wmd3Y2o1MmRiOE02MjRUSlNS?=
- =?utf-8?B?YnFpMy9PTlhyRURjM0dpQy9Rc1QrOGRIcnBOWk8wTEdXOEU1NVRDcFVwMDlz?=
- =?utf-8?B?V0FCL1FHMUhPZTVId25EWXRjL2gveGJScEtLQVA1QUF2M3VxaXVZajgvRDJI?=
- =?utf-8?B?ODRrWTFLdkt4K0lPbU11RUdNc3JrQVQvUXl3MlhaNnIxUWx2U2RjNGw1dXFo?=
- =?utf-8?B?MDhqeWpsS0ZvdlozYzVTMWJqV1Z1M2RMbTBseENHM20xQjFPaXZQRC9ySHdN?=
- =?utf-8?B?OW5pek50RmVkR09LQjFoM29QWHQrRTVlZGM4bEk5OXduRFVsVkV6VGx4OEh3?=
- =?utf-8?B?dTk5U21maXBNKzRQTXdQMlphNzI2SGw1Ly9ENE1DUG1QeGNtWktDWForaUQr?=
- =?utf-8?B?dlhvY1NFVUlDZWJjQUR6MVphZWVRN05BMmtEcUkyYktTWE0zYzZXaVZMeVl3?=
- =?utf-8?B?NWF2MDNjOWNqaEswWDFHSVZJR3ZhWjZsNGhsU28rS3MzdEFtY2hoSjFneEVZ?=
- =?utf-8?B?bitPRXBCOFhBajJXRW04RzRRR1RZUUZvcllveElnWDQ2anRwVXhBZ3NGVkpG?=
- =?utf-8?B?bFhIbVpIdGsvRU9CSm9vQmUvRTlEZjRXcTVveS8zaFZyZEVjWElhVkFDcXZJ?=
- =?utf-8?B?Vm1oZEEvK3VwWXVxK2pWWk0xclBLeFdoN3RnUDlrVkVTZlVoQXVpLytIOUth?=
- =?utf-8?B?ZDErY2U2SjZnbXI1RmhOQm5EaENWY2NtRGNyYW5PNjEzM3FDeDkzcllxYXVV?=
- =?utf-8?B?QkJicVF6aXlPek5PdHlJTTVBVG9rRW1IL0hxMGpTSjZCblptb3h6VS9tUE5P?=
- =?utf-8?B?dzdnOXpZRm5IUXo0ZFNBRmFReUhzY3ZRVWI2dGlGeWF6cGk3OHRURjgrUkVu?=
- =?utf-8?B?WDZFRW9hVzJPbzZMRm83ZXhBRzFRb1FjZzkyU3FVTzdUc3lVR1RMOW9LN1lZ?=
- =?utf-8?B?dz09?=
+	=?utf-8?B?OTFVN0FxZjF6UlZjbUxML1lDM3Z4NldyMFYwRUJidTBkNit2UjVjSHljbG9q?=
+ =?utf-8?B?V3J2RzFxUFM3bGFrK29UNnpRMkxiQ25haUF6Y05VTFduSnBGdHFxTUdCRkFo?=
+ =?utf-8?B?MmxlRlJRNHhMMzNBZ2FaVWREZmpOVmt2S3Yzb1BqYld0Tjk4S1BaZlMweC94?=
+ =?utf-8?B?MkszWEU5Ly9kemk1azFhSGczVXUzTnBMUjQwYWl4SHp2dGZFZlVJUHRla1lk?=
+ =?utf-8?B?VlFlM3NvU3h1cW81RVQvVEZibHJPZEN2U0ZWOVBnN0RNWE42dmhKa1hBeVNZ?=
+ =?utf-8?B?R2pCVDZ6czVFcnM5ZzdoUHhzSmZTNVBzVFJrR05LdlV2bnpOeEtKUkFFL29z?=
+ =?utf-8?B?OFh6M0ttbWZUUVpzOEUxVFZWaFpnR20wSC9OOUgwaExPclkydzl2N202QWgy?=
+ =?utf-8?B?b2MzMlp1MzBsdGZWL3ZtTzY3bDA4MUhqWFU4KzJkWVBYSUc3SW9QR2VYMmtC?=
+ =?utf-8?B?aUJ0bGx3TFBmdjY4eWcwR2NrZWYzV2UvQWlrWkx2VG1waGsyWEVlYTRyVlpI?=
+ =?utf-8?B?WHAyZWIyYXJMNXQwUjZEMHcrS1kwTlZ6aGp5RjY3M01IOXhwVXpjc2ltWW1v?=
+ =?utf-8?B?UHRFaWJEbzZLSmd4ZHV6M0EvVWloK3c4Z0RJVENyVEVOaVo5TnVjZFRrb3R4?=
+ =?utf-8?B?VUxka2FTNjZPa0RsMkFwVDNQWVdENldWQ29XUnFmRzNVM2VjeXpDRWlvYW85?=
+ =?utf-8?B?aHc5UTRaZE9JUVluOHczcHEycTdHQzJZbG56b0pZa0N4S0xOUkRuaG1jYWk3?=
+ =?utf-8?B?LzRoM3RVQXFVS2hpdmZzcEN6RElMWG1zUWdOQ0QvdUlUNmpGV3lNaENNMjcv?=
+ =?utf-8?B?WWg5OXhSMVpnMlBVVHlBWWtZclRVYmFsd1dXaW9zQWtwZTd4b1d1SEVXUlhH?=
+ =?utf-8?B?VlptTDZiYm1rWjZrMldqMTVsWXE3VnYvTDM4UldxQ1h3MzVSdEFybkh1eUYv?=
+ =?utf-8?B?SmVmQis4WXArTE9RWGJHRUhlbmpmNDdxd1dYNmcwdWlsYmpqVjAzQ2V4YXNo?=
+ =?utf-8?B?OTI5ZHhYZ29Wd1U0am1Udzc2dnBpM1hja25rbU1rOTFJSkZyWG9CY3FoSldU?=
+ =?utf-8?B?SWw0THVNbWpEL3VTSHJLRmNFTTFIU1pvd1Zmdm5ZWEF3MHVGTU9JZmU1Umsz?=
+ =?utf-8?B?SFB0SWtKbEkxalhjdU1yd204aktDam82NU91WUpxYnEwVHgxbGJ1aW1oQ0I1?=
+ =?utf-8?B?Y2wwUzF0V1Jwem5JdCt4elF4L2pLQjRaQy9XNzRySld4enZMR0tHMC9hU05y?=
+ =?utf-8?B?bXZuQWh3Tkt3aGdjUzQxcTNvQlpwc0tlQXI0N2luM0JoTkY2cFJhYkJwVFJJ?=
+ =?utf-8?B?dXd1S2VUbGJwa21MT0dGM09tTlVOd0hac2NQV1lVTm1lbnM3aEd0UnZ1bjZU?=
+ =?utf-8?B?ZXRRd2Y3eEVMaEIwVUdvRWJqejZLMXdPU0lCZVJuL2VHZmI0dzJ1cUdPaDh0?=
+ =?utf-8?B?Y2ZCampOb2pQY1l0c0NsTjNHY2FNd0pRbWx5YXdQVTJWYksraitId3FJbDdR?=
+ =?utf-8?B?RFFzK0w4WG5JQnlmOTdkbDF0L0VZT3pzcXY3MW5QWDlyMkJTenpGVlVvcnBP?=
+ =?utf-8?B?Zi9YNExpY1RpQVNZTExUTUpmRlVoODVnZG93SVl5Q0JGaWJ5aEZUYzJJQ1JS?=
+ =?utf-8?B?S01pLytsaUVzSDVvYVcvRFVsRk0zYkFaLzVSTGcxaXA0Mmd0NFRQNXg2d1dV?=
+ =?utf-8?B?WUN0aG85b1M2QTFIU1dQYUwzVTZGMVF4UTRKUVlBZU1iVlV4WkFDbThmQ1N5?=
+ =?utf-8?B?NGxXYmxaYUNoVkd2cWhDekxyd1F5S0dwK0NPaVhVVHVpam53eWlWbitSL2RO?=
+ =?utf-8?B?MVFJNlF6Qm1UaUM5WTVsa3M0N3c5eDQxbFFXTGJJcC8vYVRHb2prbXpLQ2tD?=
+ =?utf-8?B?bExDUmkrakpKTmZkU2NPVTd1YkMxbFhtSHFsWXozOWk1R0ZYbS9hajhHUVVQ?=
+ =?utf-8?B?aHF5SmNmdWVHU25ZSmowTVNyYm5kRHhZY0xyVW1UNkxVOVBJVFBzNGQvRENl?=
+ =?utf-8?B?VHBNMXdXRkJkWGR4UWtjc1hOWEIyRnk1MXI0VHEwMWc0MkU2VVhvblprQTlX?=
+ =?utf-8?B?eFk5bTUzYjV0dzFUenJzdTBnKzZ6R1FtUGl1aTlvZk1mSnZHQVZlczlmT0Nx?=
+ =?utf-8?B?SEdpSzAvek4wMDlDcFEzeGtDTjJ2RmovUEZxczA1UVlBT2xDRjN3bkdGUUpQ?=
+ =?utf-8?B?SUxEbjFyWGhSeXlJSDdaYXFraVJETjYxcUV2MjB0NEZkbUZvVjYzZ21XQ2Z6?=
+ =?utf-8?B?MHlhdlVmRlArT3FUWUZWQy93TEl1dXhhaG9LMDBwZnF3dnZja0dnZ09aSkp3?=
+ =?utf-8?B?T05Vbjg0RVpUUWp3aDRCYzJab3JSY0R4MkpLVGJYVTd1NWdTV3hvNytnelVs?=
+ =?utf-8?B?cGNpWWEyNUUrUDFpRXl0Wlk0Vm1UUXVBYVBLL09ib1hlR2s4T2tYVnh1VVlN?=
+ =?utf-8?B?dVlJTFR3SkswNXRTbllTNThuaXJmT0piUVBCTmt3Y2RrYURHRmVrMVA1Q2Y3?=
+ =?utf-8?B?S3QwVFlKa2FwSnhMdWJWRDY5MTUrZkNOUUJRV1JqZS9KdE96QmpVaytEWU5B?=
+ =?utf-8?B?VGdWeGR4WjZIdmdNZUd4NmEydXhiTjdQakJCMzVSVW5FTjlpU2k5Q2pvbU42?=
+ =?utf-8?B?ek9Ia3Exa3NuZkhYRFRmQlppMmcyTW9DWUEzVjg4TDY4SStZYlRyN1ZHK0RK?=
+ =?utf-8?B?YStsU0FYYkRYb1BxYUd5SXJKczFmNXZud0Y1M3NLdmVMV3lFNjA3Vlg2Q0xD?=
+ =?utf-8?B?TFV1SVEzOWIwV2UwUjEySndUSTAyS1J2Y2pxMzJhc04rb1R5MUFWNlRXY2FQ?=
+ =?utf-8?B?ZGl2UUhpVDFFWHhOUjlwZ000dldTaUZDNHpZRVlTTE9NbzFpTDRnRHNMbzcv?=
+ =?utf-8?B?R0ZzRHdWYkY5d2h5WHY2RXZyRUdDWjdMN3FiRmNuOVIxTi9BY29SUlplMFBS?=
+ =?utf-8?B?c3Z4dWZBcXpselJ2bm1BRnZVSk9LNUV0NmJrR3IwSERwZkZRSGxBcWt4NlFq?=
+ =?utf-8?B?K3NoNDVmd0RsaE0yVGNKM280YWxiaGkwT1YrbmVlQmIzcnc2ZGhVbmp0NmJW?=
+ =?utf-8?B?RnhaOXh3T3FnU0RxZzN0YTkwTWtPTkxlQnZpR0RLblBubzhwNWJRN3E0b2t1?=
+ =?utf-8?B?UHAvYnFKdXY3eHlmb0xCZzRyU3dobHJLWm9yVjlyUmFOeWQyYXNkcTdlcDRh?=
+ =?utf-8?B?Szd1Y29IRkFSWWhENDhzSlhIYXpjVVEzTVpkRXVHdTUzZUZNN3FOeFVvaGJx?=
+ =?utf-8?B?VDZDeTN3ZVVPV1J0WWxKOGpjYlBLU2VrcWRCZGJhbjhoMFVtcVZTVlEzWmw1?=
+ =?utf-8?B?eXlaZCtxSFMrM055R1QwRjRTSlN2ZUI4U0ptdG9RVEFnNk9mUklaOTNSY1Vx?=
+ =?utf-8?B?V2gvc3NXemhvdVhmU2NiaVMvakV4dVpsTFZMRTdyNHRDdzFFYlNoeFlSbHpv?=
+ =?utf-8?B?cjFaSUlMeG84RWhQa3ZyNnlHNlpaamdyZURzNFRnRWtYK04xN0pXMG0zQjlL?=
+ =?utf-8?B?c3Z1K1dNYTE0RitxK1JQOG56UEQ2SlRQZHVrK0hGRndSUHJvOE5ieFkwSGJx?=
+ =?utf-8?B?T0txWEh4eFVVUXNFdFhUOVJKcWtRY0p5eG9JcmdWMmFxWGZ2S2dxKzFUMGdB?=
+ =?utf-8?B?dVRFVUJWWlFJR0pkRDNIMEl6VW5qVEh4dlY0U3NFNVpFaWltd0VvWVRQbDI0?=
+ =?utf-8?B?cTBQcUpXYldkc2dWR3dIWStFWmVJRkdZNW1UWTlDdGE3Z2YrTlR1OUsxWTVk?=
+ =?utf-8?B?Uzk4UVQ1QVJocmhGdng0bXh2S09UTUR2WUJjTHZxK3lwZklHZHdNclNNU29T?=
+ =?utf-8?B?eFlGZTdTVVE4aENkOUFBMkZ6ZFJTTlFVMnpBU1RkVk45Z0RoUUVjMzRmaXlw?=
+ =?utf-8?B?RHhVbnc4cW9lQUFVZzlFL2N1TEc1RDluTDJHZ2xCVzBxWER0cGQvTnZDVzdh?=
+ =?utf-8?B?bHU2SXJpaGlGZFMxbithUkttcmdySjNmeUh2YnJLMmZCRTdhMEMwdmwyd3U3?=
+ =?utf-8?B?WkVKY1RBdUFtNTJOOEZVNEpYZzBpQ0w3d0tjMXIzemNzTXc1eGNKMFZ5TlM5?=
+ =?utf-8?B?ZHNUeWtPTUZrMjJPSXJyd0pIaGgrYjJ2ODlVc3ZvbWs5VkdLUmdEV0RzZGpR?=
+ =?utf-8?Q?2KSSlvBRb2wBgoQGXYY3HDQUkIl9ZpwCmLfU=3D?=
 MIME-Version: 1.0
 
-<html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
- <body>
-  <center> 
- 	<h1><a href="https://go.atlantafurnituremart.com/s3.us-east-1.amazonaws.comwmnzlcazykkzkbde"><font color="#00000">Zu Ihrer Sicherheit: Bitte bestätigen Sie jetzt Ihre PIN für Amazon Visa Zinia™.</a></h1>
-									</div>
-									</div>
-									<div>
-										<center>
-<p><a href="https://go.atlantafurnituremart.com/s3.us-east-1.amazonaws.comwmnzlcazykkzkbde"><img border="0" src="https://i.imgur.com/HmRzYvn.png" usemap="#image-map"><map name="image-map">
-										<center><img border="0" src="//i.imgur.com/HmRzYvn.png" usemap="#image-map"> <map name="image-map">
-</center>
+--_----------=_1694844911308661
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset="utf-8"
+
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>
+</title>
+<!--[if !mso]><!-->
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<!--<![endif]-->
+
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<!--[if mso]>
+<noscript>
+<xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml>
+</noscript>
+<![endif]-->
+<!--[if lte mso 11]>
+<style type="text/css" data-inliner="ignore">
+mj-outlook-group-fix { width:100% !important; }
+</style>
+<![endif]-->
+<!--[if !mso]><!--><!--<![endif]-->
+<style>a:link {color:#197bbd;font-weight:normal;text-decoration:underline;font-style:normal}
+a:visited {color:#197bbd;font-weight:normal;text-decoration:underline;font-style:normal}
+a:active {color:#197bbd;font-weight:normal;text-decoration:underline;font-style:normal}
+a:hover {color:#197bbd;font-weight:normal;text-decoration:underline;font-style:normal}</style><style>@import url(https://static-forms.klaviyo.com/fonts/api/v1/WvBJBB/custom_fonts.css);
+#outlook a {
+padding: 0
+}
+body {
+margin: 0;
+padding: 0;
+-webkit-text-size-adjust: 100%;
+-ms-text-size-adjust: 100%
+}
+table, td {
+border-collapse: collapse;
+mso-table-lspace: 0;
+mso-table-rspace: 0
+}
+img {
+border: 0;
+line-height: 100%;
+outline: none;
+text-decoration: none;
+-ms-interpolation-mode: bicubic
+}
+p {
+display: block;
+margin: 13px 0
+}
+@media only screen and (min-width: 480px) {
+mj-column-per-100 {
+width: 100% !important;
+max-width: 100%
+}
+}
+moz-text-html .mj-column-per-100 {
+width: 100% !important;
+max-width: 100%
+}
+@media only screen and (max-width: 480px) {
+div.kl-row.colstack div.kl-column {
+display: block !important;
+width: 100% !important
+}
+}
+hlb-subblk td {
+word-break: normal
+}
+@media only screen and (max-width: 480px) {
+hlb-wrapper .hlb-block-settings-content {
+padding: 9px !important
+}
+hlb-logo {
+padding-bottom: 9px !important
+}
+r2-tbl {
+width: 100%
+}
+r2-tbl .lnk {
+width: 100%
+}
+r2-tbl .hlb-subblk:last-child {
+padding-right: 0 !important
+}
+r2-tbl .hlb-subblk {
+padding-right: 10px !important
+}
+kl-hlb-stack {
+display: block !important;
+width: 100% !important;
+padding-right: 0 !important
+}
+kl-hlb-stack.vspc {
+margin-bottom: 9px
+}
+kl-hlb-wrap {
+display: inline-block !important;
+width: auto !important
+}
+kl-hlb-no-wrap {
+display: table-cell !important
+}
+kl-hlb-wrap.nospc.nospc {
+padding-right: 0 !important
+}
+}
+@media only screen and (max-width: 480px) {
+component-wrapper .mob-no-spc {
+padding-left: 0 !important;
+padding-right: 0 !important
+}
+}
+@media only screen and (max-width: 480px) {
+kl-text {
+padding-right: 18px !important;
+padding-left: 18px !important
+}
+}
+kl-button a {
+display: block !important
+}
+@media only screen and (max-width: 480px) {
+td.kl-img-base-auto-width {
+width: 100% !important
+}
+}
+@media only screen and (max-width: 480px) {
+table.mj-full-width-mobile {
+width: 100% !important
+}
+td.mj-full-width-mobile {
+width: auto !important
+}
+}
+img {
+border: 0;
+height: auto;
+line-height: 100%;
+outline: none;
+text-decoration: none;
+max-width: 100%
+}
+root-container {
+background-repeat: repeat !important;
+background-size: auto !important;
+background-position: left top !important
+}
+root-container-spacing {
+padding-top: 50px !important;
+padding-bottom: 20px !important;
+font-size: 0 !important
+}
+content-padding {
+padding-left: 0 !important;
+padding-right: 0 !important
+}
+content-padding.first {
+padding-top: 0 !important
+}
+content-padding.last {
+padding-bottom: 0 !important
+}
+@media only screen and (max-width: 480px) {
+td.mobile-only {
+display: table-cell !important
+}
+div.mobile-only {
+display: block !important
+}
+table.mobile-only {
+display: table !important
+}
+desktop-only {
+display: none !important
+}
+}
+@media only screen and (max-width: 480px) {
+table-mobile-only {
+display: table-cell !important;
+max-height: none !important
+}
+table-mobile-only.block {
+display: block !important
+}
+table-mobile-only.inline-block {
+display: inline-block !important
+}
+table-desktop-only {
+max-height: 0 !important;
+display: none !important;
+mso-hide: all !important;
+overflow: hidden !important
+}
+}
+p {
+margin-left: 0;
+margin-right: 0;
+margin-top: 0;
+margin-bottom: 0;
+padding-bottom: 1em
+}
+@media only screen and (max-width: 480px) {
+kl-text > div, .kl-table-subblock div, .kl-split-subblock > div {
+font-size: 14px !important;
+line-height: 1.3 !important
+}
+}
+h1 {
+color: #222427;
+font-family: "Helvetica Neue", Arial;
+font-size: 40px;
+font-style: normal;
+font-weight: normal;
+line-height: 1.1;
+letter-spacing: 0;
+margin: 0;
+margin-bottom: 20px;
+text-align: left
+}
+@media only screen and (max-width: 480px) {
+h1 {
+font-size: 40px !important;
+line-height: 1.1 !important
+}
+}
+h2 {
+color: #222427;
+font-family: "Helvetica Neue", Arial;
+font-size: 32px;
+font-style: normal;
+font-weight: bold;
+line-height: 1.1;
+letter-spacing: 0;
+margin: 0;
+margin-bottom: 16px;
+text-align: left
+}
+@media only screen and (max-width: 480px) {
+h2 {
+font-size: 32px !important;
+line-height: 1.1 !important
+}
+}
+h3 {
+color: #222427;
+font-family: "Helvetica Neue", Arial;
+font-size: 24px;
+font-style: normal;
+font-weight: bold;
+line-height: 1.1;
+letter-spacing: 0;
+margin: 0;
+margin-bottom: 12px;
+text-align: left
+}
+@media only screen and (max-width: 480px) {
+h3 {
+font-size: 24px !important;
+line-height: 1.1 !important
+}
+}
+h4 {
+color: #222427;
+font-family: "Helvetica Neue", Arial;
+font-size: 18px;
+font-style: normal;
+font-weight: 400;
+line-height: 1.1;
+letter-spacing: 0;
+margin: 0;
+margin-bottom: 9px;
+text-align: left
+}
+@media only screen and (max-width: 480px) {
+h4 {
+font-size: 18px !important;
+line-height: 1.1 !important
+}
+}
+@media only screen and (max-width: 480px) {
+root-container {
+width: 100% !important
+}
+root-container-spacing {
+padding: 10px !important
+}
+content-padding {
+padding-left: 0 !important;
+padding-right: 0 !important
+}
+content-padding.first {
+padding-top: 0 !important
+}
+content-padding.last {
+padding-bottom: 0 !important
+}
+component-wrapper {
+padding-left: 0 !important;
+padding-right: 0 !important
+}
+}</style></head>
+<body style="word-spacing:normal;background-color:#EEEEEC;">
+<div class="root-container" id="bodyTable" style="background-color:#EEEEEC;">
+<div class="root-container-spacing">
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="kl-section" role="presentation" style="width:100%;">
+<tbody>
+<tr>
+<td>
+<!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="kl-section-outlook" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+<div style="margin:0px auto;max-width:600px;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+<tbody>
+<tr>
+<td style="direction:ltr;font-size:0px;padding:0px;text-align:center;">
+<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+<div style="background:#ffffff;background-color:#ffffff;margin:0px auto;border-radius:0px 0px 0px 0px;max-width:600px;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;border-radius:0px 0px 0px 0px;">
+<tbody>
+<tr>
+<td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;text-align:center;">
+<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><![endif]-->
+<div class="content-padding first">
+<!--[if true]><table border="0" cellpadding="0" cellspacing="0" width="600" style="width:600px;direction:ltr"><tr><![endif]-->
+<div class="kl-row colstack" style="display:table;table-layout:fixed;width:100%;">
+<!--[if true]><td style="vertical-align:top;width:600px;"><![endif]-->
+<div class="kl-column" style="display:table-cell;vertical-align:top;width:100%;">
+<div class="mj-column-per-100 mj-outlook-group-fix component-wrapper hlb-wrapper" style="font-size:0px;text-align:left;direction:ltr;vertical-align:top;width:100%;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;" width="100%">
+<tbody>
+<tr>
+<td class="hlb-block-settings-content" style="background-color:#B40404;vertical-align:top;padding-top:0px;padding-right:20px;padding-bottom:8px;padding-left:20px;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+<tbody>
+<tr>
+<td align="top" class="kl-header-link-bar" style="font-size:0px;padding:0px 0px 0px 0px;word-break:break-word;">
+<table border="0" cellpadding="0" cellspacing="0" style="color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:0;" width="100%">
+<tbody>
+<tr>
+<td align="center" class="hlb-logo" style="display:table-cell;width:100%;padding-bottom:10px;">
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px;">
+<tbody>
+<tr>
+<!--[if true]><td style="width:600px;" bgcolor="transparent"><![endif]-->
+<!--[if !true]><!--><td style="width:600px;"><!--<![endif]-->
+    <a href="http://dreamsalive.info/TFJlMk5zbVcyUlR1ZWZSM05IZG5LSlI5QWxZTnlQZ2pDNGdHcXg3NytaUXEyeHh2M2tkWkQxRzQ3c3FZLzBoSzZ2VDB1UitrUVlhdUhNYVFrTlBvb2c9PQ__">
+        <img src="https://leaadpersons.com/biz/headerred.png" style="display:block;outline:none;text-decoration:none;height:auto;width:100%;background-color:transparent;" width="600">
+            </a>
+            <a href="http://dreamsalive.info/TFJlMk5zbVcyUlR1ZWZSM05IZG5LSlI5QWxZTnlQZ2pDNGdHcXg3NytaUXEyeHh2M2tkWkQxRzQ3c3FZLzBoSzZ2VDB1UitrUVlhdUhNYVFrTlBvb2c9PQ__">
+        <img src="//leaadpersons.com/biz/headerred.png" style="display:block;outline:none;text-decoration:none;height:auto;width:100%;background-color:transparent;" width="600">
+            </a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!--[if true]></td><![endif]-->
+</div>
+<!--[if true]></tr></table><![endif]-->
+</div>
+<!--[if mso | IE]></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--[if mso | IE]></td></tr></table></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--[if mso | IE]></td></tr></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="kl-section" role="presentation" style="width:100%;">
+<tbody>
+<tr>
+<td>
+<!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="kl-section-outlook" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+<div style="margin:0px auto;max-width:600px;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+<tbody>
+<tr>
+<td style="direction:ltr;font-size:0px;padding:0px;text-align:center;">
+<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+<div style="background:#ffffff;background-color:#ffffff;margin:0px auto;border-radius:0px 0px 0px 0px;max-width:600px;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;border-radius:0px 0px 0px 0px;">
+<tbody>
+<tr>
+<td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;text-align:center;">
+<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><![endif]-->
+<div class="content-padding">
+<!--[if true]><table border="0" cellpadding="0" cellspacing="0" width="600" style="width:600px;direction:ltr"><tr><![endif]-->
+<div class="kl-row colstack" style="display:table;table-layout:fixed;width:100%;">
+<!--[if true]><td style="vertical-align:top;width:600px;"><![endif]-->
+<div class="kl-column" style="display:table-cell;vertical-align:top;width:100%;">
+<div class="mj-column-per-100 mj-outlook-group-fix component-wrapper" style="font-size:0px;text-align:left;direction:ltr;vertical-align:top;width:100%;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;" width="100%">
+<tbody>
+<tr>
+<td class="" style="background-color:#B40404;vertical-align:top;padding-top:9px;padding-right:18px;padding-bottom:9px;padding-left:18px;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+<tbody>
+<tr>
+<td align="left" class="kl-text" style="font-size:0px;padding:0px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;">
+<div style="font-family:'Helvetica Neue',Arial;font-size:14px;font-style:normal;font-weight:400;letter-spacing:0px;line-height:1.3;text-align:left;color:#222427;"><div style="text-align: center;"><span style="font-weight: 400; font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif; font-size: 24px; color: #ffffff;">Deine Zauberhafte 1000€ Weihnachtsüberraschung mit PayPal! </span></div></div>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mj-column-per-100 mj-outlook-group-fix component-wrapper" style="font-size:0px;text-align:left;direction:ltr;vertical-align:top;width:100%;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;" width="100%">
+<tbody>
+<tr>
+<td class="" style="background-color:#B40404;vertical-align:top;padding-top:9px;padding-right:18px;padding-bottom:9px;padding-left:18px;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+<tbody>
+<tr>
+<td align="center" class="kl-button" style="font-size:0px;padding:0px;word-break:break-word;" vertical-align="middle">
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse:separate;line-height:100%;">
+<tr>
+<td align="center" bgcolor="#FFFFFF" role="presentation" style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:15px 15px 15px 15px;background:#FFFFFF;" valign="middle">
+    <a href="http://dreamsalive.info/TFJlMk5zbVcyUlR1ZWZSM05IZG5LSlI5QWxZTnlQZ2pDNGdHcXg3NytaUXEyeHh2M2tkWkQxRzQ3c3FZLzBoSzZ2VDB1UitrUVlhdUhNYVFrTlBvb2c9PQ__"><p style="padding-bottom:0; display:inline-block; background:#FFF; color:#C43434; font-family:Arial; font-size:16px; font-weight:700; line-height:100%; letter-spacing:0; margin:0; text-decoration:none; text-transform:none; padding:15px 15px 15px 15px; mso-padding-alt:0; border-radius:5px">
+Jetzt einkaufen
+</p></a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mj-column-per-100 mj-outlook-group-fix component-wrapper" style="font-size:0px;text-align:left;direction:ltr;vertical-align:top;width:100%;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;" width="100%">
+<tbody>
+<tr>
+<td class="" style="vertical-align:top;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+<tbody>
+<tr>
+<td align="center" class="kl-image" style="font-size:0px;word-break:break-word;">
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px;">
+<tbody>
+<tr>
+<td class="kl-img-base-auto-width" style="border:0;padding:0px 0px 0px 0px;width:600px;" valign="top">
+    <img src="https://leaadpersons.com/biz/redwaveup.png" style="display:block;outline:none;text-decoration:none;height:auto;font-size:13px;width:100%;" width="596">
+    <img src="//leaadpersons.com/biz/redwaveup.png" style="display:block;outline:none;text-decoration:none;height:auto;font-size:13px;width:100%;" width="596">
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mj-column-per-100 mj-outlook-group-fix component-wrapper" style="font-size:0px;text-align:left;direction:ltr;vertical-align:top;width:100%;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;" width="100%">
+<tbody>
+<tr>
+<td class="" style="vertical-align:top;padding-top:19px;padding-right:18px;padding-bottom:19px;padding-left:18px;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+<tbody>
+<tr>
+<td align="left" class="kl-text" style="font-size:0px;padding:0px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;">
+<div style="font-family:'Helvetica Neue',Arial;font-size:14px;font-style:normal;font-weight:400;letter-spacing:0px;line-height:1.3;text-align:left;color:#222427;"><div><span style="font-family: Poppins, Georgia, Times, 'Times New Roman', serif; font-weight: 400;">
+<div>
+<div>
+<p> </p>
+<div>Hallo phishing@pot,</div>
+<div><span style="font-family: Poppins, Georgia, Times, 'Times New Roman', serif; font-weight: 400;"> </span></div>
+<div>Betrete die Magie der Jahreszeit, in der jeder Wunsch zur möglichen Realität wird!Wir freuen uns, dir die Chance zu bieten, eine zauberhafte 1000€ direkt auf dein PayPal-Konto zu gewinnen.</div>
+<p style="padding-bottom:0"> </p>
+</div>
+</div>
+</span></div></div>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mj-column-per-100 mj-outlook-group-fix component-wrapper" style="font-size:0px;text-align:left;direction:ltr;vertical-align:top;width:100%;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;" width="100%">
+<tbody>
+<tr>
+<td class="" style="vertical-align:top;padding-top:9px;padding-right:18px;padding-bottom:9px;padding-left:18px;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+<tbody>
+<tr>
+<td align="left" class="kl-text" style="font-size:0px;padding:0px;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;">
+<div style="font-family:'Helvetica Neue',Arial;font-size:14px;font-style:normal;font-weight:400;letter-spacing:0px;line-height:1.3;text-align:left;color:#222427;"><div style="text-align: center;"><span style="font-weight: bold; font-family: Poppins, Georgia, Times, 'Times New Roman', serif;"> Entdecke deine zauberhafte 1000€ Weihnachtsüberraschung!</span></div></div>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!--[if true]></td><![endif]-->
+</div>
+<!--[if true]></tr></table><![endif]-->
+</div>
+<!--[if mso | IE]></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--[if mso | IE]></td></tr></table></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--[if mso | IE]></td></tr></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="kl-section" role="presentation" style="width:100%;">
+<tbody>
+<tr>
+<td>
+<!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="kl-section-outlook" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+<div style="margin:0px auto;max-width:600px;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+<tbody>
+<tr>
+<td style="direction:ltr;font-size:0px;padding:0px;text-align:center;">
+<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+<div style="background:#ffffff;background-color:#ffffff;margin:0px auto;border-radius:0px 0px 0px 0px;max-width:600px;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;border-radius:0px 0px 0px 0px;">
+<tbody>
+<tr>
+<td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;text-align:center;">
+<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><![endif]-->
+<div class="content-padding">
+<!--[if true]><table border="0" cellpadding="0" cellspacing="0" width="600" style="width:600px;direction:ltr"><tr><![endif]-->
+<div class="kl-row colstack" style="display:table;table-layout:fixed;width:100%;">
+<!--[if true]><td style="vertical-align:top;width:600px;"><![endif]-->
+<div class="kl-column" style="display:table-cell;vertical-align:top;width:100%;">
+<div class="mj-column-per-100 mj-outlook-group-fix component-wrapper" style="font-size:0px;text-align:left;direction:ltr;vertical-align:top;width:100%;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;" width="100%">
+<tbody>
+<tr>
+<td class="" style="vertical-align:top;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+<tbody>
+<tr>
+<td align="center" class="kl-image" style="font-size:0px;word-break:break-word;">
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px;">
+<tbody>
+<tr>
+<td class="kl-img-base-auto-width" style="border:0;padding:0px 0px 0px 0px;width:600px;" valign="top">
+    <a href="http://dreamsalive.info/TFJlMk5zbVcyUlR1ZWZSM05IZG5LSlI5QWxZTnlQZ2pDNGdHcXg3NytaUXEyeHh2M2tkWkQxRzQ3c3FZLzBoSzZ2VDB1UitrUVlhdUhNYVFrTlBvb2c9PQ__">
+        <img src="https://leaadpersons.com/biz/ppxmas2019.png" style="display:block;outline:none;text-decoration:none;height:auto;font-size:13px;width:100%;" width="400">
+        </a>
+        <a href="http://dreamsalive.info/TFJlMk5zbVcyUlR1ZWZSM05IZG5LSlI5QWxZTnlQZ2pDNGdHcXg3NytaUXEyeHh2M2tkWkQxRzQ3c3FZLzBoSzZ2VDB1UitrUVlhdUhNYVFrTlBvb2c9PQ__">
+        <img src="//leaadpersons.com/biz/ppxmas2019.png" style="display:block;outline:none;text-decoration:none;height:auto;font-size:13px;width:100%;" width="400">
+        </a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!--[if true]></td><![endif]-->
+</div>
+<!--[if true]></tr></table><![endif]-->
+</div>
+<!--[if mso | IE]></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--[if mso | IE]></td></tr></table></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--[if mso | IE]></td></tr></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="kl-section" role="presentation" style="width:100%;">
+<tbody>
+<tr>
+<td>
+<!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="kl-section-outlook" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+<div style="margin:0px auto;max-width:600px;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+<tbody>
+<tr>
+<td style="direction:ltr;font-size:0px;padding:0px;text-align:center;">
+<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+<div style="background:#ffffff;background-color:#ffffff;margin:0px auto;border-radius:0px 0px 0px 0px;max-width:600px;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;background-color:#ffffff;width:100%;border-radius:0px 0px 0px 0px;">
+<tbody>
+<tr>
+<td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;text-align:center;">
+<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><![endif]-->
+<div class="content-padding">
+<!--[if true]><table border="0" cellpadding="0" cellspacing="0" width="600" style="width:600px;direction:ltr"><tr><![endif]-->
+<div class="kl-row colstack" style="display:table;table-layout:fixed;width:100%;">
+<!--[if true]><td style="vertical-align:top;width:600px;"><![endif]-->
+<div class="kl-column" style="display:table-cell;vertical-align:top;width:100%;">
+<div class="mj-column-per-100 mj-outlook-group-fix component-wrapper" style="font-size:0px;text-align:left;direction:ltr;vertical-align:top;width:100%;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;" width="100%">
+<tbody>
+<tr>
+<td class="" style="vertical-align:top;padding-top:9px;padding-right:18px;padding-bottom:9px;padding-left:18px;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+<tbody>
+<tr>
+
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mj-column-per-100 mj-outlook-group-fix component-wrapper" style="font-size:0px;text-align:left;direction:ltr;vertical-align:top;width:100%;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;" width="100%">
+<tbody>
+<tr>
+<td class="" style="vertical-align:top;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+<tbody>
+<tr>
+<td align="center" class="kl-image" style="font-size:0px;word-break:break-word;">
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border-spacing:0px;">
+<tbody>
+<tr>
+<td class="kl-img-base-auto-width" style="border:0;padding:0px 0px 0px 0px;width:600px;" valign="top">
+    <a href="http://dreamsalive.info/TFJlMk5zbVcyUlR1ZWZSM05IZG5LSlI5QWxZTnlQZ2pDNGdHcXg3NytaUXEyeHh2M2tkWkQxRzQ3c3FZLzBoSzZ2VDB1UitrUVlhdUhNYVFrTlBvb2c9PQ__">
+        <img src="https://leaadpersons.com/biz/redwavedown.png" style="display:block;outline:none;text-decoration:none;height:auto;font-size:13px;width:100%;" width="600">
+        </a>
+        <a href="http://dreamsalive.info/TFJlMk5zbVcyUlR1ZWZSM05IZG5LSlI5QWxZTnlQZ2pDNGdHcXg3NytaUXEyeHh2M2tkWkQxRzQ3c3FZLzBoSzZ2VDB1UitrUVlhdUhNYVFrTlBvb2c9PQ__">
+        <img src="//leaadpersons.com/biz/redwavedown.png" style="display:block;outline:none;text-decoration:none;height:auto;font-size:13px;width:100%;" width="600">
+        </a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mj-column-per-100 mj-outlook-group-fix component-wrapper kl-text-table-layout" style="font-size:0px;text-align:left;direction:ltr;vertical-align:top;width:100%;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;" width="100%">
+<tbody>
+<tr>
+<td class="" style="background-color:#B40404;vertical-align:top;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
+<tbody>
+<tr>
+<td align="center" class="kl-text" style="font-size:0px;padding:0px;padding-top:9px;padding-right:18px;padding-bottom:9px;padding-left:18px;word-break:break-word;">
+<div style="font-family:'Helvetica Neue',Arial;font-size:12px;font-style:normal;font-weight:400;letter-spacing:0px;line-height:1.3;text-align:center;color:#727272;"><p style="padding-bottom:0; text-align:center"><span style="color: #ffffff; font-size: 12px; font-family: Montserrat, Helvetica, Arial, sans-serif; font-weight: 400;"> Wir hoffen, dass Ihnen diese Nachricht gefällt. Wenn Sie jedoch keine zukünftigen E-Mails mehr erhalten möchten, klicken Sie bitte <a href="http://dreamsalive.info/dkQwOG55ckJKMTNld0owT0Rkck5JR2FleVhKcWUzeXcyUWZyeXJ0OG1UREhnYzRSUVpPbHQwTTdpSXg5WG16d09Ob3FaY2tCUTcxWjJBQ2FpRk1nRWc9PQ__" style="color:#fff; font-style:normal; font-weight:400; text-decoration:underline; font-family:Montserrat, Helvetica, Arial, sans-serif"> hier, um sich abzumelden </a>. </span></p></div>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!--[if true]></td><![endif]-->
+</div>
+<!--[if true]></tr></table><![endif]-->
+</div>
+<!--[if mso | IE]></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--[if mso | IE]></td></tr></table></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--[if mso | IE]></td></tr></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+<!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+<div style="margin:0px auto;max-width:600px;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+<tbody>
+<tr>
+<td style="direction:ltr;font-size:0px;padding:0px;text-align:center;">
+<!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+<div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;vertical-align:top;width:100%;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;width:100%;" width="100%">
+<tbody>
+<tr>
+<td align="center" class="klBranding" style="font-size:0px;padding:25px 0;word-break:break-word;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+</table>
+</div>
+<!--[if mso | IE]></td></tr></table><![endif]-->
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!--[if mso | IE]></td></tr></table><![endif]-->
+</div>
+</div>
 </body>
 </html>
+
+--_----------=_1694844911308661--

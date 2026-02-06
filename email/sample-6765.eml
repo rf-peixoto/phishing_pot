@@ -1,572 +1,260 @@
-Received: from PH0PR10MB7097.namprd10.prod.outlook.com (::1) by
- MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Mon, 19 Jan 2026 05:00:50
+Received: from DS0PR10MB7524.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Thu, 22 Jan 2026 18:45:13
  +0000
-Received: from AS4P190CA0001.EURP190.PROD.OUTLOOK.COM (2603:10a6:20b:5de::7)
- by PH0PR10MB7097.namprd10.prod.outlook.com (2603:10b6:510:28f::20) with
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=GFPcCFExgeP1A8MsPXL/KoheBZTHkCtmIoSDJZOCFAIsEAZBk1br4APOOZdLcE99EGUq5omsAbk/aPXbRrZvfvImmB3ld3FDa6wSqCdU3/cXblqLN0YhGpu3DRwnq9NqsXzplY2OFT6+Z8h5Bn//vL3h/QT8C0obxJ2W2MtZTy8aqDH5IDgBVujlJE3L01fi1ECwp5Ez1Q8dONuOn1YBFhFnaOeDIvYLKXPGSQBL1SPo+3VLzli3e7ydE1AWAcyWuVpeeAEJeS1AazLpiQuxx46Y31+opD3uECDQFPnxLzmGOfLiW/fO2Byx+nDESOjwV0w7mfViGkv5IxYNrPfN+Q==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=y1UVqJRUw0UX/UMhoT5grR0AwitYdC0bvC1xbxNyZCE=;
+ b=U4eG0bcprmqo2/vzvZSK2ps+49Vf+aUzgpwBK5R26S6FVMfyW5qIJYPs4ckTgkSoB1bBVjCXPBNBFTYcCsmAekBLe1G30YjDA63Ky10d+H6BVSzropwmJZBnjYPEp5549YRttvBitSgm/4R6YfWwgryRrOd7mXuoRnyA1Pprn9DUVdNPyBFvSkp3MsAw7H+jdxk6ykORMGGtCtlnqeghCD2zflTz7hRWfjzngdgKedxv0YuzsdNSuD/0FLQYrqpb/ygjzaqAZOMYOOihduz9q99Go/P7J/nJHX9YGyU0eRf2YZAYYJiW6lG9aWjM4vY0tgToK1cO7IhDq7VKquMuEA==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.102.171.62) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=deb20809944.onmicrosoft.com; dmarc=none action=none
+ header.from=omahasteaks.rav.com; dkim=none (message not signed); arc=fail
+ (48)
+Received: from BN1PR14CA0023.namprd14.prod.outlook.com (2603:10b6:408:e3::28)
+ by DS0PR10MB7524.namprd10.prod.outlook.com (2603:10b6:8:15c::5) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.12; Mon, 19 Jan
- 2026 05:00:49 +0000
-Received: from AMS0EPF000001AA.eurprd05.prod.outlook.com
- (2603:10a6:20b:5de:cafe::16) by AS4P190CA0001.outlook.office365.com
- (2603:10a6:20b:5de::7) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9520.12 via Frontend Transport; Mon,
- 19 Jan 2026 05:00:50 +0000
-Authentication-Results: spf=none (sender IP is 74.125.82.52)
- smtp.mailfrom=shcms.org; dkim=pass (signature was verified)
- header.d=shcms-org.20230601.gappssmtp.com;dmarc=none action=none
- header.from=shcms.org;
-Received-SPF: None (protection.outlook.com: shcms.org does not designate
- permitted sender hosts)
-Received: from mail-dl1-f52.google.com (74.125.82.52) by
- AMS0EPF000001AA.mail.protection.outlook.com (10.167.16.150) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.4
- via Frontend Transport; Mon, 19 Jan 2026 05:00:48 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:CF5D52625DE909A17715AD6E73742DC03B04AC02579761D946F290DC305671FF;UpperCasedChecksum:13CA874A71208516150167ECE4AA496FEA4A97C56E9EE370F9FD088FB1065A7F;SizeAsReceived:3019;Count:17
-Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-11f1fb91996so9066364c88.1
-        for <phishing@pot>; Sun, 18 Jan 2026 21:00:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=shcms-org.20230601.gappssmtp.com; s=20230601; t=1768798848; x=1769403648; darn=hotmail.com;
-        h=to:subject:message-id:date:mime-version:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=YYgb/0SIBVIfu4sTSu8Juy3pjmBFerryuXOg/4eJB3A=;
-        b=Yi0uLWWn439vzRfJWBHpplyJfrQIu5Q+FPi7WyxvR+KC72k/8EXFfC0DytCMQncG7O
-         V+wTjALxBMn1XKuAtWSy2zjilKjI01mFVDjqO5HjcXHlnCsMCA2IEcLVua2YZRYXmaQe
-         Y3zmAKE67GjLhr+KvYXrmEHMiH4zbxED2mO8UlSsJ09L63R9VkNGP4Booz8R5qkPi/ir
-         6ePzgFSxA5zoGlC1e/m8jFUDzyw0sV2yegwg5SgJUM8ufjjEfKvHJELFLthjgvcTCNcA
-         8/XI7Wh5+w5k1997igeKpJD5JsK6kykKqyQi4vcS2l8ywwCaJAyhyB4AvXjTgE51m4qU
-         xKyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768798848; x=1769403648;
-        h=to:subject:message-id:date:mime-version:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YYgb/0SIBVIfu4sTSu8Juy3pjmBFerryuXOg/4eJB3A=;
-        b=o0FTnPyTi85C+/JPyCqQ7lngh/5oC/zs8azjvH7OVL0XCXrhXpJ8ym8J4cTwxj6CvM
-         sNzQk/SREwghh5Txn8rFKW6/swHDlrNmhRxOYwA5sJOmZMWRB/JWhRr6HwjkoqY1vbXw
-         CKfjbmRJa6kqGW9xIx8u5tHPeuXsw2CQbweoCXKnoSLkOJkyHBVFoRdlgMdy/cMn4gn2
-         2BTRtrV+b0hU0a/7LygNZr4ag4SdtLJQNegfzwhiK9iEVw33mOItjEDFo1y6cY6MN8WG
-         Hu1Yimke8IvresK4RqWnsBfEePPenLQFvfxa3ub4uPIhZVoTTEC8zxR1Is49o91cjUT1
-         u3hg==
-X-Gm-Message-State: AOJu0Yx3mFuEi4wQqOD2OsijJgpSZkUzRgRWQdxAMRfskZ+htJOOeknk
-	KaBlZTEo5Xt3Q5tJlsMKR8wBuny2x56wDI80o6lVVUPiKMj2Sn8IKOQcYDVNMbjx4zaT+EwvAtS
-	Pz5dSkrQtINbsoOiSCGY+LwUDnTMzR/ZybAGpZ0YkdEcql4rZOi43nw==
-X-Gm-Gg: AY/fxX5MFGlAes8kCYzE/o+k7X6imcMkmT10xblt62liSey5uawqnXPqGqtv5amff7H
-	sMMayhAeY0IHC+pUK9voTG1tl2VrJLBRBadJvKqWGeNfxZNtd8EWc9RQB7AdDppM9T3auW9xPzO
-	NuUxouoBHbkVcsxKFsDAKLiGEswFBJVAsskDIfNEoPzHpws2hdo7T4n9jH7aAWuxNJMIlo+LK47
-	zwmZomEl1OnmlgEoEZ98V3x2hnRuJtZLz09l2H+lHDPw69nPuTLA+73fieiZRRQcFh0sitiBWM1
-X-Received: by 2002:a05:7022:4184:b0:11d:e40f:ee69 with SMTP id
- a92af1059eb24-1244b380f9dmr9177258c88.36.1768798847963; Sun, 18 Jan 2026
- 21:00:47 -0800 (PST)
-Received: from 77463558223 named unknown by gmailapi.google.com with HTTPREST;
- Mon, 19 Jan 2026 00:00:47 -0500
-Received: from 77463558223 named unknown by gmailapi.google.com with HTTPREST;
- Mon, 19 Jan 2026 00:00:47 -0500
-Return-Path: jordan.perez3@shcms.org
-From: Free Spins Inside <jordan.perez3@shcms.org>
-Date: Mon, 19 Jan 2026 00:00:47 -0500
-X-Gm-Features: AZwV_QiRKhyjtBdaXMI8bmFnddkIEc8ZgzIBZ4Le8Yl1VfRY4d_KAGbMujNJ_Cc
-Message-ID: <CAGOhqOpDv1XDu0Fx7+6jKRvLWH2tC0Fe2GuHwKvFhZg3D4EFQg@mail.gmail.com>
-Subject: Free for New Casino Players
-To: phishing@pot
-Content-Type: multipart/alternative; boundary="00000000000003214d0648b69347"
-X-IncomingHeaderCount: 17
-X-MS-Exchange-Organization-ExpirationStartTime: 19 Jan 2026 05:00:48.phishing@pot4
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.10; Thu, 22 Jan
+ 2026 18:45:11 +0000
+Received: from BN1PEPF00004685.namprd03.prod.outlook.com
+ (2603:10b6:408:e3:cafe::ac) by BN1PR14CA0023.outlook.office365.com
+ (2603:10b6:408:e3::28) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.10 via Frontend Transport; Thu,
+ 22 Jan 2026 18:45:01 +0000
+Authentication-Results: spf=pass (sender IP is 52.102.171.62)
+ smtp.mailfrom=deb20809944.onmicrosoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none
+ header.from=omahasteaks.rav.com;compauth=fail reason=001
+Received-SPF: Pass (protection.outlook.com: domain of
+ deb20809944.onmicrosoft.com designates 52.102.171.62 as permitted sender)
+ receiver=protection.outlook.com; client-ip=52.102.171.62;
+ helo=TYDPR03CU002.outbound.protection.outlook.com; pr=C
+Received: from TYDPR03CU002.outbound.protection.outlook.com (52.102.171.62) by
+ BN1PEPF00004685.mail.protection.outlook.com (10.167.243.86) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9564.3
+ via Frontend Transport; Thu, 22 Jan 2026 18:45:09 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:D5AA0A69BF7DCCAC713845E712D04C9BAC338B48B752C28CF3AD8CDF62C7D561;UpperCasedChecksum:A8423B10261DBE3B36BD07E3E1D003E97D5CEFC83D7FFFC0D4C8F5C36BDE02ED;SizeAsReceived:6486;Count:32
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kN0m45ootE+96AQi5vo1CF8/yRhWW2KdgcgW8Rd7yaD3XPRN9t1k99F68ZnsiHLBDUDjhPAQvMjh93uxNXNCDVdiijrBX4GtyQw9kviPcIazqGH+ULH8I9GVYdPmuOAfPREcK3zOkuT9eCsP/P7Pr6mTRQuuLMCGY2M8EEQTfhnVnCJEDSNZXCr6vdF4H1RJO0CRkGutafRD9Mj/xp+4ar1CFt0aUYAn+53LZKolseALbQUmP9dZRrziLdXu6o6SWE72wQoOSK9veZb8+8KrYxcyK+OyqDuk/40WAfCafw2wK5lAalrmPGrQuFf2HahRluUJU/krWXZp0kWpXFCNkw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=y1UVqJRUw0UX/UMhoT5grR0AwitYdC0bvC1xbxNyZCE=;
+ b=nXrX+C2W9EUZ5lIImKCVIf9GTik98/+6KF/XyUD42VGYkoIjcFRfs8g0vo1v4FUj4KGvq5cWc0hImAxUxeSio1LSrtgFGtcsJDYiu0HDrAl8HijfzrgbKIz31k7Bk0audCk6arGxEqcKDoDHFx+NlhmlsmFqsQ3tPM5zBZmyS0s2OtKp/8VSmdgOhA3vJQNXe4fQsfDGXPKwAklHkIj17SvaeN9TzB6rUVptk6Vukc4bAuCnBa4y1lM4MliLM4LrzinqkCL2tNstm41bl8x6lTuAufaCQ23LzAl5w1u7QMlFrOqpmWmcm0ks4gGIywQcl5bzrM2b94q1Tcru5Jw88A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 64.120.94.224) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=deb20809944.onmicrosoft.com; dmarc=none action=none
+ header.from=omahasteaks.rav.com; dkim=none (message not signed); arc=none (0)
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.120.94.224)
+ smtp.mailfrom=deb20809944.onmicrosoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=omahasteaks.rav.com;
+To: <phishing@pot>
+Date: Thu, 22 Jan 2026 18:45:01 +0000
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Subject: 🥩 Your Gift Is Ready – Just Open - QQG-87591!
+From: "Omaha Steaks" <omaha@omahasteaks.rav.com>
+Content-Length: 185870
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Message-ID: <ec5968ab-ea38-4d72-ba34-ec8d211c6b83@OSA0EPF000000C8.apcprd02.prod.outlook.com>
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: OSA0EPF000000C8:EE_|SEZPR06MB5877:EE_|BN1PEPF00004685:EE_|DS0PR10MB7524:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2b5c8106-cdc9-4c5b-c8fc-08de59e65ef4
+X-MS-Exchange-SenderADCheck: 2
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|3phishing@pot0700013|61400799027|32650700017|48200799018|34020700016|4022899009|69100299015|376014|82310400026|8096899003|52005299006|4076899003|54012099003|85622059|32550700048|15450700066;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?cU1OaUxmQVZRME5KVDkvWGh5RGNjclVwT1JiRDZsZCtXSWRwekFiUDJiL29I?=
+ =?utf-8?B?aGswY1RrZ0tMb0tlNHRhZEdKT3dVNmpDNkFZaDNtbGNsODFIU24wTmJUOVg3?=
+ =?utf-8?B?WXZFOUNET3YrY3Vrc2o4eWYwa3RpWVRDcVFxQm45RWd5K3hzVkJqVGluQVNB?=
+ =?utf-8?B?MDVVUmptRWVSUVc0VnBmWm9iMk1kczIwNTN2RDZlejJQSERVZFpLOEhNOHNq?=
+ =?utf-8?B?M1hGbVBnbndWRm9CTDNYVGpUUlJmSnA2ZDV4d2cyREhTUGdOdG9sQTZmZm1v?=
+ =?utf-8?B?cEl3SDBGT3dkQmZ6TldDMnRrVnpDT3B0cTBlYVM3UjZPbGFhMnFKVXViYld5?=
+ =?utf-8?B?Qy9kaHAvMDVTQ2NkcDQzMzBycWk0ajlDcHliMGY3UEVDL2NPVnpLOVJFSFB3?=
+ =?utf-8?B?SzV1UmpYY2tFbE00TnEyTGxETUVsNk0vM3grRmJCQStXM0YwbkpPdU9GRjVu?=
+ =?utf-8?B?bUNzT0hCc3R6ZUZnbTA3Q2hETmV6anNIZHFnSFo3L0JlR3YxME1qQms3aSt4?=
+ =?utf-8?B?akdsSTUxejRUdDRWTllqbHVjV0xxa0lZR1IvRHJlR2luNjdnYXY2RlVvSXpW?=
+ =?utf-8?B?aEE2Smdjazc5NEVycVBIU0E1amFXdldGVkhJVHNCOWpUOWNNcHpoM2cxTjMw?=
+ =?utf-8?B?RnFxT2ZYUVFBOTE0N2QvQUtaQkV5UFFNN1NSL1pQQVp3dUtZTUpyRWlxVlJK?=
+ =?utf-8?B?TUZkWlRWNEJuR1BFbUdUK1lNUExGWVo4eGtlYzMvZmxVNzZTSVpJbS9UdkNN?=
+ =?utf-8?B?bFh0aThNN243QmlwVWlDT3hxVU1HZ2djc1g3cDZET0pmMEg1NEszWVptaEhS?=
+ =?utf-8?B?eDhBNXp0V1E3ZzAwNVZ5dHB5YUFENEovTVdHWlhHYUJSSzAxSm1LZnVOYnps?=
+ =?utf-8?B?MmJOdnRIK3Q0L1dwa3VkWDdmQkVaNFFSVjJiMGdOUitpTHlkSmwzbXZ1T2Fu?=
+ =?utf-8?B?NkZNRXVBMnNybXNFR0FGV1VDNHU0Y2hJU05VYittVEhzZW9ZZUpTbFg1NHlm?=
+ =?utf-8?B?Zk53SnZ6TTdZb2w3TXhoeUdQQ0x5dmJuTjkxcllDOTQzbUh6ZFF2RTlTT3RY?=
+ =?utf-8?B?ZlM1ZGVxQVAyanNzV2JYdzBaQkhmYjNyN3NLVi9nb2crSEFGVjU3a0h3V25M?=
+ =?utf-8?B?MUFNVVlOYXljWmF5alJHTVRMTFUyUFo3VUhMVkpSejRCSWZmYThtWVlBQ08r?=
+ =?utf-8?B?WllEM0FzdnNleVkyeXpPVEhidUR5UHRDTkl6Skd1SFZDMnc5YTZlTzZMK0l4?=
+ =?utf-8?B?Yk9QeHdJd3pRdU01S2t2WVdSb3VNT3hUN0tSNFRUQ3FlSlM1T0VkS0h2RDI4?=
+ =?utf-8?B?TUFlOUtxYmgyUHFxZ1o5YUQrWlFIbXlBWFZpbFAxZkhHaXhUWlRJQ1NPYWVi?=
+ =?utf-8?B?YTlVRmpVVFNVM29iN2xPRFJyY3IwUWJEK0F4Q1pSb3FodFZTajRsUlA2YWxo?=
+ =?utf-8?B?NFZxeGdQN1p4RDRwVTBaMWo0ZC9xb296bTNSLzA2ZitPd0IyL0NNQTRyZjBq?=
+ =?utf-8?B?RkNOMHg0eGlRNmFqSzk2RGg1TWRDRnpaVk8vK1JYSzV4U0g5eVBsWExyaW1v?=
+ =?utf-8?B?SDBxNU14bXpITjRaWHJXdlNRY2tFclkxdjF1UjFaaTNlYVFXWnV5Qy9BZ1dQ?=
+ =?utf-8?B?MkxVTlZXblp2RjJMMGdXejJHTk5pK3BrN1ZZTjI4UXBRczhRMHB1T1N3a1or?=
+ =?utf-8?B?TzVoSlFzTUwxVHFyQ250WGh4TXVJb1oybzlzK3A4T1pIMDVUZWJISTYrZVdK?=
+ =?utf-8?B?c3hhSXNjRE8ydWVRMFpnSUJxSzRBNVZwUHU4TXJwKzFRTGZsMy8xZHMzckt3?=
+ =?utf-8?B?aU83WWI1cEdkcGxRRGQ2ajlFMGluemFreUtzMjdFb2NRdWxHSUVsajA1L1l5?=
+ =?utf-8?B?ejRrSGJlSGJLZkxKeXlqSVdPZmE3aEczUURQUFJ1cDNVeDMwWldhQ2ZaWi9i?=
+ =?utf-8?B?N2lVN1NBellUUU1uN2NaUkJ5N2VtU0IrTFlYRmRobW9FR2diY3F2Mm5XMXdz?=
+ =?utf-8?B?dnJmOUJUZTkyMjVhVUZhRzNzNlkzZTBJUSs1Z1hSdUlzQmdFY1k5bmIzcEsw?=
+ =?utf-8?B?Z0hwNWMrZXhrdmpvUkZLamZHenlGL0xKbWo2YUI2dnhpbzZLVytqN3B6MWo2?=
+ =?utf-8?B?Z21XRytiRHhUdy92Y0tkR09Bb1FIMEQvb2dDNVZybkRoVTJSQXpxcVU0cnhD?=
+ =?utf-8?B?T2xTVFhwZlMzZ05nb2ZHSnkzWXE3NHJSWVJnZzFVOXBIdzBIWFFJbkZrWGY3?=
+ =?utf-8?B?QWRPZXExRGFrMmZkK1FtSFRNYjJBPT0=?=
+X-Forefront-Antispam-Report-Untrusted: CIP:64.120.94.224;CTRY:SG;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:deb20809944.onmicrosoft.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(3phishing@pot0700013)(61400799027)(32650700017)(48200799018)(34020700016)(4022899009)(69100299015)(376014)(82310400026)(8096899003)(52005299006)(4076899003)(54012099003)(85622059)(32550700048)(15450700066);DIR:OUT;SFP:1501;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5877
+X-IncomingHeaderCount: 32
+Return-Path: vrapkkcg6w@deb20809944.onmicrosoft.com
+X-MS-Exchange-Organization-ExpirationStartTime: 22 Jan 2026 18:45:10.3639
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: 10e69662-0b37-4e4a-7ef8-08de5717b642
-X-EOPAttributedMessage: 0
+X-MS-Exchange-Organization-Network-Message-Id: 2b5c8106-cdc9-4c5b-c8fc-08de59e65ef4
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: BN1PEPF00004685.namprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: BN1PEPF00004685.namprd03.prod.outlook.com
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AMS0EPF000001AA:EE_|PH0PR10MB7097:EE_|MW4PR10MB5749:EE_
-X-MS-Exchange-Organization-AuthSource: AMS0EPF000001AA.eurprd05.prod.outlook.com
+X-MS-Exchange-Organization-AuthSource: BN1PEPF00004685.namprd03.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 1/19/2026 3:49:18 AM
-X-MS-Office365-Filtering-Correlation-Id: 10e69662-0b37-4e4a-7ef8-08de5717b642
+X-MS-UserLastLogonTime: 1/22/2026 6:02:22 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: d43c39b9-3e6a-4672-415a-08de59e65a0d
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 74.125.82.52
-X-SID-PRA: JORDAN.PEREZ3@SHCMS.ORG
+X-Sender-IP: 52.102.171.62
+X-SID-PRA: OMAHA@OMAHASTEAKS.RAV.COM
 X-SID-Result: NONE
-X-MS-Exchange-Organization-SCL: 9
-X-Microsoft-Antispam: BCL:0;ARA:1444111002|119000799006|20103052909095|6100799021|22090799003|21090799003|32080799006|30140799006|33080799003|3025599003|461199028|27045499008|56000799018|2700799029|22065499019|31140799006|1680799066|9000799056|42200799015|970799060|9400799043|84100799003|1131999016|41010799003|46080799006|18040799003;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jan 2026 05:00:48.6830
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|15110799015|10300799038|46110799009|46080799006|47200799024|58200799021|2700799029|35120799006|970799060|36140799009|62400799018|461199028|39010799012|67000799015|470799035|18030799003|20103052909095|3412199025|440099028|4302099013|6022199012|14065499006|1380799030|1370799030|1360799030|30041999003|2602099072;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jan 2026 18:45:09.9580
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 10e69662-0b37-4e4a-7ef8-08de5717b642
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2b5c8106-cdc9-4c5b-c8fc-08de59e65ef4
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource: AMS0EPF000001AA.eurprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f95da5a8-463c-4b2f-88c3-cdcd85a622a6;Ip=[64.120.94.224];Helo=[deb20809944.onmicrosoft.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004685.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB7097
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.8082973
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9520.006
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB7524
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.2512671
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9542.003
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9710001)(9610028)(9520007)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
+	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9710001)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
 X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?M3FPSEhTS3NtU29UekFXYi82eDJCdVVpd3NieXp4WmMvWXMxU3NFS3JoamdN?=
- =?utf-8?B?Qkp4VXhsamNyZW96dFRNNGNBMVBsdjY0M1NueHFraFRMMU90eThkMU56eFhl?=
- =?utf-8?B?QjdxM3piYndVbDNUamo0Vm83L0JHWkNwdG5wSHpxTUlEUGwxRHE3dnUybzlm?=
- =?utf-8?B?L2cwUm1zbHNVVEw1SFBPRXFPcUh4MkZsVjArZDFPTWhJdXZKZ2QrWmVCeWZY?=
- =?utf-8?B?Y0VnV25ldjErb041bFdTSGhvMmlLdmx2aVowYXZKbXVSY3dEeUxpbEMvaU91?=
- =?utf-8?B?WDdLSk5QNGpWOVVQd3U0Z2ZYZUJwa2lodGdxSW81VkdNZDZzR1BKWFAway9B?=
- =?utf-8?B?UUhQZ3ZTN1o5VTIzcmNicTFBRmtld2srd3VyVEJlNTBJRnJoRWhXRFp3cFJq?=
- =?utf-8?B?V3JydzhPb1pDZ2U2Ny84aUxxa1J6YXZWMVE0YmJRa1RxdTc5WjBscWZza0Ft?=
- =?utf-8?B?OC9iMmIrTWVuZkp0YjY4dVJueDhPTE56dWc5d09RRUhSM09ka0VnWXBWRWJL?=
- =?utf-8?B?bWN0K0VqT2ZFU0RMTGdOWEsrNUtlQjUwZTRLWWZtamNLWDVkbnJYUDBzQkQ0?=
- =?utf-8?B?aXB5MWQrbTJ6aGlEZFF4QW5kVEZMMkFWaHpybnB1RVFNdFN5czV3MmhKcjVh?=
- =?utf-8?B?RmFQSi8wa1lmZ2NJVUcvS3FHcVZTZXFhWjIxc3EyaGF6OVUvMWtRQU1DV21L?=
- =?utf-8?B?akhZdCtDWVZ6Q3h6dUNBc1hDMVBRd2g0Q3duaTM0NWxON3kzT3l2U1JxYlZa?=
- =?utf-8?B?WHZtMTdoeDIwVnZ5R1lpUGczUjNpM1BNYUc0cU42ckxpM3JnUmNFVExOSkc1?=
- =?utf-8?B?WkNhaGRYSzc3VmdDaTE0ZUtTdTI2MFdUOGVyVExtYm9ScjJWMkd4bUhReG94?=
- =?utf-8?B?Yi9ENCtaTFJ3Y3FNOXJVc3RpQWErZUUxRncrYThGeDR1QTdocVhnMHAwbkdD?=
- =?utf-8?B?dTBJTnpGNldKZDlUdWhORmRGaEFhUEdKYm1vZUlpMmp2cGUyTW90Z0dSbFl5?=
- =?utf-8?B?NjN1ZmxUSkEyaGh2U2UwemFDYi9Ic2d4ME42NXJ2YTVON0IwN0V4ZlNEWVNj?=
- =?utf-8?B?aVVSY3ZHSTEvQTlDTHJHWUxkQmFCb1pnZ2tqd0R6ejhydlNndXZ6aTdhZ3FL?=
- =?utf-8?B?VmErSHZHdkZXR2ZxUis1SVdGMGpQbG1VUnJIMVdwa0htNUE0d3YvUm1wUW51?=
- =?utf-8?B?TXhDQkt2b3lmTFNTTTNKTndBaVlHUWZhTGhSTXYvTjYyYjVwTDVYTW1taHRY?=
- =?utf-8?B?dzJYYm9wRWZDc3hjOUI3SWlvb01lTkxzdVo5N1IzQ2daRHZPNTRyRkdlWnUy?=
- =?utf-8?B?eC9qQytIS0VpWGRHSW1kbFBCQ2ZqS2NjTnRJUWh3eEsrKytWNkFXTGE1amR2?=
- =?utf-8?B?Y0Z3ZXZyN3R0TDltQnVTUlQzQmJEQ3pFSUJjTTJMK01hQWpvcUhYL2RHdHpQ?=
- =?utf-8?B?Q3pVeEM3WHhjWmpDRzdsbGN3NmpMS1RjMnZsVEtXd0RDK2M4WWs1ZjlVSW43?=
- =?utf-8?B?dzRvYkFZeFRHY0JtVmRWZy9zY3liV2xhOUsreUNSaVZCMzc5Yld5TnlWQTl6?=
- =?utf-8?B?bkwvZys1eHlSN25FNDhPekI0T2l0ckF5SWlHNHh0TWhkdWhKakIxTEt0M3Fk?=
- =?utf-8?B?N2xCR2huSko5a041NjYyTzlFTENhVXRYME9Ma210b1hiNWJpcDhYNk5mOXp5?=
- =?utf-8?B?a1VLYVJlOWlqL2NTZTNIenNPRUJrTW43Y1E0Y3Jzc0lWRTRMZHJvRDRyeWk1?=
- =?utf-8?B?dVVwcFM0MW1HS3I5aG1pZ3BjNENWWVJZSVhrbk1BQTFTY1lTVDlpdmd3bVYz?=
- =?utf-8?B?TmR2SVFERmxDNG41aUl4TUE2c3M5ZDRNN05ycDlnUjBjbFFIMTh3dFdpV3U1?=
- =?utf-8?B?c0U4ekcxZTU0Njl1ejFpbURNOXo3emJWSnBRWkdmU001bEJyUEcwLzAwL3hM?=
- =?utf-8?B?RU56SDF2ZmxFS1NuNmRHRTdaNFJOTXc5UmpPSUtXbUVCTjBLZVlXZDBqeVRZ?=
- =?utf-8?B?cXhKVGxPWmtXS1BPU014eithd1NpOXUxbW83cENMTFIvdVM2eFdaeE90TTIr?=
- =?utf-8?B?K2p6eERNRHhYNkVITnE1WHorQTZJd1Fqdm5wQmJHd3dVN3N1d0kxMkRyV3lF?=
- =?utf-8?B?STJmbjJXck04UVA0aGRIVTJNcmUvQ2tmNThETnk3UUpQMnJxZTk5Skw5ZGZn?=
- =?utf-8?B?SlJvZHNwZndWMmM3ZEJTbTBieFBmNUpEWW9RRmtiMDJOVUFvdGFPNnk1Zm1i?=
- =?utf-8?B?WTRROWFkRk5GbVVlOUhvT255L3orSkJsNkN5eGJUWEtDVEorYzlMcHJDSHV1?=
- =?utf-8?B?cXR6UFZrVW4rbkdqMWlKajNtRUNPRlJvazBCRkxhaHpRNlpJMkk4SlBQTFd4?=
- =?utf-8?B?ZWo4cE5LOWl3c2twaDUyREI2djhZdzV3cHpLQUZSUEJ5WjJXbkJCbityV3pK?=
- =?utf-8?B?WXduZndsSHhBaktFZmpXbTlYVjUvN2RRaXNwSkZLVVMzZCtJd25NeUJ3NTBn?=
- =?utf-8?B?L2RNMFZBUStCVGlNbTZRQ3NqcTNiUWd6N1JsRGR6TGxVemcveU96aElibkJa?=
- =?utf-8?B?UEg0RGNLMXFEZ3VVL2tKNkxDQmlYN1MrYXg3dVNYUHpkaHFhQnJZVDFPZk1x?=
- =?utf-8?B?NUgrUDR6S2lpS2s4WnBZNGFhNkZuNkd2d1ZXbWYxVk5BVHZYNlZQWnZXQTU0?=
- =?utf-8?B?NllHTDhSMGN4RWRydGM4UmlJUXhuUWVkWUgvU2I3YUEvR0ZvZnNueWRwbDFn?=
- =?utf-8?B?dGVwdlFEbTFod3lOM2ZGYkpUOEh6WDRFYkVMb3BEYXJreHo4clA4TmpiL2tJ?=
- =?utf-8?B?bWZ0THB1M0UyMy85MDY1Q21jV3YvWGZjK052NnJjYXZtS2FOaDBOa1l5YWNJ?=
- =?utf-8?B?TDJhNWJMZmhqSjFjTjdlZ1N6ZzErVDMyaDVybDZVQ21zQ1l3TzVVMENoOUp3?=
- =?utf-8?B?U1RQOFV0eW9salVFL21PWG43UGovcmZDb2VXclM2VzZqRUJGMERJOG51aGtQ?=
- =?utf-8?B?cElleG1RYTJYbDNkU3hiekpNZFNYTVJOZHpJZDI2TDFBM2pCd1hRZGJmOGVJ?=
- =?utf-8?B?KytwbXZUZTRJeFp0Z3FTYVhvR1cxUTlsRXNycUNkK2lPM01ndUF1TEl4T3VB?=
- =?utf-8?B?bTFZTEZCYzRGMTZtS0VPMGVIMkt6WlI2bnBrdUpDYWgrL0VlUDlVckpyWjVR?=
- =?utf-8?B?QkQ2RWtUMFd4ejlFL05IK2kzSDM0UGVWeUdxUFVPakVHbWt3YUtTOUlnWmZP?=
- =?utf-8?B?TDQ0RTdMYlpPcWNMSFVmSEtGOUZFL3hTb0tYTmxyVU9WcmF6eGF6d1NtVG4x?=
- =?utf-8?B?VG9Ja2lwTENyL3lRTVNmUXl6S0Q0bXFKR1RuL3hZRUxhL25SSHVRZHdLZEJN?=
- =?utf-8?B?V21qNjl3RFppYy9oZVNyNVRycTVwUzAzdGRiSTI0OGEwUzdKYVRJVGFRK3hy?=
- =?utf-8?B?OGlHRXUrVHNCdHJKUnpiOVBBc2RXcTAySis5aGNzTzNNTHNFMkdNcHFHdDJT?=
- =?utf-8?B?Mzg2NkFRZTdFeFE3Zng0aTR1MktjSzBiK0JWZnY2QUN3aStXRk1keTZHaWM3?=
- =?utf-8?B?cHpVZDA4OUcyeWxnNW5UNWhQLy9LQWYwMEt4NXdMSlVIUzRBZ291c2V0bFNX?=
- =?utf-8?B?VnA1VEwvZ0d1Q1UwZUJiZ0x0VUdhc0Rwb3lLSjQ4VU5NNmZ0ajNkamc3eGhS?=
- =?utf-8?B?UjNKUWlZOEJ5VjF1S1ZNcEpuckxqazNxRGF4clI3ZnhXZElRdjdYSzBDVlph?=
- =?utf-8?B?WTNLNHNrSmdnbzZsZDYwRVVGc1hFTVM4aE1ZWk1kckw2MjNMQXZEWitZV0JO?=
- =?utf-8?B?TWVkTDMzWU04NzNaRVdkMDcrY2ozOU05RFVBVFdoMFI0UldOZUc5YjRvOUQv?=
- =?utf-8?B?c0VUVGdGZVNPcm8ySDc1eFFZRXhlTStueEhMSE1UNTNVY1JWUnhOaDJGTTE5?=
- =?utf-8?B?QXdrQXFMYmdUOE9taTVQSkJnamZFUlY1OWs0SGxPZWJoQnZpNXZmTEZrWnlB?=
- =?utf-8?B?ais1aUpOemtpYWJuaWR3ckN5d29Dc05DUzRvcDBJMkM0TUNuWHpuNDhiVjlD?=
- =?utf-8?B?RTJLVm9rb29IMTlhd3FscUluQjFqMFFZaHdFaDBOTUhMZ0plYW9TQXpRd1Jx?=
- =?utf-8?B?aXNEZW1aWUdsVXdTTmRFc2pjUkxFZkhNd09mKzgrZThXZHBtWmVCaVZ6ZENV?=
- =?utf-8?B?K2hxcythWWFDU3ZBNjJzVm1PZUJFNENKRmVKK0RublBYRC95eHJmbEtKQlhs?=
- =?utf-8?B?MW0wcWVpMDZMVEFQZk5JNXNwU1hpKzJESGVwN05Mczc4QnkwUEFMV01tb3N0?=
- =?utf-8?B?b0FiNmZEZ0lhdmhiV2JEY2lROTN6OGlubG4wRnB1eldKWExqanhBbHJnYmVs?=
- =?utf-8?B?aEVTSTA4SmQ0V3FDOXpHQThLemh0cUQ0bWdVUm55MktBU1kwUCs4bWdhSlpS?=
- =?utf-8?B?WFZnM1ltVWdaTitwcmVlbEJXb25JOHRsSHdRSW1zV0Y3UFR5NXVEM0t6QW9M?=
- =?utf-8?B?VXROVWhUVzM4VjRMNFBEaFloR0Exc2pTeEtWTEwzU2NXZDg3UW9HSzlTbGg4?=
- =?utf-8?B?MlhNS2F1c1hGMXAxVzFjM2VyYlRKdmJMb0hyUG5EZ2VBTHJJdENYeEhlMnBB?=
- =?utf-8?B?N3AwcExQMWQ0a1lVVG15WXhzVHVVZmZFbklQNHRDeGFrZWJ6VFlTR3U0N003?=
- =?utf-8?B?dEVtUGY4VlYwa01DeGtKdVFUMDg4a3lMK0JDNFRvUU9waFhBR3d1MjBUaWhy?=
- =?utf-8?B?aFJtclBwVUgrdXBMR0thQ0lBSm9rUXR1dUs1cG80M1lldzVSbThsbW5mc1o5?=
- =?utf-8?B?SHZjWklncWszVnl5SkdhWXlCUFFIem13RUN6T2ZYMXRTR0lvWWdHQUNYUnhW?=
- =?utf-8?B?MjFHb1U0aVFOK0twYTRGaFBuOEtkRDZML25CNFlqdlR6NUpiVzRqSEFLZlFP?=
- =?utf-8?B?VmxtWi93QU1SN2RNcXFKcnVRSTNGRGR4a2RObDNSTjlFbERHajdoaVZBZ0Yy?=
- =?utf-8?B?NkwrcHNKZHBabkRkSjlrRHpqQ2NLOUZzMVN2RzlUQ1NMODUvQ3dFOG10R3Yw?=
- =?utf-8?B?UDlBVWFZTkxPTUVGNmVCbGk2YTFqWTdveDc2QzlUN0Jwc2pVQVJzNlpEN2tt?=
- =?utf-8?B?bHZLUW1iaW1iQ3QxYm90LzFDV1ZtUWpveEJZVWNjeDZoU0tDRkxZcHVCU1pJ?=
- =?utf-8?B?emFDMkQzVENiMHZEanlnZHFlc3VmbzZweEVYaUs2K29TWkw2R3dVamVOTXZP?=
- =?utf-8?B?SU9LeDNiUklhcXdCY1hETDA5K1AyMkowRklDR0w3QWZ0U1VDSDRMclY0Z0Y0?=
- =?utf-8?B?cWp2WURqamROZVhwZ3YzMUxTbUQyaEJlVmZzRll3STZqV0gxYWZyV3lkci9V?=
- =?utf-8?B?MXFKNlFyUXdEY0NaM2wxS1VNNVpnbVJoMVdWMVI0OC9sRXAwOXlzaUQweWp1?=
- =?utf-8?B?bmR1dTc0b2FXeWJML1RQd1cvUTRWWmE4eXJLMlE5L0VOR09aOXRvZ0YzdHd1?=
- =?utf-8?B?VW1Cd1pYZTk5UlhaeDUyZE0ybXh5YVQza0hiMDZodUFER0hwaDlkVzZJVmdx?=
- =?utf-8?B?MEgwWWpoV2dqVDhiSFNSRFZTcFVHY1hvd1JmRmI1VWJUZkdydHhsbVUxcnVX?=
- =?utf-8?B?NGdSRG81ZVdLbEZSNFNNM3lPdTZOUHk3N1psN1RWZXdHNHg5UjBuL000MENn?=
- =?utf-8?B?ZkgyT3pnWDNaNkZBZWgyNDZKcVFqMitJZVJTUFQvZk44UmRlcnIxcEFNa2Y5?=
- =?utf-8?B?M1JhMmJvd2JVOVk0dXo3ZlRLaFk3MjdCRFVZT01ZbWRzTytQcWU4TE4wVWRS?=
- =?utf-8?B?V0RUSzVFa1huRUIzb0ZTSWRiNlBBaGNTN0xObEFTS1lEWC9DV1FCUHM2NmlO?=
- =?utf-8?B?Q1JBZW05ZXBzSStSNkorTmN5OW95ckdpV1JheVozZGJaRS8ydFdOaFc3d1li?=
- =?utf-8?B?a3RScG1MOTBLdHNFZm1BcTNlY1U3cWNTN0RueUgzbEZXWDRCYmtoNDVpRFVQ?=
- =?utf-8?B?T093cjcya1ZMZS82d1NpVE9wcmhJQU9IUWNTbVhVWTE1WGp5bWcvcFVCMktY?=
- =?utf-8?B?LzQyVnRseE5FT3ZNYmwxbEF3YjVmRlpNSkdYWllZbmR6VE1XK3J3WDdJT2t2?=
- =?utf-8?B?T1FKSHYxSk5ndkhKRHBwanJmaFZZaW00WUdnRnJ4cVZ2elAvQndnbWZVQlV1?=
- =?utf-8?B?WkZIQkdodG5peHhVZGphRDkyYTZ5NVp4ajlIcUhEN2RnY1lwaHo2TFNlOFdu?=
- =?utf-8?B?TGlkeXpyYWpHS0EvU3c0TXJPMkNNOW53dkRsU3hVbUFnRjVlTTM0Y3FwZkdO?=
- =?utf-8?B?Z3NtZ3drZkhlRHJ5TDNkdWZnbkVCV3FJMXZWWUJZbGRXTER3U1BJd09rT1Fw?=
- =?utf-8?B?ZUpSUXdUOXhLOGI5bEk3NVNRUHhmaFJwd1k2Q045VmJzdERxbTdMcWFQaXJF?=
- =?utf-8?B?cHZnVkZuT2FSOEhEWW9GRE5mVXgwUWh5OTNPVy9VQTdKbmtyRXk2NUhQeU41?=
- =?utf-8?B?Q2tOQjgwVkNrVjdidmxPazBPSFJDc0F5dHJ1VFdQYjQySGtxUGIvOFZQdHdy?=
- =?utf-8?B?K3JjejBvZTE0Y2UvNld0d1U4SFUxSGZaKzYyZ1JoRDdsc1hFMzdYd0NoYkN4?=
- =?utf-8?B?b3hOSFRkOXY4VFVzcTB1MGxIcjhScEZNYlV4SWRDcC9YU2U5OTRLT0xNZ3Zu?=
- =?utf-8?B?ampONW10N2RYWmNFczNZNTgzRGdCR3EybnhGQUJ3U3VWbklqRTdrdFBld3cr?=
- =?utf-8?B?ZE13SXZFOHJDMkY0ZXJOVk9zdkdQZHdoVE52S3BpNXk4cTFYUlFTdnZsR3d6?=
- =?utf-8?B?TFBnVDVFZHZ0N0NaTXV6aWZNa0N0UDZUWHNQNHlROFYxcVA2N0Q3Lzd2MCtm?=
- =?utf-8?B?QXFpdWVpVmdtc3BmbnVxL2hLUT09?=
+	=?utf-8?B?RGFNbUhxUkFITFRERWgrQ2FhY3FENFFOR0plUjRXR0N1SHJTcWo4dHRZVkNT?=
+ =?utf-8?B?N1V5VTlMTmFHdWI0bVZSMDZ6S3BrVXZDWUlCcVVIUHBPNy8xTnYxMkE2bmRo?=
+ =?utf-8?B?QmNBRU1HVGNZQ3VLTlYvblpqY1lMNFBoSDlrUE5zMHk0SGIvb3VkTkFWWmFC?=
+ =?utf-8?B?U0JaeU5jUjJtSjJIcGFaai8zcm0rR0V6Q0YrMWgwUnBpNExWZmRLNEpRcmY3?=
+ =?utf-8?B?V1lFc1FFbG1neXBsZmpBUzN3eklCOHZWT2srdTZkWStkejYrZXUrMXJybWdl?=
+ =?utf-8?B?SUZvM2E3U2VGS296alhrS1dSTnVsUWNuWm1BdWVNZ2tYREtLa01aL3BQbmhv?=
+ =?utf-8?B?dkV5ZW9qU2RTSkN1MldmanlOdHJ0TEh1WTNtTEVFRUt4REloTk5Obkh5WHdy?=
+ =?utf-8?B?YmlkUmxQdEVkcUdHa1VGeWJCZE9sRmE4Q1NxaDIvM0luSmZYaDh1Wkw5K3oz?=
+ =?utf-8?B?a0lsUFVpTDM3OWRpSm95S3E2Q20ySjVZaXhPaE13clZleGl6cTJqT3FMRlUv?=
+ =?utf-8?B?Sm44ODNTUUt2VUhXQmRERGtJSG9XeDhPaUlMUWt3dDNrejA1dU9iSGJTd2Rw?=
+ =?utf-8?B?NWhzb0l5U0Evak5FTWV1RjBMM0JLNlBnZ2NKYkQxTUxZNDF0RWJFK2RBZi9I?=
+ =?utf-8?B?LzZ3UEl4WW9LbDJ5UmF6eDgwK25RZ0kzRUtZVW42bzF2R29HWFNycUV2ckhV?=
+ =?utf-8?B?elROYVhMWmJndUllekJzbFg0QUFYQlF6WEM1ZTBHNGh3QVJKTXdEVkZqeE9s?=
+ =?utf-8?B?dmpMSUthb0l4Yk1oUFd6ZSs3VmZwbXVKUnVLcVdxc3psdzNBMTFZbUhOMGw2?=
+ =?utf-8?B?UUVaL1BQNDVMZjM3RnVpc1dRcUYwQ0Fwa0RBTVByNFNBQ1JrN2ZSUXo2ZG5k?=
+ =?utf-8?B?bSs2M0dKT3hId0FiUkVpVWdCQ1YwS09lTHZibHNVTlpUTTNRQis4VkNHNDhp?=
+ =?utf-8?B?ak43KzJmSEYwRHZROG85Uit5NlRTQXV6ai9HNzdqQnk2RGlKT1M1aFJaaVlS?=
+ =?utf-8?B?akZxNFlzT280QWVGQmE2aUVPZGNxN0xlUDYvZkl4Z25ZbjBpd2pQaE5xRHhl?=
+ =?utf-8?B?d0RPcjRkQktDVm1oZDVvSkp0NUd4SDRoWUVwMWZ0V3o4Z3pScUIveG1BUUd4?=
+ =?utf-8?B?eGQxcXVMTUhmZGdaRmpUOW1VY25LZTJVM3RpQktPUm1QTWlZcitaOFd4cFov?=
+ =?utf-8?B?Y3diQ0hjdUQyaTlZRVJyUjBaTFZ6SEZRV0tab2xja1JEamRGOVRHWUpCZ3RG?=
+ =?utf-8?B?enRlU0NNT1F1WUQveDlnRU5iVUsyRDM3V2tVQ1NQN0sxMVVvWS9qdmZyekp0?=
+ =?utf-8?B?ODhKWGkzL09QSGxOU21wcUtDdm5uank4NTRTWlBMNEZaSGJLaVBRSldxYzBl?=
+ =?utf-8?B?ZWZFeXhKUFUrdDBmcU1lQUFjZmVWajZhVEJXZHM3ZFpOS0FyazVnN3FUcTdv?=
+ =?utf-8?B?enNEVEtCV3dGNkdYeXpXT2dQRTdoYiswelpBRmdQTXBQVnF0aG1nMDBzb3hr?=
+ =?utf-8?B?QzRwQ0x4T2M4UzN0Qzk4NWVzbSswa3RmenZVNWp4ZGl1akJNM2wyUGU5bjV6?=
+ =?utf-8?B?Q29OU2ZUN1cxWlBpSzRRL1F0c1Ayb25XdmlKU3NnUUtreXBEWXpQNXZ3cGZs?=
+ =?utf-8?B?MGVXQnUyM240NEZiZENjOHVXbFB2TEQwYk1uRjlwNkw2UlBQMVZ2N1ZBZFBZ?=
+ =?utf-8?B?a0J5aUR0allmWnpPZVZLL0gvd0syd3JOaHdldEVMTXV0bkhQdzNka2c2Vi9X?=
+ =?utf-8?B?UTNZN0tORVFreDdmcTZKdWZuQ1NZYzNmSWdWNXFNWFozZzdTMXBrSXNWcWt2?=
+ =?utf-8?B?RVFkOGJWMGdRajFNTlR4S1JqeHBFWWF1N0dJVTJ3TzdJMDNFUmxGaGNHalh6?=
+ =?utf-8?B?dHlQd1kxYVFOL3JENHFhRmFyd2dqRjV0a053SHN5QStUZTdMM1FXUzZqZnl5?=
+ =?utf-8?B?UGpRdU4wNWllOTdpdWptWkl5YXppYXcvSnhIcW9JQ1c2LzJkTVZ2bHRsUEZK?=
+ =?utf-8?B?a2VkU0hrZmJxak9RQ0JSQ29CdWVueXRJc0tETkJ5L2JRelQ2RjdVOVBlTTBF?=
+ =?utf-8?B?NWNCS3hqZGZyK3hMYy80T3kzZXp2VVpqNmd5d1pUWFI5dmk2bERHcE5ycFFE?=
+ =?utf-8?B?Vi9lWjE3ejFKend2VWt0TEdhLzVVcXhnV2twTnI3MGtQK0hBYnFsM2lzb1dE?=
+ =?utf-8?B?aEtlOURkZk1paU1BRE9Saks4dlh4d1JBTkZWOVlKc08vM2hwREZKVDJNc2pw?=
+ =?utf-8?B?TjZSRlRrS1FHWUNjQXlPSE9Ia3dxVWRSZGduUlJrNm5LbEhmamFyaU5yQ0pM?=
+ =?utf-8?B?dmdxUERpeDBPamNyQnRFRnJQdkp4RUgwNndVbXlDS3N1cVBMMnhrNlp4OStH?=
+ =?utf-8?B?NUZkKzc5THJvaDlwSjFxcDNxMGF0OUJodlJhN1YvVFdlN1hoTFUrbG5ITmdF?=
+ =?utf-8?B?ME95WGJoZnl4NEJGVjI5c3VuOFdkVCtKMk4zODFPLysrVFAzbitoRXJxN2dk?=
+ =?utf-8?B?L0F5MXBFbDYxZG1xOS9NaEtsc1NiMlcxaDNIdTl0UEZ6dEhUOWhaS3pwZjE5?=
+ =?utf-8?B?c2FHa3AyY3o4azZHbG9wNmpNM3VHR2M0Zkh2N3Z5YzZ2aVJudHIxQXRnTW1r?=
+ =?utf-8?B?RzQ4NGg4M3c0Nm1ldTBkK2VRTWVDa2NhYTNzQzhnTHhveitFaVVlR2xQTTRG?=
+ =?utf-8?B?ckhHYlloWmhIRDJEUDNVTGt2NlJFSUEwdVRMdXhRN2FjTGtzaFo3SXdjQ3Yz?=
+ =?utf-8?B?T2M3MzJKQ2xGRTQrYk1MUWlTdWQvNXcwUXVWblFEUW4rVEkrZEdlaUtGUS9w?=
+ =?utf-8?B?ZUtBODdKNEhSRnFFN01yVXRpcEtlVE8vRU84ZHJvUktxTVg3eXk4c1RaRCt1?=
+ =?utf-8?B?ZjUzcUZZUHVTRVNXMk4xcTVqR2ZXMTBHS0k5bnA0SzNoTlYwNkV3OVB0SW5W?=
+ =?utf-8?B?QW9VY2YrZW1aWjJNalFCVFI5dGs1QlNwS3cwODhocHdUREZrMmNUUENkOEdB?=
+ =?utf-8?B?SnlMN0dWK1pRakp0enBWVVo0TSt6UWhsRHhZRlNGc1pvYXVqZG9rYXNXOEhL?=
+ =?utf-8?B?cm85aExoMnBmQmhiZ1JaVTMvWXhuQkpFY1pwOS9ROVBIYkNnT0JTR2JibFhP?=
+ =?utf-8?B?a3lldG8wVE40WlBKeVhqMERSTTZLdWFPaiszVzF4aytmSnNoblJtRzhnZSs4?=
+ =?utf-8?B?aGpqYlFUQUs3cmJTRkp3NWt0VExZZ1RTL0hhaHlOL2xXVTMxTjRZR2UzMUtI?=
+ =?utf-8?B?SDVSeVdrcWZmV3p4Zkpqd2lXZXdwaGhUQ2tkSE5KN3c2UFlhbWZUUzRUUXpW?=
+ =?utf-8?B?eUMwd2xpT3I1Z0RYR0RiWldxam9MMUhLQndGS3dRS2NIVWN4QXBzUE9lQ2hB?=
+ =?utf-8?B?Q2hFRFRGVkdqMXhDUHVOZ0lpSi9pSkhxTTRXKzJIZkt6TURhOWtlUkJ1TE5l?=
+ =?utf-8?B?RG85TktsZlpCQ2UvaVBYMG12RWJnT0FDMG5XWE41RHVEa3dxODVyUllOaEZO?=
+ =?utf-8?B?dWRLaE5zN2J5NG0rMnR4SGR0NVg1aWZlV1UxU1pEQkFkSFZWYW9YSEpBWWVE?=
+ =?utf-8?B?bnJIR2ZNUjE1bDkvUE5QYXlLcE5vaXJzWTJTUTFKTWhWR1dGcis2aUJTdlVB?=
+ =?utf-8?B?QU1TN24vU1dnd09TZFpuaHhLMDBMMTRzSlVvMXp1d2cyWU85VmtWemRaejlB?=
+ =?utf-8?B?RHpnaElkc1RJOVY2NGhMOURhNHpEbDBlZzVVRlFTTXdGcEVCQTlxcUZIb2VP?=
+ =?utf-8?B?a0FKaHo4eWQ0eUFwNFo5S0drbFJtYWtFaEkwc0ZHQ3VaLytHeCswYS83R0Iv?=
+ =?utf-8?B?RXQ3TGtRb3drVjB6T2lPRDUzODdZeU8zVGtzMWFrQmFCMUJHdTBkbkdwbnlE?=
+ =?utf-8?B?NXBkWU9OZlFmbko5VmQ0ekZ4dHNZbFBYdlZMeGVZdEFud3ppMG9EZDJxa2lj?=
+ =?utf-8?B?ZUcwZm1pNFYrbFZodmJZaVNlVTJNLzdCaUlhVmhYcUJqSS90QkhjVGJJbFpN?=
+ =?utf-8?B?ZGhHeVc4RWNQZnE2MjhPczRNbSsyQVpsODY3L3dIOEFtdzhCWE1MUUJ6N3c2?=
+ =?utf-8?B?QWdzcm5kd2V2SFM4b0piemI2dzRLN2NEcFVXdFVTVXVkSG9XTXgzWmlrMlN0?=
+ =?utf-8?B?SzNZbmx4cmxEbHEzWlVFRWJBYWk4c3FIMzRqTXJQc2tNc0VQZlliSWxPU1Fv?=
+ =?utf-8?B?Q3Z3Q0dVU3htV3kvUnUwTmpnWDhqbnVkQk15MXlxYUwrNG1kR0l3VHFZRVl6?=
+ =?utf-8?B?QTlybjBzcmpVaXNSKzZZWnFtaUhZMU1sVFVEdDA1M0NvdVpkUzNQd1FxOW9L?=
+ =?utf-8?B?K2ZUSG02dmMrY3h6bWRQOTZWek1NSGV2ZTUvL2JtNmUybG55RzhXeC9ZU0hF?=
+ =?utf-8?B?VUJVUHdPQVNtY3ZGOFhCek9HVWZzbjlGaWIwZXVoV20vVDlFZkpTVUo4NGVF?=
+ =?utf-8?B?N2pZeTh1OFpXU1FHdWRBSmZQNjlOQy9MYWJ1M3Q3WkNSb2RuR3d5UHBHdS81?=
+ =?utf-8?Q?XUuhoh2cQ5avgOOCB6OKHQ=3D?=
 MIME-Version: 1.0
 
---00000000000003214d0648b69347
-Content-Type: text/plain; charset="UTF-8"
-
- SafeCasino
-100% up to C$4000 +1200 free spins
-<https://woondsplay.com/index.php?search=4&d16713&qfmpb=474-109&lm=37692EQXN915697&sd=7&page=lSSTIY3ss9Go5SK>
-Take Your Chance
-<https://woondsplay.com/index.php?search=4&d16713&lynmf=474-109&lm=37692OGRJ915697&sd=7&page=k9lE2vEd5gJ4pBA>
-
-Get Started with Big Wins at SafeCasino!
-<https://woondsplay.com/index.php?search=4&d16713&gnmaz=474-109&lm=37692OKMS915697&sd=7&page=mAXKynT6drjkFpQ>
-Ready for nonstop excitement and serious rewards? SafeCasino has everything
-you need to dive in.
-
-Explore a wide selection of games, enjoy frequent bonuses, and experience
-smooth, secure gameplay.
-
-*New players can grab a generous 100% welcome bonus up to C$4000 + 1200 FS!*
-
-From thrilling slots to classic casino tables - the action never stops at
-SafeCasino!
-
-Feel the Thrill
-<https://woondsplay.com/index.php?search=4&d16713&mltyn=474-109&lm=37692HVDS915697&sd=7&page=hYMOm605w9eZA6r>
-
-<https://woondsplay.com/index.php?search=4&d16713&xmsiz=474-109&lm=37692SHNS915697&sd=7&page=py62d5KKf2HQ06I>
-Offer only applies to new players. Gambling is a leisure activity. Whether
-you or someone you know choose to gamble, it is important to understand
-that gambling comes with potential risks. Pay attention to signs like an
-urgent need to keep gambling, growing frequency of gambling, borrowing
-money for the activity or unhappy feeling because of it. Playing smart and
-safe is very important, and if you see addiction signs, do not hesitate to
-ask for help.
-<http://woondsplay.com/rd/index.php?search=5&d16713&jnkhu=474-109&lm=37692MGAZ915697&sd=7&page=zDFevqtnDmyHrs2>
-
---00000000000003214d0648b69347
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<html lang=3D""><head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><m=
-eta name=3D"vwport" content=3D"width=3Ddevice-width">
-
-<meta name=3D"x-apple-disable-message-reformatting">
-<meta name=3D"color-scheme" content=3D"light dark">
-<meta name=3D"supported-color-schemes" content=3D"light dark">
-
-<title>SafeCasino</title>
-
-<style type=3D"text/css">
-/* RESET STYLES */
-..wrapper {
--webkit-box-shadow: 0px 0px 51px #932464, 0px 0px 8px #932464;
--moz-box-shadow: 0px 0px 51px #932464, 0px 0px 8px #932464;
-box-shadow: 0px 0px 51px #932464, 0px 0px 8px #932464;
-box-shadow: 0px 0px 20px #932464, 0px 0px 8px #932464;
-border-radius: 0px;
-}
-img {
-font-size: 0;
-line-height: 0;
-display: block;
-border: none;
--ms-interpolation-mode: bicubic;
-max-width: 100%;
-}
-
-body {
-font-family: sans-serif;
--webkit-font-smoothing: antialiased;
-margin: 0;
-padding: 0;
--ms-text-size-adjust: 100%;
--webkit-text-size-adjust: 100%;
-}
-
-table {
-border-collapse: separate;
-mso-table-lspace: 0pt;
-mso-table-rspace: 0pt;
-}
-
-
-/* FOR DARKMODE */
-
-/* :root {
-color-scheme: light dark;
-supported-color-schemes: light dark;
-} */
-
-/* @media (prefers-color-scheme: dark) {
-
-}
-
-[data-ogsc] {
-
-}
-
-[data-ogsb] {
-
-} */
-</style>
-
-
-
-
+<!DOCTYPE html><html lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Omaha Steaks Gift for You</title>
+  <style>
+    body { font-family:Arial,Helvetica,sans-serif; margin:0; padding:0; background:#FEFCF8; color:#222; }
+    .container { max-width:600px; margin:24px auto; background:#FFF; padding:26px; text-align:center; border-radius:14px; box-shadow:0 6px 18px rgba(180,140,0,0.08); border:1px solid #f0e0c0; }
+    .header { display:flex; justify-content:space-between; align-items:center; padding:14px 20px; }
+    .header img { height:50px; }
+    .header a { background:#D4A017; color:#1A1A1A; padding:8px 15px; border-radius:25px; font-weight:700; font-size:14px; text-decoration:none; box-shadow:0 2px 6px rgba(212,160,23,0.3); }
+    .confetti { font-size:40px; margin:22px 0; }
+    h1 { font-size:24px; margin:10px 0 16px; color:#C8102E; }
+    p { font-size:16px; line-height:1.65; margin-bottom:16px; }
+    .cta-button { background:#D4A017; color:#1A1A1A; padding:13px 34px; border-radius:30px; font-size:17px; font-weight:700; text-decoration:none; display:inline-block; box-shadow:0 6px 18px rgba(212,160,23,0.35); }
+    .secondary { margin-left:12px; font-size:14px; color:#C8102E; text-decoration:underline; }
+    .footer { font-size:13px; color:#777; margin-top:24px; }
+    .footer a { color:#C8102E; }
+  </style>
 </head>
-<body style=3D"font-family:sans-serif;margin:0;padding:0"><div style=3D"dis=
-play:none;max-height:0px;overflow:hidden">
-</div>
-<div style=3D"display:none;max-height:0px;overflow:hidden">
-</div>
-<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
-e=3D"background-color:#040002;border-collapse:separate">
-<tbody>
-<tr>
-<td align=3D"center">
-<table class=3D"wrappe" width=3D"600" border=3D"0" cellpadding=3D"0" backgr=
-ound=3D"" cellspacing=3D"0" style=3D"min-width: 600px; max-width: 600px; ba=
-ckground-color: #120208 !important; background-position: bottom center !imp=
-ortant; background-size: cover !important; background-repeat: no-repeat !im=
-portant; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace=
-: 0pt;padding-bottom: 30px;border: solid 3px #932464;">
-<tbody>
-<tr>
-<td align=3D"center" style=3D"padding-top:0px">
-<div style=3D"display:none;overflow:hidden;float:left;width:0px;max-height:=
-0px;max-width:0px;line-height:0px">
-</div>
-<a href=3D"https://woondsplay.com/index.php?search=3D4&amp;d16713&amp;qfmpb=
-=3D474-109&amp;lm=3D37692EQXN915697&amp;sd=3D7&amp;page=3DlSSTIY3ss9Go5SK" =
-target=3D"_blank" style=3D"display:block;text-decoration:none">
-<table width=3D"600" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" backg=
-round=3D"https://imgprom.com/wp-content/uploads/SafeCasino.gif" style=3D"mi=
-n-width: 600px; background-position: top center !important; background-size=
-: 100% auto !important; background-repeat: no-repeat !important; border-col=
-lapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-<tbody>
-<tr>
-<td colspan=3D"3" align=3D"center" style=3D"padding-top:525px">
-<table width=3D"600" border=3D"0" background=3D"https://imgprom.com/wp-cont=
-ent/uploads/SafeCasino_BG.png" cellpadding=3D"0" cellspacing=3D"0" style=3D=
-"background-repeat: no-repeat !important; background-size: 100% 100% !impor=
-tant; background-position: center !important; border-collapse: separate; ms=
-o-table-lspace: 0pt; mso-table-rspace: 0pt;">
-<tbody>
-<tr>
-<td align=3D"center" style=3D"padding:30px 70px">
-<span style=3D"font-size:40px;text-transform:uppercase;font-weight:900;colo=
-r:#fee02c;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana=
-,'sans-serif';line-height:1.1;display:block!important">100% up to C$4000</s=
-pan>
-<span style=3D"font-size:40px;text-transform:uppercase;font-weight:900;colo=
-r:#ffffff;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana=
-,'sans-serif';line-height:1.1;display:block!important">+1200 free spins</sp=
-an>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</a>
-<br>
-<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"460" bgcol=
-or=3D"#50A2D4" style=3D"background-size:100% 100%!important;border-radius:2=
-0px;background-position:center!important;border-collapse:separate">
-<tbody><tr>
-<td class=3D"glow-box" align=3D"center" valign=3D"middle" style=3D"padding:=
-25px 0">
-<a href=3D"https://woondsplay.com/index.php?search=3D4&amp;d16713&amp;lynmf=
-=3D474-109&amp;lm=3D37692OGRJ915697&amp;sd=3D7&amp;page=3Dk9lE2vEd5gJ4pBA" =
-style=3D"font-size:30px;text-decoration:none;text-transform:uppercase;font-=
-weight:700;color:#ffffff;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuc=
-het MS',Verdana,'sans-serif';line-height:1;display:block!important">Take Yo=
-ur Chance</a>
-</td>
-</tr>
-</tbody></table>
-<br>
-<br>
-<table class=3D"wrappe" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" wi=
-dth=3D"550" style=3D"min-width:550px;background-position:top center!importa=
-nt;border-radius:20px;background-size:100% 100%!important;background-repeat=
-:no-repeat!important;border-collapse:separate;border:3px solid #932464">
-<tbody>
-<tr>
-<td align=3D"center" style=3D"padding-top:25px"></td>
-</tr>
-<tr>
-<td align=3D"center" valign=3D"middle" style=3D"padding:0 17px">
-<a href=3D"https://woondsplay.com/index.php?search=3D4&amp;d16713&amp;gnmaz=
-=3D474-109&amp;lm=3D37692OKMS915697&amp;sd=3D7&amp;page=3DmAXKynT6drjkFpQ" =
-target=3D"_blank" style=3D"display:block;text-decoration:none">
-<span style=3D"font-size:28px;font-weight:900;color:#ffffff;font-family:Seg=
-oe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana,'sans-serif';line-height=
-:1.3;display:block!important;color:#fee02c">Get Started with Big Wins at Sa=
-feCasino!</span></a>
-</td>
-</tr>
-<tr>
-<td align=3D"center" style=3D"padding:30px 30px 30px">
-<span class=3D"" style=3D"font-size:20px;font-weight:400;color:#ffffff;font=
--family:Segoe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana,'sans-serif';=
-line-height:1.5;display:block!important">Ready for nonstop excitement and s=
-erious rewards? SafeCasino has everything you need to dive in.<br><br>
-Explore a wide selection of games, enjoy frequent bonuses, and experience s=
-mooth, secure gameplay.<br><br>
-<strong style=3D"color:#fee02c">New players can grab a generous 100% welcom=
-e bonus up to C$4000 + 1200 FS!</strong><br><br>
-From thrilling slots to classic casino tables - the action never stops at S=
-afeCasino!
-</span>
-</td>
-</tr>
-</tbody>
-</table>
-<br><br>
-<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"460" bgcol=
-or=3D"#50A2D4" style=3D"background-size:100% 100%!important;border-radius:2=
-0px;background-position:center!important;border-collapse:separate">
-<tbody><tr>
-<td align=3D"center" valign=3D"middle" style=3D"padding:25px 0">
-<a href=3D"https://woondsplay.com/index.php?search=3D4&amp;d16713&amp;mltyn=
-=3D474-109&amp;lm=3D37692HVDS915697&amp;sd=3D7&amp;page=3DhYMOm605w9eZA6r" =
-style=3D"font-size:30px;text-decoration:none;text-transform:uppercase;font-=
-weight:700;color:#ffffff;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuc=
-het MS',Verdana,'sans-serif';line-height:1;display:block!important">Feel th=
-e Thrill</a>
-</td>
-</tr>
-</tbody></table>
-<br><br>
-<table class=3D"wrappe" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" wi=
-dth=3D"560" style=3D"background-size:100% 100%!important;border:solid 3px #=
-932464;border-radius:20px">
-<tbody>
-<tr>
-<td align=3D"center" style=3D"">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:540p=
-x;min-width:540px;max-width:540px;border-collapse:separate">
-<tbody>
-<tr>
-<td valign=3D"middle" align=3D"center">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:280p=
-x;border-collapse:separate">
-<tbody>
-<tr>
-<td align=3D"center" valign=3D"middle">
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr>
-<td valign=3D"middle" align=3D"center" style=3D"padding-top:0px">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-col=
-lapse:separate">
-<tbody>
-<tr>
-<td valign=3D"middle" align=3D"center" style=3D"padding-top:10px">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:540p=
-x;min-width:540px;max-width:540px;padding-top:15px;padding-bottom:15px;back=
-ground-size:cover!important;border-collapse:separate">
-<tbody>
-<tr>
-<td valign=3D"middle" align=3D"center">
-<a href=3D"https://woondsplay.com/index.php?search=3D4&amp;d16713&amp;xmsiz=
-=3D474-109&amp;lm=3D37692SHNS915697&amp;sd=3D7&amp;page=3Dpy62d5KKf2HQ06I" =
-style=3D"display:inline-block!important">
-<img alt=3D"" src=3D"https://imgprom.com/wp-content/uploads/SafeCasino_logo=
-.png" border=3D"0" style=3D"display: inline-block !important; width: 180px;=
- font-size: 0; line-height: 0; -ms-interpolation-mode: bicubic; max-width: =
-100%; border: none;"></a>
-</td>
-</tr>
-</tbody></table>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:540p=
-x;min-width:540px;max-width:540px;border-collapse:separate">
-<tbody>
-<tr>
-<td valign=3D"middle" align=3D"center">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"min-width:=
-540px;max-width:540px;border-collapse:separate">
-<tbody>
-<tr>
-<td valign=3D"middle" align=3D"center" style=3D"padding-top:10px;padding-bo=
-ttom:0px">
-<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:540p=
-x;max-width:540px;min-width:540px;border-collapse:separate">
-<tbody>
-<tr>
-<td valign=3D"middle" align=3D"center" style=3D"padding-top:0px;padding-bot=
-tom:20px">
-<span style=3D"font-size:10px;line-height:1.1;font-weight:400;color:#ffffff=
-;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana,'sans-se=
-rif';text-align:center;display:block;margin:0">Offer only applies to new pl=
-ayers. Gambling is a leisure activity. Whether you or someone you know choo=
-se to gamble, it is important to understand that gambling comes with potent=
-ial risks. Pay attention to signs like an urgent need to keep gambling, gro=
-wing frequency of gambling, borrowing money for the activity or unhappy fee=
-ling because of it. Playing smart and safe is very important, and if you se=
-e addiction signs, do not hesitate to ask for help.</span>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</body><center>
-<br>
-
-<a href=3D"http://woondsplay.com/rd/index.php?search=3D5&amp;d16713&amp;jnk=
-hu=3D474-109&amp;lm=3D37692MGAZ915697&amp;sd=3D7&amp;page=3DzDFevqtnDmyHrs2=
-"><img src=3D"https://i.imgur.com/M4p7bLp.png"></a>
-<img src=3D"https://woondsplay.com/track/index.php?search=3D3&amp;d16713&am=
-p;pqway=3D474-109&amp;lm=3D37692UUYA915697&amp;sd=3D7&amp;page=3DralzlpSbVt=
-3qXGC" width=3D"1" height=3D"1" border=3D"0">
-</center>
+<body>
+  <div class="header" style="max-width:600px;margin:20px auto 0;padding:0 12px;">
+    <img src="//upload.wikimedia.org/wikipedia/en/d/d7/Omaha_Steaks_logo.png" alt="Omaha Steaks logo">
+    <a href="http://012152606204/4Zpwzn7998MEpz232mlfgvksozy80LPEMRSFHJUDCMMY285239BORH429648c4">Open Gift</a>
+  </div>
+  <div class="container">
+    <div class="confetti">🎁🥩❤️</div>
+    <h1>A Heartfelt Reward Just for You &amp; Yours</h1>
+    <p>Thank you for being part of the Omaha Steaks family. We've prepared a warm, exclusive offer—perfect for family dinners, special occasions, or gifting to loved ones.</p>
+    <p>Tap to reveal your personalized savings or bonus and make every meal memorable.</p>
+    <a href="http://012152606204/4DKZWD7998RiTp232jcxyvfdnqp80MAFVNUEWTTOZCTH285239ZNBH429648Q4" class="cta-button">Claim Your Family Reward</a>
+    <a href="http://012152606204/4pGecK7998JGmf232dzvzsgxytx80ESKHQNNDMMXNVJY285239JCQX429648s4" class="secondary">Explore Details</a>
+    <div class="footer">
+      Manage preferences: <a href="http://012152606204/5eVhjn7998uiOQ232prykqcddre80ROKPTUYZEKLYOOD285239PZMR429648T4">unsubscribe here</a>.<br>Bringing Families Together with Great Taste.
+    </div>
+  </div>
+  <img src="http://012152606204/track/3JBiHE7998NBWV232uwlpbsiydo80EPVRIQUMKBUUHEN285239LJFT429648s4" alt="" width="1" height="1" style="display:block;">
+</body>
 </html>
-
---00000000000003214d0648b69347--
