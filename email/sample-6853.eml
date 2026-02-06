@@ -1,0 +1,614 @@
+Received: from PH0PR10MB5731.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Sat, 24 Jan 2026 15:12:24
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=R7W5j/+1IgWTSH1AJGQfJBEHVgMd5/HjX0QOD8XXgzY1tp/6gWbb5x5ZRvGeyQ/V1RhhkqQue+6Oq9wJ3GrKG3h0iUckxuKpEJB/BY8VL87QnfLSL8mE03jyO4JUiSqHjgCu9F0d0m9tzgeYNuKgAkIzgt0vAIVJriGRgs4rb18pNv2opxPIJt192nZ8fU8hbDKGz5zXt0P/xKYVCDMYARk09yOZvBLN1KoRyM9UhwrtIlHTq40vxbmBie5BS5ZA/3FlajlB04A1iOtvZG+p0UuV+zyzVk+9Url48C0HY72olWEo9VEfAj+pfHyQWpD0P8BE1A/WbzRl1e9XRag6aQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SQfGMGmK7/IGSPS7zPZ10j/LjF8pxOjrzBHiu0o/X6U=;
+ b=jJKvTEWXstA4Tkbq2vnKlRWrKL9aJi43TvkeUdgSZzuUh5xFhvtmDToV+OnFtzJoyzhOZk4txtz0VW0vLdcbzTYSr4ITrsR/6rGXodHxnNqIv/w9Dji/dJMiGQElDMQaXxNZr7wVsBaJq/O1Zhek5KiJPtzBzsLulM/xYBqIdAiaOeYIGiqAvPeP5xSryl874iiVe+PdhT06l7I8qP900g8kLRBYgiKOp1vrjkNfCzK56MPdTyYahuoqXW3ZQ7FF+n+18wlBRAtdgBBlUbuZqpjwKNpuCLVYW4F7gCDxpC0r9V7yTvmxOGL1p0L4fplxDJ06n/YPXscZAk2BJM16IA==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=none (sender ip is
+ 74.125.224.68) smtp.rcpttodomain=hotmail.com smtp.mailfrom=shcms.org;
+ dmarc=none action=none header.from=shcms.org; dkim=pass (signature was
+ verified) header.d=shcms-org.20230601.gappssmtp.com; arc=pass (0 oda=0
+ ltdi=1)
+Received: from DUZPR01CA0251.eurprd01.prod.exchangelabs.com
+ (2603:10a6:10:4b5::23) by PH0PR10MB5731.namprd10.prod.outlook.com
+ (2603:10b6:510:149::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.12; Sat, 24 Jan
+ 2026 15:12:23 +0000
+Received: from DB3PEPF00008859.eurprd02.prod.outlook.com
+ (2603:10a6:10:4b5:cafe::b) by DUZPR01CA0251.outlook.office365.com
+ (2603:10a6:10:4b5::23) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.12 via Frontend Transport; Sat,
+ 24 Jan 2026 15:12:40 +0000
+Authentication-Results: spf=none (sender IP is 74.125.224.68)
+ smtp.mailfrom=shcms.org; dkim=pass (signature was verified)
+ header.d=shcms-org.20230601.gappssmtp.com;dmarc=none action=none
+ header.from=shcms.org;
+Received-SPF: None (protection.outlook.com: shcms.org does not designate
+ permitted sender hosts)
+Received: from mail-yx1-f68.google.com (74.125.224.68) by
+ DB3PEPF00008859.mail.protection.outlook.com (10.167.242.4) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9564.3
+ via Frontend Transport; Sat, 24 Jan 2026 15:12:21 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:2F66515AEEDE239DACFE1EBB52B16A682817C6B350A4E9F4672FEE5D35DDC4DB;UpperCasedChecksum:77E1D82146C2F82E39B6F31CDE613EF681237827D07BA4911B69DF386F30D74A;SizeAsReceived:4313;Count:20
+Received: by mail-yx1-f68.google.com with SMTP id 956f58d0204a3-64931bbf70cso2748570d50.0
+        for <phishing@pot>; Sat, 24 Jan 2026 07:12:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769267541; cv=none;
+        d=google.com; s=arc-20240605;
+        b=E46cW+2Rmt3PXZeHtKEm/2dMSu/D0mD9MKAlhreI0N9/9a1HAk2ou9S85Rpq9mvXLq
+         4+XDCdICQ19jFyt0NW7YplZT1LNauglHnHF3Rmo7EkRIPsrh5r2EOxm3tktxy6jCGUWY
+         agA/xI8btg7pv/r8O/YMmWgVLdR5jbYuaXAAwKzpaT9v9U6yu3OL9NE4rEfn2HCMDhZC
+         bigi41m9LrzoczkZU/WiY7jS3+lrHoBJ1qz+jYQeqNFKR+MjsQDwU7XX4epg9FCdEVgo
+         AUAwGjrnKdMDN+OO5UBjr2AnmpwvhUwcPKE+NJIfE7AQIg7gEawQtFmxX6cEdFrPHChQ
+         xjbw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:mime-version:from:dkim-signature;
+        bh=SQfGMGmK7/IGSPS7zPZ10j/LjF8pxOjrzBHiu0o/X6U=;
+        fh=VrTfz0XidPASn7FsQj739/CVZZukwSnZToehA0l5x04=;
+        b=H888Xp0cJA9xxd8bIYsz6n6RV6SIL5PpjD9MHri+mtvlBAj7lg9ZB1vj5+wIoStYxy
+         CvfJOhUMro5JkcRy+Mqk1rlJGdgx14XBwHK/0xOiKFyPCNPYIfrgXuPkrkhwNKWH/ZdE
+         4pRRcXPfdmw+7HYImlRCnjM626PGzH1fnJhO33g8crVY+IsTUqBMbJTBqIz73gJanxSZ
+         MnfUnXXpmCKrGikeqbtP+96uYlw6RcRcKY4gVX21iMpvmjccecbeLWGgXnitZ0+tWNVG
+         LX/fFX0M8WyKgg7kJyLMKjZjH5Xr63ArGIJN6SXZm6LhZaozh8Tn4OWQCASl99Oj/BKp
+         AcwQ==;
+        darn=hotmail.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=shcms-org.20230601.gappssmtp.com; s=20230601; t=1769267541; x=1769872341; darn=hotmail.com;
+        h=to:subject:message-id:date:mime-version:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=SQfGMGmK7/IGSPS7zPZ10j/LjF8pxOjrzBHiu0o/X6U=;
+        b=B6eNx+KvrumQuHIYJ6DHQg+Dk7f5kahBLfKdirKUV74F4Cjx3yj9N7X2LTTVqij1MQ
+         E3Tt3aI7NkFWV6mjK6EeqXw8ifWCqPtOxOSe4i8LzmYvOku0pfT9fPo6gJTy1QKmlTza
+         6T6AMNVyUYk9gdVkAgQ7BUlq6+iXhIKLYlS+fVL+2aIeBeuT30DuJ3tZkkXqrIIUPBd5
+         UWQMshEfiGe5CrVP4m4WdnwqHYY+pPT5SNJ3aWVL0GTFTmHQ2HyApcYg3LkaxrYovlxj
+         19C40R+I0OCIXD+bJxEvB+n1VkXEO7NS82I6Wk3s+ZskfR0vD/jt+cDX2h6BoidHnlUk
+         fKjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769267541; x=1769872341;
+        h=to:subject:message-id:date:mime-version:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SQfGMGmK7/IGSPS7zPZ10j/LjF8pxOjrzBHiu0o/X6U=;
+        b=Sqorz/wZq3uE+t3DfM+jN09j3eTGZYXUmqINOtasO25FF2T7GzTLzgEDETc2m5oerK
+         QNjgQ/vCk0g7vSi2iIGIkayfGeJDIkI5itiHYMdW9aWjDAGEGI0Fvevnh3jPodPr43NT
+         1CEbhZ5xnK4T/Epv5Y/JmZnTnbU5wUnzuZNC5P4pXydRoUW+jAmiqiB0vPs0o3e7Ah4X
+         eSFPxSEjf3I3JvHpoEX8F2WouHpVEALkxyh4JKWJkiRG4dubO7SHli71MZrtTyh7fXXi
+         ewXGnhIVorKwsNIzrJYveCoDL28F3HgUT730SX0N4i+qzpo6ci39UK8ubTf2j/wxz3i2
+         NOdA==
+X-Gm-Message-State: AOJu0Yx4z5EG7MHC+WlqA0x6ZcUlHICmJ3VO9FVE30qaIwXKAcDKVcvB
+	sk4qiDOxCsG2NfKYjhmSLE42IGHE+KMVKmhuALWYwdShx/Fi56wLkdDK/W/KZYjyQss4o7guLrM
+	UhncB8Wu1f61jZlul4pJ+6p8T2H2veDO2axV0zyXE4UFo+NjqQZ3w+HHB
+X-Gm-Gg: AZuq6aLtcF8PlXkdeV+GAdCutE1YytORpTwhCRK0Ma3abwm4WedIaf0ZYKTftLkIvZA
+	z9Xkim7G5sYmKvj4SvAzLLtY3c2Etj2u5ZTfg9hWMWJyDCQ6UfGL/PoaGkydSqoaf3UzFYZbMvM
+	JGJBvpp/eIqd+XRAFbhjtaWCRS9k/ioS8nZWLBOAB6wkY6Y+TnkE23UACVGynSQ6PDewuV7ubKd
+	CZGxlAvs+GyM1BPfqqGmOxE2IoS8GTVNLqXPw9eFhOQ/qZXJzg4gn/b6vFZZBTClZ+APxQ=
+X-Received: by 2002:a05:690c:48c2:b0:786:a774:e415 with SMTP id
+ 00721157ae682-794399be8cdmr107287867b3.56.1769267539773; Sat, 24 Jan 2026
+ 07:12:19 -0800 (PST)
+Received: from 77463558223 named unknown by gmailapi.google.com with HTTPREST;
+ Sun, 25 Jan 2026 00:12:18 +0900
+Received: from 77463558223 named unknown by gmailapi.google.com with HTTPREST;
+ Sun, 25 Jan 2026 00:12:18 +0900
+Return-Path: sam.lewis@shcms.org
+From: get your bonus <sam.lewis@shcms.org>
+Date: Sun, 25 Jan 2026 00:12:18 +0900
+X-Gm-Features: AZwV_QiwZTR9BcmcvEy15_EX7zvr3whZW7cttUZO48Hby-eiU96CUlliv-_YjvY
+Message-ID: <CAJiT7+5RDTY7mRT0zsQdnUZb=hCeNE4m2s4iWM5QL_uxXhpsag@mail.gmail.com>
+Subject: phishing@pot- Play Now with 200 FREE SPINS Welcome Bonus!
+To: phishing@pot
+Content-Type: multipart/alternative; boundary="0000000000003893a4064923b365"
+X-IncomingHeaderCount: 20
+X-MS-Exchange-Organization-ExpirationStartTime: 24 Jan 2026 15:12:21.8776
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 50831c61-9f9a-4642-e252-08de5b5af92b
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DB3PEPF00008859:EE_|PH0PR10MB5731:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource: DB3PEPF00008859.eurprd02.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 1/24/2026 2:54:25 PM
+X-MS-Office365-Filtering-Correlation-Id: 50831c61-9f9a-4642-e252-08de5b5af92b
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 74.125.224.68
+X-SID-PRA: SAM.LEWIS@SHCMS.ORG
+X-SID-Result: NONE
+X-MS-Exchange-Organization-SCL: 9
+X-Microsoft-Antispam: BCL:8;ARA:1444111002|21090799003|22090799003|84100799003|20103052909095|3025599003|9000799056|30140799006|32080799006|6100799021|31140799006|42200799015|1680799066|3151999006|9400799043|970799060|46080799006|41010799003|119000799006|56000799018|27045499008|22065499019|68400799013|1131999016|33080799003|461199028|18040799003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jan 2026 15:12:21.8555
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 50831c61-9f9a-4642-e252-08de5b5af92b
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: DB3PEPF00008859.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB5731
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.8702619
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9542.003
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9710001)(9610028)(9520007)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?U3ZQYy9yRnllSXJOenUraGdCNnFlTk9qeWx5V3lidFJaeUpPL0w3REE4TXpr?=
+ =?utf-8?B?RnJMNkExZDAxUFpsZzR2R3hPbDFnd1FxUnBVOXQ2Z0NFa0k0UFR1OGJhZEJn?=
+ =?utf-8?B?Qk9CVjI2cER6MktCMzUyV0VyL2NhcHlqaE1Na0FQWkV4aUhnNjExQWF2bEdO?=
+ =?utf-8?B?eEJoa2JFMVhyUnNoaU1lRDY2V0h5dTNGYTFDOHpmZFpIVjhRTzRhaTBSQ0VJ?=
+ =?utf-8?B?bzFhVFBXZWIxbVlxWHlvOXhmUTVpYlhqS0FsaHhkbWZzcndjLzN3MG5DWDlE?=
+ =?utf-8?B?emYrZmtuNUNnOXlsdDZhZ3NveEFQVkJMb0VkdjFWWEhKV0dRb2Rvd3RoVXBH?=
+ =?utf-8?B?RTI4UWF3eGxZYXRqMmtXMDNNNStSSlcyUW1kd0FVNVhDK1FwL0lPNWp6NmpB?=
+ =?utf-8?B?WlhHOFF2WDU4dnVrNk1iZ05kZW5qd21iQjRwSVcxNWtvS0hCMXVGbjd6alVE?=
+ =?utf-8?B?aC9lb1ZzZ0dibVZubjREWGE2OVVibWJmSWFEQkJtOE8xRVRETmhXVTk2SHNv?=
+ =?utf-8?B?MUU2UzByaCtnTE5BSlNrdXVVT1FnSmRXWE05T2lTWWRWdlpqRkdWTTlZRFo1?=
+ =?utf-8?B?MmRRaFd4anpOUktjRHpUalhxQ1VHbzNqTzRCYmNsK2pIQ054NFRoc0g0RGdk?=
+ =?utf-8?B?UlJDczRIUXNjSEM4M2lBOHU2RHltaHVXcGFWSnhaSHdCQzM4aFltQUk5VW15?=
+ =?utf-8?B?dEtGbm1uUTNWMGYxN0kwQUpRYkFTUHB3RCtKcmJlTExDc3h6VHFnTGw3dC9N?=
+ =?utf-8?B?M2d4ZWpjN0xTbi9kN1NCZDAzcllWU1hVL0x0RDRHWmtRcGZUV0pjeDBseG5H?=
+ =?utf-8?B?ZktZdGFXMHBhSmdZcDU5VVB3R1V4ZHRLYTAyUXNNbmhTV2FqQS9ONlBzWTA2?=
+ =?utf-8?B?Mjh0WE50QXJkeVBCUjJaY2ZsNTRIOGNmMHV2dWRuRnVQWEJKUjNENnFVQ2Vl?=
+ =?utf-8?B?TFRoTXhVMlZOdU1ROG9lVkI3V2pLZHNJVUdGYmxPdkdBTFYxRktpTWFrczJ4?=
+ =?utf-8?B?YTdVRzJkam5PdWlwc0RDSVRPMGZobHRuY253YUVuU0FyaDlOSWs1czV0akJ2?=
+ =?utf-8?B?MmhHOWZlaWFZVXdMbERyMG1jM0pHbHlsMjg3TzlxWGl3aFo3UkpBYUJGb045?=
+ =?utf-8?B?N1p1ZFNVTC9qK1pZS1YvWkh6VjBHcFArTEJyN0h4ZU9YSkZ1N0d6VGtzMTha?=
+ =?utf-8?B?OGprNjN2Z21QYXQxSHJzbzVwQmdJSnRpRG5vVDZQVGVGZTExc0xyOG1Yejk1?=
+ =?utf-8?B?Z0dsYzJHeWpqZS9aRlJjRjE3L0ZPaEJ3Z0s4SU84STIxeTRJQTVBNkFZd0NZ?=
+ =?utf-8?B?V2Z2M2dMcG9qUlF4d3JlYWVXMk9NVWMveklhZ01MMzVQN054ZndUdmdnaWIz?=
+ =?utf-8?B?OHNWVUlzVnJGOS9LeUMxSllKL21hRVVBNWV1UXFkanl4Q0NqOTY2U2lrcEwr?=
+ =?utf-8?B?dUlKNjRIRDBwRGZERHp2N2k2VC9aMGh3dnpSdXJxQUtQcFdYbzFBOERxY0lM?=
+ =?utf-8?B?VDVrRmpoYnhqVTViUmRyTVNwR2ZKeEorMFJDVmN5UXgwaVlWbVYrS1hZUk11?=
+ =?utf-8?B?NExKMUFJa2lKSThGNTk4VTdXcmNVd3NnVC9HTkVWNzJleDhxaEZ6R3J4YzJF?=
+ =?utf-8?B?YytJRElkV0VFWVhRTUtMcWRGSzdjMmZBMEVQeHJmK0pSclpnOE1MMlZQKy9u?=
+ =?utf-8?B?djE3VGZ2QzVmTG5YTWtrSVRkaUlFNkdwR21mc3BqcEhLa1VYVHQ2TGJ6dHNi?=
+ =?utf-8?B?M1cxWWZ5N0tXQ1FQV21MLzliai9BK2lNT3ZEdWlESUtWaFZYeWQyQ3p3cUlL?=
+ =?utf-8?B?ZEUyZXBNcjZ0NGZHa3UyV1ZSbXdQVVBHbEg3U3NWVkhuZnNHK0ROeG41NFpU?=
+ =?utf-8?B?a2sxTmNzMXhTeGk2eXlyTDdWVFlCSUNjT3BuVjdHMHh0SUVoRzdmSFQ1enBX?=
+ =?utf-8?B?cE9aeGZvWDdtYVk2Q1MyTm1takxrVUZ3cEwySWtGRDZJRHN0YzJaQnRpVG5G?=
+ =?utf-8?B?SmhuSUNHQWFqanFrWmVHM2czYmhhNExtUUVrZE9hL3pQcEozNUkyYjVjK2Y5?=
+ =?utf-8?B?a1ZPenN0NlVKamo5OWxyZVIrWVBXZnpZRm51YVh0SDBmT0ozdytqalc3a2VL?=
+ =?utf-8?B?V2ZFS2dyUXIzeFZrZnYyQmVmT0Y0M0lGTmpOS3ZkYm4zdHdRSVlXY3JNbVJ4?=
+ =?utf-8?B?bzE2WTh3QU1LbmNZdmRhRW5qNnBNNlUwVVRjM3llMTR2YlNTZ0RhVkdDMjZa?=
+ =?utf-8?B?QU92NW44OU1iK1cyRVVDL1d4UjdnaS9JcTNvRENSUVE2STkrcUEzdS9sRUxv?=
+ =?utf-8?B?OTJ2dzlYUUMyUUQ0L0x4TFVrUU9yOEpjK3JmdjYwbXNkdkk3WmRmMWdBaUxi?=
+ =?utf-8?B?eXc0bHdoaEpPL2JGTXZZUjQ3YkVGeXg2UXhxcTZBZXJFcnZ2eHRQUFdKNi9r?=
+ =?utf-8?B?UklnNjFBd0R5TTA5ZDRKWXYxQjdPUGs3dGNmczJiZUhNZmZpalhBQTZFYmlB?=
+ =?utf-8?B?d2JsSG1VKzBBekR5ekNaK3pGKzh3dHFMZVM4cUxYVzNBWmRPN3Y4Vkl5SG9k?=
+ =?utf-8?B?WUEzQzdIS0I4NC9PbVJLcHNpY0xpWllNcCt4MHpodEZ2YXBkeWlkN3Q3WTlo?=
+ =?utf-8?B?dW9qUzBSajdURFA2YXlBU2hpUXVqTnd6bVBhRnB0bXg2SERwRnNLVmNVcU5O?=
+ =?utf-8?B?b2M0Z2dzaTd4ZHVyY3Rab2FmSWtSMnFuYVJUVUJyenpyTzB1eXFsUDhOSU1N?=
+ =?utf-8?B?OW9zRWw0Tm1BL3JvcUI3OExHS2VLUU5ORG9GbXltL0UzTEU1ZDRhNUdOQmgx?=
+ =?utf-8?B?NWpSeGpCcW44NGRIekMvNzhMcWM0aDNFLzVRdmJXaVZCUjZBNGF3a2FWb3ln?=
+ =?utf-8?B?Znd4cnlJelZRUFIwU1k1M1podXFsRUdlVWo3Q1FHSkswQjBvUDI5eUU4RmpO?=
+ =?utf-8?B?YXFYeDczUXhLUkdtWDlBK3krKytUYkJjMDU5UVM0YXpWT1RKdmh5TGlxQUt3?=
+ =?utf-8?B?SGl0UG5sY250eUlQc3pqZnpLYXpnTmpYNER1aXk1SnRLekRLRTlTMUJiS04v?=
+ =?utf-8?B?RTNWZ0hrTFdoUzRsUENIWERMV0UrUU1WM1JKN0hkMWwzL3NFTnZaYnV4Y3c3?=
+ =?utf-8?B?V25zenNnWmhNNG5ucnJ3Z1pyYVBCUGZpS3dZWjhzRWNCQWphSURtSHJlQlNr?=
+ =?utf-8?B?dHovUFp2akw5YWt0Z0xDUUM0ZFV5bDZ5dHFMUVNBNHp0SlVYRlg4aEkwMVhs?=
+ =?utf-8?B?UmttU0cvZkxHNHQ0d3J6Qkh5WW9sNDNPSWZwckJkMnJoYnBWZlNDaWQ5a1Ux?=
+ =?utf-8?B?dXFmaWVCQVB5VEFnRXNOSTRNLzF5YzNyQnRyWG1jQjhyMWlPdVIvZzN1Z3hO?=
+ =?utf-8?B?NWllR2NhRmttaUJHRjFFa0EzQzF2ZlI5NFJIUS9TaGNRajhhYVVJVlFmYXEz?=
+ =?utf-8?B?SkVwbHFrWVZWZUlpYUxUaVJPWnVqc0lzWWxBc3hpMmZIakgxeHJneDh5QzBK?=
+ =?utf-8?B?OGh4UHlLL3FycHFUTGcrVVVjeTdoeFV4V0pCeFV0SnJVVURMUHZTUVlIcytR?=
+ =?utf-8?B?VVR2YUdOYk11UWZ3R0Y4SVJ6V0F3dGVqcHAyTVFjRzd3ZDdReTZJcldPUFdv?=
+ =?utf-8?B?VnlVd1ArdHFUdFFIdFBMNHcxWE02RjNuR01BanZMRzdDSWpseGVvaGpCRFhM?=
+ =?utf-8?B?K0JJTFIwazF6N2x0NS9oRHpXU3dqUVdLUEFVYkoyZXArdWU1aVRMVFdGRmNP?=
+ =?utf-8?B?cjRKVWFYc1RlNzdGUVFPQ3J1cDlSeU1WcTZsVHhENzZWNEo2aHJOd3UxMjdT?=
+ =?utf-8?B?bVdZWGgvdnZmaGZFOStBc3l1a0RuRkp2KzVwL3JGQ0hLOFN6WUVlcmN1VTB6?=
+ =?utf-8?B?MlhrRDRNRkpNeW1rNUNkSEJ1Q254QzZUYzdhTStzY1pMR21kQVlnbmVoOFVj?=
+ =?utf-8?B?V2drSnBxS2V5UHhzTzB0UHpqcWZRZDlTdnlITGhOQUlVR1RIWlpCbi96RWlS?=
+ =?utf-8?B?SHh2VUVxOHRNU213cGUrYSt1cVFZWFgyamFOVXJrRW82RTZMN1lGRk1VbmZa?=
+ =?utf-8?B?eC9yVkt0alRYV216cTlMNFgvZWo5a29USnR3dVM3Kzc5QTJ1VDA0b1R6Y0VM?=
+ =?utf-8?B?c1FyVkZ2bEZTWGtXajdJc3NMZGpiTWR6VDRsdnJ3c1lERURtS0V6cTZGWjNK?=
+ =?utf-8?B?ckVUZzlaUHZrTkJ4Sk5nT3l5OFVhdVd5bU9aVEdrcTFVeU05ZDdjaUJGdFEy?=
+ =?utf-8?B?YXZHMGdoNCtsUkZudGpLVk9YMjlNZVVUM250S09CbzZOVFFuZ3FVZkU5MUc4?=
+ =?utf-8?B?TmRsWEtJNjZYVUJjSnkxK0JERUpOckJnTTR2QTJ3bnBTMnpJMG9sYjU3TXdO?=
+ =?utf-8?B?VUh4WlBmNU5aclo5V2VMVEE4VHpQZVYydEtQYXc0cmJpb002clcwMHNRTFRy?=
+ =?utf-8?B?ODhRcm0xZXVGRzQ0QXhiK2JSblYrSFBKcXE4RGxzWjJVbk9jeU5LUkg0blQy?=
+ =?utf-8?B?QXVqMXFvZEtCWnUzSStVSXZORGlzd21KcTJqMDYxNzRCT0U4QkRqM0NHV3pu?=
+ =?utf-8?B?VXg5Yjl6M04wa1JpQ2pzSEJQUmJYd25JWXdsZ01pNlg3NXNWWUs4aExsditt?=
+ =?utf-8?B?MEIzL094TmNWemNCSUNBMW8wNDZhSU5IcGxZbFk4alMzalFsRC9kcFpYcnQ5?=
+ =?utf-8?B?SHY1eEhydkhET2tldndxaSttek9CYmVHMFJzY2F4VXd1U2lSYWR4TXo5OHFV?=
+ =?utf-8?B?QU1RazFPZUxFc2JuNzJUZXZlZFFmZ2dOMDhycGUwdWFJRDFqUTk3UGp4NGJI?=
+ =?utf-8?B?aFBYdVFmR3hFZ3J1bjlFQXk3ejV0KzhjWFFteWlPem1lYzVxQkdObzdZajJW?=
+ =?utf-8?B?U1dldDYzVG1vUnprQmJRZy9KWW1zUTBKTmx3N29qU24wVE5KSFJuSUU5Sy9S?=
+ =?utf-8?B?UjQ2ejNRUElpRHpJOGFPT0lHM0pydzlHY1BocEFYRnRBenNzWHdkdThzS0N4?=
+ =?utf-8?B?dW1XMXhQSGNQS1JvV2FvODI3MUpEUlJkR202RVN5d3g2M3VWN0dvcW5GSGdX?=
+ =?utf-8?B?UnNabTNNRlRNNEE0eWozSHMxdmVmbXRlSjFNQWZ6S0tMUFBKajNXck1YaTdS?=
+ =?utf-8?B?K1h3MFNDMzZYczRiRkJIc1B4dkRKMENsVnhUb1BxV0pObGlrdzl3QUZ6RGJl?=
+ =?utf-8?B?d3dmUjN5d3NzWThmWTRMeW9pZ3RsYkZjeVFGL3RkV0hheUdZV1U0ZzFIcnFt?=
+ =?utf-8?B?VTh0WDlLdVQyazJ6RzVaWk9xYURSNCt0b3RqeFdkbWJtQ21aVGp2MExNeG5o?=
+ =?utf-8?B?WHZJeFhwUU1TR3l5NXVoT2d1V3RTL0U5Qy9XcEQxbFhwRGRIcFNKaE5tWlQ2?=
+ =?utf-8?B?UllzanhUU3UwOTRJTWpnTS83UkgvVUNsd1hrOTNSMTA2NHphVUVGZjY3ZmxH?=
+ =?utf-8?B?UXRtZE8yTys2VElCalZPZmVkREdsNk05MWVaaGx5MFFFWm1vbCtVeGVhVGVB?=
+ =?utf-8?B?ZGwyc2tXU1h3YVRXNisyVFdIeTQ0ZGZzK0IvU3kxR3lyMWVxQ1AxQ2NNUEh0?=
+ =?utf-8?B?WnZWd2o0dVBsMWtiT2c3eTFuR2xZOG05VTN2SHlKWStQWFlpT1p4MWd5ZDFN?=
+ =?utf-8?B?dm1POXU1bzRrM1NRc0RtTVhwNkppbWQ2QTYzVFN2NFE0RlROeGRYZGV1c2hM?=
+ =?utf-8?B?c1NiWEFMdmdMdlJrMnV4NkRVRlg0ZVpNT1ZacVVLaEkrUmlqWmlOdHBFN2hD?=
+ =?utf-8?B?ekt3ek9nUElJOC9QdlFIc1pBQ2E1VEwrWlgzMFJGVTlNZUl6N2o2NjRVY3lQ?=
+ =?utf-8?B?ZENrV21ybHlQZXVONW1hbUNZVjBsS2RGZmZ1WWVHRGhlYkJSUXpLQUtjMk0w?=
+ =?utf-8?B?eU5JdUNwNGRyV2dCNGJWdXA2cGt0N3d3L0liU3llWjBXVCtRYUw3YlhpT2VY?=
+ =?utf-8?B?ZW5Yd2o4cm5sUE1iUGxjaXpXMXo2Wmh4UWxlV2lGWEZxUE9PblRGQkZrN1Jo?=
+ =?utf-8?B?VXdNYmxTZWxTU28zclplYmNMcHNDZjNVU2NDR0p2a1p2bjI2Si9ROFlJYmJI?=
+ =?utf-8?B?OEo1b1F6N3M1MEloVTNsOENrTklrYXNVelh4SXRTRDk1SVBhdGplaFZ2WktO?=
+ =?utf-8?B?dzFOZGJaM1l4eC9lSzJBSHhMNWFYNHNCT2pUTVRFQnBGbnpMa3pscHFKcHFn?=
+ =?utf-8?B?cE5DbHNmU0FjQkJWeFdzNk81WFhsYVNMUEFJUkdyOXYvNVp0eDgyR0U2a1VC?=
+ =?utf-8?B?MC82Mjh4WkVLZklkUXF2MDJFVFVjclFPdlkrblNYZGszTmlTdG1udkF3b2Mr?=
+ =?utf-8?B?VDJXZGZxRXZDeUlLWE90RHRIUlhOMU5URWpUbmp2cW9VQnlxYklseUJWdTgv?=
+ =?utf-8?B?cmFyNnBzOUFaUjV0NHFBV3U1VHZrWTFRcnNWTGp5Vkd1M3JKeWVIcjN0ZFpq?=
+ =?utf-8?B?eWxqRGVDcm43MWx1U094SHZ2U2xORXFhaS9jbG02S29wT0Q4UVJHRGhITXpU?=
+ =?utf-8?B?ei9xV0MxV2ZwK0hGNmlVQU43WTZkTTB1ZTFnUzdzcHVnPT0=?=
+MIME-Version: 1.0
+
+--0000000000003893a4064923b365
+Content-Type: text/plain; charset="UTF-8"
+
+ SkyCrown
+welcome pack C$7,500 B0NUS + 400 FS
+<https://canadianshopping.net/index.php?search=4&d16985&dmwxx=392-109&lm=37692WUWO928889&sd=5&page=BNfpx7I7SNwLC6b>
+Take Your Chance
+<https://canadianshopping.net/index.php?search=4&d16985&bmlcy=392-109&lm=37692UWRL928889&sd=5&page=qV76qU2vz7MWlKX>
+
+Welcome to SkyCrown, your place for royal fun and sky-high wins!
+<https://canadianshopping.net/index.php?search=4&d16985&eeisv=392-109&lm=37692ILQJ928889&sd=5&page=Hj9sErUcHAefAtM>
+Every day, right before you start playing, SkyCrown staff dusts off over
+7,000 slot games and prepares special bonuses for you to win more and
+bigger.
+
+And as soon as you complete your mission and get what you came for,
+SkyCrown personnel will immediately go to the vault where your winnings are
+stored and deliver them to you in no time.
+
+That's how SkyCrown works in a nutshell. Thousands of games, enticing
+promotions, fast withdrawals and best payment methods - all this and more
+await you at SkyCrown.
+
+*Too good to be true, but it is! Take your special offer of up to C$7,500 +
+400 FS and increase your profit!*
+
+Royal fun never stops here, and sky-high wins are always within reach!
+
+Make Your Move
+<https://canadianshopping.net/index.php?search=4&d16985&lgvqc=392-109&lm=37692AJTD928889&sd=5&page=dtXo32tX8ueupAL>
+
+<https://canadianshopping.net/index.php?search=4&d16985&knhaq=392-109&lm=37692MFLX928889&sd=5&page=chxymu3NvBtEiR3>
+Offer only applies to new players. Gambling is a leisure activity. Whether
+you or someone you know choose to gamble, it is important to understand
+that gambling comes with potential risks. Pay attention to signs like an
+urgent need to keep gambling, growing frequency of gambling, borrowing
+money for the activity or unhappy feeling because of it. Playing smart and
+safe is very important, and if you see addiction signs, do not hesitate to
+ask for help.
+
+
+
+
+
+
+
+<http://canadianshopping.net/rd/index.php?search=5&d16985&rmgwz=392-109&lm=37692XZHG928889&sd=5&page=RUvgNI3Pw3iEgPc>
+
+--0000000000003893a4064923b365
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html lang=3D""><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><m=
+eta name=3D"vwport" content=3D"width=3Ddevice-width">
+
+<meta name=3D"x-apple-disable-message-reformatting">
+<meta name=3D"color-scheme" content=3D"light dark">
+<meta name=3D"supported-color-schemes" content=3D"light dark">
+
+<title>SkyCrown</title>
+
+<style type=3D"text/css">
+/* RESET STYLES */
+..wrapper {
+-webkit-box-shadow: 0px 0px 51px #66dafe, 0px 0px 8px #66dafe;
+-moz-box-shadow: 0px 0px 51px #66dafe, 0px 0px 8px #66dafe;
+box-shadow: 0px 0px 51px #66dafe, 0px 0px 8px #66dafe;
+box-shadow: 0px 0px 20px #66dafe, 0px 0px 8px #66dafe;
+border-radius: 0px;
+}
+img {
+font-size: 0;
+line-height: 0;
+display: block;
+border: none;
+-ms-interpolation-mode: bicubic;
+max-width: 100%;
+}
+
+body {
+font-family: sans-serif;
+-webkit-font-smoothing: antialiased;
+margin: 0;
+padding: 0;
+-ms-text-size-adjust: 100%;
+-webkit-text-size-adjust: 100%;
+}
+
+table {
+border-collapse: separate;
+mso-table-lspace: 0pt;
+mso-table-rspace: 0pt;
+}
+
+
+/* FOR DARKMODE */
+
+/* :root {
+color-scheme: light dark;
+supported-color-schemes: light dark;
+} */
+
+/* @media (prefers-color-scheme: dark) {
+
+}
+
+[data-ogsc] {
+
+}
+
+[data-ogsb] {
+
+} */
+</style>
+
+
+
+
+</head>
+<body style=3D"font-family:sans-serif;margin:0;padding:0"><div style=3D"dis=
+play:none;max-height:0px;overflow:hidden">
+</div>
+<div style=3D"display:none;max-height:0px;overflow:hidden">
+</div>
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"background-color:#01000a;border-collapse:separate">
+<tbody>
+<tr>
+<td align=3D"center">
+<table class=3D"wrapper" width=3D"600" border=3D"0" cellpadding=3D"0" backg=
+round=3D"" cellspacing=3D"0" style=3D"min-width: 600px; max-width: 600px; b=
+ackground-color: #06011F !important; background-position: bottom center !im=
+portant; background-size: cover !important; background-repeat: no-repeat !i=
+mportant; border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspac=
+e: 0pt;padding-bottom: 30px;border: solid 3px #DFFCFC">
+<tbody>
+<tr>
+<td align=3D"center" style=3D"padding-top:0px">
+<div style=3D"display:none;overflow:hidden;float:left;width:0px;max-height:=
+0px;max-width:0px;line-height:0px">
+</div>
+<a href=3D"https://canadianshopping.net/index.php?search=3D4&amp;d16985&amp=
+;dmwxx=3D392-109&amp;lm=3D37692WUWO928889&amp;sd=3D5&amp;page=3DBNfpx7I7SNw=
+LC6b" target=3D"_blank" style=3D"display:block;text-decoration:none">
+<table width=3D"600" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" backg=
+round=3D"https://imgprom.com/wp-content/uploads/SkyCrown3.jpg" style=3D"min=
+-width: 600px; background-position: top center !important; background-size:=
+ 100% auto !important; background-repeat: no-repeat !important; border-coll=
+apse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+<tbody>
+<tr>
+<td colspan=3D"3" align=3D"center" style=3D"padding-top:525px">
+<table width=3D"600" border=3D"0" background=3D"https://imgprom.com/wp-cont=
+ent/uploads/SkyCrown_BG3.png" cellpadding=3D"0" cellspacing=3D"0" style=3D"=
+background-repeat: no-repeat !important; background-size: 100% 100% !import=
+ant; background-position: center !important; border-collapse: separate; mso=
+-table-lspace: 0pt; mso-table-rspace: 0pt;">
+<tbody>
+<tr>
+<td align=3D"center" style=3D"padding:30px 70px">
+<span style=3D"font-size:44px;text-transform:uppercase;font-weight:900;colo=
+r:#f75cf8;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana=
+,'sans-serif';line-height:1.1;display:block!important">welcome pack</span>
+<span style=3D"font-size:36px;text-transform:uppercase;font-weight:900;colo=
+r:#ffffff;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana=
+,'sans-serif';line-height:1.1;display:block!important">C$7,500 B0NUS + 400 =
+FS</span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</a>
+<br>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"460" bgcol=
+or=3D"#0365EE" style=3D"background-size:100% 100%!important;border-radius:2=
+0px;background-position:center!important;border-collapse:separate">
+<tbody><tr>
+<td align=3D"center" valign=3D"middle" style=3D"padding:25px 0">
+<a href=3D"https://canadianshopping.net/index.php?search=3D4&amp;d16985&amp=
+;bmlcy=3D392-109&amp;lm=3D37692UWRL928889&amp;sd=3D5&amp;page=3DqV76qU2vz7M=
+WlKX" style=3D"font-size:30px;text-decoration:none;text-transform:uppercase=
+;font-weight:700;color:#ffffff;font-family:Segoe,'Segoe UI','DejaVu Sans','=
+Trebuchet MS',Verdana,'sans-serif';line-height:1;display:block!important">T=
+ake Your Chance</a>
+</td>
+</tr>
+</tbody></table>
+<br>
+<br>
+<table class=3D"wrapper" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" w=
+idth=3D"550" style=3D"min-width:550px;background-position:top center!import=
+ant;border-radius:20px;background-size:100% 100%!important;background-repea=
+t:no-repeat!important;border-collapse:separate;border:3px solid #dffcfc">
+<tbody>
+<tr>
+<td align=3D"center" style=3D"padding-top:25px"></td>
+</tr>
+<tr>
+<td align=3D"center" valign=3D"middle" style=3D"padding:0 17px">
+<a href=3D"https://canadianshopping.net/index.php?search=3D4&amp;d16985&amp=
+;eeisv=3D392-109&amp;lm=3D37692ILQJ928889&amp;sd=3D5&amp;page=3DHj9sErUcHAe=
+fAtM" target=3D"_blank" style=3D"display:block;text-decoration:none">
+<span style=3D"font-size:28px;font-weight:900;color:#ffffff;font-family:Seg=
+oe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana,'sans-serif';line-height=
+:1.3;display:block!important;color:#f75cf8">Welcome to SkyCrown, your place=
+ for royal fun and sky-high wins!</span></a>
+</td>
+</tr>
+<tr>
+<td align=3D"center" style=3D"padding:30px 30px 30px">
+<span class=3D"" style=3D"font-size:20px;font-weight:400;color:#ffffff;font=
+-family:Segoe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana,'sans-serif';=
+line-height:1.5;display:block!important">Every day, right before you start =
+playing, SkyCrown staff dusts off over 7,000 slot games and prepares specia=
+l bonuses for you to win more and bigger.<br><br>
+And as soon as you complete your mission and get what you came for, SkyCrow=
+n personnel will immediately go to the vault where your winnings are stored=
+ and deliver them to you in no time.<br><br>
+That's how SkyCrown works in a nutshell. Thousands of games, enticing promo=
+tions, fast withdrawals and best payment methods - all this and more await =
+you at SkyCrown.<br><br>
+<strong style=3D"color:#f75cf8">Too good to be true, but it is! Take your s=
+pecial offer of up to C$7,500 + 400 FS and increase your profit!</strong><b=
+r><br>
+Royal fun never stops here, and sky-high wins are always within reach!
+</span>
+</td>
+</tr>
+</tbody>
+</table>
+<br><br>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"460" bgcol=
+or=3D"#0365EE" style=3D"background-size:100% 100%!important;border-radius:2=
+0px;background-position:center!important;border-collapse:separate">
+<tbody><tr>
+<td align=3D"center" valign=3D"middle" style=3D"padding:25px 0">
+<a href=3D"https://canadianshopping.net/index.php?search=3D4&amp;d16985&amp=
+;lgvqc=3D392-109&amp;lm=3D37692AJTD928889&amp;sd=3D5&amp;page=3DdtXo32tX8ue=
+upAL" style=3D"font-size:30px;text-decoration:none;text-transform:uppercase=
+;font-weight:700;color:#ffffff;font-family:Segoe,'Segoe UI','DejaVu Sans','=
+Trebuchet MS',Verdana,'sans-serif';line-height:1;display:block!important">M=
+ake Your Move</a>
+</td>
+</tr>
+</tbody></table>
+<br><br>
+<table class=3D"wrapper" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" w=
+idth=3D"560" style=3D"background-size:100% 100%!important;border:solid 3px =
+#dffcfc;border-radius:20px">
+<tbody>
+<tr>
+<td align=3D"center" style=3D"">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:540p=
+x;min-width:540px;max-width:540px;border-collapse:separate">
+<tbody>
+<tr>
+<td valign=3D"middle" align=3D"center">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:280p=
+x;border-collapse:separate">
+<tbody>
+<tr>
+<td align=3D"center" valign=3D"middle">
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td valign=3D"middle" align=3D"center" style=3D"padding-top:0px">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-col=
+lapse:separate">
+<tbody>
+<tr>
+<td valign=3D"middle" align=3D"center" style=3D"padding-top:10px">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:540p=
+x;min-width:540px;max-width:540px;padding-top:15px;padding-bottom:15px;back=
+ground-size:cover!important;border-collapse:separate">
+<tbody>
+<tr>
+<td valign=3D"middle" align=3D"center">
+<a href=3D"https://canadianshopping.net/index.php?search=3D4&amp;d16985&amp=
+;knhaq=3D392-109&amp;lm=3D37692MFLX928889&amp;sd=3D5&amp;page=3Dchxymu3NvBt=
+EiR3" style=3D"display:inline-block!important">
+<img alt=3D"" src=3D"https://imgprom.com/wp-content/uploads/SkyCrown_logo.p=
+ng" border=3D"0" style=3D"display: inline-block !important; width: 220px; f=
+ont-size: 0; line-height: 0; -ms-interpolation-mode: bicubic; max-width: 10=
+0%; border: none;"></a>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:540p=
+x;min-width:540px;max-width:540px;border-collapse:separate">
+<tbody>
+<tr>
+<td valign=3D"middle" align=3D"center">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"min-width:=
+540px;max-width:540px;border-collapse:separate">
+<tbody>
+<tr>
+<td valign=3D"middle" align=3D"center" style=3D"padding-top:10px;padding-bo=
+ttom:0px">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"width:540p=
+x;max-width:540px;min-width:540px;border-collapse:separate">
+<tbody>
+<tr>
+<td valign=3D"middle" align=3D"center" style=3D"padding-top:0px;padding-bot=
+tom:20px">
+<span style=3D"font-size:11px;line-height:1.1;font-weight:400;color:#ffffff=
+;font-family:Segoe,'Segoe UI','DejaVu Sans','Trebuchet MS',Verdana,'sans-se=
+rif';text-align:center;display:block;margin:0">Offer only applies to new pl=
+ayers. Gambling is a leisure activity. Whether you or someone you know choo=
+se to gamble, it is important to understand that gambling comes with potent=
+ial risks. Pay attention to signs like an urgent need to keep gambling, gro=
+wing frequency of gambling, borrowing money for the activity or unhappy fee=
+ling because of it. Playing smart and safe is very important, and if you se=
+e addiction signs, do not hesitate to ask for help.</span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</body><center><br><br><br><br><br><br><br><br>
+
+<a href=3D"http://canadianshopping.net/rd/index.php?search=3D5&amp;d16985&a=
+mp;rmgwz=3D392-109&amp;lm=3D37692XZHG928889&amp;sd=3D5&amp;page=3DRUvgNI3Pw=
+3iEgPc"><img src=3D"https://i.imgur.com/M4p7bLp.png"></a>
+<img src=3D"http://canadianshopping.net/track/index.php?search=3D3&amp;d169=
+85&amp;gpmbm=3D392-109&amp;lm=3D37692KXBF928889&amp;sd=3D5&amp;page=3DONvaF=
+9NBN0JjZ3A" width=3D"1" height=3D"1" border=3D"0">
+</center>
+
+</html>
+
+--0000000000003893a4064923b365--
