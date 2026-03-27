@@ -1,0 +1,289 @@
+Received: from CY5PR10MB5940.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Thu, 19 Feb 2026 01:00:28
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=H3RneMrdi0GwR6zeaKl/pPHCbZOrZeQ+v9AuA3g8tkyEZZLy7M6gYNV4jXhTv3F6casRv8gXjC9XYZHZr3c1EjoKAGk2PmZtytwD2LSaQjkWNboJuHJPj/d4VpDRv0xI7z8cl59QW4fXtiaAIsNh4Y+98RsnUSLiJ+fu5NKiG+056URVNtp4t9Hjv6TDDZOID+nDpkq1AqX2W8F1cqR8E1V6Ju0JzkTYfvk95hM/m5F7kWTIZQ+nO6ajI9uWOC3ZGUXkfyBMag1kXVnToL18IShnfLqAhOw5I+zvO4T7Ni56Ncjf2zfWLfuQpNk3x2PfVf/FCGZ2OtFCXCcRM89gtA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=V5txQq/eEXNBi5vYwdfDmWTN5z58R+JSQQqgrcwoTSU=;
+ b=cjcOhN/xGmcQOimFsBVvyxlkRBAH0UiqHFNsELAk+NDDpdeu8oltZa05k/Zjy4wtIApaAfY7pEvvkl6fwefPfNvT6tcPCxrFf5ceQPPNbLKGViQulDx3aOk/Xn1G075CPmjiHequ5F8w1uqz00xRIkUqmQ+XR7GvnhoKPOmVVW1pT3G79XY+zMVR/zgEj8NfR7z7/yBvh6P8SjdQzvj1WwtXT6z768cC29KFaXG+jZjrimN0yZ9PCctJV5C8BX6/2OAFjK2jY4WX//ZCFvTJ12dVrqrK7kVKyUuZeQ2rWUTNG6/gADhrGEflIKdaEe+68xVDIS2dZshBxPMxqTNQmA==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.102.194.41) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=trunk.prismforgelab.com; dmarc=pass (p=none sp=none pct=100)
+ action=none header.from=trunk.prismforgelab.com; dkim=none (message not
+ signed); arc=fail (48)
+Received: from DS7PR05CA0023.namprd05.prod.outlook.com (2603:10b6:5:3b9::28)
+ by CY5PR10MB5940.namprd10.prod.outlook.com (2603:10b6:930:2b::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.13; Thu, 19 Feb
+ 2026 01:00:26 +0000
+Received: from CY4PEPF0000EDD4.namprd03.prod.outlook.com
+ (2603:10b6:5:3b9:cafe::69) by DS7PR05CA0023.outlook.office365.com
+ (2603:10b6:5:3b9::28) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.13 via Frontend Transport; Thu,
+ 19 Feb 2026 01:00:18 +0000
+Authentication-Results: spf=pass (sender IP is 52.102.194.41)
+ smtp.mailfrom=trunk.prismforgelab.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none
+ header.from=trunk.prismforgelab.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of trunk.prismforgelab.com
+ designates 52.102.194.41 as permitted sender)
+ receiver=protection.outlook.com; client-ip=52.102.194.41;
+ helo=OS8PR02CU002.outbound.protection.outlook.com; pr=C
+Received: from OS8PR02CU002.outbound.protection.outlook.com (52.102.194.41) by
+ CY4PEPF0000EDD4.mail.protection.outlook.com (10.167.241.200) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.12
+ via Frontend Transport; Thu, 19 Feb 2026 01:00:26 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:7E162FE4315E6171C2E1ADE6D0DFE68460D0C88E6DC0C7DEF331F0D435224AC0;UpperCasedChecksum:CCBEC3A922CB8914FEFC76EDAED12C71661528AE2DD87D27F76F2EFA2601FE3F;SizeAsReceived:9266;Count:37
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qWxTtAR7nKqG6EePFdPXYwc/lmOeTe2bZ+DatrJWMJS+aB9vKq5/l4luS86cu90uYWu03gzZ8f63H/2EjwfsZz0goPruox1UtW5ZvlAJ5Jq1j5jlYSWZxZD2IhsbvYX4pd/A6w/vJoD3uC+V0vAyp7GvqTE/RPo6LNBwAAgTKecirQgswGAw7Wv1kFZYQmN5Bt8o9GGPIH6C8SMossjweRfq1NYZ5q35vJnmp83mDa4bYd3ROgHdfFXBGISBCSk1FiLqx9uAROzpnwijUpk8n3pyBi0WSBs7oQfYtomOZgbcbe1+IfSPHtdKmdCtXOm06pslfrueAdk7G2MUVR9B0w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=V5txQq/eEXNBi5vYwdfDmWTN5z58R+JSQQqgrcwoTSU=;
+ b=Yl2XecrsciPCXsK0bgI3p4IZivaUMXRe47ZURz/sIdXmUZAemY2b8vICibpNSWVJCneRBH9PV8g/6bqWzHiw35jy8DaccfaFntRH4OAJyZcOCa5wASXC4UxqZ04FclFvjTXMqRLYInKTWjIINEAP3dPJ6lr6DoTGCjencvasQDt7e+pIQIZzakXN7l+sCM9VXdGx3Sa1GiecL6zGthEpEpAkkSUo1Z4XWhpFjWJRPCwimG99WZsMt0zYq0Q3JEXBArcxeKw1bojLsNSyFtvD3ZA1v3QOm9q6Fxu5BdBE7hbdSzxQTc6p0laNxfF9Td2vm3Kpvrod8YlOETmF+O7vZA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 184.107.178.48) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=trunk.prismforgelab.com; dmarc=fail (p=none sp=none pct=100)
+ action=none header.from=trunk.prismforgelab.com; dkim=none (message not
+ signed); arc=none (0)
+Received: from SI2PR01CA0016.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:191::20) by PUZPR01MB5433.apcprd01.prod.exchangelabs.com
+ (2603:1096:301:dd::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.15; Thu, 19 Feb
+ 2026 01:00:08 +0000
+Received: from SG2PEPF000B66CA.apcprd03.prod.outlook.com
+ (2603:1096:4:191:cafe::6) by SI2PR01CA0016.outlook.office365.com
+ (2603:1096:4:191::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.15 via Frontend Transport; Thu,
+ 19 Feb 2026 01:00:03 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 184.107.178.48)
+ smtp.mailfrom=trunk.prismforgelab.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=trunk.prismforgelab.com;
+Received-SPF: Fail (protection.outlook.com: domain of trunk.prismforgelab.com
+ does not designate 184.107.178.48 as permitted sender)
+ receiver=protection.outlook.com; client-ip=184.107.178.48;
+ helo=trunk.prismforgelab.com;
+Received: from trunk.prismforgelab.com (184.107.178.48) by
+ SG2PEPF000B66CA.mail.protection.outlook.com (10.167.240.22) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9632.12 via Frontend Transport; Thu, 19 Feb 2026 01:00:07 +0000
+From: "Sam’s Club Affiliate Deal" <GQVbcRBBd@trunk.prismforgelab.com>
+Date: Thu, 19 Feb 2026 00:40:13 +0000
+Content-Transfer-Encoding: 8bit
+Subject: Big Value: $30 Sam’s Cash with Membership
+To: <phishing@pot>
+Content-Type: text/html; charset="UTF-8"
+Message-ID: <fc477ef9-d9e9-4d43-9ec9-d599102d7d3d@SG2PEPF000B66CA.apcprd03.prod.outlook.com>
+Return-Path: ist1u9p59ov2@trunk.prismforgelab.com
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: SG2PEPF000B66CA:EE_|PUZPR01MB5433:EE_|CY4PEPF0000EDD4:EE_|CY5PR10MB5940:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: 12c55565-355a-4224-272a-08de6f5244ce
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|61400799027|7149299003|4022899009|82310400026|32650700017|3phishing@pot0700013|1032899013|69100299015|3109299003|7049299003|376014|13003099007|2066899003|4076899003|8096899003|54012099003;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?bzVMZE9qalRuZDVVL2o2T3phcFVUZTJSbXpJUllYa0h1bFE3azRnVS9tQXlv?=
+ =?utf-8?B?cnJsTjZKUGZqOTJiVHBPT29JRnN0ZG1PMk9QeVNYVzFueWYyWkNXaG1wK1VR?=
+ =?utf-8?B?LzBpazM3eDdMalRxZlNqUlFCY2s4MHpRRFQ1aDZGRDZMNGxWOGo4Y2hFK1Qy?=
+ =?utf-8?B?WkRZRVJhSFFSZnRBQ2N4dnE0cEFxSUdBa2lEK29pa2hCdFBIOW9UOVp0VS9J?=
+ =?utf-8?B?NXI1WTI3TjJPbmVjMmVlYzdOV2tTcWdWQTBSZ1ZjYTZvbG9Xb1YzTHVnZGFt?=
+ =?utf-8?B?TkRSY0FjdnJpUnNjamM2QzhjQUNna09mUUMvRTBJNkhTNUpFcjZhZW0wUDhG?=
+ =?utf-8?B?dzVmeW1ZaUVsV2p0ZC9vSnVNbXFZQkI1UHBSNjFwbWNKUnhmSmx6VnBCcnVu?=
+ =?utf-8?B?bUxOalBsaWpoeWNNQmtjUzc5V2FRbSs0bEpGWklHU296NHNsZ2RXZi8rS04y?=
+ =?utf-8?B?SnVwRjRic2tENVc4bkRJc21CREVGMXRrZ1pYdi85V2tUOFpDZWE4NUIwcWpp?=
+ =?utf-8?B?T2VhSVBLeHhSMXVsck1WdHpycUROc2VpVCtsSEY2cW13V3ZaM0pWb2t2WHVh?=
+ =?utf-8?B?S01WZTZNVHk2cnIyMGlzQ0NzQVRmUjNaajh6S21yUzBoWmNEQ0p5c3NKeHRn?=
+ =?utf-8?B?bkxBd3JxeU9WUFZQKzlhb3RITjFBUnB3ODh5aElkTzNsUjMzTzFFbVlsQ1p2?=
+ =?utf-8?B?YU5JQ3VRZVgrMDR0TDlMUmVqM0wxRW1CTFJoY0xvdXEvTmtZQzFVOWFIbkZt?=
+ =?utf-8?B?dEozWnpXbmc4dHl6dkcyL2FpY2JWWmdDOEpPcTNnbmdGZTdGRTJGNkoyZENv?=
+ =?utf-8?B?RlJkL3JzU2FHbDJVenE3eFlUQ1Z3clVNZ0RLcTA3V3RJM1lGV3YzNEZGd1VW?=
+ =?utf-8?B?Ni9CQ3pWVkcreENncmE3bU5kTGQ1TEV4RjlNYU93UE1XZFJKOUZibTU0Tmdr?=
+ =?utf-8?B?ZFVSbjAxZ25BTldEWVV3L0p3RVJXcS9NVHpsVE9Pc2JMckFkRlNyM3czT2xx?=
+ =?utf-8?B?cmp3dmRhaU5BczF6WFNvak5yMW5vZUxGWndzWWJaUnNGTVZoNjFMOGJYS05n?=
+ =?utf-8?B?MXNhOHJoWmErSElXTVVnNHFyUTlkRGhzdm9Od21HY0JUZXBFeC84T25qV1d6?=
+ =?utf-8?B?YjhPenpwT0JBcHFiVTdhTmtBV2ljYTg3ZTg1eUZuTmYvMGtRYU5vTkNPVHJK?=
+ =?utf-8?B?dENVb1VBWTJiOXN1QWIyMGR2WkZXSE9JMmt0cjgvY3JrSDh6SFRtRzR3RTlZ?=
+ =?utf-8?B?WWVjdklPc2dIUU5DeUV3c29hLzNtOGVHZlBvVzVmNG5EK2lNbTRCWUoyK2FW?=
+ =?utf-8?B?NlNUZlRLb3JzUlRjeDIyUjFxRVg1TVI2NmJsNVFVUS9UYWo2b3BUR3c4cHND?=
+ =?utf-8?B?S3dIOUZ5OTU1bUFUbVMvS1NNYTlKdld4NDV4YTNwTm44TGloMldXNzIyb0hy?=
+ =?utf-8?B?VGlPRVc4VmRKVEV5aXlDT1U5L1l4RVEwQk5RWkJadWZScEF5ankxQzFzcHhQ?=
+ =?utf-8?B?VnFPbXRLb1NsNGV4cEJLeWJNNlRla2MzOHp5T2xGa2lBd1ExTGdCU01NN09p?=
+ =?utf-8?B?ZEFRT0hrWEx1OTZjelVyMk14c0EzcVExYzFlZ3paUFJUQWRhSkp4MHppTHZK?=
+ =?utf-8?B?V2Z0d3BNVnlQazFVL0UwamdNYUllZDlNTUFRZzUybG41KzUxbmpERitQRHFY?=
+ =?utf-8?B?ZldtUnlROFc3SWtMNHVZZWdLeWtGbUM5ajBMQXV0Vk5LZnZTdlgvaHJJb1d3?=
+ =?utf-8?B?L3FvNkl5UWRVaHFXamhSWWFCL1VTSGhkNVdLcUE0K09uOEFNNzM2VWpmTG95?=
+ =?utf-8?B?UWtUb0tBNTRYU2cvMzR0dWtUZEVSNEROUGdVaTNEQklDTllaekhLTGpnMnlZ?=
+ =?utf-8?B?N0xHRVIwZEJlSnRNM2NkeEhXaXh3cUROdWliczlVRVNBV3NMT3NxaXVxNDBh?=
+ =?utf-8?B?aUpVODZuUDhaRUZkKzFqVjk1dFRiSUxmd1FUV3RPYndBYzZCMGJ6NHN0V1pB?=
+ =?utf-8?B?azNsaXNaY3NWNW5SSGZnS2VTL3I1UTJ6b0dZR1NJT05zeGRmbmw3Rzd3ZnFx?=
+ =?utf-8?B?dWJmQUVBRC9MbnBlWmJ5OXhTaXVic3VFaXhzYlhGb0d4QnVVaGJrdzdMeWNW?=
+ =?utf-8?B?U2FCQ1cySitaQitKMW4vRk5RYXozcHAvWnNNNmZORklRSFlKWDhVdW8xTjlQ?=
+ =?utf-8?B?R09oRXlTRVNsdzk0MG5SRWE5WG1aVG1CUm1JSmQ4ZERaVkJMYllRbGxRUjZr?=
+ =?utf-8?B?K3RPNWhPcTNrYWxHOWZoVnNUZ0dYYi9HZGJoNGFYL0RVVldGemRXNkxqQkhU?=
+ =?utf-8?B?YTFIVFdYYlllamRTNzRLV3FGWDk3RlNXa2ZkdGs2eXlyc3BXM1Brd0ZGSHp2?=
+ =?utf-8?B?RXB5WmkrNkxZd1prY2FVMTlTUG9yakIxZGxiSlZaSHVSS1phM3F0T1RrSU83?=
+ =?utf-8?B?czZrQkorQ3E4QTExbzBVSWh5bXYxTFlmS2Z4bmczMlExNE1ycWhMd2IxdTlN?=
+ =?utf-8?B?NWw0ME9pRFNqdHV3OGtXN2l2OCtsWlB6c3F3bHEyeEtCdVlkNkxlbHE1YzNv?=
+ =?utf-8?B?R1hzcHRGS05CbFVBdG5yVzhCempOTE9mODd2RnV0TlBIMFF2M2FQRkNKN2JN?=
+ =?utf-8?B?TGVWdURhbFNteERBYWJ5aWh1L0crSlZ3ZFVlY1FFbjJhNkRxYXVlaDVnTkll?=
+ =?utf-8?B?Q3cwL09uL0tpNHV4S2VVbkdueThISW9NZUpZYk42Z2NseVZvWnJWM3U1Z2VO?=
+ =?utf-8?B?NFJQK0xOWTdjVVhjRjJGdE5UNC9HZ0NudFBwckt1cGZ3eGtveFJla3NGekV2?=
+ =?utf-8?B?VDkxZ1IrVHRiKzZPcWFVZEtMSlcvSzNpSTV6S1F5VWxnV1B5aFMzTUdkOWU1?=
+ =?utf-8?B?bTVZUHh0WmFnZnljcTdKdnV2S3pwa2NUeEtKVTdQaEJRYXpBVlNsQW9VQWZa?=
+ =?utf-8?B?RnNydTFMRWRnbFZHemlhL0FIRTRINkxsZ3RRUmttMldBYnZEZTFoVlYrWlRC?=
+ =?utf-8?B?MEg3QXdoNW1uc3AycGNaeHlKcno5WjQvZHpNYVZ0Wk5taUhlUktWbmdZbFA4?=
+ =?utf-8?B?dzBVYURNYTdqQUNRPT0=?=
+X-Forefront-Antispam-Report-Untrusted: CIP:184.107.178.48;CTRY:CA;LANG:en;SCL:8;SRV:;IPV:CAL;SFV:SPM;H:trunk.prismforgelab.com;PTR:InfoDomainNonexistent;CAT:OSPM;SFS:(13230040)(61400799027)(7149299003)(4022899009)(82310400026)(32650700017)(3phishing@pot0700013)(1032899013)(69100299015)(3109299003)(7049299003)(376014)(13003099007)(2066899003)(4076899003)(8096899003)(54012099003);DIR:OUT;SFP:1501;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR01MB5433
+X-IncomingHeaderCount: 37
+X-MS-Exchange-Organization-ExpirationStartTime: 19 Feb 2026 01:00:26.5551
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 12c55565-355a-4224-272a-08de6f5244ce
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: CY4PEPF0000EDD4.namprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: CY4PEPF0000EDD4.namprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: CY4PEPF0000EDD4.namprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 2/19/2026 12:27:05 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 7fb8a043-16ac-411c-f183-08de6f5239ef
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.102.194.41
+X-SID-PRA: GQVBCRBBD@TRUNK.PRISMFORGELAB.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 8
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|39010799012|3600799018|32020799003|1680799066|46080799006|9400799043|42200799015|9000799056|69000799018|21090799003|22090799003|10300799038|48050799009|13020799006|34130799006|46110799012|5099299006|970799060|67000799015|461199028|470799035|119000799006|62400799018|56000799018|33080799003|30140799006|20103052909095|7120799021|87000799018|51300799021|2700799029|32080799006|58200799021|9800799015|15110799015;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2026 01:00:26.2473
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 12c55565-355a-4224-272a-08de6f5244ce
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=aabf402a-122a-4329-9a5d-5987ebad552e;Ip=[184.107.178.48];Helo=[trunk.prismforgelab.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EDD4.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR10MB5940
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.8293269
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9632.007
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9525003)(10145025)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?QVc2VlZndWhrZkNQWjVqK0VBQ2ZVY3ZvbmEvVVA1ZmJwYk5XWVhLZGhjeVhl?=
+ =?utf-8?B?aHhiY2xlRnJaMXhuazFkcEtRejFEelhYQkdCcmZ2TytTRUx4WXlBWncyMFVX?=
+ =?utf-8?B?NFV6Ujl0QmVTdGljNUhoSnQ3TktvcHdreHRiR1piZWlUMWpwV0U1MVNRTlFn?=
+ =?utf-8?B?RU4vWC90YXhqbTloZk11SnpTY0F1SENwdGxsakszTG9OZkJIL1J6SWVURGJ1?=
+ =?utf-8?B?dEp0dEZud0VsTWJEcGpNL01zUkFvV1NodXRwMlp6VWVtT1ZmcHN0d0hFV2RV?=
+ =?utf-8?B?SVMwWDRxN2UrWnpTcnMyZ2ZYaWdVRTZvZUhWR3Nzc3pJWEpiM0NsQ29sUHNn?=
+ =?utf-8?B?MjREMXBXZitwak1HRVg1OTU1THRmb3lsZlAvb0Mva1A2RjNDUVB6SVJHcTdL?=
+ =?utf-8?B?RndVL3dXd1R0TUxFL2FpYVo0RHNlU1FYNVR5cW5wSElyZEZOdUxzeVc0UEJP?=
+ =?utf-8?B?cjlJNzFjb3FDZnhrNE1VdlJFM2lvTkpMTmx3RVk0S3l4YXd0RjhVNHV6Snpp?=
+ =?utf-8?B?NVZTd0l3bEJsWEVmemJvZHlLZyt6TThnaXNlOXQvcFNUVG9zUXdqS2R2dlZv?=
+ =?utf-8?B?N1FGRHZaMXh1bk5mN1FSL3Awem9MWUlzdktzbmhiZHNjY0FUQ21CNm4zU2Nk?=
+ =?utf-8?B?Lys1bzVzWmt4UThuUFI4Y2FFWnJ5cUJWSXcvYUZYaWRyM25zUlhBSTlORU5J?=
+ =?utf-8?B?ckFLcC9rS0VmM1lHeGtpTU1mSWVZUUd6c2NKMnhheDF0K1NzV1pnSXRPdWpN?=
+ =?utf-8?B?RUVhNnVQcFBNOVpsRTZHd0liaTFtSURKanVyaGJXSFFjSGEvaENNZFFXSHlV?=
+ =?utf-8?B?REkraEI3NFVtSGxQQ05rYXZRY1VjeHBtd2t0ekk2eVlRUHJVN01FREhlemt5?=
+ =?utf-8?B?bnNHRmxjZ0NsU0U1cXVMTUlaVFBLSDNxOUcyemlpUzd1dnhOeXR1bkt0ZGpv?=
+ =?utf-8?B?bi9CYmsrZnd5WVlCQks4RVVmUFY3aTc3VkxwaVhxbFF4UE1ZRFI4UitTOHJR?=
+ =?utf-8?B?dFdsWU1Rd2N6VWdML21zT3h0ZTdYZDJMZ0dJSitVVFhoaGthOVByN3Y4WTUz?=
+ =?utf-8?B?TjJVc2NwTnU5b1FlNGdiMi9jZ1BQMUpIR3J5cWZXU003aGRIMHlySkRzTTFQ?=
+ =?utf-8?B?Uk02dWJQQ0hPamRRRURyNCtseTM2bjJOaGdVQTBZZ1F4WERlRWo3T0NJUncz?=
+ =?utf-8?B?aE8rWHFKTzB3YmlaWTVkUStYWWNBYVJ4LzEwZnBoM3k1dzlZU2p5dGVYN2g4?=
+ =?utf-8?B?endLcjFhTnBRUVlYZDBTU2VRMEVZbXgrWGJaSUs0SG80U1VEWWtZN1ZzTXpi?=
+ =?utf-8?B?cC83bzJva3lEMmZ5cmZlUkxSWm5UMU1sdDFiMURESlpVQVZXTk9tZGtiQ3ZD?=
+ =?utf-8?B?TktGUnV4RG5DTVBHQ0w3YlovK2V3QmFnVytZRFMyb3RMNmRzUmsrcWpqelBG?=
+ =?utf-8?B?aTVoaG5sOXJCMnJtRzVGb3lhQzE2TjNwc1JpR1FvSnI3WFBDSEFLa2E5TWxK?=
+ =?utf-8?B?cy91ODNQMUJLWDZxNWtyUGR0R3prL0xCS2xwYVJobjR2T2NhenJyZGRXK25Z?=
+ =?utf-8?B?N3VRYVJ2Tk82LzBjczRBbk1jT2F2SG5rN1Y5NktqZ2FNa1RlNHF1ZTNjaWNH?=
+ =?utf-8?B?MjJ3Nk1oUTExTGVqbFlSOVVseThaNGtQUmpBbGI4VG1KNWcxMERERUF6c0pO?=
+ =?utf-8?B?NkdBVWNIQWF6NW9xWmlSVklCY3VlL3R2akVjeEFGb3YwWGZNVHR0U0F3c2d2?=
+ =?utf-8?B?Y3FZVjNVaU5xMjZ0b3doTFR1Zi9PeHRIa0tnUTNqVDl5WmN3bHBQbzl5RFZH?=
+ =?utf-8?B?MXdvSlBObXBnZ3lIYVhwRVUxVHZTdDVHNTVOaUtkRjBWSFFyZ045ZHpOU0ty?=
+ =?utf-8?B?NzRweG5TRDRJb3IwMnVZVWNnYk10ckQ5dDJyVCs1ZHZMUk1ZRWxuSEd6dGkr?=
+ =?utf-8?B?YjFDZ3pDNS9SQThLR2FGdHpJTVZBRUYrS2FZcW9sNldlVGI4OGdUN3lkZzY2?=
+ =?utf-8?B?ZFlnNUlJVkpmWTgvb1dra2VabWJBNDRnalRYK0pHQTBvaHVQVnBIWGR0WW1L?=
+ =?utf-8?B?SEUyS3hOeTk1d3kwMGpJNlYzRG1aYVFoYXNNQlNGZFBBUjBHaXlwKzdoNk5P?=
+ =?utf-8?B?RmJISW53TStZY1Q0VG1yejhCbEoxSWJ5VkVXdkY3a3NiWkFIcElpclNkU0dJ?=
+ =?utf-8?B?a2pOWDI1NEhwR01hSFR0ZGdEemltVkFyZ1lETXVyZDVibDhrUGMrUGRlc0dL?=
+ =?utf-8?B?bHhZVHB3Z3pnd0I5eEduL0JVbUpiSXgwY1BXdUE2NnE1TERGcEVNQjl5WHl0?=
+ =?utf-8?B?RnBiaXVmS0FQNjEyUDhrTUc5d0tyYUNGNDFzbGc1UUlzNTlNSFkxa245WXdG?=
+ =?utf-8?B?V1NxN2tOZm9LVnJzTGZUODI4eXFwZVBEMS9odGdjTlRlYjk0Mjg4dytZNSt3?=
+ =?utf-8?B?QzJxckVOMVZtSnVSazMwNEtma1VnNk9COHdNSUg5cWplQ3lTdU1lNGFKemIw?=
+ =?utf-8?B?cStsVFc2VXN1K1JjTWVFcWZYYUJzblgzRFR3emxRT2Y0Q2tNQmJzSGs1dDln?=
+ =?utf-8?B?STZYdTIxRXhIQ0VDY0lDK2VDd3NyTS9JM3JMWjE1QVMyY05hYmJIZlR2Sloz?=
+ =?utf-8?B?U1g5MGxIeDRlSUE1TmcwdkIyR0M4azNxek5tSncyZEFtMlR1QlJsaUprWG1V?=
+ =?utf-8?B?ZlMrUEFiSXBBYmlkNTNqUzBOOGVTZnNvZWFmencyVU9nUUYxaXVsUmNZdWt6?=
+ =?utf-8?B?NUtUZXJHamdqaXlUYWRoWlIyQ3JQNUZhMmRLZEhXaEN6ak1SQWQzUHVOUTMr?=
+ =?utf-8?B?SWhsZ29oaGxqTFF5RVZrMnpQNk1vcjlzTUxUMmRNNjdEeGt5K2pBbjNCSG1U?=
+ =?utf-8?B?UUV5bFNYSVpNRGZmR2FQOW9lbm5yMUJZZCtLOXFTK3JDajhmQXBVU0VBUWR4?=
+ =?utf-8?B?b2RMYkZOZ1hJSmR3ZVBnSTgrTGpMNWlpOFhPaThGSmxBcjBXUWxwamZlQ1dy?=
+ =?utf-8?B?SHZ3dXBxOEVFMjB1WVpCUTNtRXdNN0lSejZkejdMRTg1eS9veFdXOW8xNUxy?=
+ =?utf-8?B?UVIvV2dKaHFzKzd6M1BqVjY3NlBMUEdjYWY3SXhLSXlaeGFtZlZjUUF1cmlE?=
+ =?utf-8?B?Y2pWV3YrU04xWVhCUEQ1Sk50OEdDOWFONXAvYWtRNndUVncrUGQ1Z3hBMGY5?=
+ =?utf-8?B?dGVNemM3ZHdYQmJEdFRpcE1kaWFTMVdqZnhVeSs0Wmp4aDYxSFByM1BMNG12?=
+ =?utf-8?B?YVpsRVNlL3RUalliOHNaakN0TFkrUTljZGFRck1FQ0gydUdvMUNxbzdJdEZi?=
+ =?utf-8?B?QXA2TlI2dWxNOWhjZzV4bHJXZ0F0OVh5amlIVDV2bVk5OExzNkRoNVpRZzNV?=
+ =?utf-8?B?aXhOQ3k2VWFQMlhRR3lGTUJtN1ZXVC9uM2c1RmlEYlZwWnYvT0VwUlgwWGk0?=
+ =?utf-8?B?SHh2OVQ4ZFR2L2J5LyswbnplMi8xVzdubzl3N3Z2VThMa0VUMkhQTCs4bjds?=
+ =?utf-8?B?YU8rQVEvS3Z1cjVMUTVjWXQ4MGN0N09HVDBsVnk4UVpXWmMxQUt0TXBBL2x5?=
+ =?utf-8?B?RFVYdGMxQ3IvTUtkZ3E2NGl2alRocGRxYUVDU2RkNFhvM3o3WUJ6RmE1cml1?=
+ =?utf-8?B?REJkV0xVWUhKM0V1NnUxZEhwaEx1R0JLYVVRWkZuelR0M0lhY0kyTDIrMTBo?=
+ =?utf-8?B?elQ2cm1SS3l0ZHdhTmh5VVU2K1g5ZTdyWkd5QkFVL2tPcVk1R1RvbXo5aHBN?=
+ =?utf-8?B?eTQyRS9lTENUUmJoZGxMdUVpRG9pMGw1OFIydnZCOWtHQy9PWVdJQmFiZ1JV?=
+ =?utf-8?B?SC81b0pOazhSZ1NYSlRNQVJVNHFEVGlCY3ozRjFqSEJSSGFjem1saHNjUFpL?=
+ =?utf-8?B?SnE2L29JQm5Bbno1aUZERzhXU0lvU2tYd09ubURiMVdKSE9pazQwTjR4aUcz?=
+ =?utf-8?B?eWE0Y1VLMkY5VzQyQVZ1SFNqb2dCRlJTTmNqbUUyaTl1MnZTY2FYL0t1OXlD?=
+ =?utf-8?B?c1V4WFVTQk9FNk1IcW1iSS85aWh6K28rVTU3SFEwdUlZMWlEdnZQZGZIK2kz?=
+ =?utf-8?B?ZUo0aUpXQXlETGtqcjlINnhJakY2Wm9KUlFuNG1Yd25FOE5UOE8rQXdmZ1dI?=
+ =?utf-8?B?N1Z6VDdyZ1p3WjFnRHRPNEJKVEVIYnVZRWdML3o3bWZSenNWVGw0SkQ0emVZ?=
+ =?utf-8?B?clRBOGsrbThpSnhxU3dMKy96V1BsQTZjOWxFcWJwa01tVmlzUGN2TWRWcWdL?=
+ =?utf-8?B?WUYyeEQ1ZFhSckxvWVJVZzZyaS9YUWRBRUlKMFRRdWh0ZXpXazFiNTk4OUs4?=
+ =?utf-8?B?bDBBbmxrenR2NmsxeXRoU1RTdzBFQnJZZTZiVjc0MDZPN2dEYXBJV3hONUZS?=
+ =?utf-8?B?QVdoNnpSL1Z5cHpiQWhlTHNOT2ZNeVByaUpWb2ZidkNKaVc1M2h3Q0JEWEFC?=
+ =?utf-8?B?RTlMM1dFZkpPelhiVDNaQXMrY2lZS0g2blFJY3FCMjBKMExvTmppZ0F2QURx?=
+ =?utf-8?B?OU9ja2lRemNFNEFTQWg2Q0MrZk0zVFpYeWdmWjBVYmhJaWppY3pmVTFaVGQ5?=
+ =?utf-8?B?TUxvMzVZRFdkMzFGZ1ZpZS9zVC9PUnFlaEhHK2FzVjdJNjFEZjd3ZDhEc3Rh?=
+ =?utf-8?B?S1ZPVGluMWoyMmw2ZEdjM1FnNklVUjNnVzJaK3RFSDlNbUQwQlA2Rm5VUmhJ?=
+ =?utf-8?B?SUV3ZnpjaG1MOCtuWmlVR1BGWWxlSnVmS2FtSWNyUGRSU291TDJGS0dZczd1?=
+ =?utf-8?B?dzBRdWFEZk1NZm1NU2FFQzVZR0R5SnZQREI5VENMY1RKNXVBTnRnbmQrTlIz?=
+ =?utf-8?B?S3RqRHJVY3RYdStuK2R0QktQTUtUUHI1Y0s1Y29Hd1UwUHpCVThTTzRPTHEx?=
+ =?utf-8?Q?vEVZIOSf2+4P2vnkbk0EfOWgWndjZ?=
+MIME-Version: 1.0
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>
+      Sam's Club
+    </title></head><body>
+    <center>
+      <center>
+        <br></center><a href="https://trunk.prismforgelab.com/4czZnT2629EQzm185pasjlwfthf551NWTKNDVALIAFLZC26PLLY12042D9"><h1 style="color: blue;">Big Value: $30 Sam’s Cash with Membership</h1><br>
+	  <img border="0" src="https://trunk.prismforgelab.com/img/EDOeTheyuGuoosU0"><img border="0" src="//trunk.prismforgelab.com/img/EDOeTheyuGuoosU0" height="1297" width="600" alt=""></a>
+      <table border="0" cellpadding="0" cellspacing="0" class="aWCT" width="600" style="background-color: #ffffff;"><tr><td style="font-size: 10px; line-height: 30px; height: 30px;" height="30"></td>
+        </tr></table><table><tr bgcolor="#FFFFFF" style="background-color: #ffffff;"><td align="left" bgcolor="#FFFFFF" style="background-color: #ffffff;">
+            <table border="0" cellpadding="0" cellspacing="0" class="aWCT" width="600" style="background-color: #ffffff;"><tr><td width="40" style="width: 40px; font-size: 20px; line-height: 20px;"></td>
+                <td align="left" bgcolor="#FFFFFF">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td>
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td style="text-align: left; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif' line-height:15px; font-size: 9pt; color: #737373;" align="center" class="auto-style2">
+                              <br>This message was sent by a 3rd party marketing company
+
+							  <br><br>Terms and Conditions<br><br>Join now and receive $30 Sam's Cash when you buy a $50 club membership. Must join as a new Sam's Club member using promotion link to qualify for offer. This offer is not valid for Plus level memberships. This offer is limited and may be terminated or changed at any time. You must be 18 years or older to purchase a membership and membership is subject to qualifications. Membership cards are non-transferable and are valid at all Sam's Club locations nationwide. Walmart © and Sam's Club associates are not eligible for this offer. Primary memberships are valid for one year from date of issue. Visit samsclub.com/privacy to view our privacy policy. Auto Renew: By accepting this offer, you agree to Sam's Club Terms and Conditions found at https://www.samsclub.com which includes auto-renewal terms and authorize annual recurring charges to any card on file or any payment method in my digital wallet for my Sam's Club Membership fee and any add-on membership(s), as well as any applicable taxes at the then-current rate for my membership level every year until I cancel. I agree that Sam's Club may charge any such card or payment method and am aware that failure to maintain sufficient funds in the accounts connected to those cards may result in overdraft or over limit fees being charged by the financial institution that issued the card. I represent that I am the owner or authorized user of the card and payment method to be charged. You can cancel or turn off auto-renew, remove any payment method or edit any payment method at any time in your online Account. If you do not want to renew, you must cancel at least 24 hours before your membership is due to renew to avoid being charged. You can also visit samsclub.com or any club location or call (888)746-7726. The Instant Savings offer will apply at checkout. Prices shown are pre-tax amounts. State and local laws may require sales tax to be charged on the pre-discounted price. Offer Valid through February 25th, 2026.
+
+							  <br><br>Sam's Club 2101 SE Simple Savings Drive, Bentonville, AR 72716-0745, Sam's Club All rights reserved.
+
+							  <br><br>This email was sent to you on behalf of Sam's Club Member Services by a third-party marketing company. You are receiving email from this third-party marketing company because you have previously expressed your interest in receiving commercial email through a site or sites associated with them. If you do not wish to receive 3rd party email messages from Sam's Club, please 
+							  <a href="https://trunk.prismforgelab.com/5WFBiH2629EPsY185hjvenxqgup551INSRUGIPPGALKWM26MHEA12042H9">Unsubscribe here</a>.
+</strong></a><br>
+.<br>
+                            </td>
+                          </tr></table></td>
+                    </tr></table></td>
+                <td width="40" style="width: 40px; font-size: 20px; line-height: 20px;"></td>
+              </tr></table></td>
+        </tr></table></center>
+  </body></html>

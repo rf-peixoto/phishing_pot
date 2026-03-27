@@ -1,0 +1,332 @@
+Received: from DS0PR10MB6029.namprd10.prod.outlook.com (::1) by
+ SJ0PR10MB5743.namprd10.prod.outlook.com with HTTPS; Thu, 19 Feb 2026 06:05:54
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=dHyYpLyRwSa8NI8YrFa+EZQhzsF18ohupiKCl2IXYUM8u5tJ/OuoWIjUlfAGflkhg2q0mmpkPZbnkYLo/zTmpFmED2W5hh1iU9l5jtrcb7LyG6Pr4yydmYMPCWuVColdJY29ImT7gDyqf96LEsD9Eod/GprgPcxGVOZ8CAsS7CKalRAz86oMPcOGaenJ8aJ4TQi3jlxoBzclPn2FRLF+Oy9d0y2BCPBbVJWSABdbP2mZYrZNYeVFx2oJdPZL0Iw0TWlpYmRBXYmxLy7c4fqM6By4rYBOcJE8+nKtwxA4aA01x0zGUvqooikKzd03V0x9GCRFvfrnBnRbDOuHDLxW4Q==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HP1GxZhfR+/0KmEpH7JSZxZJt0PsYGL6da9a1rvgr/Y=;
+ b=aqdsAkUrnwfSZz29JIFJYFDVQXfgtypiBapLWgIL+pBnHFHSzjslBCIs8tSSnt+e3mkAm7AV6rf2umPLYtvlyUda/xKLJ8sFkXDEVpuGgxWtDNknKyYutyk+sEA/rCcNXh9neaWR4OIu3tUchcI2U2IGF8xB18Gjhng4lYOZluIk74F3HvhMCAcXIw1y258ewyblq6rmSXB4wz6lgJwlHf/2PPBoh4zxOWIUj7sf1n34pxubUuuhIOoceTNo7nvvRGnfov5oRQGxbrypC9H31N0IjpM0m4jjBxQxWkQBvCoxuYyHd6QZtIypHL3PdUFaT8qNOu6eeu2L051ilDeu0A==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 40.107.75.97) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=power.solarixworks.com; dmarc=pass (p=none sp=none pct=100)
+ action=none header.from=power.solarixworks.com; dkim=none (message not
+ signed); arc=pass (0 oda=0 ltdi=1)
+Received: from PS2PR02CA0058.apcprd02.prod.outlook.com (2603:1096:300:5a::22)
+ by DS0PR10MB6029.namprd10.prod.outlook.com (2603:10b6:8:cf::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.14; Thu, 19 Feb
+ 2026 06:05:51 +0000
+Received: from OSA0EPF000000C7.apcprd02.prod.outlook.com
+ (2603:1096:300:5a:cafe::d) by PS2PR02CA0058.outlook.office365.com
+ (2603:1096:300:5a::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.14 via Frontend Transport; Thu,
+ 19 Feb 2026 06:05:49 +0000
+Authentication-Results: spf=pass (sender IP is 40.107.75.97)
+ smtp.mailfrom=power.solarixworks.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none
+ header.from=power.solarixworks.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of power.solarixworks.com
+ designates 40.107.75.97 as permitted sender) receiver=protection.outlook.com;
+ client-ip=40.107.75.97; helo=OS8PR02CU002.outbound.protection.outlook.com;
+ pr=C
+Received: from OS8PR02CU002.outbound.protection.outlook.com (40.107.75.97) by
+ OSA0EPF000000C7.mail.protection.outlook.com (10.167.240.53) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.12
+ via Frontend Transport; Thu, 19 Feb 2026 06:05:50 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:FAB6670C48324B2CC314758BB1D629D84E9016D738B5E0BF9A766D76F936DC42;UpperCasedChecksum:52D2C538FBBC6BD75FC907E229C481C9878C914185FCC4B397BB9EF0BE4B2FFC;SizeAsReceived:7872;Count:37
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Tgw0vwEkFHKoeMIxytWau+95p423EIvVDF8PKWhkgA7SJqdy8tBeTqQq3VCyaF58rQCnR/FEDij4rXDVwGfwX1mitUFq3cXfy6bQzsDgEchqntj4UYq7Tps6Q+XYu1z8whCK+3jCus18MBXIngtbAFEmb4Y5RXtyhhwcVCa3ERfJ9tD4T3xwJnAw31DNL3tosX9zMVvGpAAD2MzfOxaMDyp8lRH3DIjfqcGhcM3ECeNoHOPFuDbjUHTlWvw3j6VWWhNbDrJu2KYRkGfocKowDOPrKU5vOSXzULpLrsVsAhjA4j18s0gDz8nTD2aEMkoL+N9Dy/EoyA2HO9RS3NBpnw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HP1GxZhfR+/0KmEpH7JSZxZJt0PsYGL6da9a1rvgr/Y=;
+ b=tx3sn/TwMcvK6mG+MTWV+3YaE82a3Diz03KExUUlRqy48mz8KhGjDouME7Ta0ZkOH9Ki+gN0cN6oVqrLGKBzsjjBJFzJGxvUDunTOfoforqDx9z9+M3lNIp9y9m4vThOyzSgAQyVN+8L8zWt5VEtr62/RYCKsSnlC9AzmWg8byFwypsm4avYTVwqHuWXIYXJ8X0yftiCBgS11+003NS+weT3CZoOvr5DMM4oUia0wDQl6sDWChIci2dR9xDPQ4yIOBjux3EX1oyqyG3v/MbstEsaiL1xoNasiNQlJ908iQhNw+Y0Y7c7ftRX0+QXEuH1umqgmVUfn799fVYijXXi+g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 23.81.33.35) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=power.solarixworks.com; dmarc=fail (p=none sp=none pct=100)
+ action=none header.from=power.solarixworks.com; dkim=none (message not
+ signed); arc=none (0)
+Received: from SI1PR02CA0043.apcprd02.prod.outlook.com (2603:1096:4:1f6::19)
+ by SEYPR01MB4439.apcprd01.prod.exchangelabs.com (2603:1096:101:5f::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.14; Thu, 19 Feb
+ 2026 06:05:49 +0000
+Received: from SG2PEPF000B66CC.apcprd03.prod.outlook.com
+ (2603:1096:4:1f6:cafe::ea) by SI1PR02CA0043.outlook.office365.com
+ (2603:1096:4:1f6::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.15 via Frontend Transport; Thu,
+ 19 Feb 2026 06:05:47 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 23.81.33.35)
+ smtp.mailfrom=power.solarixworks.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=power.solarixworks.com;
+Received-SPF: Fail (protection.outlook.com: domain of power.solarixworks.com
+ does not designate 23.81.33.35 as permitted sender)
+ receiver=protection.outlook.com; client-ip=23.81.33.35;
+ helo=power.solarixworks.com;
+Received: from power.solarixworks.com (23.81.33.35) by
+ SG2PEPF000B66CC.mail.protection.outlook.com (10.167.240.25) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9632.12 via Frontend Transport; Thu, 19 Feb 2026 06:05:48 +0000
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+From: "Audien Atom Hearing Devices" <uQBATEO@power.solarixworks.com>
+Subject: The most premium, discreet, and affordable hearing aids that everyone is talking about
+Date: Thu, 19 Feb 2026 05:16:17 +0000
+To: <phishing@pot>
+Message-ID: <e838d658-469c-4bf4-8f7b-eb7d1e1b225a@SG2PEPF000B66CC.apcprd03.prod.outlook.com>
+Return-Path: ccxyve9qhl3g@power.solarixworks.com
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: SG2PEPF000B66CC:EE_|SEYPR01MB4439:EE_|OSA0EPF000000C7:EE_|DS0PR10MB6029:EE_|SJ0PR10MB5743:EE_
+X-MS-Office365-Filtering-Correlation-Id: d9c3c160-cd9a-402a-8eb5-08de6f7ceecf
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|3phishing@pot0700013|32650700017|61400799027|376014|4022899009|82310400026|8096899003|54012099003;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?UUFMb3RpTm1uMGhSS3RoeWJKTi9laEhaTEZjV2dCVjBRZmZ6YWFVbTZGUUVt?=
+ =?utf-8?B?YVdzUHhoM0F5Wk83S3ZtQlRsU053WnlpTkdTOXZlNXR0WlhncVlQVVRtWnhz?=
+ =?utf-8?B?aTlDb09TZXdqb0VvUDRKb3BXTW1MK1lONko4ajBmMTNnUTZIRFJQVlN1OUpU?=
+ =?utf-8?B?T2Zrb3JFb0xQSkpGSGNsSHpzWHpvMGthV3B2ZzRZQzNMOTQ0VUxaUEhqaGN1?=
+ =?utf-8?B?bytCa3p1UUFpSE1wS3hPU0dobWFsT3FDOU0xTDN4V3VrRWd1WjVibFJSTnNK?=
+ =?utf-8?B?U1ErSGE1R0NxR3Z0YjlEZ3dodHpZeHpTVjFqS0hmWVVtL2tpZ3Y2L0RzYmhU?=
+ =?utf-8?B?dUY1NEdFUVhZVjdJSXoxN2NlcHZya3ZDSHoxb0V1SnBobmJYQ1hvVDcyMGRD?=
+ =?utf-8?B?dmY4Zzhzb0VMeCt0S2VYeEdsYjJTdUpmMjJpRXg0QXFLVW5jZ2F3MnY4aHpT?=
+ =?utf-8?B?ZEh6YUI3VE1TVSsrL2pmcHRxNDBOcVFyRlEwRWtvTEcyTHpaY0RxeFdDY1Ru?=
+ =?utf-8?B?TjF3UUhldWtPaTQ2YUF3WFVRT2E4c1ZpQ1h1YjYyaHlYUGt0dnlSbFB3aHpQ?=
+ =?utf-8?B?L05BZFhGYXJHMTQ3eUt4eXRHNHB1YUVYMjhHakFCdDYvR25MN3dZVkhDSG9T?=
+ =?utf-8?B?SHo3MWQ1Q3hzOGtWL2hqdmVMZ3FYY3dJUmw5TWJ2OXcxWERoL3hZMWRxVnhs?=
+ =?utf-8?B?ejJnRjcyWDVtMWRLUFNzaXFlcUNZUnByaDFETEN1dmdsWnhzNWd5VFhrajlu?=
+ =?utf-8?B?ZjZCalFDTGhsMEQzbFB6ejRscGsxQktuY0lnamZqd1ZSYy9pbGNheG95NnYz?=
+ =?utf-8?B?VnhmeVE2QmJWZTBHTkI5NmFuMU5YVzdZbCtnQll0cmtsWXdoTUNLN3NFQUZG?=
+ =?utf-8?B?bkpIbFBjd1paM2JlWjNuWUUvaFk2NytwdVdRbWd2Ym5leVloYzc2K1hOc25h?=
+ =?utf-8?B?aUJHSXN0REFiNS9TSEtFMWVKcjZpUU04MXhuZkFhVjIyckoyUGUrT012aTBy?=
+ =?utf-8?B?ZEt6MnVYSEhWcHZZbjc5VHhNa2QybHlDWGt1VzE5Qmh0S3pRNkRiWGZOck5I?=
+ =?utf-8?B?L2VkWE9DYmJWelIwb3VQZW1GdVY0SFMwTHAvTy9NdEFLb0NNVGxYSklyZ0Vz?=
+ =?utf-8?B?eHc1b1oyd0REUGRuTE9wVWFvekV5Q05HK1BBWDBoRlBmWHZzZzI1QTZBZ1ov?=
+ =?utf-8?B?bU1SK2YvbFNpYVRRUi9YMW1qZkI4M3pUZ0FhV1RjZ3dDWDFtcU1vd3FDZGlF?=
+ =?utf-8?B?SEdWYUd0bm5aOW1RL1NvTHdNM3JTNHFEdk9NK093WUZoaVVFR1hVa3FuUFJs?=
+ =?utf-8?B?V1I1M0NXb0grWDVPeDQ3RFhBOXpEVTVOYkgwNUtTQ3Q2STlQVHNVek9TcW1o?=
+ =?utf-8?B?Vk9hcE94NlhCdTh2VnI1QXlyM3Z3THUyeFREZnJqOE1qdG1vRDlZeWRhUlVS?=
+ =?utf-8?B?WTZIUTMrQmZZMEY5dk1IS2ZPMEJ5RzIyc0JRTVBtTzI0cHNocGdiUlh4VTFH?=
+ =?utf-8?B?WnBiM1d2NWZPVDZ4bXAzT0tzZzExZ0RrTGlyM2pDbWxGaUZ0VVY3TmovNDZB?=
+ =?utf-8?B?ZHNOVm8ycDdaMU5vOWxJVGZ4RkFlc2VOb0szYTZyaWFNNDZoM2VZK3hjQUJF?=
+ =?utf-8?B?aFF0S1A5aWx4OGh2WlNtTHI5Unc4VlI4aWM1Q2JSM1B0Y0V3aitOSlJnd0Z3?=
+ =?utf-8?B?enluN3ZnRFJjYWVxMWFFU2tNS0ErdWh5NGJ0TDI4Mmt5ZXlCTTlEUVFUNlQy?=
+ =?utf-8?B?U3FWVXp5UGpDMG9peHBndGg3N29mSWRacVlIalRGNFhwVUdtbGFHQW9pSHpa?=
+ =?utf-8?B?ZEJNbmsrSFBvcGZCaHF5cmE1UUoyemJTZ0VYalV1N3dSaVorUlJVcXpFQ1BH?=
+ =?utf-8?B?WGxINTNtSE8yT2d4MVI5eDU5YTF6TW9FTituTzVuQ3l4Y256TzZyT09BSGV6?=
+ =?utf-8?B?cUNac1N4L1ZsckpKbEJzeVhOcFpVL2dNQUpvTVh0N3hFdXFiZ0FJN3pLUnlS?=
+ =?utf-8?B?YU1VYm11WngwTXJtS3B1L3JtNUJockpFemNlWUxhVnNGTmNEUWFDYUhGcTZ0?=
+ =?utf-8?B?ZnE0L0ZpOEhJTHdyTWE4NUYrWVdXaFRxN0lDeXdKSmt0QlRQZHlnTE1INmxp?=
+ =?utf-8?B?bUlMNTdhQk1ncGZZMW9BK2ZaQS80QVJZUW4yR0xySmlOdjluNTgrWTFzVkFs?=
+ =?utf-8?B?bGc9PQ==?=
+X-Forefront-Antispam-Report-Untrusted: CIP:23.81.33.35;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:power.solarixworks.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(3phishing@pot0700013)(32650700017)(61400799027)(376014)(4022899009)(82310400026)(8096899003)(54012099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: Zp4sNIPW6r5+ObOURLPhcT5SzYD82LV8Fip5qp/09qElao7w1A9tMDYmdf3sTRHLt0+APgyfgBvg9QiLFFQFCfEShBW3z+4iVex5dv8QUQeCP86pgjQrvvhbrzql3ccm7qtfjGVyjd5nJ9z/Rh2jr4cKruywMPe/JL3YEkd+KpT4oIVpaS3ue063OcSBEbw4E6eLY2UHeJmMF+LhlNXvGl2PSsfzpTV7KRYa+QS4v22OVAV16h4VHpTYh2Lrp+3Gj8xPINjxngbG9y2argh8RHzzvtuCoQ2nrp/sWq0PKH6W5KQZ20vkswNNHVm3g+Lfusadv9NoXCv7QJG1shzDpbfCsIQuYryOKa7cK4O9dZ4MMgnRyb2EjyEAbtH9QwC8o3t0UJyrabMVe/Ln+UcnxyU1GXXgawE0Az/1ATjGh76xt0Bv4KryByYiOy7k4r4Q
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR01MB4439
+X-IncomingHeaderCount: 37
+X-MS-Exchange-Organization-ExpirationStartTime: 19 Feb 2026 06:05:50.6396
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: d9c3c160-cd9a-402a-8eb5-08de6f7ceecf
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: OSA0EPF000000C7.apcprd02.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: OSA0EPF000000C7.apcprd02.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: OSA0EPF000000C7.apcprd02.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 2/19/2026 6:03:34 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 1b0fe0f8-9b79-4d7e-e90e-08de6f7cedc7
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 40.107.75.97
+X-SID-PRA: UQBATEO@POWER.SOLARIXWORKS.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|7120799021|42200799015|30140799006|87000799018|46080799006|51300799021|21090799003|58200799021|970799060|20103052909095|9400799043|470799035|9800799015|119000799006|15010799006|32080799006|3600799018|3025599003|11020799009|461199028|33080799003|15110799015|69000799018|13020799006|67000799015|56000799018|84100799003|22090799003|2700799029|46110799012|5099299006|34130799006|5149299006|11119299006|32020799003|62400799018|48050799009;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2026 06:05:50.2125
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d9c3c160-cd9a-402a-8eb5-08de6f7ceecf
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=a9790f7f-1bb1-47ab-a182-21c61e1c9a78;Ip=[23.81.33.35];Helo=[power.solarixworks.com]
+X-MS-Exchange-CrossTenant-AuthSource: OSA0EPF000000C7.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB6029
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:04.5046211
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9632.007
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?VXBQWkE3cVFzbVJkSVdud3FWOGt0N1JiMzIyRisrZTFySlY4N1hFbXdEeExn?=
+ =?utf-8?B?MzZacmJmcFM5dkJrL1NrV3Q5dm1zcldzUG85aHB2clJvdE5iNUVqTDZ4SGF6?=
+ =?utf-8?B?aFZZUEgxV1dnS25TUVBkc2N2eXdpRnovZ214QmNseWxzaG1IaWg2TUsrenZE?=
+ =?utf-8?B?b1pFYmhxNFpCRmFLY1pRRzFuZ09JaFgzcWhoWFgrMzc3eVVIZHVnc0FCcGxI?=
+ =?utf-8?B?em9DL1E0RlpVY2QwclN6QzNWMUllWlBjZ2hnLzRTZTArN0ZUMlA0SzNlMkJ6?=
+ =?utf-8?B?VjZhQmtkMUoyMm5MTHR3S3dML3dlWUtVbGlDM2VmL1FkYXVQMEk5SGRhQm83?=
+ =?utf-8?B?WTFhWVkxb2ZUVzFFRHVPMmltNGJVK2VSbHAwU1JES2R0VVBndFl5eHR6Vnp6?=
+ =?utf-8?B?WDl0RHNOWW1vdHpReTFITmcvMS9YeGVQVUZmZTE2enVuSU9lYVhlbUUxQ082?=
+ =?utf-8?B?NDBDWEhiWFZwQVQxUEJ6cVdvSTRiTFV1SzRMTzJHTnAzK2RXdDFGaWNuK3Ew?=
+ =?utf-8?B?cVd6V0dLck5KZzNyWWhPYmNpS1F1SGlYdmlhVUNIVjF0VE45TVZhc09wd3Ry?=
+ =?utf-8?B?RHlaeGwvTWdBc3FUOENPakRUOUlrTW9mUU1teHhlNjhnN3FBcUJZS2F2MEVL?=
+ =?utf-8?B?TG90c1p6dmlHMHZBQ29DaVdZNFhFeFdRdTFRc1Joejd1MUtYR3pEK1lCR0ds?=
+ =?utf-8?B?cktmM3dMak14U1RMNEc3T3NuSzhBbUtpNTFCNGkyWVNlZHRnZG1lWHJ0c0pW?=
+ =?utf-8?B?bnVROUpuSitrQkp5Zk1tdENDbjN3TzBkRytIUGxsS25kU2wyQUVncUdmQ3lW?=
+ =?utf-8?B?WEw3TU5BNnRUWEc3UnZTN2lxczlPaFNGdnpJWm5CUFlhUkVzRXJCOEFuSXdH?=
+ =?utf-8?B?OU9FaXVWL3dxUmdNZGd4NHpRLzdPUTNwd1VjYldJNHhmRDhPTjBzNGJIbHB4?=
+ =?utf-8?B?STBTK0NGZm44L01LNDBBK0czWk0zSk1ZRXBsK1IvRlkzdytXaUI2NzRubmtH?=
+ =?utf-8?B?K0pmWDJpZ2dvYjBjN3krd1BoTmY5anFPUnV2R1lSN21PTTQvQjlkZmZ5TURY?=
+ =?utf-8?B?bWFzMUxUZUt5TEtNOCtYNzdYZlN1SWk0aytqSGcxWUVvYzJWazA4VUFRczhr?=
+ =?utf-8?B?Mnd2dWJ5amNNRnN3WjAxVU5QT0Q3cWpPQSs3Y0RGRDVJUVpSSXdiTkdmalYv?=
+ =?utf-8?B?VW9rUVYzcTh5bzZpQzRRbmNLYThuRnpzSTJ3bVFscjZRL2Q5WFRQeW93STc3?=
+ =?utf-8?B?T2VZYjA2V29CM2xTd2ZtcUt0aUNqYzZjckx1T3BaU05XVVpIYXNBUDcxOXBG?=
+ =?utf-8?B?Y2ZXajVEK0ZPNXF2OHBZTi9wZDFrRkR2MHlEOFcwR2J4Y0xLOXpmZUlqZ1Yw?=
+ =?utf-8?B?a3V5dE0xblpINjB5RWNIN0tCV0g1djRkOTBZK09PUG4rWVV1RkxxL2U3MEY0?=
+ =?utf-8?B?L0NtVm10eG5EVDNpZHlLV0ZWQWU5dlFlWVpCaVhwNnVaSlozaWRQUlVJd0JN?=
+ =?utf-8?B?bTBmenBhNENucy9OUGJPL0xjS1BvRStPUHY2ZmhRTGdoaXBKVzhqaUFyUUwv?=
+ =?utf-8?B?akZKZEZ0WElNc3B6ZmpvQkdPcDR0R01ITmFPTXpNWk1YcHZldUVjWW5QSHNk?=
+ =?utf-8?B?NDUxMEhnSnh0VDUyb2FWT3VzaHh0QzZyaG15cnZ5b2NYRWE1eERJSGhINnda?=
+ =?utf-8?B?V2Y4ZHlnYUhDSG92T3Y1NkZlZU9MT3c5RTFpQnJTczhzdjYwd1RnUTlVWkJx?=
+ =?utf-8?B?RXJPcW1GTFlXeWlDbVFxVHR3dmwzNUg5UzNkOVIxdEM0ZFRYZ1R6Z1k0VHRQ?=
+ =?utf-8?B?R2JEdUZHN0orcjRFVDZndUJXSzBMNXVoRzNBT1VQT1Q5V09Fa0taRUdaUnFV?=
+ =?utf-8?B?bDFuRmpFaU4ySlFsdHk2YVFMWW5RS3h5NnN3UzZCQmdZZytoTkE2M1NlWTEz?=
+ =?utf-8?B?WmFhMW9XMWl6RmNyUG5pU3RIdUJmby93SUFlbmxYNjRyTE9QU2NVSGNaMWJJ?=
+ =?utf-8?B?UVZHMTBDQ3RlV1lRQnY1d3BRTWZWWDJYRGx1TThEN3RhL2JCNlM3b01EVGRT?=
+ =?utf-8?B?Z2s5eWw3MDRuZjFUeWpRR1pZUGhQV2dWUUpUNlZPR2Q1LzBOdTVKd2tEbXdD?=
+ =?utf-8?B?YVVxZk1XOFV6cUxacHpmWFZwRFpwSjdIOStCOUtzbG1IeEFpNVR1Y1JrS0ZG?=
+ =?utf-8?B?aTNWZjZ6eWFzSUVna05JYVZVZEhaOEluVUk2SXBDQTNCdFVrYmo5Y09TdkRt?=
+ =?utf-8?B?ekwvL3VKK1FrckZFSUhCbE40YWFFbk5Xbk1vMlhDS1JTRDdNVFhIbGxOWWdI?=
+ =?utf-8?B?NUFtbk5uSC9QZWFkU0Q4WUE5N29Teng5eHlzSmpoc3p3emM3WlNYd00zMU4z?=
+ =?utf-8?B?R0c5aDBOc1J5NEIzelZ2bHByRzdsZjZOd0o2QlhpVWQrZVpyeDgyZ0NrdGQx?=
+ =?utf-8?B?eUsydEYrTFpLS3NLNHhGREZqMUtUVTRXWDJsUVZpdUZZWk92YkNndkRxR1FR?=
+ =?utf-8?B?cWpzcGM1VjlOc0daQmRvQkN4bkYxNHBNRXVwbUd3TWVHRll4U1ZQc1haVHZN?=
+ =?utf-8?B?Mjh2OE1zNi9PMFd6eTNJZUdxQUVNYjNHVUVvb1RheENzUmhIUEIycjQ5MXk4?=
+ =?utf-8?B?dy9jcDNZQi94Q3dRZ2svL3BRWmlLb2FhVldZQnh4anNyN2RSWUVTeXQwOHlt?=
+ =?utf-8?B?RmNHUkFaQWRadnFqaXFVc1J3a0xvU1lHUExUWXRhaThVckRyQW9rZ2tTdUJo?=
+ =?utf-8?B?Y3NUQXluYUZ1OEVCWCtIYkNTTVdsa0Ywb0lNblA2am5wWTNPK0packROK0w5?=
+ =?utf-8?B?M05KSk1oZklLS2d1L1AyU25VZWd1bEFybUhxOUM1amNaYU5jQTlJQUtlbUxM?=
+ =?utf-8?B?bHpoa09FeEdtTzYvdGRtTUZoTWNiVUtSbUZ6cld6REJ2Y2dkMHNtWmNqelAw?=
+ =?utf-8?B?S2w5SXNTUVMwQVFFMzBacHZJWC9PblBMcGZWTW0vNGsvOVdqSGQ5TzFIL284?=
+ =?utf-8?B?eVJDQlRIa2UvbjljKzduZUZJbTZkQi9UbXI1SHFOMUR5YkNNdVdzc3BCUUxI?=
+ =?utf-8?B?MUZ5MUhCakc2M0wxTTVRVWo0ZGFWQXltd3ZwZ1QwcURpVEpicUNJa1RpY0dO?=
+ =?utf-8?B?dUhZa2VOWEo4bXU0Qy9KVmJMNUc1MDdZTk1xVXpmYnVubGJsR25qWmhZQk44?=
+ =?utf-8?B?RVR4UjRQQ203R09tWEZlZHNQUkg3ZDdKMk9UVDF1cFJhVU1rUWx4elJjUFU1?=
+ =?utf-8?B?S0tBbUhqYm5zKzZ5c3FGZGFOeEljMElaaGN4YmJneU9FSzVFV3RsU0pXNzdy?=
+ =?utf-8?B?VnBoUUlPd3A2Zzh1WEhZRTZsWTRKSTN2V2pxTnR3UVJMbld4SjlOTDZNaE1k?=
+ =?utf-8?B?QjVJNnZRaUp0bGhSMksxTk81cXpPYlZjazhwYit1czRCeDVFL1RtWXBjd29m?=
+ =?utf-8?B?ZDBLVnJ6NG5KaGU4ZTlQdjhmNG95bEZwTDQ2NDBYUlhQeHlRdHNhdXlManVi?=
+ =?utf-8?B?bE40NmZjU29JdzZzajNzRHNJVTlobGVJS29JaEx5WWplUlB5QXdhWElCMWJm?=
+ =?utf-8?B?dXQrcHJEdEdHeGNiN0dIYlptNytFVWw4K3V0bDNiZDVMZkNjbU5aK05KUS9q?=
+ =?utf-8?B?cGs4QzNCTzFldy9XR2I0cmdibmoyYk9acnBORmRXNFQ2TmNHRmNtN2l4Z2I0?=
+ =?utf-8?B?c2JjM3pxN0ljSG1nem4ydE5rZHJYT2FhTTlRRXhVVzdQRE9XZUFRbWdWRCtO?=
+ =?utf-8?B?UFlqb3p2WEFaRUJnSFRUeGs0YktZWExENGxwR21Nb3FXTWpudmRucFYvbGNp?=
+ =?utf-8?B?K2RpaWVoYXk3bE5XbHZzZzN3YzBEeGs1NkFObEpWTGdVeWtOQUJpM0g1NWhV?=
+ =?utf-8?B?VktLaG1GSDdzWWkxMll2TytQSWtUNm5Vc0hwcW1WWmtOYjR3Z3I0TWdsSHow?=
+ =?utf-8?B?blM2bGtCd2xSekxUSW5lWWhidmlMTkRCdUo3WFN5M2F3eVdzMVBxdzRWbFp4?=
+ =?utf-8?B?RDgzQ2RsL01weVlBZkJId3VYd2d3SmgvWVNHQjYwL3pLMEhZcFRvNVBpdlpj?=
+ =?utf-8?B?SmI3dk9ob3BXbnFqZWdWZUx2bVVUbXdLL2FhRGhiTCtOQTRxa2JRdGxRSkFS?=
+ =?utf-8?B?OG1ZNVF4T1d4S0pwdXovWXE5M0JUaHV5WHYxZmpMaUhoWFhiNXBYUVJOMUxr?=
+ =?utf-8?B?Rm13aWdKcllLU1A4MDVobURRMm9aV2ttT3lybkFwVFZvb1hGWlNtL1g1dENW?=
+ =?utf-8?B?emY0RkE3YWIvajVEUE9aaFBWSDQyS1dXNlpidWdGTjRKMVpiVjBUN2kxNVB0?=
+ =?utf-8?B?cUhJREowZ3F3dVFHTjBXRTk0OWhkTHNBdGFvMkV5U3dVem5UeU9INHc1YTlR?=
+ =?utf-8?B?Q1VuYncvdHBFZy9HR0EzMDMyTE53L3k4UjZ4b2pDS2Y3YllvTlpkMENobERi?=
+ =?utf-8?B?bEN3a3pSZ28wb3BYU1AvMzlsT3A0cEpQM0FwS09pL2R1VURFV1JsVjZOTlZq?=
+ =?utf-8?B?Zz09?=
+MIME-Version: 1.0
+
+<!DOCTYPE html><html lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover the Audien Atom 2 - Revolutionary Hearing Aid</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .header img {
+            width: 100px;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #007BFF;
+        }
+        .content {
+            padding: 20px 0;
+        }
+        .content h2 {
+            font-size: 20px;
+            color: #333;
+        }
+        .content p {
+            line-height: 1.6;
+        }
+        .cta-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .cta-button a {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Revolutionize Your Hearing</h1>
+        </div>
+        <div class="content">
+            <h2>Introducing the Audien Atom 2</h2>
+            <p>Experience the latest in hearing technology with the Audien Atom 2. Designed for those who value quality and performance, the Audien Atom 2 offers:</p>
+            <ul>
+                <li>Crystal clear sound quality</li>
+                <li>Comfortable, lightweight design</li>
+                <li>Long-lasting battery life</li>
+                <li>Affordable pricing</li>
+            </ul>
+            <p>Don't let hearing loss hold you back. Reclaim your independence and enjoy life to the fullest with the Audien Atom 2.</p>
+        </div>
+        <div class="cta-button">
+            <a href="https://power.solarixworks.com/4XhwzZ2638ZUkX268yadibzomym551EHGVIALQXTFZGPX26QMIG12032V9">Learn More &amp; Order Now</a>
+        </div>
+        <div class="footer">
+            If you wish to unsubscribe from future mailings please click
+ <a href="https://power.solarixworks.com/5tSbjI2638qiyY268krpktmilrx551PCIXZVJTKFBDKJG26ZXRW12032W9">here</a> or write to:<br>
+Audien Hearing 10733 N Frank Lloyd Wright Blvd Unit 103 Scottsdale, AZ 85259<br><br>
+This is an advertisement.
+        </div>
+    </div>
+</body>
+</html>

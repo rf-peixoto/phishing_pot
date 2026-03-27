@@ -1,0 +1,262 @@
+Received: from SJ0PR10MB5566.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Thu, 19 Feb 2026 04:49:08
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=bopzNlmagqTNa+jvld2HKBhnopQV6qM4td9aO0DkXyWHH1wVpzjP77P48kSLVNLDMSHG3y1SRBPIGKWbLoMuNwm02cT5uRiCEYqIf8jMy9XcDaQDotGeQ1Q/oh9eol4IYhERoDtfIe6sheDEzrpgA0h0v+ECs9GRoyC4DX2qxDBAOv/qa6nulPHjvxqE2Ybj3sCUlfot6wWo1OpCSp6k1t14X6oKTbXj7pZmUT+pu3iI+dMBA4Hh7VXwYACBZiLbZkt9fbNQYlebgDP0fx4nyU/wKNacTJSoQS7uOPlRs8hPXrAPaFTlUWGDIhWQQLGEioJ7iQm+0Ptz+VFjTee68w==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=032N76/HCQF74sXiZOfYD+5YYpZn2GSihuUOnysZ4HM=;
+ b=xJgSpj3rAMA+6z1FkyYCl1ufu1uUNHdefFnw+cMPEmZ+3T1usbWwePeep3OcnpqnYZ/v9VMrqBfDX+2Mk+D60SmQ1nzM/05QZ0YTLoO4ZieNnQ86+RjlvXjpI/R+8UMmECIl/dKpXs0z6DIUD0e6HCIsc1CHCb/BEL8eJk51HH5qzXIXKICVUOQ72s2EdSal8mqBXDMY2iBeoa0j75iHyGOzNTE6BEo4TMO9fjzD16MQB2zonZu6SPS4ZG3d6qvNpAJlBnLyE4rWzOrb7OXDs0gwSjX52IviemsNYG00kJE+pJ4t6hQ4/p/S7jWlc9YABIetqhywBzy4+xEbOr3XhQ==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.101.127.110) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=trunk.prismforgelab.com; dmarc=pass (p=none sp=none pct=100)
+ action=none header.from=trunk.prismforgelab.com; dkim=none (message not
+ signed); arc=pass (0 oda=0 ltdi=1)
+Received: from DUZPR01CA0218.eurprd01.prod.exchangelabs.com
+ (2603:10a6:10:4b4::21) by SJ0PR10MB5566.namprd10.prod.outlook.com
+ (2603:10b6:a03:3d0::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.15; Thu, 19 Feb
+ 2026 04:49:06 +0000
+Received: from DB1PEPF000509F1.eurprd03.prod.outlook.com
+ (2603:10a6:10:4b4:cafe::7d) by DUZPR01CA0218.outlook.office365.com
+ (2603:10a6:10:4b4::21) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.14 via Frontend Transport; Thu,
+ 19 Feb 2026 04:49:02 +0000
+Authentication-Results: spf=pass (sender IP is 52.101.127.110)
+ smtp.mailfrom=trunk.prismforgelab.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none
+ header.from=trunk.prismforgelab.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of trunk.prismforgelab.com
+ designates 52.101.127.110 as permitted sender)
+ receiver=protection.outlook.com; client-ip=52.101.127.110;
+ helo=TYDPR03CU002.outbound.protection.outlook.com; pr=C
+Received: from TYDPR03CU002.outbound.protection.outlook.com (52.101.127.110)
+ by DB1PEPF000509F1.mail.protection.outlook.com (10.167.242.75) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.12
+ via Frontend Transport; Thu, 19 Feb 2026 04:49:05 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:8360ED7D3BBC3797190130B65A98EDF601E8AA68E4B0C9386116A7B4D4097DEC;UpperCasedChecksum:F1311418568AB0565AAA48F79AB1ADBA38A5729F4149692A6F028510E654E4A1;SizeAsReceived:7831;Count:37
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VjqS8uSrlY05NH1v1O1NQWLdbpbfT4k7b/anOiUyTnwEzYQLKIfYrqqyyC2eblgN45dOBdxOR2YmP52ffiiYeYIhe65UbmCUM7Z7tcFi+nwO8ptEG0zAG/26xBWNQumG7h0+cbMJ0KrhUqFEY++B9DdHChPPuL2MzjwOwgLHxwgm2kJ4bQCaMehvQqnq8Te3kOPqjl0OAYaF2L4mxzdVrS+rluxKSrxTlK78pwc4tgLyPfXJ6KLQ2ZSd1H+Yo0XaHQfjOfLWrr6jz3Y8v/TKx07M+BfE65OEpkb0ybhODBMSEnvbcGrTGeNk5DQVHQtH8kjv0H570OJ30yVl8r4ZXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=032N76/HCQF74sXiZOfYD+5YYpZn2GSihuUOnysZ4HM=;
+ b=Pwh+GGtiG5wswbqJAJwiNxpIfd1TkE8pa5J8SFJaLMPy8wlNZl15sLXr4yhLrCKga4F47PIf9vEz/By3cNiIjaQF+7iZh4xSV5KF6n7xfzONsF519fWOHEcKpjTUQBriN5z25GAyK5tplletxVTbC0muXewbypwCY7+CxDhjfeWJf1R24XT2BCpmjqJFDzKEQfvcbTwGFaFtfIPAsWsNz/9i0ay64SjnZkMao2/22PT0pm8SyB4/SbL0iV9U/iuObHOtROX0P0KX9ohY4XmnozFrxJSA+BYU83RI0Hv5SOX1yLZ20eX/tiyoOy28KQ5ZACgzmCFjeT5J96y8HoQaeg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 184.107.178.45) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=trunk.prismforgelab.com; dmarc=fail (p=none sp=none pct=100)
+ action=none header.from=trunk.prismforgelab.com; dkim=none (message not
+ signed); arc=none (0)
+Received: from TY4PR01CA0105.jpnprd01.prod.outlook.com (2603:1096:405:378::19)
+ by TYZPR01MB5756.apcprd01.prod.exchangelabs.com (2603:1096:405:27::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.15; Thu, 19 Feb
+ 2026 04:48:56 +0000
+Received: from TY2PEPF0000AB8A.apcprd03.prod.outlook.com
+ (2603:1096:405:378:cafe::67) by TY4PR01CA0105.outlook.office365.com
+ (2603:1096:405:378::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.15 via Frontend Transport; Thu,
+ 19 Feb 2026 04:48:56 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 184.107.178.45)
+ smtp.mailfrom=trunk.prismforgelab.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=trunk.prismforgelab.com;
+Received-SPF: Fail (protection.outlook.com: domain of trunk.prismforgelab.com
+ does not designate 184.107.178.45 as permitted sender)
+ receiver=protection.outlook.com; client-ip=184.107.178.45;
+ helo=trunk.prismforgelab.com;
+Received: from trunk.prismforgelab.com (184.107.178.45) by
+ TY2PEPF0000AB8A.mail.protection.outlook.com (10.167.253.8) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9632.12 via Frontend Transport; Thu, 19 Feb 2026 04:48:56 +0000
+To: <phishing@pot>
+Content-Type: text/html; charset="UTF-8"
+Subject: Let your tax worries melt away this spring .
+From: "Optima Tax." <hCENlmyo@trunk.prismforgelab.com>
+Date: Thu, 19 Feb 2026 04:48:55 +0000
+Content-Transfer-Encoding: 8bit
+Message-ID: <df55a245-f10b-4d9a-b297-2ff0e6f5e620@TY2PEPF0000AB8A.apcprd03.prod.outlook.com>
+Return-Path: yniqvk0iguqy@trunk.prismforgelab.com
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: TY2PEPF0000AB8A:EE_|TYZPR01MB5756:EE_|DB1PEPF000509F1:EE_|SJ0PR10MB5566:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: a0bd42e4-3150-49de-9643-08de6f7235f3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|82310400026|376014|61400799027|3phishing@pot0700013|32650700017|8096899003|54012099003;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?aFM4YVlIUE1DT2R2YlVTY01BMHBCV1doRFhyWlI3L2hKb2V1MVZnamtrU3dB?=
+ =?utf-8?B?WnQrV0J4dnlJTW12YWU1VjZ5RlZ2TVhsWEkrajNWZjRVY2cvalFxK1A1MVM3?=
+ =?utf-8?B?U2lKeU5OTzFQLzlJa3hBQi9ublcrTWI0Vys0RmlIQWl0UFNlN2tJbC9rQ3A3?=
+ =?utf-8?B?bm16VHRaVForU1h1aUFjR0Z5OGFVVmNtODRVc2FGVkpLZmx6SVE5RURrWWl0?=
+ =?utf-8?B?bW4vbmVFQkdhVmVaQzBvTkJaQTgzbzRndlg2Tmdxa0RTZzNsNFJaZGJFenAz?=
+ =?utf-8?B?MXRUQlYvMGwvL00xWTlPUWxPZzJsenJxNzJGWG13YStTU2dJUVpaM2dUODR5?=
+ =?utf-8?B?aGxEVlVPMm9zaWEyRXlnR2kzb2FrR0lSYmN2S2d4Tlh0SjBuUUZQV1QzNjNV?=
+ =?utf-8?B?cnBuNWxMeHhWSUJFMWoweWNOQUJucEoveTl0VmpaNHZBM2xxNitFam1DMmpt?=
+ =?utf-8?B?M29iZnF3MjZlYmpybW4wMnZ3QmdzVFVMcDhyek90YjY4NW8wRUlSRWJONVZZ?=
+ =?utf-8?B?ZlpWZHRYYUVKVitzcDh3eG5CZlZDVFBlRkJnRGRiVHNjbXUvNDYzR3lMS2Mr?=
+ =?utf-8?B?YVlNOXdzdkZkL2hkWjNWRkFOQ2lGd1gwcENzaTVicjAxZVM0YXkzdVlEM3la?=
+ =?utf-8?B?NWtBQUYrQlZnY1FEVWQvK2owOW5yVFREWUFoaFdGVjMvbjBqcFVzZTJwSjBX?=
+ =?utf-8?B?WWl5NStCcWxYMWkwaER5RGVlNFB0N3FjMXBhZHFuS3RSeS9DQ0kwSHB0ME5I?=
+ =?utf-8?B?Q3NGWDJNOW00T2FlNythQ21TQUYzUERrSnBHMG9CK1M2UFhQSVdxYmZJbEMy?=
+ =?utf-8?B?dkNVbCtFQ2pWTDhaeXpMdkhDQktUdTF5Y0N2clYzZGlqWDRWck1ERjFhbjNT?=
+ =?utf-8?B?RTFrdWYxbS9tam5zTmM2cHdTWVlSWDhFS1JGbjljbERZL1FjL0xDL2tDTEV2?=
+ =?utf-8?B?THM0MXNmMGQ2dXV6ZFBJeVNxc1hDd2FuemhTT2Q4YXFOekFhQVZRMEllcHov?=
+ =?utf-8?B?WVg1ekwrL1FLdFdMTjQwL2VtUHJ0MEJLZFRUWUZQTSs1MVQ3V1BHK05LQnJV?=
+ =?utf-8?B?bTZodVkxZEVSN3J1bjh0c295UmRwbS9vZmlYT2lxVjk4Slp0VjVDTUUvYTNR?=
+ =?utf-8?B?eG9ESHFQRmhWdUQxNzBHV3hiUVFQTjREcDhBaERLNmQrdThKY0kzcTF5MWY4?=
+ =?utf-8?B?bi9TK1VQL2JOcXBWUjJ5bEdlV2xFNlZ1UFo0bWs3LzdGUlIwc2M4Q2FicHpi?=
+ =?utf-8?B?cGJ4aUF4cGptR1VyTXZRR2dTL3ZDa2FwRWhnOG0weDM3UXQ3dFBuZTU1enIr?=
+ =?utf-8?B?dUM1OHVERFlxV2dQUk11WUw3WFR6WmZBZDhldGZEUmhhL0ppVVM1MkJZdWFD?=
+ =?utf-8?B?bWg4Q1BxcU5ySDQ4dDgvczlZVEFoc21pbEVUYmVtZEtHUHBDOGFsS3RkeFMx?=
+ =?utf-8?B?N0MybWF6VENSZ3lCK2h2RUxoN3FqekFHZ0NkSzQ3WkRsdURKQ3kyckdDZGhJ?=
+ =?utf-8?B?YjhzQVd2c0g1MzRkUmtFSkpXRkxxeWU4T0IzeU9YdTJoZHBoSkhXZGx0M09B?=
+ =?utf-8?B?Unhic2YrYk5BQTJUNjNSdk1mbk41SlAveUIxMTQrRjMzbCtHTE5jdmFyQUdW?=
+ =?utf-8?B?cGE5YlQ3V3RaNXMra3B0djJsT0Nub2JwZVlQN0tMYkpmT1lTb0hmVjIxbVpl?=
+ =?utf-8?B?Vjh3UFVPU1NudDM2QkoyTllNM0taRG4wZkEzWXRGTkVIYTNtYzhiYng0WHEx?=
+ =?utf-8?B?QjRNWEppano4aEYvc0RNQWNtMStKOG5ybWpVc1VEME5IZlcySHdYOUdQemRW?=
+ =?utf-8?B?ZHdWZ01ZaDc2ZWcyUmpadEVkQXdZNUs3SVBHeUM0cmtQM1Z2Z2l0TFlNNGtY?=
+ =?utf-8?B?emVBYnl6U29QZVFWSVNjS2ZXS0hKZHgyNGtZNGhoMXYzMEN2clE5TS95NlpO?=
+ =?utf-8?B?VTdoaXdrOXQ2MmJGVFRqb0FQSFhBck5BZnhLVG14Rk80UFBOeDBITGNJeVpX?=
+ =?utf-8?B?OUUrN25pQUVEaitwbkxZRHd0WWNaRENkQ0I1WTEzSStXQ01DTWRQNEVtSFpl?=
+ =?utf-8?B?MnBBdUloU2hEWURsSGRQRGJvOGZZRGVwWHRzbldzV3A1M3V4K1I4c2dJamMr?=
+ =?utf-8?B?cWxmTHlrd2w3K2FwMTA5blNvUWRSUGFkQW00Skc2NTVINXBTdkJLSFZOSnMw?=
+ =?utf-8?B?RXc9PQ==?=
+X-Forefront-Antispam-Report-Untrusted: CIP:184.107.178.45;CTRY:CA;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:trunk.prismforgelab.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(376014)(61400799027)(3phishing@pot0700013)(32650700017)(8096899003)(54012099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: hu0E2nIfJ269S0/BowUSce2jZ1il9I2yyvgKk51XWshUlFSE11Wcxw5RcIJu2ZijzhQYd3DwWXt4ZrsAGdEMo9lL8lu9grVHeT7cKNa8whhzPbChiSL4clIWbldnSE6Nwh/gWAP+9PUtcE4sCkc5BNJWoELq9b7OmpQUV/WjjIIy2OKbDGPLHZU/7NSxwKnTVt5KRzzjixhWmXxfTvTxP8uwI/CDj309spqcZpqawqEMvyQFKwVyMGsRyASgx18uvW8t7eOctftiIN6fjLXlpFwXjHmEX3y4f/Dd+ZYK+ymiGC7JTxG2Czok1MCqXeSzxZzYha51bqC0UW198gfbX7LfZfw2Qa6Wy/wSUrrbpAsV6BEGLLTFUkeH1iW4l5GBdpaHHDN52Z4wfvzbNueocbSU7ZyDxEZm+XGap1Zd3p6rl3wF4IXdMTDVZ/z1pGjC
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR01MB5756
+X-IncomingHeaderCount: 37
+X-MS-Exchange-Organization-ExpirationStartTime: 19 Feb 2026 04:49:05.5300
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: a0bd42e4-3150-49de-9643-08de6f7235f3
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: DB1PEPF000509F1.eurprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: DB1PEPF000509F1.eurprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: DB1PEPF000509F1.eurprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 2/19/2026 3:07:58 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 8d783149-cd72-43e0-bee6-08de6f7230d0
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.101.127.110
+X-SID-PRA: HCENLMYO@TRUNK.PRISMFORGELAB.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|461199028|3025599003|34130799006|15110799015|32020799003|33080799003|11020799009|5149299006|56000799018|6019299003|13020799006|62400799018|3069299007|84100799003|69000799018|7120799021|32080799006|9400799043|46080799006|58200799021|21090799003|42200799015|22090799003|970799060|30140799006|119000799006|87000799018|470799035|51300799021|9800799015|2700799029|20103052909095|67000799015|15010799006|1370799030|1380799030|1360799030|1602099012|6022199012|440099028|4302099013;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2026 04:49:05.0213
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a0bd42e4-3150-49de-9643-08de6f7235f3
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=aabf402a-122a-4329-9a5d-5987ebad552e;Ip=[184.107.178.45];Helo=[trunk.prismforgelab.com]
+X-MS-Exchange-CrossTenant-AuthSource: DB1PEPF000509F1.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB5566
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.2062055
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9632.007
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?MDJJKzZic0ZPMnVYQURJeTQzWTVHOU85OWxIYzFKMWZRK3VmOFEzOEZSejJt?=
+ =?utf-8?B?SGxGM0xvUDMrT011a1JQdzZ2NC9oWDFZQTRXOWpKSTdFWEVaZFRZSTR2bVF4?=
+ =?utf-8?B?R3FxcDFBS0FLb3NFTjR1SlR6VjNhSFFVTThNZ1BreFZMRkNZUVpZaGJFTEJ4?=
+ =?utf-8?B?WmlpeVlNUkdaR3JHaHlaQWxCdUJtWDhEbmxxQnowY2NZN2ZrZ3J4SWl0MGJv?=
+ =?utf-8?B?TC9MTU9oQk8rcFZ4a2pqRXBYTHFOemc3OWlKajJVL0E4b3hBZXF6bGxmZnQ5?=
+ =?utf-8?B?Q2poMUI0aXduY2E5cG1kSEcwU0gzS2RhdEhQV2hDbjg3NjdWOHB2emFtQ3lO?=
+ =?utf-8?B?NVJSbnZpQmZDbTNIVzNjVTYvY2pJamVPMXh1bm51Q2N0L2RBMU0wVHlKRlF1?=
+ =?utf-8?B?K1RTRjgrcklud3M1bGFqbkN1ZkJQN0JsRWxFV3E2RUtuL1NkR3ZGTFk3eU05?=
+ =?utf-8?B?UjA2c3RncGRoWFBLWmt5ekdlWE03QVREbGd3d0tyR1VVT3d5d2xSS1ZQbXdJ?=
+ =?utf-8?B?M1lZMnlzYXlvNnRGQTc5M0tTbkIzWCtJNmhBK3B1RGd5TENlSFMvVVJ5Wkt2?=
+ =?utf-8?B?WWRBdTk2eHBtSlJHOUJqZllKMnNwYUF5UXNYb3VOZEN5dDdvbnZDM3RVMC9M?=
+ =?utf-8?B?TzlybVVWVmQxa1R6QnFBejcvbjZvbzBFbHljWTZDK0NUNjZoWkhKZHlQL1hh?=
+ =?utf-8?B?WEVBU3B3T2I2WVFpdmJQZDdRTENWbzRyUlQvVVNia1ZUWHdUdG81eXJiTzNo?=
+ =?utf-8?B?SHhpOTdvdEZqWW1QNCtieGNEUGdPcUhSU2xXOUxjMDZWMi93Zzk5Y3BjWXdT?=
+ =?utf-8?B?a0NhUm9hU2c4QUFWNVhOaHpGM2paSjRCQkwwY2NRWlcwU284V2VVdmZTckhK?=
+ =?utf-8?B?NmJ0ek9XdUxBdnUwbitwUjh1WG9lVGdXNGRHS3A4S0owYlZYYm9HbVhncW81?=
+ =?utf-8?B?c3BxNlJxS3JCUVNvMklhNEFSM2RTLzA3VUl2Sk53amJ3MlJPZ1p2MkUzSjhv?=
+ =?utf-8?B?U2UwZkNJZzAvZjdLdHJaSDVHVVF0UFV6bHVZOVViOUh3YjRiZUNmQWp3YWFO?=
+ =?utf-8?B?WXUzNTRraXBiNXB0T0Y2eFdxT0tCMzBnY3MwaVJsRXZGYnpyWCsvMk5ub1lp?=
+ =?utf-8?B?dm1reURjYU5NdGM1QjVjUVU1WVpDbVh4eTRLOHcrb1BSYkpMdjFVZXdoaUF6?=
+ =?utf-8?B?RGpLUzFrekRUdHUxVWdWK1p5UkVqZm94SjhkRHNkb3J5cDAwU1dvVDd5THM1?=
+ =?utf-8?B?WVAxSktKa3pPdlBlTjM3dGZkMVBxR2pqa05zeXVpZEdlTFBEeDEzTVZKZk1X?=
+ =?utf-8?B?ZUdSbTgrM3dJbEp6QlBJejAybmJNMkF4L1lZM1hSQmRHK0Z3eERLL2JseFRP?=
+ =?utf-8?B?bEE0bGR1ZlVxYjQ5ZEszTkhVcDBtcXpMem10NnN0VHoraFRBa3pTUFBPWXEw?=
+ =?utf-8?B?UXdiR0ZpUkxPdDFldXE2UVBSM1VsbFhiQzBNeElpSnlubFVYUklmaXloR3Bx?=
+ =?utf-8?B?SmFuTUtsWFpUR21IZFg0RlhnVzY5Zm1wcGxFVnFiQzlZOUFGVWFJcy9pQTdJ?=
+ =?utf-8?B?MVlHOEJ4MHNuNDZLdUN0TTZ3Z0locjJtYW10d29KbHZucGFDYlVjRWRaNFV0?=
+ =?utf-8?B?K29LUDJvT2xzQ0VjRDhQYXJjTlplb2cybVVZRU53c1Vjb2VLVjNHVlg4bFNi?=
+ =?utf-8?B?bzBYQ3p3TnRtU2VZS2VCc3hXQ0hKYmZ6YlI2WENpR2pISlljcHM1dG1RUVYy?=
+ =?utf-8?B?SzI3Z0ZlbWoxbDN0Mm8ySXVybm1QTmhEaU5icFU5ZldKN3ZzclJQaTlZeDRl?=
+ =?utf-8?B?U1J2aWFVTWpxL2VOa3QvOGFpcUF4STljNGFuY1lhOFVXbFExbFljOE0zWGlj?=
+ =?utf-8?B?V2NBcHYvK0tMbVlqeUhJTEwydW9WSU5KbjBkK2w5MUQxTjhEN1lxZWJQaGpK?=
+ =?utf-8?B?VVFzNVBuZTJDbnZJQWY4YTQ0MHViWVZKRkZWb0Y1aURCYWFBK0ZpSkRGdjRW?=
+ =?utf-8?B?SzNvT0MxUEhyM1lvR09PRnNJOHNURmNhK3RLdEdRaWtBa2FBR3ZSZmZta0Rk?=
+ =?utf-8?B?bXNuOXVLMlRGSi9SS3B6dFZ1UEFiM0c5N21DbDRqWEQxNlJ5R25HQkFRK3pT?=
+ =?utf-8?B?V3VPMVQ5TlhGdEhTZ2Z1M3A5VGowYXJJQkY1MDZJSW0vWkUvNmlnOVhMVGcz?=
+ =?utf-8?B?RklkUDFSd3BPZTZCUmhiWndySWF3dE0yUnNRalJOaDdiNXZRMDhYZW14SlZj?=
+ =?utf-8?B?Y294di81Q3Q1c3VEdWdCTDdUaG5YTHNGT090QzEydy9qMS9Ub2duaXFFQlVS?=
+ =?utf-8?B?UjNLYWdpWjVhUVdrS2R6UWV0cEhkeWF5ajBSeWE4Z1JXeUVhSjZTVk5Tempq?=
+ =?utf-8?B?dTkxWDJ6dmkxVENVYTBUMDh6NzNHUWN1VkFrZkdZZFROMk91SlZmR0xGY3E5?=
+ =?utf-8?B?V25pbnAxYWpHRmNOQVVOVy85YWZ3VU85TG9nWnY0UDdBZzBibjM0SXpTVUd3?=
+ =?utf-8?B?d3EwUzBTNGtlalZoU0YrZ2dWNmtIZWR3TVdZazB3N3hZcGIzS1UxcWl6bXgz?=
+ =?utf-8?B?VStzbWtoQXg2bDR4MDNOSEZReG1pZlMwZ3VSd1RibzdubmZiWGo5cDhXdXll?=
+ =?utf-8?B?dTdUSHBHbVJmU1YzWTVPTmxVb21KRm40VWhkamFia2lORC9LOER4ajBWUjNC?=
+ =?utf-8?B?YmVPTzRQbWlydEFVSkVPZW1ZekxLRDh1emk4SzFjL0VOU245Q2RNZ202cUtj?=
+ =?utf-8?B?N0E5dkowbEtGQWEyNHcyYUpmRDdFMVdLcFFJdTJpNkRXZ0NCZGtJWkFEbWxv?=
+ =?utf-8?B?UWg3Y3hsVUV1ZFY4Vm54cGwzbWlFazNQVEtnTHhHd01pelZEZWNiQUd4L0Qy?=
+ =?utf-8?B?ZEV0QnZuNitmM01idXI4WHFRMWlFYWw0cjkreEpNZTRpVW5nY1FFY3ZRVGVC?=
+ =?utf-8?B?K0UrckVuOWdqY3MzdDJ3MHNNblhKOURwQ2tkR0lhK20rRlE5cTdqUzB4dXNX?=
+ =?utf-8?B?MCtVU1U4V1p3YUFvTmhFYk1FNkgycFhwSnh3STIxOTFTS1AzbGswYnlLU1c0?=
+ =?utf-8?B?ZDVtZm5PcUVmMU5TaGYwRTdVL2VuT2UwR3BzT2tGSWM2TEc0Tk1NWEFPTW9D?=
+ =?utf-8?B?UTJGM1ZXL09FVGZ4SmgzeG9wVEtDdzRpeHMxUC9hMXhGYnJpRVMrWU5CM1ha?=
+ =?utf-8?B?dnVrVjM2cWkrUDdNZ0YxcmVCWVN2MFI3M3MvVzQxVi85Ymk5YkV6SldvemxH?=
+ =?utf-8?B?ZkZWcFJWcnlSU1pTcHRNVlFNOVQzMCtNWVhnR3RJeGVUQ0p6NVplc1F6MWtJ?=
+ =?utf-8?B?di9pWSticEozL1MybTRFUGE3TThwc3hjY3RuWVRXTHdXL3NGVTBJOEoxZ0U5?=
+ =?utf-8?B?YlFaR1hTeUFIZlRrMjJqKzVDN1BkUEFWeVpCMktpOHlPWWdDMEIvMFF5TnR5?=
+ =?utf-8?B?RDNXMEgrMzRpeGxSQnY0OWdjbk9QZWE0eFRWZ2EzSjNieGRsL2Y3SFI1ZHRX?=
+ =?utf-8?B?NUp3cGpYN0NpUktYNUNMd1l0L2o5cSs4aEJWeWZtUVVNcmE3VjdHbno1ejZC?=
+ =?utf-8?B?Y3J2N2ZnRXlScGh1cFg4a0JJYVZmSTNudFVNZG9xZUJxYTdVMXFaMFlSZnJS?=
+ =?utf-8?B?djZmNHkrNi9JaXNZSmdZRVl2aWF4RUhHTm12NUszY1BqeEQ4dkRrZjBBNlh0?=
+ =?utf-8?B?YnZpWGJKRjRCanhaRk9pamtWb3Z1ak9XcjcxeC9OL2wwWmQzN2lBR1g2ZWxz?=
+ =?utf-8?B?QS9udmhyMUFneHllcWRrMzVFaWR4U0NqeHVVbitjUk9xZEV6REZkL2cvUTFa?=
+ =?utf-8?B?L2pDS1lvMXp3b2p2SkRJb2FBazRncVcrT3dJb1ZYNkUrNFdmL01iYkFPcWpX?=
+ =?utf-8?B?d1BjQis0TDY4Qk4yYTREb01CL1gvT0t6WnVBaDIrMzk4bUFaRkEwcjE5K3ph?=
+ =?utf-8?B?THdUWXhMVmxxZlB6aXhUemNpVGdHVHl6UWlvVnNqQ0NHNVVBOERNbGhvUDMy?=
+ =?utf-8?B?M0c4azltODFOYmliR2lWVC9yU0FHWHp6ZUJVQVFNSlJpcHVyWXVmMkljNkhT?=
+ =?utf-8?B?OGp4Ti9DdEhjNGEyUTBxS1JqOXlrUFFhVlFkOTFsSFpKenRxTmpBSTdCeDVy?=
+ =?utf-8?B?TlA3bjg4V1hvRWVJb3dHdjJwWVlUZEp1OWRNZTgrTEsvMVVvbkNxWktWZEVH?=
+ =?utf-8?B?Mm1WdWNVRDZIanNtZVJPK1ZVekdjc0d3dGZ5TFpESGc4cEhJY0VzR1BtQlI0?=
+ =?utf-8?B?b3U1Zk5YbHA2R1JxaVhuZ0k2SGlaWHBYb2F1Ny85WU5iYlBKZ0dxMlhrdXBF?=
+ =?utf-8?B?TW9VMjlpb3Nyc1haR0FqMG8wN3NpZGE1eU81SGF4aTVIQWtjQm8xOGd3b1Nw?=
+ =?utf-8?B?M2lnL0s0dENaQ0xYNjRxMWVMaEM2UWdUeTNmK0tNaVZwNjFSTTNSVkZuVGxG?=
+ =?utf-8?Q?KWs=3D?=
+MIME-Version: 1.0
+
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<body style="margin:0; padding:0; font-family: Arial, sans-serif; background-color:#f4f4f4;">
+    <div style="max-width:600px; margin:auto; background:#ffffff; padding:30px; box-shadow:0 0 10px rgba(0,0,0,0.05);">
+      <h2 style="margin-top:0; font-size:24px; color:#222;">Trusted Tax Relief Starts Here</h2>
+      <p style="font-size:16px; color:#333;">
+        If you’re facing IRS debt, Optima Tax Relief could help reduce what you owe or settle your balance. Our team of tax professionals has helped thousands find relief.
+      </p>
+      <p>
+        <a href="https://trunk.prismforgelab.com/4nLruE2622fHaQ285aztmhanzaz551FVRCMUBYRAXGZRL26FYHQ12044A9" style="display:inline-block; background-color:#005BAA; color:#ffffff; text-decoration:none; padding:12px 24px; font-weight:bold; border-radius:4px;">Get a Free Consultation</a>
+      </p>
+    </div>
+    <div style="max-width:600px; margin:20px auto 0 auto; font-size:11px; color:#666; text-align:center;">
+      <p style="padding:0 20px;">
+        This is an advertisement. Nothing included in this advertisement should be taken as a guarantee, warranty, prediction or representation about the results of your situation. Results may vary. We do not provide tax, bankruptcy, accounting, or legal advice and nothing contained in this ad is intended nor shall be construed as such. Read and understand all program materials prior to enrollment. Not available in all states. Optima Tax Relief is tax resolution firm independent from the IRS.
+        <br><br>
+        To stop receiving messages, please <a href="https://trunk.prismforgelab.com/5hNjDz2622slbj285qajkzbdueh551QPXPQKUPKDCWIDU26CPAU12044C9" style="color:#005BAA; text-decoration:underline;">visit here</a><br>
+        or send a request to: 6 Hutton Centre Dr., Suite 300 Santa Ana, CA 92707
+      </p>
+    </div>
+  </body>
+</html>

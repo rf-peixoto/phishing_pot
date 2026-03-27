@@ -1,0 +1,426 @@
+Received: from IA0PR10MB6796.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Wed, 11 Feb 2026 01:49:19
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=zHy/t33GGVOnMNMtK+rnu/yEkah8vmmZf475rO2NiTwEgleVyfVnXRiUCC0IF/WQIJrzLTPbd/wXnI/Kg6/XR615YDEQ+owmn1PQ2c1gbPh4u04tnMuKnBMnLKas9b9/1N1ZcG8sr1KxN0HWfB3HQcwcALfqf2oYVN5Q0vbYa9aw3W2/mPpZSN7pfpvOKMI4hWghh6ODzJhHXBWxtpgQDHswkgN3bRG7bb3KmVcYe/Wkvb6C8lzhxLznXjgEGzCHs3WqQx2xelGEA8P57MD3eOzfE7S2WcMfV1L717fQax3TpNhuRHlaqmgs2b83pZYkOZ36XXMk/Dhk3hzpbOeImw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KJFCbc/zUm9hq/ClkxjxD62MahqAiK8ehqe6kiMhnws=;
+ b=KPfO9BqF5jg/n9hyGcHkgbcdKahnGhQH9iN4MfO6Nuask+4Wq9bHENg/SFGhnM5yWq2fH2Z4x3M56Yv0l8AWSoN2x+0qeFBLvwu67+blVld+i3LhM/Db0xbNaw8RbQeE12d7Sv6swLYLOQgbiBqxqYPeqjIfkhG9StzAzmNhwte+f/aut1Su0AcIOwS8zfGAEIVCytdpcqnpnhAss5MQDlLmBPRzsLg5M4UBdjkztEVJ54rUQ6uxmpwh6sZ4ZWFnrGEA1zAetZbJCb1Rxeiwo2AMSC2CpK496pBZknKSEyfb5O0VgpKglOunOrdagn+1mvMHNqung3/d/eRFn+JpvA==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.101.127.127) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=rare.smartwebing.com; dmarc=pass (p=none sp=none pct=100)
+ action=none header.from=rare.smartwebing.com; dkim=none (message not signed);
+ arc=fail (48)
+Received: from PH8PR15CA0013.namprd15.prod.outlook.com (2603:10b6:510:2d2::16)
+ by IA0PR10MB6796.namprd10.prod.outlook.com (2603:10b6:208:438::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.18; Wed, 11 Feb
+ 2026 01:49:17 +0000
+Received: from CY4PEPF0000E9D2.namprd03.prod.outlook.com
+ (2603:10b6:510:2d2:cafe::eb) by PH8PR15CA0013.outlook.office365.com
+ (2603:10b6:510:2d2::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.8 via Frontend Transport; Wed,
+ 11 Feb 2026 01:49:15 +0000
+Authentication-Results: spf=pass (sender IP is 52.101.127.127)
+ smtp.mailfrom=rare.smartwebing.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none
+ header.from=rare.smartwebing.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of rare.smartwebing.com
+ designates 52.101.127.127 as permitted sender)
+ receiver=protection.outlook.com; client-ip=52.101.127.127;
+ helo=TYDPR03CU002.outbound.protection.outlook.com; pr=C
+Received: from TYDPR03CU002.outbound.protection.outlook.com (52.101.127.127)
+ by CY4PEPF0000E9D2.mail.protection.outlook.com (10.167.241.137) with
+ Microsoft SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id
+ 15.20.9611.8 via Frontend Transport; Wed, 11 Feb 2026 01:49:16 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:446360D6A43B233067B115A31386BC57EA70DF4FA55163D172C090F9416DF79B;UpperCasedChecksum:50023F4E7A7FDCD79C921939A488D45EF9D0F7F7CD5A2E633F9DE1244EABB029;SizeAsReceived:7835;Count:37
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uFtTpJnhhBxo/ymrZfAbUBPGxy6891SMRqJn2PiN6UCN0punABLVDmflNbWLtcsc9Jeadav3GjQ2kOEbIPgrI0OF9gbv99TDT51D1yL/Hur2uQOGASE47PwTBFJZBJaeiSef5mvZHts6El3D+Xz2+wRluKzKCiSBL1ehB7pCmkMwD96DoRuRzMNfpGQS7XIYWtq6slWNiHqFpvWJ+umL3fBeInfwtbbAfa+LQDWKcvwyyLYokmGRJf36n1aDJgYmqRIAxPOvQ5LTvpqsycAWCCxu5wxokSi6avYIKqx26y+b2gWCV5HPKYpFzIWKtuVpZzEPZJ4UNdnnj6/QqNh6+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KJFCbc/zUm9hq/ClkxjxD62MahqAiK8ehqe6kiMhnws=;
+ b=FKLebeAkDpHqqbnLZNQSti/qN2U5mtXSxB9G/4o1KfmQvmEpz7cuFjn9wJpbsYSbHAq7zRDNb+lxaJydIsMh0J7F9OQUKh/vgOrdCDwzJV1rMhmQaOBZZqGJ2k7JcwfHD4gs6NRKUSZYallnbT0jqSXpehbmkRiGvE6QA99dBp3c2Au/g9ijHu97m6ulLBwcgM1m1DUgORwbmKdGWBoUkD9g+bsvENW8d9QhreYRqCek9qcki561uFpsOMv90L8RwjyjyxwzdClpjB2bo5oq1F0q/3VHfQW6+ZVkNey9MvEnw8JP8KDxZjfAPdbw8Y+nYXxAhyeF21hkENEM2aX7jQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 78.159.110.149) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=rare.smartwebing.com; dmarc=fail (p=none sp=none pct=100)
+ action=none header.from=rare.smartwebing.com; dkim=none (message not signed);
+ arc=none (0)
+Received: from SI1PR02CA0017.apcprd02.prod.outlook.com (2603:1096:4:1f4::10)
+ by SEYPR06MB8312.apcprd06.prod.outlook.com (2603:1096:101:303::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.18; Wed, 11 Feb
+ 2026 01:49:14 +0000
+Received: from SG2PEPF000B66D0.apcprd03.prod.outlook.com
+ (2603:1096:4:1f4:cafe::e0) by SI1PR02CA0017.outlook.office365.com
+ (2603:1096:4:1f4::10) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.8 via Frontend Transport; Wed,
+ 11 Feb 2026 01:49:13 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 78.159.110.149)
+ smtp.mailfrom=rare.smartwebing.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=rare.smartwebing.com;
+Received-SPF: Fail (protection.outlook.com: domain of rare.smartwebing.com
+ does not designate 78.159.110.149 as permitted sender)
+ receiver=protection.outlook.com; client-ip=78.159.110.149;
+ helo=rare.smartwebing.com;
+Received: from rare.smartwebing.com (78.159.110.149) by
+ SG2PEPF000B66D0.mail.protection.outlook.com (10.167.240.26) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9611.8 via Frontend Transport; Wed, 11 Feb 2026 01:49:13 +0000
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+From: "LifeStory Quotes" <VsCmIld@rare.smartwebing.com>
+Subject: $500k Term Life – Less than $1/day
+Date: Wed, 11 Feb 2026 01:40:23 +0000
+To: <phishing@pot>
+Message-ID: <51626f07-3eb1-4b36-a9da-a62df558bde8@SG2PEPF000B66D0.apcprd03.prod.outlook.com>
+Return-Path: bjVaLQhV@rare.smartwebing.com
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: SG2PEPF000B66D0:EE_|SEYPR06MB8312:EE_|CY4PEPF0000E9D2:EE_|IA0PR10MB6796:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: 87c5b2da-a03a-434e-de0c-08de690fc3f0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|4022899009|32650700017|3phishing@pot0700013|69100299015|82310400026|61400799027|7049299003|3109299003|376014|13003099007|8096899003|54012099003;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?UWlpTS82Ym9GWEdLSm9HWHQyVHljYWtNR3h0NW9BdTBxaVB6MWpSNm1Ud3NS?=
+ =?utf-8?B?MS91ZzZJWFFyb2p4NXR5ckVUMTZNUzE0bW5XQ3VUakJZelQ3RlVVbGEzd1Nk?=
+ =?utf-8?B?ZVNwenZpbTdFeU42bFcvOHBoUzZXRDNGa2lYdzluL3pwajdNcWRNbi9WYVpL?=
+ =?utf-8?B?c2ZhUUJ3bzZ2RDUrOS9KSDhzVGpjOWV4Z1owWlM5alpCbDNnVEV5Z2Q2eE1G?=
+ =?utf-8?B?VjNaRzVuNGhKT2dlSmVZM0t2UTlsZTR5cFllZzNiRmJIbUZ0dko1TmsyMEVz?=
+ =?utf-8?B?R1N1TWFkajlkVjV0QkFsN24za2NtYURVZ3pIM0RlUEIyS1MrR1Y5L3ZOaXpw?=
+ =?utf-8?B?L29TU09LeE44UW5xeWNRK2RTRTR2MzRhL1l3eHRMOGhvMy9Jem5LUUx5MWxl?=
+ =?utf-8?B?aXQzVzhLK2ViMy9lMjNXRHRkeURvS2FPTGhzNW1jbm5Cekc4QVpTVGZhNE9P?=
+ =?utf-8?B?bGo1ZHZwK2dKZ1BxV2E3d3BHdFZxU01JN0pEYTc5RGF3bzBZU2d6M0hOblVD?=
+ =?utf-8?B?UzUvMElROHdwMnJHL3ZISDJuVEF4eEd5Wjh1NzVjNXU1ZWRpYVNzbWp3b0sw?=
+ =?utf-8?B?Y0prMUh5YllUSUh0eFVQTnlLVmwvZ1cwbE5BWkZibzBtekU2WWVmc2lsaDhU?=
+ =?utf-8?B?anNZazNLNU5WOUlKRlNKSGgyeUNKZ2JEK3BBK1IzNEh3OXlTL2JYbm1wWjh4?=
+ =?utf-8?B?WDUwRkdGRnN4WURlQjJQNlZ0YnpRaEp3dGVJVWg5SHQ3S25rRGNnNHNOVUJQ?=
+ =?utf-8?B?Z0pvNlNNT2lxU3pjWllsbVlIRVhHeG0zb21Md2lnRlFpSXczRm1yZjR6YWFs?=
+ =?utf-8?B?Z2ZuSHYrWFV5ZkhtejV5Z1V1bzBRZVV4OHZpbWx2bGwyMWRpQVlRNlFRODNl?=
+ =?utf-8?B?b3lsL3lXY05OcmFqM29BUzBtSDdxcXpOSnFON1JsRU53ZUlRdlRNUDhMeHg2?=
+ =?utf-8?B?NVNuc2NMMWxaTlBuK2tBT204d1l6cFk3UVg5QWNkcnZmMklHV1FIZzY4cUh1?=
+ =?utf-8?B?ajVmTDdNYVNkNEdwdW0xUFNNQUNNK1NNSFdsdklRVUVoa3pBNllwM1ZacWZC?=
+ =?utf-8?B?YnM0b2s4ZFh2VzFaSVRRbWtoejMxQzAyeW96NGtSNXYrSUhQZHoxS2dtb3JG?=
+ =?utf-8?B?c0dicTV2Ni9tN0JoNXVCeC90SnFpZkhJczZ3TDZkbXNRTXZWQTNPZERoakdu?=
+ =?utf-8?B?ZGdFTFNNWkJIWGtMVjYyemF5OEQxQTJHYjk5Y2JQQzI4dHZwY1l2UURac214?=
+ =?utf-8?B?SzRnTzFlNlI3dFcyckdTN25kY3NhUWoydVhmcStiZnJVQ2JzcS9VVmZUbWVY?=
+ =?utf-8?B?eFRDOFVrV2g4dE9uOGkvLy9DREhzN1A4MnlYUHZMbGFhcXN0VHVBUm4zNU9S?=
+ =?utf-8?B?MlZiWU0wczgzMEZybkRmZkxnMjhhcjNVUWZUV1dHYndJeDlraWQwNnVPYmNO?=
+ =?utf-8?B?T2VaUEg4MjBNeFpsV0NqMVFBa055T2xGNVo3cnVKck9nUjYvTGhaUnhYYXJO?=
+ =?utf-8?B?TGwzMHRXT3puSlRvVGVIZVJ3bDNkRjh5M1BCMDFVazlOTHhJckMzY25ucmV6?=
+ =?utf-8?B?YVJrcmlGRHFEanp6cTdFRVEwcGFMS05nNk9mNlR1UG1Jb29pNEFRbFZSTnl2?=
+ =?utf-8?B?RkFRb01IWU5ndGJKTVlHZno1MmdLeGVGQnVBV2V3Rkc4ZzZ0TWQ1OE1qaWVO?=
+ =?utf-8?B?cTViVk5RTHU3R1c0amZuN0d2ekdVQUJpZVQyZkJTM3JGd0tYbW1GVHdGTE5n?=
+ =?utf-8?B?UXdiUWhKc0t1QktVbW1zMVpMekQ1S2dFeHJjSE1ST3REd2g2SisrbmVpeTJa?=
+ =?utf-8?B?RWdvZEtTbTVuL05zSnRPdk9tOHpLbWwzZmkva3YxUkRLTkVXRUlFQ2ZRaXhy?=
+ =?utf-8?B?SmNEK0lqR0NsQlkrazBoUFdXNEFGazZKSnFSRlB4d0xpOFc3RUVYb2wrOHJG?=
+ =?utf-8?B?aFVYbGQzampIdGxiMlMxbnc4TUpabTZoRFdjS2drZ3YwTHlaRkhrYXBETjlh?=
+ =?utf-8?B?N0RhamhoelIvM2xlekJvbTU2eFcxNFB0MWJiZzZFVEJHa1NINWxoK3hWQUhN?=
+ =?utf-8?B?R3dHVkROVG5HYW11cVJkVkFSS1V2K1QxbGZuRHdEejc5WStmUFI5dTBpVHVR?=
+ =?utf-8?Q?9OXy3Qxxg5rynFNOr6jb/mm4u?=
+X-Forefront-Antispam-Report-Untrusted: CIP:78.159.110.149;CTRY:DE;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:rare.smartwebing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(4022899009)(32650700017)(3phishing@pot0700013)(69100299015)(82310400026)(61400799027)(7049299003)(3109299003)(376014)(13003099007)(8096899003)(54012099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB8312
+X-IncomingHeaderCount: 37
+X-MS-Exchange-Organization-ExpirationStartTime: 11 Feb 2026 01:49:16.5957
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 87c5b2da-a03a-434e-de0c-08de690fc3f0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: CY4PEPF0000E9D2.namprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: CY4PEPF0000E9D2.namprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: CY4PEPF0000E9D2.namprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 2/11/2026 1:44:00 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 9bfcb75c-f26a-4c0f-0eaa-08de690fc248
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.101.127.127
+X-SID-PRA: VSCMILD@RARE.SMARTWEBING.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|470799035|119000799006|21090799003|2700799029|15110799015|22090799003|30140799006|461199028|13020799006|970799060|3600799018|9400799043|9800799015|84100799003|34130799006|67000799015|33080799003|15010799006|10300799038|1680799066|42200799015|32020799003|87000799018|7120799021|47200799024|31140799006|20103052909095|9000799056|58200799021|41010799003|46080799006|32080799006|62400799018|56000799018;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Feb 2026 01:49:16.2674
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 87c5b2da-a03a-434e-de0c-08de690fc3f0
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5fc7ffa-39c3-4a88-9d4f-ad9f4a5ec515;Ip=[78.159.110.149];Helo=[rare.smartwebing.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000E9D2.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR10MB6796
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.9122537
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9587.013
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?LzJLNDQ5aytNMEVwZUJHNi9EekJMb0tMbUhkMEE0SXdyN3FtdGQ2K1gveXVY?=
+ =?utf-8?B?SG1yRWFOM3JXcTIyT1VxLzdFUHpZbDVzVkFXSExxdDlHcnVsS2RUdkNWRk02?=
+ =?utf-8?B?QmJPNERNWnlhQTFSOWVGcTlkNWVYVDlONHB1VmN1ZnBzbjMzTVFWYUlCMlhK?=
+ =?utf-8?B?VDNwcFdzcmZIeDVxdWlObVg0U0ZkQlM4ZElTZXdnWjZoTC9UMEdaaXlWU3Fw?=
+ =?utf-8?B?bDlMK3ZzTFJOZnR6K1d2d0FPNjEzSnY2ODNYdlNnTmRSeWJiQkZ5bEJLQTMz?=
+ =?utf-8?B?TzArOHl5V0VrOG15emE3QzZSeXpKWDZ2bDJBenlMNEFKd0RKMmZCL0NRRDV4?=
+ =?utf-8?B?anUxaG81ckMrZWZkaFIwUGs5TlZOVXJuc2JTcHl3TFp3R1gvY29sdElKdCtk?=
+ =?utf-8?B?RkxIUlgrSDlCY2hEKzBKZTFSdkJ3OE90M2hoNW15K3NMRzJQTnJDbDkxYVdy?=
+ =?utf-8?B?cmpidmxlRjk5ZWwxaWRxYVZDaVUydE1hZmhxcldvOExEclB5eCt0aVVlUG1h?=
+ =?utf-8?B?cm5ac0JTOW13R3RnRWtHOVM0TFpEeUJQM2hJWkkwOVdvWGRyUWV2dkhVREpi?=
+ =?utf-8?B?UmNaREphQi83LzFnUWRaOTJidEJ0NjlCelk4Ylp2aVBIOHNwaDJKdU5EdUEr?=
+ =?utf-8?B?S21lUmFzeE11YkhqcWNLV0JFdlY1bzExV2xuMDV5OXY1ODgwa3VyTFZKNUFF?=
+ =?utf-8?B?aW9uV3lNa0ZOSjVIZzhNWStCR1hDR2RML05RMGRYMFZhSjQwOFBHd3d2ZElF?=
+ =?utf-8?B?Z1lXd2NDL3pFRkUwVHVNKzRpWHhEQTdYZFlyVmlPTkV5MWZFSmY2cXErSitv?=
+ =?utf-8?B?VEF0SGZiTmZ3Y2VnRFlxYldjUzNncURwdFF4RW4xREY3eTkvalRXbXhEMlUy?=
+ =?utf-8?B?dHZFdFA0eEpDOEZ0NEZaQjJHaUI4Q0kvSnlweklDWW0xa3dsVEZmcURhamJx?=
+ =?utf-8?B?c256TFU2WEFYY1orMWo2bWprWDVmUkN5TzNvUjJVUExjNXU5VUhpYnpjTXRm?=
+ =?utf-8?B?R05jaGxHYm1tckRVQmZ3YVlBcXZyOStWdE5qZ0NTMlFjQ3VyZEMyODk3M3Jw?=
+ =?utf-8?B?M1B4d293MzlrbHIxTDZYNnlOZE9qOEVtYUlGdVdDVkhmZFltRmRzVVB2M1Y2?=
+ =?utf-8?B?RFVGSGlQV1JPZ1JkcUN4ZHlCVHN0VUpWL3hmYmd6Z05ILzBrSkQwZHFIMlZY?=
+ =?utf-8?B?MUZvUENrTDdYUlc2STFWZGY3TTBLaWUySDE2UGY0OUxTbXJwWnNCUktRYXVS?=
+ =?utf-8?B?SHpSWU90YjlpeWZEYVpjME81V3psZDRrOUFnMVRXaGdqc0VCdVYwRVQ1a0JS?=
+ =?utf-8?B?cVZJZ2VGS2NlNmtDdDhaOHZMSTdkY3lMbURMQVptbFpJb1NvVmZJUThuQ0xp?=
+ =?utf-8?B?bGd6Wjd1cVR5akNob2FySjN3MVFKSEdpRUVSc0dxYW9Vb0d2aWdUbGNvWDdq?=
+ =?utf-8?B?c21vTWpkT2xhekxTaUJoenUvdmxUcGJhWEVrdUJDd0Z6QkJKakZtZ29Uazg4?=
+ =?utf-8?B?Q0dUS0g1eklYOXJZZW84WlBLUVFKZWovWWluUE93NTVzc3BEMXFEV3pXWmdQ?=
+ =?utf-8?B?b291RVdqMTVQYU1XOVh6VmhINWR4dG1HSDRTUldTNWNISU9LNTZaL09jRUNI?=
+ =?utf-8?B?Z3Q2bGd0TWgvRzgzUmFMRkwxRXEyV21Xazd4ekl2RGExdzVac09ReXZOTGtW?=
+ =?utf-8?B?b2k0VERjN2hqN0RlTHBTVmszWjdUS0RmOE44YWdwQXc3WWNQeFBVeHJCVVJu?=
+ =?utf-8?B?L08ySUdsMDlIcm90b0VXdWlzWit6emg5S0dHdUJBTldWbkl2SSs3VTNLNEpx?=
+ =?utf-8?B?dHB0T21OaDBoUVlCa2xsTHg1emJGdUxiNkR6VzNzeGlKaVB0VXBMeW5rYi83?=
+ =?utf-8?B?QXlUU1JUQnhmamsxMG9pUmFKbXBRRDlyeHpwbExTajBWZ1V2b1pzY2Y4bU1i?=
+ =?utf-8?B?ek42MnRtTU5FaXB1ZFZpNTNEVzdzZlBlLytHbVlIdWNEUXlDWSswVUdrOHdI?=
+ =?utf-8?B?bWc5SzhnYm1nRkpnS08xWXhnZ2o5WW9sazQzTnVtQnROMzA1KzRsTnJxbGxD?=
+ =?utf-8?B?eGtrMndnREs2NXpuQUNCMHFNVXFSSy84TkthTHhhczkyaXMzc1UyR3FWNkdS?=
+ =?utf-8?B?OFJVUlZQajg3OUVRT2lkb3RTcWZuU0J3djhSbm5VMytiRTdTUlJESHRHenhM?=
+ =?utf-8?B?aFFnS0ZuR3Z6QUJNZktqK1dqbWJSNmRSZFBvNWZUYUNaRTF4ZEdwL3ZPck9k?=
+ =?utf-8?B?RmZScytGVHAvOGhuS0RvUDdCNDhVdE01SkR5U1JPYzdmQmk5c2Fsc2swOURM?=
+ =?utf-8?B?cTdXNFgrNjBzMmoyZGNCdmswQ2NkUTl2UUhiTndtYnlVb0IwTitiNGNkK05q?=
+ =?utf-8?B?S2t0QUNJVnBzN2JneWVZRStyaCtPdG44R2crQzdudnMzd2o0SEE2MFh0K0RZ?=
+ =?utf-8?B?M3M1ZHdnTzJLRE55R2ZQVm1TbGJHeWd1bVk5N1RqekJhWjByc0k1ZHBrZ2Fu?=
+ =?utf-8?B?SGJsenA3TVgrVkgyaVFNeTg1a2h6UmJwQ2VFbnRzQlg4UFVWcDZXdE9KanQy?=
+ =?utf-8?B?M1dCcmN0ZUtkUU8xNk9LMFJIWmhuL0VNMUtVYUxzNUtvamE1cVFNR3h3V0Ez?=
+ =?utf-8?B?R04rY1JlTDlRUm9jYktCYU1rejhBZDliRURxdWo4Vk90Q2xaTTlJRmtHYnpQ?=
+ =?utf-8?B?V1RBUzFKakR5QmxMNVhRaFBWQzN6UkM2UitiZ09DVDhmT0VLZUs5bVMrQ0Vs?=
+ =?utf-8?B?VkQxSGQ0eFhyMklJSHE4VzlkM3BRT0dwOHJmM2p2QjN3NlQ1OGt1TzJiRkJk?=
+ =?utf-8?B?K1FzTDVySS8wdFZOVUMyWEJ6UXRmVGxwK3pQUFN1VzJVNEl4dXF0ZFpzQzhT?=
+ =?utf-8?B?bW9FYXRFK3JzelZiMm5xL1Nza3hJRWwxNnJJNDhRR2trNjVpSjZkRnJYb2Qv?=
+ =?utf-8?B?dXdSN1Q5YjBCWC9mSGM5blFTZDlnQUV3dThJUFhQUk9aRStkL0JFbzZkM0pq?=
+ =?utf-8?B?ZjRVN05iUVNYQVhIeVBDVXNrc1F4dHlneXNWTFJhYjk5RzVBZlphRXhqWEpu?=
+ =?utf-8?B?WXF6ZldDRmNhYzg2Q25pemFzSHU2NTJaWDExdzdwNmFjMGZ0TDRKNkJqUjAw?=
+ =?utf-8?B?S2V0L05zNEF0UEJNNGRyUUhmbzVLdE51MnRHLyszeDd6MllwY2FnZGl2alAx?=
+ =?utf-8?B?ZmVQUFNFUmdoaVpvbEg4dFAycTc1b2VXUitsK2J3L2NScnM1RnJZUHFmYTh0?=
+ =?utf-8?B?NlFSSVpWSk9TT3d3ZGpnQ2hnUTJ1UTJZTnY0cG9ScGQvZ2EwSG9jbS9OYUVM?=
+ =?utf-8?B?STFBNjFCdEpDQldmbzdjdTVuYWVsdVVOeDNLRlRqYjhFbjhMTE4zRWRGcHI3?=
+ =?utf-8?B?U3dPQ2xEcVF3VFBGcE5tNkhGN3hmTXpwN1JwZW5DY3JDdHd4Z1hsWlZ5QXhn?=
+ =?utf-8?B?WnJuWThDdnBKV3YrYlFaMDZ2c01IL0FXYVk3SmNwOVRGMmFGQjdhNkVJSkRq?=
+ =?utf-8?B?bjZwa3Q3Mm1VZzZ1c1ZoRUVSYUx0NnA4MjJIOE9SYlNLRk5UaHJEQ1ZMVThH?=
+ =?utf-8?B?MWl4aW5vQ2dpVHhqOGY2KzMrQW5yblBXTlhDMGtFVktFN0dwa2kxNFg0N1dN?=
+ =?utf-8?B?MDUyUjFYdGhjanF1UmRkSVl4OU1vMExETFhCMktxcDhmc0trQzkvcWJIUnhE?=
+ =?utf-8?B?ZE9NL3NIMXA3Ynh5bVFaRlpOa0ZGNS9FYThVRTBHTnU0WUk0N0JJQmp5cG1k?=
+ =?utf-8?B?bTdUV0tOM3VCWUVEa3FOUXZnMldDQlJONDV6YWVjVUpkWDI2aGo4R1pRdmIx?=
+ =?utf-8?B?dWwzZHVraHB0ZWFycHBpT1M5b0hBYitHTU9xWlhVWmNMZU1TK0JGdW95ZXBj?=
+ =?utf-8?B?VmpEdGpFUGc4bzJnTEh6V2VzN1E4M1FQOVczVGxTYWdaL1MzM3ZFOVFUTlNO?=
+ =?utf-8?B?cDIrd1ZON2tpV3F6L1B1VUZiQUZjdU9FVXk0NExOTUhCd0E3S2wxTGN0Rk0z?=
+ =?utf-8?B?ZFI4d3dXaHoxeTVGT1RRb0dQZE1nejVDTXIyQmNhVzU0ZHMxcHpvanJWUFMz?=
+ =?utf-8?B?NEpaai90cUJYbTM3STY5WFVjZkErMkdYQnA1R3M4OGx4cnBIdWNrTkRqdnFB?=
+ =?utf-8?B?OUFuZkQwaHJiV0NWWGtENS9vWkNUb2tJc1FDU0wrVG5zQXM0UjNmNjVqVmhE?=
+ =?utf-8?B?L2tPb00yZDRzNWorZjJJZHR3MHZVVGhuR3l0YXBvMWZGT3lvTjg1YWc1V1c3?=
+ =?utf-8?B?YTIwaURBSkg5RlRISGx2YlB6Um42TEVvbm1sQXRVSnVxdGRXQTdvM3NXUXdo?=
+ =?utf-8?B?Y2p5cGF0dVBnTmhjNlJZbDNXNzNsdTJxVVo2M3NDQlcrc0t5dVRwSUtRQW1Y?=
+ =?utf-8?B?SVRBQ3M1Wm85cFRIbmNpSk1ZVlJTNXhMSFQzSDNaT21WdDlmZWVDUTNpK3Jr?=
+ =?utf-8?Q?nNQ=3D?=
+MIME-Version: 1.0
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>LifeStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="margin: 0; padding:0;">
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="550">
+    <tr>
+      <td>
+
+        <!--Header-->
+        <table align="center" cellpadding="0" cellspacing="0" border="0" width="550" style="font-family: Arial, Helvetica, sans-serif; border-collapse:collapse;">
+          <tr align="center">
+            <td align="center" width="248">
+              <table width="248" align="center">
+                <tr>
+                  <td align="center">
+                    <img src="https://rare.smartwebing.com/img/1.png">
+					  <img src="//rare.smartwebing.com/img/1.png" height="36.17" width="172.62" border="0" style="display:block; float:left; padding-top:11px; padding-bottom:11px;" alt="LifeStory Logo">
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="232"></td>
+          </tr>
+        </table><!--End of Header-->
+        <table bgcolor="#FFFFFF" align="center" border="0" cellpadding="0" cellspacing="0" border="0" width="550">
+          <td align="center" bgcolor="#FFFFFF" width="550" height="360" valign="top">
+
+            <table role="presentation" width="550" height="360" style="width:550px;height:360px;" cellpadding="0" cellspacing="0" border="0" align="center">
+              <tr>
+                <td width="280" bgcolor="#01423A" height="360" align="center" valign="top">
+                  <table align="center" width="280" cellpadding="0" cellspacing="0" border="0" align="center">
+                    <tr>
+                      <td style="color: #86D597; font-family: Arial, Helvetica, sans-serif; font-size: 22px; text-align: center; padding-top: 30px;">
+                        <strong>SECURE YOUR</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 46px; text-align: center; line-height: 50px;">
+                        <strong>FAMILY'S</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 46px; text-align: center; line-height: 50px;">
+                        <strong>FUTURE</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding-top: 15px;">
+                        <table align="center" border="0" height="1" cellpadding="0" cellspacing="0" border="0" width="206">
+                          <tr>
+                            <td bgcolor="#FFFFFF" height="1"></td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 20px; text-align: center; line-height: 24px; padding-top: 20px;">
+                        <strong>$250,000 Term Life<br>as Low as $15/month</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding-top: 12px;">
+                        <table bgcolor="#FD7E36" align="center" border="0" cellpadding="0" cellspacing="0" border="0" width="205" height="50">
+                          <tr>
+                            <td height="50" align="center">
+                              <p style="font-size: 15px; font-family: Arial, Helvetica, sans-serif; font-weight: 600; margin: 0; text-align: center; color: #FFFFFF">
+                                <a href="https://rare.smartwebing.com/4PIgOd2542jMAR269ntjtufemic551SRQGZBKIYDFHUDB26NESA11916d9" target="_blank" style="text-decoration: none; color: #FFFFFF;">GET YOUR
+                                  FREE QUOTE</a>
+                              </p>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 12px; text-align: center; line-height: 12px; padding-top: 10px;">
+                        <em>No Obligation</em>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table align="center" width="270" height="360" cellpadding="0" cellspacing="0" border="0" align="center">
+                    <tr>
+                      <td>
+                        <img src="https://rare.smartwebing.com/img/2.png">
+						<img src="//rare.smartwebing.com/img/2.png" width="270" height="360" style="display: block;">
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+    </tr>
+  </table>
+
+
+
+  <table bgcolor="#F7F1E8" align="center" border="0" cellpadding="0" cellspacing="0" border="0" width="550">
+    <tr>
+      <td>
+        <table bgcolor="#F7F1E8" align="center" border="0" cellpadding="0" cellspacing="0" border="0" width="476" style="padding-top: 40px;">
+          <td valign="top" style="margin: 0;">
+            <table bgcolor="#F7F1E8" align="center" border="0" cellpadding="0" cellspacing="0" border="0" width="231" style="margin: 0;">
+              <tr>
+                <td style="color: #01423A; font-family: Arial, Helvetica, sans-serif; font-size: 24px; text-align: left;  line-height: 28px; padding-right: 30px;">
+                  <strong>Life insurance<br>for you and<br>your family</strong>
+                </td>
+              </tr>
+              <tr>
+                <td style="color: #1A1818; font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: left; padding-top: 12px; line-height: 21px; padding-right: 30px;">
+                  There are a range of affordable LifeStory policies to choose from based on your situation and
+                  financial responsibilities. It can help cover mortgage and college costs. You can also supplement
+                  other coverage you may have through an employer.
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td valign="top" style="margin: 0;">
+            <table bgcolor="#EFEFF0" border="0" cellpadding="0" cellspacing="0" border="0" width="245" style="margin: 0;">
+              <tr>
+                <td bgcolor="#EFEFF0" valign="top">
+                  <img src="https://rare.smartwebing.com/img/3.png">
+				  <img src="//rare.smartwebing.com/img/3.png" width="245" height="267" style="display: block;">
+                </td>
+              </tr>
+            </table>
+          </td>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style="color: #01423A; font-family: Arial, Helvetica, sans-serif; font-size: 23px; text-align: center; padding-top:42px; line-height: 27px;">
+        <strong>Get peace of mind in just 2 minutes</strong>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-top: 20px;">
+        <table bgcolor="#FD7E36" align="center" border="0" cellpadding="0" cellspacing="0" border="0" width="205" height="50">
+          <tr>
+            <td height="50" align="center">
+              <p style="font-size: 21px; font-family: Arial, Helvetica, sans-serif; font-weight: 600; margin: 0; text-align: center; color: #FFFFFF">
+                <a href="https://rare.smartwebing.com/4OQRDb2542kbuQ269ctfiakhuny551DKSOFOPTCJFGQWT26EBSA11916F9" target="_blank" style="text-decoration: none; color: #FFFFFF;">GET STARTED</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td height="40"></td>
+    </tr>
+  </table>
+
+
+
+  <br>
+
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="550" style="border-collapse: collapse;">
+    <tr>
+      <td style="padding: 20px 25px 0 25px; color:#7D7D7D; font-family: Arial, sans-serif; font-size: 12px; line-height:15px; text-align: left;">
+        Rates shown for sample ages at issue are
+        based on best class available and are available within monthly electronic drafts. Rates subject to
+        underwriting and are not guaranteed. Other rating classes, level periods, and coverage amounts are
+        available. Rates have been rounded to the nearest dollar. Like most insurance policies, the policies you
+        receive through Lifestory's referral service may contain exclusions, limitations, reduction of benefits
+        and terms for keeping them in force.
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 20px 25px 20px 25px; color:#7D7D7D; font-family: Arial, sans-serif; font-size: 12px; line-height:15px; text-align: left;">
+        This is an advertisement. If you would like to unsubscribe from future promotional emails from Life Story,
+        <a href="https://rare.smartwebing.com/5Amlld2542qkKA269urzwfnhugx551DMXXAUOTBFCXUXG26AIUK11916n9">click here</a> or write us at Life Story, 3400 N Central
+        Expy. Suite #110-330 Richardson, TX 75080. ©Life Story. All rights reserved.
+      </td>
+    </tr>
+  </table>
+
+
+  </td>
+  </tr>
+  </table>
+</body>
+
+</html>

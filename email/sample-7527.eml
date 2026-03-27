@@ -1,0 +1,466 @@
+Received: from BLAPR10MB4916.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Mon, 16 Feb 2026 15:54:24
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=jDU6updUW1V8jRxexdX6wdCO/vfyyhroDE8FOxqPJx0JknGaDKtuNk3Qjcl/gaDYaeqdL3uxT7rYKE1kDVTrEyjlIOO0JKSCmhj4I6ZNEG8Bi/qMaScMLz85DutV3L6MpRGz1wOacUiJIo/3bIeE7bFYWanivBAPVodhjmR0pPRpOXGrf89GKaGffFpoJTphOZMEjPOXHga+3cZBwW+ZZGL7IW4r73vHz5q/zy4AmlAOLYHIKkK/dhMPiR2TA1I6i5nDuTIGaZZvcBIdfJKpnmMYav6EaSq1kRaW33/93xuEcELChDG06TxSIqM5jnbaKTuVmMTEwMjX6uc3P6QFtg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ySSTg6aUuekl6fqfWzEV/OG3EKGqq6mY/cxBeNQzDoc=;
+ b=DjBXDMyINjQyBWCcYlsBNGak4ECy9AS2GWaB6LHhMeJ9oHPYel7iYYEFgfBufISTUnJCmTIW8UtYQ0A7H5qDsyxBMZOUdRj5InlhkANXq+gT74sOw5S5pByVJjaQZ+WUr91nt3Nna2Bpe2kbtzQqaJtEPRbfH2YJEocuVwzz5qQ3Si4zwQeBqLcNaapQ7FhOdjluzcexeU41/EHoPFYlCUfP10tXFgQNv78MjyUHHr/mCRRviEY9By5725ZNCyxa3z3i+w0FY1jyNrg0p1LObW1UVqneZvfxRrW0tbhWzIHeO0LJom0dIv4ay4E/YNqq7in8rtCpbPm31j9WxS5vYg==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=none (sender ip is
+ 52.101.127.120) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=slave.socialou.com; dmarc=none action=none
+ header.from=slave.socialou.com; dkim=pass (signature was verified)
+ header.d=san19784407.onmicrosoft.com; arc=pass (0 oda=0 ltdi=1)
+Received: from BL0PR0102CA0017.prod.exchangelabs.com (2603:10b6:207:18::30) by
+ BLAPR10MB4916.namprd10.prod.outlook.com (2603:10b6:208:326::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.16; Mon, 16 Feb
+ 2026 15:54:20 +0000
+Received: from MN1PEPF0000F0E0.namprd04.prod.outlook.com
+ (2603:10b6:207:18:cafe::76) by BL0PR0102CA0017.outlook.office365.com
+ (2603:10b6:207:18::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.16 via Frontend Transport; Mon,
+ 16 Feb 2026 15:54:22 +0000
+Authentication-Results: spf=none (sender IP is 52.101.127.120)
+ smtp.mailfrom=slave.socialou.com; dkim=pass (signature was verified)
+ header.d=San19784407.onmicrosoft.com;dmarc=none action=none
+ header.from=slave.socialou.com;compauth=pass reason=115
+Received-SPF: None (protection.outlook.com: slave.socialou.com does not
+ designate permitted sender hosts)
+Received: from TYDPR03CU002.outbound.protection.outlook.com (52.101.127.120)
+ by MN1PEPF0000F0E0.mail.protection.outlook.com (10.167.242.38) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.12
+ via Frontend Transport; Mon, 16 Feb 2026 15:54:19 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:9BEBFAA4D800EB6EF0B2363E72C372E13057E8FB22D8C32F2F1EE8F8B561DD31;UpperCasedChecksum:9FFE62139CCD1081F5B6421BF85B9CF62104DFA3BF9ECF9EAD5D395E4896E950;SizeAsReceived:8460;Count:38
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=K7XkQHv18NSP4fI774CuF3nOyKcnWBQik2MWPoqRNCuf39UXBGlrMb55eFQNilVVDSWH+3oLiO5h7+Nn9GsLDUs6GK2rTbLrunzx9pbDi54/Z30TmzC4lsn+pTy6FLl8P4PO/5D0+VoZg9iwA9Baar/iL/7Tt+cUnm27e95SQPAI0at+7MSEt+WtvjdUJ7FLp25azNUMXaun138dfhWbKnnVVRfArwLhG9SrBSTn5GWLV8NKq7l+/0Pp7L6Dwa402PqBRGfUHOthf2Yjuliq553rUHhDhaSUqfKL1ApqK6BnX9Zra/Ffy7XVm+iWik64px+ym2mMPJzxD8lL0qVAOw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ySSTg6aUuekl6fqfWzEV/OG3EKGqq6mY/cxBeNQzDoc=;
+ b=zPNFnkw3Tspq+JVuDaaTD6DntmETob8ouuQqQziX7ggbK6i/RS6GXk1P1cq4CbLlcureUhLO0/a+7nv93jsrlRkpZqFF6ly6RYdTZIDSTZUGYzOsU1Cne4M/zmD47hVOAeiurbCjuwmfkh1GgvM3Owm/cEVtPHAJ3zxBhqYDUZqE0tO4D1Lm1Tnlx2ADnQwjYHISG4LW0R6608bmuRdscoKjmmnQpfHNSOzcYL6lmz1nQ4K0RQa7Tj6+krO/wcaYrth8AnRfcrueXQUO+FdzsUvYzqpD1uUb5OUaeozCLW2GXbnT8IZlei1r9HrSMW7s+2zwNTcp7AHH675vsa9Fiw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none (sender ip is
+ 23.81.33.40) smtp.rcpttodomain=hotmail.com smtp.mailfrom=slave.socialou.com;
+ dmarc=none action=none header.from=slave.socialou.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=San19784407.onmicrosoft.com; s=selector1-San19784407-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ySSTg6aUuekl6fqfWzEV/OG3EKGqq6mY/cxBeNQzDoc=;
+ b=jUMPWnX7YY1gkpG6f+SeMuWMd/Tpciu4tVXIy/aIXHNYFuSpQNLMt6pk5kOGndQ7Q/3qpLB9lXdEA2LdAd1MZyTTnh3Ab4uW6MewBbWOXUweGhXf2QVlbnCsW1dkRRAlnK55wh37+BaqZkmfGapJfkT8SuernJmo9RGfLKLkxosSVTfyfET1+RQn5YU+Tjvx+KTtF57isCI+v7DURZtaqQ/TQ+MPdYEDtKHSoM9IiwrwMV30Z+WeMqGTf8Y6tpeAOTzc9f224C5+Nx/O2fFUs/m+YejRLPZdHIb9pUVg/pJmvAROZWh4jVusIxRN/2w5qpoZQnEqbBXYGfFrzUfbjg==
+Received: from PS2PR01CA0063.apcprd01.prod.exchangelabs.com
+ (2603:1096:300:57::27) by KL1PR02MB7089.apcprd02.prod.outlook.com
+ (2603:1096:820:10a::7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.14; Mon, 16 Feb
+ 2026 15:54:15 +0000
+Received: from OSA0EPF000000CB.apcprd02.prod.outlook.com
+ (2603:1096:300:57:cafe::a6) by PS2PR01CA0063.outlook.office365.com
+ (2603:1096:300:57::27) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.16 via Frontend Transport; Mon,
+ 16 Feb 2026 15:54:08 +0000
+X-MS-Exchange-Authentication-Results: spf=none (sender IP is 23.81.33.40)
+ smtp.mailfrom=slave.socialou.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=slave.socialou.com;
+Received-SPF: None (protection.outlook.com: slave.socialou.com does not
+ designate permitted sender hosts)
+Received: from slave.socialou.com (23.81.33.40) by
+ OSA0EPF000000CB.mail.protection.outlook.com (10.167.240.57) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9632.12 via Frontend Transport; Mon, 16 Feb 2026 15:54:14 +0000
+To: <phishing@pot>
+Content-Type: text/html; charset="UTF-8"
+Subject: SECOND NOTICE: Payment details required Security Alert: Membership not renewed .
+From: "Norton Membership." <JkdlbJXB@slave.socialou.com>
+Date: Mon, 16 Feb 2026 15:47:30 +0000
+Content-Transfer-Encoding: 8bit
+Message-ID: <7814c5d6-11de-43c3-b40f-1b951c140b54@OSA0EPF000000CB.apcprd02.prod.outlook.com>
+Return-Path: m2ycgcarxykh@slave.socialou.com
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: OSA0EPF000000CB:EE_|KL1PR02MB7089:EE_|MN1PEPF0000F0E0:EE_|BLAPR10MB4916:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4c4ba4ce-c118-445f-86f6-08de6d73a596
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|61400799027|69100299015|376014|32650700017|3phishing@pot0700013|34020700016|7049299003|82310400026|3109299003|4022899009|8096899003|4076899003|54012099003|3613699012;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?T3hVTzB2VG4rR05ibmVqbm5NblhvdWhlUTJvYzlmYXZzaU1VakZXVkt0cWxW?=
+ =?utf-8?B?OERON1M1MVQ2Z3FPZXQ2WTJEYVl0TEhzdXp1Q0NWM0d2T2UyVzNiZGlqTnhS?=
+ =?utf-8?B?YVB5RDFKTy9uQUlZOTNaREdCUE5JY1NiaER3Y3o1c0JHZ0xpMk1yUGNkcDJF?=
+ =?utf-8?B?WnhWTWRVWVpzd1VOYnRVVzFxZkJnTkQyL3Z0N1R6V1U0ekE0Qm03bHNrdEJ3?=
+ =?utf-8?B?dmhGSDRKcS9lQklkV1dNSkVNTitiMEUydm1yTkx6RWs2R2hDRTNhankyZk1M?=
+ =?utf-8?B?cUFmTjlDTm1DbkdQUkFkRm9KVjRaYWZjQ1lIODhrblUwMzVGOFB1aGRRUC9K?=
+ =?utf-8?B?NjIrSFZCR0daaW0rTGJka0hhWmFrZk9ac1pZSm9RVjJtLy9qM1BKNjJ0UDJ2?=
+ =?utf-8?B?V242QUN6d1Z6T1RzVXFMak1VVDRVdSsvc3d5cENXUnhaNkFpWi9BcExJSmNL?=
+ =?utf-8?B?WldTdFd5OTBpK2x3dExjV1ZxL0hjWkprN1pjMmp2ZVNNMEk3SERMeG9GaEFX?=
+ =?utf-8?B?WTFTMjZDT2o2bmxvZXdZZERvaDVDNWRZOXpaeWVWTEdXMGYzK0kySVlPemdR?=
+ =?utf-8?B?MEw2RjgxbzZBVmtRMGJDK2hURFczNGRrVUVsMktCZGowY01MbUV2RGhDSVBz?=
+ =?utf-8?B?Y2U1S2xiMm4vZnhHd2luWWRDNmpaV0hETHNCOFNKNVRMYmt2UHhiRzIrTk1J?=
+ =?utf-8?B?N3BxMVQ1bVVjQTRoOHJWRTFNSUhPa3BUbk1zWk83RlVndDlSQU5OMm8xaEl5?=
+ =?utf-8?B?ais5MW82bmZXOGZLNDNHVDVEd1dxbjFxWXFHM2tqdC9LZlpOSEsxWXZOcG1O?=
+ =?utf-8?B?TU1lL1Nva2ZnWTJ2NmduREtQazNHU3ZPM0Y0WHJKMGRtcVdSQ2YzMnNXZmNo?=
+ =?utf-8?B?Vnc0QTlvZ3FXakFBUDlraTJnMnVTc2Z6UzYxbjFMcXZLNlhUZnlNaUtUUTJw?=
+ =?utf-8?B?WHB4Ry9LSVAzY0UxcktJVWJHZDU4UjZtbUprZEpIOU1TaEVvS0dRa1pHOHVj?=
+ =?utf-8?B?MjVvOWFlakl0R3B5Q3A4b3UvMkdCOVB5SExGSkgybDlGcGVHS3FxSDMyeTdK?=
+ =?utf-8?B?SXlFS3hoK3FsNE1zdEE1ZDBRQ2dlSGhKb2hLK21ndFFIYmRzYWtkT2V6VEFK?=
+ =?utf-8?B?b0hRVDNkM0grWFlTMHlEeVowSHFUa0hPajVHOHhuT3IzM3VCSlM5eWFkSTQy?=
+ =?utf-8?B?a2lSZS9TTzFGRkZXZVYzL3NJckhaRnZabGhJVmxNakZwaXg3UjUrU0UxUlFr?=
+ =?utf-8?B?ZlRuOWFCNE9ZMHgvWFlJQmpOVkpMZnlnMmRDVzNJMk5NRDRYakxjY3hveTFY?=
+ =?utf-8?B?TW42cTN6ZlVaZklweUpXZTl0TzVDV1krOXBkblg2eHlRcXlGSk1wd1ZmSUYy?=
+ =?utf-8?B?K25Rd2pYYTR6aE9BL3VCM0FLTTFNOTZPYXpSMkY0aFdFdUhwZnZaV1JhQmhF?=
+ =?utf-8?B?djNWZVR3YWszVGZTbGFxV0U4QlQydWRKY05VSUEwWnllSnlFbVlnck1Cc3Jy?=
+ =?utf-8?B?YWJTa2NHVXFacE5oaUxzS2VhOENjWGdqNEs0TmpNOFErUU9jL2Z1eHhOM3Jr?=
+ =?utf-8?B?UWJaSUZJVjZZMXVielUwL2t1aDdJSURkUG9aU2ErU0wrbmd3TVoxNUZtNTEy?=
+ =?utf-8?B?aGJROTdQNlVCYVZxZEJFWjJUaWozNk1rWVRHWUwwM1g0MUJWa1paVGE4TTFk?=
+ =?utf-8?B?b3BPamttQmtBZWRVVGJCekJJeU5FbTgvZjZDVUpiZm1IN2oxaG1BZitleEdQ?=
+ =?utf-8?B?TThmeVdRMmdiY1JYLzBYSkgxTXg2YVZ0QlBieEs4WU9FN045L29NbTBCNDVk?=
+ =?utf-8?B?RzdFb002WHhwR2ZDTFAzS0U0bnJ6bGdKZEVOcUVCTjJpaHJzbzI3RklBeFYy?=
+ =?utf-8?B?cGczWXZYSk9oZHZ1QVE4ZmJtdTdYNFB3Vm1EYTRLMmN4Yjk1ZDZHWU1PdERZ?=
+ =?utf-8?B?QU9JL3hxNzNpTFJpZzdZZEZkZUpQSFdNOGdWa3oxTnh6Tm9GZVY2ZVdlWkdl?=
+ =?utf-8?B?Zm40ZUZJRWI1QjdBT0gvN0RKKzFzOWpSS3NDaVhCRVlvWkRQUTlEclJFc1VO?=
+ =?utf-8?B?c3JjdldiZ3kreGhKRk5peFRrZFVycmNqM1lzaWFVOFJ2SXFubTg2eVVMZnBY?=
+ =?utf-8?B?SnUvdExoVHhnVmYxNGNwMHFwQWZrUHo1dnJPVFRTTDgwV1YxQUVzUncxTGhu?=
+ =?utf-8?Q?t4MqTBo/w/ULRtGdekK/BeE=3D?=
+X-Forefront-Antispam-Report-Untrusted: CIP:23.81.33.40;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:slave.socialou.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(61400799027)(69100299015)(376014)(32650700017)(3phishing@pot0700013)(34020700016)(7049299003)(82310400026)(3109299003)(4022899009)(8096899003)(4076899003)(54012099003)(3613699012);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: T0A05sVlloJw4SHyg3CtCnJJ97t7FmPG/arxKtWvznH3ZZKFm/oRJUnvj20oA0EXPikg79/QYPoXTqo8CSTr0Hc5D9ay/Ed0NNpLx2YVV9y32w83r7ddGi0rYFTd2SFV1Ls1IzR+EQYqiWMWkWAhiFEzn/7ZwM8KJ8zVkohsnYHoQQOYemnQAMUytWamImk/5AWZKNSE9gv4Qmz9J2qZiN7F9pZazbex77bOBg2gYhopQqA//dz6kxceMCtPAmX7K19UBFu2hhZ5kDmOVlM5tRJYkjv42eYXjMQUXKCFv2cS9iV8mTQ7uoAYVsT4CCW/5To6pWylATCix1hg5mGZvE5FNeMerU41geAVqgLm4KW9G7LGIU9epg9TMYLCKa/FX/Vwo7jJN+6F0zcpLjP3TVnk3bOPDkArnp1d2XydDZaGwSLHIXRONzFA9aVWAqvP
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB7089
+X-IncomingHeaderCount: 38
+X-MS-Exchange-Organization-ExpirationStartTime: 16 Feb 2026 15:54:19.9961
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 4c4ba4ce-c118-445f-86f6-08de6d73a596
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: MN1PEPF0000F0E0.namprd04.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: MN1PEPF0000F0E0.namprd04.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: MN1PEPF0000F0E0.namprd04.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 2/16/2026 3:04:28 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 709c6ad5-75c5-4d8b-8c3d-08de6d73a2e3
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.101.127.120
+X-SID-PRA: JKDLBJXB@SLAVE.SOCIALOU.COM
+X-SID-Result: NONE
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|3025599003|6100799021|2700799029|56000799018|20103052909095|62400799018|84100799003|461199028|74100799013|470799035|10300799038|15110799015|11020799009|3600799018|22090799003|21090799003|9400799043|970799060|32020799003|46110799009|46080799006|34130799006|9000799056|13020799006|32080799006|1680799066|67000799015|23130799006|17120799003|47200799024|48050799006|42200799015|58200799021|18040799003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Feb 2026 15:54:19.5521
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4c4ba4ce-c118-445f-86f6-08de6d73a596
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=772f1099-bc2b-4797-9c22-94594494461f;Ip=[23.81.33.40];Helo=[slave.socialou.com]
+X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000F0E0.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLAPR10MB4916
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:05.1249316
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9611.011
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9710001)(9610028)(9525003)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?ZUlqZEpiZS9HUnBIVlVMVExlaWVuS0cxT1Z6SkY4SmhEam1QbmFCWnNsWXY4?=
+ =?utf-8?B?dXBaVVlPT1VNZDdzN3dMbmpMV0s4MnNoN2tHTzB4dXVnVnZGVmQ5VEw4dGo4?=
+ =?utf-8?B?UVpQWkxESm5kdFR1cjY5SkpIV2lwemdZT3gwWXlYcnRZUEVITU1HMDFRYXJZ?=
+ =?utf-8?B?R2xhT2lVN0syK3l5eU5nZEV3VVYwWkJzV1FWOHI2T3ppdjkvS1FhRDRqRWNQ?=
+ =?utf-8?B?REZKdFhwZ2RiZk8xNTJRL1R6WG9iM2ZzSUcwWE5Jdnh2ckx1RmpnWFlMM09G?=
+ =?utf-8?B?K0xYY0hDVUZYNE5ENXUxcUdwSTFGSDkvc2xrQVN4NFk0MUg2TVRVZEY1ZmND?=
+ =?utf-8?B?UHI3V2k2bk1sQnNXNmhHRzdqeEhCY2U5VURvQWl6N1Z0aU5aL1YyeXdKSDlS?=
+ =?utf-8?B?akdvSGZEcEI2eFUrM2hiTWNuQkRvemJEVWFOZGJqMzBCYkYvbTliTDltcHM1?=
+ =?utf-8?B?YzhPdzQzSlNhd0QzcU9XRWZvZ1BaUDhhYTFTSjZMOGRSM29EcDkralh3Z29x?=
+ =?utf-8?B?WE94eHFSbUhzYVgyRWRJY0kyYlQvOEJ5ZGQ3MHVOakF1eUlCQVVPUVJpQ0tm?=
+ =?utf-8?B?TlNhOTRuMDB5dERZaWhqRk9CRmtJdk8wQUtEdndRSnZYVDJSVzZ5T0prZzZU?=
+ =?utf-8?B?QXVBWGhNMXlIam1yejVJMDAyOGdRaGpKaDRjMFdaejc2eDFPWGM0WTlkYlVs?=
+ =?utf-8?B?VStLZnI1SzFRZEo5elJMN3p4bU1VcUtqd2x2eU5NWkJuRGI0MjRjSHNmcWdq?=
+ =?utf-8?B?eklBazhZV25HcFgwcG9aVnFOTXBhUXFJNUN3NHZqYWVLdkp5RndickhZS0hj?=
+ =?utf-8?B?ajh1RTltVkZkL3JhejNLaDF1ZkNIVURaMGF1SGdjaFNCOGNRSlBGUGh3N01X?=
+ =?utf-8?B?NVBIRUd3emNPUldYTnRwSGswbzFGMytJRFFmdElOSEZySDdLTGxueVN1VVI1?=
+ =?utf-8?B?dzYzdXR6QTNqMEdCalBvamZsUi9IL3M2K3htWXNaUWVDdVdDRTBmUjVBckRo?=
+ =?utf-8?B?aFhsSDFIVm1KMTNjT3VURWlJMFVpdFZBOWVLaVhHbnI2eDViTElTMnN1Y09O?=
+ =?utf-8?B?czBhOEFxMlRHMzE2N0ErMmwzRCtpRGVUMllQOHlSQ2ZuS0hUcGQwbW1PKy9H?=
+ =?utf-8?B?cE50WThkdHh4QzMxM3gxUGlMZUxXUWNGUUxHOXhiL3V1VXE1bnhkTFFuWkhK?=
+ =?utf-8?B?ODE4bXFjK2ttZmt5V3dWZ3c2eVlkQ3YzbGRPSXZ4ckFQWTVGMWd0RVFZZTMr?=
+ =?utf-8?B?K011RW1ETWc2MlY1aUtMbjNLRjR3dlRzZUozelFRaDIwQmJkNlR1T0czemdt?=
+ =?utf-8?B?R0lMaUxnajF0NWRnQmdKbmIzVURiY1hHMWk5YzI1M1c5amlXSUhBUGgvT3M4?=
+ =?utf-8?B?Yk42dThENHMzUTJ0R1ljSDRyTWgySzcwNENRaitZNUJKSy85TkU1SjhIVnNr?=
+ =?utf-8?B?Q0N4aEZFbzFrdlBtanRrMGJTZDZnNGV4M3o0cWhyeFJ1bGNjWU1TY24yd3g3?=
+ =?utf-8?B?cjNKcEZ4c1diRnd3cGlNQjRua2diT2JXdm96dWs1WEtZSDB5Q2tFdDc1NXZR?=
+ =?utf-8?B?MGtuV2ZibEFBd0tsUUVJSmtNdlpFL0V5Y1daM3NwSVUzd3k1MW9tYVEvUU5K?=
+ =?utf-8?B?ekRzM3hENzNqcG0zUlUwTVBwUTAxT1hEcDliZHVmZUtWQXNCTDNJbXVTbUJO?=
+ =?utf-8?B?SktZSDFWSlpOMXhEZTNnOXlsTkpUMXozWFlTdWpPZkFXOWZPcVJyYkxSbHpK?=
+ =?utf-8?B?WHphbWdHYlhMMDNpSEpXR2x4NHF1aGpNU1lzRDRJQ3BlM1NHUFI5OFNycVNP?=
+ =?utf-8?B?Q3ozem52TExqS2NOV3dLTmNGUzRhTzBGUUpuU2NydzlyTk40UEhGdi82NEdm?=
+ =?utf-8?B?QUREQ2YwREpGUkd1WkJUZTBYUVViYlZKQXhiUTZVT3JobXg2dnZPVit5L3lj?=
+ =?utf-8?B?dWZMdjJQYWp1ak1iMW5aY2dXeDh5NXJGTWc4ejlsWEowOE9zbTBqYTc4aDBZ?=
+ =?utf-8?B?MXhaK0JqSEFTRVI1c2d0ZlVzZVg4ZHBOOVRYSFlLa2djRDVodW1maG5lNGli?=
+ =?utf-8?B?TUxzbVVvdnZjRkhkdWJGRGZKQW44ZzBFRXdiZnAwMjFkQmNnMlZvcnhTV3NO?=
+ =?utf-8?B?TS91UXUrZGVvbVBJZjg1U3llSUFpQ2tNTFY2eVczSENsUEhQY2hwV1hMS3J3?=
+ =?utf-8?B?eFlYL3dTSzNLWHkzejROQWhsODZyQWg4TmpNa0xoU3JPMDlOUEF2N0NaSURa?=
+ =?utf-8?B?b0lBVWtELy82Y0t4WVhwSmlPR1RMR1dtTUc3K1VWd3hmbTJtSkxxVWtRWUdt?=
+ =?utf-8?B?RGo5YVpmUDFZb1VQcnJHbis0SEVIeHVNdUtIL3BjUk53ZlNHOVNpbnZoczRk?=
+ =?utf-8?B?ZUJzelpCYUMzam5nUmJDL09OUU1sOW9DRm9pbkl4SWs2bzA2aXlYNXRJazFs?=
+ =?utf-8?B?WjBYVjZCQmRZY0ptc21xY2JOV1hXMlh2b1ByUXBPbUlVQk8vMlBDTEUvRytM?=
+ =?utf-8?B?cFBEL2p2TVJBV1pFSFlDZXBoZ1JocmNQU3loN3o3MkRDUW50RnkxVjhNV1M0?=
+ =?utf-8?B?c0RwOFBYWDZyd09vSHhBVzNKMmhscmxMdlRwKzBwOTV6NzNEL2h0WWFvWGhi?=
+ =?utf-8?B?UEM5RU50cjBWS3BjNXBJQVlwK0JuRDlMZENhQ1NkYXhXY2tDdG5nUnBWUGlK?=
+ =?utf-8?B?RHcxa0RpVTlYbE5pcFVwcEhUU005ZlZYL0Y3cGpuWjArRHBUcFkvdXhiM0JX?=
+ =?utf-8?B?NXF4dE11cERPbTJKbjlLRGZKZk55anFYVmhVM2J0alpHUVFyZ3FlS2VVbnJG?=
+ =?utf-8?B?bzNna0pEeEp6YlJlS2JEbzVwc20vbFFlckp0TkFOcGZYM3lMcVVnSytPN3RX?=
+ =?utf-8?B?NnNsbDl5akp0OC9IMk9lRFFYVmp6OWhuQTNLQi9jdFlzczlRRkRmVTdxd1Z4?=
+ =?utf-8?B?M1JiNzg2Y25qVDNkSFl5RFdJNnhHU0VLbUZrUFhuUWNMeEo0NlNySGQ0ejZa?=
+ =?utf-8?B?aXNqQWVid3UrVGtlckVHb01aVGM4c3hRT0Y0SEN0V01uS2dVdTFlb1N0TmJ3?=
+ =?utf-8?B?NHBQRVEyRlY1SzQwTHUyaVUzV2xBQURqUkZTUDk3K0RqOWszYXVPc09IdEkv?=
+ =?utf-8?B?QmdkdnVOcWR4bmw4bTE4YmxaQWRXZ1lsejdTQmhmYUg4WXJ3UFhYYkV2UjVV?=
+ =?utf-8?B?V3RMTGV4emVyWCs2RmtuaXMxQlNwZ2ZqTGNlZnJGNEh6VUk5T3dPTTlHVDBa?=
+ =?utf-8?B?d1F6Y0N2aXhjUUJaZFdUUmlsdXorc2wyanA5NGxlQUJSTHlYemZ3eHkvczJx?=
+ =?utf-8?B?bERGMkxMREtUUU5RZzZjRG5vVE9WTE5NeHdNMURHSEJXVWN5a1QwOUJ0dmxX?=
+ =?utf-8?B?TGZFTjJxeTBPWml6c1htM21Bb3RvY080WFdySkJlYUV3SW1FNzFZR1VBNjht?=
+ =?utf-8?B?Q0ZFNko2MEZPZHFpNHlHcDEveVphc2JBWHJBOUg4WGt4cHIwcU9JRDZJQ2Jz?=
+ =?utf-8?B?WVpmSWhZdGx1ZGJWck1iVUFpWWZIZHhMb0tPK2tOMmtXUFZpZXhleFA1V1E3?=
+ =?utf-8?B?Q2VSRlREQmd1RU0yRmFQek0zbmJXVFRpUHV3UVRrNTUyUmJvQlY2TTUvbWRo?=
+ =?utf-8?B?ZDJYUUR5MDM4ei9aMzQ2YzcrYWllMEp2cllqc0xGOTVwY25vVXpZb3BLc1dN?=
+ =?utf-8?B?UndmMlN3THZpd0JMZ3JZeDd2eENXd0FNU3orWFFOZ2prZzBZNDYrV3k1Njlj?=
+ =?utf-8?B?eUc5c1BCZzlXNHhlcDRLdVB5SFZZZjNCd2lmcjd1ZHVSd0dsL0E2T09UcW4v?=
+ =?utf-8?B?UHRqOFlTOThMRUF4L01rZWNGbWpORXVzM0t2OVNNSUtRSzE2ekFickN6K0x0?=
+ =?utf-8?B?UzJBd084ZHRrTDJ1aDdYSVpVa2pHQ2lkMHNsbU9yS1FMeDFmdEhCSlpkQ1lo?=
+ =?utf-8?B?NnkrNUJSZlhkZFduMGJGS0EzZ0crc2RaTWhnRzV4akRWd2Z0ZG5ScVBjWW1p?=
+ =?utf-8?B?S2k4QWpNdm11ODZWOUhXWVp5Z01DZnFmYXNEQ3cwYTY2MjljWmptTCt0STJN?=
+ =?utf-8?B?cFZWNmpucTd2aWZTdis4RklYNUZKM0tpQ1pMMG9tcXYweGN3M0hHVVNMWkVU?=
+ =?utf-8?B?K0NRSTYzSkFVaVVQSE5VVUhXaEdQWHRKOTlPZTBsQ2NnSjhtQTMwcjVLRzBi?=
+ =?utf-8?B?T1VjWmhHWUdvUE4wcThHRmp3UTM0MGF3a3p1aEtHVTNnbktkQkt2K0syK2pa?=
+ =?utf-8?B?TnArV09kdDVXZlBHRzcrUWZJZklLL0crNHVaUktTZlpIRU1mNDdCam9rNzFk?=
+ =?utf-8?B?UzhXRmc1Y1VZZWFweE5FeEZsVDQ1eGNoeDQ0UTF4R21XSWFPOTkrcVI5Szd5?=
+ =?utf-8?B?QWFMY3J6ZThicXRqdEZSZXdqOTluMFhmUmJ0aDBqOFZRbWhmNUtqZDZ4SFpV?=
+ =?utf-8?B?L0I3dThSMHJyM25GTkZwRGZhYUUwZ3FQQ2oxSHdPU2dISi9MQy9Id3d1bmZH?=
+ =?utf-8?B?VEhTa2FVZjR4d21QQ0dzVSt6Y0pQbFJBQlZUb1hrYVhhQlBlNWFZNyt1YzBU?=
+ =?utf-8?B?MzlWY1poak4xa3JpVHZ2QjFTQ1pOZEJjbHpEM1RtMnlsVjNaMkNkNlp4MWlW?=
+ =?utf-8?B?YmtjWUVUaks3VkRMNmpTUSt2c1BYRU9FMWcvZU93NVdoZEVWbmdMZnZ3d1ZM?=
+ =?utf-8?B?RERHT29JK0Q0c2JWSlY3UTNrdHJTWldMYkpNYXRSQlh1Y0FJSE5iM3Y1NFJi?=
+ =?utf-8?B?V1VNWjJWeUlValR1NUttOGtEd0pidndLdDdXMzE2UEhiTmEvV1hZWEc1c1Qv?=
+ =?utf-8?B?R2hmTVhYVGFwbFpBYjc2eTdSdko2MEJBdytYZ0NQQ2t6c0ZHK3FKOWZwTmtx?=
+ =?utf-8?B?eGQ3SlJpNkgwY2cwOEJWRFhzVCtSMzNPL0FpcStSbGxJazVjNEJkT3MzNDJn?=
+ =?utf-8?B?M3pVTHRxQUV2aVNXeTJrZVhkY3AyRDZzNzdyRGNhbzV3cjdPYU4yUmpPMW0w?=
+ =?utf-8?B?RlJ5SHNFYmdic05mTkx0UEljd21UOEE0SVM0c1VJL2FJbUlLNkdPMjlqWUd2?=
+ =?utf-8?B?VTVoaDBNbExlaGwrUkdGa3UrWVluUUZTVnV2WUZrancxbktkOENpUmt0Q0pH?=
+ =?utf-8?B?S1VyWTFrZmRhWFphNkgxWFRHMHNMUTQ0RnNLb1VoNEZ5K01rU0ZnT0J4ZjVE?=
+ =?utf-8?B?UG02aEM1eWoya21FQlhqSzN1eU5wbHI5aXBZNXpkZXFhdkpXWFhMakFBU2g1?=
+ =?utf-8?B?VEJGZHpUcEUvZWtPZk1mdU41TjJreTZDamJWV2JXQnp6MkUxMVdaV3YveC9B?=
+ =?utf-8?B?WWhoNVl3b3hOK3dJRjZNQVVsblErVE1sOXdERjd2dXo5eU84dDk3WGFNVHlM?=
+ =?utf-8?B?RnQ0R0RqeGxtaHlsNjJhSnB6U3BUenlTcUxqQlFnR0k5bHhNNDRVZnJCMkRq?=
+ =?utf-8?B?STc1T1c3RlhSaUJkK01xL01idmxUd20ySFZzaHl4UVVlTWNvQk9oSmVjd3FO?=
+ =?utf-8?B?ejViaVZKWkVCYkx2a05zcTMraTd5N09uTFZXaDFmdEJORzlLSDBZV1Q3L1Rz?=
+ =?utf-8?B?TC9ldnBZTmlieE1KL3A3djRaRTdUc2ZsRmFXWDNFME9KNGFyMFhzMkVxdklB?=
+ =?utf-8?B?T3VkQjZGSHRhTjgzSkZPTDdKc3JpVGc9PQ==?=
+MIME-Version: 1.0
+
+<!DOCTYPE html><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #666;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .modal {
+            width: 550px;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-img {
+            max-width: 60px;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        .banner-yellow {
+            background-color: #ff2222;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .banner-yellow h2 {
+            margin: 0;
+            font-size: 22px;
+            color: #fff;
+            font-weight: normal;
+        }
+
+        .modal-body {
+            padding: 30px 50px;
+            text-align: center;
+            color: #555;
+        }
+
+        .date-text {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .warning-red {
+            color: #d0021b;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .discount-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .red-badge {
+            background: #d0021b;
+            color: #fff;
+            padding: 5px 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            border-radius: 3px;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            border: 1px solid #eee;
+            padding: 10px;
+            display: inline-flex;
+            border-radius: 5px;
+        }
+
+        .product-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .serial-grid {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 10px 0 30px;
+        }
+
+        .serial-box {
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+            background: #f9f9f9;
+            font-family: monospace;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* REVISED BUTTON STYLE */
+        .action-btn {
+            display: table;
+            margin: 0 auto 30px auto;
+            background-color: #ffb81c;
+            color: #000;
+            border: none;
+            padding: 15px 50px;
+            font-size: 18px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .action-btn:hover {
+            background-color: #e6a519;
+        }
+
+        .footer-unsub {
+            background: #f9f9f9;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="modal">
+        <div class="modal-header">
+            <!-- LOGO REPLACED WITH GENERIC PLACEHOLDER -->
+            <img src="https://symbols.getvecta.com/stencil_27/71_security-center.7c9a269b33.jpg" alt="Logo" class="logo-img">
+        </div>
+
+        <div class="banner-yellow">
+            <h2>Subscription Expiry Notification</h2>
+        </div>
+
+        <div class="modal-body">
+            <p class="date-text">Your Antivirus subscription for Windows expired on <strong>January 5, 2026</strong>.
+            </p>
+
+            <p style="font-size:14px; line-height: 1.5;">Without an active subscription, your PC may be vulnerable to
+                malicious software, viruses, and potential identity theft.</p>
+
+            <div class="warning-red">
+                Your device is currently unprotected.
+            </div>
+
+            <div class="discount-row">
+                <span>✔ Renewal Discount Available:</span>
+                <span class="red-badge">Save 70% Today</span>
+            </div>
+
+            <div class="product-info">
+                <!-- ICON -->
+                <img src="https://files.softicons.com/download/application-icons/hex-icons-pack-by-martz90/png/512x512/antivirus.png" alt="Icon" class="product-icon">
+                <div style="text-align:left;">
+                    <div style="font-weight:bold; color:#000;">Antivirus Premium</div>
+                    <div style="font-size:11px; color:#555;">Version 20.9.139 (10 DEVICES)</div>
+                </div>
+            </div>
+
+            <p style="margin-top:25px; font-size:12px; color:#777;">Associated Serial Number:</p>
+            <div class="serial-grid">
+                <div class="serial-box">8A5B4</div>
+                <div class="serial-box">RV6N</div>
+                <div class="serial-box">Q8TL</div>
+                <div class="serial-box">OFG3</div>
+            </div>
+        </div>
+
+        <a href="https://slave.socialou.com/4iVSdY2616GTgx278yvgddbplsl551LFNUBZEGCQNCTRI26IGWQ12006e9" class="action-btn">Renew Subscription</a>
+
+        <!-- Footer -->
+        <div class="footer-unsub">
+            <p style="margin:0;">This is an automated system message.</p>
+            <a href="https://slave.socialou.com/5crSuM2616iepL278pkonqzjpae551DJPBVGLBZBMGWCZ26DXNO12006b9" style="color:#999; text-decoration: underline;">Unsubscribe from alerts</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

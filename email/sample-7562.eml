@@ -1,0 +1,345 @@
+Received: from SCYP215MB2251.LAMP215.PROD.OUTLOOK.COM (::1) by
+ CPWP215MB2144.LAMP215.PROD.OUTLOOK.COM with HTTPS; Mon, 26 Jan 2026 00:25:09
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=C9Es5ZZbS/vrI7JrObfWVtXAJYCGIVMtTItYW2xhLZ+unnmHPJVw9iWk0wKr0TI81p/lYD4W+bje6mLnlk0CYloZhQ7AN1t2RUMUG08JdMp/W0/jPHHO6JBOdkj9h0GOZj6caU9sYIY/lcHhXm1BLIuGANMHH39s8dJYjay0OHmb7KOBqWemMRd+d5fnp9efhQszZRnfnQH4yly8S79hOyYog1d3sr+2XRD1HaH4qYf7006TzO3TdvSavjqThh2pCz28RGaOv+dIAsfmXnitIWTqujK3M+kmgUBoCbaPO+/w7HTuwkrUpQsQoiBwNSC0b5hMRSlC+s8ErTU6L/NW3A==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sQg2wugUbDb8oM5MJDfx5Iubmsz5Y7fFgyvoE3fExwY=;
+ b=KDH7pJSh/23vEr0fgUQYCLSZWoIHfmk2h8Snz6WEohBzfNmTLkuFGJuiSUYwponJLHPKweb03y2HorhvmWUHISU50xbdWuSTxw839bpjdVZjXWL5MTkW1e3Nuc19wseRTP6mOVKx00XmYBOOtkWlhoPYD482o19haE9Ort3xqCM5huM7PeqgeydWLl2q+bOFT6AqDvY8DluWA4MWrXlQigOPCvwm/gpYTp9rSGeckkytjw002e1DSPEgYRH+dsJ3cU3lBfWF+RbCmhQvj7hur5BEZWmsDUaXk96uHr0bATsG8LNtATNWCnpTBi/4gpFtam4ci0pGGrnO77EN4ciOmA==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.102.202.61) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=dus19794839.onmicrosoft.com; dmarc=none action=none
+ header.from=cloud-storagel4j.com; dkim=none (message not signed); arc=fail
+ (48)
+Received: from BN8PR04CA0056.namprd04.prod.outlook.com (2603:10b6:408:d4::30)
+ by SCYP215MB2251.LAMP215.PROD.OUTLOOK.COM (2603:10d6:300:44::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.15; Mon, 26 Jan
+ 2026 00:25:07 +0000
+Received: from BN2PEPF00004FBF.namprd04.prod.outlook.com
+ (2603:10b6:408:d4:cafe::51) by BN8PR04CA0056.outlook.office365.com
+ (2603:10b6:408:d4::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.15 via Frontend Transport; Mon,
+ 26 Jan 2026 00:25:06 +0000
+Authentication-Results: spf=pass (sender IP is 52.102.202.61)
+ smtp.mailfrom=dus19794839.onmicrosoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none
+ header.from=Cloud-Storagel4j.com;compauth=fail reason=001
+Received-SPF: Pass (protection.outlook.com: domain of
+ dus19794839.onmicrosoft.com designates 52.102.202.61 as permitted sender)
+ receiver=protection.outlook.com; client-ip=52.102.202.61;
+ helo=SEYPR02CU001.outbound.protection.outlook.com; pr=C
+Received: from SEYPR02CU001.outbound.protection.outlook.com (52.102.202.61) by
+ BN2PEPF00004FBF.mail.protection.outlook.com (10.167.243.185) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9564.3
+ via Frontend Transport; Mon, 26 Jan 2026 00:25:09 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:349E4177FA7EBE8F1876EFC16E41E46CF71860C7C784E9959EA5E03D292815B4;UpperCasedChecksum:992F31D650E34B4E21C71E1A814FAB1F41BC6CE3537D13D065A01301C81B3AE9;SizeAsReceived:7652;Count:36
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TgK6QJYRQ7tC21Ujl5i0CsJcZZKCC2ouUOQJFXFllkec59P0IUkXOX+FqtOsBpYHtRsDgiXg9HgR/45OfBHS4AS1S+JJVPuuzc7SeF6D/xtSp9aUfwqlq/aP0KkDpfyGhHLT93uPzOEpB5U+51c+SqF88eXY4npmLqYnmSzjAZ/UKZkKpeQ89e7O2sYar74Y6+PaqXNpev3cEqyYcyFsqqnu8OXjPfKgYB2EIU0wQxDOriPSc1DW9kKdtYE4G+AD9N6oSd+Qo5yuf5FA6HftqgxhGwKqE52zqOvhgQ32LiNjsVu/d1juZ8jcNB2Uz1H7OBWkTT6Cr61QbpCzqvGwWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sQg2wugUbDb8oM5MJDfx5Iubmsz5Y7fFgyvoE3fExwY=;
+ b=WUZLstCtjjqu39ZWRnrwYRZ+KPUz0OADqqCkzmBmq+c+ar3pSb7w8Kpw+GAmoljP/5QSKiKmhBzUV1HaaeO6jOg2v8dWsuGjuOl3qG75cbnBXu18wjw/RtKUOI2INVlaPUzWNleZdTDvI6x8pIWCjTjUKfJsFJ2z1ue3e50B1jj1aCS5My8wDMMqfxQWEbXl5Qc+c3fvU3woBFVz0GvUXAkuawBMqxO51EUL8oypdCxcPkdzDw4T/wdhS3coGTwLnw4TCyyLRjndXOQzbZJaYYSon1g3ZSxBqjCYlBg4+x6zYe6iZo/xAr8K0dhq9MmP8KJW7K2m6oW44S8hiZj9aw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 178.162.245.96) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=dus19794839.onmicrosoft.com; dmarc=none action=none
+ header.from=cloud-storagel4j.com; dkim=none (message not signed); arc=none
+ (0)
+Received: from SE2P216CA0059.KORP216.PROD.OUTLOOK.COM (2603:1096:101:115::10)
+ by TYZPR03MB8054.apcprd03.prod.outlook.com (2603:1096:400:463::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.15; Mon, 26 Jan
+ 2026 00:25:07 +0000
+Received: from OSA0EPF000000C9.apcprd02.prod.outlook.com
+ (2603:1096:101:115:cafe::10) by SE2P216CA0059.outlook.office365.com
+ (2603:1096:101:115::10) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.15 via Frontend Transport; Mon,
+ 26 Jan 2026 00:24:59 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 178.162.245.96)
+ smtp.mailfrom=dus19794839.onmicrosoft.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=Cloud-Storagel4j.com;
+Received-SPF: Fail (protection.outlook.com: domain of
+ dus19794839.onmicrosoft.com does not designate 178.162.245.96 as permitted
+ sender) receiver=protection.outlook.com; client-ip=178.162.245.96;
+ helo=dus19794839.onmicrosoft.com;
+Received: from dus19794839.onmicrosoft.com (178.162.245.96) by
+ OSA0EPF000000C9.mail.protection.outlook.com (10.167.240.55) with Microsoft
+ SMTP Server id 15.20.9564.3 via Frontend Transport; Mon, 26 Jan 2026 00:25:05
+ +0000
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Subject: ⏳ Your Cloud Account Is Suspended — Respond Within 24 Hours - Member #(KWA-824049) ❗
+From: "Cloud Storage" <hello@Cloud-Storagel4j.com>
+Content-Length: 3787211
+Message-ID: <851eccb3-3a8e-42a8-8fcb-3d14d81b5ce7@OSA0EPF000000C9.apcprd02.prod.outlook.com>
+To: Undisclosed recipients:;
+Return-Path: rs0baudhml@dus19794839.onmicrosoft.com
+Date: Mon, 26 Jan 2026 00:25:05 +0000
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: OSA0EPF000000C9:EE_|TYZPR03MB8054:EE_|BN2PEPF00004FBF:EE_|SCYP215MB2251:EE_|CPWP215MB2144:EE_
+X-MS-Office365-Filtering-Correlation-Id: bc835774-c1cc-4c1f-1239-08de5c715d25
+X-MS-Exchange-SenderADCheck: 2
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|69100299015|3phishing@pot0700013|376014|48200799018|34020700016|32650700017|82310400026|61400799027|4022899009|52005299006|4076899003|8096899003|7053199007|85622059|27013499003|54012099003|32550700048|15450700066;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?QXh6UGRmRzdhQnh0NHN4dS9qY3RMa1NMOGpKWnR5N214elY2a2xTWUQraUx3?=
+ =?utf-8?B?L1A0V2xsQTdlaGFRR0xXUkRpQzV6NjNuSnA3MFN1WHp3NFlja3RXcTF3OGw0?=
+ =?utf-8?B?eDkvRVlteHI4aTNlMDlwRnpMTUlIU2FXSlIyWFllRExMaFRjZXAzc1V4Q1M4?=
+ =?utf-8?B?eElaMS8zSWxocFdDdExjV21HKzZBQVJ4REdhTktsR2VGQ3JjZkViVjB0YWZq?=
+ =?utf-8?B?ZS8xNjhROVZBZzN0ZndPZVZJajlWQ0xXWEpEMlNtcU9RWEVoQklRRjhTanlX?=
+ =?utf-8?B?ZFZOa21jbUpvY1pLRm5uY1ZDZ0tHWis2UmJxbXZtODVKWmFIRzlUOE5HdVc3?=
+ =?utf-8?B?eHVoRXA1VmpsNnRnQ2ZlSCtYSFo4THQrMGt4VzNTTm4xNjVNdUM5dUUrYmIy?=
+ =?utf-8?B?c3RoYk44RDVjNDNIM09TVWhYQ1huUGQrT0JpdUQvVUpQYlM5QkJOaFdQRlRM?=
+ =?utf-8?B?OW1KMGJHWExDbXdTcG9hRUNPV2QvbGVQRVhjdnYrY0pUOVFIRmZIeCtSeUxa?=
+ =?utf-8?B?QzZqcHVXRXZxczlKc2RTT0dUUzczMnR3UUUrOFpTRjZCTk91OTJSaXdKOHpE?=
+ =?utf-8?B?dCtWVzAzUkJiVDVYS1gwTHlXZUdSZjlBK2NoR1RWRzAxdUJEMmFKWThzVXc3?=
+ =?utf-8?B?aHNEZ3lJSDFXY2VjRENEaEtGa24vd1FKWk9xSEh4ZG8yQVZSanRzaWlWL0FG?=
+ =?utf-8?B?QnJGS2R4d2Z2Ukh2Qk9tNGQ2eGxaNFRINkxhMUdlNUlQb1g5ZkZtSUFtc3dq?=
+ =?utf-8?B?Q2lMUTU5SFgrTzY1Y29EbmZ5S2trdURmOThXck9EU3lRR3Y3cFVmRlN1RFpT?=
+ =?utf-8?B?anpPYWZWTzBMNmtOMERCRTFWZkc2dDR0KzMvaW40c3Byd1hWaWtYUUNUUzZV?=
+ =?utf-8?B?VE1DalcrazNhcXljeHlaYjFlMVpibzlKTGpKUU92RFFaSG9veW1ScHEveVc2?=
+ =?utf-8?B?MmVaV3B0eGU2cmxhcm9LVlRLekhjbDNoVHcxNWF6U2k3ZzhseGE1MitKNExO?=
+ =?utf-8?B?N3ZvVzNxbU9uRkM1OXZOeDhibjhrZXlKdWIvYUNneUkvTXl5cEtwU3J4RUV6?=
+ =?utf-8?B?SVZpaC9vaTZWRDQrWkRqN0l6bVNzdVJ6aDgveVkvc2xaZ0JyMjE4ZkNNcFBW?=
+ =?utf-8?B?Z3lKc3JLckNjZDhCbUcwbDBJbXVCcXplNGNncDZUd3Z1bzRSOUFQOXlEOGpI?=
+ =?utf-8?B?aUtpcndIK1BtMGl0MjgwaCsxSCtrbkFzenRlcWcrVVJyVUhuUC9YcFUzZVp4?=
+ =?utf-8?B?eXFseHh2ZDYzc0lMdUV6Y0RPZ00yQm5zOUNqdFlVd2VQZVUxYzAyWVlLNlNm?=
+ =?utf-8?B?blpvdVErWHlrSXdQenlFakVwdm13T1lDMjVXNS8yVFBJc1RvZ0R6SC9xOU1W?=
+ =?utf-8?B?NTJnc1BuNGZFc3lPM3ZZMFNrQ3RCZ2xFQ2pEZ2hCRjdOR3FXbkovZThkWkU5?=
+ =?utf-8?B?WFVEb0FtekNBWmswMEpRLzNyYUNoa2Rhbjh5LzM1N1k4R1pkQW05Sys1RjBn?=
+ =?utf-8?B?ZXpTWmhkLytvNk9TUWdiYytHUzlhaFhIV0Jxb0FVWnpkZXFFNnEzdjhwekFN?=
+ =?utf-8?B?Q2FuWStTSzZyNUlKS1lTNTBaZjVjNkRweDZPZjRHcng5eEZEbGJWUHdXTm84?=
+ =?utf-8?B?SnY1ODV1S3JxeGFuL3QxTjhkRk0xcmMyK3hJWlZQVXpCWEZOaWpJL0QzU2JW?=
+ =?utf-8?B?QTBPZVg0ZVhpUnkrSlZ2dlByczYzQ3hoUGVBZFVzQjJ4cU5IazlvTU00SzlQ?=
+ =?utf-8?B?c3RhZTdLUzhFM1BXQUpXWkZhZk43UUxJUG00WWRvOU9uV05LTWV2VnduTEJu?=
+ =?utf-8?B?VWNrK3ZjcWtKemtHTUxhNnhSK2VMMGNtcEphV3NxU043b0ZPWXNmVmtFRzEw?=
+ =?utf-8?B?MWIrdi9McVJ3NVZwZWpiQ2Y3NEZiL3dqdCsxME9VKytGdkNvVjlOMTk1UUVV?=
+ =?utf-8?B?azVLUTRUWFkvYjc0dSswSzBZZFBFekdqWENRRGpmVmdTaERpUjhzZTZwV2dh?=
+ =?utf-8?B?ZHo2M2Jkc2lSZUhMYnBDQ3R6KzdwUzNGRlNrZDBrL0NmYW15SC9RcFJmbkpZ?=
+ =?utf-8?B?Zk10NmZrWTkydmlxZmFFQWtOajh1c1E4WEltd3UyVGxCRCtnSitYZzRrRERH?=
+ =?utf-8?B?QnJIejgzNzF2SWo0aUoxbmRBbzdacU10VFVBcU4yUGVZZzdCNUlBUXFOYXdr?=
+ =?utf-8?B?a1Vaa0pxSjJUSHlrZmwwNFBDQmo1cStPa1REdE85ZVUrZlorTjFpM05SZGVn?=
+ =?utf-8?B?RFgvbTdBd3VqUTVPdGUyOU1mN3FRPT0=?=
+X-Forefront-Antispam-Report-Untrusted: CIP:178.162.245.96;CTRY:DE;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:dus19794839.onmicrosoft.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(69100299015)(3phishing@pot0700013)(376014)(48200799018)(34020700016)(32650700017)(82310400026)(61400799027)(4022899009)(52005299006)(4076899003)(8096899003)(7053199007)(85622059)(27013499003)(54012099003)(32550700048)(15450700066);DIR:OUT;SFP:1501;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR03MB8054
+X-IncomingHeaderCount: 36
+X-MS-Exchange-Organization-ExpirationStartTime: 26 Jan 2026 00:25:09.6959
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: bc835774-c1cc-4c1f-1239-08de5c715d25
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: BN2PEPF00004FBF.namprd04.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: BN2PEPF00004FBF.namprd04.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: BN2PEPF00004FBF.namprd04.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 1/25/2026 6:41:40 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 9d00051a-6c29-44dc-9885-08de5c715b2a
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.102.202.61
+X-SID-PRA: HELLO@CLOUD-STORAGEL4J.COM
+X-SID-Result: NONE
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|2700799029|461199028|35120799006|36140799009|15110799015|51300799021|87000799018|63100799012|3025599003|470799035|62400799018|67000799015|970799060|9400799043|10300799038|70000799015|18030799003|15010799006|46110799009|46080799006|47200799024|58200799021|13020799006|18040799003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jan 2026 00:25:09.2438
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bc835774-c1cc-4c1f-1239-08de5c715d25
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=8d3c58fd-a42c-4842-913e-3c8ad7a9a886;Ip=[178.162.245.96];Helo=[dus19794839.onmicrosoft.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF00004FBF.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SCYP215MB2251
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:00.3329478
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9542.003
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9610028)(9540006)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?V1NoZmZPNnkyd3c1L2pWWHVkODY4RCt6bVJtY0xWd1JLaGVXejhXMWYrLzVJ?=
+ =?utf-8?B?d21aZXE2U0dDU3MwOFM2ci9XaHZDejFXbmUyZ3AyNE45WXp0aTZwcjRNM05i?=
+ =?utf-8?B?L0xZR2RSTHdhS2ZLcnlTWENrMWd5dmJVbmtzbjdyK1JIRFdkU3RnT2xrQkkx?=
+ =?utf-8?B?MzhLVFhyTnhjdlhBeFFTYk9NbVM3MUt4RVV1WW13OEdYVXRWNVJ2YUdrRG9B?=
+ =?utf-8?B?ZlNBdzVPRERlQ05CTE1EUThNMEdNc0dQcXBRYUlCajhHQW1vR21kWGRmWXRO?=
+ =?utf-8?B?YTZPMTZKczIzRTZuZDVaVzlHcEJuRXYxV29ZQXJJUU5HRE5BdnV3QjMyZkxo?=
+ =?utf-8?B?SmdYTTRkUXNSUzYrLzJEM016OGs3dTVhV0tWTjV3b3Rhdzh2RUVTeE9qbnNx?=
+ =?utf-8?B?eWFpVVFDQ1RTR2JwSWtmWjFkUTZhaXR5VWEvcGVZTTdiOHBwUFM5U2p6N0k5?=
+ =?utf-8?B?WG8zSTZpRVJKUjZIOVJ2M0dxNUdCVzMxQVIvaXZDanFBdEFFTmdncktuaVlB?=
+ =?utf-8?B?bjN2bndCYkJzRnc1bUZPS2NrNlZsN01UNStFWFltTk50cVFaR0huWDc0NUJ4?=
+ =?utf-8?B?WERxRm5rMzJGNER6Y2llSHRzRUl6c09ieHRmdE90cmdxUHB3T2gvTm5kbzlX?=
+ =?utf-8?B?SGFibm5ZeWdhWlVwTTFQb2VyMjAwNG9oT0FBaE1YYjdkOFRsSXdZTmlFemll?=
+ =?utf-8?B?MmRmTGJ5UmZWSzV0QXhnLzNSKzhvNDZQQ2ZrM2tCbUFLckw1eW5ITXZhZ1cx?=
+ =?utf-8?B?TnJBamNDcjFqM3puVDhqbnhTODVhaExoL2tjWktJcklYenJsSkpZR24vcGhM?=
+ =?utf-8?B?VHpzdUNqbDN2WmlVS3Q0RWxTWlNkMkpnaE9wZitpQ1h0b2NJWWFKakZjOE9X?=
+ =?utf-8?B?TmphaVVUWkpUbnJvMGpuKzh5d0RMM0JkYUZLR1pZcmNNdDU2UkhnS1llaENK?=
+ =?utf-8?B?d3BLSlN0OW4zcWRIbnhEZ0lwTm1YQ3FSeEEwMWhYY2VjUHA2V1U5ZUw1WDQy?=
+ =?utf-8?B?OGVKSXRWVisrMGJGTEg5QUVGVUJoUEFuUVIwcWpidHNseVBJdVZsOVhlMno3?=
+ =?utf-8?B?bGF1Vm5UK3JSWE53U1VUWnJPSm5sVEptN2VQZ1gwenZHaDJyS1lGVExnazZl?=
+ =?utf-8?B?RWhWczQyNG9hc2ZBNmFja251b1VvalI2SCt1WDI0Y2pLbVVJei9MZk9oNk1F?=
+ =?utf-8?B?QlJYdzBHQVV2Uk8rbTFRVU5EdUNEbUdKQU14WXlmRnVhU0pER0xtMWROdUVP?=
+ =?utf-8?B?S1M3UkxUYVNyNlV6ZGtYS3NHa3JuN29JL2dMV3RLNVVpQWtLeWMwbnR0ZlZ2?=
+ =?utf-8?B?UFc3aGRPQ3Z6aW5sRURaZjlhQWdPajZPS3ZqVFJlUnN4KzJoNGVWR1N3RkYy?=
+ =?utf-8?B?akVxclZVZmdudUdxTWlkWTNjYXUzSUxpQi82RFhzQ2xSWlUwanNUZXR2Q0s4?=
+ =?utf-8?B?NVpTOFJ3TzdkVEhjcUNoc0ZtZWhueTJLNEZydDQ4NlZlRWRBdEp6T3BUNklY?=
+ =?utf-8?B?NGpsOXNpZXJHcEE0eVRPeG0yRENVTnQ5LzlBb0VzeDJ0MDBoSEQyaktTNTRZ?=
+ =?utf-8?B?ay92SVVsaVdPK0owYnF6STlidVVETHhDZHAxaTYvTEZzMnF4MkVNMThqS0Ew?=
+ =?utf-8?B?K2Nac3RoVE80NnZHak9qOXlWSjlSOHpoZ1FkM1RWN0NQclhSMDF0QnptcjJP?=
+ =?utf-8?B?ZHYvRGx2ZnBSRU52T0x0RS95MmhtSWZ5RVo4eEhXMVViUlJGWTcvUUptOXk3?=
+ =?utf-8?B?SnBDQS9hbEE1bUpmWm9DSjVEUStUN2RxbSs2MVBFV2oyanhWNVJMSFdoZDZp?=
+ =?utf-8?B?TEllZzVEMXVwOW5yU2NiOVdaZXVuc2lnR1d2bTFIU29YVUU1NmNPekpmV0N0?=
+ =?utf-8?B?ekxOa05RYXhWOWRIbXVGei9BVExWWmU2ajZYYzUrQWYwdGo2dHBlYjVtbVhp?=
+ =?utf-8?B?eXVGSm9PdmkwYktnZHd1QVBtZ09mcE9PWjdOUTF1bVV5U1hpU0QyWGV3M3dN?=
+ =?utf-8?B?aDNaQ2I5WEdRanYxb0lLRUYyLzVsd2ZLUVJmWUJDenNuY0tpNXpUTE9JcU9x?=
+ =?utf-8?B?SDhIcTVhYjNBTzdwZzZrNkdjR0x1ZWxLYVc3LzdRSGdTc2J1VTJwSTZFa0dk?=
+ =?utf-8?B?cVJTWElKRnlRc0RkTkZSNVlrRlFKR0lqcHNtcFpKTGM0NkdjaG52bzFwSWIv?=
+ =?utf-8?B?aG9pTTFYODdiTFYzaURheG81ei9aOEdIWHlyQ2FScE94UnlDaTNjQnFkNTUr?=
+ =?utf-8?B?WVczNjZRLzBnZGRVbFBpOGZvNXM3RVIwTE5BRDlUNXRYU0VwM0t4Q2IyRGxB?=
+ =?utf-8?B?OTNLSGIwZFF5S1FJNDlyUlNPdkNHZ09yOC9GSU1VTnp5K2ZUZFNDbG1uaFYy?=
+ =?utf-8?B?WnQwdjZBdSsxamVsSVByYndhUnk4MThwMEZycXAxNUwyWXZNVnY1Vy9mdkdn?=
+ =?utf-8?B?OFU5UUFBTTliMkthRnRxdjBUekZjS3pjVE9ncGx0blBGb0dVeWJQejl0azU2?=
+ =?utf-8?B?c1E5OE1Hb0J4WlF2TjY4RlI2cDBDZVgrSXNGMUtqMkdwS3gyb3hRM0FQUlNz?=
+ =?utf-8?B?ZFQvaG5BMGZpTSsxeXZmTTh2UjY1Q29VZFE3YzBXWEpFTkNheE1GcHRJTndz?=
+ =?utf-8?B?ZHZ0K3FEaDR3YUdpVHBteERpazFKMldvdmFsT0RKOTdRYlhUSUl3THRSMnls?=
+ =?utf-8?B?ZUdNMVJSQnJRSTVKR0UwdHdUbE1yTDZmalpteUVyMEc1Q1FWM2UrMmdWb0d6?=
+ =?utf-8?B?QWJ5ZVpTQ05Ga3B5L054cVBGZVIwWHJPMFRTbWJyejFONFduWVRFc3U1Mk5O?=
+ =?utf-8?B?aXJqcldXK2hhMThkcytEMEdZWlUvUmVQb0RMc2hQZ3BqY0R6bE1rbGt6eUV2?=
+ =?utf-8?B?dmVTamRQTnZIUjdFOUc0NUdFRnFOM2prMFlCc2ZnWE9lanNKSi9vTHRJMndm?=
+ =?utf-8?B?a0pjN1U5aEc0WTFpZzZiN2ZoSi9BUzM5SXd1Q1A3UUFaN2M0enZSSitKUkxp?=
+ =?utf-8?B?KzgwbWNqQkN0MmxqZlczVTRtWFh0bjR3KzNiZklJRFdvSEVWNUg4TGlVKzFl?=
+ =?utf-8?B?NmdqWGdUNmdaNFByZExpcisySjczbFZPTG9vcXlzbzdGeTVkWEl4cXBTbnpa?=
+ =?utf-8?B?eGFqYVVPbnZ6YVNlVkJDT0dJd0hSMWRlZEFqTkpCcms3OGZSMnF2NUlhQTNr?=
+ =?utf-8?B?ZHJxb0l2OVVWN1cyWkhlN1IwZEF6MGdxNklFelVDdzB0L0FiNnQxV1ZKRG9Z?=
+ =?utf-8?B?SUdGeXBpSGg0RkxHck8zZXRlaDhuU2dRVERYelN4SXh0T0JlcjJzM1F5TE95?=
+ =?utf-8?B?SlUyMHRxbTVTWk8yYVpUTVZtYkFsWC9qbzNRZFk3bnVxNjFTTEtvUDV3UEFL?=
+ =?utf-8?B?aWt3dmNJQm9zQ2tGMkVHaHdqVU9nNmJoVkZMeExRZXlTdlo3RXVvVmpZd2hz?=
+ =?utf-8?B?YmtDcTZoYUhkZzlzaHNxYUpoSEtmSUs4Rm14Y3lwYkFhL1REREdFd0hBalh0?=
+ =?utf-8?B?cnV2M3AwWE9LMHhLV1BYVWRjU2c3c1huWTZrM3hqRkFCbXJCenQrSXNETkI3?=
+ =?utf-8?B?SHluTWhFOEtyRjFMbEVFcHk0bHdQcHJPQjJnVXcxbWNjZ2xxMnMxWS85Z0Vh?=
+ =?utf-8?B?bGhEYzdPakN1b0ZtVUxBcGMxMWg4TytSWWN4TVNIRTMreW5PSU9vWXFaSWZB?=
+ =?utf-8?B?TS8vL3hnMllmK1MxYk85TldYaTM1bG5icUNXK25Zd1dzc3pvbnBJWUxHUEx0?=
+ =?utf-8?B?RVRFZVBLNFZvdUN4dDVGQnVIc0s5TnltZXJJbzIyWWs0VGNiTmlkU2Q5REJo?=
+ =?utf-8?B?RFJTQnFpcjgyVnExV2graThaTDlsRFR3Sm9qUUwybFU0MnNSLzR3UjBrUUE2?=
+ =?utf-8?B?alV2bGJxZzJjRnZ1elo4TDYyTllueVZpT3NGWVhidUlpd0d3ditrelFSMElm?=
+ =?utf-8?B?WlZZMGxwaU9uSUhMZXVRZEI2MkhGazBQQURUc0VRd2pzK0c2N1gwaDY3WWpq?=
+ =?utf-8?B?NVd3UkE5RUpoMzlnajJyNkFvcUVDUnpOeXJOS0c5aTJwc01OdDBTZWIvNi9t?=
+ =?utf-8?B?eXRrK0xONzFFT09pYkl6c2lLRWhkTndSejlqQkRkT0VuNU9pRncrb2gvVG94?=
+ =?utf-8?B?NUpzM3o4Zkx3c1B6ajlqUW0rdTcwd3JkbkJBZjdIV0hqVlVlWHJaM0VqOE9Y?=
+ =?utf-8?B?ZFNtdW9tbGhDTTQxeG9TbXA0clAvUWhESndUNDJCNDdwSXoxWXh5MkZBcTR4?=
+ =?utf-8?Q?4yp7WfF7optWsDCrAQXHsa6vyO9a8XI?=
+MIME-Version: 1.0
+
+<!doctype html><html lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Cloud Account Suspended</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body,table,td,a { -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; }
+    table,td { mso-table-lspace:0pt; mso-table-rspace:0pt; }
+    img { -ms-interpolation-mode:bicubic; border:0; outline:none; text-decoration:none; }
+    body { margin:0; padding:0; width:100% !important; background:#e5f1fb; font-family:Arial,Helvetica,sans-serif; }
+
+    .wrapper { width:100%; padding:40px 0; }
+    .container { max-width:650px; width:100%; margin:0 auto; background:#ffffff; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,.1); overflow:hidden; }
+
+    .logo { display:block; margin:0 auto; padding:30px 0 20px; max-width:130px; height:auto; font-size:80px; line-height:1; }
+
+    .header-bar { background:#1d4ed8; color:#ffffff; padding:20px 25px; font-size:20px; font-weight:bold; text-align:center; }
+    .header-bar small { display:block; font-size:15px; margin-top:6px; font-weight:normal; }
+
+    .alert { padding:25px; text-align:center; font-size:17px; color:#b91c1c; background:#fee2e2; border-top:1px solid #fecaca; border-bottom:1px solid #fecaca; }
+    .alert strong { display:block; margin-bottom:8px; font-size:19px; }
+
+    .progress { margin:25px auto; width:85%; height:18px; background:#e5e7eb; border-radius:999px; }
+    .progress-fill { width:100%; height:18px; background:#ef4444; border-radius:999px; }
+    .progress-label { text-align:center; font-size:14px; margin-top:8px; color:#111827; }
+
+    .details { font-size:16px; color:#111827; line-height:24px; padding:0 30px 25px; }
+    .details p { margin:8px 0; }
+    .details strong { width:140px; display:inline-block; }
+
+    .btn { background:#2563eb; color:#ffffff !important; text-decoration:none; display:inline-block; padding:18px 28px; border-radius:8px; font-size:17px; font-weight:bold; }
+    .center { text-align:center; }
+
+    .footer { font-size:13px; color:#6b7280; line-height:18px; text-align:center; padding:28px; }
+    .footer a { color:#6b7280; text-decoration:underline; }
+  </style>
+</head>
+
+<body>
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="wrapper">
+    <tr>
+      <td align="center">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="container">
+
+          <!-- Logo -->
+          <tr>
+            <td align="center" class="logo">
+              ☁️
+            </td>
+          </tr>
+
+          <!-- Header -->
+          <tr>
+            <td class="header-bar">
+              Your Cloud Account Is Suspended
+              <small>Restore access by updating your payment information</small>
+            </td>
+          </tr>
+
+          <!-- Alert -->
+          <tr>
+            <td class="alert">
+              <strong>⚠ Urgent Action Required</strong>
+              Your subscription has been suspended. Update now to avoid permanent data loss.
+            </td>
+          </tr>
+
+          <!-- Progress bar -->
+          <tr>
+            <td align="center">
+              <div class="progress"><div class="progress-fill"></div></div>
+              <div class="progress-label">50GB Used / 50GB Total</div>
+            </td>
+          </tr>
+
+          <!-- Details -->
+          <tr>
+            <td class="details"><br>
+              <p><strong>Subscription ID:</strong> XAS38798UK108</p>
+              <p><strong>Date Exp:</strong> 01-26-2026 </p>
+              <p><strong>User:</strong> math.kichuu </p>
+              <p><strong>Product:</strong> 50GB Cloud Storage Space</p>
+              <p><strong>Email:</strong> math.kichuu@hotmail.com </p>
+              <p><strong>Error:</strong> Account suspended — data inaccessible</p>
+            </td>
+          </tr>
+
+          <!-- CTA -->
+          <tr>
+            <td class="center" style="padding:28px 30px 35px;">
+              <a href="http://g1fgv.com@0x40785ee0/4cfRjf8782SfIw233ozwvwdawzc169WUYVSILXQUUAPGO3787211WOHB429691c1" target="_blank" class="btn">Update Your Information</a>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td class="footer">
+              *Eligible for 50GB bonus storage after updating account.<br>
+              To stop messages like this, <a href="http://03odi.com@0x40785ee0/5mUavn8782fDAL233gzwlmdxwnp169JBJDVIDRNBPUISH3787211SAYW429691r1" target="_blank">unsubscribe here</a>.
+              <br><br>
+              <img src="http://785a0.com@0x40785ee0/track/3VNxGs8782qtCn233ghcvvyjorf169PMYNPDXABAKPKKW3787211XKVB429691G1" width="1" height="1">
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,464 @@
+Received: from IA0PR10MB7184.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Sat, 14 Feb 2026 12:22:23
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=AXJ3R5aggBbzhdQj4wId3llrVRHOtKp9ysMqJ1JWVM9DUAZqUlvwuGHjORxekYmksoXseoDDlI5cGE0toxt0KyH627lSMUoDWSBs562EGBkFXm/JllLoVJaCFvTxKXV5XFNYPWPEUb9o/yGHMObW8DKBJw8T2KgU3rce7xUBx1RUmAYouolIHjyDnntEkd4Le9uFJSbForQgfGK9kYP2xMAdGpBecib4+86fTR/Io5NGa5aoiBkiCMdTAoECcGCxBIw5anRGgAeozitYGFTgIiwGwhSfQYzlcqTcBmsakPwZiYNy+8nvelRQ66U1xRk2chBG28pfc7lR5NyeMjk8Lw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fmUl0urcYutaPU9pfpvkdAu24evsXzD2szRHOX/xQV4=;
+ b=EdWQ7qod2PJGicCdCkdTN8DDKVlRvrhmfgG+B/yvz2TlwFGYmXQ4DpV8hvOxQ+sWF0KT3fqVUvfRxopw6u3ZOpr9CJZbgl1QiGwHjcPwjQw1Cb7dJFlHiG6eMH36RbF4DSVXm4vyQZ0y6crSl2LfczoHnV1+wZli9zI5l1deGcudf4evn2TSNMzaqWnUfmrlmbvohm22HLaNBeIDyUhOqSA3H5rUN7EfSZKCdRnlt3WHJxyNaF6WgiRFheCNfyzcVyo5nd32SWEkQcSQh+ZAMXOUb8h8tKJSpojdwmIMEubPVlSkDC44ees3c4PXpW56XWBtl3R5igoIVBOBr2GuWw==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 40.107.44.109) smtp.rcpttodomain=hotmail.com smtp.mailfrom=pier.socialbl.com;
+ dmarc=pass (p=none sp=none pct=100) action=none
+ header.from=pier.socialbl.com; dkim=pass (signature was verified)
+ header.d=ger20162233.onmicrosoft.com; arc=pass (0 oda=0 ltdi=1)
+Received: from DM6PR01CA0013.prod.exchangelabs.com (2603:10b6:5:296::18) by
+ IA0PR10MB7184.namprd10.prod.outlook.com (2603:10b6:208:409::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.11; Sat, 14 Feb
+ 2026 12:22:21 +0000
+Received: from CY4PEPF0000EDD2.namprd03.prod.outlook.com
+ (2603:10b6:5:296:cafe::4c) by DM6PR01CA0013.outlook.office365.com
+ (2603:10b6:5:296::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.14 via Frontend Transport; Sat,
+ 14 Feb 2026 12:21:54 +0000
+Authentication-Results: spf=pass (sender IP is 40.107.44.109)
+ smtp.mailfrom=pier.socialbl.com; dkim=pass (signature was verified)
+ header.d=Ger20162233.onmicrosoft.com;dmarc=pass action=none
+ header.from=pier.socialbl.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of pier.socialbl.com
+ designates 40.107.44.109 as permitted sender)
+ receiver=protection.outlook.com; client-ip=40.107.44.109;
+ helo=SEYPR02CU001.outbound.protection.outlook.com; pr=C
+Received: from SEYPR02CU001.outbound.protection.outlook.com (40.107.44.109) by
+ CY4PEPF0000EDD2.mail.protection.outlook.com (10.167.241.198) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.8
+ via Frontend Transport; Sat, 14 Feb 2026 12:22:20 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:890EA348051979B8EAD268D71E0DDD0D4524A7EEBA97CCD7418C92699ABA4AE5;UpperCasedChecksum:44FEB346C241CD68F30CE3F7DA1A34B7790DF0B8F461F003823C553C6067121A;SizeAsReceived:8455;Count:38
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tUO2SK2rS+44BWd0ntO2e3jGp08LnmAmrSd0Bi8s/LpVixvf+2y072W0ElU0mkY+FRlXinmgjNRVEqK/nRNvtgVfhqek7QYSGIl39PBexCPB7mO445hXjjGAtPqFHPbNrQwP494eOP+1JVYsp0bxSCgVlGJV0xiNVYcTXmEJfW5l3fJbSaeydV1ToJyyIp/sWY+DdjW5jmGApc610KVAWyPdgMc9qlEJKrz2JFfvnbyO9I/n05kVgjq2DtDB+GZhDiprJ1hibX7G2YszHceCtBnYRNkhJbE2Ar6hYRciiJmioWaq+0YjO93vKpjhmfNxi4GDiF4erQR2aIfS5jze1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fmUl0urcYutaPU9pfpvkdAu24evsXzD2szRHOX/xQV4=;
+ b=I+LkpitOdTkN99EZxlpbKuv17zAQrVvBGFgzchERNO/nERLrYIqBkuXbKGUue9g/reTr+p1ygN5mRVs3uznUzH5ZfrKVhKg3vg3Osq0uOWdYOQCR/tkcYFScpOc9MZb81lXvxTlquFT+EAPrhIVDK4hFlbUgU1R6/vNg9/xnqkiDzFOBlrhqxw9U458MnyoRE9zvmkip8JC58iM0lmJfs8uXP9qXiTLuOBfCCWzQ4v6eISr6PvPrViXLtTALMuHfSZD5nSBketgKyKBXvqWiiCm3a8LPVerRdKuk8N10y54gBac3P3FrU/47eHxpmhrTMK/Fksc3FNK+hsOM+n+6Gw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 23.81.33.40) smtp.rcpttodomain=hotmail.com smtp.mailfrom=pier.socialbl.com;
+ dmarc=fail (p=none sp=none pct=100) action=none
+ header.from=pier.socialbl.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=Ger20162233.onmicrosoft.com; s=selector1-Ger20162233-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fmUl0urcYutaPU9pfpvkdAu24evsXzD2szRHOX/xQV4=;
+ b=DX94JZRci0WkrdqWgmWwBbymUFDe7EjynNq1qYr7mL5s3fPqRzCHSZtigMQxK1OeVc0SvUpI/yLMYtY8Ekqs8F0g5kVVnI4S48RGLwqfZkyqmUfUe3LvXWCtZe7iOGRmN+aYEmEKVQ0S1iaZhr4hPx1CYwCAmuwUqsy3SqDLrNJGjep2hjVhGvVWnTDxUvuazbsJZkHRx7yFBqnQ0WsAlp5KImEADhXErx/amMq5KyhZEYHJifIpSnkc53PlmO9mGj8ZMygwMB0Ei1uSyXQGFOAwo6pjXRX7Mo85L7UPSPQotQMtVEEJ6OW8Is/6ncjMRJuIkCfqAI3JBhZRh88//Q==
+Received: from SG3P274CA0020.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:be::32) by
+ KL1PR02MB7190.apcprd02.prod.outlook.com (2603:1096:820:110::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.10; Sat, 14 Feb
+ 2026 12:22:17 +0000
+Received: from SG2PEPF000B66CA.apcprd03.prod.outlook.com
+ (2603:1096:4:be:cafe::4f) by SG3P274CA0020.outlook.office365.com
+ (2603:1096:4:be::32) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.14 via Frontend Transport; Sat,
+ 14 Feb 2026 12:22:18 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 23.81.33.40)
+ smtp.mailfrom=pier.socialbl.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=pier.socialbl.com;
+Received-SPF: Fail (protection.outlook.com: domain of pier.socialbl.com does
+ not designate 23.81.33.40 as permitted sender)
+ receiver=protection.outlook.com; client-ip=23.81.33.40;
+ helo=pier.socialbl.com;
+Received: from pier.socialbl.com (23.81.33.40) by
+ SG2PEPF000B66CA.mail.protection.outlook.com (10.167.240.22) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9611.8 via Frontend Transport; Sat, 14 Feb 2026 12:22:16 +0000
+To: <phishing@pot>
+Content-Type: text/html; charset="UTF-8"
+Subject: ACCOUNT SUSPENDED: Update card details .
+From: "Billing Alert." <MgIJJaye@pier.socialbl.com>
+Date: Sat, 14 Feb 2026 12:22:14 +0000
+Content-Transfer-Encoding: 8bit
+Message-ID: <c030f5be-1a2d-4897-ac1f-4b16207803c2@SG2PEPF000B66CA.apcprd03.prod.outlook.com>
+Return-Path: bm52p9p2ahu4@pier.socialbl.com
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: SG2PEPF000B66CA:EE_|KL1PR02MB7190:EE_|CY4PEPF0000EDD2:EE_|IA0PR10MB7184:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2538bc61-c673-42b6-6d75-08de6bc3b369
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|3109299003|7049299003|32650700017|69100299015|4022899009|82310400026|376014|3phishing@pot0700013|61400799027|8096899003|4076899003|54012099003;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?N0lIRTFSSlV5bHU2MzhIekNVb0JtNDV6KzhYaWd6WTVDd2RoRnMvVzJXSklI?=
+ =?utf-8?B?WlIzbzdiSWtiMmJiejk3TXd2Z01kNnpwM3NxWkEyNXc1Slh5WGxrTllyY3FH?=
+ =?utf-8?B?WlhQUFRnQXlMUHgzak43a0VKOGVZWUF5U0RJZ3UzLzJTclArSG01UDlsMll2?=
+ =?utf-8?B?aklNWEFkZ2RpMkcxUWRETkFCMnpBaExMbTVKb3EvYlNKM2NnSncySmlVSld5?=
+ =?utf-8?B?ZnRrcDk5QWhadisxME1nckFqUkt1U2JMREhqZlJDOE1vZ2tCTmhBcklsaVlp?=
+ =?utf-8?B?OGVSRWdjNlNSVEZIMC9FQjN5UWJRcHdhUCtBK3RqNXVXVlV0QmJIT3F2V3pi?=
+ =?utf-8?B?V09wTXV1dExFb0R2NVJEK2JZMzRZbmx3WWYvQlJmNUV3c1VocU9OTC9kYmdz?=
+ =?utf-8?B?eDZsS0tMM1FVc2x5c1pvcFhzNVM1bVNFeXJVWWgwWGtETWZyczVHdXVQSmpa?=
+ =?utf-8?B?cWRKRFFUUVc0K0kyRzBFa051NmpHMmw1T2dheStlT21YcDM1OUhOanVWQURp?=
+ =?utf-8?B?QjYxNlJEeTAwYUtvR24yNWh6cjF3VEtUYnVrSGkySXpVdmZwbzNPNU5PcE0w?=
+ =?utf-8?B?ektHcDlZZVNld0p2SEI3blFZREJwRDlIU2FjdUdHUnFPeFh1NXlMUjd2RjFQ?=
+ =?utf-8?B?SWM1TXdqbm9qenE5NGhEajZuSGtLOVhlQTM0UnlRNXZ4cS9jKzhiaU5qTGo3?=
+ =?utf-8?B?NlBGZjZsaTNvQTNjMkdYL2dKdTF5TWJSV0Q2dVU2U3NvQU1CL0MxZXlmMmx6?=
+ =?utf-8?B?MzJUZjduY1hKcGd5aWhBNFJhMklzZ0hzdnFSNG1WYktScFExeC9GNzNtSi94?=
+ =?utf-8?B?QTF1STNDOWx3dzNjbVVyaVowSFNIS2pBdGdLcU1wbkM5bUFXMElPSm9IbGR2?=
+ =?utf-8?B?dWVPVlI0Mmk0TmpFazFlSTV5WEdQclp0TEVlLzdFK1RNcDR4UnJjWjRUMlB5?=
+ =?utf-8?B?WmR4YktMNmdaWUNzZlBERXZMOHRSQWE4UTlpNDJId0NENFVudXNUSHFwRkoz?=
+ =?utf-8?B?SUJTYTRCZDBnK01wdUNqam5HNEFDS3VXUTQvRkc4YnNkODVmLytLeXJTbnhI?=
+ =?utf-8?B?Z3dDZGFrcjlLWlQwYlRCZmF3Wjg5Slp3Ujg4NWhOeUl3RWZWV2orVk5zMXUv?=
+ =?utf-8?B?NVMzbWsrN2Y2QzRsOEFUTFhNdUFCditWb1N3a3YyZmQwS3RZNURid2xyUW00?=
+ =?utf-8?B?Q0dpM0ozSjZSWXA0MzZsWDV3dWdMYmdtcHpjV2VsUWJ1WDNqcEcxeXYveUcy?=
+ =?utf-8?B?R21pS0RCdE1HdG5iOUhlRDVWREpFV0NzOTlrc0Q3dTJ6czBFbXlGbFhnS1dP?=
+ =?utf-8?B?SjhEZlJBTkJkcHFpTjMvV2U0c29EZjdTQU1jaWc0U2M5VUszU29jbERObmVh?=
+ =?utf-8?B?Vnk2RndJcmpsNlcxbDNPTEF6MSt2MzVLK1pJVWxuRWVkM08zeERwZ2dVdXF6?=
+ =?utf-8?B?YXFxMGxqSGJmU2ZBVHNuZW5JWTE5TXJVdTVxRlJpRlF0WWN5d3kwUEdvdFJG?=
+ =?utf-8?B?QnJSOHRWWHVtMk5mTjRMMHF5dzBWa1VjRzhJRmZKSzZhTHRHWDNvTTUyTUFz?=
+ =?utf-8?B?NmxsTDhlL0dMbHdaR0hCeWpWUHBOdWV3VXlkeGUvVDdwdTVKeUc5S3FVU25Z?=
+ =?utf-8?B?ZnBxMVpkcXBieFZ1NlJidkYzZXpkZkRjcDZvbmtCUEhwMGMyL2ZmRkFGaE16?=
+ =?utf-8?B?L1hRbi9kWC9hUjhSaU55WjhFWVBPdmVPOWY1WmNaMG54Q29mU0xKYU5DRlFY?=
+ =?utf-8?B?RTZkamNLelV5RnNqaEN0YWxmcDY3UFVsM2I0T3VOV1grNktFemhjWU1ScUlv?=
+ =?utf-8?B?NUZrcm9SOEEzbW9HVDlEL2cvZTBOR1pVQ3RJRVJLUVNKRHNRekQ4TjBrRTJS?=
+ =?utf-8?B?SDduZjMzMk9CRHhPaTg5MHR3Y1hYT2tBS1E1cm9KVkY4TUJRZmxBQXdNcmQr?=
+ =?utf-8?B?SXlaRnVIbDUvSHRWU0VZR2dtbUY2bFZFdUZKaDh0d2JsbkhBMjRxbEpLUzE1?=
+ =?utf-8?B?dWhQeGRVd0RObXVQL0hscU1IYThhU1ZhdWMwbFoycmtnUHM3N29CN1VYT1VU?=
+ =?utf-8?B?TTNLanFkaXQvMXcxeVR6QVBsMmZRVWZoWVcyeUFsRitDQTY2bno5UUxjUVV3?=
+ =?utf-8?B?RC9WcGx1K0NRZkFJbkJwYkRWdW5IY010K0NZamR1MjdFNG0wZlJ2SFFLWElG?=
+ =?utf-8?B?b0E9PQ==?=
+X-Forefront-Antispam-Report-Untrusted: CIP:23.81.33.40;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:pier.socialbl.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(3109299003)(7049299003)(32650700017)(69100299015)(4022899009)(82310400026)(376014)(3phishing@pot0700013)(61400799027)(8096899003)(4076899003)(54012099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: 1RMW+JqWgYRmfo8Fhtw4+1v0WjcjXnI/ymPE5APgXy+UtM0NB7gP/DQYEopAwe5H3HagliIsZSlHBgwrXWI9+IpIdwvN+JUOwiRh+4DB1YIZnxvHxMYjqlfnGYw6cD8gSW8kKwsqut/mQwZnEr7jiT70s80eNnl0KliHZry0aRBrLHvYqkCthjh/ErX2QJHKoEBKQRuiFRGvrxk6KgTqbXVRB5mTNawPVbsOQEllBxVvEARg8DbF+UKkQltIn3mpJ3fOW+bt/ty4NiuUGFpm6hrMW4wy7HZk9PCoG/zAMXO8dg/DXkSmNMIX7G+nLNL3kby3rZ8kIRsWVhQbWW8yBsCSJ+U5QZa/a62cavWKJ2KTG/kXPIgH7JcyGYcCGX7mcxdeZt7B1Q/FvIkjj/G5xdQOanOyNxTCI1GsM2gsxiW3k3p2djQvM+ghKfXSRWaY
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR02MB7190
+X-IncomingHeaderCount: 38
+X-MS-Exchange-Organization-ExpirationStartTime: 14 Feb 2026 12:22:20.6014
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 2538bc61-c673-42b6-6d75-08de6bc3b369
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: CY4PEPF0000EDD2.namprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: CY4PEPF0000EDD2.namprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: CY4PEPF0000EDD2.namprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 2/14/2026 12:17:44 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: f8c2c817-b21d-42ed-ac78-08de6bc3b18d
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 40.107.44.109
+X-SID-PRA: MGIJJAYE@PIER.SOCIALBL.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 8
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|33080799003|9800799015|87000799018|62400799018|56000799018|67000799015|470799035|20103052909095|42200799015|15110799015|461199028|58200799021|119000799006|48050799006|10300799038|32080799006|30140799006|22090799003|9400799043|21090799003|11020799009|2700799029|970799060|46110799009|34130799006|32020799003|47200799024|13020799006|46080799006|84100799003|3025599003|1680799066|9000799056|3412199025|2072599012;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Feb 2026 12:22:20.2115
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2538bc61-c673-42b6-6d75-08de6bc3b369
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=c2531e2f-c7d3-46ad-bc38-16e8999cff0e;Ip=[23.81.33.40];Helo=[pier.socialbl.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EDD2.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR10MB7184
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.8179786
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9611.011
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9525003)(10145025)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?anRETE9qMENvb2t5aHpXaFpOWDZCWGNvMlBoMFBHK21uZVVXdjcrd2lpaW8v?=
+ =?utf-8?B?VVBSaXpwUDhYYmpWOWNtT2lPYmN2dEhkR25Tc0xWZTNFWGZURExjVkFLcWFF?=
+ =?utf-8?B?dEtyUXIwamdKaHlHVUlyOTB5WE16dlYrV1o4Vk9NdUwxMlBSc1ZqTC9jWUNP?=
+ =?utf-8?B?cFA5OEdOKzM3ZWRyeFUvYll2a0FGc3kwNVoyZlNDeTVCRm1xeE1ydEVGRjJR?=
+ =?utf-8?B?QTJDVW5SQURWWXdRR0tKUm5Zc3VFTDRzRjBsV205VjVxMXYrcVB5VDFGTkx0?=
+ =?utf-8?B?SWVkcko4Mm5xTzJwQVdEbTBBZ215L0RVd2FLdkxYaFZPTkVRbjJTU1dRUTdW?=
+ =?utf-8?B?enJXT3JkUktXRDRBUSs2TWFlSTVvUmNxUEZXQjRtL0tRMU80VU1nL1cyQjZ6?=
+ =?utf-8?B?dm1aWjVFTzVDbXU3cUhTL3g1LzhONmRRcUo5UkJoT3dOd2tjWDFheWNGMnV2?=
+ =?utf-8?B?MjljWWIxbFRMNStXSW8yNXdmRFNXOUViRjJVekpLcWtRbjQzUC91bU1xWnYx?=
+ =?utf-8?B?UXhWU0hFMlpINE1pVkQzNjkxWVhwc3FuYnBzTThGdVJ0YlJKUDgrTzR0VXhJ?=
+ =?utf-8?B?MnlXN3VkV1pQWitmL0Y3TXRIempIblVlR0ErbUNocTBkNk5idGo3Z1FsdnJn?=
+ =?utf-8?B?L2RjUTZnend3cHk5VjhlT1NYUEhjOGZ6TktVQ2QrL3JnVlhZQmorL3Y1elVF?=
+ =?utf-8?B?bDU1ZGpNcE11dUM5VkpjVnlpaHR1RFViNEg4amVTa1pDUHA5WDF0Q3p4RkJs?=
+ =?utf-8?B?OXU3NjIyZlcwZy8xZUkrS3RWLzIxM1dpcS80WGU5bURmc0duZitDMGFDWlJE?=
+ =?utf-8?B?MWJwclhhWFpDcVEyVzdQWHhJajRXdy9KQVpHVTRqU3poSmZDQ2l6WjVOTUxK?=
+ =?utf-8?B?ekQxdmJ5Z051eFNjT0dVZ2M4d2pTREo0d3RPWDJOck5tandUVThhY1Z5bVh1?=
+ =?utf-8?B?K3ZyRjRCdHV0UWlGVTBGY1J1Z2U4T0RVQncyT3VibnhOQmdFYkJQdEh1Z3FZ?=
+ =?utf-8?B?WEk2RTRPczdzcmtVYkxqOUs1WTFiWmF3S09reUhJY1JHdnk3RVkwNU9Sb0c4?=
+ =?utf-8?B?Z2Vnd2RUZ25VaDV2d1c5OStxTWxPL1NlTW5NZk00TWdJQTRKcFovWEtaL2JJ?=
+ =?utf-8?B?OC9lcTdZVW55MzhFYnVWVkJMbE0rQ1NYUnhhZmJiRGJ5OU1sTFl6RmU3THVo?=
+ =?utf-8?B?T0x5OGFKVU5zMWRGbU1SU251Z1NYcWFYbVlkK013TjFaQnB0RS9xWG5KZHps?=
+ =?utf-8?B?cU1MVlpZT2JUc2pnM1MrQ3FTWGpoSUVhU1FUQm1USE1LblJ5Mk9qV3Q0cGgz?=
+ =?utf-8?B?WTlyck1PK05VUURwa1h0R0NmS0FjWEhKS2lPc2JJUitZSGZaVjQyMml5M3lW?=
+ =?utf-8?B?OVJuZHVsK0Q1YXpZMXVLQkpvV1kxdXdHVWZQQUdvUmlqQjNWbmdiQXpXbzV0?=
+ =?utf-8?B?aWd0T2ZiWWttZStnZUlaRnh1QStpTkRiaDBuYjdqNlRreUtRU0NVS1ZnNEM0?=
+ =?utf-8?B?N3M4Tm4yaHVrS3dKN0R0WHAxUXBQMEZlOW1EOTJvNnlTRzBJY3c0Q0JKVVEv?=
+ =?utf-8?B?MENDS1pIQVlIWUtoUy9YSUNiYWpoZWRlMTRpaXgwT2hxYzdCdFcvNkxvcDZr?=
+ =?utf-8?B?R3pLdEk4MzFCMjcxYk5wbENVRkFzNWlVK3Z4QXNiWVVFSTY4ZmhLWmNoc2FQ?=
+ =?utf-8?B?eS8xVHVOelVTWmhYSHp2THdMU0NjOThSUkFRTUtvNUJlMXhvK3hwSmdLWjRH?=
+ =?utf-8?B?bUthVllhSFQ3T2FHaGZxWXNFWHh4Vm9xbzYzWmJKejk4NnhDWmNTcU15MDdi?=
+ =?utf-8?B?MDR3Y050WGZFeEJDeDdXaUlwZnRKeWFDVHlZOHVuN3hkUDlMbEZydGlEZFpS?=
+ =?utf-8?B?TmRvYUFzSU9KOTZla0FXRmZkQ2J5Q1dnMVQvblZKT2ZJOFVmdnhKY2xLREVm?=
+ =?utf-8?B?eG5ORzZMSWkrbVpoYU43N09oK3FNcDJFUUgzeE5IMVNrbnNKbjZwTjBXaURm?=
+ =?utf-8?B?aDI1bnBKelV2RERwdFFJVFZrUldhZGU5NjVERzh6NjFVbWdkaDhrMTFrM0FR?=
+ =?utf-8?B?NXp3bVZuS3pzM2hPWFNRYS9TZEJBSU5UTUEvN085azRXQ0RLRlBBaFVQU0lv?=
+ =?utf-8?B?ZWRkUGsxZTNDM21qdXRqR0NVODIyQnFSN2tOVlhPZkIvdWpGN1o3bHp3TjNP?=
+ =?utf-8?B?VXppSS9OYkFldFk3dExWZ2hLa0xNM2NRVGxZYlpxVXVzdnVZN0pBZzV3Zys3?=
+ =?utf-8?B?a0JEWUhXdlVFeW5PQkh2V3JhQ3VSNWpITDBBY3YvNWZrMnJUV0NqQnVkUmhZ?=
+ =?utf-8?B?T2hGcFpISDRZN3NSQXVIOTJpbXJYM1pTVEpGWTBGWkg4MFZva29MSmVGNkNF?=
+ =?utf-8?B?enRxTjh3M3JhczREZUJlYVlHS3BkMG1ZZ0IrYlFHYnl5ZTZQT1FuR2VUanlh?=
+ =?utf-8?B?ZndQaStwVGtCS1F0NzhsQVJOSTNvQ3pvRGF0bVNnRXpDUW95Ni9vYmZwS2Vs?=
+ =?utf-8?B?NnN4cExSL1ZobjhWSHhMazE5TFpDT3hHTE9QNVBsS3RDRjUvVTlKVEJXem5F?=
+ =?utf-8?B?MXVtVWxCYTdaVzVpekVwREZCSE5oZDZYNVBEVGZEYTd4OG5jV1VRRDY5SUE3?=
+ =?utf-8?B?aFg0ZzljdUpvTUZqa1lBWjdsVEh1T2Q4NmpteXo4c0d0SkxUZEoyVFltYU5n?=
+ =?utf-8?B?S3ZTbG5QSG80N3lLZFhQMDlvZlFFdUg4ZUI4VlRIMXRrcDJEM1JMeEdwT3Nw?=
+ =?utf-8?B?SjBMenhabFlGbTFSTXJuNXc5MUZJbjJDSm1uaWJIT29pREw5ZTA2R2Q2QVZq?=
+ =?utf-8?B?dnBRS0VFMk1tZXpvTUJMZHFwVDgvRTU2V0dOSE5ZaC9OVVJUK0VDU0Vvc0tt?=
+ =?utf-8?B?TTdaaE5GaDJqWXN5bkxUNWRudUlWOFpzWkhnOVNDTFVJSUkydmxVRFJCOEtM?=
+ =?utf-8?B?S2kxUzRxUDBxa1doc2w1Mm1ZK1ZkdXlKdjl0MytuZzN1TXh3OTNuMzd6VjdW?=
+ =?utf-8?B?NVBtTjRRZ1ZBYzNkdXFzMjJReTBCZFAxa0M1cVAydmlBOHFXZmU1RkRLT0ht?=
+ =?utf-8?B?OVhoVzZ2blJMYy9TS1p2bXpnZFdMZnhEVmdCbll0K0E2SWx3S3JKV09kSjlG?=
+ =?utf-8?B?MElVUmdNL2pEbG5yRFV0UWFIczJGanViUWlySTFweGw2a2tsenFJSjZYY1VL?=
+ =?utf-8?B?QXVaclVtSFIzc0lqdkRiQ3R1MG01ZnV6THhCQTNWa2kvQkNPcjJIRkNGc1dN?=
+ =?utf-8?B?R3RrZU5raXVRSWs3UnRpWkVxTEx4WHZDcDQxZTAwVlI1UHY2QndackJKYkVr?=
+ =?utf-8?B?TWVYQW1qMWJxZ3EvQUlWa3RPZDVOUUNJWWxVSnk5NXBibFp0ZzV4VUhhNjRZ?=
+ =?utf-8?B?cU9zZXNJNzJMTER2NS9IQ2NZbWhHdFJSOE9DL3VEZGlJLzJhQlZXOHRkWit5?=
+ =?utf-8?B?dGUyNDFreCs4MnhOdGx6cHBlbmFacWlhS296S1YyWXp6ZHl6YkNsTmZ6K0hL?=
+ =?utf-8?B?bldSSTE0R1FoRE1RbmJNbFNXa0g2amdobkNrQUlPamd5bWVkczFaeDVQNkRW?=
+ =?utf-8?B?NHpBS3hyMUVITDZ4M2hnY050d01PWHl0cE5rbld6WFFtZFVRMmw5dEQ4Yzkx?=
+ =?utf-8?B?elcyU25pTXhLZzNUb3E5NjdaQ2p4azJIMW5zS1hHSVJEY1NmdWZLSEtRTVEz?=
+ =?utf-8?B?dVR4VEN1RGJDeThsaWIzTGdtMXFFMTFHZC9wWDhQUm5yY1B4WXk0Z0pzczcx?=
+ =?utf-8?B?ZFVUbFp2eFdvWjM4eTFtd1lLMGN5aTB3RmVsT21XQkQ3QmJUWXN6cUp5QVJL?=
+ =?utf-8?B?ZTVqYllETE0rdVV5SFF6SUJXMW5BUUN4WSsrdTNqL1NjLzRHWkVKOVBiSGYv?=
+ =?utf-8?B?eVFrWmNVOEFpRnhQYlo5d0JZV3JSakVybkV4QisyZGl1SVRUcVNjblpnMUF2?=
+ =?utf-8?B?RUR6R3ZxNXNBcFE1UUx3dCtUejByRnJkMVE3YzVHSUhyc1VWbVRWYWJ2S3Qv?=
+ =?utf-8?B?dXBqYXI0NEhjMFl0QnBBQ05YVldHWHZyelJVVmNWazRvcDRraVlMbWIwVXdQ?=
+ =?utf-8?B?S0NQc0M4UXVwRjZwWEtqSytyanIwZWQrdDdmbkE4VEdMRVdyaldKZzd6YkJQ?=
+ =?utf-8?B?TU45UXZ4aGFOSGx4Um5MT0Y5SWxLbmlOL3hGRituSHVWTFdMaEI5WGNISTg4?=
+ =?utf-8?B?SzRiWm9LVlJnUEorTDZWMUNxQW4yL1ZVTkZBbGtUbU9NcWd5K2xLVkM3Wk5Y?=
+ =?utf-8?B?OG5JZUd4bXpHUlJzZTljbUJxU1AvRDhvUDR6OGQ0VDNjdUNRSDllQjRHS250?=
+ =?utf-8?B?cS9sQy9VWWJ4T2Y5UUZnQ1lSZUVSQzlTb2hCN1FaeVlTMkhHSzdraGtxc21L?=
+ =?utf-8?B?MHltWmNkUFpuazM2Mk1Sb3hwdDAwVEVlWllOejd4TThkcGt2NjlkN2FqMHlv?=
+ =?utf-8?B?bVd3KzI3ZGhjY2RlQS83ZTNEL3ZzYzd5cHkxanhMYVJCQjRFcXhPc01XZ3Vj?=
+ =?utf-8?B?c0c4R1ZKK25DSmRlcFdXcHUyOEhIQmVYbnhIQmNqQUh4QWJRLzJudzg4ZzRV?=
+ =?utf-8?B?YTI0MHptVGdtSVdjR00vSzM2K09yaWtRRitTUDN0YkYyRDQvWDVTSG9QeEI5?=
+ =?utf-8?B?KzBhTlY2bzJPNytMVmk1Qis5VjdKSEg0SHFtVFN4RXgxeGkwVjIvTlNyQ3Ns?=
+ =?utf-8?B?Ti9abE91di9jRGVOTzA0UWZ0aG50WUlPN3RmYkt2dkViQmoxWURTUmcxZ082?=
+ =?utf-8?B?RUg0TmJUQjZHRHJxYnllMGNUQXFjZkJpNEZDUk5YczFITHNZS3BFdXdPYTV5?=
+ =?utf-8?B?eGtNU1BnUzU4eXBhK1VxUmtiUW4wbW9vMFYrRVcwaHBOeUF5SUtJMUFZYVE1?=
+ =?utf-8?B?T3JORXJuTkNsRzVoRTdOalg3S3JWaTFsUklmSGFDMnU5eVRGRWs1NUtHdEVk?=
+ =?utf-8?B?akFqY2U4T0xZZzR6MWhvdEVCNkVLUXgwZDlqdzJVL2d0clNFMmYvTlF0d0xR?=
+ =?utf-8?B?amowNGx5Ylp3TXF6cmFVNDEydCtPU25veElSRDNjeG1qYkRlU3FNMWYxb2hh?=
+ =?utf-8?B?VjZ3SzB6bi8xUmtDMzRiM1JBQXF4RmZpMTZobjdYS21uSHhXbFlPSUNJWVZ0?=
+ =?utf-8?B?M3kxcEllWi9ZaEpZMHFuTnJNNmYvQmliT2Q5WFUzZTJPcmMwdkhSYm1PR2py?=
+ =?utf-8?B?cnArbDU1cnIyMlFFVjdpM2xGY0xkZkJYLzZrWWhTa2FHN2oyUGdEdUxwN3ZX?=
+ =?utf-8?Q?d3S0RU+m46OXYsu?=
+MIME-Version: 1.0
+
+<!DOCTYPE html><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #666;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .modal {
+            width: 550px;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo-img {
+            max-width: 60px;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        .banner-yellow {
+            background-color: #ff2222;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .banner-yellow h2 {
+            margin: 0;
+            font-size: 22px;
+            color: #fff;
+            font-weight: normal;
+        }
+
+        .modal-body {
+            padding: 30px 50px;
+            text-align: center;
+            color: #555;
+        }
+
+        .date-text {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .warning-red {
+            color: #d0021b;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .discount-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .red-badge {
+            background: #d0021b;
+            color: #fff;
+            padding: 5px 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            border-radius: 3px;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            border: 1px solid #eee;
+            padding: 10px;
+            display: inline-flex;
+            border-radius: 5px;
+        }
+
+        .product-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .serial-grid {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 10px 0 30px;
+        }
+
+        .serial-box {
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+            background: #f9f9f9;
+            font-family: monospace;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* REVISED BUTTON STYLE */
+        .action-btn {
+            display: table;
+            margin: 0 auto 30px auto;
+            background-color: #ffb81c;
+            color: #000;
+            border: none;
+            padding: 15px 50px;
+            font-size: 18px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .action-btn:hover {
+            background-color: #e6a519;
+        }
+
+        .footer-unsub {
+            background: #f9f9f9;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="modal">
+        <div class="modal-header">
+            <!-- LOGO REPLACED WITH GENERIC PLACEHOLDER -->
+            <img src="https://symbols.getvecta.com/stencil_27/71_security-center.7c9a269b33.jpg" alt="Logo" class="logo-img">
+        </div>
+
+        <div class="banner-yellow">
+            <h2>Subscription Expiry Notification</h2>
+        </div>
+
+        <div class="modal-body">
+            <p class="date-text">Your Antivirus subscription for Windows expired on <strong>January 5, 2026</strong>.
+            </p>
+
+            <p style="font-size:14px; line-height: 1.5;">Without an active subscription, your PC may be vulnerable to
+                malicious software, viruses, and potential identity theft.</p>
+
+            <div class="warning-red">
+                Your device is currently unprotected.
+            </div>
+
+            <div class="discount-row">
+                <span>✔ Renewal Discount Available:</span>
+                <span class="red-badge">Save 70% Today</span>
+            </div>
+
+            <div class="product-info">
+                <!-- ICON -->
+                <img src="https://files.softicons.com/download/application-icons/hex-icons-pack-by-martz90/png/512x512/antivirus.png" alt="Icon" class="product-icon">
+                <div style="text-align:left;">
+                    <div style="font-weight:bold; color:#000;">Antivirus Premium</div>
+                    <div style="font-size:11px; color:#555;">Version 20.9.139 (10 DEVICES)</div>
+                </div>
+            </div>
+
+            <p style="margin-top:25px; font-size:12px; color:#777;">Associated Serial Number:</p>
+            <div class="serial-grid">
+                <div class="serial-box">8A5B4</div>
+                <div class="serial-box">RV6N</div>
+                <div class="serial-box">Q8TL</div>
+                <div class="serial-box">OFG3</div>
+            </div>
+        </div>
+
+        <a href="https://pier.socialbl.com/4ChDbK2567YHHY278syutckvaiw551XNRZHTFAUTPYVJM26VWEU11966j9" class="action-btn">Renew Subscription</a>
+
+        <!-- Footer -->
+        <div class="footer-unsub">
+            <p style="margin:0;">This is an automated system message.</p>
+            <a href="https://pier.socialbl.com/5hWpMb2567fhev278foicjbzxjs551GKKPOEJTICKVACF26CBRS11966y9" style="color:#999; text-decoration: underline;">Unsubscribe from alerts</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

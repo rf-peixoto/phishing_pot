@@ -1,0 +1,425 @@
+Received: from DM3PPFADA73EAD2.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Tue, 17 Feb 2026 14:07:03
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=xNHGehl4lN3iaDhW0/a9n+xsQ4zPhIRkxTWUom+EAEWXV3MXie/vHRBiFAW8yb6SUcUrmWGt9voXYFG3O5uXvSIfNZFvYHDZkjqSka0EYDhKXP/bnLLIBzUKlrpcLavgY1Jga3qMCc9Y47kifSDPHMQvSwZrX6WuGa7A7sXEpw3prMXdNHF/Qza5vsioJYOmKckEghpqtNRu5ZRfkwYnpI/XplHoc4J1HH/eCvCzyr5PbvjKFnq+KkWGL05uCZHPdTUq7z/i1Gbg/usl11NyTtjKyqZG85hZoj3x63a2fzBm6RSucb4aKmXqg6dKSNKTgVLo8d/pxh6Uz2JXKElk6g==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oCuQlqbqHOLzYK0krfIRfoF2bGo8xlIdFgmKBmG2NQo=;
+ b=jh2wCYLYNC+XpLQksJzA5dBePB9vnCRk+XSsr0SOjPM1uWXhw1uFzAxxXoefcd1ZL2/LezSvracE05OASgdbB+bD8RbO6litDuKCOx6DwHOukZ9Id5b8q3tmx7wbO48D0HL5VGoIYc9w7656DDnqzHB52b/vJfxkcfcm3zQbUbFFJOkfJ5ff5Cb+83G5sctftkKWRfYKGQFrB0iLsHa1QpficyoGNx4yNBLo901FQ/NbUgbkq5OE3vI9D6E0yAdxIGEW6BJz0n87336QiOUOpncimS2zf2TOD+4st4QT68b2zboCJ16NZVitwc1qFSpnQGTxDhw5Hs6YDq7MEzstGw==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=none (sender ip is
+ 52.101.126.101) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=slave.socialou.com; dmarc=none action=none
+ header.from=slave.socialou.com; dkim=pass (signature was verified)
+ header.d=san19784407.onmicrosoft.com; arc=pass (0 oda=0 ltdi=1)
+Received: from AS9PR06CA0620.eurprd06.prod.outlook.com (2603:10a6:20b:46e::18)
+ by DM3PPFADA73EAD2.namprd10.prod.outlook.com (2603:10b6:f:fc00::c42) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.11; Tue, 17 Feb
+ 2026 14:07:02 +0000
+Received: from AM3PEPF00009B9B.eurprd04.prod.outlook.com
+ (2603:10a6:20b:46e:cafe::4e) by AS9PR06CA0620.outlook.office365.com
+ (2603:10a6:20b:46e::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.16 via Frontend Transport; Tue,
+ 17 Feb 2026 14:07:00 +0000
+Authentication-Results: spf=none (sender IP is 52.101.126.101)
+ smtp.mailfrom=slave.socialou.com; dkim=pass (signature was verified)
+ header.d=San19784407.onmicrosoft.com;dmarc=none action=none
+ header.from=slave.socialou.com;compauth=pass reason=115
+Received-SPF: None (protection.outlook.com: slave.socialou.com does not
+ designate permitted sender hosts)
+Received: from TYPPR03CU001.outbound.protection.outlook.com (52.101.126.101)
+ by AM3PEPF00009B9B.mail.protection.outlook.com (10.167.16.20) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.12
+ via Frontend Transport; Tue, 17 Feb 2026 14:07:00 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:56A11B78D2EFB358B756ECC61B44F6CC8173FA392DD547A02D29CFCA876099B9;UpperCasedChecksum:D65F9AE9B1561EDAC25834D954CFBD14ACEE844172E825C94E3534DD67699179;SizeAsReceived:8322;Count:38
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=DJceG94VMdA0CsRQ+3m8129TgACByAAM/tBh9gRaW4rbADTes5x5DrjciE0T2jPQrwC9PF3egu9tC6QCMiXcZ9OYGzxuH3XSwnbAqewlJaCtYRiz3lQWkPYgw4yCDDXVjgrtNN9wsKyHt6bcyCyj/rv/mVHhR0zUCTW69jIoOuoKSx5MSEGoqwjLaJHhRmrzrISoesPuGv6fiaQuWaJERyPjwgYaw1T9MkJKHjhtltf5UCINkMjv9pDQ+xy/QGLac9VqSw4k4TYW2yw6E66I2OGPz4DCZpP59RJ1Q4x8YlUVxEJ9uOxID8ntHS8Gf6hX/2FsXBEJPZNCPEimYLDNFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oCuQlqbqHOLzYK0krfIRfoF2bGo8xlIdFgmKBmG2NQo=;
+ b=jZIE2966IfoBVvSjtgoPW3a8twYH/SghaM2zLYnZAB04R7ksh/jI7+evm3IMAXd96Toa4A6OPSVZcK4jPClnWyy/4zXH5ll5OWl5ZbmXjLKYJsxo3nMUnA5Nj1kfk4OhO3NxKRDd97XpOZxjfL7/f9CRgL6V2QP6HEn/Bb52m6QyJUvA0b+t7GdG35fIrMo0n2Ute2GF64o/HF5BFw/ac2cNsf03tTgZJ//YN2g2jsXQuJrRN05vFWy8/jVTr/0e9yAkuLW2Gn/oSNejHuiua9HI2Rb1Jq0Gp/Izrr3HBugjylHyK4dvFjD4xqELfBTRihwJa4829eHbEUKROeoCWw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none (sender ip is
+ 78.159.110.149) smtp.rcpttodomain=hotmail.com
+ smtp.mailfrom=slave.socialou.com; dmarc=none action=none
+ header.from=slave.socialou.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=San19784407.onmicrosoft.com; s=selector1-San19784407-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oCuQlqbqHOLzYK0krfIRfoF2bGo8xlIdFgmKBmG2NQo=;
+ b=JFA0IO37dd1UQoodMpDvBtRf4mPWUHtebSX/S2A+pBJ0S0A910Us4y6ZfKmXIFX9TrnSe3ttGNLzq/ptaMN6BonXCzdj4xI+ztlgSFje1Q1DTj6lL5cWZjfiCzaBjWSbZgNVj8N2wKUP15jn29NaBdYh6kagfMdPOM1gmnj2D6nki+NkI+flmqQtaqkFqQJ2GxO4/rXIbCcUIOg9zl+rbMaXrE28tt87HOM9XxVucozMDbMD0IwAkWHdoGjU28rLBxiI2m6J5/8N9D96WW+SsTg/pn/xWTRyx/E7YOZAK5dnhMKFh27mALq9ycibQCG35dSVaB23D+6eZjrOYu4r8g==
+Received: from OS0PR01CA0109.jpnprd01.prod.outlook.com (2603:1096:604:9b::8)
+ by KUXPR02MB8877.apcprd02.prod.outlook.com (2603:1096:d10:4f::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.13; Tue, 17 Feb
+ 2026 14:06:56 +0000
+Received: from OSA0EPF000000CB.apcprd02.prod.outlook.com
+ (2603:1096:604:9b:cafe::2b) by OS0PR01CA0109.outlook.office365.com
+ (2603:1096:604:9b::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.16 via Frontend Transport; Tue,
+ 17 Feb 2026 14:06:56 +0000
+X-MS-Exchange-Authentication-Results: spf=none (sender IP is 78.159.110.149)
+ smtp.mailfrom=slave.socialou.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=slave.socialou.com;
+Received-SPF: None (protection.outlook.com: slave.socialou.com does not
+ designate permitted sender hosts)
+Received: from slave.socialou.com (78.159.110.149) by
+ OSA0EPF000000CB.mail.protection.outlook.com (10.167.240.57) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9632.12 via Frontend Transport; Tue, 17 Feb 2026 14:06:55 +0000
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+From: "LifeStory_Quote" <evSiMQY@slave.socialou.com>
+Subject: New Life Insurance quote for [username]
+Date: Tue, 17 Feb 2026 14:06:53 +0000
+To: <phishing@pot>
+Message-ID: <f33631f3-b121-482c-a107-e7176801d2a4@OSA0EPF000000CB.apcprd02.prod.outlook.com>
+Return-Path: vUHvrxym@slave.socialou.com
+X-EOPAttributedMessage: 1
+X-MS-TrafficTypeDiagnostic: OSA0EPF000000CB:EE_|KUXPR02MB8877:EE_|AM3PEPF00009B9B:EE_|DM3PPFADA73EAD2:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: e932e13e-7808-4bfe-a971-08de6e2dd1fa
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|4022899009|7049299003|376014|3109299003|82310400026|61400799027|69100299015|3phishing@pot0700013|34020700016|32650700017|8096899003|54012099003|13003099007;
+X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?UVBIZERmemlMMTJGTVVKTVdDL1dSdHF4NzJWU3k4ZmZQZVVQYmZ1YTkyWk9B?=
+ =?utf-8?B?bmFxdlR5R0dCWmpzOFl5aDg0Z3YvUzNlMjRLb2hZblpibzFyR0NCSU54ckVw?=
+ =?utf-8?B?d2s3R3FUazl1eUJvai9uMVZXTHVqQ216Y2FHTjdMakRRRHZmUGhHUUIvTFpE?=
+ =?utf-8?B?azM5OW9VR1dRYnRiY1VacCtHdW50S0RXa2dqcTJFWTBRNHRIZWg3MW5PdERK?=
+ =?utf-8?B?dE9SOS93MjNmUnVsYXhVV2d6cFM1MjRJbHNhQ1RxYmF5Q2thQVBXNUVwK0lk?=
+ =?utf-8?B?SUt0cUs5Qm85SlZxaldWVG5rK3dNR29rL2NFMEc1bDFqQTBNMjErNmladG9n?=
+ =?utf-8?B?Q2t1YVpRVTBxWllPa1gyOTg0OHdSOElYNmovcXNURkFTUE9FMFBsUUYrOW11?=
+ =?utf-8?B?bjlkNTZNck4xT0ZNenhGSmFhNGpCbEVqclFxdi9ZWGV6UkVhTWlOMGZpQzUw?=
+ =?utf-8?B?SzNCZkxTTmlMRnhZRlFnNWcxcnE3N3VUNlJsZ3VWTlhVckQ5SGhncnJ2Q0Yz?=
+ =?utf-8?B?blZkL3R6TUFuZTVkWXFVTkpvR2hvRGpVSEp5bm1UU1UyUnBlbjVsbEJXWlc0?=
+ =?utf-8?B?OGQyN0U0VG94Y2UxUi9lUnJnci9FeGdHL0dPYXZXdVdCY051ZzZMUWpLRG5u?=
+ =?utf-8?B?c2syeWpRUHg1THo1cXNkVHJLdnRGRFlLMFJnVGtMM1FBbDB6M1lON0lNbWF2?=
+ =?utf-8?B?WStZTXRPd3pqYVdCT0Z2Nmk5ajk3M0tDRzJWRmo5SVdFV1lQbGFXUXlraThn?=
+ =?utf-8?B?NXVmZmpPNWFaMGFKbjllRXl1Q1dOOFRLWmNtTGJZczdka20vcTRsem5ZVkQ4?=
+ =?utf-8?B?Z25GdlRQR3FEVFBJeUFiVGtiNW1PQ3ZDMlhUcnlid1Y0VzZ1U0MxYXhramZH?=
+ =?utf-8?B?UUxnbWhjYXNMb0VveU5lSlhrMTNnL3RjMjJ3NUEwRlRrYjU1VngvVy9pQkIr?=
+ =?utf-8?B?RkpzaUZUSzMwQ0U0Z2pKOVJidi9nK3Fma01nLzJscGJ5Y2lUUzZmSDZodFdV?=
+ =?utf-8?B?TGx1citDd3kyWmlWL2ZocEV0SnlJOW5Mc2p2K2p2L29OVWIrTG1xNElueU5v?=
+ =?utf-8?B?MlVySTlyakRsc2NkaWg2NG83amFVRjFaWkgrZUNISTVjS3NlUDBkdUljbDd5?=
+ =?utf-8?B?Y21yODBZRmYzVFBkOGVDMUhLWXhUcE9FWGxoTEtVa2pDN2RqTURieEk2VHF6?=
+ =?utf-8?B?Z3hPREFMcnQxT20wNFFkME1yTU1UbSt2eVI4V0tqQUdSVnVWdnYrVGx6OGxG?=
+ =?utf-8?B?UFNHMEFZQmxidDNTeEdGUkZuMC9VTTNtS3dwRmF5Z2FDdlUvWmNEN1ZPMmVU?=
+ =?utf-8?B?VkZheUcybitJMnBqeWN0OCtmSE9SNlpXbEVyTW1BT2h1NUEyMjZGaGxWbEVT?=
+ =?utf-8?B?SVdEeVFuVnFsS20rdTZNWlVpWHIvNGdqUSs3V04yaytJOEVYbTVJWnNUZ0ND?=
+ =?utf-8?B?alg5MXo5Q3NzNDExUEEvYXFsOWE0ZlNwNkE5c0NZM3BpWmVTR1Y0a1l1NDVD?=
+ =?utf-8?B?TmYzYVNYN3p2ZkhhUWNZY09kd09acWZHRWUzazlxS0xxTSsxVXNmZ05HTEc3?=
+ =?utf-8?B?Vi9aaWJvS0pJVXJITTNRNVFNUDdGZm9MKzVUSkg5NnNPWGJwaXl3WkdqZGFJ?=
+ =?utf-8?B?bnZkOTE3UTZZMnVCMFdNeFdkR1J1cW5OY3pkY2MrQk1oVzc5SS9xMUE3bGU1?=
+ =?utf-8?B?NTJPL05zZkNMVnZySUdqeGNZVkJTb3J0Y05oMHAzTFpXa2tNd1dlblRoTnEw?=
+ =?utf-8?B?bjl5NWZrdFUvYzIvVHlPbzhYbFNNazJEYlorcUV0dkxMMTlaQXBFRmJxMnB4?=
+ =?utf-8?B?dXNKTzFLdCttS0luTU5zQWRpM3VUYWwrSDk0UUJRN1JWalpldy92cnpMOUdq?=
+ =?utf-8?B?VWR6SDEvSzBlanovYi9FclNoTjBDVVQ0Z2IyV29Od3Z0MmhRQjVNdGt0YUdL?=
+ =?utf-8?B?S2w2dXJUVG03d2xDNUZjc0lVeHZhbXJYM2tjclgza2NhSlZXT1ZHazE1Nm05?=
+ =?utf-8?B?MjVpcmpxWUhSa3dGcUJwR3hUbTlIeUMxUVY3UStvdXNPVDV6Q3RJeXlWMlEv?=
+ =?utf-8?B?SGttclVnZmQrNkRhNGo2R09EK2JONkpVb1dTM25LZ2NSY2xPSktnbGdXb0ow?=
+ =?utf-8?Q?gnEYDDGUn8mCGpmeWEKDt20bg?=
+X-Forefront-Antispam-Report-Untrusted: CIP:78.159.110.149;CTRY:DE;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:slave.socialou.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(4022899009)(7049299003)(376014)(3109299003)(82310400026)(61400799027)(69100299015)(3phishing@pot0700013)(34020700016)(32650700017)(8096899003)(54012099003)(13003099007);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: rTr6orBV6FaI7NEPkQrY2td58zBLgs0GZMEPxETkg9/ONbldUueKwBIW2jX8y8ogtXya66YOEHRu2vYsNFQHKG83ddpNTiGaZ7MoojKLGzCN+w9mCxdxM/LniIP87rIcgXyPopnKIFLbo8mOYceiHf0ckCTeisQIbUy+c1ZFP3jHXi7dgQqCBueOIJ7uZpysePZHwUdaF1FStZffRr662bLb2tXQqIwin7RJbGBh/Fhv3LO7zYZLGgYQIidm3oWbSztySwQRPX8TEDVzIDzuT0DSIh/xK/dRi6hlmeRdjQgelozlLHElmbFYTwaeaONKkOgP2n6heA7u2oWRzpaFFa/sczt7LFr041FWspVVhl5OAs+ivNOGShKN6GZyRZgjGLMXZlpZ3h2X1iZjpfmX/8XreiVNyGDTTywTxpo683IcSeOF3jCiw5BUh2930RkS
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR02MB8877
+X-IncomingHeaderCount: 38
+X-MS-Exchange-Organization-ExpirationStartTime: 17 Feb 2026 14:07:00.8638
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: e932e13e-7808-4bfe-a971-08de6e2dd1fa
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: AM3PEPF00009B9B.eurprd04.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: AM3PEPF00009B9B.eurprd04.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: AM3PEPF00009B9B.eurprd04.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 2/17/2026 2:05:57 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: a4e9f123-1a80-42ec-0165-08de6e2dcf2b
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.101.126.101
+X-SID-PRA: EVSIMQY@SLAVE.SOCIALOU.COM
+X-SID-Result: NONE
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|32080799006|21090799003|20103052909095|47200799024|58200799021|470799035|9000799056|22090799003|6100799021|461199028|9400799043|970799060|1680799066|74100799013|10300799038|11020799009|15110799015|46080799006|42200799015|67000799015|56000799018|17120799003|84100799003|23130799006|13020799006|62400799018|2700799029|32020799003|34130799006|12056099003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Feb 2026 14:07:00.2804
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e932e13e-7808-4bfe-a971-08de6e2dd1fa
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=772f1099-bc2b-4797-9c22-94594494461f;Ip=[78.159.110.149];Helo=[slave.socialou.com]
+X-MS-Exchange-CrossTenant-AuthSource: AM3PEPF00009B9B.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PPFADA73EAD2
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.7092774
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9632.007
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?VitralBGQnB5aW5wQTdhcWV3VlJsQW81MmwrejRlaVd6KzBTU09PSnRrNWR2?=
+ =?utf-8?B?QzJWM0FRc2VXTnhUV0QyMlRzUkVtV3VMVm5uTDdqU3ZWejZjYk9saGFPNy83?=
+ =?utf-8?B?VDZkazRUdXhzK1lhN2Z1TzF1MTErVERINkd6Z3JubWVGRlBMcGVNeWN6T2FY?=
+ =?utf-8?B?NzZuNy91QnZOREtSYUMrWC9XS2JtNkx4Yk00SFZLeXF5S2FFVG9VWGZDQ2Y2?=
+ =?utf-8?B?aWxBdkNjVUNOSnh1RkI1eE11alVMczdBZ1Y5Vm8zNk4xczdyYkQwZTdzaXhh?=
+ =?utf-8?B?aUVaSllBdzR4ME1NZ1dRNjhZZWU2NFRKQU5icFhjL1ptVTkzZGlTdnJyN1dB?=
+ =?utf-8?B?NldueXZIdEJrNi9tUmM1bk4vNmxlNlJiekZxUFVZb2FkWExzSzY5cnExZkJx?=
+ =?utf-8?B?OFMwTE9ZSUFKVzhWbVJtM1kvVVpRc0lXZlliQ0NOa21QQjdyaTAwZXRSOVhh?=
+ =?utf-8?B?VVh0NlZyNHRwOUE4ZzcyUEVndTlIeUtmQjhiYmZOMmYxODBOeVptbHB5VGpu?=
+ =?utf-8?B?cHR6RjdwOXp6bHZCVWtlQkRCSVRwQ2FQb2lsUGJ0WVpXOEZFRFJNS1pidjYr?=
+ =?utf-8?B?M3V6VGRkRlUvY0s3anp0ZDJmc1FaaVFvemlScDdJNzFLNkwzdlpzL2ExYkxU?=
+ =?utf-8?B?NGVVaVdxR2hpZFJJRXZxV3FOTWFucEhyYUZhc1IxTkZqTmIvV2s1OHoyRW0y?=
+ =?utf-8?B?UlgzY2dMWkZkcW0zd2trZnBkeXRGVWdvdlN6ZzVwSmNkUXlMM3ZGeGZlV3k0?=
+ =?utf-8?B?UjRSSlJUYXBrUGRNWUcwdE41TkJqZFFQMWw3VU5XZFZDcmYxdGx3SW9TamZw?=
+ =?utf-8?B?dFFqSk1ZTDFqcjh0YTUrcXU2NjdYR3ZPN01Ba2JacmlZRVExQWJMRTB4WDAz?=
+ =?utf-8?B?RWo3MmFER0dsOGs3L3dmenRJZzVaUFBLVWo4VDhxcEIzSTNTeGZYV21jU21n?=
+ =?utf-8?B?Yyt4YVNSVjQ4azZzZmNEMXc5YXg0Q3ZuTTZLdm9TWEhXMDRvcktxVVg1dk1w?=
+ =?utf-8?B?ZHRVNjdPOFluUGtRYUNIL1h0UUJ5ZVRHVUVtUUpFRSswbHBZSndVMlVoQTRU?=
+ =?utf-8?B?VnFIWCtWVUtyU0pLS0pwWTI2MVczZ3RrVU5pUWw0ZkdpcjhoUWwwNXRiRDg3?=
+ =?utf-8?B?Z1NpQWp0aDl1QlQ4Q2J1VnpWMzV0UmJxNDVkSkZvbkhpMlg5SUQreXB3TUdF?=
+ =?utf-8?B?VnJLN1VuWm5mUHFxNmdDVVZFRG1iVU5VblhON253VFZYVzhRa2dSYTlERGNw?=
+ =?utf-8?B?a0M5NVdVQ0pWQlhqNkU2WkhrbWh4TFRYQ214MEVYWGN6K0xPYWZGYzltUzMw?=
+ =?utf-8?B?cUcrQU1KSUJsR1Fsd2ZwT3orVDJJVkcxcEhHQndGbHJYaE5RRTdkb05LQ2Fo?=
+ =?utf-8?B?N3J2cm1NeUtVTlNVaFQwenlqS0lBV09nUU9RWm5TNnJHb0FwdUpjd3JKY1lR?=
+ =?utf-8?B?V0tBU1JTY01xc2VRQzRkZTgrRlpBai8wd2JqRUpjZ01kS1liWGFROWhaczlQ?=
+ =?utf-8?B?U0k5dnB6ZDJDYzlZcitlcDhUaHFaMW9hMUJNUVJkTDI2eVlrT1NlVXFiYzh6?=
+ =?utf-8?B?M2pUcDFJMWtMZG5adGhDWFdCN0xYblphL3dWYzZaMWZsbWxtUXFpMmNUcHVr?=
+ =?utf-8?B?VE1zM3B1bVNLNGJ0dVBxY1JqWmdpUEw5VmF4Rm1DKzFMWC9pNmJFMkV1K1lk?=
+ =?utf-8?B?aXRlMGVIK1VOWjFiUWF1N1NnZ2NsclFyd0czL3FSaGtFejBBOElpenJ2ZXh1?=
+ =?utf-8?B?UEp4anNib2dwVE9DUUdpa0tuVFFmblpEQXZROU4wZDlKV2RZQlRQeTJmbDFZ?=
+ =?utf-8?B?WkRLcFJOV3JvVlVWSGxHb0lETFUveklhUmZ3ckhNcG9TYlRieTVPTmFkR2pn?=
+ =?utf-8?B?MnJManZPYXN0andsRWwxeGwrMG0reUhQTUY3a1J4cWg4YjRaaGx4Yjgyb3Fp?=
+ =?utf-8?B?S0xGMzI4Rkp2RE56UFA5V0VFVUJwSkM4M0RqNXA2SU83eXMrMzd2MTlISVBm?=
+ =?utf-8?B?UFpvaU1ZQU4xSnpkOW9DZm81ZXlmMWtwYmxZdzV6SUlSZmVjMFZoUHJjL1B0?=
+ =?utf-8?B?QW1WRkhIQnd2VElZaGhHdGsydVdsOER6bTVJTUtxTy9WcG1hdmx3MWNQWDhj?=
+ =?utf-8?B?OWlYNmp5dnZwQ3Z1NVNKZnV3di9vc2dMZ2FJb1RQZFhlSlFxSjVsLytwS0xH?=
+ =?utf-8?B?VEltL0dBalVQbUFsSnczakF6akhOMVdicHVCQ0NXMzhyekpJRUgvZy9LcGsx?=
+ =?utf-8?B?VHNuL0U4a0xOSUp3Mm9Ja3RnNTZwdEcydTduMVI4RlcrVzNkbTVtNngvcjUy?=
+ =?utf-8?B?aWNzOEd0cjB5cU0wbnVEOUpoQzFPWVYzbURuc0h1Q09hbCtJYjZ0V0gveG9o?=
+ =?utf-8?B?SE84aU9kSG84YzJBVzhuYkFLQlhjUzhQMEdUU3YwaUthMDFMeDJ1S0FZbXZa?=
+ =?utf-8?B?SnZTVlRXdTk2QXJtd0lPMnhLS2NXc3h1UDA4NDcvVjZQNStPZE51OExSL2o3?=
+ =?utf-8?B?RGVNSG9HNDM3L3ZadXViejFLMHNOMGJrYkN0Vm5pUW1EMVo4MEpQOFhqUzVT?=
+ =?utf-8?B?RVViY0VlUlptdGhWSVBMbDdGWHQyMC8yS01VVG5MalJkTzJwRDJTM0EwcW8r?=
+ =?utf-8?B?a09mTlRsOTJxMmxVVFZyRFY1K2l5NFBYeTdDTEpqdmg3bW9NUkM5blZFRnNX?=
+ =?utf-8?B?Ukloa05VVXk2YXhIWVRSM1A5RWs5bWlzL2o3eDlDNG1FMWk5OXZNYm5Wc0Q0?=
+ =?utf-8?B?L0pDSjR6dnQ2ZWxHQkx4TkRYcnROM0VPcEIrSkttMGg0TDd0YThsSXRwKzZu?=
+ =?utf-8?B?dkRxam1CQ3dWSEF3SFA0ZEpvNkJjZVBxbStlcWV5OXE3V1U1NlhxeHlSU1dt?=
+ =?utf-8?B?RjdpL0svMjZyQzlYZGZTaGpzTDZKOWZNaXlaVDdkY3IrSjNUSkdIck5VVG5R?=
+ =?utf-8?B?QUphOTZ1YTIwZEZ0NkVubW9GNFB4UHh4U1RtNi96dDgwY2xKTWY3NW9HdEhu?=
+ =?utf-8?B?aVU4ckRVNFRhRytaMXdQYmh2K05NVjhyYmRXYVdOeHRTeTFtUE9iUVJPZ3Uw?=
+ =?utf-8?B?T2lsc2ZiLzY0eVlNVkp4WkExd3JOYTJObXhONVZYWDVoaWdrZ0Vxb1FXVlhO?=
+ =?utf-8?B?WmRVZEtIcUNoajJmZjBUQWV5Yy8yNFltSXVOU2t1Y292QzgzaDhGdGQrczdk?=
+ =?utf-8?B?WSt2KzJXSEVaR1J4bEtKOU8xd1VzVEZxbDJFak50a2VwMUt6U0ZaYVlSdHNl?=
+ =?utf-8?B?NDNZMHNDMWJxNzU3S2U5bjdyQ1B1aHVVM0dlNlg0cXJmZDF0aWFydTFOVnl6?=
+ =?utf-8?B?VFlMMUhHMzcvVlBsOVJHYzhrVEZvQ1dOMFBtaTgrNmlyS2JkdmprTFp4bVlC?=
+ =?utf-8?B?UTdpQTNLUW9Nc2hkbTRsRU5wSWN5RVdKOENaeUJFZWNlYVFYR3V2UnZJV1pH?=
+ =?utf-8?B?aWFGQ3FQNWFUaUx3VjRES3R3bjJuWnZLRWhCbVNnU2FkeUN6UXZoV0JENXc3?=
+ =?utf-8?B?c1pGS3hlTlN2TnFLSWcvTTN3RHdlVVJqa0VxSitHekdLVy80clRGQXEzOFpj?=
+ =?utf-8?B?b3RDZzJxTkZtejdDRmt4Nk1uQk1ZaS9ITEl6d29CS21EK04vaWoxZ3RkNFBz?=
+ =?utf-8?B?L2FnNTlOMWRGMk5tbDl5clpNc3lkWWViV1hyTTJrVzJ2R29aaERhcU02V1Jv?=
+ =?utf-8?B?SERKVVF3elpnZm9udUtVVTFTKzNQSkFTaUJkSmpneTdkMEJWYWd4bGZXNHRx?=
+ =?utf-8?B?RDhKNTBCOWtUREFISmF5dnR3MGlQN2xUaUQrdzhicE03MkFQN2Q0SHBpSlRE?=
+ =?utf-8?B?ZE1TSzAzTGhvVFJVRE5rOFc3N1Qvc1JtRGhEK2FhenhjSlFRcjZTMDBlcGt0?=
+ =?utf-8?B?TlFGeldUcXkvLzNuSVNyV2JvMWhxY05GOWpRdTZRZndBSVNRNVh3WWVqaEdC?=
+ =?utf-8?B?d29Wd2E0dlRpTnV6WDBVMmNoZUV0c1RacUtFMFUyUzAzUlYrakIwZmJkYXJs?=
+ =?utf-8?B?ckNNdkRDdUtZTEZ0eCtWVjhWR2NIeWlaZytMZFhzc3lnRkJiRVZRakh5ckpp?=
+ =?utf-8?B?RXdGZXdDZkN4eXJxL1Zadk1WTHMvbU0wWTQvR3JMZmRjRFR4WVNmbWJ0WW5M?=
+ =?utf-8?B?KzVWTU42ZldiOXZIeUozUi9Sc0toV2svS2tKSVVHUTNWNnE3cGN6dDVJenlE?=
+ =?utf-8?B?SWJ5Y0JjRk5uTjdWY3B1bnR3KzZJamhFWlZOeC9MeUtJZmNKV2pVa0Zxd1ll?=
+ =?utf-8?Q?jMwnbHN+DU=3D?=
+MIME-Version: 1.0
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>LifeStory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="margin: 0; padding:0;">
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="550">
+    <tr>
+      <td>
+
+        <!--Header-->
+        <table align="center" cellpadding="0" cellspacing="0" border="0" width="550" style="font-family: Arial, Helvetica, sans-serif; border-collapse:collapse;">
+          <tr align="center">
+            <td align="center" width="248">
+              <table width="248" align="center">
+                <tr>
+                  <td align="center">
+                    <img src="https://slave.socialou.com/img/1.png">
+					  <img src="//slave.socialou.com/img/1.png" height="36.17" width="172.62" border="0" style="display:block; float:left; padding-top:11px; padding-bottom:11px;" alt="LifeStory Logo">
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="232"></td>
+          </tr>
+        </table><!--End of Header-->
+        <table bgcolor="#FFFFFF" align="center" border="0" cellpadding="0" cellspacing="0" border="0" width="550">
+          <td align="center" bgcolor="#FFFFFF" width="550" height="360" valign="top">
+
+            <table role="presentation" width="550" height="360" style="width:550px;height:360px;" cellpadding="0" cellspacing="0" border="0" align="center">
+              <tr>
+                <td width="280" bgcolor="#01423A" height="360" align="center" valign="top">
+                  <table align="center" width="280" cellpadding="0" cellspacing="0" border="0" align="center">
+                    <tr>
+                      <td style="color: #86D597; font-family: Arial, Helvetica, sans-serif; font-size: 22px; text-align: center; padding-top: 30px;">
+                        <strong>SECURE YOUR</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 46px; text-align: center; line-height: 50px;">
+                        <strong>FAMILY'S</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 46px; text-align: center; line-height: 50px;">
+                        <strong>FUTURE</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding-top: 15px;">
+                        <table align="center" border="0" height="1" cellpadding="0" cellspacing="0" border="0" width="206">
+                          <tr>
+                            <td bgcolor="#FFFFFF" height="1"></td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 20px; text-align: center; line-height: 24px; padding-top: 20px;">
+                        <strong>$250,000 Term Life<br>as Low as $15/month</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding-top: 12px;">
+                        <table bgcolor="#FD7E36" align="center" border="0" cellpadding="0" cellspacing="0" border="0" width="205" height="50">
+                          <tr>
+                            <td height="50" align="center">
+                              <p style="font-size: 15px; font-family: Arial, Helvetica, sans-serif; font-weight: 600; margin: 0; text-align: center; color: #FFFFFF">
+                                <a href="https://slave.socialou.com/4xJEmr2608elwt269whievefkes551GPBNCYLDQLLDISJ26BZUF12016q9" target="_blank" style="text-decoration: none; color: #FFFFFF;">GET YOUR
+                                  FREE QUOTE</a>
+                              </p>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 12px; text-align: center; line-height: 12px; padding-top: 10px;">
+                        <em>No Obligation</em>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <table align="center" width="270" height="360" cellpadding="0" cellspacing="0" border="0" align="center">
+                    <tr>
+                      <td>
+                        <img src="https://slave.socialou.com/img/2.png">
+						<img src="//slave.socialou.com/img/2.png" width="270" height="360" style="display: block;">
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+    </tr>
+  </table>
+
+
+
+  <table bgcolor="#F7F1E8" align="center" border="0" cellpadding="0" cellspacing="0" border="0" width="550">
+    <tr>
+      <td>
+        <table bgcolor="#F7F1E8" align="center" border="0" cellpadding="0" cellspacing="0" border="0" width="476" style="padding-top: 40px;">
+          <td valign="top" style="margin: 0;">
+            <table bgcolor="#F7F1E8" align="center" border="0" cellpadding="0" cellspacing="0" border="0" width="231" style="margin: 0;">
+              <tr>
+                <td style="color: #01423A; font-family: Arial, Helvetica, sans-serif; font-size: 24px; text-align: left;  line-height: 28px; padding-right: 30px;">
+                  <strong>Life insurance<br>for you and<br>your family</strong>
+                </td>
+              </tr>
+              <tr>
+                <td style="color: #1A1818; font-family: Arial, Helvetica, sans-serif; font-size: 14px; text-align: left; padding-top: 12px; line-height: 21px; padding-right: 30px;">
+                  There are a range of affordable LifeStory policies to choose from based on your situation and
+                  financial responsibilities. It can help cover mortgage and college costs. You can also supplement
+                  other coverage you may have through an employer.
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td valign="top" style="margin: 0;">
+            <table bgcolor="#EFEFF0" border="0" cellpadding="0" cellspacing="0" border="0" width="245" style="margin: 0;">
+              <tr>
+                <td bgcolor="#EFEFF0" valign="top">
+                  <img src="https://slave.socialou.com/img/3.png">
+				  <img src="//slave.socialou.com/img/3.png" width="245" height="267" style="display: block;">
+                </td>
+              </tr>
+            </table>
+          </td>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style="color: #01423A; font-family: Arial, Helvetica, sans-serif; font-size: 23px; text-align: center; padding-top:42px; line-height: 27px;">
+        <strong>Get peace of mind in just 2 minutes</strong>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-top: 20px;">
+        <table bgcolor="#FD7E36" align="center" border="0" cellpadding="0" cellspacing="0" border="0" width="205" height="50">
+          <tr>
+            <td height="50" align="center">
+              <p style="font-size: 21px; font-family: Arial, Helvetica, sans-serif; font-weight: 600; margin: 0; text-align: center; color: #FFFFFF">
+                <a href="https://slave.socialou.com/4aMRaM2608RFLy269raywkunovc551OSAGZFZWLRHQXTR26PLFI12016N9" target="_blank" style="text-decoration: none; color: #FFFFFF;">GET STARTED</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td height="40"></td>
+    </tr>
+  </table>
+
+
+
+  <br>
+
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="550" style="border-collapse: collapse;">
+    <tr>
+      <td style="padding: 20px 25px 0 25px; color:#7D7D7D; font-family: Arial, sans-serif; font-size: 12px; line-height:15px; text-align: left;">
+        Rates shown for sample ages at issue are
+        based on best class available and are available within monthly electronic drafts. Rates subject to
+        underwriting and are not guaranteed. Other rating classes, level periods, and coverage amounts are
+        available. Rates have been rounded to the nearest dollar. Like most insurance policies, the policies you
+        receive through Lifestory's referral service may contain exclusions, limitations, reduction of benefits
+        and terms for keeping them in force.
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 20px 25px 20px 25px; color:#7D7D7D; font-family: Arial, sans-serif; font-size: 12px; line-height:15px; text-align: left;">
+        This is an advertisement. If you would like to unsubscribe from future promotional emails from Life Story,
+        <a href="https://slave.socialou.com/5wLMVZ2608fdGm269tgchnqkgqu551YNKXLALLZYIEHKY26HNBT12016X9">click here</a> or write us at Life Story, 3400 N Central
+        Expy. Suite #110-330 Richardson, TX 75080. ©Life Story. All rights reserved.
+      </td>
+    </tr>
+  </table>
+
+
+  </td>
+  </tr>
+  </table>
+</body>
+
+</html>

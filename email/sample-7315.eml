@@ -1,0 +1,754 @@
+Received: from SJ1PR10MB6003.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Tue, 10 Mar 2026 13:17:58
+ +0000
+Received: from SJ0PR13CA0178.namprd13.prod.outlook.com (2603:10b6:a03:2c7::33)
+ by SJ1PR10MB6003.namprd10.prod.outlook.com (2603:10b6:a03:45e::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.25; Tue, 10 Mar
+ 2026 13:17:56 +0000
+Received: from CO1PEPF00012E65.namprd05.prod.outlook.com
+ (2603:10b6:a03:2c7:cafe::58) by SJ0PR13CA0178.outlook.office365.com
+ (2603:10b6:a03:2c7::33) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.25 via Frontend Transport; Tue,
+ 10 Mar 2026 13:17:56 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.161.70)
+ smtp.mailfrom=opalbridge-96606.firebaseapp.com; dkim=pass (signature was
+ verified) header.d=firebaseapp.com;dmarc=permerror action=none
+ header.from=opalbridge-96606.firebaseapp.com;compauth=pass reason=111
+Received-SPF: Pass (protection.outlook.com: domain of
+ opalbridge-96606.firebaseapp.com designates 209.85.161.70 as permitted
+ sender) receiver=protection.outlook.com; client-ip=209.85.161.70;
+ helo=mail-oo1-f70.google.com; pr=C
+Received: from mail-oo1-f70.google.com (209.85.161.70) by
+ CO1PEPF00012E65.mail.protection.outlook.com (10.167.249.74) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.18
+ via Frontend Transport; Tue, 10 Mar 2026 13:17:56 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:95D110BB80E193E527FC7CD97E276DA14B0E9157DD74AA6AEA8B8D01D546AC0C;UpperCasedChecksum:BFB39BDE18DC0F8F7925FF041ABB74ADAF182427381085A1571C42AE17A087A3;SizeAsReceived:2430;Count:13
+Received: by mail-oo1-f70.google.com with SMTP id 006d021491bc7-679a47a1febso71161472eaf.3
+        for <phishing@pot>; Tue, 10 Mar 2026 06:17:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=firebaseapp.com; s=20230601; t=1773148676; x=1773753476; darn=hotmail.com;
+        h=to:from:subject:date:message-id:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JASmg5Kqano0qjk/5gmPQfZgOz5n45H2WIkOl4LlePE=;
+        b=mWReS6sFozIXgMIXKAYu4liU5KXwI6B4VR+2grdqhulFw8EYQwQmezGJrfspeRgEeC
+         u7gYykH3vRLGK0qseJpDgfteAgm++dfFXeOkZgmXMJu64HDuH+Oxp6dKgwQSQn54eHo2
+         rabG9mnYJMa1PWKYa8UqqXUDYsBixkU3ASfjdIyycZVlZR/h6JvmGv+pE3lxcUa5JJtg
+         AHaiQyKsIG5bB0E98WnL4FRB4ShPGjjyJ+UMislYA83pTvFwcaG3zkDSsNOhooyYMHZz
+         kpPEybk/sQQJCDwldns8JP7+Qlfl+gIYMtSH1IgZ/DX4/X+rTWwHK5IbA10QvE57X5h+
+         7IyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773148676; x=1773753476;
+        h=to:from:subject:date:message-id:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JASmg5Kqano0qjk/5gmPQfZgOz5n45H2WIkOl4LlePE=;
+        b=ZuUszsAzbKSrwF3zI8P+UvyTSpsVu6a30sQc+MOGwl9y2+rm9+m5+a2uMXs9DuCkzp
+         EJ8DPudzolmxyP2i6pb5U7uyJte3PaOFvoWEl38Nsc30RqEyAjx9T85PYtM0Krnj9EkP
+         ahEvcWMKTZFXgrHjQq2dY9XmAOJf+pJ9f3sasMu29vwSymA4IzmxTObwZ0G9SiK8TgTR
+         DO2p1SNk4TjGoUEWThX1nNlryehKQc1ZTH/OC06fz3UZKoNzLE4K1xn0RMtjpBtkX+jt
+         7Yp0X8w/tHMTBHbsSgaQPZUsPXrSSLZZw7vzoKCQ8zcLWaoS33jiFG6KF20uLomHy5QQ
+         T+KA==
+X-Gm-Message-State: AOJu0Ywv2mR4MWxbv4n694Pe9RWoBfsRHEBoI5U26Sdi6u6OWkiYgwsx
+	nYkLg1HbfseVdt1YvvQP3nroGy9/NcStE4ir/MuYISi0ZzWyWxegNSOlrUPYmUtjJ8mKn73J3bz
+	OV4U2j/cgSg==
+X-Received: by 2002:a05:6820:3090:b0:67b:ba1b:f160 with SMTP id
+ 006d021491bc7-67bba1bf2bbmr2721633eaf.58.1773148676167; Tue, 10 Mar 2026
+ 06:17:56 -0700 (PDT)
+Reply-To: vip@dudespin-ai.com
+Message-ID: <000000000000fa1f22064cab5816@google.com>
+Date: Tue, 10 Mar 2026 13:17:56 +0000
+Subject: =?UTF-8?B?4q2VRmluYWxlciBBdWZydWY6IOKCrDIuMDAwICsgMTUwIEZTIOKAlCBCZWdyZW56dGVzIA==?=
+	=?UTF-8?B?QW5nZWJvdA==?=
+From: =?UTF-8?Q?=D6=8E_ChatGPT_Casino?= <noreply@opalbridge-96606.firebaseapp.com>
+To: phishing@pot
+Content-Type: multipart/alternative; boundary="000000000000fa1f11064cab5813"
+X-IncomingHeaderCount: 13
+Return-Path: noreply@opalbridge-96606.firebaseapp.com
+X-MS-Exchange-Organization-ExpirationStartTime: 10 Mar 2026 13:17:56.4804
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 66e42e73-7735-4c19-283c-08de7ea771aa
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF00012E65:EE_|SJ1PR10MB6003:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource: CO1PEPF00012E65.namprd05.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 3/10/2026 1:16:56 PM
+X-MS-Office365-Filtering-Correlation-Id: 66e42e73-7735-4c19-283c-08de7ea771aa
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 209.85.161.70
+X-SID-PRA: NOREPLY@OPALBRIDGE-96606.FIREBASEAPP.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|46110799012|9020799019|2700799029|10029299006|34130799006|13020799006|5139299004|32020799003|9109299003|60050799006|70000799015|32080799006|46080799006|58200799021|69000799018|20103052909095|9800799015|51300799021|87000799018|9000799056|970799060|45200799018|1680799066|6401999021|5301999021|9400799043|10300799038|5099299006|461199028|56899033|1360799030|1370799030|1380799030|1602099012|440099028|3412199025|4302099013|30041999003|19025499015|18021999003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2026 13:17:56.4422
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 66e42e73-7735-4c19-283c-08de7ea771aa
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF00012E65.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR10MB6003
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.6119099
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9700.003
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9560006)(10180024)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?NmtiL0psY3pYdmJMbFc2SEY1WVVPQjZNZ0pjUmJjenRjUWFiRXZUNU5GM2NL?=
+ =?utf-8?B?Y2ZmcUMwVU01WGpEbVJDQUwwWmsxcmhnUFAxZDgvNGhNNEE4WEp3alFQREJy?=
+ =?utf-8?B?ZmhJY0tCMy9paUlRTldJZ2RnUG9ZWS8rWVFYOVREMjZ3V2t6S1B0aDVpeWtG?=
+ =?utf-8?B?SjlyeU0vVVZsSUdOelB3UEcyemw1d1VScTF2VTlSTGJNemZua21CZnltbWU5?=
+ =?utf-8?B?TDRpbTVmazJsaHc0bklScE0zUEEwL0lBeVpHM1YvVFRoU1Z2QXVzT3lBZVhR?=
+ =?utf-8?B?aHFXbzNiQzFPN1RrWTdIREJ1RGtRKy83azVvQmd5bnIzc05QS2Zqa0QrYkRT?=
+ =?utf-8?B?N1VTbU9QNEN0ajFXWVNnNkhRcDUxWnN0WDBtSUZNaFNzUkpleExkbVZwWkg4?=
+ =?utf-8?B?MEhPaTlzZE9Fb1QwYjF2YTJCNTBla0hzNDRBams3UE44Z2dhTmdScFp1THF5?=
+ =?utf-8?B?N0FtMFZzVC8ybGxLenJnNlo5NmE1bUh1VTRPRFlUcC9lY1VzTFhCTUhtYnFo?=
+ =?utf-8?B?M2p0VXVmY2JsRlhYYnRRd0hwb2ovaFN6QjNuR0hVQ00rdUIyL1IyVW1vbGo4?=
+ =?utf-8?B?Nlk4YmtNaGMyL1VDNTR5enRSMGNXS01zMVRMUFVZVXQ5anJRRFVoZ05SdmFV?=
+ =?utf-8?B?Q1FVOFpFbWpla3hlWDU1VWlqTkJQbTVFNTBQeUErYWZnRmxHTnptRW0vMHdG?=
+ =?utf-8?B?OCtFWm53bWtYMFZvTHplT3ZvK0RraHZCUlhyUmxMa0ptbnBKNzBmdjF6Y2Fp?=
+ =?utf-8?B?Z1JpVTFYS0djVmszdTZoK0h0cGRoZEJuU1hDTnpLVE1OTS9RNHE1eHF4K01w?=
+ =?utf-8?B?UkVMVFpTam5jL2IrckJnV252RlhnTUl6OVcwcmRybE45UG9CMy8ybGI3eDRX?=
+ =?utf-8?B?NE1oSzlyRmtwaEZkVEVYa1A5dmVFOXJ3WHNsWjFUQUtqMXcraHFwS0p0R2I1?=
+ =?utf-8?B?V0xIQ2RtampWTEFPWCtCaTlmSVU3cng3T1h6YU14Ky9UK01sNkZGczJqRVVC?=
+ =?utf-8?B?bzY1aEFvYzNvckFaS3ZnU2NUdEx2TjhxY1pVWmp3eXdTQzd1MDJ1SGptLzUr?=
+ =?utf-8?B?MzVPcEFKK1ZaSzVRUXJkT2t2KzMwVGFKU20xVGZDaGkwU3c2M0hzNytWUEJv?=
+ =?utf-8?B?a1dXQ3l6RDJjTWd1S09GWUR0eXZQK1JneStueVRhcDRmbXRHVlBDcjNFdEN4?=
+ =?utf-8?B?Q2ZsanNSSUdDczhFVFlzZVNoWis4eDY2WHAvdkRlZDZZQnpET3RqWEpmeVRQ?=
+ =?utf-8?B?djNtRkhjUmVFUElPQnFqWTkvMUMxVzdNcUoxdlpIVGJ1b1ZxcnVyajNUeXpR?=
+ =?utf-8?B?Y1NyY0xXU2dYTWhiZnY1UkVTZlYvVGovM0ZWaVI0ejcrSXIzOTAzc3BuRlVu?=
+ =?utf-8?B?ZzZMZHl6cUM4U2JZRlhvakJDNjlJeVBqaUY4Z3BNYlhrOGNKMnpZSk1XNWdK?=
+ =?utf-8?B?MWk1eDc1L3NuUHJBTE5YczF1dVZLRnd6VEJTeGl6SzQ2ekdDSFN5czJnaWRX?=
+ =?utf-8?B?bmNrKy9ac0dLcGltTHZJS3kveGwvQUlvYkl2VHF5bnc0NWVFQUZDNlJJOUJs?=
+ =?utf-8?B?QndyaVpXd1VKRmZYSytFNDB4YUVGRlozK0xMOWsrU0txRGdpS3RlOXpRVzVu?=
+ =?utf-8?B?WUw4ZTRiaEk0UkRZUDVvakVWRklXWExCTWYwZWE0cDlrblZpQjQ2TlYwKzlK?=
+ =?utf-8?B?T3pqQTBiVXJpaXk5TXpaY2VHNmJaYTBIdVFRMVI0YlBMYW5jR1ZKTUdYQ3NE?=
+ =?utf-8?B?VXFRMnZKeXlYR09aNmJ0Y1dtYzdtZm5QVGI2YjZXZW9COGIrbWp6cTNWMXpO?=
+ =?utf-8?B?SWdEUWNRRXlvWlpJWUt4eFdMWktRZlVJb3NtRWVKanFTMGRlQ0NjN3lUUEdJ?=
+ =?utf-8?B?OEVjd3BTVFFrQ3U5SmdnelFKYTU1WmlzWFpPaTFwYTg2V3U2ak4wSXZjYy9F?=
+ =?utf-8?B?UE1iYUhRNnJ0QSttcld3dkVkbU9sdGgzbUJEMTFSRWFyTWhLT0F0V2o2alZG?=
+ =?utf-8?B?czRvUHVBaWZoUW11V29ZLzBVeHArK2xXSGpmdUluVHd3YjYvbi9VTmNRUG9T?=
+ =?utf-8?B?QktnMTlxWU5qZjdDVXVjbGphdVZRWDgwQkZwUVR0dmtlSlZNUEh3MnM0dlYx?=
+ =?utf-8?B?NXNNTDFmbFlZajdEZS9KWkRiTTU3Vnk4TmdMbm9yajM0WmRhMWJnakZFMzlM?=
+ =?utf-8?B?c0F6dEpQZ3JxWVdCOTI5V3prZWVZUE05YUowcGU5U2E2T0xsWDRRL1l4VVU1?=
+ =?utf-8?B?K2xIcWtEMVZjcnJLWm9TRkl2c0NyWWZmRlNLQUdDS1h4cWNSdk5pY25XQSs2?=
+ =?utf-8?B?amtCK2NsUkxtc3IrV1hsVFhCWlQwbzRvY1d5MEN6R0FJRnJwemxpK3o3amtT?=
+ =?utf-8?B?bXVhNTh6T0twb1MvVDlvMDRYVVJGZ0t1MXU2bnF4UG1Pcm5wYWs3dXVlTFA4?=
+ =?utf-8?B?VkR0ZUR0c1FnUVBIWXFReG5ubWozNkZqdFJHYVRXUmRKQ3FmeHF6VDNrSFhG?=
+ =?utf-8?B?Nkw5TFJUZzd1YUJ0eVhaOGtFanpYUnZrR0F4ckJxL3lkSEFpb3J0STYxUVFN?=
+ =?utf-8?B?TWFnSkZKK1ZLaVphL1E1amxaeG9KL0YzSWk1VVh5MkFVc1lmU1Yrc3JzMVAr?=
+ =?utf-8?B?V3JWOEVsMHkrdEUyWkhkSGJ2QkxSckpldFp5TTZSUUJ2MG1CVTJHeVp1MHU1?=
+ =?utf-8?B?b1lVZDNEUTlnMTJXZ3RmTEp0RCsrYXpNSDVzcm1pa1VwU1NCeDVzbmJFbitJ?=
+ =?utf-8?B?SndHWlZFbmE3VlNOVEJneFp5R2NLYXdRbmRIZTdvMmtCUmtUZXJ2bVpaL2tk?=
+ =?utf-8?B?TjZhcmQ5Q2VOOGRUdUd3QjFxbnpXODY0emZxV3NOMVd1K3JSOEc2eFE5WGlq?=
+ =?utf-8?B?U05VMnZVcENoOFYyWXhULy9McG50RmUvL0VUUy9PUEY1NWhEdnptNDRkVi9F?=
+ =?utf-8?B?cHQySmFPWE5lUmxtVkpyeWcxY1FvN0dRZkMrRk5XWU94QStER1dNaGxaV3F6?=
+ =?utf-8?B?Z1pzSDlnSkVvVHp4YXkwdHJIZEJXQkNkQXdpWGlRVVdNME9XNERZcWp4N2FC?=
+ =?utf-8?B?cmxDZ0xqOVkxY09jdW1XT2lqRlRHMjEwdWVESHZlcWFFVk54T0JBQkVzdjd3?=
+ =?utf-8?B?YTdjaEc0WmFZeWxjN3RwVGE1ZFNsTnkyeCtQZ0lZTER0amVrTThGWEZUL25t?=
+ =?utf-8?B?MmV0S1J3Y3VyaUs4TmVNMERNMWwyMmFkTFVvdzNyQkl1Vk1kSVVuT1pJNEFm?=
+ =?utf-8?B?aTFUWDlOWlpKdGxRQjJ1dWlDYmhqZE91b0dqOGF4OEUxSldDSTNURTJ3a0ZI?=
+ =?utf-8?B?aVlBZlFFWVdYdXZYeWpidFc4YUZ1c3duZXMrcTd6aVpscm9xQ3ZGZk1CL3ZG?=
+ =?utf-8?B?OEdGTWdjZG1XMTRrRENLeGZpUnBPWENKT09oOWYybERGTlBtR0lZS1AxaDFZ?=
+ =?utf-8?B?eFJxL3VFWENSZ3ZWUno1RWpPNnNZblpNeXo3WnYvTkQwR2J6YWpad25nSEdW?=
+ =?utf-8?B?MFJWMGwzRVBZNm91M044STZTYmF0bGJWOHdhTytTd1lPbUt4a0ZZNURuY2RO?=
+ =?utf-8?B?NG5nczltTEZKU0tlSEY5dnVTdFp2azFnalgrM3YxVjZrNTQ1b1VjT3lycU9W?=
+ =?utf-8?B?NWhzaERsSFVnTXl0Y0hEc0lROHdmTUFaV1lpRVMyY0srY09jTjRwZzdVSFdQ?=
+ =?utf-8?B?YmpEanJwYXlFV0RxWldTNnpKclB0NEd2M0lyazJvWnBiZlQ2RWRHL0hLTzl2?=
+ =?utf-8?B?ejhaWTZQSkdia0Y4ZXlXV1hSMkxxcUhzT0I1RDd4YnpzTnRveVdiOVNLOGpY?=
+ =?utf-8?B?ZjZHbHRzSmxzV1Q1U2JtQkJ1Zk9SZ2txMTBRVVRNenk5dXliV2pYRnpaeSti?=
+ =?utf-8?B?MS9pYzJrRzM1MGFOZG1pSVI1dGs2OGdDKzdqNk9JRmNUMzNFcHNWSGJIZlpB?=
+ =?utf-8?Q?tBnRcoGCjbtbNJLSgf72C1zDbIUkUUkC8qqbivNj2d8=3D?=
+MIME-Version: 1.0
+
+--000000000000fa1f11064cab5813
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+Content-Transfer-Encoding: base64
+
+4o+zIE51ciBub2NoIHdlbmlnZSBTdHVuZGVuOiAzMDAlIEJvbnVzICsgQ2hhdEdQVCBLSS1adWdh
+bmcgbMOkdWZ0IGJhbGQgYWIg4oCUICANCmFiIOKCrDEwLiDigIwg4oCMIOKAjCDigIwg4oCMDQoN
+Cg0KDQoNCvCfpJYgQ2hhdEdQVCBpc3QgamV0enQgaW4gZGVpbmVtIENhc2lubw0KDQoNCkRVREUN
+Cg0KU1BJTg0KDQoNCg0KDQrwn46zIENoYXRHUFQgS0kg4oCUIENhc2lubyBkZXIgbmV1ZW4gR2Vu
+ZXJhdGlvbg0KDQoNCvCfp6AgQ0hBVEdQVCBTUElFTEJFUkFURVIgfCBMSVZFIFJUUCBUUkFDS0VS
+IHwgQk9OVVMgT1BUSU1JRVJFUg0KDQoNCldJTExLT01NRU5TQk9OVVMNCg0KMzAwJQ0KDQpiaXMg
+enUg4oKsMi4wMDANCg0KKyAxNTAgRnJlaXNwaWVsZQ0KDQoNCuKchSBOdXIg4oKsMTAgTWluZGVz
+dGVpbnphaGx1bmcNCg0KDQoNCg0KDQrwn46zIEpldHp0IE1pdG1hY2hlbg0KDQoNCkNoYXRHUFQg
+S0kgYWt0aXZpZXJ0IHNpY2ggc29mb3J0IG5hY2ggZGVpbmVyIEVpbnphaGx1bmcNCg0KDQoNCuKP
+sCBCb251cyArIENoYXRHUFQgS0ktWnVnYW5nIGzDpHVmdCBhYiBpbjoNCkFuZ2Vib3QgbMOkdWZ0
+IGFiDQpTb3dvaGwgZGVyIEJvbnVzIGFscyBhdWNoIGRlciBDaGF0R1BUIEtJLVp1Z2FuZyBzaW5k
+IHplaXRsaWNoIGJlZ3Jlbnp0DQoNCg0KDQoNCg0KDQoNCg0K8J+kliBXaXIgaGFiZW4gRHVkZVNw
+aW4gZWluIEdlaGlybiBnZWdlYmVuIER1ZGVTcGluIGzDpHVmdCBqZXR6dCBtaXQgZGVyc2VsYmVu
+ICANCktJLVRlY2hub2xvZ2llIHdpZSBDaGF0R1BUIOKAlA0KYmVvYmFjaHRldCAyLjcwMCsgU3Bp
+ZWxlIGxpdmUsIHZlcmZvbGd0IEF1c3phaGx1bmdlbiBpbiBFY2h0emVpdA0KdW5kIHplaWd0IGRp
+ciBnZW5hdSwgd28gZGVpbiBHZWxkIGFtIGjDpHJ0ZXN0ZW4gYXJiZWl0ZXQuDQoNCg0KDQoNCg0K
+8J+noA0KQ2hhdEdQVCBTcGllbGJlcmF0ZXINCg0KRnJhZyB1bnNlcmUgS0k6IOKAnldlbGNoZXMg
+U3BpZWwgemFobHQgaGV1dGUgYW0gYmVzdGVuPyIg4oCUIEVjaHRlIEFudHdvcnRlbi4gIA0KTGl2
+ZS1EYXRlbi4gU29mb3J0Lg0KDQoNCg0KDQoNCg0K8J+ToQ0KTGl2ZSBSVFAtVHJhY2tlcg0KDQpL
+SSDDvGJlcndhY2h0IGFsbGUgMi43MDArIFNwaWVsZSBsaXZlIOKAlCB3YXJudCBkaWNoLCB3ZW5u
+IGVpbiBTbG90ICANCnN0YXRpc3Rpc2NoIGJlcmVpdCBpc3QgYXVzenV6YWhsZW4uDQoNCg0KDQoN
+Cg0KDQrwn46vDQpCb251cy1VbXNhdHotT3B0aW1pZXJlcg0KDQpLSSB3w6RobHQgYXV0b21hdGlz
+Y2ggZGllIGJlc3RlbiBTcGllbGUgZsO8ciBkZWluZSAxNTAgRnJlaXNwaWVsZSDigJQgQm9udXMg
+IA0Kc2NobmVsbGVyIGZyZWkgYWxzIGplZGUgbWFudWVsbGUgU3RyYXRlZ2llLg0KDQoNCg0KDQoN
+Cg0K8J+Tig0KVm9sYXRpbGl0w6R0cy1NYXRjaC1FbmdpbmUNCg0KR2liIGRlaW4gQnVkZ2V0IGVp
+biDigJQgS0kgZmluZGV0IGRlbiBwZXJmZWt0ZW4gU2xvdCwgZGVyIGRlaW4g4oKsMTAgYW0gIA0K
+d2VpdGVzdGVuIHN0cmVja3QuDQoNCg0KDQoNCg0KDQrimqENCkthbHRlLVNlc3Npb24tQWxhcm0N
+Cg0KS0kgZXJrZW5udCBrYWx0ZSBTZXNzaW9ucyB1bmQgc2FndCBkaXIgZ2VuYXUgd2FubiB3ZWNo
+c2VsbiDigJQgc2Now7x0enQgZGVpbiAgDQpHdXRoYWJlbiB3aWUgZWluIFByb2ZpLVRyYWRlci4N
+Cg0KDQoNCg0KDQoNCkR1ZGVTcGluIOKAlCBXbyBncm/Dn2UgR2V3aW5uZSBiZWdpbm5lbi4NCkpl
+dHp0IG1pdCBDaGF0R1BUIEtJLiBEYXMgZXJzdGUgQ2FzaW5vIG1pdCBlaW5lciBlY2h0ZW4gQ2hh
+dEdQVC1LSSDigJQgZGFzICANCjIuNzAwKyBTcGllbGUgbGl2ZSBiZW9iYWNodGV0IHVuZCBkaXIg
+emVpZ3QsIHdvIGRlaW4gR2VsZCBhbSBow6RydGVzdGVuICANCmFyYmVpdGV0Lg0KDQpTdGFydGUg
+bWl0IG51ciDigqwxMCBFaW56YWhsdW5nIHVuZCBlcmhhbHRlIHNvZm9ydA0KMzAwJSBCb251cyBi
+aXMgenUg4oKsMi4wMDAgKyAxNTAgRnJlaXNwaWVsZS4NCg0KS2VpbiBSYXRlbi4gS2VpbiBHbMO8
+Y2suIE51ciBDaGF0R1BUIEtJLg0KDQoNCvCfmqggTGV0enRlciBDYWxsIOKAlCBLSS1adWdhbmcg
+KyBCb251cyB2ZXJmw6RsbHQgaW46DQpLSS1adWdhbmcgbMOkdWZ0IGFiDQpEYW5hY2ggaXN0IGRl
+ciBDaGF0R1BUIEtJLVp1Z2FuZyBmw7xyIG5ldWUgU3BpZWxlciBnZXNjaGxvc3Nlbi4NClNpY2hl
+cmUgZGlyIGRlaW5lbiBQbGF0eiBqZXR6dCDigJQgYWIgbnVyIOKCrDEwIEVpbnphaGx1bmcuDQoN
+Cg0KDQoNCvCfmoAgMzAwJSBCb251cyBIb2xlbg0KDQoNClJlZ2lzdHJpZXJ1bmcgaW4gNjAgU2Vr
+dW5kZW4g4oCiIE51ciDigqwxMCBNaW5kZXN0ZWluemFobHVuZw0KDQoNCg0KDQoNCvCfp6AgQ2hh
+dEdQVCBLSQ0KDQrwn5OhIExpdmUgUlRQLURhdGVuDQoNCvCfjrAgMi43MDArIFNwaWVsZQ0KDQri
+mqEgTnVyIOKCrDEwDQoNCg0KDQoNCkR1ZGVTcGluDQpDaGF0R1BUIEtJIENhc2lubyDigJQgTmV1
+ZSBHZW5lcmF0aW9uDQoNCkRhcyBBbmdlYm90IGdpbHQgbnVyIGbDvHIgbmV1ZSBTcGllbGVyLiAx
+OCsgSmFocmUuIE1pbmRlc3RlaW56YWhsdW5nIOKCrDEwLg0KQm9udXNiZWRpbmd1bmdlbiBnZWx0
+ZW4uIEJpdHRlIHZlcmFudHdvcnR1bmdzYmV3dXNzdCBzcGllbGVuLg0KR2zDvGNrc3NwaWVsIGth
+bm4gc8O8Y2h0aWcgbWFjaGVuLiBTcGllbGVuIFNpZSBtaXQgVmVyYW50d29ydHVuZy4NCg0KQWJt
+ZWxkZW4NCg0KDQoNCg0K
+--000000000000fa1f11064cab5813
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html><html lang=3D"de"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D=
+1.0">
+  <title>DudeSpin =E2=80=94 ChatGPT KI-Casino</title>
+  <style type=3D"text/css">
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #020000;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    table, td {
+      border-collapse: collapse;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+    img { display:block; border:0; max-width:100%; height:auto; }
+    a { text-decoration:none; }
+    @media only screen and (max-width:620px) {
+      .wrap { width:100% !important; min-width:100% !important; }
+      .px { padding-left:16px !important; padding-right:16px !important; }
+      .btn-full { width:90% !important; }
+      .hero-name { font-size:40px !important; }
+      .bonus-num { font-size:52px !important; }
+    }
+  </style>
+</head>
+<body style=3D"margin:0; padding:0; background-color:#020000;">
+
+  <!-- Preheader -->
+  <div style=3D"display:none; max-height:0; overflow:hidden; mso-hide:all; =
+font-size:1px; color:#020000; line-height:1px;">
+    =E2=8F=B3 Nur noch wenige Stunden: 300% Bonus + ChatGPT KI-Zugang l=C3=
+=A4uft bald ab =E2=80=94 ab =E2=82=AC10.
+    &nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=
+=80=8C
+  </div>
+
+  <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" bg=
+color=3D"#020000">
+    <tr>
+      <td align=3D"center" style=3D"padding:30px 20px;">
+
+        <!-- MAIN CARD -->
+        <table class=3D"wrap" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0" style=3D"max-width:600px; width:100%; min-width:600px;
+                      background-color:#0F0604;
+                      border:3px solid #FFE5F6;
+                      box-shadow:0px 0px 40px #f71e5d, 0px 0px 10px #f71e5d=
+;">
+
+          <!-- =3D=3D=3D=3D=3D HERO HEADER =3D=3D=3D=3D=3D -->
+          <tr>
+            <td bgcolor=3D"#08040a" style=3D"background-color:#08040a; padd=
+ing:45px 30px 35px; text-align:center; border-bottom:2px solid #01dcfe;">
+
+              <!-- ChatGPT Badge -->
+              <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=
+=3D"margin:0 auto 20px;">
+                <tr>
+                  <td bgcolor=3D"#0a1520" style=3D"background-color:#0a1520=
+; border:1px solid #01dcfe; border-radius:30px; padding:8px 24px;">
+                    <span style=3D"font-family:'Segoe UI',Arial,sans-serif;=
+ font-size:12px; font-weight:bold; color:#01dcfe; letter-spacing:3px; text-=
+transform:uppercase;">
+                      =F0=9F=A4=96 ChatGPT ist jetzt in deinem Casino
+                    </span>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Brand -->
+              <h1 class=3D"hero-name" style=3D"margin:0 0 4px; font-family:=
+'Segoe UI',Arial,sans-serif; font-size:58px; font-weight:900; color:#01dcfe=
+; letter-spacing:6px; text-transform:uppercase; line-height:1; text-shadow:=
+0 0 30px rgba(1,220,254,0.5);">
+                DUDE
+              </h1>
+              <h1 class=3D"hero-name" style=3D"margin:0 0 16px; font-family=
+:'Segoe UI',Arial,sans-serif; font-size:58px; font-weight:900; color:#ffdc2=
+7; letter-spacing:6px; text-transform:uppercase; line-height:1; text-shadow=
+:0 0 30px rgba(255,220,39,0.4);">
+                SPIN
+              </h1>
+
+              <!-- Divider -->
+              <table width=3D"200" cellpadding=3D"0" cellspacing=3D"0" bord=
+er=3D"0" style=3D"margin:0 auto 16px;">
+                <tr>
+                  <td bgcolor=3D"#01dcfe" style=3D"background-color:#01dcfe=
+; height:2px; font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+              </table>
+
+              <p style=3D"margin:0; font-family:'Segoe UI',Arial,sans-serif=
+; font-size:13px; color:#8a6a8a; letter-spacing:3px; text-transform:upperca=
+se;">
+                =F0=9F=8E=B3 ChatGPT KI =E2=80=94 Casino der neuen Generati=
+on
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D CYAN BADGE BAR =3D=3D=3D=3D=3D -->
+          <tr>
+            <td bgcolor=3D"#01dcfe" style=3D"background-color:#01dcfe; padd=
+ing:12px 20px; text-align:center;">
+              <span style=3D"font-family:'Segoe UI',Arial,sans-serif; font-=
+size:11px; font-weight:900; color:#020000; letter-spacing:3px; text-transfo=
+rm:uppercase;">
+                =F0=9F=A7=A0 CHATGPT SPIELBERATER &nbsp;|&nbsp; LIVE RTP TR=
+ACKER &nbsp;|&nbsp; BONUS OPTIMIERER
+              </span>
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D BONUS DISPLAY =3D=3D=3D=3D=3D -->
+          <tr>
+            <td align=3D"center" class=3D"px" style=3D"padding:35px 30px 10=
+px; background-color:#0F0604;">
+              <p style=3D"margin:0 0 10px; font-family:'Segoe UI',Arial,san=
+s-serif; font-size:13px; font-weight:bold; color:#01dcfe; letter-spacing:4p=
+x; text-transform:uppercase;">
+                WILLKOMMENSBONUS
+              </p>
+              <p class=3D"bonus-num" style=3D"margin:0 0 4px; font-family:'=
+Segoe UI',Arial,sans-serif; font-size:68px; font-weight:900; color:#ffdc27;=
+ line-height:1; letter-spacing:-2px; text-shadow:0 0 20px rgba(255,220,39,0=
+.3);">
+                300%
+              </p>
+              <p style=3D"margin:0 0 6px; font-family:'Segoe UI',Arial,sans=
+-serif; font-size:28px; font-weight:900; color:#ffffff; line-height:1.2;">
+                bis zu =E2=82=AC2.000
+              </p>
+              <p style=3D"margin:0 0 14px; font-family:'Segoe UI',Arial,san=
+s-serif; font-size:22px; font-weight:700; color:#01dcfe; line-height:1.3;">
+                + 150 Freispiele
+              </p>
+              <!-- Min deposit badge -->
+              <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=
+=3D"margin:0 auto;">
+                <tr>
+                  <td bgcolor=3D"#0a1520" style=3D"background-color:#0a1520=
+; border:1px solid #01dcfe; border-radius:6px; padding:7px 20px;">
+                    <span style=3D"font-family:'Segoe UI',Arial,sans-serif;=
+ font-size:13px; font-weight:bold; color:#01dcfe; letter-spacing:2px;">
+                      =E2=9C=85 Nur =E2=82=AC10 Mindesteinzahlung
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D MAIN CTA =3D=3D=3D=3D=3D -->
+          <tr>
+            <td align=3D"center" style=3D"padding:22px 30px 10px; backgroun=
+d-color:#0F0604;">
+              <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+                <tr>
+                  <td bgcolor=3D"#01dcfe" style=3D"background-color:#01dcfe=
+; border-radius:20px; padding:20px 60px; box-shadow:0px 0px 20px #08b8e5;">
+                    <a href=3D"https://studyingukraine.com/globaldude" styl=
+e=3D"display:inline-block; font-family:'Segoe UI',Arial,sans-serif; font-si=
+ze:24px; font-weight:900; color:#020000; text-decoration:none; text-transfo=
+rm:uppercase; letter-spacing:1px;">
+                      =F0=9F=8E=B3 Jetzt Mitmachen
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style=3D"margin:10px 0 0; font-family:'Segoe UI',Arial,san=
+s-serif; font-size:11px; color:#8a6a8a;">
+                ChatGPT KI aktiviert sich sofort nach deiner Einzahlung
+              </p>
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D COUNTDOWN #1 =3D=3D=3D=3D=3D -->
+          <tr>
+            <td align=3D"center" style=3D"padding:22px 30px 10px; backgroun=
+d-color:#0F0604;">
+              <p style=3D"margin:0 0 12px; font-family:'Segoe UI',Arial,san=
+s-serif; font-size:13px; font-weight:bold; color:#f71e5d; letter-spacing:2p=
+x; text-transform:uppercase;">
+                =E2=8F=B0 Bonus + ChatGPT KI-Zugang l=C3=A4uft ab in:
+              </p>
+              <a href=3D"https://studyingukraine.com/globaldude">
+                <img src=3D"https://gifcdn.com/32cpn68qj8b9l6koj6d1h.gif" a=
+lt=3D"Angebot l=C3=A4uft ab" width=3D"300" style=3D"width:300px; height:aut=
+o; border:0; margin:0 auto;">
+              </a>
+              <p style=3D"margin:10px 0 0; font-family:'Segoe UI',Arial,san=
+s-serif; font-size:11px; color:#8a6a8a; line-height:1.6;">
+                Sowohl der Bonus als auch der ChatGPT KI-Zugang sind zeitli=
+ch begrenzt
+              </p>
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D DIVIDER =3D=3D=3D=3D=3D -->
+          <tr>
+            <td style=3D"padding:20px 30px 0; background-color:#0F0604;">
+              <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" bor=
+der=3D"0">
+                <tr>
+                  <td bgcolor=3D"#01dcfe" style=3D"background-color:#01dcfe=
+; height:1px; font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D AI SECTION TITLE =3D=3D=3D=3D=3D -->
+          <tr>
+            <td align=3D"center" class=3D"px" style=3D"padding:30px 30px 15=
+px; background-color:#0F0604;">
+              <span style=3D"display:block; font-family:'Segoe UI',Arial,sa=
+ns-serif; font-size:20px; font-weight:900; color:#ffdc27; letter-spacing:2p=
+x; text-transform:uppercase;">
+                =F0=9F=A4=96 Wir haben DudeSpin ein Gehirn gegeben
+              </span>
+              <span style=3D"display:block; margin-top:10px; font-family:'S=
+egoe UI',Arial,sans-serif; font-size:14px; color:#b0a0b0; line-height:1.8;"=
+>
+                DudeSpin l=C3=A4uft jetzt mit derselben KI-Technologie wie =
+ChatGPT =E2=80=94<br>
+                beobachtet 2.700+ Spiele live, verfolgt Auszahlungen in Ech=
+tzeit<br>
+                und zeigt dir genau, wo dein Geld am h=C3=A4rtesten arbeite=
+t.
+              </span>
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D AI FEATURES =3D=3D=3D=3D=3D -->
+          <tr>
+            <td class=3D"px" style=3D"padding:10px 30px 25px; background-co=
+lor:#0F0604;">
+              <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" bor=
+der=3D"0">
+
+                <tr>
+                  <td style=3D"padding:14px 0; border-bottom:1px solid #1a0=
+a14;">
+                    <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"=
+0" border=3D"0">
+                      <tr>
+                        <td width=3D"46" valign=3D"top" style=3D"font-size:=
+28px; padding-right:14px;">=F0=9F=A7=A0</td>
+                        <td>
+                          <p style=3D"margin:0 0 4px; font-family:'Segoe UI=
+',Arial,sans-serif; font-size:16px; font-weight:bold; color:#01dcfe;">ChatG=
+PT Spielberater</p>
+                          <p style=3D"margin:0; font-family:'Segoe UI',Aria=
+l,sans-serif; font-size:13px; color:#b0a0b0; line-height:1.6;">
+                            Frag unsere KI: =E2=80=9EWelches Spiel zahlt he=
+ute am besten?&quot; =E2=80=94 Echte Antworten. Live-Daten. Sofort.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style=3D"padding:14px 0; border-bottom:1px solid #1a0=
+a14;">
+                    <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"=
+0" border=3D"0">
+                      <tr>
+                        <td width=3D"46" valign=3D"top" style=3D"font-size:=
+28px; padding-right:14px;">=F0=9F=93=A1</td>
+                        <td>
+                          <p style=3D"margin:0 0 4px; font-family:'Segoe UI=
+',Arial,sans-serif; font-size:16px; font-weight:bold; color:#01dcfe;">Live =
+RTP-Tracker</p>
+                          <p style=3D"margin:0; font-family:'Segoe UI',Aria=
+l,sans-serif; font-size:13px; color:#b0a0b0; line-height:1.6;">
+                            KI =C3=BCberwacht alle 2.700+ Spiele live =E2=
+=80=94 warnt dich, wenn ein Slot statistisch bereit ist auszuzahlen.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style=3D"padding:14px 0; border-bottom:1px solid #1a0=
+a14;">
+                    <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"=
+0" border=3D"0">
+                      <tr>
+                        <td width=3D"46" valign=3D"top" style=3D"font-size:=
+28px; padding-right:14px;">=F0=9F=8E=AF</td>
+                        <td>
+                          <p style=3D"margin:0 0 4px; font-family:'Segoe UI=
+',Arial,sans-serif; font-size:16px; font-weight:bold; color:#01dcfe;">Bonus=
+-Umsatz-Optimierer</p>
+                          <p style=3D"margin:0; font-family:'Segoe UI',Aria=
+l,sans-serif; font-size:13px; color:#b0a0b0; line-height:1.6;">
+                            KI w=C3=A4hlt automatisch die besten Spiele f=
+=C3=BCr deine 150 Freispiele =E2=80=94 Bonus schneller frei als jede manuel=
+le Strategie.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style=3D"padding:14px 0; border-bottom:1px solid #1a0=
+a14;">
+                    <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"=
+0" border=3D"0">
+                      <tr>
+                        <td width=3D"46" valign=3D"top" style=3D"font-size:=
+28px; padding-right:14px;">=F0=9F=93=8A</td>
+                        <td>
+                          <p style=3D"margin:0 0 4px; font-family:'Segoe UI=
+',Arial,sans-serif; font-size:16px; font-weight:bold; color:#01dcfe;">Volat=
+ilit=C3=A4ts-Match-Engine</p>
+                          <p style=3D"margin:0; font-family:'Segoe UI',Aria=
+l,sans-serif; font-size:13px; color:#b0a0b0; line-height:1.6;">
+                            Gib dein Budget ein =E2=80=94 KI findet den per=
+fekten Slot, der dein =E2=82=AC10 am weitesten streckt.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style=3D"padding:14px 0;">
+                    <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"=
+0" border=3D"0">
+                      <tr>
+                        <td width=3D"46" valign=3D"top" style=3D"font-size:=
+28px; padding-right:14px;">=E2=9A=A1</td>
+                        <td>
+                          <p style=3D"margin:0 0 4px; font-family:'Segoe UI=
+',Arial,sans-serif; font-size:16px; font-weight:bold; color:#01dcfe;">Kalte=
+-Session-Alarm</p>
+                          <p style=3D"margin:0; font-family:'Segoe UI',Aria=
+l,sans-serif; font-size:13px; color:#b0a0b0; line-height:1.6;">
+                            KI erkennt kalte Sessions und sagt dir genau wa=
+nn wechseln =E2=80=94 sch=C3=BCtzt dein Guthaben wie ein Profi-Trader.
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D DIVIDER =3D=3D=3D=3D=3D -->
+          <tr>
+            <td style=3D"padding:0 30px; background-color:#0F0604;">
+              <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" bor=
+der=3D"0">
+                <tr>
+                  <td bgcolor=3D"#01dcfe" style=3D"background-color:#01dcfe=
+; height:1px; font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D BODY COPY =3D=3D=3D=3D=3D -->
+          <tr>
+            <td align=3D"center" class=3D"px" style=3D"padding:30px 30px 10=
+px; background-color:#0F0604; font-family:'Segoe UI',Arial,sans-serif; font=
+-size:17px; color:#ffffff; line-height:1.8; text-align:center;">
+              <span style=3D"display:block; font-family:'Segoe UI',Arial,sa=
+ns-serif; font-size:22px; font-weight:900; color:#ffdc27; margin-bottom:16p=
+x;">
+                DudeSpin =E2=80=94 Wo gro=C3=9Fe Gewinne beginnen.<br>Jetzt=
+ mit ChatGPT KI.
+              </span>
+              Das erste Casino mit einer echten ChatGPT-KI =E2=80=94 das 2.=
+700+ Spiele live beobachtet und dir zeigt, wo dein Geld am h=C3=A4rtesten a=
+rbeitet.<br><br>
+              Starte mit nur <strong style=3D"color:#01dcfe;">=E2=82=AC10 E=
+inzahlung</strong> und erhalte sofort<br>
+              <strong style=3D"color:#ffdc27;">300% Bonus bis zu =E2=82=AC2=
+.000 + 150 Freispiele.</strong><br><br>
+              <span style=3D"color:#01dcfe; font-weight:bold; font-size:18p=
+x;">Kein Raten. Kein Gl=C3=BCck. Nur ChatGPT KI.</span>
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D COUNTDOWN #2 =3D=3D=3D=3D=3D -->
+          <tr>
+            <td align=3D"center" bgcolor=3D"#08040a" style=3D"background-co=
+lor:#08040a; padding:25px 30px; border-top:1px solid #f71e5d; border-bottom=
+:1px solid #f71e5d;">
+              <p style=3D"margin:0 0 8px; font-family:'Segoe UI',Arial,sans=
+-serif; font-size:14px; font-weight:bold; color:#f71e5d; letter-spacing:2px=
+; text-transform:uppercase;">
+                =F0=9F=9A=A8 Letzter Call =E2=80=94 KI-Zugang + Bonus verf=
+=C3=A4llt in:
+              </p>
+              <a href=3D"https://studyingukraine.com/globaldude">
+                <img src=3D"https://gifcdn.com/32cpn68qj8b9l6koj6d1h.gif" a=
+lt=3D"KI-Zugang l=C3=A4uft ab" width=3D"300" style=3D"width:300px; height:a=
+uto; border:0; margin:0 auto 10px;">
+              </a>
+              <p style=3D"margin:0; font-family:'Segoe UI',Arial,sans-serif=
+; font-size:12px; color:#8a6a8a; line-height:1.6;">
+                Danach ist der ChatGPT KI-Zugang f=C3=BCr neue Spieler gesc=
+hlossen.<br>
+                Sichere dir deinen Platz jetzt =E2=80=94 ab nur =E2=82=AC10=
+ Einzahlung.
+              </p>
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D FINAL CTA =3D=3D=3D=3D=3D -->
+          <tr>
+            <td align=3D"center" style=3D"padding:25px 30px 30px; backgroun=
+d-color:#0F0604;">
+              <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+                <tr>
+                  <td bgcolor=3D"#01dcfe" style=3D"background-color:#01dcfe=
+; border-radius:20px; padding:20px 55px; box-shadow:0px 0px 20px #08b8e5;">
+                    <a href=3D"https://studyingukraine.com/globaldude" styl=
+e=3D"display:inline-block; font-family:'Segoe UI',Arial,sans-serif; font-si=
+ze:24px; font-weight:900; color:#020000; text-decoration:none; text-transfo=
+rm:uppercase; letter-spacing:1px;">
+                      =F0=9F=9A=80 300% Bonus Holen
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style=3D"margin:12px 0 0; font-family:'Segoe UI',Arial,san=
+s-serif; font-size:11px; color:#8a6a8a;">
+                Registrierung in 60 Sekunden =E2=80=A2 Nur =E2=82=AC10 Mind=
+esteinzahlung
+              </p>
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D TRUST BADGES =3D=3D=3D=3D=3D -->
+          <tr>
+            <td bgcolor=3D"#08040a" style=3D"background-color:#08040a; padd=
+ing:14px 20px; border-top:1px solid #01dcfe; border-bottom:1px solid #01dcf=
+e;">
+              <table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" bor=
+der=3D"0">
+                <tr>
+                  <td align=3D"center" style=3D"padding:0 6px; border-right=
+:1px solid #1a0a14;">
+                    <p style=3D"margin:0; font-family:'Segoe UI',Arial,sans=
+-serif; font-size:10px; color:#01dcfe; font-weight:bold;">=F0=9F=A7=A0 Chat=
+GPT KI</p>
+                  </td>
+                  <td align=3D"center" style=3D"padding:0 6px; border-right=
+:1px solid #1a0a14;">
+                    <p style=3D"margin:0; font-family:'Segoe UI',Arial,sans=
+-serif; font-size:10px; color:#01dcfe; font-weight:bold;">=F0=9F=93=A1 Live=
+ RTP-Daten</p>
+                  </td>
+                  <td align=3D"center" style=3D"padding:0 6px; border-right=
+:1px solid #1a0a14;">
+                    <p style=3D"margin:0; font-family:'Segoe UI',Arial,sans=
+-serif; font-size:10px; color:#01dcfe; font-weight:bold;">=F0=9F=8E=B0 2.70=
+0+ Spiele</p>
+                  </td>
+                  <td align=3D"center" style=3D"padding:0 6px;">
+                    <p style=3D"margin:0; font-family:'Segoe UI',Arial,sans=
+-serif; font-size:10px; color:#ffdc27; font-weight:bold;">=E2=9A=A1 Nur =E2=
+=82=AC10</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- =3D=3D=3D=3D=3D FOOTER =3D=3D=3D=3D=3D -->
+          <tr>
+            <td align=3D"center" bgcolor=3D"#020000" style=3D"background-co=
+lor:#020000; padding:25px 30px; border-top:3px solid #FFE5F6;">
+              <a href=3D"https://studyingukraine.com/globaldude">
+                <img src=3D"https://imgprom.com/wp-content/uploads/Dudespin=
+_logo.png" alt=3D"DudeSpin" width=3D"140" style=3D"width:140px; height:auto=
+; border:0; margin:0 auto 14px;">
+              </a>
+              <p style=3D"margin:0 0 5px; font-family:'Segoe UI',Arial,sans=
+-serif; font-size:10px; color:#5a3a5a; letter-spacing:2px; text-transform:u=
+ppercase;">
+                ChatGPT KI Casino =E2=80=94 Neue Generation
+              </p>
+              <p style=3D"margin:0; font-family:'Segoe UI',Arial,sans-serif=
+; font-size:10px; color:#5a3a5a; line-height:1.7;">
+                Das Angebot gilt nur f=C3=BCr neue Spieler. 18+ Jahre. Mind=
+esteinzahlung =E2=82=AC10.<br>
+                Bonusbedingungen gelten. Bitte verantwortungsbewusst spiele=
+n.<br>
+                Gl=C3=BCcksspiel kann s=C3=BCchtig machen. Spielen Sie mit =
+Verantwortung.
+              </p>
+              <p style=3D"margin:14px 0 0;">
+                <a href=3D"https://studyingukraine.com/globaldude" style=3D=
+"font-family:'Segoe UI',Arial,sans-serif; font-size:10px; color:#5a3a5a; te=
+xt-decoration:underline;">
+                  Abmelden
+                </a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>=
+
+--000000000000fa1f11064cab5813--

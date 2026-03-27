@@ -1,0 +1,960 @@
+Received: from IA6PR10MB997656.namprd10.prod.outlook.com (::1) by
+ SJ0PR10MB5743.namprd10.prod.outlook.com with HTTPS; Tue, 10 Mar 2026 06:47:03
+ +0000
+Received: from PH7PR17CA0024.namprd17.prod.outlook.com (2603:10b6:510:324::21)
+ by IA6PR10MB997656.namprd10.prod.outlook.com (2603:10b6:208:5df::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.24; Tue, 10 Mar
+ 2026 06:47:02 +0000
+Received: from SN1PEPF00036F41.namprd05.prod.outlook.com
+ (2603:10b6:510:324:cafe::87) by PH7PR17CA0024.outlook.office365.com
+ (2603:10b6:510:324::21) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.25 via Frontend Transport; Tue,
+ 10 Mar 2026 06:47:00 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.210.199)
+ smtp.mailfrom=perfecto-87061.firebaseapp.com; dkim=pass (signature was
+ verified) header.d=firebaseapp.com;dmarc=permerror action=none
+ header.from=perfecto-87061.firebaseapp.com;compauth=pass reason=111
+Received-SPF: Pass (protection.outlook.com: domain of
+ perfecto-87061.firebaseapp.com designates 209.85.210.199 as permitted sender)
+ receiver=protection.outlook.com; client-ip=209.85.210.199;
+ helo=mail-pf1-f199.google.com; pr=C
+Received: from mail-pf1-f199.google.com (209.85.210.199) by
+ SN1PEPF00036F41.mail.protection.outlook.com (10.167.248.25) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.18
+ via Frontend Transport; Tue, 10 Mar 2026 06:47:01 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:B39AEA810D9BB1102E48BE5D2B47327DC9B7982EE26A955570D7DD0C158AF277;UpperCasedChecksum:579F76EA17445402834A2C56819A2116CD32A2A9E8A462A3CE87D912738A5001;SizeAsReceived:2453;Count:13
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-829b8bb5211so9341258b3a.2
+        for <phishing@pot>; Mon, 09 Mar 2026 23:47:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=firebaseapp.com; s=20230601; t=1773125221; x=1773730021; darn=hotmail.com;
+        h=to:from:subject:date:message-id:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fSy51931cFGOH0t/iIMvZi9B6UwGaH/FY6fd+CDfoFE=;
+        b=SIVfffiMurV7/uHk7ZVPk1+NdTmDcMuwsCTbACeOOg6gF4MVjyXeeeZ8O/3tNpqxNN
+         mfkxXFGA93TfYU6XpH/En17KuhxALsPAGFLtUfRLPIgli46vEacE9ACg5KdKJcPZdmyo
+         qlvDlzhqaToLYre8P3/QSYbk15bd5UzmblOx6UdlkXAGTJz5YTexNmQwrWo19wqtglc4
+         XoCrNgJfM+X16BILQEXlQ6WJTLC1Ax0PQtcxmAoxC+WX2+kOWvGKG4gG9Yxfu5M+tDLN
+         Yo15p38uMIk2cxe2XYD/Zbp4W7xzjWx2eRKYd70Htkg4nkUsZNfesEAtk7VCJSlr8F4o
+         xjAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773125221; x=1773730021;
+        h=to:from:subject:date:message-id:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fSy51931cFGOH0t/iIMvZi9B6UwGaH/FY6fd+CDfoFE=;
+        b=AF1jw8VCgkbLUxaZ5TdW0qdafFuFDhDC7NhzjOmu/iZcmbiMgzzMAsgsP0TEgdLK16
+         RbfWJ9rQfYI75N7U3V4OnFt8CboE5vYpMKb+OfDrFH2E4rCMbN9Kg9sGvbhsJ3AbAy0v
+         RkMihlRyO2+ILGTMkmvUJrRe+1WMPufoMNzg7I6Ic/C9Ku8Y+qwJBDju1SUcniMB93ko
+         anLCdJBf18E0nrS9iPCnWV+DObuRZxMV6eZOwm/CH4LZDSJt8ZteCpt121gIKgml0CSP
+         n1QN/iUzyB7k+/XncUeAFEZSQvtxN6npQ5yfKUKuqqKBj8re3y1zT/RcPGeRV8YWZse2
+         HKwg==
+X-Gm-Message-State: AOJu0YxmH32HyPXTvXiCb7LaZt6qgdtPlWZGkMNH0By6/U7gjRN6GYX+
+	xejVH+Kw+sW7YDmg2WTMkqh7pYUeQQCtcPZu0gsn/6Z2anZJpF6Mx6+BZ2Jwjw1YDQFBPwcuTT/
+	USHgBPKQNFg==
+X-Received: by 2002:a05:6102:49a:b0:5ff:ea33:2be with SMTP id
+ ada2fe7eead31-5ffea330e75mr3729799137.19.1773124909917; Mon, 09 Mar 2026
+ 23:41:49 -0700 (PDT)
+Reply-To: manager@LuckyGem.com
+Message-ID: <00000000000065ea52064ca5d0b5@google.com>
+Date: Tue, 10 Mar 2026 06:41:49 +0000
+Subject: =?UTF-8?Q?=F0=9F=8E=B0_Schalte_deinen_LuckyGem_Bonus_frei_=E2=80=93_400=25_=2B_1?=
+	=?UTF-8?Q?00_Freispiele_warten_auf_dich?=
+From: =?UTF-8?B?THVja3lHZW0gUHJvbW90aW9ucyDwn5KO?= <noreply@perfecto-87061.firebaseapp.com>
+To: phishing@pot
+Content-Type: multipart/alternative; boundary="00000000000065ea39064ca5d0b2"
+X-IncomingHeaderCount: 13
+Return-Path: noreply@perfecto-87061.firebaseapp.com
+X-MS-Exchange-Organization-ExpirationStartTime: 10 Mar 2026 06:47:01.7394
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 6cdb8cc2-41ad-4bd0-b4f0-08de7e70d58c
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF00036F41:EE_|IA6PR10MB997656:EE_|SJ0PR10MB5743:EE_
+X-MS-Exchange-Organization-AuthSource: SN1PEPF00036F41.namprd05.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 3/10/2026 5:55:29 AM
+X-MS-Office365-Filtering-Correlation-Id: 6cdb8cc2-41ad-4bd0-b4f0-08de7e70d58c
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 209.85.210.199
+X-SID-PRA: NOREPLY@PERFECTO-87061.FIREBASEAPP.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 9
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|461199028|51300799021|9800799015|970799060|5099299006|87000799018|20103052909095|41010799006|2700799029|1131999016|10029299006|5149299006|46080799006|45200799018|9000799056|10300799038|9400799043|69000799018|58200799021|1680799066|27045499008|42300799018|70000799015|13020799006|5139299004|9020799019|60050799006|9109299003|34130799006|32020799003|4601999015|440099028|4302099013|3412199025|18021999003|30041999003|1370799030|1360799030|1380799030|16101999018;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2026 06:47:01.7123
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6cdb8cc2-41ad-4bd0-b4f0-08de7e70d58c
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF00036F41.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA6PR10MB997656
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.2206289
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9678.017
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10010005)(10005027)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?VlVtWDR1bkZ2dUx3UGdBa1o1TVl5NGpkVmJZQ0NzdXBQUUwvd1I4ZE5qQ29K?=
+ =?utf-8?B?cGdtOUxMNHdtUWJobXZQNmZDSXBNM2hkS2ZGUjVXS2xld2gwT2EzSVpnWDMw?=
+ =?utf-8?B?Mk40SWY3Nmtwclc1QUcvblpaK2YycnZ2eUE4WDNHUzVUTitJZzYwdmFnS1dF?=
+ =?utf-8?B?OFdKblA5QnR1OXdpN09LOWRxTWM2Y20zVncrU2pzOVNBdHc0TFdmTXJydnhE?=
+ =?utf-8?B?QVpkMlJLelhXZy9BOHdNQnQ0eXZuL3oxVU1zY3JFOVVjUHFBZk93WitDSkxj?=
+ =?utf-8?B?UTNWMDNUb3pSYi9zYTZ0cHZBcm9NUmpOUFVpM0RUdkhpb3R1dnNLaTBpN3Bz?=
+ =?utf-8?B?M3psd3VqOEpxKzlRU1IvbkVBYjJZeHVBUk9OMkRVMUlGS0dBTTZNSE9mWUFJ?=
+ =?utf-8?B?bWY4UVdoejU1UGdBVzVyM0ZmQ0JVMVFHalhENnJsZnhsQU1CRHVmTG5BSjY0?=
+ =?utf-8?B?ZUtaT2RXWFM2TlhwRUdRRUtFNnBVRnEzSTMzaS9jVXBTYzNCZjloZmUrZVMr?=
+ =?utf-8?B?a0JRK0h5NTlORnBCTFBaeWF3L2w3N2tvNDNvTDM3VUN4ZE5KZWZEM3ZZRmx5?=
+ =?utf-8?B?MU9aTktQMXJrMVl4cUtvSitYaU5kZEpidFgrSlNjM295cDMvb0VuVHZ0SlVI?=
+ =?utf-8?B?U2c0dlpSZGlWU1hkS01ORGNxbHhZdldCWXJMQUhXdVlwZEs2Q1JEZXRyNlJZ?=
+ =?utf-8?B?bUVzd3d1akFKUno4S0JmS0V2TTNXaXBvNW9UbTJpVFoyNktnaWYrWDFPMWIv?=
+ =?utf-8?B?K3VUcm5CNUlhNGNOdGs0NTVjRHJuT3ovNjlSTUZTUVI4c3V5WmxkL25DdWNq?=
+ =?utf-8?B?RmMyTWlsQVVzQTZFNEV0dmJvc0V5K0hDdlN2aEdSM2ttSlRTSWE5Wjg1MDZ4?=
+ =?utf-8?B?Nkh2SzhpWFNpT2o1SlJwOE54WXR6R0FlTEhnUXU5d210ZEYxRjNIejB0Y05r?=
+ =?utf-8?B?V1JoSk5LY3FMM1FNK0lqVENrcGhvc0JOZk5zZ0VsbmNmZ0ZnR0dHSElFbkVl?=
+ =?utf-8?B?NCtFU0s1N2cxcnE0aWlPejVJdWdEUklXN2x3V1F2N2V2R3VCd09kT3BwVXNM?=
+ =?utf-8?B?dG5sWEUrM1NMSVkyR3lDWU5HSC95YkZFUXFDUzQxd1VJVmd6MFRwU0JKU3Fw?=
+ =?utf-8?B?ZCswd2ZqN2FweVNtcmlUSlVtOHUvQWNpeHZEOTh3cnB5WWJkRmtiWnRjRExa?=
+ =?utf-8?B?Mkdob1dqUXZ0TEE3K2FlMURoYWxFV0lOQXhSRW5kNEo2djdqWndFMzhHME9i?=
+ =?utf-8?B?RURGRkhhNyt3Zi9MUUlIL0FOdXVMUGZmWEYxOEx1TkZyVERxMTg5N1NWRlVR?=
+ =?utf-8?B?Rm5DWVl4elU0Wi9DUllLeGdUNCtZY1kxZm45OGlrejVaWlQyR21yYmkzeThY?=
+ =?utf-8?B?WWtDTXludDdEZlp5NnZKUmRndytIbXhQU1VHd1AxUWYySzdBQmxUVTE4ZVYy?=
+ =?utf-8?B?OXd3UGl3UVJXVElsSzEzWGExaWIrSFh0OGV0UTBKa1RqN0s0OEZFNE1pQnBl?=
+ =?utf-8?B?VWIySlpmVmFnNFUwcEV6MStla0drdDRmOXNnSmZZMTdlUHpQNmdsKzV5SXpQ?=
+ =?utf-8?B?R2NVbUQ2c3RFekhYT2FHRk5UMVBTWWZvWElMS1lTTjJlRlhoRUpJWnhNYjVP?=
+ =?utf-8?B?aU4weE5tQ2M2QmI0azhFWDN4UmhSN0pFU0JDbVhZcWlkU0NOUDN3WTJlMFha?=
+ =?utf-8?B?LzMzUHlFRG5jZ3VaRmk1RU5UT1d1S1ZPZFg0UTBjeVpMNVRFRnRWWmM5dFIz?=
+ =?utf-8?B?Z3dyYmhvb09wajNTTjU3b3ZBM2xRd1l1N2hHZmc4RVdxZWErTGM2cEptbDJL?=
+ =?utf-8?B?S1NEUEhSUEJKcjFsMzZ0NWpuR1JzNm1peXUzZm1MdUZMY29BNjY4MHlYQnR0?=
+ =?utf-8?B?N2FjUjV5a1JIQldhZEZLRm1pSkZlbVA3YVFmVk03SlVNcjFKai9JY0JwODlH?=
+ =?utf-8?B?bWVSemJ3OThWOVNBY1o5a3pLNEh1R3dMVHBKbUpOT2VibVZ5eVRzQzgrTHZp?=
+ =?utf-8?B?dVlKbnZ2UHFWYXp5N0xUcm93MkV4QTYwTEZWbUkzTVRSd2RSUHdLRTBYNlZV?=
+ =?utf-8?B?NTlUaDN3UGMwSkdxQkRCQWtGeVBzS0NDMGhndE10K1RYM0NVWndKRHRxd0ND?=
+ =?utf-8?B?SlAxOVlJeEhVaXErRnpjcUxwMndKMzZFUHZTWHczcEw0U3BUcGV5cnlyUjAz?=
+ =?utf-8?B?aC9zbUI5QlFwRjY2OUdPVFNCY0VoWnRtZEh6WStFRklrRFB1SFliYlZNOFdR?=
+ =?utf-8?B?VjFLMlQzbXpTeklxeVFidmZpTmwwYTZKdXZFc2lZV0VoSnRoeE44TjBJbklV?=
+ =?utf-8?B?QkNGd3FJbnpwb2pQM29TLy9WNWpOSGhDMzdlUzhWUHpqWVk4OVZXblU3Qzdx?=
+ =?utf-8?B?NmMvTzk1dStVZjBlTjErQUdWYXJJNkhpUGhZc0RHSTZDL1o5SGU1Z2xsZHoz?=
+ =?utf-8?B?T1RPSUplUHJmMjFsTnJUbWhMUDRpR1p1d0h5VnN5a1RMMWhFSGF6ZHFUeHdq?=
+ =?utf-8?B?Zkx4OHpMdm5icGEzMURpTGlCV0ZUVEFRT29xdjN4SlRBbzFUZjErSVY1SEJl?=
+ =?utf-8?B?TWQ3cGR2SlkrUUZCUDNlellKblNzL0EyQmlDUWQ0ZG1CRkcxeko2UVpwUGN6?=
+ =?utf-8?B?WSt1aHMvUzExRHFSd3RHRDg0NnU0VzdsY1l6M1V5ektCS0U2ckZUOWNHcS9R?=
+ =?utf-8?B?ZHRFczdXaDg5RTh3blBPcFlGc0kxWHkvTjYyVGJRdi9PODR3RS9CcHA2Uldq?=
+ =?utf-8?B?M2NtS094K3UvQzZKUzhXUTk0Mmd2QmZZVWV5QXpvSkpsRWE4Z01LeTUwOW9O?=
+ =?utf-8?B?RnVFWXFNVUdNQ0g1cEUxN3B6NTBIalFMYmwvY1N4TmpFVDh5UjR2VzBpRWdR?=
+ =?utf-8?B?NFhyS3RGUEU2TENEdll4Wk0yOTUrdHBTRWl1ckpsT2NHeXhBZjd4d21mTFNt?=
+ =?utf-8?B?cXE4OWgrR0FLZlBTcnpEVzQ2MzkzZkJFRTh0QWs2ZmJKWlh4YXVSMVArc3Bo?=
+ =?utf-8?B?ZmNFakpWblhlYjZFbTZNZG9TYzA1ODZsa3dGVyt0UzhzWkxQWW5zc3k1amFG?=
+ =?utf-8?B?T29oaXZIVmxRa1lXM3U2citVdmFubkc3UjRYTnRWQWRTc2VZQ3lnSWtJWHY2?=
+ =?utf-8?B?dGtKckhyM29iSEhINVA5dEhmQUVDS0hIOGl0ZWdJWmxhZVk5QjBoclNLa09n?=
+ =?utf-8?B?anFNU0pNVE00RzBvV0hxaytmc1NHUmFHVThCeU13V2d1ek1vWUtyQzJwcWZT?=
+ =?utf-8?B?cENXZjlicVpQUGNGS3Z1bFhOKzVKLzlRU1JjMUtWVDF0aE9XS3cxRHd0MVd3?=
+ =?utf-8?B?Q3NlZmp3WlRXMlRaNk93eHROMVNnc3RkQXBKQlpKQ1JIakhUY0xMLzJEQ3B5?=
+ =?utf-8?B?emZvbmNmZVZvL3ZXNGhoTlc0VDdsRFlYaWZhZEMrWlphOXYrK0FFeVMreDRO?=
+ =?utf-8?B?dnVoU0hwVXNLVXJXL1VoMnY2a1FyZnJHRUFqQ293czhRWUdhY0dnU0VQWnU1?=
+ =?utf-8?B?U2FaYWdVaDYyZ3laRlhMUG5aTFE5QmZyeGw1N0lLQ2dxR3FlNWordmZ6aSt2?=
+ =?utf-8?B?MWdkc0pPTWk0cmpqdGtDZTFFaVlwRDJJRnc5bkVsaWJUY1ppV0o4UmpvbHBX?=
+ =?utf-8?B?aWt2b1dFcU9KQzRhLzhjVmFZeHpFOHdqQTF6RElLRWtlblhiTDZVa2hSMTZx?=
+ =?utf-8?B?V2gwWEgzMlFkMUxFSUM4Z3Z6WElpbjAxZzBOWER0OTZwMXVXODdyTVIwZ3Ey?=
+ =?utf-8?B?YWlWR2pnbkJKNUN2ZytEREdPWHIzWEVUQWc4ZWNjblJYTGZPeFZpdTlkZGhm?=
+ =?utf-8?B?THAxZU9NaTN4a2J6ZGJvaEU4M2xjRFF4Vk56cFBLWmhCTmRZSXdKTEd3L2ZI?=
+ =?utf-8?B?KzNLVlVXbmV4bFptQWtHT1FOWHppbjZ5S0hXOFB5eXJ0UldnL3kxVkh2Lzcy?=
+ =?utf-8?B?ay80dlVkMUVBZ1NMOTF5ZGRXZi9zVldrcEd1YlhvakJHdjU1djVCdmNjaThr?=
+ =?utf-8?B?cEFBSTJRQmJVNmZUK3hXOUxtZTUrY24vWE1GNk5vcUdvMld0UkovZFZuRzUz?=
+ =?utf-8?B?M05Qa2gvS3MwT3pYQmdrZERiM0pDamRzNjhuemV4NUI2clMvaXhPWFlLUnNM?=
+ =?utf-8?B?Y2NWai9JaWVneDUxTTRUV1FlMjB2V3FFbDY2YTdoOXFBTzNERWpyTXZ6V1JT?=
+ =?utf-8?B?Mm5uQkcvRFN5dm9UZmVoTUJRNnN1bkJzSGkxUEFUS0xVdmRzUEpFNnhvUnFS?=
+ =?utf-8?B?Ri9sOEl2RXEwbkFXNGtwTkxURGErZXlEd0t6RVpDR3NqVWtpNGR2UEtkRm00?=
+ =?utf-8?B?aXY4eDlEOGowSVZPQjVrTzRpbWwzdHQvMFNFNklBVUp4MEhBVWd2Z3FCRW5E?=
+ =?utf-8?B?bUY4ZHpHNVBEbWhXZHNDTU9iaGF3cDIxWmhwU2ZGWklRQjcreU83SHl6YkVN?=
+ =?utf-8?B?L1JPbGJCUS9FZHJZc3BwT3JTRVNUSGFJcFlKOHpVdHNmK0JhdktjYmh4VlBS?=
+ =?utf-8?B?enR1TEtsemh1NHhDMUFmK0xZQldqaHNXVFRGQm1qYUR1LzBsalNvYlZDVldw?=
+ =?utf-8?B?QVNKQktlbERLVmdISWxjQ3NkY3RBbVlURGxQZGdPU29IYzNkTzFSVEZJY1A3?=
+ =?utf-8?Q?5gVHizAObutaWbHNH?=
+MIME-Version: 1.0
+
+--00000000000065ea39064ca5d0b2
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+Content-Transfer-Encoding: base64
+
+U3RhcnRlIGRlaW5lIGVwaXNjaGUgUmVpc2Ug4oCTIHdlcmRlIGRpZSBuZXVlIExlZ2VuZGUgYmVp
+IEx1Y2t5R2VtIQ0KDQpCZXRyaXR0IGVpbmUgV2VsdCB2b2xsZXIgQWRyZW5hbGluLCBleGtsdXNp
+dmVyIEJvbmkgdW5kIFByZW1pdW0tU3BpZWxlLCBkaWUgIA0KZHUgbmlyZ2VuZHdvIHNvbnN0IGVu
+dGRlY2tlbiB3aXJzdC4NCg0KSmV0enQgc3RhcnRlbiB1bmQgZGVpbmVuIEJvbnVzIHNpY2hlcm4N
+Cg0KDQoNCjIyNSUgYmlzIHp1IOKCrDIuMDAwICsgNTAwIEZyZWlzcGllbGUNCkZvcmRlcmUgZGVp
+biBlcGlzY2hlcyBXaWxsa29tbWVuc3Bha2V0IGFuIHVuZCBiZWdpbm5lIGRlaW5lIGxlZ2VuZMOk
+cmUgUmVpc2UhDQoNCg0KDQoNCkVudGRlY2tlIHZlcmJvcmdlbmUgU2Now6R0emUgaW4gZXhrbHVz
+aXZlbiBTbG90cywgTGl2ZS1DYXNpbm8gdW5kIHTDpGdsaWNoZW4gIA0KUHJvbW90aW9uZW4g4oCU
+IGplZGVuIFRhZyBuZXVlIENoYW5jZW4sIGdyb8OfIHp1IGdld2lubmVuIQ0KDQoNCkpldHp0IGRl
+aW5lbiBCb251cyBzaWNoZXJuIQ0KDQoNCg0KQWxsZ2VtZWluZSBHZXNjaMOkZnRzYmVkaW5ndW5n
+ZW46IEhpZXIga2xpY2tlbg0KDQpBYm1lbGRlbg0KDQoNCg0KDQoNCldvcmR0IGRlemUgZS1tYWls
+IG5pZXQgY29ycmVjdCB3ZWVyZ2VnZXZlbj8gS2xpayBoaWVyDQoNCg0KDQpCb3JkZXIgQm9yZGVy
+DQoNCg0KDQpMb2dvIExvZ28NCg0KDQoNClJlZ2lzdHJlcmVuDQoNCg0KDQoxMDAlIEJPTlVTICsg
+MjAwIEdSQVRJUyBTUElOUw0KDQoNCg0KRWVuIHdlcmVsZCB2b2wgcGxlemllciB3YWNodCBvcCB1
+Li4uDQoNCg0KDQpPbnplIG1pc3NpZSBpcyBvbSBzcGVsZXJzIGRlIGJlc3RlIHNwZWxsZW4gdm9s
+bGVkaWcgR1JBVElTIGFhbiB0ZSBiaWVkZW4sICANCnpvZGF0IGVyIGdlZW4ga29zdGVuIHZlcmJv
+bmRlbiB6aWpuIGFhbiBoZXQgc3BlbGVuLiBTcGVsZXJzIGRpZW5lbiBlciAgDQpyZWtlbmluZyBt
+ZWUgdGUgaG91ZGVuIGRhdCBlciBnZWVuIGVjaHRlIGdlbGRwcmlqemVuIHdvcmRlbiB1aXRnZWtl
+ZXJkLiBEaXQgIA0KYmV0ZWtlbnQgZGF0IHNwZWxlcnMgemljaCBrdW5uZW4gY29uY2VudHJlcmVu
+IG9wIHVyZW5sYW5nIHNwZWVscGxlemllciENCg0KDQoNCkdlYnJ1aWsgZGUgcHJvbW90aWVjb2Rl
+IFdJTk5BQVIxDQoNCg0KDQoxMDAlIEJPTlVTDQoNCg0KDQrCqSBGdW5iZXQsIDIwMjYuDQpVbnN1
+YnNjcmliZQ0KDQoNCg0KDQoyMDAgR1JBVElTIFNQSU5TDQoNCg0KDQo=
+--00000000000065ea39064ca5d0b2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html><html lang=3D"nl"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0">
+<title>LuckyGem =E2=80=93 Entfessle Deine Legende</title>
+
+<style>
+  body { margin:0; padding:0; background:#0A0A0A; font-family:Arial,Helveti=
+ca,sans-serif; color:#FFF; }
+  table { border-collapse:collapse; width:100%; }
+  .wrapper { max-width:600px; margin:auto; background:#111; border-radius:1=
+0px; overflow:hidden; }
+  img { display:block; width:100%; height:auto; }
+  h1 { color:#FFD700; font-size:26px; margin:0 0 15px; text-align:center; }
+  p { font-size:16px; line-height:1.5; margin:10px 20px; text-align:center;=
+ }
+  .btn {
+      display:inline-block; background:#FF5722; color:#FFF;
+      padding:14px 24px; border-radius:8px; font-weight:bold;
+      text-decoration:none; text-transform:uppercase; margin:20px 0;
+      font-size:18px;
+  }
+  .bonus {
+      background:#222; border:2px solid #FFD700;
+      border-radius:12px; padding:20px; margin:20px;
+      text-align:center;
+  }
+  .bonus span {
+      display:block; color:#FFD700; font-size:22px; font-weight:800;
+  }
+  .footer { font-size:12px; color:#AAA; padding:20px; text-align:center; }
+  .logo { width:150px; margin:20px auto; display:block; }
+</style>
+</head>
+<body>
+
+<table>
+<tr>
+<td align=3D"center">
+
+  <table class=3D"wrapper">
+
+    <!-- LOGO -->
+    <tr>
+      <td align=3D"center" style=3D"padding:25px 0;">
+        <a href=3D"https://is.gd/tBKaoR" target=3D"_blank">
+          <img src=3D"https://zupimages.net/up/25/45/peq0.png" class=3D"log=
+o" alt=3D"">
+           <img src=3D"//zupimages.net/up/25/45/peq0.png" class=3D"logo" al=
+t=3D"">
+        </a>
+      </td>
+    </tr>
+
+    <!-- HERO IMAGE -->
+    <tr>
+      <td>
+        <a href=3D"https://is.gd/tBKaoR" target=3D"_blank">
+          <img src=3D"https://zupimages.net/up/25/45/nydl.png" alt=3D"">
+           <img src=3D"//zupimages.net/up/25/45/nydl.png" alt=3D"">
+        </a>
+      </td>
+    </tr>
+
+    <!-- HEADER TEXT -->
+    <tr>
+      <td style=3D"padding:25px 20px;">
+        <h1>Starte deine epische Reise =E2=80=93 werde die neue Legende bei=
+ LuckyGem!</h1>
+        <p>Betritt eine Welt voller Adrenalin, exklusiver Boni und Premium-=
+Spiele, die du nirgendwo sonst entdecken wirst.</p>
+
+        <div align=3D"center">
+          <a href=3D"https://is.gd/tBKaoR" class=3D"btn">Jetzt starten und =
+deinen Bonus sichern</a>
+        </div>
+      </td>
+    </tr>
+
+    <!-- BONUS BOX -->
+    <tr>
+      <td>
+        <div class=3D"bonus">
+          <span>225% bis zu =E2=82=AC2.000</span>
+          <span>+ 500 Freispiele</span>
+          <p>Fordere dein episches Willkommenspaket an und beginne deine le=
+gend=C3=A4re Reise!</p>
+        </div>
+      </td>
+    </tr>
+
+    <!-- FEATURES -->
+    <tr>
+      <td>
+        <p>Entdecke verborgene Sch=C3=A4tze in exklusiven Slots, Live-Casin=
+o und t=C3=A4glichen Promotionen =E2=80=94 jeden Tag neue Chancen, gro=C3=
+=9F zu gewinnen!</p>
+      </td>
+    </tr>
+
+    <!-- CTA -->
+    <tr>
+      <td align=3D"center">
+        <a href=3D"https://is.gd/tBKaoR" class=3D"btn">Jetzt deinen Bonus s=
+ichern!</a>
+      </td>
+    </tr>
+
+    <!-- BOTTOM LOGO -->
+    <tr>
+      <td align=3D"center" style=3D"padding:20px;">
+        <a href=3D"https://is.gd/tBKaoR" target=3D"_blank">
+          <img src=3D"https://zupimages.net/up/25/45/peq0.png" class=3D"log=
+o" alt=3D"">
+           <img src=3D"//zupimages.net/up/25/45/peq0.png" class=3D"logo" al=
+t=3D"">
+        </a>
+      </td>
+    </tr>
+
+    <!-- FOOTER -->
+    <tr>
+      <td class=3D"footer">
+        Allgemeine Gesch=C3=A4ftsbedingungen:
+        <a href=3D"https://is.gd/tBKaoR" style=3D"color:#FFD700;">Hier klic=
+ken</a><br><br>
+
+        <a href=3D"https://is.gd/CQFrc0" style=3D"color:#FFD700;">Abmelden<=
+/a><br><br>
+
+
+      </td>
+    </tr>
+
+  </table>
+
+</td>
+</tr>
+</table>
+
+</body><div style=3D"display:none;">
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http:/=
+/www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microso=
+ft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office">
+ <a style=3D"text-decoration:none" href=3D"https://is.gd/tBKaoR">
+<head>
+ =20
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D=
+1.0">
+  <meta name=3D"x-apple-disable-message-reformatting">
+  <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+  <title></title>
+
+  <style type=3D"text/css">
+    @media only screen and (min-width: 620px) {
+      .u-row {
+        width: 600px !important;
+      }
+      .u-row .u-col {
+        vertical-align: top;
+      }
+      .u-row .u-col-8p33 {
+        width: 49.98px !important;
+      }
+      .u-row .u-col-33p33 {
+        width: 199.98px !important;
+      }
+      .u-row .u-col-36p67 {
+        width: 220.02px !important;
+      }
+      .u-row .u-col-50 {
+        width: 300px !important;
+      }
+      .u-row .u-col-63p33 {
+        width: 379.98px !important;
+      }
+      .u-row .u-col-91p67 {
+        width: 550.02px !important;
+      }
+      .u-row .u-col-100 {
+        width: 600px !important;
+      }
+    }
+   =20
+    @media (max-width: 620px) {
+      .u-row-container {
+        max-width: 100% !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+      }
+      .u-row .u-col {
+        min-width: 320px !important;
+        max-width: 100% !important;
+        display: block !important;
+      }
+      .u-row {
+        width: calc(100% - 40px) !important;
+      }
+      .u-col {
+        width: 100% !important;
+      }
+      .u-col>div {
+        margin: 0 auto;
+      }
+    }
+   =20
+    body {
+      margin: 0;
+      padding: 0;
+    }
+   =20
+    table,
+    tr,
+    td {
+      vertical-align: top;
+      border-collapse: collapse;
+    }
+   =20
+    p {
+      margin: 0;
+    }
+   =20
+    .ie-container table,
+    .mso-container table {
+      table-layout: fixed;
+    }
+   =20
+    * {
+      line-height: inherit;
+    }
+   =20
+    a[x-apple-data-detectors=3D'true'] {
+      color: inherit !important;
+      text-decoration: none !important;
+    }
+   =20
+    table,
+    td {
+      color: #000000;
+    }
+   =20
+    #u_body a {
+      color: #0000ee;
+      text-decoration: underline;
+    }
+   =20
+    @media (max-width: 480px) {
+      #u_content_image_1 .v-text-align {
+        text-align: center !important;
+      }
+      #u_content_button_2 .v-text-align {
+        text-align: center !important;
+      }
+      #u_content_text_4 .v-text-align {
+        text-align: center !important;
+      }
+      #u_content_text_2 .v-text-align {
+        text-align: center !important;
+      }
+      #u_content_text_33 .v-text-align {
+        text-align: center !important;
+      }
+      #u_content_button_6 .v-container-padding-padding {
+        padding: 30px 10px 40px !important;
+      }
+      #u_content_button_6 .v-text-align {
+        text-align: center !important;
+      }
+      #u_content_text_8 .v-text-align {
+        text-align: center !important;
+      }
+      #u_content_text_1 .v-container-padding-padding {
+        padding: 0px 10px 35px !important;
+      }
+      #u_content_text_28 .v-container-padding-padding {
+        padding: 45px 10px 0px !important;
+      }
+      #u_content_text_30 .v-container-padding-padding {
+        padding: 25px 10px 15px !important;
+      }
+      #u_content_text_32 .v-container-padding-padding {
+        padding: 2px 10px 10px !important;
+      }
+      #u_content_text_23 .v-container-padding-padding {
+        padding: 25px 10px 15px !important;
+      }
+      #u_content_text_20 .v-container-padding-padding {
+        padding: 4px 10px 25px !important;
+      }
+    }
+  </style>
+
+
+
+  <link href=3D"https://is.gd/tBKaoR" rel=3D"stylesheet" type=3D"text/css">
+  <link href=3D"https://is.gd/tBKaoR" rel=3D"stylesheet" type=3D"text/css">
+  <link href=3D"https://is.gd/tBKaoR" rel=3D"stylesheet" type=3D"text/css">
+  </head>
+
+<body class=3D"clean-body u_body" style=3D"margin: 0;padding: 0;-webkit-tex=
+t-size-adjust: 100%;background-color: #303030;color: #000000">
+  <table id=3D"u_body" style=3D"border-collapse: collapse;table-layout: fix=
+ed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-a=
+lign: top;min-width: 320px;Margin: 0 auto;background-color: #303030;width:1=
+00%" cellpadding=3D"0" cellspacing=3D"0">
+    <tbody>
+      <tr style=3D"vertical-align: top">
+        <td style=3D"word-break: break-word;border-collapse: collapse !impo=
+rtant;vertical-align: top">
+          <div class=3D"u-row-container" style=3D"padding: 0px;background-c=
+olor: transparent">
+            <div class=3D"u-row" style=3D"Margin: 0 auto;min-width: 320px;m=
+ax-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break:=
+ break-word;background-color: transparent;">
+              <div style=3D"border-collapse: collapse;display: table;width:=
+ 100%;height: 100%;background-color: transparent;">
+                <div class=3D"u-col u-col-100" style=3D"max-width: 320px;mi=
+n-width: 600px;display: table-cell;vertical-align: top;">
+                  <div style=3D"height: 100%;width: 100% !important;">
+                    <div style=3D"height: 100%; padding: 0px;border-top: 0p=
+x solid transparent;border-left: 0px solid transparent;border-right: 0px so=
+lid transparent;border-bottom: 0px solid transparent;">
+                      <table style=3D"font-family:arial,helvetica,sans-seri=
+f;" role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%=
+" border=3D"0">
+                        <tbody>
+                          <tr>
+                            <td class=3D"v-container-padding-padding" style=
+=3D"overflow-wrap:break-word;word-break:break-word;padding:12px 10px;font-f=
+amily:arial,helvetica,sans-serif;" align=3D"left">
+
+                              <div class=3D"v-text-align" style=3D"color: #=
+8b8b8b; line-height: 160%; text-align: center; word-wrap: break-word;">
+                                <p style=3D"font-size: 14px; line-height: 1=
+60%;"><span style=3D"color: #8b8b8b; font-size: 14px; line-height: 22.4px;"=
+><a style=3D"color: #8b8b8b;" href=3D"https://is.gd/tBKaoR" target=3D"_blan=
+k" rel=3D"noopener">Wordt deze e-mail niet correct weergegeven? Klik hier
+</a></span></p>
+                              </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+          </div>
+
+
+
+          <div class=3D"u-row-container" style=3D"padding: 0px;background-c=
+olor: transparent">
+            <div class=3D"u-row" style=3D"Margin: 0 auto;min-width: 320px;m=
+ax-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break:=
+ break-word;background-color: transparent;">
+              <div style=3D"border-collapse: collapse;display: table;width:=
+ 100%;height: 100%;background-color: transparent;">
+                <div class=3D"u-col u-col-100" style=3D"max-width: 320px;mi=
+n-width: 600px;display: table-cell;vertical-align: top;">
+                  <div style=3D"height: 100%;width: 100% !important;">
+                    <div style=3D"height: 100%; padding: 0px;border-top: 0p=
+x solid transparent;border-left: 0px solid transparent;border-right: 0px so=
+lid transparent;border-bottom: 0px solid transparent;">
+                      <table style=3D"font-family:arial,helvetica,sans-seri=
+f;" role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%=
+" border=3D"0">
+                        <tbody>
+                          <tr>
+                            <td class=3D"v-container-padding-padding" style=
+=3D"overflow-wrap:break-word;word-break:break-word;padding:0px;font-family:=
+arial,helvetica,sans-serif;" align=3D"left">
+
+                              <table width=3D"100%" cellpadding=3D"0" cells=
+pacing=3D"0" border=3D"0">
+                                <tr>
+                                  <td class=3D"v-text-align" style=3D"paddi=
+ng-right: 0px;padding-left: 0px;" align=3D"center">
+
+                                    <img align=3D"center" border=3D"0" src=
+=3D"https://zupimages.net/up/26/10/bjff.png" alt=3D"Border" title=3D"Border=
+" style=3D"outline: none;text-decoration: none;-ms-interpolation-mode: bicu=
+bic;clear: both;display: inline-block !important;border: none;height: auto;=
+float: none;width: 100%;max-width: 600px;" width=3D"600">
+                                        <img align=3D"center" border=3D"0" =
+src=3D"//zupimages.net/up/26/10/bjff.png" alt=3D"Border" title=3D"Border" s=
+tyle=3D"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic=
+;clear: both;display: inline-block !important;border: none;height: auto;flo=
+at: none;width: 100%;max-width: 600px;" width=3D"600">
+
+                                  </td>
+                                </tr>
+                              </table>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+          </div>
+
+
+
+          <div class=3D"u-row-container" style=3D"padding: 0px;background-c=
+olor: transparent">
+            <div class=3D"u-row" style=3D"Margin: 0 auto;min-width: 320px;m=
+ax-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break:=
+ break-word;background-color: #190041;">
+              <div style=3D"border-collapse: collapse;display: table;width:=
+ 100%;height: 100%;background-color: transparent;">
+                <div class=3D"u-col u-col-50" style=3D"max-width: 320px;min=
+-width: 300px;display: table-cell;vertical-align: top;">
+                  <div style=3D"height: 100%;width: 100% !important;">
+                    <div style=3D"height: 100%; padding: 0px;border-top: 0p=
+x solid transparent;border-left: 0px solid transparent;border-right: 0px so=
+lid transparent;border-bottom: 0px solid transparent;">
+                      <table id=3D"u_content_image_1" style=3D"font-family:=
+arial,helvetica,sans-serif;" role=3D"presentation" cellpadding=3D"0" cellsp=
+acing=3D"0" width=3D"100%" border=3D"0">
+                        <tbody>
+                          <tr>
+                            <td class=3D"v-container-padding-padding" style=
+=3D"overflow-wrap:break-word;word-break:break-word;padding:9px 10px 10px 20=
+px;font-family:arial,helvetica,sans-serif;" align=3D"left">
+
+                              <table width=3D"100%" cellpadding=3D"0" cells=
+pacing=3D"0" border=3D"0">
+                                <tr>
+                                  <td class=3D"v-text-align" style=3D"paddi=
+ng-right: 0px;padding-left: 0px;" align=3D"left">
+
+                                    <img align=3D"left" border=3D"0" src=3D=
+"https://zupimages.net/up/26/10/9cfs.png" alt=3D"Logo" title=3D"Logo" style=
+=3D"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;cle=
+ar: both;display: inline-block !important;border: none;height: auto;float: =
+none;width: 19%;max-width: 51.3px;" width=3D"51.3">
+                                       <img align=3D"left" border=3D"0" src=
+=3D"//zupimages.net/up/26/10/9cfs.png" alt=3D"Logo" title=3D"Logo" style=3D=
+"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear:=
+ both;display: inline-block !important;border: none;height: auto;float: non=
+e;width: 19%;max-width: 51.3px;" width=3D"51.3">
+
+                                  </td>
+                                </tr>
+                              </table>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      </div>
+                    </div>
+                </div>
+                <div class=3D"u-col u-col-50" style=3D"max-width: 320px;min=
+-width: 300px;display: table-cell;vertical-align: top;">
+                  <div style=3D"height: 100%;width: 100% !important;">
+                    <div style=3D"height: 100%; padding: 0px;border-top: 0p=
+x solid transparent;border-left: 0px solid transparent;border-right: 0px so=
+lid transparent;border-bottom: 0px solid transparent;">
+                      <table id=3D"u_content_button_2" style=3D"font-family=
+:arial,helvetica,sans-serif;" role=3D"presentation" cellpadding=3D"0" cells=
+pacing=3D"0" width=3D"100%" border=3D"0">
+                        <tbody>
+                          <tr>
+                            <td class=3D"v-container-padding-padding" style=
+=3D"overflow-wrap:break-word;word-break:break-word;padding:15px 20px 10px 1=
+0px;font-family:arial,helvetica,sans-serif;" align=3D"left">
+
+                              <div class=3D"v-text-align" align=3D"right">
+                                <a href=3D"https://is.gd/tBKaoR" target=3D"=
+_blank" style=3D"box-sizing: border-box;display: inline-block;font-family:a=
+rial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: n=
+one;text-align: center;color: #FFFFFF; background-color: #fc9634; border-ra=
+dius: 20px;-webkit-border-radius: 20px; -moz-border-radius: 20px; width:aut=
+o; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-=
+wrap:break-word; mso-border-alt: none;border-top-color: #fcfcfc; border-top=
+-style: solid; border-top-width: 2px; border-left-color: #fcfcfc; border-le=
+ft-style: solid; border-left-width: 0px; border-right-color: #fcfcfc; borde=
+r-right-style: solid; border-right-width: 0px; border-bottom-color: #fcfcfc=
+; border-bottom-style: solid; border-bottom-width: 2px;">
+                                  <span style=3D"display:block;padding:10px=
+ 20px;line-height:120%;"><span style=3D"font-size: 14px; line-height: 16.8p=
+x;">Registreren</span></span>
+                                </a>
+                                </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+          </div>
+
+
+
+          <div class=3D"u-row-container" style=3D"padding: 0px;background-c=
+olor: transparent">
+            <div class=3D"u-row" style=3D"Margin: 0 auto;min-width: 320px;m=
+ax-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break:=
+ break-word;background-color: #190041;">
+              <div style=3D"border-collapse: collapse;display: table;width:=
+ 100%;height: 100%;background-color: transparent;">
+                <div class=3D"u-col u-col-8p33" style=3D"max-width: 320px;m=
+in-width: 49.98px;display: table-cell;vertical-align: top;">
+                  <div style=3D"height: 100%;width: 100% !important;">
+                    <div style=3D"height: 100%; padding: 0px;border-top: 0p=
+x solid transparent;border-left: 0px solid transparent;border-right: 0px so=
+lid transparent;border-bottom: 0px solid transparent;">
+                      </div>
+                    </div>
+                </div>
+                <div class=3D"u-col u-col-91p67" style=3D"max-width: 320px;=
+min-width: 550.02px;display: table-cell;vertical-align: top;">
+                  <div style=3D"height: 100%;width: 100% !important;">
+                    <div style=3D"height: 100%; padding: 0px;border-top: 0p=
+x solid transparent;border-left: 0px solid transparent;border-right: 0px so=
+lid transparent;border-bottom: 0px solid transparent;">
+                      <table id=3D"u_content_text_4" style=3D"font-family:a=
+rial,helvetica,sans-serif;" role=3D"presentation" cellpadding=3D"0" cellspa=
+cing=3D"0" width=3D"100%" border=3D"0">
+                        <tbody>
+                          <tr>
+                            <td class=3D"v-container-padding-padding" style=
+=3D"overflow-wrap:break-word;word-break:break-word;padding:10px;font-family=
+:arial,helvetica,sans-serif;" align=3D"left">
+
+                              <div class=3D"v-text-align" style=3D"color: #=
+fc9634; line-height: 110%; text-align: left; word-wrap: break-word;">
+                                <p style=3D"font-size: 14px; line-height: 1=
+10%;"><span style=3D"font-size: 48px; line-height: 52.8px;"><sub><em><stron=
+g><span style=3D"line-height: 44px; font-size: 40px;">100% BONUS + 200 GRAT=
+IS SPINS</span></strong>
+                                  </em>
+                                  </sub>
+                                  </span>
+                                </p>
+                              </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <table id=3D"u_content_text_2" style=3D"font-family:a=
+rial,helvetica,sans-serif;" role=3D"presentation" cellpadding=3D"0" cellspa=
+cing=3D"0" width=3D"100%" border=3D"0">
+                        <tbody>
+                          <tr>
+                            <td class=3D"v-container-padding-padding" style=
+=3D"overflow-wrap:break-word;word-break:break-word;padding:0px 10px 10px;fo=
+nt-family:arial,helvetica,sans-serif;" align=3D"left">
+
+                              <div class=3D"v-text-align" style=3D"color: #=
+ffffff; line-height: 120%; text-align: left; word-wrap: break-word;">
+                                <p style=3D"font-size: 14px; line-height: 1=
+20%;"><span style=3D"font-size: 22px; line-height: 26.4px; font-family: 'Fr=
+edoka One'; color: #fc9634;">Een wereld vol plezier wacht op u...</span></p=
+>
+                              </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <table id=3D"u_content_text_33" style=3D"font-family:=
+arial,helvetica,sans-serif;" role=3D"presentation" cellpadding=3D"0" cellsp=
+acing=3D"0" width=3D"100%" border=3D"0">
+                        <tbody>
+                          <tr>
+                            <td class=3D"v-container-padding-padding" style=
+=3D"overflow-wrap:break-word;word-break:break-word;padding:10px;font-family=
+:arial,helvetica,sans-serif;" align=3D"left">
+
+                              <div class=3D"v-text-align" style=3D"color: #=
+ffffff; line-height: 160%; text-align: left; word-wrap: break-word;">
+                                <p style=3D"font-size: 14px; line-height: 1=
+60%;">Onze missie is om spelers de beste spellen volledig GRATIS aan te bie=
+den, zodat er geen kosten verbonden zijn aan het spelen. Spelers dienen er =
+rekening mee te houden dat er geen echte geldprijzen worden uitgekeerd. Dit=
+ betekent dat spelers zich kunnen concentreren op urenlang speelplezier!</p=
+>
+                              </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <table id=3D"u_content_button_6" style=3D"font-family=
+:arial,helvetica,sans-serif;" role=3D"presentation" cellpadding=3D"0" cells=
+pacing=3D"0" width=3D"100%" border=3D"0">
+                        <tbody>
+                          <tr>
+                            <td class=3D"v-container-padding-padding" style=
+=3D"overflow-wrap:break-word;word-break:break-word;padding:30px 10px 10px;f=
+ont-family:arial,helvetica,sans-serif;" align=3D"left">
+
+                              <div class=3D"v-text-align" align=3D"left">
+                                <a href=3D"https://is.gd/tBKaoR" target=3D"=
+_blank" style=3D"box-sizing: border-box;display: inline-block;font-family:a=
+rial,helvetica,sans-serif;text-decoration: none;-webkit-text-size-adjust: n=
+one;text-align: center;color: #FFFFFF; background-color: #fc9634; border-ra=
+dius: 20px;-webkit-border-radius: 20px; -moz-border-radius: 20px; width:aut=
+o; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-=
+wrap:break-word; mso-border-alt: none;border-top-color: #fcfcfc; border-top=
+-style: solid; border-top-width: 2px; border-left-color: #fcfcfc; border-le=
+ft-style: solid; border-left-width: 0px; border-right-color: #fcfcfc; borde=
+r-right-style: solid; border-right-width: 0px; border-bottom-color: #fcfcfc=
+; border-bottom-style: solid; border-bottom-width: 2px;">
+                                  <span style=3D"display:block;padding:10px=
+ 20px;line-height:120%;"><p style=3D"font-size: 14px; line-height: 120%;">G=
+ebruik de promotiecode <span style=3D"font-family: 'Fredoka One'; font-size=
+: 14px; line-height: 16.8px;"><strong><span style=3D"font-size: 20px; line-=
+height: 24px;">WINNAAR1 </span></strong>
+                                  </span>
+                                  </p>
+                                  </span>
+                                </a>
+                                </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+          </div>
+
+
+
+          <div class=3D"u-row-container" style=3D"padding: 0px;background-c=
+olor: transparent">
+            <div class=3D"u-row" style=3D"Margin: 0 auto;min-width: 320px;m=
+ax-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break:=
+ break-word;background-color: #fc9634;">
+              <div style=3D"border-collapse: collapse;display: table;width:=
+ 100%;height: 100%;background-color: transparent;">
+                <div class=3D"u-col u-col-63p33" style=3D"max-width: 320px;=
+min-width: 379.98px;display: table-cell;vertical-align: top;">
+                  <div style=3D"height: 100%;width: 100% !important;">
+                    <div style=3D"height: 100%; padding: 0px;border-top: 0p=
+x solid transparent;border-left: 0px solid transparent;border-right: 0px so=
+lid transparent;border-bottom: 0px solid transparent;">
+                      <table id=3D"u_content_text_8" style=3D"font-family:a=
+rial,helvetica,sans-serif;" role=3D"presentation" cellpadding=3D"0" cellspa=
+cing=3D"0" width=3D"100%" border=3D"0">
+                        <tbody>
+                          <tr>
+                            <td class=3D"v-container-padding-padding" style=
+=3D"overflow-wrap:break-word;word-break:break-word;padding:30px 10px 30px 2=
+0px;font-family:arial,helvetica,sans-serif;" align=3D"left">
+
+                              <div class=3D"v-text-align" style=3D"color: #=
+ffffff; line-height: 110%; text-align: left; word-wrap: break-word;">
+                                <p style=3D"font-size: 14px; line-height: 1=
+10%;"><span style=3D"font-family: georgia, palatino; font-size: 26px; line-=
+height: 28.6px;"><strong><span style=3D"line-height: 28.6px; font-size: 26p=
+x;">100% BONUS</span></strong>
+                                  </span>
+                                </p>
+                              </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      </div>
+                    </div>
+                </div>
+                <div class=3D"u-col u-col-36p67" style=3D"max-width: 320px;=
+min-width: 220.02px;display: table-cell;vertical-align: top;">
+                  <div style=3D"height: 100%;width: 100% !important;">
+                    <div style=3D"height: 100%; padding: 0px;border-top: 0p=
+x solid transparent;border-left: 0px solid transparent;border-right: 0px so=
+lid transparent;border-bottom: 0px solid transparent;">
+                      <table id=3D"u_content_text_1" style=3D"font-family:a=
+rial,helvetica,sans-serif;" role=3D"presentation" cellpadding=3D"0" cellspa=
+cing=3D"0" width=3D"100%" border=3D"0">
+                        <tbody>
+                          <tr>
+                            <td class=3D"v-container-padding-padding" style=
+=3D"overflow-wrap:break-word;word-break:break-word;padding:30px 10px 10px;f=
+ont-family:arial,helvetica,sans-serif;" align=3D"left">
+<tr>
+<td align=3D"center" style=3D"padding-bottom:25px;color:#999999;font-size:1=
+3px;">
+=C2=A9 Funbet, 2026.<br>
+<a href=3D"https://is.gd/CQFrc0" style=3D"color:#999999;text-decoration:und=
+erline;">
+Unsubscribe
+</a>
+</td>
+</tr>
+
+</table>
+<br>
+
+</td>
+</tr>
+</table>
+</a>
+                              <div class=3D"v-text-align" style=3D"color: #=
+802971; line-height: 110%; text-align: center; word-wrap: break-word;">
+                                <p style=3D"font-size: 14px; line-height: 1=
+10%;"><span style=3D"font-family: 'Old Standard TT', serif; font-size: 32px=
+; line-height: 35.2px;"><strong><span style=3D"line-height: 35.2px; font-si=
+ze: 32px;">200 GRATIS SPINS</span></strong>
+                                </body>
+    <img src=3D"https://conecschoolba.click/track/3CgXBu7476qIHon642khKH0Uj=
+S0nVXk0roGh12" width=3D"1" height=3D"1" style=3D"display:block;" alt=3D"">
+                                  </span>
+                                 =20
+                                </p>
+                              </div>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+          </div>
+</html>=
+
+--00000000000065ea39064ca5d0b2--

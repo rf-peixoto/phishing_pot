@@ -1,0 +1,505 @@
+Received: from SA1PR10MB7710.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Fri, 6 Mar 2026 01:30:06
+ +0000
+Received: from SJ0PR13CA0145.namprd13.prod.outlook.com (2603:10b6:a03:2c6::30)
+ by SA1PR10MB7710.namprd10.prod.outlook.com (2603:10b6:806:3a7::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.17; Fri, 6 Mar
+ 2026 01:30:02 +0000
+Received: from SJ1PEPF00002310.namprd03.prod.outlook.com
+ (2603:10b6:a03:2c6:cafe::70) by SJ0PR13CA0145.outlook.office365.com
+ (2603:10b6:a03:2c6::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.18 via Frontend Transport; Fri,
+ 6 Mar 2026 01:29:59 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.160.72)
+ smtp.mailfrom=sync-ledger1.firebaseapp.com; dkim=pass (signature was
+ verified) header.d=firebaseapp.com;dmarc=permerror action=none
+ header.from=sync-ledger1.firebaseapp.com;compauth=pass reason=111
+Received-SPF: Pass (protection.outlook.com: domain of
+ sync-ledger1.firebaseapp.com designates 209.85.160.72 as permitted sender)
+ receiver=protection.outlook.com; client-ip=209.85.160.72;
+ helo=mail-oa1-f72.google.com; pr=C
+Received: from mail-oa1-f72.google.com (209.85.160.72) by
+ SJ1PEPF00002310.mail.protection.outlook.com (10.167.242.164) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.18
+ via Frontend Transport; Fri, 6 Mar 2026 01:30:02 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:93D03E4C296BD1B658290C643D8C2F4C0395D2C96A79515160E662F0C5E29E9A;UpperCasedChecksum:9C3F2D16F97A2EDE27C352AA966A1C74C8ED5CD7133BB97D4F9031A15EF82807;SizeAsReceived:2296;Count:12
+Received: by mail-oa1-f72.google.com with SMTP id 586e51a60fabf-4163be2d2ecso25416460fac.2
+        for <phishing@pot>; Thu, 05 Mar 2026 17:30:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=firebaseapp.com; s=20230601; t=1772760602; x=1773365402; darn=hotmail.com;
+        h=to:from:subject:date:message-id:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=sMLsgSH1hA2B1iRP/Chzu70XD2hh8MUw1YbNN/aQNcU=;
+        b=L+RBbToH4Qbt29FiS3+E37J/9BKnCxHv5rVaa09XA05SOzZUTyZoZbUxOW+ng8iqyk
+         s8m3aOnzyCbiibcTIuojROdxtxaZW8PoYQfu6/LWkHDkScJ0v9k6xewa5tKXth5waUFe
+         Q/s3/jAVdCuAvFo/39b1mTl+pI3WgSndFYHMQ9Do3QLKAypzaxQDNOlL047u7RsBIoy7
+         zU4eTrmHzo0kjbEFHWwK25wy7QCg37m1p6SRtyXDEjbBdXj8wHxHoiMQNGpoKTTT5u1Y
+         V8iqXijeWKW+V0koQOnUwtv7XLeKnpjIGd8iy5NBrjg/WbAGo04BogIl3y0zZz3v5J0I
+         MUtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772760602; x=1773365402;
+        h=to:from:subject:date:message-id:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sMLsgSH1hA2B1iRP/Chzu70XD2hh8MUw1YbNN/aQNcU=;
+        b=rFqVZcLMw8dkPG7zMuua9eXPdGY+1P5HmF/u/x8zPpQeP5xULDPk/tmyTECUCRkWxE
+         ghothukG4DQ7OwnWBMEBV7uBgjmsqqeg5Z4tfS0uKblUz1dGg9EN3owt4NerVU4BZHDt
+         s/cvDdopfmM7AraiFvhWApJUoQ4Du6TqqevXMg3ZsUzLybTiZYvfLpz4mZX0yy6BCdYC
+         f7cgvtY6+WZaXNb3gJSB9H2jLlIwQRdK/1krdbbo8NNUSWLZoLf86kv7IVFn5D2ho0aQ
+         JJ97MUUyQDNS6za6aHtEHApldLQXHDHVKe5BHrQocn1O4bk/i8FFNIlB1gu7H3FgLq7Y
+         Tqmw==
+X-Gm-Message-State: AOJu0YwqLl3Dtpe8F8vqduDBRA+5mTpodSjIKBX4TvnwOoOK52TdXyp5
+	GXFpVEFdyYOy2oiDlCP2xHDv4zdALO6q+Nowps5zk5iIKqotKObZLWGnGkyDg9fshSfnTdGy3dp
+	EK4654VDLdg==
+X-Received: by 2002:a05:6820:610:b0:679:e7b2:9fb7 with SMTP id
+ 006d021491bc7-67b9bc4f048mr458443eaf.13.1772760601375; Thu, 05 Mar 2026
+ 17:30:01 -0800 (PST)
+Message-ID: <000000000000eab6c0064c50fd3d@google.com>
+Date: Fri, 06 Mar 2026 01:30:01 +0000
+Subject: =?UTF-8?Q?Security_Update_Needed_=E2=80=94_Please_Act_Now?=
+From: Ledger <noreply@sync-ledger1.firebaseapp.com>
+To: phishing@pot
+Content-Type: multipart/alternative; boundary="000000000000eab6b5064c50fd3a"
+X-IncomingHeaderCount: 12
+Return-Path: noreply@sync-ledger1.firebaseapp.com
+X-MS-Exchange-Organization-ExpirationStartTime: 06 Mar 2026 01:30:02.2048
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 8d3e4a4d-fb35-444b-0c91-08de7b1fe35f
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00002310:EE_|SA1PR10MB7710:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource: SJ1PEPF00002310.namprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 3/6/2026 1:25:00 AM
+X-MS-Office365-Filtering-Correlation-Id: 8d3e4a4d-fb35-444b-0c91-08de7b1fe35f
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 209.85.160.72
+X-SID-PRA: NOREPLY@SYNC-LEDGER1.FIREBASEAPP.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|7009299003|69000799018|2700799029|60050799006|9800799015|20103052909095|9109299003|70000799015|87000799018|13020799006|970799060|461199028|9000799056|45200799018|5139299004|32020799003|34130799006|1680799066|10300799038|58200799021|9400799043|9020799019|32080799006|51300799021|46080799006|4302099013|3412199025|440099028|30041999003|18021999003|22062799003|3311599026|1360799030|1380799030|1370799030|56899033|1602099012;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2026 01:30:02.1639
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8d3e4a4d-fb35-444b-0c91-08de7b1fe35f
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00002310.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB7710
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:04.7340142
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9678.010
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9560006)(10180024)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?VGpWZTFpRktvZmdPR1lxMVhtVklTV0JiL0RISDFxVlU0OFcwYkRQTFZpVEps?=
+ =?utf-8?B?Wm5ST1A3Y2Y0YjFQNS8zREd5Z2hSNklTektTbjVVZUJ2MGZNOTF3R0hQaUY2?=
+ =?utf-8?B?dkhnZFVlZnV5cWZrUXRDM1FKYzIxSFUxd1dlRklYY09MTmxvTWh0UVpjZGhZ?=
+ =?utf-8?B?Y1FCTFBieWtiYnUvUDNRNDY0N05HY29uZ21HTnRtdmZGUDhWV213Y3c4YW1P?=
+ =?utf-8?B?eE1nRkFXS0VtalIvOUNVMnh2SUx6cWRZVWx1VkJTbnF3SURzQUdHZi9HZmZV?=
+ =?utf-8?B?RjE2N1B6djgzay9VMVpkbzZzMGxyVTFUT2NLa1lIRlZNaStuZ1N5cERoNVNp?=
+ =?utf-8?B?bVZwb05ubllJRFgvRGNnZGYwRWxobXV6UDlkK2ZYZk9HZ3loTHpVZjFEYlh5?=
+ =?utf-8?B?T0NMOFRocVNzUTVwUjVBWlBVTUtWRElDS0dlT0M4QVpBaFp3UytkdWg3VVk5?=
+ =?utf-8?B?clc1N2FvbGRucDVVS1lOd0ZCTFpuWk4yKzNoY1FHdk1yT3JTTDIvSWZNODVN?=
+ =?utf-8?B?Qkc2OU8rYW1kMUZoc2UyYmZaTTdOSnZlSXlRR245Sm9YOUxGYi96VU9DbXdQ?=
+ =?utf-8?B?eHQzTmo4QkxXL3lXV0FUam5zaE9NUlZxZkRxYXdwVzZCcGdlQmpabjhSWWo1?=
+ =?utf-8?B?MGJ6TGhrbHNzcmFYYzV4VysxKzd2eUNmUjBWbytnbmhmQXVVdi9OQUlFL1lq?=
+ =?utf-8?B?L0poYlZsTGtwNVI4ZUpDTHFZVnZDWjN2UElheXRUeERPUldDRlM1OWJCd1BG?=
+ =?utf-8?B?TDBIcnRPcCtKRHdTc0hvbVFXYitOampXYXdDVlZUVU9GSzlNY2RzSkpyNVdp?=
+ =?utf-8?B?c09DTXZ2eGVIWm9scGM3Sko0UC9WTmRqZSs1S3J6MFNUNVQyMHAxQmk3b2RD?=
+ =?utf-8?B?Tno0dnlHM1ZBZFNpcWFWaWNIR1I0SVBxY25BbzhsMUF5bWVQTGVxUDBISWRC?=
+ =?utf-8?B?a280ZU5OVHNlWGNESEJ1SzJaVmZ0L0tVQ1dTeWJJbUNjclRZUlp3LzNTMXY2?=
+ =?utf-8?B?ZkpFeGNhcFdGeTVjd3d2dThsZjBOSFZSb0g5K1p4UGdjQUl1UEZkYk1tdWU4?=
+ =?utf-8?B?VWYxQTdXQ0tTZlNjY1I0NTFNbHAvTWZhbU9ROTFuN0xwZEhCam9PdVcweHd6?=
+ =?utf-8?B?UVp1bklENDNCbkx3RDRCVXBGZElMSm5rdUI4VENGOTJaRlNsYTk3czVZeUNo?=
+ =?utf-8?B?NnY4OWt6c3FUMXo0NFVUUm5mOW5iRk1jVE02cE5iclpkVVU3L1VQdDJHdElN?=
+ =?utf-8?B?VlowUTVKZ0V6YmhLMi9MUlZNV0tkSFNySXQvVlVFSkw0bEJLOTRvM3ZqYjJ3?=
+ =?utf-8?B?MlNLM3VFelZtRmlRN21SWGhzdmVBdVNtckJSYTlidllnKzdjdmJLTDdPZmRj?=
+ =?utf-8?B?T3MrU3Ayd3N6Ulh5UmxIRzBDd2hpTW9ROFhUYzNaMDJSSzdhcmxHSWlELzZo?=
+ =?utf-8?B?am54aHhtV2ZqeTZoWjJCVVN0U2NzTU9KY0E4Y0syd1dLTjRTVnBhQWV1czVI?=
+ =?utf-8?B?Tk0xZ3ZtSUM2aGJjNExkU1YrNTNlMlozVXl6by94TFdvQnAzajAybGdVWVNY?=
+ =?utf-8?B?MzhYK0d2a01QbDJwaDN4K2dGVGN1YWRYQ3BaVnVTTjZTbnpZcGhIMkJVdjRH?=
+ =?utf-8?B?MnR6ZzVuL2grUzVMSTE5ZHY3ak1OczF3RGwxQzIzUUtQMzdOZDhKdzNDcUhp?=
+ =?utf-8?B?MWFxV3liTWlNTHZUMGRkbVJXUUt6dkNPWnFuVEgvbGFjZjl2UDBnZHI1dTJW?=
+ =?utf-8?B?eGIzRWx5RmN1LzNFQ292K0lIT0ZmMG9VK21JbStKV3I2blg5dlVjc0ZzQjFr?=
+ =?utf-8?B?L1Jsa0s3RWFHdEFVOUNNb0dTaTl2TXFCUzUvQk83MlV6NTJETmI3bjdpVmdt?=
+ =?utf-8?B?a2ZIT01Oa0FSNWpjZTNDRS95TDcrOXhTbjV4eGZVNUV4L0lMT0NLMUs1bUxi?=
+ =?utf-8?B?SE1kcUg3TFBMSnlzbENvNXh2SDRrN1c3a0M2YkE4ejdETDBzeUVtTWxmdHIw?=
+ =?utf-8?B?dFhacGthYzJqT0xBcmVqb0tyWjJ2ZSsvUFFuaGNaUC9hSFNwWEZWUU1nUkNn?=
+ =?utf-8?B?U2kza0VXb0ZUdWd6STlncTVEcFZIdDZWT29mYWRNN3BKOGNGUHE1WmhyQ2lK?=
+ =?utf-8?B?UXkrWkJWc3FMUDJBcTVTckljZWNCeWpFVG1jYkVHejJyLytaamlqeXFIeVBO?=
+ =?utf-8?B?S0dETHZiSDJ6UXFMNUp6RUpZQmViT2t6MkRWc2hiS3BuMmNBYXk0TXJuTFNC?=
+ =?utf-8?B?enpCbE04Y25zTXFjVDh0LyswRFlnekNpMDk3Q0hQZ2pvRXNCSUdpNGwrL281?=
+ =?utf-8?B?Q0NPWk1hMUFYd1lyRVlmbGhrQWlaREo0bHF0Z2FXNWRocWI2VGdWaTVqN0Qw?=
+ =?utf-8?B?QlMzeWdldk14M0lCTWxsTkwvbnlnTk5wVUttVDF0ZmNFTVBYOXpRazdKY0JD?=
+ =?utf-8?B?dGJMZWtRWjYvdk92K0RDU1U3T1Fzc0h6TWllZy9NdVZpbC9NWnlOd2QvRFFO?=
+ =?utf-8?B?YVNLa2QyaVBjRGxrcWdJNktkUFNycHNDQzYzWGpqc3VqZnJhWHEvaDR2Yk1G?=
+ =?utf-8?B?ZFpDWk0vTTR1dkhjZkZVTjBCUFFXYVkrRWZWSWhHMlNNZGlOWkJoc2JUNzB1?=
+ =?utf-8?B?bmhHTUppT05sT1RNbTZTNmY4TWhVWlFycW1pemJjeDZMTlc2WnlaaGxJRWZZ?=
+ =?utf-8?B?SnVGLzNQTTFYRTR6N2F6ZXpEV25EMUltY1JZRmtURkhrS0hZc0wyZGNPbEVX?=
+ =?utf-8?B?QWZkaUVieFNHQ1Bva0xZTklOTDhVUDNFVzltZDQ1dGEzZ0RIOE9vUm45TkJP?=
+ =?utf-8?B?VVVGTkhtd2l6dUNWZ0EvSXYyNXM2RUM1WWVWZmhzS1NlZWY1bnpacDd1TlRh?=
+ =?utf-8?B?WVg1T01ra3cydWxwNjNVK0NGUmszRzlmQlZTbm9iY3I4R0pNVU5RaTlFSUow?=
+ =?utf-8?B?QXQ4dHdrYm5PaUZqZTNpdDNEOUVQdFQyRklUUmtzTlVKNk1MM0piYnRubVp0?=
+ =?utf-8?B?dWZRdnVUNm9NK3R2a0FmRUtmeEVyV25CWEFXL3Z6eFF4TTVqZnpmN0tpdXpD?=
+ =?utf-8?B?dHRIdkRQTTV4K0QyalhQVEZja2tES0RSU24xalJRNThxTXZwNEtjMVV0Ulo5?=
+ =?utf-8?B?akFPWTRjVmhGdVNMbUI2OVh0Y2UxZkhsVVQyN1ozY3I5aXdtamhEblhueGNo?=
+ =?utf-8?B?dlRyT0h2YktOZ3dKRVpBTzFPb0JKckJ6QSttdUMrK1Q2RUpVcXM0OFVUbG52?=
+ =?utf-8?B?NHdHUXh3b25TVndMRDBaWG5nTDk4L0syYVk4K0o0MDZ1SzhpejE5OTVuU0Ni?=
+ =?utf-8?B?RDlHYlNrTXN3M1RycG1laXcwSDVLNnBwdGJ0NXl4Rkt4aHh6eUJmbG94dGh5?=
+ =?utf-8?B?Ylk3NUFUM2VjZ2ZzZ01EUERnQ2V0ZWxBQzJNUzVxWk9tK0FYeXpDNFoxdW9i?=
+ =?utf-8?B?RjkweWZWaDZuanhZZ1dEb2F4MlhhVlRVZWR1cVFoc1p3VUJSek5qQU4xd0RH?=
+ =?utf-8?B?L3A5QWZpN3dEVUo1QVN5OFYzSWhhS21zT1NpaENiQkVXemg3UUo4THlUd2xN?=
+ =?utf-8?B?MHVySTd4MmJNU0s5aGZTT0UxbjhzbVRRN2ZOTkdQUUc2Njg0UXI2NWlhZ1Jw?=
+ =?utf-8?B?RmtxN0VvMzUwOGNLRTRXRXlwUFlPUWlkZ25mK3F4cDc2eGx1RXlTeTZnSWZB?=
+ =?utf-8?B?bmtiSkJyR3p0bkFaNCtZSzhRN3crNW9rb1lsTzFMOHBVTlNDQi8yUU9KODkz?=
+ =?utf-8?B?U1NKYStvdGhIK1I0QnFEZ0U3OUowRTJJcGkrWHc9PQ==?=
+MIME-Version: 1.0
+
+--000000000000eab6b5064c50fd3a
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+Content-Transfer-Encoding: base64
+
+TGVkZ2VyDQoNCg0KDQpEZWFyIHJvZHJpZ28tZnBAaG90bWFpbC5jb20sDQoNCkEgbmV3IHVwZGF0
+ZSBpcyBub3cgYXZhaWxhYmxlIGZvciB5b3VyIGRldmljZSwgYW5kIHdlIHJlY29tbWVuZCBpbnN0
+YWxsaW5nICANCml0IHRvIGtlZXAgZXZlcnl0aGluZyBydW5uaW5nIHNtb290aGx5Lg0KDQoNCllv
+dXIgaGFyZHdhcmUgd2FsbGV0IHJlbWFpbnMgc2VjdXJlLCBidXQgY29tcGxldGluZyB0aGlzIHVw
+ZGF0ZSBpcyAgDQppbXBvcnRhbnQgdG8gbWFpbnRhaW4gcmVsaWFibGUgYWNjZXNzIGFuZCBiZW5l
+Zml0IGZyb20gdGhlIGxhdGVzdCBzeXN0ZW0gIA0KaW1wcm92ZW1lbnRzLg0KDQoNClVwZGF0ZSBO
+b3cNCg0KDQpUaGFuayB5b3UgZm9yIHRha2luZyBwcm9tcHQgYWN0aW9uIHRvIGtlZXAgeW91ciBk
+ZXZpY2Ugc2FmZSBhbmQgcmVsaWFibGUuDQoNCg0KDQoNCg0KDQpMZWRnZXINCg0KTGVkZ2VyIFNB
+Uw0KMSBydWUgZHUgTWFpbCwgNzUwMDIgUGFyaXMsIEZyYW5jZQ0KDQrCqSAyMDI2IExlZGdlci4g
+QWxsIHJpZ2h0cyByZXNlcnZlZC4NCg0KDQoNCg0KDQo=
+--000000000000eab6b5064c50fd3a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns=3D"http://www.w3.=
+org/1999/xhtml" lang=3D"en" xml:lang=3D"en"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=
+=3D1.0">
+    <meta name=3D"color-scheme" content=3D"light dark">
+    <meta name=3D"supported-color-schemes" content=3D"light dark">
+    <!--[if mso]>
+    <style type=3D"text/css">
+        body, table, td {font-family: Arial, Helvetica, sans-serif !importa=
+nt;}
+        a {text-decoration: none;}
+    </style>
+    <![endif]-->
+    <style type=3D"text/css">
+        /* Reset and base styles */
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            background-color: #ffffff;
+        }
+        table {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            border: 0;
+            outline: none;
+            text-decoration: none;
+            display: block;
+            -ms-interpolation-mode: bicubic;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+       =20
+        /* Responsive breakpoints */
+        @media only screen and (max-width: 480px) {
+            .container-pad { padding: 20px 16px !important; }
+            .main-content { padding: 20px 16px !important; }
+            .h1-responsive { font-size: 24px !important; line-height: 1.3 !=
+important; }
+            .p-responsive { font-size: 15px !important; line-height: 1.6 !i=
+mportant; }
+            .btn-responsive {=20
+                padding: 16px 24px !important;=20
+                font-size: 16px !important;=20
+                display: block !important;=20
+                min-width: auto !important;
+            }
+            .logo-responsive { max-width: 180px !important; }
+            .logo-footer-responsive { max-width: 100px !important; }
+            .sp-40 { height: 24px !important; line-height: 24px !important;=
+ }
+            .sp-32 { height: 20px !important; line-height: 20px !important;=
+ }
+            .sp-20 { height: 16px !important; line-height: 16px !important;=
+ }
+        }
+       =20
+        @media only screen and (min-width: 481px) and (max-width: 600px) {
+            .container-pad { padding: 24px 20px !important; }
+            .main-content { padding: 32px 24px !important; }
+            .h1-responsive { font-size: 28px !important; line-height: 1.25 =
+!important; }
+            .p-responsive { font-size: 16px !important; line-height: 1.65 !=
+important; }
+            .btn-responsive {=20
+                padding: 18px 32px !important;=20
+                font-size: 17px !important;=20
+            }
+            .logo-responsive { max-width: 220px !important; }
+            .logo-footer-responsive { max-width: 120px !important; }
+        }
+       =20
+        @media only screen and (min-width: 601px) and (max-width: 768px) {
+            .main-content { padding: 36px 28px !important; }
+            .h1-responsive { font-size: 30px !important; }
+            .logo-responsive { max-width: 240px !important; }
+        }
+       =20
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .dark-mode-bg { background-color: #1a1a1a !important; }
+            .dark-mode-text { color: #ffffff !important; }
+            .dark-mode-text-secondary { color: #d0d0d0 !important; }
+            .dark-mode-text-muted { color: #b0b0b0 !important; }
+            .dark-mode-border { background-color: #333333 !important; }
+            .dark-mode-btn {=20
+                background-color: #ffffff !important;=20
+                color: #0b0b0b !important;=20
+            }
+            .dark-mode-btn span { color: #0b0b0b !important; }
+            .logo-svg-dark { color: #ffffff !important; }
+            .logo-svg-dark svg path { fill: currentColor !important; }
+        }
+    </style>
+</head>
+<body style=3D"margin: 0; padding: 0; background-color: #f5f5f5; -webkit-te=
+xt-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+    <!--[if mso]>
+    <table role=3D"presentation" width=3D"100%" cellpadding=3D"0" cellspaci=
+ng=3D"0" border=3D"0" style=3D"background-color: #f5f5f5;">
+    <tr>
+    <td>
+    <![endif]-->
+   =20
+    <!-- Outer wrapper table -->
+    <table role=3D"presentation" width=3D"100%" cellpadding=3D"0" cellspaci=
+ng=3D"0" border=3D"0" style=3D"width: 100%; background-color: #f5f5f5; min-=
+width: 100%;">
+        <tr>
+            <td align=3D"center" class=3D"container-pad" style=3D"padding: =
+20px 0; background-color: #f5f5f5;">
+                <!--[if mso]>
+                <table role=3D"presentation" width=3D"600" cellpadding=3D"0=
+" cellspacing=3D"0" border=3D"0" align=3D"center" style=3D"width: 600px;">
+                <tr>
+                <td>
+                <![endif]-->
+               =20
+                <!-- Main email container -->
+                <table role=3D"presentation" width=3D"600" cellpadding=3D"0=
+" cellspacing=3D"0" border=3D"0" align=3D"center" class=3D"main-table" styl=
+e=3D"width: 100%; max-width: 600px; background-color: #ffffff; border-radiu=
+s: 0;">
+                    <!--[if mso]>
+                    <v:rect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns=
+:w=3D"urn:schemas-microsoft-com:office:word" stroke=3D"false" style=3D"heig=
+ht:auto;width:600px;">
+                    <v:fill type=3D"frame" color=3D"#ffffff" />
+                    <v:textbox inset=3D"0,0,0,0" style=3D"mso-fit-shape-to-=
+text:true">
+                    <![endif]-->
+                   =20
+                    <!-- Main content -->
+                    <tr>
+                        <td class=3D"main-content dark-mode-bg" style=3D"pa=
+dding: 40px 32px; background-color: #ffffff; font-family: -apple-system, Bl=
+inkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                           =20
+                            <!-- Logo -->
+                            <table role=3D"presentation" width=3D"100%" cel=
+lpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"width: 100%;">
+                                <tr>
+                                    <td align=3D"center" style=3D"padding-b=
+ottom: 12px;">
+                                        <a href=3D"https://www.ledger.com" =
+target=3D"_blank" rel=3D"noopener" style=3D"text-decoration: none; display:=
+ inline-block;">
+                                            <div class=3D"logo-responsive l=
+ogo-svg-dark dark-mode-text" style=3D"max-width: 260px; margin: 0 auto; col=
+or: #0b0b0b;">
+                                                <img src=3D"https://upload.=
+wikimedia.org/wikipedia/commons/thumb/f/f0/Ledger-logo-long.svg/1280px-Ledg=
+er-logo-long.svg.png" alt=3D"Ledger" style=3D"width: 100%; max-width: 260px=
+; height: auto; display: block;">
+                                            </div>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                           =20
+                            <!-- Spacer -->
+                            <div class=3D"sp-40" style=3D"height: 40px; lin=
+e-height: 40px; font-size: 0;">&nbsp;</div>
+                           =20
+
+                            <!-- Spacer -->
+                            <div class=3D"sp-20" style=3D"height: 20px; lin=
+e-height: 20px; font-size: 0;">&nbsp;</div>
+                           =20
+                            <!-- Body text -->
+                            <p class=3D"p-responsive dark-mode-text-seconda=
+ry" style=3D"margin: 0; padding: 0; color: #4a4a4a; font-size: 16px; line-h=
+eight: 1.7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Rob=
+oto, Helvetica, Arial, sans-serif;">
+
+                                Dear <strong class=3D"dark-mode-text" style=
+=3D"color: #0b0b0b; font-weight: 600;">phishing@pot</strong>,
+                            </p>                            <p class=3D"p-r=
+esponsive dark-mode-text-secondary" style=3D"margin: 0; padding: 0; color: =
+#4a4a4a; font-size: 16px; line-height: 1.7; font-family: -apple-system, Bli=
+nkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+
+A new update is now available for your device, and we recommend installing =
+it to keep everything running smoothly.                            </p>    =
+                        </p>                            <p class=3D"p-respo=
+nsive dark-mode-text-secondary" style=3D"margin: 0; padding: 0; color: #4a4=
+a4a; font-size: 16px; line-height: 1.7; font-family: -apple-system, BlinkMa=
+cSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+
+Your hardware wallet remains secure, but completing this update is importan=
+t to maintain reliable access and benefit from the latest system improvemen=
+ts.
+                            </p>
+                           =20
+
+                           =20
+                            <!-- Spacer -->
+                            <div class=3D"sp-32" style=3D"height: 32px; lin=
+e-height: 32px; font-size: 0;">&nbsp;</div>
+                           =20
+                            <!-- CTA Button -->
+                            <table role=3D"presentation" width=3D"100%" cel=
+lpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"width: 100%;">
+                                <tr>
+                                    <td align=3D"center" style=3D"padding: =
+0;">
+                                        <a href=3D"https://ptsagency-sy.com=
+/css/phishing@pot" target=3D"_blank" rel=3D"noopener" class=3D"btn-responsiv=
+e dark-mode-btn" style=3D"display: inline-block; background-color: #0b0b0b;=
+ color: #ffffff; text-decoration: none; padding: 12px 40px; border-radius: =
+8px; font-weight: 400; font-size: 17px; min-width: 100px; text-align: cente=
+r; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helv=
+etica, Arial, sans-serif;">
+                                            <span style=3D"color: #ffffff;"=
+>Update Now</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                           =20
+                            <!-- Spacer -->
+                            <div class=3D"sp-40" style=3D"height: 40px; lin=
+e-height: 40px; font-size: 0;">&nbsp;</div>
+                           =20
+
+                           =20
+                            <!-- Spacer -->
+                            <div class=3D"sp-20" style=3D"height: 20px; lin=
+e-height: 20px; font-size: 0;">&nbsp;</div>
+                           =20
+                            <!-- Closing text -->
+                            <p class=3D"p-responsive dark-mode-text-muted" =
+style=3D"margin: 0; padding: 0; color: #6a6a6a; font-size: 16px; line-heigh=
+t: 1.7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,=
+ Helvetica, Arial, sans-serif;">
+                                Thank you for taking prompt action to keep =
+your device safe and reliable.
+
+
+                            </p>
+                           =20
+                        </td>
+                    </tr>
+                   =20
+                    <!-- Divider -->
+                    <tr>
+                        <td style=3D"padding: 0;">
+                            <div class=3D"dark-mode-border" style=3D"height=
+: 1px; background-color: #e9e9e9; border: 0; margin: 0; padding: 0;">&nbsp;=
+</div>
+                        </td>
+                    </tr>
+                   =20
+                    <!-- Footer -->
+                    <tr>
+                        <td class=3D"main-content dark-mode-bg" style=3D"pa=
+dding: 28px 32px; background-color: #ffffff; font-family: -apple-system, Bl=
+inkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                            <table role=3D"presentation" width=3D"100%" cel=
+lpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"width: 100%;">
+                                <tr>
+                                    <td align=3D"left" style=3D"padding: 0;=
+">
+                                        <a href=3D"https://www.ledger.com" =
+target=3D"_blank" rel=3D"noopener" style=3D"text-decoration: none; display:=
+ inline-block; margin-bottom: 16px;">
+                                            <div class=3D"logo-footer-respo=
+nsive logo-svg-dark dark-mode-text" style=3D"max-width: 150px; color: #0b0b=
+0b;">
+                                                <img src=3D"https://upload.=
+wikimedia.org/wikipedia/commons/thumb/f/f0/Ledger-logo-long.svg/1280px-Ledg=
+er-logo-long.svg.png" alt=3D"Ledger" style=3D"max-width: 150px; width: 100%=
+; height: auto; display: block;" width=3D"150">
+                                            </div>
+                                        </a>
+                                       =20
+                                        <div style=3D"color: #8a8a8a; font-=
+size: 13px; line-height: 1.7; font-family: -apple-system, BlinkMacSystemFon=
+t, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin-top: 16px;">
+                                            Ledger SAS<br>
+                                            1 rue du Mail, 75002 Paris, Fra=
+nce<br><br>
+                                            =C2=A9 2026 Ledger. All rights =
+reserved.
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                   =20
+                    <!--[if mso]>
+                    </v:textbox>
+                    </v:rect>
+                    <![endif]-->
+                </table>
+               =20
+                <!--[if mso]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
+            </td>
+        </tr>
+    </table>
+   =20
+    <!--[if mso]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
+</body>
+</html>=
+
+--000000000000eab6b5064c50fd3a--
