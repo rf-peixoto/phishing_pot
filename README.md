@@ -1,4 +1,4 @@
-Phishing Pot is sponsored by:  _the-street.xyz_, a private forum for cybersecurity, threat intelligence, and cipherpunk culture.
+Due to the constant use of this repository by multi-billion dollar corporations that have never contributed, coupled with the significant maintenance effort, this is the last public commit of Phishing_Pot. New updates will only be shared with individual researchers.
 ---
 ![Phishing Pot](https://github.com/rf-peixoto/phishing_pot/blob/main/img/phishing_pot.png)
 
