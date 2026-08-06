@@ -1,4 +1,4 @@
-Due to the constant use of this repository by multi-billion dollar corporations that have never contributed, coupled with the significant maintenance effort, this is the last public commit of Phishing_Pot. New updates will only be shared with individual researchers.
+Due to the constant use of this repository by multi-billion dollar corporations that have never contributed, coupled with the significant maintenance effort, this is the last public commit of Phishing_Pot. New updates will only be shared with individual researchers. Total number of samples, including private ones: 10362.
 ---
 ![Phishing Pot](https://github.com/rf-peixoto/phishing_pot/blob/main/img/phishing_pot.png)
 
