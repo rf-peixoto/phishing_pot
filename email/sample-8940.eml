@@ -1,0 +1,350 @@
+Received: from DS0PR10MB7953.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Sun, 14 Jun 2026 20:33:44
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
+ b=jMVKZ7c552I9HvRn4WKAOUoikUAjs9N9ND5YLGeijnai0ilsi8cfuMBF7G9HESFCOQhMo4YYQo7IE/0ZbklIpgur3obwsI8M5rdAzewbkTmA5Mv+TSNAmFSFglqNAfVz9EEQpDe5nFkAboaazG1p/ioyfJ6puE/uNR8CeBqrmHNOpaa2IeTcUnFajNXIcQUePI/EFnqrudf4PudSrAAvIL+FkSBd8UFHgiT91vuaMz6cEJTiuXOd8oMDM/RgDyMIzjMzQPT1op1JP7/8OZuciodcXfHNNMwdi2d8OqPXewFpZhF1RPjA9qhUf4TBAEcMXXIOvmw7CRbE01+jY7tFqg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fgNNXamGx4XKXUnDkAqNO1LrKFRq4TCi/6JOnZlJjbc=;
+ b=ZPQac6orH8Oxc7RguiPwrn5NEdTWtC6HnNBJkEHpQ/LN4DF1QteTnPrK+khZtMtPGyOUgMgJQo66gUdwVYdS6h7349ekCmrfEMT7IsF2sVAQ3GuTm43KBoQoVmtS1w/LavWqoZUemYE3cNwoxf79cctzcIerk5QoRI+bhWcXaj2aa6aT5aMQ7rqO4fmmL/bZ1bx29zH7mDFrYBxuH7AprM6opkvwe3vZ9PioXNDC4qhOvhDiTCiFsIu5D05AXDO+EyYJxbuuPxfsACE1XeczZJR4Zgavjve1eVUqwrxmqS+7OF87Ecm2TIKp0144jadBIgu2U9fC+6IlSTiXuPXVCw==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.103.12.21) smtp.rcpttodomain=hotmail.com smtp.mailfrom=hotmail.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=hotmail.com;
+ dkim=fail (signature did not verify) header.d=hotmail.com; arc=fail (48)
+Received: from BL1PR13CA0022.namprd13.prod.outlook.com (2603:10b6:208:256::27)
+ by DS0PR10MB7953.namprd10.prod.outlook.com (2603:10b6:8:1a1::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.18; Sun, 14 Jun
+ 2026 20:33:42 +0000
+Received: from BL6PEPF0001AB4D.namprd04.prod.outlook.com
+ (2603:10b6:208:256:cafe::1) by BL1PR13CA0022.outlook.office365.com
+ (2603:10b6:208:256::27) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.9 via Frontend Transport; Sun, 14
+ Jun 2026 20:33:42 +0000
+Authentication-Results: spf=pass (sender IP is 52.103.12.21)
+ smtp.mailfrom=hotmail.com; dkim=fail (signature did not verify)
+ header.d=hotmail.com;dmarc=pass action=none
+ header.from=hotmail.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of hotmail.com designates
+ 52.103.12.21 as permitted sender) receiver=protection.outlook.com;
+ client-ip=52.103.12.21; helo=BN1PR04CU002.outbound.protection.outlook.com;
+ pr=C
+Received: from BN1PR04CU002.outbound.protection.outlook.com (52.103.12.21) by
+ BL6PEPF0001AB4D.mail.protection.outlook.com (10.167.242.71) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.8
+ via Frontend Transport; Sun, 14 Jun 2026 20:33:42 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:3F28FD2430696DA24C1F9F1910DEFA1B4C1A7C8B1D1AE2F6DE19606A9C589C5A;UpperCasedChecksum:1C78E001BEF119291CF1B312EF465581EA8C531CDB4C877ACC3A465CF63C2F99;SizeAsReceived:10030;Count:42
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wezIKREdP5a9nGY3k1XfhTGdOFzB+7nze6LBNoSmK+RJeLwg6/aO8m9f6eCZoP3hEriBAKES45rMfOnIAjhHIIAdzacWL5A8345FaSAY/QsAk+1AgDmWxajbb8yl2eGLWHO7szsrzK6XhqJ7pu6q2t70PiRuttFxU1Nv+2UQOAdupGyKNYBrl8+wG9soJHZyAbfw0+c/QIBlKNShwEWZzEeytJqelJYbZ/+ByJHB/F/TF6BniVXRXuzAVjKafPCtge4jo7ucHUZ4AlTMepxzyKTeqJ5YZqte4uw1slYw7BWi3ttsQL2SzRivLUhf1DMlaRp2k1a38n//ZjgH+DFf/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fgNNXamGx4XKXUnDkAqNO1LrKFRq4TCi/6JOnZlJjbc=;
+ b=nEwUgFbvsmeo/kg1oFHipTdNHnDqNn8O2wHWKye0bHGbwUlQizXEdJZcNMWKMz3TdzXuxismxj1xJt3obGY5JgD8R27g/6TLbvglyU3Y1dKNdMQUQe9ih+mqQFr4OJdKN4AxG3uo7r9+bBVQAvNE+G7N2iGlpA72MgFoLch5GOOnBQa4WKLr+0EpxEHxRCXPdPqQJciJ4SgpJ43Idj6ST3bG7pWKiJIGkEwMDZ1+7Av+HIdeSARcNDToQqq2H51ek0+OQ8hUmphI49++xZ3fC1PWzY95YhpZmbAuWA8p6HdpbWiVAKxtvqVpPG9ZW/y6J4NL4budj0bsRDHEhhdN1w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fgNNXamGx4XKXUnDkAqNO1LrKFRq4TCi/6JOnZlJjbc=;
+ b=X/l0uchoTKfrzk4ADso6Bj+maKyxlZS3nad5II6eqI7IqkFKSHU9Jb3pnA+5/0CQhLw+1SBCSLPyQnRyT6fQj7J0uT6eP/4n3DcgIT85fklf4e1bcY6gu32xQgAkmOJe03Ys045cZKkjFyiPM+Y3vC1T5MO3DgxdW/amz89ruhP6ljNj0xh8j2Tdb3jYUmCkqf3CrH86n0nzHfpoo3acwIf1GGI3XaHNi/q3DXLKtsNxvSVM11/r2OC1BuSWJrl0BeF9UTUZ3Oich0/17BJYEpQxYEmhvP9rNUQNr+N3f/SNDC3DcZ9vjUFj6MOH63/bdAHt2ZlUeBeJvDKtHCo5Bg==
+Received: from CY4PR1301MB2199.namprd13.prod.outlook.com
+ (2603:10b6:910:41::28) by DM6PR13MB3818.namprd13.prod.outlook.com
+ (2603:10b6:5:243::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.11; Sun, 14 Jun
+ 2026 20:33:40 +0000
+Received: from CY4PR1301MB2199.namprd13.prod.outlook.com
+ ([fe80::a94d:cfb8:91cf:c1c7]) by CY4PR1301MB2199.namprd13.prod.outlook.com
+ ([fe80::a94d:cfb8:91cf:c1c7%6]) with mapi id 15.21.0139.006; Sun, 14 Jun 2026
+ 20:33:40 +0000
+X-Rpcampaign: 9M3o7btHSySNbI82O3dYdm9VCa
+Subject: Votre abonnement Prime Video a expiré
+X-Feedback-ID: CIH-h-pcagpvdk:WOP-h-vheiqmv:16N-h-bQ9WcK:createSEND
+To: phishing@pot <phishing@pot>
+CC: phishing@pot <phishing@pot>
+Content-Type: multipart/mixed; boundary="=_ALT_20260603544000_ABC123XYZ"
+From: "Expiration de Prime Video" <helpfulcser08@hotmail.com>
+Thread-Index: AQHYJxe7QvAzAaLuMU2LdT2HNtE1GQ==
+References: <JSCPKUV2EBT2JE2RFBWZOOWBQI9YG2XXF4JLI3@Y5VNWSNPSA3YH.m4bl.org>
+Thread-Topic: Herstel schade aan jullie serre
+Message-ID: <CY4PR1301MB21994085C33AFE63641681BBAEE72@CY4PR1301MB2199.namprd13.prod.outlook.com>
+In-Reply-To: <JSCPKUV2EBT2JE2RFBWZOOWBQI9YG2XXF4JLI3@Y5VNWSNPSA3YH.m4bl.org>
+Date: Sun,14 Jun 2026 21:30:16 +0100
+Feedback-ID: 8949631:activecampaign
+X-ClientProxiedBy: MN2PR16CA0060.namprd16.prod.outlook.com
+ (2603:10b6:208:234::29) To CY4PR1301MB2199.namprd13.prod.outlook.com
+ (2603:10b6:910:41::28)
+Return-Path: helpfulcser08@hotmail.com
+X-Microsoft-Original-Message-ID: <CIHL8JNRT0DI6OQU665PGFB0QR4E010O46P1T9@CIHNV76A6DVFF.VJOU0I5.m4bl.org>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-TrafficTypeDiagnostic: CY4PR1301MB2199:EE_|DM6PR13MB3818:EE_|BL6PEPF0001AB4D:EE_|DS0PR10MB7953:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3144d505-9c99-4d3e-227c-08deca5439b5
+X-MS-Exchange-SLBlob-MailProps: AlkLxVwsndm0VyxXF8Qt58maZsxVls0a7g2wbSWccg3NpoKK7EOLClSnekGdlv7HKwS60f9PchUrF3FWtwBCK1NYj/Q9bQEYjwywG9UEqwK0rsQsA1WpjVHG6RJNtu9qGpX0wZ9aMzWNn672UwfPtJqhSLQT43AWe1jLA+FDkjyFaXLFrhH5WS8K1qbzYjViP1cSC0l1yrEDcpprUK4LF+akwUGXc9OMAJ/+HyOOkz+M/UyZN+UgxgG5olNuVmVQdL2hdRUxH/lSyca3RgUkvbI/p6G0xFEs4NfriYa2hRH8hEj87HbFtKLq7DhHjLkjcSCJS63jibLmK+rVidg37ytOCUhXuEFo/BQLXhPeCcMLZVpQU/SSDRO6BMIKja4QbZqftdbNb5leQNERohXeaB3XM1Yjcekb3+8b6qg1/L5w/3KDhdDgNiFMbENmv1g9+hReyk/3pFHRuPIipPu/xlrwTIDamJKo+zg+5I3aIoAT5rV6D7PofjvBpgAH1g9ZgI8hUIn2e/NY3EWvZqWmlmbNjoIKr92KOcZ3idJdPxn6WrZxgzX/az7tgO6FgQBWECtDtwQP2nDNAE9DXZLG2ri9k+bqtNJhIaO6Q0dI200guUK7pbPTJAIb6TvDg2ILjHsEkv4juIdhoVFxpY4We7KJeb0sPpzwQbdHLDOZrtr3N8qXO/R4PAAXriqyQoc6WLYQBOpr+LAcyW874Y92A2jBu4rI0HwNjMK1ZtoSzANzCOMtmGFFSoP2qt4Kd2iWHQa7/X8Ql/AJp6DxtVgvgpu9uYszYZIR
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:14566002|9000799056|20031999006|9400799043|39105399006|5072599009|19110799012|12050799012|1680799066|2604031031799003|12121999013|23021999003|15081099003|8060799015|15080799012|5139299004|6092099016|9112599006|16065399006|23121099006|3430499032|3420499032|440099028|3412199025|40105399003|20055399003;
+X-Microsoft-Antispam-Message-Info-Original: =?us-ascii?Q?G7OeD+v1AAS8jy/608vAM3trRAWYO6sCesd9SQ+or7jszTYMD3Jzl7MAZ84Q?=
+ =?us-ascii?Q?JCbZiDjQ22AIUxdkufJ2Q56Kt8JC4jVlXegJAZ9YCav4XCq/9wxt3Mue06E0?=
+ =?us-ascii?Q?OAjONmPANCDtFxSe3cFHyz09HL5z7hLqnMGAJPhr1+bbxH3+vZnuG4avRFkN?=
+ =?us-ascii?Q?zmyp9G79NyPTHQaO0hQVoods8TBZsDs4i3jDdfzKNE0oQFllFHLTkNu8/T4N?=
+ =?us-ascii?Q?es4VtTImXHESxXqEFU7bC6GChACWR5K+9airt7GWp4LAA+ZkK7L6E91KTQDG?=
+ =?us-ascii?Q?WNiveDA5XcIzo6B4cqC3TZXK7T5CwVlVTH0hIv9ryQJ7mDgQt3Ko8RIRj1b7?=
+ =?us-ascii?Q?WJIfa5nrJtN6nQUJ5LCeLDI+qPr8XsBug8yG/5fSPwennjEtioZ8QgHHtb/8?=
+ =?us-ascii?Q?Y7ggs+SBL7d60xS8uru9tewbHsv4JLJ+2AIYQtGiKGkxpz+A8qdgpj+kr8BS?=
+ =?us-ascii?Q?YgFvHr3MfGEpLDvEEgZ+/aZ9wGvxQL/cKHm9iIGp3pXzetjFlypwbCP5NDAR?=
+ =?us-ascii?Q?SHXPJDLoPZ3jJwGsuBQJBRm0TT57C3TRM3h/22BMdlsl8YwHo3h6WUXu3Ul/?=
+ =?us-ascii?Q?3Mao7IASWgeMJfPD8Kxo+VgMQnD+wEV5eOlzA4yWNbXQqZ88yzfcAUB2x/g8?=
+ =?us-ascii?Q?/HOekGMhla628zNbFHknmiXrJhhV1zj86s6lawtOgeI91UklcIzYzGbssDBW?=
+ =?us-ascii?Q?39tmk5w/Kio9Zvj3w/MW/z0BzpIvVyKC7W0wLwHFnNCS3cK7EYqllkrdBN1r?=
+ =?us-ascii?Q?wy9JUQ8dh77OUp32urH/aQrm6nypWFyHYAwjbWj9lX0gZVFeHK8K1zOkO55P?=
+ =?us-ascii?Q?IVgQ2q/K2DaOyXxOg6AsZxZkUxC8P56FSwoO+N2UIOmdXV4HfggZuUxi2hzJ?=
+ =?us-ascii?Q?LclEL/e0ddjq8Y+X2pnywaXQKOOATLSBY2cfDEu+YNmL1U2UCf+2Owfn7Lb2?=
+ =?us-ascii?Q?cvHR2SV9JBpyt6cIH0ioLL8fmO6n6DtyUZkTRl/8aAIh9bv0rsN9yvQslaff?=
+ =?us-ascii?Q?noHP77iSOauTjE/UfSjMNCfOhZUXRN/PyDMoWoV2/km28y8OZJPNqTscFWz1?=
+ =?us-ascii?Q?j1EPd/kWHnBhAr5Xez07IVWvjXXHlyS3cw+dIhEjrkXDMNr59vKw0d4ylhT6?=
+ =?us-ascii?Q?1S+v4OvRCTCGILlD+vJnW6hF8A3G4MWUzeiy26+5MkJuExglxs6j8e6+2S6c?=
+ =?us-ascii?Q?I7J3kVPM1r91zG18NecRDNNTIul//pZeTUCuQg=3D=3D?=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR13MB3818
+X-IncomingHeaderCount: 42
+X-MS-Exchange-Organization-ExpirationStartTime: 14 Jun 2026 20:33:42.7424
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 3144d505-9c99-4d3e-227c-08deca5439b5
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: BL6PEPF0001AB4D.namprd04.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: BL6PEPF0001AB4D.namprd04.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: BL6PEPF0001AB4D.namprd04.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 6/14/2026 7:35:19 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 540d804c-cb35-416d-8033-08deca543805
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.103.12.21
+X-SID-PRA: HELPFULCSER08@HOTMAIL.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|3151999006|58200799025|5149299006|1680799066|5099299006|5402599027|10300799038|9400799043|60050799009|20103052909095|39102599003|4052599003|32080799009|5139299004|47200799027|9000799056|970799063|5082599009|13020799009|6092099016|34130799006|19300799024|2700799033|34101999003|1701999012|440099028|3412199025|30041999003|14045499003|1380799030|1370799030|1360799030;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jun 2026 20:33:42.6105
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3144d505-9c99-4d3e-227c-08deca5439b5
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB4D.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB7953
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.8779901
+X-MS-Exchange-Processed-By-BccFoldering: 15.21.0113.000
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(920221120095)(90000117)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9560006)(10180024)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?eC8vWUVPRURBLzRXZmV4Q2ZrVlRFOHM4bzBjSUw5S0VITTRyazNqNUVhS3Rm?=
+ =?utf-8?B?ajQrQmtwUnZNeGhPYk9ZbEJJcVBYVEFkay92SWVVeHgwaUR0eDluZkJrdzRX?=
+ =?utf-8?B?SFBZVmQyYURJdmVtZFpkS2M1ajJUYjduOGc4OXBydG9JUENKU09MRjFkRTF5?=
+ =?utf-8?B?QThBNlZoUDN6Y1J0cllvNW83c3BIWmVkUlFLZVVOb0JWRjZhNDBIZjhXZDV0?=
+ =?utf-8?B?SDZLd2V1K3JzV3FZTys2MlIzS0ZjWTRuZEZYOTJJbHU3WVhRbU1XelQ2dUk1?=
+ =?utf-8?B?cmNVai9yQngwUGp5U2FSSWlEK05zTXgvNFlwUU1mdStObmlSMk5DdTMvYk5V?=
+ =?utf-8?B?c0Z5RkNtZVptWVhSZU1PUkVZUzNKY1ByU1h3aVhCckxjNXkyaWpFTkt5S0pR?=
+ =?utf-8?B?a0tRMG5DWlZTWEdBejRYVm9BcHlPc1BCd2ZLQ2cwRDhsYjBxRGxTT2FMcnQv?=
+ =?utf-8?B?MS84THNYZ0syVGhydk12WkE3SE12N001cHhFZ09OR3ZWcUxpSTh5MWM0Vk9D?=
+ =?utf-8?B?MjhnS29tODhYRVd6Y2Zvb3p0VW9zNU9ZbFZjSVorVjROS0s0UWU1VjhYZWVV?=
+ =?utf-8?B?VUNuSVRqVlUrelZDR1F3WkorYlVLcllyNTZxcGxkSFpoYXhMT2RuOVZHRlBa?=
+ =?utf-8?B?b3AvLzhrOEpGemFsUXlORFFYbzRydVY2Z3J6dEVYdndib0U1UmNjY0JJNjlL?=
+ =?utf-8?B?UG1rQXdLWjZtS3NESlRxYTlyQlE0N1lXZ0lFYVg1L0k3Zi9LUDlVbklBbVRR?=
+ =?utf-8?B?ajM2aTlTN2s1bmtCaFJBbU00QjJNUXp2a2lGM01lSC9NNkZNZE5VWTJNNXhk?=
+ =?utf-8?B?T2lZSWVLak1GbndIb0JpV1dRemVQK1BYQWhSMzF3NmErWXFOV2x1eFhsV0tC?=
+ =?utf-8?B?dFZvZWc2ZUxob1ZjWG92QWhrWFQ0OTdKVmlrWG5wL2dSZ3N1aGMvOENLVHpl?=
+ =?utf-8?B?RDBLSzd5UmVQcUJTWGMzbVFseEN5OG15cGlQWDJsZVE1akRjblYrbi9GbHJP?=
+ =?utf-8?B?L0REUUFQSEtMVG5XbDZxbVZhdWJoNlAyZkNjZGQrUkdwY3JWbFFCS05ISG84?=
+ =?utf-8?B?cWN6azRsOGJVT2tQY1VlY0FnQ2FwTGZUZWZkczJBZmZNSFBlYkJOY3R0ZkZt?=
+ =?utf-8?B?WEllenhIVFlhRE5FRCtSdHN1ekY4T2hsMVdsZWZaNTlqVmdnVVkvb21pQW4w?=
+ =?utf-8?B?S1FRd3VuMkJpc0hWcUpWVGtOV2JUcFZ3Q0pySTRuVDU1UmZCU0loUTJQNEF5?=
+ =?utf-8?B?M295aEFPem9KMVkrR0ptbEQyaTdSMXlrVXpKVXM3TnVSbHVJc2hFaWZMNjlh?=
+ =?utf-8?B?anFTMk5CQ0Rua1gyVFIrUldGSVhZODUvQTFVQmFEa2RMcU5jRVI2TE9ldXFu?=
+ =?utf-8?B?R0k1QzJwcjVpek9TMkF6Umw3VEdjR3d5N0F5bDZiZW5weUJpK1ZRRUZnc0tR?=
+ =?utf-8?B?UCtvc2lOdWwzNTNTd0xqYUxOajlrL2xzQW1nY3ZpdHUvY1dBR0E1dGdjYjND?=
+ =?utf-8?B?REZGRG9qeWdGOFAyK1F2dHBxRGF2d1RlaFdIeVVCdk1FRXBhelVoejVkLzJD?=
+ =?utf-8?B?VXljRDU4M2RiMUtYT09SN29kc0ZLUFVrb1BVMFVrNkdvTFdMVG5jVlZ2L2Rp?=
+ =?utf-8?B?RjE0eGFZbEYrdVA4dGF2UWlIZzBydE9pUi9IZUdkNUVvTHRMNGdidkpOaDVO?=
+ =?utf-8?B?Tm5PYWp0RVgxeERFMzZYM2dnTmhxQlZLWUNnRlVJbVVFUWRoUXVGVDE0RGF0?=
+ =?utf-8?B?a1ZvSmIzNlhxZkg1ajlCMlpmV0JINFluYnhnM2hqOGptc3YzTUZ1NUR2SXJE?=
+ =?utf-8?B?b1RiNjBoM2FObnhNc1RaaXZtU0hvdzVoak01cURZT0hzVHF5UndoWmgxMkpF?=
+ =?utf-8?B?dXc1dHBmbERYUlVNbHJaWklGQTZzck12TEo5T2cwUG5SZmZGR21ua3NPak1O?=
+ =?utf-8?B?SVhoRHEzbXNiL0RKcFRuOEhWZERDd0pHYXNBOFQyUjZwc1ZVdGs4YzMrL3JU?=
+ =?utf-8?B?TEJlUHJydkV1NWVZM0daMW9NeU9LN3puV0R1OHhZcFE2MW82YUw1N2ptZ0ZQ?=
+ =?utf-8?B?SUVZbVh1eTFCL3hYUmZ5V2JaVTA3QXo1aGJIa0Y1UnJBMFh6cXFvbDEvdXdL?=
+ =?utf-8?B?TEZKeXFXQkFoKzB5NnpUc1VRNmQrNGg2Yk5tN2Jnc0RqeGlPY09uNUdkQ2FW?=
+ =?utf-8?B?R283amxHNXJRL0I0S2R6T0M2MHhGbTNyS0w3UlhxNW9ZWllsM1E4ZFVPQ0RJ?=
+ =?utf-8?B?dUoydTZhaWlUd25PbURFajk0OVdvd0d4ZVhJa0tDWUtxSHVDbzZ3T08yTWF2?=
+ =?utf-8?B?YWlGdURhbHoxNkdMVzlPZEtXQ1JkU2VHZ0p3eXJLU1BQK1pjc1VhY29INSt1?=
+ =?utf-8?B?Z2VSQS9DZ215N3UzQTNCZHVRK3ZzMTJIdWs2V005SjRGTnZsanRVWDByclF1?=
+ =?utf-8?B?K2ZLRitFM2lUMnZxdThUN0psS1lvcnM5SDZ2OXdtRWk2R1cvTkJQTDlUTnZC?=
+ =?utf-8?B?am9CWTUvNmd2aWlPeUdqS2EyUlJxRkZDOTcyUFd4R3hpd1crSHAyc3dMT1l1?=
+ =?utf-8?B?UWZESW5aYUcrdWlFaHpOMm5JZml3eWlIb3FpdlNPdjkxazFhS2VZYzUybS9N?=
+ =?utf-8?B?SEluSHpnRnFYV09DOXhpNHVGNFhxTXpBcEFyM01pNzNYR3hWTFc0d3QrRVdo?=
+ =?utf-8?B?anFXWUxYOXNySFNBSkpLUVZzL1p3WHl3THdtNWtJOFBDbDdlNURDNzlZeSty?=
+ =?utf-8?B?bk02Mm0rMWYyN2g5a1Z5c1dtb2xPU3lBOXM0ZHNtVDVRT25EeHhDNUVkRmNC?=
+ =?utf-8?B?NFErNW5qaTdpNGJpUXArdk1jTTJLRjhnT2g5YkRyVkxXdnRodWRUbkFtTS91?=
+ =?utf-8?B?Z2lWbGJtdUdNZUQrdjhpajFiSisyMlRlTVRqWm9mczJIZWMzNlNMZERTdkJC?=
+ =?utf-8?B?bi9mczFBd1F5OHhickxVS1pSUjZ5akJsQ1FOWkxkTVp1WWU2SVpheHlXa0F5?=
+ =?utf-8?B?U25KSjFOeVB5cjFMRURWRFN5Nk9xVlJLK21mZ0p0RytadzNYbTZXTTM5Vkk1?=
+ =?utf-8?B?ZVVaYVAwejlhZ1cvcHBOWXRZR3ZxRDBybThMWGpjRWRyM2EzYWJvazBlWndy?=
+ =?utf-8?B?RHVxcXhnN2JRQ0x1WXdhM2lrb1YzbU1JVmVIdEViMDBTblo2QWI4SVo4RXkz?=
+ =?utf-8?B?bjhmbEVVb256MHd0dHlhaHJmbHJzSGJFczF2TnpKUlprZ3prWTZ6ZUd3WlFz?=
+ =?utf-8?B?bjlEdk5KVWdhVkI5TlBxZ3N3VnN4SHlxeG43Y1JXazQrQVVnTlJ5YTNtVUZX?=
+ =?utf-8?B?MFlDa2ExRmJYdWZvK2luWm5xS2FsSlBhVE55VGZXL3laYnZoVGt4eVJwOVAw?=
+ =?utf-8?B?d1UrbnlsSVMvZEZ3S2k3N0U1V3NBMnBGUkJUS0RUa280dUxiSTdFanoyQnFW?=
+ =?utf-8?B?VEJ1dnNLdG1UWkxmQm5laUZsSnpuYkJlbUVJdFlxdUwzNFoyNFJYZldERHQ0?=
+ =?utf-8?B?ODA5NWQ0RHcxNnI4RERWWDJqeEdKVFM3MjE3clZ4NUFPKzg2VHBaeFZ3ZUFh?=
+ =?utf-8?B?RXI1NnNvb1hUQTVCS0NETXV4d09FMkRtWGhuVEdncVFnT0FRPT0=?=
+MIME-Version: 1.0
+
+--=_ALT_20260603544000_ABC123XYZ
+Content-Type: multipart/encrypted; boundary="=_ALT_6Dn_VJOU0I5"
+
+--=_ALT_6Dn_VJOU0I5
+Content-Type: text/html; charset="UTF-8"
+
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<center><a href="https://a1838e0d6d53a4730aad25fd7b.content-storage-download.googleapis.com:0000000000000000000000000000000000443/4PAzk84lTjHtoKH7PUt9f8pR8/../818554123d7ec229db5b#cl/261583_smd/1020/8502190/332/263/6a2ee9e7500cba7f2bbbfc7b">
+<img src="https://5c4f166ef7efe7473ddc71f37.content-storage-download.googleapis.com:0000000000000000000000000000000000443/dCjv4BPkyZxKYn5rGNhbODpCW/../08f91f0ebd821c7#https://m4bl.org">
+  </a></center>
+<center><br>
+  <a href="https://a1838e0d6d53a4730aad25fd7b.content-storage-download.googleapis.com:0000000000000000000000000000000000443/4PAzk84lTjHtoKH7PUt9f8pR8/../818554123d7ec229db5b#un/261583_smd/1020/8502190/332/263/6a2ee9e7500cba7f2bbbfc7b">
+    <img src="https://a1838e0d6d53a4730aad25fd7b.content-storage-download.googleapis.com:0000000000000000000000000000000000443/X9d7roNNc9kirAVvQJGVdxXdE/../45a431eefc64f7c#https://m4bl.org">
+  </a>
+</center>
+<SECTION style="margin:699px;height:1px;"></SECTION>
+<tr>
+<td></td>
+</tr>
+</table>
+<head>
+
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:m="sny.tv/office/2004/12/omml" xmlns="sny.tv/TR/REC-html40"><head>  <meta name="Generator" content="Microsoft Word 15 (filtered medium)"><!--[if !mso]><style>v:* {behavior:url(#default#VML);} o:* {behavior:url(#default#VML);} w:* {behavior:url(#default#VML);} .shape {behavior:url(#default#VML);} </style><![endif]--><style><!-- /* Font Definitions */ @font-face {font-family:"Cambria Math"; panose-1:2 4 5 3 5 4 6 3 2 4;} @font-face {font-family:Calibri; panose-1:2 15 5 2 2 2 4 3 2 4;} @font-face {font-family:Verdana; panose-1:2 11 6 4 3 5 4 4 2 4;} @font-face {font-family:"Segoe UI Emoji"; panose-1:2 11 5 2 4 2 4 2 2 3;} @font-face {font-family:"Segoe UI"; panose-1:2 11 5 2 4 2 4 2 2 3;} /* Style Definitions */ sny.tv, sny.tv, sny.tv {margin:0cm; font-size:sny.tv; font-family:"Calibri",sans-serif; mso-ligatures:standardcontextual; mso-fareast-language:EN-US;} a:link, sny.tv {mso-style-priority:99; color:#0563C1; text-decoration:underline;} sny.tv {mso-style-type:personal-compose; font-family:"Calibri",sans-serif; color:windowtext;} .MsoChpDefault {mso-style-type:export-only; font-size:sny.tv; font-family:"Calibri",sans-serif; mso-fareast-language:EN-US;} @page WordSection1 {size:sny.tv sny.tv; margin:sny.tv sny.tv sny.tv sny.tv;} sny.tv {page:WordSection1;} --></style><!--[if gte mso 9]><xml> <o:shapedefaults v:ext="edit" spidmax="1026" /> </xml><![endif]--><!--[if gte mso 9]><xml> <o:shapelayout v:ext="edit"> <o:idmap v:ext="edit" data="1" /> </o:shapelayout></xml><![endif]--></head><body lang="PL" link="#0563C1" vlink="#954F72" style="word-wrap:break-word"><div class="WordSection1"><p class="MsoNormal"><span lang="EN-US" style="font-size:sny.tv;font-family:&quot;Segoe UI&quot;,sans-serif">Good morning team! <br>We’re all set and waiting for your requests today. If you have any freight ready to move, just let us know and we’ll get to work on the best options for you. Wishing you a productive working day!</span><span lang="EN-US" style="font-family:&quot;Segoe UI Emoji&quot;,sans-serif">😊</span><span lang="EN-US" style="font-size:sny.tv;font-family:&quot;Segoe UI&quot;,sans-serif"><o:p></o:p></span></p><p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p><div><p class="MsoNormal"><span lang="EN-US" style="mso-ligatures:none;mso-fareast-language:PL">Best regards,<o:p></o:p></span></p><table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="550" style="width:sny.tv;border-collapse:collapse"><tr><td style="padding:0cm 0cm 0cm 0cm"><table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="margin-left:.1pt;border-collapse:collapse"><tr><td valign="top" style="border:none;border-right:solid #BE2E21 sny.tv;padding:0cm sny.tv 0cm 0cm"><table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="margin-left:.1pt;border-collapse:collapse"><tr><td style="padding:0cm 0cm 0cm 0cm"><p class="MsoNormal" style="margin:.1pt;line-height:sny.tv"><a href="sny.tv/" target="_blank"><span style="color:windowtext;mso-ligatures:none;mso-fareast-language:PL;text-decoration:none"><img border="0" width="145" height="43" style="width:sny.tv;height:.4479in" id="Obraz_x0020_8" src="cid:sny.tv@sny.tv"></span></a><span style="font-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-ligatures:none;mso-fareast-language:PL"><br></span><span style="font-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#BE2E21;mso-ligatures:none;mso-fareast-language:PL">Vitalii Stepovyi</span><span style="font-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-ligatures:none;mso-fareast-language:PL"> <o:p></o:p></span></p></td></tr><tr><td style="padding:sny.tv 0cm 0cm 0cm"><p class="MsoNormal" style="margin:.1pt;line-height:sny.tv"><span style="font-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-ligatures:none;mso-fareast-language:PL">Sales manager<o:p></o:p></span></p></td></tr><tr><td style="padding:sny.tv 0cm 0cm 0cm"><p class="MsoNormal" style="margin:.1pt;line-height:sny.tv"><span style="font-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-ligatures:none;mso-fareast-language:PL">Speedixa Sp. z o.o.<o:p></o:p></span></p></td></tr><tr><td style="padding:sny.tv 0cm 0cm 0cm"></td></tr></table></td><td style="padding:0cm 0cm 0cm sny.tv"><table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" style="margin-left:.1pt;border-collapse:collapse"><tr><td style="padding:0cm 0cm 0cm 0cm"><p class="MsoNormal" style="margin:.1pt;line-height:sny.tv"><b><span style="font-size:sny.tv;font-family:&quot;Segoe UI Emoji&quot;,sans-serif;color:#BE2E21;mso-ligatures:none;mso-fareast-language:PL">📞</span></b><b><span style="font-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#BE2E21;mso-ligatures:none;mso-fareast-language:PL">&nbsp;</span></b><span style="font-size:sny.tv;mso-ligatures:none;mso-fareast-language:PL">+48 577 012 723</span><span style="font-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-ligatures:none;mso-fareast-language:PL"><br></span><b><span style="font-size:sny.tv;font-family:&quot;Segoe UI Emoji&quot;,sans-serif;color:#BE2E21;mso-ligatures:none;mso-fareast-language:PL">🏢</span></b><b><span style="font-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#BE2E21;mso-ligatures:none;mso-fareast-language:PL">&nbsp;</span></b><span style="font-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-ligatures:none;mso-fareast-language:PL"> </span><span style="font-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-ligatures:none;mso-fareast-language:PL">Kawia 23, 42-202 Częstochowa</span><span style="font-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-ligatures:none;mso-fareast-language:PL"><o:p></o:p></span></p></td></tr><tr><td style="padding:sny.tv 0cm 0cm 0cm"><p class="MsoNormal" style="margin:.1pt;line-height:sny.tv"><span style="font-family:&quot;Segoe UI Emoji&quot;,sans-serif;mso-ligatures:none;mso-fareast-language:PL">📧</span><span style="mso-ligatures:none;mso-fareast-language:PL"> </span><a href="mailto:info@sny.tv"><span style="color:blue;mso-ligatures:none;mso-fareast-language:PL">info@sny.tv</span></a><span style="mso-ligatures:none;mso-fareast-language:PL"><br><br></span><span style="font-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-ligatures:none;mso-fareast-language:PL"><o:p></o:p></span></p></td></tr></table></td></tr></table></td></tr></table></div><p class="MsoNormal"><span lang="EN-US"><o:p>&nbsp;</o:p></span></p></div></body></html>
+
+--=_ALT_6Dn_VJOU0I5
+Content-Type: application/xml
+Content-Transfer-Encoding: quoted-printable
+Content-ID: <data-record>
+Content-Disposition: inline; filename="Data_Record.xml"
+
+<html xmlns:v=3Drn:schemas-microsoft-com:vml" xmlns:o=3Drn:schemas-microsof=
+t-com:office:office" xmlns:w=3Drn:schemas-microsoft-com:office:word" xmlns:=
+m=3Dny.tv/office/2004/12/omml" xmlns=3Dny.tv/TR/REC-html40"><head>  <meta n=
+ame=3Denerator" content=3Dicrosoft Word 15 (filtered medium)"><!--[if !mso]=
+><style>v:* {behavior:url(#default#VML);} o:* {behavior:url(#default#VML);}=
+ w:* {behavior:url(#default#VML);} .shape {behavior:url(#default#VML);} </s=
+tyle><![endif]--><style><!-- /* Font Definitions */ @font-face {font-family=
+:"Cambria Math"; panose-1:2 4 5 3 5 4 6 3 2 4;} @font-face {font-family:Cal=
+ibri; panose-1:2 15 5 2 2 2 4 3 2 4;} @font-face {font-family:Verdana; pano=
+se-1:2 11 6 4 3 5 4 4 2 4;} @font-face {font-family:"Segoe UI Emoji"; panos=
+e-1:2 11 5 2 4 2 4 2 2 3;} @font-face {font-family:"Segoe UI"; panose-1:2 1=
+1 5 2 4 2 4 2 2 3;} /* Style Definitions */ sny.tv, sny.tv, sny.tv {margin:=
+0cm; font-size:sny.tv; font-family:"Calibri",sans-serif; mso-ligatures:stan=
+dardcontextual; mso-fareast-language:EN-US;} a:link, sny.tv {mso-style-prio=
+rity:99; color:#0563C1; text-decoration:underline;} sny.tv {mso-style-type:=
+personal-compose; font-family:"Calibri",sans-serif; color:windowtext;} .Mso=
+ChpDefault {mso-style-type:export-only; font-size:sny.tv; font-family:"Cali=
+bri",sans-serif; mso-fareast-language:EN-US;} @page WordSection1 {size:sny.=
+tv sny.tv; margin:sny.tv sny.tv sny.tv sny.tv;} sny.tv {page:WordSection1;}=
+ --></style><!--[if gte mso 9]><xml> <o:shapedefaults v:ext=3Ddit" spidmax=
+=3D026" /> </xml><![endif]--><!--[if gte mso 9]><xml> <o:shapelayout v:ext=
+=3Ddit"> <o:idmap v:ext=3Ddit" data=3D" /> </o:shapelayout></xml><![endif]-=
+-></head><body lang=3DL" link=3D0563C1" vlink=3D954F72" style=3Dord-wrap:br=
+eak-word"><div class=3DordSection1"><p class=3DsoNormal"><span lang=3DN-US"=
+ style=3Dont-size:sny.tv;font-family:&quot;Segoe UI&quot;,sans-serif">Good =
+morning team! <br>We=E2=80=99re all set and waiting for your requests today=
+. If you have any freight ready to move, just let us know and we=E2=80=99ll=
+ get to work on the best options for you. Wishing you a productive working =
+day!</span><span lang=3DN-US" style=3Dont-family:&quot;Segoe UI Emoji&quot;=
+,sans-serif">=F0=9F=98=8A</span><span lang=3DN-US" style=3Dont-size:sny.tv;=
+font-family:&quot;Segoe UI&quot;,sans-serif"><o:p></o:p></span></p><p class=
+=3DsoNormal"><span lang=3DN-US"><o:p>&nbsp;</o:p></span></p><div><p class=
+=3DsoNormal"><span lang=3DN-US" style=3Dso-ligatures:none;mso-fareast-langu=
+age:PL">Best regards,<o:p></o:p></span></p><table class=3DsoNormalTable" bo=
+rder=3D" cellspacing=3D" cellpadding=3D" width=3D50" style=3Didth:sny.tv;bo=
+rder-collapse:collapse"><tr><td style=3Dadding:0cm 0cm 0cm 0cm"><table clas=
+s=3DsoNormalTable" border=3D" cellspacing=3D" cellpadding=3D" style=3Dargin=
+-left:.1pt;border-collapse:collapse"><tr><td valign=3Dop" style=3Dorder:non=
+e;border-right:solid #BE2E21 sny.tv;padding:0cm sny.tv 0cm 0cm"><table clas=
+s=3DsoNormalTable" border=3D" cellspacing=3D" cellpadding=3D" style=3Dargin=
+-left:.1pt;border-collapse:collapse"><tr><td style=3Dadding:0cm 0cm 0cm 0cm=
+"><p class=3DsoNormal" style=3Dargin:.1pt;line-height:sny.tv"><a href=3Dny.=
+tv/" target=3Dblank"><span style=3Dolor:windowtext;mso-ligatures:none;mso-f=
+areast-language:PL;text-decoration:none"><img border=3D" width=3D45" height=
+=3D3" style=3Didth:sny.tv;height:.4479in" id=3Dbraz_x0020_8" src=3Did:sny.t=
+v@sny.tv"></span></a><span style=3Dont-size:sny.tv;font-family:&quot;Verdan=
+a&quot;,sans-serif;color:#000001;mso-ligatures:none;mso-fareast-language:PL=
+"><br></span><span style=3Dont-size:sny.tv;font-family:&quot;Verdana&quot;,=
+sans-serif;color:#BE2E21;mso-ligatures:none;mso-fareast-language:PL">Vitali=
+i Stepovyi</span><span style=3Dont-size:sny.tv;font-family:&quot;Verdana&qu=
+ot;,sans-serif;color:#000001;mso-ligatures:none;mso-fareast-language:PL"> <=
+o:p></o:p></span></p></td></tr><tr><td style=3Dadding:sny.tv 0cm 0cm 0cm"><=
+p class=3DsoNormal" style=3Dargin:.1pt;line-height:sny.tv"><span style=3Don=
+t-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-=
+ligatures:none;mso-fareast-language:PL">Sales manager<o:p></o:p></span></p>=
+</td></tr><tr><td style=3Dadding:sny.tv 0cm 0cm 0cm"><p class=3DsoNormal" s=
+tyle=3Dargin:.1pt;line-height:sny.tv"><span style=3Dont-size:sny.tv;font-fa=
+mily:&quot;Verdana&quot;,sans-serif;color:#000001;mso-ligatures:none;mso-fa=
+reast-language:PL">Speedixa Sp. z o.o.<o:p></o:p></span></p></td></tr><tr><=
+td style=3Dadding:sny.tv 0cm 0cm 0cm"></td></tr></table></td><td style=3Dad=
+ding:0cm 0cm 0cm sny.tv"><table class=3DsoNormalTable" border=3D" cellspaci=
+ng=3D" cellpadding=3D" style=3Dargin-left:.1pt;border-collapse:collapse"><t=
+r><td style=3Dadding:0cm 0cm 0cm 0cm"><p class=3DsoNormal" style=3Dargin:.1=
+pt;line-height:sny.tv"><b><span style=3Dont-size:sny.tv;font-family:&quot;S=
+egoe UI Emoji&quot;,sans-serif;color:#BE2E21;mso-ligatures:none;mso-fareast=
+-language:PL">=F0=9F=93=9E</span></b><b><span style=3Dont-size:sny.tv;font-=
+family:&quot;Verdana&quot;,sans-serif;color:#BE2E21;mso-ligatures:none;mso-=
+fareast-language:PL">&nbsp;</span></b><span style=3Dont-size:sny.tv;mso-lig=
+atures:none;mso-fareast-language:PL">+48 577 012 723</span><span style=3Don=
+t-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-=
+ligatures:none;mso-fareast-language:PL"><br></span><b><span style=3Dont-siz=
+e:sny.tv;font-family:&quot;Segoe UI Emoji&quot;,sans-serif;color:#BE2E21;ms=
+o-ligatures:none;mso-fareast-language:PL">=F0=9F=8F=A2</span></b><b><span s=
+tyle=3Dont-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#BE=
+2E21;mso-ligatures:none;mso-fareast-language:PL">&nbsp;</span></b><span sty=
+le=3Dont-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#0000=
+01;mso-ligatures:none;mso-fareast-language:PL"> </span><span style=3Dont-si=
+ze:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-liga=
+tures:none;mso-fareast-language:PL">Kawia 23, 42-202 Cz=C4=99stochowa</span=
+><span style=3Dont-size:sny.tv;font-family:&quot;Verdana&quot;,sans-serif;c=
+olor:#000001;mso-ligatures:none;mso-fareast-language:PL"><o:p></o:p></span>=
+</p></td></tr><tr><td style=3Dadding:sny.tv 0cm 0cm 0cm"><p class=3DsoNorma=
+l" style=3Dargin:.1pt;line-height:sny.tv"><span style=3Dont-family:&quot;Se=
+goe UI Emoji&quot;,sans-serif;mso-ligatures:none;mso-fareast-language:PL">=
+=F0=9F=93=A7</span><span style=3Dso-ligatures:none;mso-fareast-language:PL"=
+> </span><a href=3Dailto:info@sny.tv"><span style=3Dolor:blue;mso-ligatures=
+:none;mso-fareast-language:PL">info@sny.tv</span></a><span style=3Dso-ligat=
+ures:none;mso-fareast-language:PL"><br><br></span><span style=3Dont-size:sn=
+y.tv;font-family:&quot;Verdana&quot;,sans-serif;color:#000001;mso-ligatures=
+:none;mso-fareast-language:PL"><o:p></o:p></span></p></td></tr></table></td=
+></tr></table></td></tr></table></div><p class=3DsoNormal"><span lang=3DN-U=
+S"><o:p>&nbsp;</o:p></span></p></div></body></html>
+
+--=_ALT_6Dn_VJOU0I5
+Content-Type: image/jpeg
+Content-Transfer-Encoding: base64
+Content-ID: <zuFOsmPeRsOqNjNMwilfoda4gpqXRQdEC5wAPAaZkno7gloNN5kqJC>
+
+
+--=_ALT_6Dn_VJOU0I5
+Content-Type: image/jpeg
+Content-Transfer-Encoding: base64
+Content-ID: <zuFOsmPeRsOqNjNMwilfoda4gpqXRQdEC5wAPAaZkno7gloNN5kqJC>
+
+
+--=_ALT_6Dn_VJOU0I5
+Content-Type: image/jpeg
+Content-Transfer-Encoding: base64
+Content-ID: <zuFOsmPeRsOqNjNMwilfoda4gpqXRQdEC5wAPAaZkno7gloNN5kqJC>
+
+
+--=_ALT_6Dn_VJOU0I5--
+
+--=_ALT_20260603544000_ABC123XYZ--

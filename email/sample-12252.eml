@@ -1,0 +1,797 @@
+Received: from SJ0PR10MB4557.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Tue, 1 Sep 2026 07:08:49
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=p7xbafhaWF8A+3sRwMPZDo7FJUr0H06YOMYJj/zDWofU9qikHY5QZepABqa7clIRO/MZprxxrX0e9IMoG+eJ1btSYxg6Qgc/VHmKZMk8W3F4l+x1ZjtZi8mPsU4wqBuquRbAKR4K95+GDDm8Fa/CFiUx0jF2/PcYL26AvY2f3P0tnZPXtlRuBDlyPsQfI44qe1nvmkyKB0Y5BilT0USgS9Qg74OIHih2e/uUi3l0szMx2TNMgi14F7xCp6FDmt7m55QRwUPTwnYnTWzrib+3x3C4sS/dxDFIB28Izb/cDwizTWuVHXT8RsAGfXJEhhIoDMgHcfQQfbltMrtf20ewZg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=26rFUhiDIkgtgYQpF/zUdYa2akXj6sS1UYWi66GqoQo=;
+ b=jPEOIHAdnTypVQnNLipTzaADHDjX//tGjvc0z7kw1RfGNOyPNwgZWQVuzVc6lcgKTyXnAK47KZN7bTK3aVqSey4jFo0aEgHRoN/5lo4dTw8xhET5M3r8yEuuDxnvdix/NrX0g6ohiPLtmwxRDyY2sOXexpMHCofYwD1xQz3Afg/pHTfsbMIiEbnZXN15MCx6Pg7/VUDM01ufvPK18IznhE0Sov0bNMpYJbHjDrm+yPtzetBFEo6yo+d38kO9kRxzGubyerpLgnZnray8VuaodDurm8VG+QGkcvPBn8dlyKdV7EtEbsZSyPi524pCWNp6ZrMWmdtHGo7J3xpun2o9gw==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.101.69.84) smtp.rcpttodomain=hotmail.com smtp.mailfrom=pme.suezuni.edu.eg;
+ dmarc=pass (p=none sp=none pct=100) action=none
+ header.from=pme.suezuni.edu.eg; dkim=pass (signature was verified)
+ header.d=pme.suezuni.edu.eg; arc=pass (0 oda=1 ltdi=1
+ spf=[1,1,smtp.mailfrom=pme.suezuni.edu.eg]
+ dkim=[1,1,header.d=pme.suezuni.edu.eg]
+ dmarc=[1,1,header.from=pme.suezuni.edu.eg])
+Received: from PUVP216CA0016.KORP216.PROD.OUTLOOK.COM (2603:1096:301:16e::19)
+ by SJ0PR10MB4557.namprd10.prod.outlook.com (2603:10b6:a03:2d4::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.10; Tue, 1 Sep
+ 2026 07:08:48 +0000
+Received: from TY2PEPF0000AB86.apcprd03.prod.outlook.com
+ (2603:1096:301:16e:cafe::24) by PUVP216CA0016.outlook.office365.com
+ (2603:1096:301:16e::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.13 via Frontend Transport; Tue, 1
+ Sep 2026 07:08:46 +0000
+Authentication-Results: spf=pass (sender IP is 52.101.69.84)
+ smtp.mailfrom=pme.suezuni.edu.eg; dkim=pass (signature was verified)
+ header.d=pme.suezuni.edu.eg;dmarc=pass action=none
+ header.from=pme.suezuni.edu.eg;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of pme.suezuni.edu.eg
+ designates 52.101.69.84 as permitted sender) receiver=protection.outlook.com;
+ client-ip=52.101.69.84; helo=AM0PR83CU005.outbound.protection.outlook.com;
+ pr=C
+Received: from AM0PR83CU005.outbound.protection.outlook.com (52.101.69.84) by
+ TY2PEPF0000AB86.mail.protection.outlook.com (10.167.253.10) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.8
+ via Frontend Transport; Tue, 1 Sep 2026 07:08:45 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:A8C403D9C36A4A6A21247B6BFE3A8B4BE5DB5A65E11FCD53DE7451BEC7DCD87B;UpperCasedChecksum:B69C469D5864376348B1C1B1D8C1886B4449CFF53B78FDC47EA78ACDACFEA099;SizeAsReceived:8806;Count:37
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vqvTfEnTTDBwrPer+3pEvf5k3FJKgXZVeNdtWxYvjlKKNkedwggnNgJ5/7IyYBFp1PNCzJO7nqjivd2PTP6F/3F8mUJYDunGGkPXxeuKld7r1Y+V5hq+cbUUmUSIC70bvQVOH4zYRCUxdQVLcOKCj/+emDLiiTQ6vjQ95Sx1OnHbJFs7Lbu1/5ofgHFEVKB4/GV3uFKvSh+SR/r7o7uRdEccFLfxHiFnJU8Qf4CnBmgafZmJB+Idid2/WXKlBf9O8npvDafnSZ2IfuFhpiZDOgH9x6JNt/XPB2f++I8DMgsbCgqhepOB+9iZ/3b4qc0xYXudbRVhEchZ2dsWDARq5w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=26rFUhiDIkgtgYQpF/zUdYa2akXj6sS1UYWi66GqoQo=;
+ b=tsTUYsKbSpgWVbaH/2+m62YGO6XIIGgicO5uBMNze5qmLUyY3mtQCOPKjo6Vx/wB9WYuCZDrd4+FKJYVANbJws5Ud3TVZ8AjdrJJhnrXgSFC8/6O/PBwy/vcjmM3vJ8xRqrHcK4wyHCSSBb/ZvicFdOSLyN8SrEi1C1ojlXopZknUJAAy0uUKBujK/GemIiCsNdI2Twri0TBtoNP26xD2ud29PIhF2Pzj4SorK5gxS46YgKxH28PT9vsmeZd7kRt7gSVaam2x0YC73Uf3mYWQDzNh1Wbg6jessQspTfs1FdmGcG79nscPRvQxIUQ8DPux0rYmNwdLO3IgYfFHOTKAw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=pme.suezuni.edu.eg; dmarc=pass action=none
+ header.from=pme.suezuni.edu.eg; dkim=pass header.d=pme.suezuni.edu.eg;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pme.suezuni.edu.eg;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=26rFUhiDIkgtgYQpF/zUdYa2akXj6sS1UYWi66GqoQo=;
+ b=HLJnIb6wrbgzpCZ8vm4j2USGhJd5ac9hQJpk/9wbZl2Rf2ltYEHMwauIOCk/UNsLnQ0m4UkT3OuLzXU/jP9XwPq3VGpS6FDSTn3hwMGTUSph5lYjkrHCr11PS/l/3vcT3sMEf/jLrBI0TcOwbnuwvLrUXPWt6cc9NeKPfmoqfpW7LeCRW7obCgp/fC3qeUbO9DbLExmvdq/50ubii/7rHYmaiQeedJj2ynSSWtvv84iYHT0W13mSjWhrYFeob6dD92DjSWEC9qTwRWOXN4LWWhdaOTy+kOnOS7ONM6+LEucztCFQ1/+baeeHUNNCz7CPt/RDmrUggFHrR2wfK1/JFw==
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=pme.suezuni.edu.eg;
+Received: from GVUPR02MB11856.eurprd02.prod.outlook.com
+ (2603:10a6:150:361::16) by DU4PR02MB11027.eurprd02.prod.outlook.com
+ (2603:10a6:10:588::10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Tue, 1 Sep
+ 2026 07:08:42 +0000
+Received: from GVUPR02MB11856.eurprd02.prod.outlook.com
+ ([fe80::ba3c:e37f:d286:df8e]) by GVUPR02MB11856.eurprd02.prod.outlook.com
+ ([fe80::ba3c:e37f:d286:df8e%6]) with mapi id 15.21.0360.008; Tue, 1 Sep 2026
+ 07:08:42 +0000
+X-MSG2EML-Original-Content-Type: multipart/mixed; boundary="===============5976143594912469022=="
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_msg2eml_33f91adfb1924f93a353846a248ff316"
+From: Crypto Mob Airdrop <mahmoud.mema@pme.suezuni.edu.eg>
+To: phishing@pot
+Subject: =?utf-8?q?=F0=9F=9A=80_Join_the_Movement_=E2=80=93_Claim_Your_ViceCity_Token_Airdrop!?=
+Date: Tue, 01 Sep 2026 08:08:39 +0100
+Message-ID: <178824651980.9096.12518144783137133438@DESKTOP-AM1PLDO>
+X-ClientProxiedBy: MA3P292CA0040.ESPP292.PROD.OUTLOOK.COM
+ (2603:10a6:250:46::12) To GVUPR02MB11856.eurprd02.prod.outlook.com
+ (2603:10a6:150:361::16)
+Return-Path: Mahmoud.MEMa@pme.suezuni.edu.eg
+MIME-Version: 1.0
+X-MS-TrafficTypeDiagnostic:
+ GVUPR02MB11856:EE_|DU4PR02MB11027:EE_|TY2PEPF0000AB86:EE_|SJ0PR10MB4557:EE_|MW4PR10MB5749:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2994fc55-7793-4546-e0b2-08df07f7dd4c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted:
+ BCL:0;ARA:13230040|1800799024|52116014|23010399003|366016|41320700013|786006|376014|40072699003|18002099003|56012099006|13003099007|8096899003|10067099003|38350700014;
+X-Microsoft-Antispam-Message-Info-Original:
+ jQfhTeEruWLkQufuhKpHEqjGUEL3AVAFqtyfCh9uTK04pfN0TYXteOKxA6S32VCbb8SqGxXjj85YIojX2WZS051eKVw30UQT8OaGY3ST25M9Zmyb2C7QOcutZWyEWuU+drOP/lR3uKaeLAf+s0N8qjeRPkq4qYtbWFVgtHMfBNwUBzyrb+HAmO+EEI51l/KjQPCikvv3w4tLr6XhooC+hLlG7tpK867Ct90I8jqTCGop9ks2kZgd0qLwUHaqyiUEk5l2R1jKWu2OGZH2SXW9RkIr7Ir0ZUCoOk0e77ZFip2GxXR9ZdlhXvcUIT9ZuU3bTg0dRKnUwfFjWPdaPOI5XjruDysocOwz8OVJq/lc78mVeutEiKzylGND8452FU9A6/Q0BhIe+pIt2C/zMFy1UoGXlO/yqqZFZovLDddhpXeeq5L+VliFiS77xIJA38582F+B4Jix+k5tCY+O8Kn6DIyEZp2qlNfxkblY2YtSX4S29WoeDd2WoFsRxoBpznRvD0YsuzFd/4GRfMq99yy8qGs+MnS1Wb8H5s7L67y62Jl5gSnQcaHt2fSrgRO1J9gknf5mPKaCUpZfzcdjVedjyDB9VPSSpkAyU+mnlK/vTcVTzxxxrHf9aX5Dn3XK8Ll9HUAo200T6Ut92pMX7rxAF8AIKgh4dmoXN2aEQ8r8bBM=
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GVUPR02MB11856.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(52116014)(23010399003)(366016)(41320700013)(786006)(376014)(40072699003)(18002099003)(56012099006)(13003099007)(8096899003)(10067099003)(38350700014);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0:
+ =?utf-8?B?Q0Mya1JRN0UxaDdnSGh1aVhHSFRLTFJyTzljU29ObVR6U3pLY0RiZU9hVVR0?=
+ =?utf-8?B?N3FyQ01wMlF5bTJhUEpRTEdqS0FndlF5cXZONTBxVGFRMFEwbnBTc2FDemhv?=
+ =?utf-8?B?L1VZU0hMWFpsWXZpU2Z3ZmJKcDVHaXFTQXVqdWIzeUhCTC9BVkE3ZW0yeEh3?=
+ =?utf-8?B?cUxGcTBHNnVWVHpwdVFNTDVqcGJPYVpIQU0wWEpRYVZsOUdhRFZycllMRkpX?=
+ =?utf-8?B?UzI4RFd4ZWpvSzF2TERBVFJPckdpd3RRTEpZMnRqZEFmdWZqdTBwTEFYZTVI?=
+ =?utf-8?B?TmJDYmpaMWlaZVJyQTMwa3VEWE8wVjI3WG0rVTZDYk5Lak5MTWc2NVdEcHE1?=
+ =?utf-8?B?NmllWmdPY2FyeW5mTzIvL0F2TmNvR1RVQkNxN2dkRkx5dHZMbTlEY0lVWmF1?=
+ =?utf-8?B?cXQzSjVKQ0hxMUhuUVV4d21DSFJSSUI1dTZrOWNhbXgySjdjb2RnbG1JYWxr?=
+ =?utf-8?B?clZpOWh4WTQ1ekxlUDFidjB1NURwb3Rjbk10VTV6ak01NHVKNWpyWTRQY2U1?=
+ =?utf-8?B?YTlkeXlDUVpqbTg2SDFQZTBiQ2M4Mlk4S29TaDZ4NTQxLzJMZDZJeDh0T1JU?=
+ =?utf-8?B?OW02UXJGNm42TzN3dFJBaFd3WnFPS0MwNFJzb01aWFltcm9seldZWVpCWU9p?=
+ =?utf-8?B?NG9FVXhRb2ZrWjZ0d3EzWGxqSWNPN3ZnejB1UXVpRjdCaVZNZy81VGVqNVMw?=
+ =?utf-8?B?eWtSNmZlRDU4R3dHQS9xSzliTElxK1ZvNTFPd0J4RnJlbVpIVE8yekZYOE5Y?=
+ =?utf-8?B?Q2t4Mkp3NUlacm5OVkZWNk1NSVI0RFovY25iVVFraUx6R0MwbVFWdXFTM0ZR?=
+ =?utf-8?B?Yyt6WFpRNmZ1cUlPNEdxejMrV1FOWll5WndQYjB0dHI3dzNNNkxuM0MxV3V2?=
+ =?utf-8?B?Qit1Qi9JQlpsQm13YWRtV21jSXQrb0lFQTd5V1VPRmhXWElYWHJGUzBhSit4?=
+ =?utf-8?B?L1lsd1pEOHhOT3dUS25JQ3JaNXJVYS9yaDlQNjFjd1ZGbVMxSHE2K3g5OGdv?=
+ =?utf-8?B?eldLNUxhYnpkVnFiQWtPOTBYd3NqNk1vc01uc2hOK0c1OThqYzR3VUhVQ0pG?=
+ =?utf-8?B?MHQrUnJJNDVXaWZNa2RTRjY1NW9PeDNiTTBuRjlGNkdRVlV5dERJYjBiNUh4?=
+ =?utf-8?B?T3JyNXhPTmx4NURDZmtsVU5iZWRMS09QRWZLd09abmYva0tJR2JCUHVHUW5U?=
+ =?utf-8?B?TXIvM2dKaEN1SHBBZ2pQdS9JYjQvYVNGMldyb3lwcGlvT0JHOVFZNW5aWjV3?=
+ =?utf-8?B?VGlTOWUycHIzQXI5cTVDZzl2SlAvR1NhMnZLTXFhamhrUkxnSkExbVpRaElG?=
+ =?utf-8?B?KzJPMElOVEhISC9aZXhWZnZnTDlJNm9vb1NIWVRJYUgyaDNYaDdNV3BPdkNx?=
+ =?utf-8?B?SlNxeWpMNXF4MGdYUitHOVNEdXp5dGdxSjB4NHUwdEQwbkVZSnNiOUNaZVph?=
+ =?utf-8?B?aTVHR1ZobzNpQ3d4bW1LeU5QVkVVbG5CWXpMaU8rTVljd2VkalI2VEN1V09i?=
+ =?utf-8?B?cHBPZVRwNUltMzl5bzRUeCtpdlkyTWVxWWJlZHVMNTdicFdReEFGeWludElZ?=
+ =?utf-8?B?TTRlQnVxZnQzYk03L3B4aFgxTUc4d3JEV2JNTWhlMDl2dXlGbzVaTytnVFN2?=
+ =?utf-8?B?RHl1aEZ3L2cvVUdjTEpuUUJuUU5VS3l6UUMrR1dxUjNRYmxTZEJQWUQvTGNC?=
+ =?utf-8?B?TnNBd2NlYllyQlZXblUxS29uR0tkaFhweDI5dlVsazRzUGNOcEE1bnZ6L3NN?=
+ =?utf-8?B?UEZJUE5CeVlyOVdFMWI3VkRRV0RHTTVRR1FGcTZZdzU0V0JibHd6N0dudXoy?=
+ =?utf-8?B?L2N3MGVSRE80THY1dG9PREFxdVRpTFZnbG1kUllkOFZ6b2QvRkljZW1IMXZK?=
+ =?utf-8?B?elZJQ0k1WDlkK2JwTjZqT1Q2aEdQdThLOUlPVllaVWVEZjJDeFQwUmN3d25m?=
+ =?utf-8?B?TEV5YnkvUlUxa2FaM09RZVhRS0VtTW1Fb0RxSEtCWlR0dWVvUVMwYzhHZ2Qv?=
+ =?utf-8?B?RFVWaVpQYVRTOFBTNVk3RlJWRzBRM2NJeERIRm1SNjdCYmZJd2JSV3BaR3Zp?=
+ =?utf-8?B?bUJiVTVGakV1VVFmWElCdWh6dm9WakZmY1RNM2NlblpEa3ZUQVZpRFVDMTNT?=
+ =?utf-8?B?Y3FGbCtFVU9NamdrM0ZMNGxJTUdLRm84NEp6THcvOXl1SXhvZjNiVzErNEMx?=
+ =?utf-8?B?b2FldTBpY1NWeVBQWFJ0RGMzM2w0QkhUaDN6bGs2a1pLTWdUbzA1TFlUS2tq?=
+ =?utf-8?B?cHFHbEZJQ0tCa3kxSmswUGpnUS9tcUErYmVhZ0lScTdYUFlKOFU0WGU3Nktj?=
+ =?utf-8?B?blV0bityZmFwM3U4MEF0cE5oZUVYcGV0SXJJQklkVlRKbGtDMkdOMGN2NE9w?=
+ =?utf-8?Q?gjWNZz1wrT76XDPQzoc//IIGLjaZwBuS8SgWt?=
+X-Exchange-RoutingPolicyChecked:
+ MdmQcIBqNmxuGMmI6tWrPPBZHM500nevzxwJn5RIoOXIemXsbvN2EKv7VUj1W2/ucZZekvTeiNUuI/1xylQs030osndcN8Uwi8ib0USTzHiKLNPpDaEL04O0f0xCWnF85PkH1+MmCL8npt5hyzgpOYV9jVn12USudw/LbggPoKABsGmMFi3sIHZPHPgktkJtDMjR+v6kF4KUCBgz87OCoCXkjlXAgriYVY6ZrntwsAhzUlabHYRXaBDQa3KcZer6+04bsHT3SP0lmih9cIy0xhW46Txwrrg8/LsY6ZzITBROjw57QqfWByC4U1+YQ1HEXf8BkyWImzr45krNDXF/mw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR02MB11027
+X-IncomingHeaderCount: 37
+X-MS-Exchange-Organization-ExpirationStartTime: 01 Sep 2026 07:08:46.1019
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 2994fc55-7793-4546-e0b2-08df07f7dd4c
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ TY2PEPF0000AB86.apcprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted:
+ TY2PEPF0000AB86.apcprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource:
+ TY2PEPF0000AB86.apcprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 9/1/2026 6:46:48 AM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ 635427a8-939f-4203-6b73-08df07f7db32
+X-Sender-IP: 52.101.69.84
+X-MS-Exchange-EOPDirect: true
+X-SID-PRA: MAHMOUD.MEMA@PME.SUEZUNI.EDU.EG
+X-SID-Result: PASS
+X-Microsoft-Antispam:
+ BCL:0;ARA:1444111002|5149299006|3069299007|8079299006|20103052909095|260820164000599003|260826003000599003|45200799018|67000799015|50300799015|58200799025|11020799012|13020799009|970799063|46080799009|9400799043|100100799003|70000799018|34130799006|32080799009|47200799027|2700799033|18021999003|3412199025|440099028|1360799030|1370799030|1380799030|2607281247196008|30041999003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Sep 2026 07:08:45.5847
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2994fc55-7793-4546-e0b2-08df07f7dd4c
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ TY2PEPF0000AB86.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB4557
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:04.0979324
+X-MS-Exchange-Processed-By-BccFoldering: 15.21.0382.004
+X-MS-Exchange-Organization-SCL: 6
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-MS-Exchange-ExternalInOutlookResult: ConsumerDisabled
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9560006)(10180024)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?WCZT+MGtzE2rcbVXad8+GSGCIQMS+2iVF66hU6ljrpFvfDYBIadAY12ZjYxA?=
+ =?us-ascii?Q?wrFGWG1VnSiuyOKrp8gXc5eiJ2DaeY0lQdz6wXDV3t3NzG8FPPFGoE/IcM7Z?=
+ =?us-ascii?Q?w8Z4ntYekcE/dA16FCqFav64Z52lohEl9G0t9wcKHk6uj99z+4FdcBN7xRkA?=
+ =?us-ascii?Q?mfmEb1ZMB9V7N3+nqYwfeL/G0p4nlU4noA0OmfrOIYSVgnMPU/wYnErlc+IG?=
+ =?us-ascii?Q?ZzWLxqAhfgNT2DI9PGfyrG4PjTH3TncPFgH5u960I23VLbIqHIXX3wdWzn4m?=
+ =?us-ascii?Q?SS67VQTd2iW52/tWAK2VZjPNZtAjXuoccC7sG7tURAthF9GjRJY7PAX/pRlE?=
+ =?us-ascii?Q?+maMKHzRUVLfQQ92zhgtuskAgC//y/s0RkA/xRiEaQrxR355RGplYAfPODZB?=
+ =?us-ascii?Q?bRFBFQftnSFSchbbsvgUmDvCGnYjosmqVcS+pxokX4AFcfsrqEWXnxdwaGTm?=
+ =?us-ascii?Q?D1auX95/YLRPes0hgmUUf59nM5RoB8sB+FgflvK0n+DnD+pkTe0j48332KZx?=
+ =?us-ascii?Q?Zd32FU0LWPBlcN3zG8S8BUOIM/aZW3/9Y8s2x96xxIvowV/QMFiWez4xsETz?=
+ =?us-ascii?Q?Eliw/LPgRqea8iwZVnvJdzpZoUWrPzmh3AcbEDYhMQrLv5kC99eyUTbVB6nV?=
+ =?us-ascii?Q?tqi4V1QMfPr18OkXapy6E7F2ij0eY5bkUSPRnUuODhzuCX+QoA//bBmvoDfz?=
+ =?us-ascii?Q?SagHpVsBV3dX2mgTXt7x2uA0EDVespAUaOU36JyolQex2iPj+UeH1Kvmbxuj?=
+ =?us-ascii?Q?lXvh+aGUSu7b9aXpA6/8Apbz6K3sBGyaj3/Q5DSCK3OtSVXgh8pQD7A20+zz?=
+ =?us-ascii?Q?fmdrBge/d7/fM/wqNBLcbF+mVIAlNLYy32o2/mSMvFzXomNBr04S4aLxftDj?=
+ =?us-ascii?Q?CeArEPkMSBIjWCn0wM0ykbeYfnn8E+2VhloThJLQ7uTuMlKdjAdf/K1iZFVF?=
+ =?us-ascii?Q?FfRMTBq+iTymrzQkZdMkZ/kPHC6f+xMc9lH6JmbINceJNsspOk61UM6oiZ70?=
+ =?us-ascii?Q?+xnTWQysIm9g5HXPd4hjT9/xxaGOfMey2AZmT3V7deyCyXfq+U0Lt5E4BPQw?=
+ =?us-ascii?Q?8OEO6duzKbe5uKyderquyrAwEbTHjgQdAINqoVFnNQ4117B0FEeGnCeHcsMn?=
+ =?us-ascii?Q?SYtljz0JIfG5L5pQdfAObALhPD36Z4pycXtTpjGRne96AFiRLoYhNYcF/WWg?=
+ =?us-ascii?Q?epM42Rdvwy9dtqEZgdpaM9E6ikgISkX6hWYCybFugXotdl7xlbr+TFWtQjCM?=
+ =?us-ascii?Q?Z8SrCukUkj6ZYMvkzIAtJ1eRktj61Ggy9//ExxVlJ7RB2LxT4XAPbal4KUf1?=
+ =?us-ascii?Q?x3FX8wrGiGVNJZrXwpExHgNSEQthzlxPwDaEvrsQhaTcQ9b4RmIIxFNC1YzF?=
+ =?us-ascii?Q?Mc0wBRqIR5thkWNPsa2BsGZSb5XDSeqbRYjD4YDRpobMemiL8FRIKOi9J4hQ?=
+ =?us-ascii?Q?P+pxtYv7EyVWOZ4hKu16tx/9QcqytP6BMTFljZHlX8edN7vzY3eOPnbw6DhH?=
+ =?us-ascii?Q?lnz1F7nqUuyQo1RJKYwIgMm7XaauoQoWuPhuOwewkiWvpQg6h73owQMHYCi1?=
+ =?us-ascii?Q?galhb1RTPQkvMhyGj9Q+NrICg/Fwny4ITJK9LqiqyADjyhnZoSgbhESBhfJx?=
+ =?us-ascii?Q?AqYRQ8AqLDoiZQedW9FPYAF9S5R5yXsXmJsalRYwAtyiCJerGNhjwOv3ba09?=
+ =?us-ascii?Q?FeAKkPef+CS2ivnHfgsipQrVhucrxPb78eoLdTqRhQmUS9MloouH8BmIxnTJ?=
+ =?us-ascii?Q?fLc5szhNOMHb3gQ5ZYwQjVXajgqifQX38v3sx749ehdIGK4LSKCuBvFAFuCG?=
+ =?us-ascii?Q?P3uTiIosQ6vs/lv1O80lPuBtYEO2hE1ME6Zr0hNhjS/syopzilJOyFPFw+Vu?=
+ =?us-ascii?Q?DPcO+k5UjH9FfLEF/5wvjbu+eo//ZC6j4hWVafXfz2E1IP7GPydSREwkfjl8?=
+ =?us-ascii?Q?yRLdRZR8ZBu9W1OC4UdE4yxW8ZWoT9d0KYTdZtTEy4vLL3DKjoPxzMYUkUHP?=
+ =?us-ascii?Q?YqRKBHwLLPnKvFNe8l8NkI9ubFUljV3vnb7u09Se9xFDkRsblm4sRgmeZMdJ?=
+ =?us-ascii?Q?r4ZTYWoyHKvmKNRoH1Zbv9mTmBlNHckrarBv0vpOlBmOgVS2DW4cD9x0NMJN?=
+ =?us-ascii?Q?FnSwzNjP1Xi2usihCj6ZlhlBW36IXMHPNjCAxUMYENM3y+6n8g2sF38RQP2k?=
+ =?us-ascii?Q?iKrgM/NlUUx2RgiJlCsruJcPJ1GyBaaCtlXrNyAGlb7p2UQk/Rg5DmeyVGbs?=
+ =?us-ascii?Q?pOhk9WqMp0wzoWWXIgZxIII8Tj278qvZVaHoyQHKBeQqBC07CkJ2VhmIqXf7?=
+ =?us-ascii?Q?UMZ0wmRDpGqWwVC8LkHeDc+dDxQJSNbDsRsV04hsAmVsx7e266JTZ1JyySPR?=
+ =?us-ascii?Q?CO3Dxsrzf7hcNnYDj+IUQs872WpcqoiU1pObRpHIpPG1nuFJxQ=3D=3D?=
+
+
+------=_NextPart_msg2eml_33f91adfb1924f93a353846a248ff316
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+vicecity solana =09
+week =E2=80=94 claim window open	=20
+
+vicecity
+token
+
+
+own The Streets. Rule The Chain.
+
+A currency for the digital underworld =E2=80=94 built for a city that never=
+ sleeps, and a community that never folds. Connect your wallet to claim you=
+r vicecity tokens.
+
+Claim Airdrop <https://bloomwellessentials.com/claim-vicecity/> =09
+
+// time:  airdrop open to everyone
+
+vicecity =E2=80=94 airdrop live now   |   liquidity locked    |   supply 1,=
+000,000,000
+
+// the underworld runs on vicecity
+
+
+Built For The Streets.
+Made For The Chain.
+
+
+vicecity is the ultimate currency for the digital underworld =E2=80=94 a to=
+ken forged for a community that plays by its own rules and moves faster tha=
+n the competition.
+
+No suits. No permission. Just a neon-lit economy where holders run the show=
+ and the community writes its own rise to power.
+
+10K+
+
+Crew
+
+100
+
+LP Locked
+
+0
+
+Team Tokens Sold
+
+// the numbers
+
+
+Tokenomics
+
+
+Clean contract, locked liquidity, community-first allocation.
+
+Solana
+
+Network
+
+Fast =C2=B7 Low Fees
+
+1B
+
+Total Supply
+
+Fixed =E2=80=94 No Minting
+
+0% / 0%
+
+Buy / Sell Tax
+
+Zero Tax, Always
+
+100
+
+Liquidity Locked
+
+Locked
+
+15%
+
+Airdrop Allocation
+
+Claimable Now =E2=80=94 Time
+
+// the plan
+
+
+Roadmap
+
+
+The takeover happens in phases. Here's how the city gets claimed.
+
+Phase 1=20
+
+Hit The Streets
+
+
+Contract , liquidity lock, and the community airdrop goes live for everyone.
+
+Phase 2=20
+
+Build The Crew
+
+
+Community growth, exchange listings, and holder-driven marketing pushes beg=
+in.
+
+Phase 3=20
+
+Run The City
+
+
+Partnerships, expanded utility, and larger listings as the movement scales =
+up.
+
+Phase 4=20
+
+Own The Chain
+
+
+Long-term ecosystem growth, governance for holders, and the next chapter.
+
+
+The City Is Open.
+
+
+Claim your share of the airdrop before the window closes.
+
+Claim Airdrop Now <https://bloomwellessentials.com/claim-vicecity> =09
+vicecity 	About Tokenomics Roadmap	=20
+
+vicecity is a community meme token with no intrinsic value or expectation o=
+f financial return. This is not affiliated with, endorsed by, or associated=
+ with Rockstar Games, Take-Two Interactive, or the Grand Theft Auto franchi=
+se. currency is highly volatile and speculative =E2=80=94 never invest more=
+ than you can afford to lose, and always verify contract addresses independ=
+ently before connecting any real wallet.
+
+
+------=_NextPart_msg2eml_33f91adfb1924f93a353846a248ff316
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<table style=3D"background-color: #07080b; margin: 0; padding: 20px 0;" bor=
+der=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td align=3D"center">
+<table style=3D"max-width: 600px; width: 100%; background-color: #0f1218; b=
+order: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hid=
+den;" border=3D"0" width=3D"600" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding: 30px 40px; border-bottom: 1px solid rgba(255,255,255,=
+0.08);">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td align=3D"left"><span style=3D"font-family: Arial, Helvetica, sans-serif=
+; font-size: 22px; font-weight: bold; color: #f3f1ea; text-transform: upper=
+case; letter-spacing: 0.5px;"> vicecity </span> <span style=3D"display: inl=
+ine-block; margin-left: 10px; font-size: 11px; letter-spacing: 1.5px; color=
+: #f3f1ea; background: rgba(153,69,255,0.12); border: 1px solid rgba(20,241=
+,149,0.4); padding: 4px 10px; border-radius: 999px; vertical-align: middle;=
+"> solana </span></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 50px 40px; text-align: center; background: linear-gra=
+dient(180deg, rgba(255,47,176,0.1) 0%, transparent 50%);">
+<table style=3D"margin: 0 auto 20px;" border=3D"0" cellspacing=3D"0" cellpa=
+dding=3D"0">
+<tbody>
+<tr>
+<td style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; le=
+tter-spacing: 2px; text-transform: uppercase; color: #2ef2e0; border: 1px s=
+olid rgba(46,242,224,0.4); padding: 6px 14px; border-radius: 999px; backgro=
+und: rgba(46,242,224,0.05);">week =E2=80=94 claim window open</td>
+</tr>
+</tbody>
+</table>
+<h1 style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 42px; fo=
+nt-weight: bold; text-transform: uppercase; color: #f3f1ea; margin: 0 0 15p=
+x 0; line-height: 1.1; letter-spacing: -1px;">vicecity<br><span style=3D"co=
+lor: #ffcf4a;">token</span></h1>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 16px; col=
+or: #f3f1ea; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 20=
+px 0;">own The Streets. <span style=3D"color: #ffcf4a;">Rule The Chain.</sp=
+an></p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 14px; col=
+or: #9aa0ad; line-height: 1.6; margin: 0 0 30px 0; max-width: 480px;">A cur=
+rency for the digital underworld =E2=80=94 built for a city that never slee=
+ps, and a community that never folds. Connect your wallet to claim your vic=
+ecity tokens.</p>
+<table style=3D"margin: 0 auto;" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0">
+<tbody>
+<tr>
+<td style=3D"background: linear-gradient(90deg, #ff2fb0, #ff5fc0 45%, #ffcf=
+4a); border-radius: 999px; padding: 15px 40px; text-align: center;"><a styl=
+e=3D"font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weigh=
+t: bold; text-transform: uppercase; letter-spacing: 1px; color: #07080b; te=
+xt-decoration: none; display: inline-block;" href=3D"https://bloomwellessen=
+tials.com/claim-vicecity/"> Claim Airdrop </a></td>
+</tr>
+</tbody>
+</table>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: #2ef2e0; letter-spacing: 0.5px; margin: 20px 0 0 0;">// time:&nbsp; air=
+drop open to everyone</p>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 15px 40px; background: #141822; border-top: 1px solid=
+ rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); t=
+ext-align: center;">
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12px; let=
+ter-spacing: 1px; color: #9aa0ad; margin: 0;"><span style=3D"color: #ffcf4a=
+; font-weight: bold;">vicecity</span> =E2=80=94 airdrop live now &nbsp;&nbs=
+p;|&nbsp;&nbsp; liquidity locked &nbsp; &nbsp;|&nbsp;&nbsp; supply <span st=
+yle=3D"color: #ffcf4a; font-weight: bold;">1,000,000,000</span></p>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 40px;">
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: #ff2fb0; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 15=
+px 0;">// the underworld runs on vicecity</p>
+<h2 style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 28px; fo=
+nt-weight: bold; text-transform: uppercase; color: #f3f1ea; margin: 0 0 20p=
+x 0; line-height: 1.2;">Built For The <span style=3D"color: #ff2fb0;">Stree=
+ts.</span><br> Made For The <span style=3D"color: #2ef2e0;">Chain.</span></=
+h2>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 14px; col=
+or: #9aa0ad; line-height: 1.7; margin: 0 0 15px 0;"><strong style=3D"color:=
+ #f3f1ea;">vicecity</strong> is the ultimate currency for the digital under=
+world =E2=80=94 a token forged for a community that plays by its own rules =
+and moves faster than the competition.</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 14px; col=
+or: #9aa0ad; line-height: 1.7; margin: 0;">No suits. No permission. Just a =
+neon-lit economy where holders run the show and the community writes its ow=
+n rise to power.</p>
+<table style=3D"margin-top: 30px;" border=3D"0" width=3D"100%" cellspacing=
+=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td width=3D"33%">
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 24px; fon=
+t-weight: bold; color: #ffcf4a; margin: 0;">10K+</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: #9aa0ad; text-transform: uppercase; letter-spacing: 1px; margin: 5px 0 =
+0 0;">Crew</p>
+</td>
+<td style=3D"text-align: center;" width=3D"33%">
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 24px; fon=
+t-weight: bold; color: #ffcf4a; margin: 0;">100</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: #9aa0ad; text-transform: uppercase; letter-spacing: 1px; margin: 5px 0 =
+0 0;">LP Locked</p>
+</td>
+<td style=3D"text-align: right;" width=3D"33%">
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 24px; fon=
+t-weight: bold; color: #ffcf4a; margin: 0;">0</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: #9aa0ad; text-transform: uppercase; letter-spacing: 1px; margin: 5px 0 =
+0 0;">Team Tokens Sold</p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 40px; background: #0a0c10; border-top: 1px solid rgba=
+(255,255,255,0.08);">
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: #ff2fb0; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 15=
+px 0; text-align: center;">// the numbers</p>
+<h2 style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 28px; fo=
+nt-weight: bold; text-transform: uppercase; color: #f3f1ea; margin: 0 0 10p=
+x 0; text-align: center;">Token<span style=3D"color: #2ef2e0;">omics</span>=
+</h2>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 14px; col=
+or: #9aa0ad; text-align: center; margin: 0 0 30px 0;">Clean contract, locke=
+d liquidity, community-first allocation.</p>
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding: 10px;" width=3D"50%">
+<table style=3D"background: #141822; border: 1px solid rgba(255,255,255,0.0=
+8); border-radius: 14px; padding: 25px; text-align: center;" border=3D"0" w=
+idth=3D"100%" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 22px; fon=
+t-weight: bold; color: #f3f1ea; margin: 0 0 5px 0;">Solana</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12px; col=
+or: #9aa0ad; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 5p=
+x 0;">Network</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: #2ef2e0; margin: 0;">Fast =C2=B7 Low Fees</p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td style=3D"padding: 10px;" width=3D"50%">
+<table style=3D"background: #141822; border: 1px solid rgba(255,255,255,0.0=
+8); border-radius: 14px; padding: 25px; text-align: center;" border=3D"0" w=
+idth=3D"100%" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 22px; fon=
+t-weight: bold; color: #f3f1ea; margin: 0 0 5px 0;">1B</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12px; col=
+or: #9aa0ad; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 5p=
+x 0;">Total Supply</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: #2ef2e0; margin: 0;">Fixed =E2=80=94 No Minting</p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 10px;" width=3D"50%">
+<table style=3D"background: #141822; border: 1px solid rgba(255,255,255,0.0=
+8); border-radius: 14px; padding: 25px; text-align: center;" border=3D"0" w=
+idth=3D"100%" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 22px; fon=
+t-weight: bold; color: #f3f1ea; margin: 0 0 5px 0;">0% / 0%</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12px; col=
+or: #9aa0ad; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 5p=
+x 0;">Buy / Sell Tax</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: #2ef2e0; margin: 0;">Zero Tax, Always</p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td style=3D"padding: 10px;" width=3D"50%">
+<table style=3D"background: #141822; border: 1px solid rgba(255,255,255,0.0=
+8); border-radius: 14px; padding: 25px; text-align: center;" border=3D"0" w=
+idth=3D"100%" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 22px; fon=
+t-weight: bold; color: #f3f1ea; margin: 0 0 5px 0;">100</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12px; col=
+or: #9aa0ad; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 5p=
+x 0;">Liquidity Locked</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: #2ef2e0; margin: 0;">Locked</p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<table style=3D"margin-top: 10px;" border=3D"0" width=3D"100%" cellspacing=
+=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding: 10px;">
+<table style=3D"background: #141822; border: 1px solid rgba(255,255,255,0.0=
+8); border-radius: 14px; padding: 25px; text-align: center;" border=3D"0" w=
+idth=3D"100%" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 22px; fon=
+t-weight: bold; color: #f3f1ea; margin: 0 0 5px 0;">15%</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12px; col=
+or: #9aa0ad; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 5p=
+x 0;">Airdrop Allocation</p>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: #2ef2e0; margin: 0;">Claimable Now =E2=80=94 Time</p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 40px;">
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: #ff2fb0; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 15=
+px 0; text-align: center;">// the plan</p>
+<h2 style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 28px; fo=
+nt-weight: bold; text-transform: uppercase; color: #f3f1ea; margin: 0 0 10p=
+x 0; text-align: center;">Road<span style=3D"color: #2ef2e0;">map</span></h=
+2>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 14px; col=
+or: #9aa0ad; text-align: center; margin: 0 0 30px 0;">The takeover happens =
+in phases. Here's how the city gets claimed.</p>
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td style=3D"padding: 8px;" width=3D"50%">
+<table style=3D"background: #141822; border: 1px solid rgba(255,255,255,0.0=
+8); border-radius: 14px; padding: 25px;" border=3D"0" width=3D"100%" cellsp=
+acing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td><span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 10=
+px; letter-spacing: 2px; text-transform: uppercase; color: #07080b; backgro=
+und: #ffcf4a; padding: 4px 10px; border-radius: 999px;">Phase 1</span>
+<h3 style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 16px; fo=
+nt-weight: bold; text-transform: uppercase; color: #f3f1ea; margin: 15px 0 =
+10px 0;">Hit The Streets</h3>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 13px; col=
+or: #9aa0ad; line-height: 1.6; margin: 0;">Contract , liquidity lock, and t=
+he community airdrop goes live for everyone.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td style=3D"padding: 8px;" width=3D"50%">
+<table style=3D"background: #141822; border: 1px solid rgba(255,255,255,0.0=
+8); border-radius: 14px; padding: 25px;" border=3D"0" width=3D"100%" cellsp=
+acing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td><span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 10=
+px; letter-spacing: 2px; text-transform: uppercase; color: #07080b; backgro=
+und: #ffcf4a; padding: 4px 10px; border-radius: 999px;">Phase 2</span>
+<h3 style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 16px; fo=
+nt-weight: bold; text-transform: uppercase; color: #f3f1ea; margin: 15px 0 =
+10px 0;">Build The Crew</h3>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 13px; col=
+or: #9aa0ad; line-height: 1.6; margin: 0;">Community growth, exchange listi=
+ngs, and holder-driven marketing pushes begin.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 8px;" width=3D"50%">
+<table style=3D"background: #141822; border: 1px solid rgba(255,255,255,0.0=
+8); border-radius: 14px; padding: 25px;" border=3D"0" width=3D"100%" cellsp=
+acing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td><span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 10=
+px; letter-spacing: 2px; text-transform: uppercase; color: #07080b; backgro=
+und: #ffcf4a; padding: 4px 10px; border-radius: 999px;">Phase 3</span>
+<h3 style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 16px; fo=
+nt-weight: bold; text-transform: uppercase; color: #f3f1ea; margin: 15px 0 =
+10px 0;">Run The City</h3>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 13px; col=
+or: #9aa0ad; line-height: 1.6; margin: 0;">Partnerships, expanded utility, =
+and larger listings as the movement scales up.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td style=3D"padding: 8px;" width=3D"50%">
+<table style=3D"background: #141822; border: 1px solid rgba(255,255,255,0.0=
+8); border-radius: 14px; padding: 25px;" border=3D"0" width=3D"100%" cellsp=
+acing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td><span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 10=
+px; letter-spacing: 2px; text-transform: uppercase; color: #07080b; backgro=
+und: #ffcf4a; padding: 4px 10px; border-radius: 999px;">Phase 4</span>
+<h3 style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 16px; fo=
+nt-weight: bold; text-transform: uppercase; color: #f3f1ea; margin: 15px 0 =
+10px 0;">Own The Chain</h3>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 13px; col=
+or: #9aa0ad; line-height: 1.6; margin: 0;">Long-term ecosystem growth, gove=
+rnance for holders, and the next chapter.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 50px 40px; text-align: center; background: linear-gra=
+dient(180deg, rgba(255,47,176,0.15) 0%, transparent 100%); border-top: 1px =
+solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.0=
+8);">
+<h2 style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 32px; fo=
+nt-weight: bold; text-transform: uppercase; color: #f3f1ea; margin: 0 0 15p=
+x 0;">The City Is Open.</h2>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 14px; col=
+or: #9aa0ad; margin: 0 0 25px 0;">Claim your share of the airdrop before th=
+e window closes.</p>
+<table style=3D"margin: 0 auto;" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0">
+<tbody>
+<tr>
+<td style=3D"background: linear-gradient(90deg, #ff2fb0, #ff5fc0 45%, #ffcf=
+4a); border-radius: 999px; padding: 15px 40px; text-align: center;"><a styl=
+e=3D"font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weigh=
+t: bold; text-transform: uppercase; letter-spacing: 1px; color: #07080b; te=
+xt-decoration: none; display: inline-block;" href=3D"https://bloomwellessen=
+tials.com/claim-vicecity"> Claim Airdrop Now </a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td style=3D"padding: 30px 40px; border-top: 1px solid rgba(255,255,255,0.0=
+8);">
+<table border=3D"0" width=3D"100%" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td align=3D"left"><span style=3D"font-family: Arial, Helvetica, sans-serif=
+; font-size: 18px; font-weight: bold; color: #f3f1ea; text-transform: upper=
+case;"> vicecity </span></td>
+<td align=3D"right"><a style=3D"font-family: Arial, Helvetica, sans-serif; =
+font-size: 12px; color: #9aa0ad; text-decoration: none; margin-left: 20px;"=
+ href=3D"#">About</a> <a style=3D"font-family: Arial, Helvetica, sans-serif=
+; font-size: 12px; color: #9aa0ad; text-decoration: none; margin-left: 20px=
+;" href=3D"#">Tokenomics</a> <a style=3D"font-family: Arial, Helvetica, san=
+s-serif; font-size: 12px; color: #9aa0ad; text-decoration: none; margin-lef=
+t: 20px;" href=3D"#">Roadmap</a></td>
+</tr>
+</tbody>
+</table>
+<p style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 11px; col=
+or: rgba(255,255,255,0.35); line-height: 1.7; margin-top: 25px; text-align:=
+ center;">vicecity is a community meme token with no intrinsic value or exp=
+ectation of financial return. This is not affiliated with, endorsed by, or =
+associated with Rockstar Games, Take-Two Interactive, or the Grand Theft Au=
+to franchise. currency is highly volatile and speculative =E2=80=94 never i=
+nvest more than you can afford to lose, and always verify contract addresse=
+s independently before connecting any real wallet.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+------=_NextPart_msg2eml_33f91adfb1924f93a353846a248ff316--

@@ -1,0 +1,621 @@
+Received: from MN6PR10MB8117.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Sat, 4 Jul 2026 15:51:30
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=LKD7cAnYL3aCoxp78LTWl7Qfbc+zmMn61zX30WW58zRWFUhRnSIAH8qcbtMH5SCL6HimXbUOkBGuuQcY8b59w6qq30uaanPcpn3NzFRhbUmZ6wHJWxYRyZ+WPSJEir52RjD3A1IkJWuicki4ueCMxEMG7Bx9fVmBGxIuip5ZPT0/P7lRYVnBNtN1hTFYOLrMueN6pKfKY6DiFCf2ZTLJRkbu5/Jcrxrw3+ng7HtWJZ0ZgWEPHuARr26tkba2HDlcx1n5K6DiWe9XaABU6wRHvq0k3RLq/l//i/qcWewFwLiMsZt1JUy9tzJ0LOy8Ayg/XAHoiuu2W7BMAk+b7PLHEg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9wtKhffy3rJVE1U9fh3kKvX3HikfVWnK44yNGzcWxDQ=;
+ b=S4ZTQdTupC3yIi6NCsMklTnbyEJVjLMAX6VKTsRs9VHtOveKrp6hkTURe6CZ9/+m+367Vb/CQAh5YWbOHLSUbjoiu370SWxT1sjds6F1Iyc8csV5fkBKIBuCHYoT6IoJqR/NtHwnl8jmlgD4muYyOlOtZZQdDblOvQ5lfdsy8oCuH/gSunTB/6eSe7JsqEZHhpZRAF3axo4wsKSusMG55R91gPZtiSj89UG+QHIPU8MrUViM3Sw71XBRBT8w5pMMySJXCU4hUyxAadt/knVpuoTB1Wxud5vcAMmB91S9OOj24Iavv9ttpKE3ZjML9GAn7ViW3zkApxZ8mP8jVCpIIA==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 209.85.160.172) smtp.rcpttodomain=hotmail.com smtp.mailfrom=ba.dilos.digital;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=ba.dilos.digital;
+ dkim=pass (signature was verified) header.d=ba.dilos.digital; arc=pass (0
+ oda=0 ltdi=1)
+Received: from AS8PR04CA0045.eurprd04.prod.outlook.com (2603:10a6:20b:312::20)
+ by MN6PR10MB8117.namprd10.prod.outlook.com (2603:10b6:208:4f1::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Sat, 4 Jul
+ 2026 15:51:28 +0000
+Received: from AMS0EPF000001AF.eurprd05.prod.outlook.com
+ (2603:10a6:20b:312:cafe::78) by AS8PR04CA0045.outlook.office365.com
+ (2603:10a6:20b:312::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.12 via Frontend Transport; Sat, 4
+ Jul 2026 15:51:28 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.160.172)
+ smtp.mailfrom=ba.dilos.digital; dkim=pass (signature was verified)
+ header.d=ba.dilos.digital;dmarc=pass action=none
+ header.from=ba.dilos.digital;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of ba.dilos.digital
+ designates 209.85.160.172 as permitted sender)
+ receiver=protection.outlook.com; client-ip=209.85.160.172;
+ helo=mail-qt1-f172.google.com; pr=C
+Received: from mail-qt1-f172.google.com (209.85.160.172) by
+ AMS0EPF000001AF.mail.protection.outlook.com (10.167.16.155) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.6
+ via Frontend Transport; Sat, 4 Jul 2026 15:51:28 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:BA871C74B7DE772187B0586F1A011A18A9879851C205A21D379155CEAE69820A;UpperCasedChecksum:3FFB5A8F7DFCB194C9B096F5B8C6AB83739DDF6DB04FA71C785EA885B7C5E726;SizeAsReceived:14164;Count:29
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-51c0c68aa31so9157581cf.3
+        for <phishing@pot>; Sat, 04 Jul 2026 08:51:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783180288; cv=none;
+        d=google.com; s=arc-20260327;
+        b=mmyYVteKWzsHGDvjT6fDCMuzd3MtugitYo2uyh80TQz7XiWfyTJRdlSG2ksX6FUI6+
+         eZyQmmpifbFmzHO/0ON6HO+JhA5qmYTxT5dYTzrNLKg7i2TS37iFM6zncqKBp7dHVPwL
+         FxerVRlYLxIY+vALJw+Eqh6Ew4mHzmWbnKpMA/iG33O1E3+6POOMS2SBwGxwa64NF0gr
+         beBoimCbO7a8yLrLyoHX2d9j46fW5FFZn1K7rhqHqW1i+ZFr6hgTmhZBu9xvhl0t7Qa+
+         o0e0GLFP834LEiggIJ4MWrNeaStVtBnH1qQnWFSGMREV7cL1X1pl7COwNJ0082oFtAqW
+         Td/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=to:subject:message-id:date:mime-version:list-unsubscribe
+         :in-reply-to:feedback-id:from:references:list-id:dkim-signature;
+        bh=9wtKhffy3rJVE1U9fh3kKvX3HikfVWnK44yNGzcWxDQ=;
+        fh=VrTfz0XidPASn7FsQj739/CVZZukwSnZToehA0l5x04=;
+        b=UclOhgCqMJSauWZyLw8GynvcWK+QAhpEKsDQK1jgHuEvU9JLZjMSPYyFl+QY4Skyt6
+         HQt9CsjWW2rV/s+x9gUKl4Bm/viA48mF2hLL9fb/S0xdhuD1SyEZvZZQmGg6xv9GqWc6
+         a0nNqH4YvvIGX7px4rWNGWcgNakr65jxkbVhsl5UFfobOQ9WRqQBaX9jcFfes30pJN5b
+         fnOHehlBslWpkg7anR43EiDL/MO4M/++aJTmuoZ9d3QCjzZBPjIePY9G8uuVoD3OUn5E
+         lK2ji4roZV3eXn5WlBoR3iAwwpOg9EyVI9PfrsX4EpleIDQEkvZa/uBDsTnYgVmqYLPB
+         xtEw==;
+        darn=hotmail.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ba.dilos.digital; s=google; t=1783180288; x=1783785088; darn=hotmail.com;
+        h=content-type:to:subject:message-id:date:mime-version
+         :list-unsubscribe:in-reply-to:feedback-id:from:references:list-id
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=9wtKhffy3rJVE1U9fh3kKvX3HikfVWnK44yNGzcWxDQ=;
+        b=SsyUQz3kHkd9fyCcGxu33crDocd3L/zFdxmfTDuhC1OrQXLC4h/38AaU6/OqeXbQNJ
+         vX0gqJchy73fF6QR+gUR10I8vRAAJqWdQGs3cG7TNCCehJVYwd9D8VuXIsaM6Yo6xBs2
+         LMCqq2TiXNRx8D+wWSTd7JtY+yH5/sqnVBkr70PKoTpMKhPWaQhVCPwHHKLvsri7OabS
+         lxJm68V8J4HtLlhJwh2m5kuk3YMV0PDubO16Lu9LvobIMePxKFs87O+xFQI3tVbEuPVV
+         yxFh3QWoOkwD77HvNco4RlZQzp02WZyTrWWZaQ6XjqNNeaHWYtU4SJVvZqbOLDNJDC+H
+         TaDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783180288; x=1783785088;
+        h=content-type:to:subject:message-id:date:mime-version
+         :list-unsubscribe:in-reply-to:feedback-id:from:references:list-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=9wtKhffy3rJVE1U9fh3kKvX3HikfVWnK44yNGzcWxDQ=;
+        b=rj/aT5N0z3MgYDMmf/Z+QmCx1/9Y+zFF8G6GUpziHI18aKKegZhKgbsD+ctsy5Ur/z
+         Y9IUuS+M+SohSVBpTyi1U5J7K9LudvyxKIs1riCJeYs2yy+ylCayuQnAXeToRbL5MPNd
+         +KeIcyTjYXKx8eOkG9B1mn9lc1ZGFAT4XqujhGMPR1NkY9BrYdLTFpQrpy/Ax81aAeKu
+         wAsvHQeN/pjfcJdfcFNaGZHwPDDuByZoZIqsdxTyhrPr9/YuMYJ7tyo5uOIg4YhzvKPT
+         hUbQ/v3xQ8T6clAQ2w/yKve5hrDbbL/UxEh0uxqHdlhz+fErjnz9mCmntjS9wvLjfebQ
+         X7Ug==
+X-Gm-Message-State: AOJu0YwLMck/Tm7jcLaLkljtRqXtAfdydp0FHhLI10P1dqLUPotVevgM
+	hUUgCMbQBIvjaH0H9mi8aQ9SoQazyA2CL48j7GrmFstrrynjBJFCUAHUbXE8QFtcy4Kk72SneKK
+	g7IvHgtGv7C58xRjmRGRTATjqtWurhPlM7ORSmwJyimK8bGjmEmWSols=
+X-Gm-Gg: AfdE7cn1u1cWyIaavhYFh7sdqcFgn953JD9jU5bgi/q5Bsn9dMeF6mHLgd/byxog22o
+	RuHOWsw2DghlR+hvJF65T8igoOgExVyh7igcZBumaS5aWLOLZnRo87IGJmRogtAKO8cuwkFmiY/
+	Qh0cBVxFh1VVEh5GpUNnWZ6oV8ij/M9532C/KLlkarijjXrRtr60KRm4JhjRd7F1BXOjASDJ1jc
+	ihcda/MLlpyBa/7VYpTXDyWOgqmqsnNLSEyZRzXqSAPL69KtS4h7TIGKeG/PQVPs0SIVeI=
+X-Received: by 2002:ac8:5f90:0:b0:51c:1bcd:5cc3 with SMTP id
+ d75a77b69052e-51c4c273937mr54953601cf.25.1783180287584; Sat, 04 Jul 2026
+ 08:51:27 -0700 (PDT)
+Received: from 477704550209 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 4 Jul 2026 11:51:26 -0400
+Received: from 477704550209 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 4 Jul 2026 11:51:26 -0400
+List-ID: <.7289367.xt.local>
+X-CSA-Complaints: a3STpDlrV3.csa-complaints@eco.de
+X-SFMC-Stack: 11
+X-FYgah: c9pg82K7yr18h1228pZjjyamXmp0yaQKBsd/+FAaydEO8wvC/vcikvH=
+References: <@mail-3Vp.Bounce_dnO.io>
+From: =?UTF-8?Q?=F0=9F=90=BC_Casoola_Rewards_Club?= <sam.anderson@ba.dilos.digital>
+Feedback-ID: 325-anexp#nret-fa:account-notifier
+In-Reply-To: <mDhpnoqQWpmiOgGSfbj77kCk4yxvKceDaDQEXO7nGMbnR5p8EXLdBNoM71woXy34gQyY9QgdMuCxXiyzZT7eiPcxcWo2G0D04ko9yw0wWlC1pBYBA1msM9eP2o5ZGSTV4GKRqkj1Ag37xmew1KTIWSZMq3p9r3P72DB71Zc5BdlTxoJOhjARnd7y4lHC5zR4wbBAVXJzUgq3x7KiFQYydb7PVNNLdUTXJ8vpK6yGgGt43ehPS9ce5S3djKOhcmWL8UiTj7L2osgTHrJLiG1hXG6nojQGMzyEX64maE1wdCPQqdbsPvGTfshFGEXljxwPYVLltF9i2S1PVGc0Fzlb0xwi62dXkyKKWlNnfywQV8IPcZNN0ucS0HXysfjGH6b9J8f7TDDs1tLbedIb7cKe8ouPeF3y8PCx31XBg2eKjTzSmC5kosNnmr39KSNZ0UN43V3YRdb0bsRmkuVrMfx6QGsVa79DEzgKxuygEq1LqeFOYxOGhVm4lDiN6vaDAGdP01p2W7vP2ln01ellapNdkogjPpHFGjrPcVDLnEXW2yRVHSRNGCwFBQ0zDh6HhfJKLFis3Y0o492icPir0BHRiHSbsVr2dqgosNNxqfdixi9R2ReNL5iKvFHodhuhQfsOhEYYxVSsbrr1CX4DUi9EJ8dzjnHwx66MQtZHSes68H2PEwerh133egngwyK3HQsYuAr9JaOQicJ1qOmcVdcFVVT4e5hn31fOWlUOfXwS225vOJT7kg3kWt0hFEbVGDuGaISeSnzHOgcwP7jiZpIC3Uun1yMipH6ImAQxZROZn6i5DgrUw1jELkiIzFaTDqGpL1S4BZm64WaXMmSrHLKd8U28YHe5vYpec9jRNUy6twDZiN1mVhTA4kqrqdNJeqj2KEijcn0KRRXKkRx67Lo1hCrnWWDAnYARnvur7Ie4fb3r0xXAc2uO5fnmXbsddd7ZBSe8syX7d3dMTkrhivjgHxz5
+ UsJfXqNTaY9U7ndKlN4kpz3dRupT1zBAmUo3ag7NW7G9b04aZ4lonCLHZMT2wMn9ps62htZa2SdoG4KtFJJXD8ZJLIwu1hDMWlyNsHRNfU6MTBVxL3iWgiXNaYU3yIBhq5nysN2JgVEubuATh9v67FapuObt3S1dj10a8ys27mT63P5jQ6XlsW1Pu49KX0LtQMp2NRs6Ca3STpDlrV3a3STpDlrV3rgHpZOJv1rqmFq@a3STpDlrV3sXGX0duZWtjVKZOeSbJsCHYSNLwaauQLgWweHLIHEKk1n1Um34exE7AGG.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.frgHpZOJv1rqmFq7FQOrTjc6epjfMksGaTvWMGZcuLqPGw1y8K1ecY1LDyxtILKTjuqdXJzkjKKjdV6jNBZH6QpwftK6Vy8Qc5asshgxTdR1NFz8Wcde9hPaOCRpY6kndDcrRL1NLXtetLYh8gxWNEMWctgseVnVZRRhYEYc9ErrT0OSPou9IWvfoXGlSyb9YvKG039ndF9bEIQ4MSHqzZUxSUen1lhCZuYPyG2rRWzhPcuXViu3CICOkGQElGL7R6EbbqRLeFFg960twxIU4WsoKceDGTsMYZtPxNPSrm3u9L8npWka23U4eeJJkueUs9itwx8uje6lSht8KqJfjybqC3TLKW5Xtce8vXMPra6pclHFIt8JprP5N5hp2OPORz0c4paTZmLa5w7VUAWo3tQKS3bTNeVhIvLRw1XDMrUocAgoFNUoZUHaU1kcm7MhQhRoRIj
+ bGgPLMdieEHG1WBvNTefX4FmwNl1W8WCWNJAQ3bspCxCd79tHJfOjqM0OuNPKFyBjVoUFRRHMzyw4HPGWihWvd4NHGVZmzBSyU2Ge6WUY75AQ8iyr5zpviCdccsgppurk5q5WTvBjLkcuMdqBqo7dyW74AYRZJ2pofO79Drt2W5v7UWqubte4Vl5wHFncTFlrF5WudCmP1xWcwTZEgmDkJEfhd8BIYrC0jradEKmyHy1FwKn3UkmEN9ghiE4dv3gobCQWGJ4ykUkRtxGWEntDIUojIGZlANe5BbhyxQKkBb5CqIGFgRZCCfUi6kEqGWarcYuy82sF3PLnu1EQ6rxA3SRv673lWF3Jqgiq2SXoob9nbhYzgZevncnJhUIXm1AdetE4vAnZkvjIYQ7AQLUgqsqjfemeJuNv5Us5aoesp9HKK1eXqjgBRV4gPfKRKxDFH2McDTyijSGf5BznucE5NgmDP7Qixub8Jbwmp0CQvNcI5XG4U23LZyvEzLums8pE1RymPkDMzgcjs9ZRkiRIBloLVaVe5ufw8gln0DF9HvUQDhmVWBUVBiYjGaRqtecjUY602HtnVRyr9dUVil0GuKa9KJ2tWE3bVL18CaXl1AZPMfiKMv1aUecyxdY59E4z8EE5uFrP4JVGVEw7jRATFlfIB03N5oYTMygBWX5OGA6RRfhWCQdtXMUKbfm6btoXOUlamzK2bgUG06Pw3VmSEGVyAp5UylMuDpZlqfpWNSqtkOUqlEcU7lT3FaCMBk9LHQ1w1jqhzTJf7GrpW6LhxJFaiMiVOEosM5BTaM1d6HbhXUZkJBoVP4IJ891G655vdXEntNFuGwDd0H5Xs6tJZ6NBQPSSlgqUlY7xgm7kTUpjPtowncdxSRivPQMprP8IJRRpRvoDxtGeEG79gV55afNlXxYsrVVzUEdzLYP6lacnEA4V9aZ8iEhZMzJSmKNx0J459KY9K9tmeXStLQezbz9RKK14voaRPwNI
+ iPt4SHWTywMq5dljTDDs1iOQtbIXdf5zZQw4xoXntrGnLXOkisrGSstbvAPwvpBQK04AyTmuer5R8d0IiVwJbe4APJb8ZXeoFpXp2PXfgA9aBvFpdVgrRsZurXwfFxrd5WzLlsk36cObC0TAIyWrbxbUXTxVfH1bv4E.edu>
+X-Mailer: FYgah
+List-Unsubscribe: 9.QUTQKMGTNOMYF@luxyinbox.site
+X-IncomingHeaderCount: 10
+Date: Sat, 4 Jul 2026 11:51:26 -0400
+X-Gm-Features: AVVi8Cf0Drr_sMlt0rOtsWJn2b9CXdlf-bu3cGjjEyuSZdqChOpFdQNAL5fYxT4
+Message-ID: <CAHq-yNm1pohAo6=T2k652ogThOo565u-9eqO1ADNCQe2aedTQA@mail.gmail.com>
+Subject: =?UTF-8?Q?=F0=9F=8E=B0_Exclusive_Welcome_Bonus_for_You_=E2=80=93_Claim_Up_to?=
+	=?UTF-8?Q?_=E2=82=AC3=2C000_=2B_250_Free_Spins?=
+To: phishing@pot
+Content-Type: multipart/alternative; boundary="0000000000009cbbeb0655cb036e"
+X-IncomingHeaderCount: 29
+Return-Path: sam.anderson@ba.dilos.digital
+X-MS-Exchange-Organization-ExpirationStartTime: 04 Jul 2026 15:51:28.1532
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 4ec8e1da-7178-41a1-e242-08ded9e41c2a
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AMS0EPF000001AF:EE_|MN6PR10MB8117:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource: AMS0EPF000001AF.eurprd05.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 7/4/2026 3:14:57 PM
+X-MS-Office365-Filtering-Correlation-Id: 4ec8e1da-7178-41a1-e242-08ded9e41c2a
+X-Sender-IP: 209.85.160.172
+X-MS-Exchange-EOPDirect: true
+X-SID-PRA: SAM.ANDERSON@BA.DILOS.DIGITAL
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 5
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|30140799009|119000799009|9400799043|21090799003|970799063|22090799003|10029299006|32080799009|3025599003|20103052909095|34130799006|32020799003|5139299004|9020799019|56000799018|1680799066|33080799006|84100799006|3069299007|9000799056|10300799038|42200799015|46110799015|18301999012|1602099012|30041999003|15095499009;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jul 2026 15:51:28.1494
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4ec8e1da-7178-41a1-e242-08ded9e41c2a
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource: AMS0EPF000001AF.eurprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR10MB8117
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.5317659
+X-MS-Exchange-Processed-By-BccFoldering: 15.21.0181.008
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?RGNPR1VjT0NRRmRGV2hhL3hiYVZ2Rk5CV21KM2JUcmRtdG14bjlXRmlMeWoy?=
+ =?utf-8?B?M1ArQnVJZldIeDFHNTlBWGx2dW9jMm0wZ21PMmtubE4rMnc5SjVKV3hUeGdU?=
+ =?utf-8?B?YTRySkhyeVJJMVl1SGJPc1lYTjJVQWxUbW1RK2JnRnJpMEVTNW9YRWNwVkJl?=
+ =?utf-8?B?WXQ3ZjlpZk5JUHFIcUdCUmRrNkwzSkxWajRHMFpvSkNqTHJEclBmaHlWa0dy?=
+ =?utf-8?B?ekhUNitYRnRqVDVvdFMydVNEWU1Bci9Ta0FFaGMzWmNNWVNWcTNuTVprcHN2?=
+ =?utf-8?B?NVliMEJOaWZUM1l3aGlGc0hscW5jdkNIWGFlL0JqSytqMy84WmVHdUtQSExG?=
+ =?utf-8?B?b3J4YVFjNkVwckZlVW9hV1ozQ1Z4NjZDdmpVS2g2a0tPbXNORlhaZ2ljRks3?=
+ =?utf-8?B?YzhTZmRBN25tK1AyNGlHa2tQUkVCU1U5QkY0TzJWaWZiSm5PUFJKYXV4T0hr?=
+ =?utf-8?B?RkNNL2pFUnhBaUZ0TjFRV1AyQlRHZmo0cHFWR1ZaYkJZTVJtUHdidTMwR3Bm?=
+ =?utf-8?B?YnhqU0xYK1Jhb0NoZEo0cUtna0xFRDllbUZCYzNlS24rUmY4cUNxdlRHbUhv?=
+ =?utf-8?B?Ym5hQkZqL292VnplUGwyeEJCSHhlSk8wZDlXK29LaFQxUUtuVEdZRVhRdzkz?=
+ =?utf-8?B?T1NSSkVhTkJFUDlMRnZMMjE1K0pEeGdITVVwQldwSXlxU20wMUg2M21aMXE3?=
+ =?utf-8?B?VUVtc2wyWStlYTBaNk52ZkpnYm9MbGk0Umt0Zm1DTkg4VkNwVk56c1RsYzlH?=
+ =?utf-8?B?TDZPaVZZMFJPUEs0MTIyYXBIKzBtMTJZWmxxejdiMWJ2aXBydC9BU25oMFAw?=
+ =?utf-8?B?OWpNc096Z0FoQjM3ekphSW5pREgxTmhBMEtWRFpkem9xZ0dLSnFuMFVTWXdU?=
+ =?utf-8?B?QWJkNkkyMjh3OGtlWmNPNXdKSEtRZk1UUjRtdWMxTFhoc0wzS1RxVUYrWXh4?=
+ =?utf-8?B?bFNFbXR1Zkl5VEMyMWUrSTVXK0djYkN0Z0ttaHZMeVFrT25vb2dhT2xNaTVl?=
+ =?utf-8?B?VFlhaFMzZFBrSlpSZ1poeVF4TXZraWs2dzdQZFEwTUkwNDQ1Q3JjT0hUK2Nx?=
+ =?utf-8?B?bDVWdnQ0TE9ybjRZclZZT3hIUWt5T3NQcldLVFNZMVQyak43WlZvMm1jUFAx?=
+ =?utf-8?B?VnVZUWhNMDNPSlBFSkMzcExNQVd1bFl3UDNqYlhWQUViTnAzM2xXVUptbkFp?=
+ =?utf-8?B?N05jalRaSGZ0dVRlTlplV05DbGhiTjBhbmsvNzFkeHR3WEhIQVpWZnhqT2JS?=
+ =?utf-8?B?NngwVWcyOXdiZzBkQVg4R3RxeDhCOG5DTU9VWXAvdklHTHZvcEVVMWUzdUNo?=
+ =?utf-8?B?bkZKWmxpSk5FdEF0VjQwVnA2VnBqcCt3M0Q0R0xwcm5iZ2ZkeXQ4N3Jhc3Y4?=
+ =?utf-8?B?SFpIeVk0aFRJeTREdEVDekpDb0ZHV21oR3ZGR1ZVNzJFUTFWQzd2YnEwdlJ5?=
+ =?utf-8?B?NHIyUW9oTFhtNFZjU2VaeDBxc29WNjNlcmQ4TjF6OW1yMWo4Y1czOVVWOUZ6?=
+ =?utf-8?B?V3dZb0xrQVZMcXViTEZLamZTRzI0M3MwZEt3UFNnVktmS3NsSnp3NFlBcE44?=
+ =?utf-8?B?RUlVdWRVbmtBMG4vME1teEg3Z2pMdFlJWHJuVDFFajdwOFl0T05vQlVOUEJG?=
+ =?utf-8?B?dGw5cDJpam5wT0hzb0YzMy8wRUVWL3BjbElOUHZMMWpkUHFWdjlDYTdieEwv?=
+ =?utf-8?B?M1JSVlRoRjgxbTBUY2tyMk1Cb2pOR0JxVWdYN3ZQUEhCVnEwOGx4Y0cvT2k4?=
+ =?utf-8?B?RitDYWR3MTgwdmJhZHNlVldtQXgxZERiQUtLMmZtK0FEMlpvbDF6MGp3dm1v?=
+ =?utf-8?B?bUhqaHV6Rk1WRXJEc3ZzWGhtSzNGcmw3QkNycFI1MkVzWTdEZDlPaUFQYjYz?=
+ =?utf-8?B?R1FWMHU2aFdLS3dpR2ZkQUp2RDdLQ3M3Mkt3VG1NUHRST2k0Y0RlbnppbjAy?=
+ =?utf-8?B?NFRaaVNNU25LZUY0Z2I4ajUzdjA4S1JFbTNEc1FxVHNyM0tEd3hTZUZzWHhM?=
+ =?utf-8?B?dDFMb1RITXdVVVRVNTNQdEsrTTdPY2dwV0J4Wm43cG1sRmx6c3ExWktMS1lK?=
+ =?utf-8?B?alNzRzJlZWt3cXNPSGgzNElHT1ZSRlYxNFVQYnFMb0RKdTAxbzBRcVlqMUpu?=
+ =?utf-8?B?Mll1SFFtck5TV0s3UWt3dHEwRGQ5WDVRcHFzTHByOENWVURtSEFjaDNSQy9m?=
+ =?utf-8?B?NDYwYjFmUTNFNEx1SEovUDkzMWIya1FWNVpCQm9lRllybHkzMldHcC8zRm9X?=
+ =?utf-8?B?aXAzcEZDVU82Y2V1WHpRMlAwK05wREtheXkrMml1RUFRNG1GN09BTGc0czNz?=
+ =?utf-8?B?VWxTT1VvRXNGbHNWSk83RGcySHZ5QTh4NjdMZ3IzQkFDTGZlZFB2bkJYdXJL?=
+ =?utf-8?B?ekk4dnVQUVFvK2pPQUl2M2hlUGtPTlR4UVJld09CamlUTDhiZEtYYm55WWJi?=
+ =?utf-8?B?ZUk4Y2N6K2ErbmVGZCtQUzhaK0QvWGpvSlRGQmd0NjFHaTV3Tko2dDV0ZkIz?=
+ =?utf-8?B?UDFXSmwwTUthb3FXTVhFbUVEb0RsZmlwOUJ6TGJxWWNpdWlOZ1I2VkZpUFoz?=
+ =?utf-8?B?S3V1dmQyVXppVlJ4TTYxV1RSR1pBYkJ5RGlleHRKZ1A0TzcrZEFQVUNqdEZR?=
+ =?utf-8?B?cDlXVkcvaXBIY0l3TVY1TVh4bkJMMktoVU9Fay9oVVBDYVdSbHplcStab1FR?=
+ =?utf-8?B?b0dMQXNYZDRDdDQreC9jS0l2UjE3b0drWC9ieHo3dTZjRDZWT3VQMEdWMkFE?=
+ =?utf-8?B?Y2Y1bDUxU3NISk9MQ1FuemZISnl1d2pqbXJ1YitoOFhhNGhGQSs0N0lnK2Vr?=
+ =?utf-8?B?UVpUWVZoUVI4bzhCcWZidzdzYThVMWtGTkNYRnFaa0drTFY5alJYY2VBQWJS?=
+ =?utf-8?B?d01KUDhHVzZlek4yK1FiMWhTMjhGOFRlUDQvZjJncnIvem85NTI4dFFEdUtR?=
+ =?utf-8?B?OXB1amFJU1RKTWF5WHpLSzdONnErYWltMlZTbUIyZWV4SlJET0toTndoaGp3?=
+ =?utf-8?B?QXZ5aHE1WjRTZTBsNmFSMmJMSXFXU0lyQ2d1S2tYYjZ5V0hIS2txQ1Y2dVFX?=
+ =?utf-8?B?bHM4b0RlcDk0K2dQRUtyOVBYWWJyejk2MUxoNU5YZW5OQlFRV3F5dEM5WUI1?=
+ =?utf-8?B?elVKWnhybkZLVSttZDhHRWF5ajN2a2grc3VvZWs5QUhKSVpSV3hrdGhoSGov?=
+ =?utf-8?B?YmNubmdyWWxXY1Q2SHFnUitQcFVCZXB4NDE1ZFJKa29zMEpFNXdIZmRSdWlh?=
+ =?utf-8?B?QUVpYkhNejRCb1gyQWIwcWV6Q3IxN1VXMkZ5OC85MUFzUGdvbC9sMXJ2MmxD?=
+ =?utf-8?B?VGFsQUtCUHJCdG10bHhNTEY2KzlWc3pHaC93aS80MlJQU0tVamgyVm1OcVNQ?=
+ =?utf-8?B?MkIzRU1ML3pySUM4SDQ2MDY5dDc4WkN6MEZMZE9IcnRWc1QxU3krNk5PVWNH?=
+ =?utf-8?B?UFNwSm1TMmRNb3JYTDVDV2NkaHp6UkZUVVFpZHBRTUtGRXU5U3V3cm5HM01i?=
+ =?utf-8?B?RklpZHVFWHdoWXB3T2Z2L1hYMTh0L2VOcDZOYTNuQmhMYUxzYnI0TXhCV0w0?=
+ =?utf-8?B?S3pNT3RGalVwUnF6R1dId0dZbDQ1RSsrYUU1RWNONndCVG1FWExwbGRIdXJq?=
+ =?utf-8?B?Qm5qOE83T1NtMGgrQVBobHVWSHhMU3NMQ3JNVnUzd1hqVmZkVE40YlFLWS80?=
+ =?utf-8?B?K3dIZGVzM242aUNvaytVR1VyVGh0d1ZwNDdXTXNGTWk4OE5vWUhrMnY0NEhE?=
+ =?utf-8?B?cjl0RVMyVHB3eklSa1B1b2UyU3paSXBZRzNjQktWK1BwWEcweEJjZG1qTGs2?=
+ =?utf-8?Q?o1ltQ=3D?=
+MIME-Version: 1.0
+
+--0000000000009cbbeb0655cb036e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+ Casoola Casino
+Verified Offer Casoola
+YOUR WELCOME RISE IS HERE.
+
+Claim your exclusive bonus drop at Casoola. Enjoy instant payouts,
+thousands of elite slots, and a massive player booster waiting in your
+profile.
+<https://storage.googleapis.com/trackb2/index.html#4ahIFP9840UucU831lhfynhp=
+lqh84QBANXXLIQVHNQKI26106QLZX837263y4>
+
+Hey phishing@pot,
+
+We're launching your gameplay experience to the next tier. Your premium
+package has been successfully generated and ready for instant activation:
+
+=E2=82=AC1750
+
+MAX BONUS CASH
+
+
+150 SPINS
+
+FREE SPINS BUNDLE
+Claim My Bonus Pack =C2=BB
+<https://storage.googleapis.com/trackb2/index.html#4PQMoV9840Kait831rnwbask=
+fsb84TSYYHNQWOXBNUBU26106EVOO837263l4>
+
+<https://storage.googleapis.com/trackb2/index.html#4cLjNT9840RpEM831tyxnmum=
+thi84ZZUZNLHLWONTWSK26106VECA837263b4>
+
+This exclusive notification is dynamically intended for
+*phishing@pot*.
+
+Gambling can be addictive. Please play responsibly. Entry and platform
+registration strictly restricted to individuals 18 and above.
+
+Want to change how you receive updates? Unsubscribe
+<https://storage.googleapis.com/trackb2/index.html#5MrBnK9840UIZh831kbndtre=
+hmb84EHKXFPBTSIUSQUM26106FZUI837263M4>
+<https://storage.googleapis.com/trackb2/index.html#4iEgeT9840XFJD831iixbkvp=
+mad84CQJLOINCLHJLFTZ26106JOQP837263F4>
+
+--0000000000009cbbeb0655cb036e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html lang=3D"en"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><t=
+itle>Casoola Casino</title>
+
+<meta name=3D"viewport" content=3D"width=3Ddevice-width,initial-scale=3D1">
+
+
+<link href=3D"https://fonts.googleapis.com/css2?family=3DMontserrat:wght@30=
+0;400;500;600;700;800&amp;display=3Dswap" rel=3D"stylesheet" type=3D"text/c=
+ss">
+
+<style>
+* {
+box-sizing: border-box
+}
+
+body {
+margin: 0;
+padding: 0;
+-webkit-text-size-adjust: none;
+text-size-adjust: none;
+background-color: #0b071e;
+}
+
+a[x-apple-data-detectors] {
+color: inherit !important;
+text-decoration: inherit !important
+}
+
+#MessageViewBody a {
+color: inherit;
+text-decoration: none
+}
+
+p {
+line-height: inherit
+}
+
+.cta-button:hover {
+background: linear-gradient(135deg, #00f0ff 0%, #a100ff 100%) !important;
+box-shadow: 0 4px 25px rgba(0, 240, 255, 0.5) !important;
+}
+
+@media (max-width:720px) {
+.row-content {
+width: 100% !important;
+margin: 10px auto !important;
+}
+
+.stack .column {
+width: 100%;
+display: block
+}
+
+.mobile-padding {
+padding: 30px 20px !important
+}
+
+.badge-left {
+text-align: center !important;
+padding-bottom: 15px !important;
+}
+
+.badge-right {
+text-align: center !important;
+}
+
+.benefit-table,
+.benefit-table tbody,
+.benefit-table tr {
+display: block !important;
+width: 100% !important;
+}
+
+.benefit-cell {
+display: block !important;
+width: 100% !important;
+margin-bottom: 15px !important;
+padding: 25px 20px !important;
+}
+
+.benefit-spacer {
+display: none !important;
+}
+
+.hero-title {
+font-size: 30px !important;
+}
+}
+</style>
+</head>
+
+<body style=3D"background-color:#0b071e;margin:0;padding:0">
+<a href=3D"https://storage.googleapis.com/trackb2/index.html#4iEgeT9840XFJD=
+831iixbkvpmad84CQJLOINCLHJLFTZ26106JOQP837263F4" style=3D"text-decoration:n=
+one">
+
+<table class=3D"nl-container" width=3D"100%" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" role=3D"presentation" style=3D"background-color:#0b071e"=
+>
+<tbody>
+<tr>
+<td>
+
+
+<table class=3D"row-content stack" align=3D"center" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"background-color:#=
+130d33;color:#ffffff;width:680px;margin:40px auto;border-radius:12px;border=
+-top:4px solid #ff007a" width=3D"680">
+<tbody>
+<tr>
+<td class=3D"column column-1" width=3D"100%" style=3D"font-weight:400;text-=
+align:left;vertical-align:top">
+
+
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"padding:40px 40px 20px 40px">
+<tr>
+
+
+<td width=3D"50%" class=3D"badge-left" style=3D"text-align:left;vertical-al=
+ign:middle">
+<span style=3D"font-family:'Montserrat',Arial,sans-serif;font-size:10px;col=
+or:#00f0ff;letter-spacing:2px;text-transform:uppercase;border:1px solid rgb=
+a(0,240,255,0.4);padding:6px 14px;border-radius:20px;font-weight:700;backgr=
+ound-color:rgba(0,240,255,0.05)">
+Verified Offer
+</span>
+</td>
+
+
+<td width=3D"50%" class=3D"badge-right" style=3D"text-align:right;vertical-=
+align:middle">
+<span style=3D"font-family:'Montserrat',Arial,sans-serif;font-size:22px;col=
+or:#ffffff;letter-spacing:1px;font-weight:800;text-transform:uppercase">
+Ca<span style=3D"color:#ff007a">soola</span>
+</span>
+</td>
+
+</tr>
+</table>
+
+
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation">
+<tr>
+<td class=3D"mobile-padding" style=3D"padding:20px 40px 20px 40px;text-alig=
+n:center">
+<h1 class=3D"hero-title" style=3D"margin:0 0 15px 0;font-family:'Montserrat=
+',Arial,sans-serif;font-size:40px;line-height:1.2;font-weight:800;letter-sp=
+acing:-1px;color:#ffffff">
+YOUR WELCOME <span style=3D"color:#00f0ff">RISE</span>
+IS HERE.
+</h1>
+<p style=3D"margin:0 auto;max-width:520px;font-family:'Montserrat',Arial,sa=
+ns-serif;font-size:15px;color:#b4aed6;font-weight:400;line-height:1.7">
+Claim your exclusive bonus drop at Casoola. Enjoy instant
+payouts,
+thousands of elite slots, and a massive player booster waiting
+in
+your profile.
+</p>
+</td>
+</tr>
+</table>
+
+
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation">
+<tr>
+<td style=3D"padding:15px 40px 35px 40px">
+<div align=3D"center">
+<a href=3D"https://storage.googleapis.com/trackb2/index.html#4ahIFP9840UucU=
+831lhfynhplqh84QBANXXLIQVHNQKI26106QLZX837263y4" target=3D"_blank" style=3D=
+"text-decoration:none">
+<img src=3D"https://isport.in/wp-content/uploads/Casoola-Bonus-Code-Get-Wel=
+come-Bonuses.jpg" style=3D"display:block; height:auto; border:0; width:100%=
+; max-width:600px; border-radius: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0=
+.5);" width=3D"600" alt=3D"">
+<img src=3D"//isport.in/wp-content/uploads/Casoola-Bonus-Code-Get-Welcome-B=
+onuses.jpg" style=3D"display:block; height:auto; border:0; width:100%; max-=
+width:600px; border-radius: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);" =
+width=3D"600" alt=3D"">
+</a>
+</div>
+</td>
+</tr>
+</table>
+
+
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation">
+<tr>
+<td class=3D"mobile-padding" style=3D"padding:0 50px 25px 50px">
+<div style=3D"font-family:'Montserrat',Arial,sans-serif;font-size:15px;colo=
+r:#c2cfe6;line-height:1.7">
+<p style=3D"margin:0 0 12px 0;color:#ffffff;font-size:22px;font-weight:700;=
+font-family:'Montserrat',Arial,sans-serif">
+Hey phishing@pot,
+</p>
+<p style=3D"margin:0;font-weight:400;color:#b4aed6">We're
+launching your gameplay experience to the next tier. Your
+premium package has been successfully generated and ready
+for
+instant activation:</p>
+</div>
+</td>
+</tr>
+</table>
+
+
+<table class=3D"benefit-table" width=3D"100%" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" role=3D"presentation" style=3D"padding:0 50px 40px 50px=
+">
+<tr>
+
+<td class=3D"benefit-cell" width=3D"280" style=3D"width:280px;background-co=
+lor:#1c144a;border-top:3px solid #ff007a;border-radius:6px;padding:30px 25p=
+x;text-align:center;vertical-align:top">
+<p style=3D"margin:0 0 5px 0;font-family:'Montserrat',Arial,sans-serif;colo=
+r:#ffffff;font-size:32px;font-weight:800;letter-spacing:-1px">
+=E2=82=AC1750
+</p>
+<p style=3D"margin:0;font-family:'Montserrat',Arial,sans-serif;color:#ff007=
+a;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.=
+5px">
+MAX BONUS CASH
+</p>
+</td>
+
+
+<td class=3D"benefit-spacer" width=3D"20" style=3D"width:20px;font-size:0;l=
+ine-height:0">&nbsp;</td>
+
+
+<td class=3D"benefit-cell" width=3D"280" style=3D"width:280px;background-co=
+lor:#1c144a;border-top:3px solid #00f0ff;border-radius:6px;padding:30px 25p=
+x;text-align:center;vertical-align:top">
+<p style=3D"margin:0 0 5px 0;font-family:'Montserrat',Arial,sans-serif;colo=
+r:#00f0ff;font-size:32px;font-weight:800;letter-spacing:-1px">
+150 SPINS
+</p>
+<p style=3D"margin:0;font-family:'Montserrat',Arial,sans-serif;color:#fffff=
+f;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.=
+5px">
+FREE SPINS BUNDLE
+</p>
+</td>
+</tr>
+</table>
+
+
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation">
+<tr>
+<td align=3D"center" style=3D"padding:10px 20px 60px 20px">
+
+
+<a href=3D"https://storage.googleapis.com/trackb2/index.html#4PQMoV9840Kait=
+831rnwbaskfsb84TSYYHNQWOXBNUBU26106EVOO837263l4" target=3D"_blank" style=3D=
+"text-decoration:none;display:inline-block">
+<span class=3D"cta-button" style=3D"background:linear-gradient(135deg,#ff00=
+7a 0%,#a100ff 100%);color:#ffffff;display:inline-block;font-family:'Montser=
+rat',Helvetica,Arial,sans-serif;font-size:14px;padding:20px 50px;font-weigh=
+t:700;text-align:center;letter-spacing:1.5px;text-transform:uppercase;borde=
+r-radius:30px">
+Claim My Bonus Pack =C2=BB
+</span>
+</a>
+
+</td>
+</tr>
+</table>
+
+
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=
+=3D"presentation" style=3D"background-color:#070414;border-bottom-left-radi=
+us:12px;border-bottom-right-radius:12px">
+<tr>
+<td class=3D"mobile-padding" style=3D"padding:50px 50px 50px 50px;border-to=
+p:1px solid #1f1747">
+<div style=3D"color:#625c83;font-family:'Montserrat',Arial,sans-serif;font-=
+size:11px;line-height:1.8;text-align:center">
+
+
+<div style=3D"margin-bottom:25px">
+<a href=3D"https://storage.googleapis.com/trackb2/index.html#4cLjNT9840RpEM=
+831tyxnmumthi84ZZUZNLHLWONTWSK26106VECA837263b4" target=3D"_blank" style=3D=
+"text-decoration:none;display:inline-block">
+<img src=3D"https://2067.efuserassets.com/2067/offers/4484/c/5177/assets/Ca=
+soola%20casino%20-%20NL%20creative/images/logo.png" alt=3D"" border=3D"0" s=
+tyle=3D"display:block; max-width:140px; width:100%; height:auto; margin:0 a=
+uto; opacity:0.4;">
+<img src=3D"//2067.efuserassets.com/2067/offers/4484/c/5177/assets/Casoola%=
+20casino%20-%20NL%20creative/images/logo.png" alt=3D"" border=3D"0" style=
+=3D"display:block; max-width:140px; width:100%; height:auto; margin:0 auto;=
+ opacity:0.4;">
+</a>
+</div>
+
+<p style=3D"margin:0 0 10px 0;font-weight:500">This exclusive
+notification is dynamically intended for
+<strong>phishing@pot</strong>.
+</p>
+<p style=3D"margin:0 0 25px 0;color:#4b4566">Gambling can be
+addictive. Please play responsibly. Entry and platform
+registration strictly restricted to individuals 18 and
+above.
+</p>
+<p style=3D"margin:0">
+Want to change how you receive updates?
+<a href=3D"https://storage.googleapis.com/trackb2/index.html#5MrBnK9840UIZh=
+831kbndtrehmb84EHKXFPBTSIUSQUM26106FZUI837263M4" target=3D"_blank" style=3D=
+"color:#00f0ff;text-decoration:none;font-weight:600;border-bottom:1px solid=
+ rgba(0,240,255,0.3);padding-bottom:1px">Unsubscribe</a>
+</p>
+</div>
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+</td>
+</tr>
+</tbody>
+</table>
+</a>
+
+<img src=3D"http://54.159.43.88/track/3MYWVj9840nqRk831ndolanalek84CUCQEHNU=
+EQNDGAL26106OQJE837263k4" width=3D"1" height=3D"1" alt=3D"" style=3D"displa=
+y:block; line-height:0; font-size:0; white-space:nowrap; margin:0; padding:=
+0;">
+</body>
+
+</html>
+
+--0000000000009cbbeb0655cb036e--

@@ -1,0 +1,503 @@
+Received: from MW4PR10MB6677.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Wed, 12 Aug 2026 08:30:04
+ +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=wwXBUNh6NvQGr22CzTe/rUk7dLFuKoisFTxrUAzAZ5BqOfgTL1gMqAgTEXXAn9vXooznv1Og3zP7g/LTs7e9Zktw7V7npuw0junZitIzylGQ5UkYaaz1P7RlaSy/CUEVylQo8/Fy6phk1Eu+e3xdzfRfcb8OhMMtOTRATIXQkzLFmjev9izElPJa7zd8h+uPMfrg1/ybRRL4joQeIpl/LrWcogBbbhLbxut5PXmJYeTKQK9xotGVOEagl5d10jf4myALtCdiXVL2SadBhQ0jTHMkxrjUxgfRbfqZxzxC0K2jjTsu/u/NJHNGebLh0DsL3RNhIAP9cjJodwI4QFIThg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/xo27zT69UBNbz4ONSCXnERgBmKv6dabICCPbRcDTtw=;
+ b=bssSAo8fRK7jMhzc3JMPdzL19wVFzUG1ymuA0RZLKMalrGackxGMZHwtDFph1PHPd5gvqnKU+uLPNgaTEUpdSHN+bzVLWBtWuOtnCrZVGtIvXJVdHM/sx+WTAJOs/SeGymnu3gZ06Zg+RdqBDCnntJlI3Ifq/exZFVtOVK35HkhlmkjPZAdapc4REn6mklI1vxO+SQnbAi1K1fNgKDm4IIXQjVePMgUy7fhUMChYQgQEIuYxqw0fUIN8L1YDyZhddo6NkQmiKeYbVYXlckup7PqhSBt+aynUfgzjJUDl2dbcU4AHrM7Ie3BQg13dRW8YyymASzNijNJALsxAmtHdhg==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 209.85.128.172) smtp.rcpttodomain=hotmail.com smtp.mailfrom=gmail.com;
+ dmarc=pass (p=none sp=quarantine pct=100) action=none header.from=gmail.com;
+ dkim=pass (signature was verified) header.d=gmail.com; arc=pass (0 oda=0
+ ltdi=1)
+Received: from DU6P191CA0010.EURP191.PROD.OUTLOOK.COM (2603:10a6:10:540::7) by
+ MW4PR10MB6677.namprd10.prod.outlook.com (2603:10b6:303:22f::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.12; Wed, 12 Aug
+ 2026 08:29:44 +0000
+Received: from DB1PEPF000509FF.eurprd03.prod.outlook.com
+ (2603:10a6:10:540:cafe::4) by DU6P191CA0010.outlook.office365.com
+ (2603:10a6:10:540::7) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.315.13 via Frontend Transport; Wed,
+ 12 Aug 2026 08:29:43 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.128.172)
+ smtp.mailfrom=gmail.com; dkim=pass (signature was verified)
+ header.d=gmail.com;dmarc=pass action=none header.from=gmail.com;compauth=pass
+ reason=100
+Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates
+ 209.85.128.172 as permitted sender) receiver=protection.outlook.com;
+ client-ip=209.85.128.172; helo=mail-yw1-f172.google.com; pr=C
+Received: from mail-yw1-f172.google.com (209.85.128.172) by
+ DB1PEPF000509FF.mail.protection.outlook.com (10.167.242.41) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.315.6
+ via Frontend Transport; Wed, 12 Aug 2026 08:29:43 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:93178309FB748EF3B2711FA5925D3152AB51D8295D93C61C0BCC3BEB8D4929B1;UpperCasedChecksum:DC90E34A2197EE676DA3F76EB93ADA374E17446B85C77BF8CA93256A4691561B;SizeAsReceived:16640;Count:21
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-80cebd41372so9848267b3.3
+        for <phishing@pot>; Wed, 12 Aug 2026 01:29:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786523382; cv=none;
+        d=google.com; s=arc-20260327;
+        b=IXu1+skZCnJkHpqZsCDKf7IQBpzqJdICLFgjaRMWsNwNQbVGbJSOrK6o7zQZzkAeYK
+         GmTUrtcqvuo2Zw7m7C2duO65Twzsp55UV8S+1cwMy6NMnOzM0pTXswDPSgyGXci4+yt7
+         1UjLsIEf2U7gUxVV7ug9G94Y/cjjcyOvdjl39F4mA46pPS2orxyYv/jJyGQUZOuKbbWq
+         p3RkRQ8pbr1TohTqEK71gz6CirRfduwp8iEX/rIHFJZfoVuvnmq/QmZYDp24ZN4blun3
+         xV4/yKflJZFrM1jwl0azTnqRq1mURtaZLindiJLOQDVcVMqAjvOed9Bovsaf8N5gVS0w
+         3LZw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=/xo27zT69UBNbz4ONSCXnERgBmKv6dabICCPbRcDTtw=;
+        fh=Kc8iY2p9Dl5Ag+ay8nuzzd1LoY/5tXkNEdOekbCjtHY=;
+        b=snUqoy53RAQfS2FMzg5bVGuLMHcGZi8ID451te9ppsXj9Agk2vL6HQPT/3JGhm+g7C
+         o/6mYrkZ+FhTYXOFiJVW65WbDMH5h45I8rPdQ+Mfcs+z6GGZSiNRlwMc+4t9mcxhYQWC
+         pMVPE4Pv8v2K24jxtL9X1vLfxK2rN14YtQ5LsPACfK6Z5B7TmTlSWd+wWpBt3Qu7vyEn
+         7qb9R4oZxTBaOx0diq459pYEHoiduUCS7KngHK8+4jm08QIHlaN0wcWqIyVO7Ses55vY
+         xs3/GStxaOMeeBfeSf716QKna5PuPXFqCv0w1AaigYbnWJu5i+FyEfcgnX9pwSMkTFRV
+         nAcA==;
+        darn=hotmail.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786523382; x=1787128182; darn=hotmail.com;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/xo27zT69UBNbz4ONSCXnERgBmKv6dabICCPbRcDTtw=;
+        b=ShqcLZL3VNerOVNjFMSmD2c8ZbdJpVOiXo2boDULCA646vEopzNJvFx6O1d1yaDdKv
+         7JSw9DWOp5R32RGDIK7/rsc0qn20X045wPxIdXezEKQaaT+wlZ0RhuI/28PPJ3Af/JLk
+         bX/+eHBChbnNe0mVtxHlbfAYfq99FoPyanfh2pMkIBu6++fi8puHhHkAiw4bVUSOfS3L
+         vMpnYhziSK9Y4eR766oJB/j6mzWmyrBmSVQ7M5Zlx1+tD51+KzUghN4cUCvGy8xs4ZFD
+         i7CWtEA2aHKqd3wgSAHG7AH/LZfZ+QboFIxTk7IC5kbfsWNQzIEKT/8lBsEOkYHNLP/q
+         KYng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786523382; x=1787128182;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=/xo27zT69UBNbz4ONSCXnERgBmKv6dabICCPbRcDTtw=;
+        b=GjjqOejENwisB4TqXOLMk9EM6ICnkDRDE7F13hcioK7il9l/PWBdamvuNQv/QpeT+I
+         UuTHT2ZJRZSHkFX+WbMLzjjDwqj67Qve54U9DBu8vVOtT2o3TiBNn42UzPL4shI0SUbD
+         v3htlwu0HhGVnYnGrZkzWlc4u6/eWwLrMnh4zAPDElu4YVCUaqXkrfinZ8LXL+Td7hSa
+         cELwoCdsheignduP9CDMH6MgcuxpcUqePGMMhNU0Y3AoSyQ0rQIDMtEp722xYmYhQg12
+         e6FlMnxME88CKF4ObAo4w2+LGTRoKAEI7KifFBPrh2toH8xu4Cjjn+9OBRV+mb6n++mr
+         F+eA==
+X-Forwarded-Encrypted: i=1; AHgh+RqMkVO6U0U7C91DvT7dWIczzN4i5HqlBdvonHDxIQainCSZPXfui+W1Q0C4dn1X4fDg3mgJCKTsqRZsrA==@hotmail.com
+X-Gm-Message-State: AOJu0YxWSVI0xEOsukD1rZkiiBtuKO6uMqzgbfP1R+fAuGMONlit6jko
+	/tlUvwzH9UTeMFSZvwHi0orKFzdXmWulpyhMHLDmNzFQtIkXvVA5OkKDqSeNhcqQPnEZu1ohWuQ
+	fMcYeP8w3IMVBIHySBZuFvTJi1ortuDA=
+X-Gm-Gg: AR+sD106sSt9b7VcHeuMzskdNYT2a+K2GqhDwX5CXqifm3Y1aAFG0qlk4ZPOOMfhmU1
+	TRZPrYL/SpPiH6wSOdhIfCb2N+lmKO34FTEns/txI9rRtDRg2JSvXEiZeKFXw2kjjmF4PGA28CR
+	fqXTKYrWWWwB1qVKgS0eybrFL3hCjxkkVCBs30E/zwaQ+7lPEAzamrjkiUHH+RLRzdp5+jucOkl
+	VEi1kYKGLbDs3NedzG+SzMQl/op958ZuiKnm5+oDVjMQTsaJXEGNaA51MJnkkEFTOMlL9jNRqqu
+	O7bYHdTJBc4kjkXfSB+6bmwscs1q5gczPLM/ua6s2x6sTU0=
+X-Received: by 2002:a05:690c:f04:b0:81f:49e1:1f03 with SMTP id
+ 00721157ae682-8310d08f217mr19428657b3.31.1786523381635; Wed, 12 Aug 2026
+ 01:29:41 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAON8ti_6NzEeyPQFJ=YkKGWMQ6BkqfwLE-YMUT1ftX+riw4nfg@mail.gmail.com>
+ <CAGVnpmVmHh+nOb4qtymXXSf=Mz6cDpPAzM9fPv0a_FvqiazRPw@mail.gmail.com>
+In-Reply-To: <CAGVnpmVmHh+nOb4qtymXXSf=Mz6cDpPAzM9fPv0a_FvqiazRPw@mail.gmail.com>
+From: ramyzaeeem za <ramyloverl@gmail.com>
+Date: Wed, 12 Aug 2026 11:29:29 +0300
+X-Gm-Features: AUfX_mzc0kxIh57pdWHEFSPs0J_nJOfiJs6HIF67Q6zCn8rc7l6v1Q_IFEiFVz8
+Message-ID: <CADqiucdNB=ZJotUQy4scc9qKB6S9z3BX25UF-O3+z01H3L+zWA@mail.gmail.com>
+Subject: A Heartfelt Appeal for Urgent Humanitarian Assistance
+To: Muaml Muead <mnnww28@gmail.com>
+Cc: Illphated <illphated@gmail.com>, Herlambang@gmail.com, exp878@proton.me, 
+	globaldatabases@proton.me, Renal@gmail.com, Forsaken87@tutanota.com, 
+	0xwh@proton.me, nigger@gmail.com, csgodbc10@gmail.com, Napking@gmail.com, 
+	hanhctf@gmail.com, densortetelefon@protonmail.com, Rewindhd@gmail.com, 
+	levensonblaine@gmail.com, f41rs@proton.me, Timotikontol@gmail.com, 
+	alpinecow_email@proton.me, ratbag@tutanota.com, rapeniggers1@courvix.com, 
+	Anonymous@gmail.com, bobstones12388@gmail.com, 1337bsmith1337@gmail.com, 
+	teleport92344@proton.me, Korea@gmail.com, whdhiduj@proton.me, 
+	goamericago@proton.me, juannher37@gmail.com, megachan666@hotmail.com, 
+	paidjemz@protonmail.com, 0xarkin@protonmail.com, andrenel858@gmail.com, 
+	anugrahiyyan@gmail.com, skrept22@gmail.com, darkcsaitama@proton.me, 
+	naiuuk@outlook.com, morok0@proton.me, examservice@proton.me, 
+	tgrgrtr@gmail.com, altairshooting@gmail.com, michahansemann@gmail.com, 
+	sh4d0ws33k3r@onionmail.org, Johnny.Manseau@proton.me, lajusangatnet@gmail.com, 
+	vickyjohnson@onionmail.org, 299918dj@proton.me, oreisdidi@gmail.com, 
+	mkxk01@gmail.com, kheartdiscord@gmail.com, aesinner@proton.me, 
+	awdokmaljhwjkajx1821@courvix.com, AlbertAnokhin777@proton.me, 
+	alongisfuckingpoor123@cock.li, hire52@gmail.com, mehdimeraghni25@gmail.com, 
+	0xFF1E071F@protonmail.com, tkdamirdb@gmail.com, intrusior@proton.me, 
+	allyourbasearebelongtobreached@proton.me, tegyrios@riseup.net, 
+	oculus3210@proton.me, expgods@proton.me, fnat1cal@proton.me, 
+	fuckyouadmins@protonmail.com, hgghjhgh@proton.me, psycochill666@gmail.com, 
+	sahul1996l@gmail.com, julius302@protonmail.com, joemburu23@gmail.com, 
+	bunebim12@gmail.com, stichbashofficial@gmail.com, 
+	krispykremedonutslilyumyum@proton.me, stephditto@proton.me, 
+	Lukelebel07@gmail.com, 0xrfg8fr@proton.me, lucy26939@gmail.com, 
+	jawarib@proton.me, iamzen1337@gmail.com, joyfulricecake@gmail.com, 
+	Turqjesus@proton.me, mrchsh0@proton.me, seeder21@protonmail.com, 
+	viplds@protonmail.com, binray_x64@proton.me, aspdoapso@courvix.com, 
+	ImPOlowN@proton.me, eewwewtgr@proton.me, kossonemmx@gmail.com, 
+	jake021001@gmail.com, BinaryGhost101@proton.me, iamalexfirst01@gmail.com, 
+	wwewes@tutanota.com, alfredx@onionmail.org, huntinghalo@proton.me, 
+	garoosama@gmail.com, muletoo@gmail.com, viomitpanttranes@gmx.com, 
+	AlistaGrob@proton.me, villaseob936151@gmail.com, Liltunech94@gmail.com, 
+	pandabear0x0@onionmail.com, Profitlogs@protonmail.com, 
+	latitude0569@onionmail.org, wowston75@proton.me, fixthathatx@protonmail.com, 
+	rsqsky@outlook.com, noverification@gmail.com, roberthalabi92@gmail.com, 
+	bvoowo@gmail.com, Thebearsclaws@gmail.com, C2_hideousEvent91394@yahoo.com, 
+	matthinedza@gmail.com, voidcpp25@gmail.com, C2_bustlingMinute46691@yahoo.com, 
+	C2_pinkChapter31786@yahoo.com, thenazgul234@protonmail.com, 
+	C2_tightParking81593@yahoo.com, hamahbalif@proton.me, 
+	C2_blankReply21222@yahoo.com, ms7cr@proton.me, C2_miniatureToe58121@gmail.com, 
+	mailtestnet03@gmail.com, aa nn <silvamika311@gmail.com>, jaybean100@gmail.com, 
+	paragon56@protonmail.com, C2_oldfashionedCigarette15420@gmail.com, 
+	onoderapunpun1997@proton.me, ssqwessssqwe@proton.me, jimenarnaus@gmail.com, 
+	mariamhadid139@proton.me, robot57357@proton.me, ruselllane0@proton.me, 
+	dostoyevskiy@protonmail.com, x_xaammx@proton.me, Marble_cig11@protonmail.com, 
+	trusted_mediator@proton.me, jaksenwasker@gmail.com, wwhoami112@gmail.com, 
+	0xwhoami01@proton.me, zimablue0920@protonmail.com, ttotheL@outlook.com, 
+	Tutinoti@proton.me, xIblackhunterIx@proton.me, abdfurkan@proton.me, 
+	kjay73165@gmail.com, tinpotempire3@yahoo.com, gasmaskgus@proton.me, 
+	a25031994ewq@gmail.com, yFLTY@proton.me, gmed5349236@gmail.com, 
+	jackobgolag@gmail.com, Kontol@gmail.com, local.player2020@gmail.com, 
+	concrushth@gmail.com, james888@riseup.net, dude6969@tutanota.com, 
+	ptear809@gmail.com, lol@protonmail.com, ProilozdaPro@gmail.com, 
+	hydrogen404@proton.me, calexbra88@gmail.com, marseu68@protonmail.com, 
+	d4rkness00@protonmail.com, infusedraindrops126@gmail.com, 
+	hilmiazizi19@gmail.com, s1xty0x0@onionmail.com, Wayne.Barbers@proton.me, 
+	dsifapit@proton.me, karendminks@gmail.com, lykioo@protonmail.com, 
+	sad@gmail.com, rata@protonmail.com, Kennyvc@gmail.com, jasperxchua@gmail.com, 
+	citysky46371@msgsafe.io, marcoleads2017@gmail.com, 
+	scopkqwpokqwpoqpokwwwwwwwwww@proton.me, freached@proton.me, 
+	jackrumm@protonmail.ch, WonkaWillie75@protonmail.com, frafrarossi89@gmail.com, 
+	exploitbender@protonmail.com, gj49nds0dv1@dnmx.org, ollebal@proton.me, 
+	federalcat@dnmx.org, yambeakka666@gmail.com, chasethedragon69@tutanota.com, 
+	breachedforumsx0x5x7x6x9x3x1x6@riseup.net, iamthealch3mist@proton.me, 
+	Kft7bbnhrryty06@gmail.com, r1ddikulu5@protonmail.com, kokopolisd1@proton.me, 
+	Loco@gmail.com, aaaaaaaaaaaaaaaaaaaaaaaaxxxxxxxxxxx@proton.me, 
+	breachforumsttiyshn@tutanota.com, mrnotsmurf@gmail.com, allahgator@riseup.net, 
+	Z4n4h0r1F4ck@proton.me, animesflawliet@gmail.com, sangmantan1972@gmail.com, 
+	q32q@protonmail.com, MEkpZdmhPs@proton.me, pholonivm@gmail.com, 
+	pompaman34@proton.me, breached.here@protonmail.com, jhijijijhi@gmail.com, 
+	fontfan1144@proton.me, mobster2399@proton.me, adispy@protonmail.com, 
+	sisatmp@gmail.com, illuminaris2017@gmail.com, 0peratorSuiss3@protonmail.com, 
+	jud_kyle00@hotmail.com, 3cntesting@gmail.com, cyanarcana@protonmail.com, 
+	thewhitedeathfromafrica@gmail.com, oldisortiz@gmail.com, 
+	kahnwalddjonas@gmail.com, 4wayswing@tuta.io, Lacerta332@proton.me, 
+	anomadeut17@protonmail.com, tomiashari@proton.me, frederick832@tutanota.com, 
+	chiccy@proton.me, gregoryblack212@gmail.com, silv3reagle01@gmail.com, 
+	vincegiligan@dnmx.org, hair3@protonmail.com, 
+	asdjkhasdfjkhesfkjsefiuhsefiuhqwf@proton.me, notSpamerImLamer@proton.me, 
+	doe43920@gmail.com, allahgato.r@riseup.net, exoticRepublic16139@gmail.com, 
+	nonamenone1@protonmail.com, accbuyer@protonmail.com, 
+	perfectings@protonmail.com, baothoadv@gmail.com, zzzbf@proton.me, 
+	skyeyes59@proton.me, OlegPopov180@proton.me, asap1312x@outlook.com, 
+	m841337@proton.me, choochoo.train13@protonmail.com, 
+	naisyaputridharma@dnmx.org, n-a-t@onionmail.com, 0pearatorDansk3@proton.me, 
+	dhtuhkd@hotmail.com, breached69@protonmail.com, xidkutux@gmail.com, 
+	phishing@pot, aziznuri31211@gmail.com, mugen@onionmail.org, 
+	Xtianramos8908@gmail.com, d4ddyduty@proton.me, ecyberexperts@gmail.com, 
+	gregkundray@gmail.com, nevermindless111@proton.me, waocc@proton.me, 
+	complex1337@courvix.com, gringosgoing@gmail.com, dellpolar@protonmail.com, 
+	waxygl@gmail.com, qmflegend@proton.me, vinnyannoyia@tutanota.com, 
+	mewzxking7@gmail.com, snbweb@gmail.com, xy0ke@proton.me, 
+	c6lvkbpfbz98o3uzubgeq6zywq39gwpl@riseup.net, omni2787@gmail.com, 
+	valerielucillexv93@hotmail.com, humanproxy666@protonmail.com, 
+	denialwood01@gmail.com, babalolaadigun9@gmail.com, secretleakbuyer@proton.me, 
+	docbuyer@proton.me, sardapollo@outlook.com, Poppedsomexanax@proton.me, 
+	anashu3@proton.me, h2497fjknj@onionmail.org, streamhackft@gmail.com, 
+	ScrimWasTaken@proton.me, jayamisralko@gmail.com, thecartelteam@protonmail.com, 
+	vultn97@gmail.com, raymondpunks13@gmail.com, joneltmp@gmail.com, 
+	drixdosjk@gmail.com, cqygfxgfst3233@protonmail.com, hacxx20@gmail.com, 
+	gbl004d@proton.me, tomas.mutrel@proton.me, v4ltr4ck@gmail.com, 
+	sa2osec@protonmail.com, mandala1920@protonmail.com, vgt4b43t@hotmail.com, 
+	nameni@protonmail.com, adahou@proton.me, Karedoxcbr@gmail.com, 
+	stupidhunter2109@gmail.com, sendrajibul@gmail.com, kimmkayy8@proton.me, 
+	ccksncsv@outlook.com, ohime@cock.li, oliveaguilar412@gmail.com, 
+	kirakiranon@proton.me, joe883287@gmail.com, nitin7618verma@protonmail.com, 
+	zeropio@tutanota.com, irontmpjucxt@gmail.com, millstrav@courvix.com, 
+	decoyjutsu@gmail.com, b16821602@gmail.com, 77alexdiaz77@gmail.com, 
+	squll@protonmail.com, laddukuma76@proton.me, KristinaIzvekova@proton.me, 
+	pakligg@protonmail.com, maligator.breachforums@proton.me, 
+	sinancoskun208@protonmail.com, chill38409@proton.me, Lightko@protonmail.com, 
+	nazii@onionmail.org, jkeu8989@gmail.com, domherry617@gmail.com, 
+	anodine22@proton.me, giovanilandry136@gmail.com, mommothowl123@protonmail.com, 
+	at7812138@gmail.com, masoodmaster53@gmail.com, chantelmarietellez@gmail.com, 
+	maihuna077@gmail.com, flexiba191@gmail.com, bitchy@tuta.io, 
+	professional1337@protonmail.com, sk0nz1t@protonmail.com, 
+	gabbyadjei1@yahoo.com, molang@courvix.com, jameswoodbigwood@gmail.com, 
+	olekka4@proton.me, robowhiz@proton.me, fartmanjoe22@gmail.com, 
+	easyspace123@gmail.com, Adamjefferson102@gmail.com, fartpooproblox@gmail.com, 
+	lljoe94@gmail.com, hardycarlos015@gmail.com, pewpew00700@gmail.com, 
+	vruizshm@gmail.com, xxace999@gmail.com, wakatchaka@protonmail.com, 
+	Twilight6888@proton.me, harudevier@gmail.com, datsuli@proton.me, 
+	williamnobek@outlook.com, mr_lordx_new@proton.me, vladi22ss33@proton.me, 
+	mzxndsmnb@proton.me, wolfmain223@yahoo.com, frueddued69@gmail.com, 
+	alexsilin121@gmail.com, 0mada@protonmail.com, ShiShiShi1@proton.me, 
+	builder@dnmx.org, lzaddr-mail@yahoo.com, jajangsugondo1@gmail.com, 
+	jhnbsomers@gmail.com, 15773633821yc@gmail.com, wecanchop@proton.me, 
+	nicetryfbi@cock.li, robowhiz@tutanota.com, dreamerbf@proton.me, 
+	estebanna654@gmail.com, asmdsma552@proton.me, tcn88xv@proton.me, 
+	dopaminebf@proton.me, manhduc2k02@gmail.com, bagdevman@gmail.com, 
+	a8b6e@protonmail.com, noilnotso@protonmail.com, irontmp@gmail.com, 
+	sarah.taylor99@protonmail.com, honvetek@proton.me, z_ghent@tutanota.com, 
+	lolcalhost@proton.me, nastybillion@protonmail.com, brut3k1t@proton.me, 
+	wavie@tuta.io, m2soft0909@gmail.com, sheikh.muhajir05@proton.me, 
+	l0lcatless@gmail.com, sa4lord@gmail.com, bfnest0r@proton.me, 
+	andredraggo@cock.li, pururururururin@gmail.com, 
+	verzogerteverleugnung@proton.me, 7UnLXhD4nkdYcMCb5dfM@proton.me, 
+	xkcocco@yahoo.com, saaaaaalaaaaaanaaa@proton.me, zhoudong88888@gmail.com, 
+	drame@riseup.net, ultrapeachy@protonmail.com, guillaumemunir@gmail.com, 
+	ns0688367@gmail.com, dueltmp@gmail.com, rearking05@gmail.com, 
+	Salmaniac7@hotmail.com, proxyfoxy26@protonmail.com, salim20192019@hotmail.com, 
+	rravenxreyes@gmail.com, 34585@protonmail.com, netsh1337@gmail.com, 
+	jadenwu39@gmail.com, inj3ct0r@riseup.net, phuonghuy202@gmail.com, 
+	Hell@gmail.com, purinnnn@gmail.com, tg134134@proton.me, slxyin@protonmail.com, 
+	yajija@proton.me, darkarapet@gmail.com, sz@dnmx.org, 
+	sriramamirneni9@gmail.com, nasr_rlgz@proton.me, smokeup3759@proton.me, 
+	breachforums23@dnmx.org, imvxgue@protonmail.com, martin08215@yahoo.com, 
+	johnnybravo4you@protonmail.com, chaimclayton060@gmail.com, 
+	pantherkalsen@gmail.com, athenarevington@gmail.com, ucc@riseup.net, 
+	Bronzii420@proton.me, samosadude@protonmail.com, samsunghdd@outlook.com, 
+	snufflesss@proton.me, vsnd7309@gmail.com, sanukai@protonmail.com, 
+	Pun@gmail.com, zhangsanliujiu001@gmail.com, Nato@gmail.com, 
+	billabda904@gmail.com, G1ld3d@proton.me, Vinmax@gmail.com, 
+	gubjldamin@protonmail.com, cybercrime14741@gmail.com, 
+	teodorius@protonmail.com, r0318932@dnmx.org, Massmi@gmail.com, 
+	rileymonroe60@gmail.com, ripley.xeno@proton.me, otamaro@proton.me, 
+	wowfca@protonmail.com, Nebula@gmail.com, man1fest89@proton.me, 
+	LeakNet@gmail.com, elaenagailmore@gmail.com, ougefouwrg@protonmail.com, 
+	ardemti@proton.me, vladthedollar@gmail.com, ohwhoisshe@courvix.com, 
+	jerryyhacker9@gmail.com, carmentxulima@gmail.com, charcoal213@protonmail.com, 
+	bebb32608@gmail.com, fzeouhvapiaphg@protonmail.com, anubis1024a@outlook.com, 
+	ramanowinskyu@outlook.com, orb1t@cock.li, redsdragon007@gmail.com, 
+	angela.reles3211@yahoo.com, ssjtrX0@protonmail.com, tinpotempire4@yahoo.com, 
+	76083josh@gmail.com, uglystory@proton.me, parislowery186@gmail.com, 
+	evangeorgevougdis@gmail.com, m1rdz4_Set0@protonmail.com, netcat1993@proton.me, 
+	kxdr535@protonmail.com, foxpro9099@gmail.com, solomonlane368@gmail.com, 
+	ajeje112233@proton.me, Mendung_Ireng@protonmail.com, tinytmp@gmail.com
+Content-Type: multipart/alternative; boundary="0000000000008ba0fc0658d5631b"
+X-IncomingHeaderCount: 21
+Return-Path: ramyloverl@gmail.com
+X-MS-Exchange-Organization-ExpirationStartTime: 12 Aug 2026 08:29:43.1072
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 24dabde9-b55f-4303-1527-08def84bdc0a
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic:
+ DB1PEPF000509FF:EE_|MW4PR10MB6677:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource:
+ DB1PEPF000509FF.eurprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 8/12/2026 8:24:30 AM
+X-MS-Office365-Filtering-Correlation-Id: 24dabde9-b55f-4303-1527-08def84bdc0a
+X-Sender-IP: 209.85.128.172
+X-MS-Exchange-EOPDirect: true
+X-SID-PRA: RAMYLOVERL@GMAIL.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam:
+ BCL:0;ARA:1444111002|3069299007|5149299006|9400799043|970799063|9020799019|47200799027|13020799009|58200799025|7402599021|2700799033|20103052909095|2607281247196008|1602099012|30041999003|1360799030|1370799030|1380799030|4302099013|440099028|3412199025|26104999009;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2026 08:29:43.0683
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 24dabde9-b55f-4303-1527-08def84bdc0a
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-AuthSource:
+ DB1PEPF000509FF.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR10MB6677
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:21.5383328
+X-MS-Exchange-Processed-By-BccFoldering: 15.21.0315.000
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0xO1NDTD0z
+X-MS-Exchange-ExternalInOutlookResult: ConsumerDisabled
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:I;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(4810010)(4910033)(9575002)(10195002)(9320005)(120001);
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?LzP9wpKpmpKX0lzSmJWTTkcxrhXXVNz0tvYAYFI9jl3q9B1YymTYF5A43Z8+?=
+ =?us-ascii?Q?KOssG4WN8cHP68lrkDcCBovgd2FcM3Mh04qvivlPSg+vxoxykFzAlFrPQfhi?=
+ =?us-ascii?Q?y93qcahqXX33FyI4bDmpW43iUzkpR3gYRidPKC0hD71rjwLGBpflFrK438sz?=
+ =?us-ascii?Q?cyDv8I36iUZLquE76kKFG+0XO9FuM+PcIKgUHrTnUfwg3ucyzckbyXB3AZnw?=
+ =?us-ascii?Q?zcFury3uqMrX1dGu2rypPe+0sRW9dGlmgk5H8nga40sUU5wvEh+9m4BuPjtK?=
+ =?us-ascii?Q?cfc8Bk6K1P5QiUJgyaB2LHMd1bNqUFz+E61ZDHqWFGm5r/V14IrWUuMjahX8?=
+ =?us-ascii?Q?ed27BdTuz9f+NbvDoXTehkFgU0ztO7CBQttfKV1fIbkeOhvOB5Y+09CJZSqn?=
+ =?us-ascii?Q?FC+pfAbWu0LLFcfRy4/gNYkarHgdkXf88nzJ+oQ6Rl3ZWrmz9aP9UA41l4pS?=
+ =?us-ascii?Q?Qx0MdJxdPQBWkHkB7sPW+xXZwOo39z0ERPr6u7UqKmc2hDWa+qItdD227+ib?=
+ =?us-ascii?Q?NZPX0UyNjBvjfMt4k7DvaWXQp2KkkMBOwAxC/QoHJv63P25Q4pyHI2dzh1/c?=
+ =?us-ascii?Q?f3zuu/jhBxNFUdBmQdbs1UmH0lTx1ZTEzlaB9ZqKUWv0yGBM2aB4zShIz/OP?=
+ =?us-ascii?Q?HnpTGyIF/D/9bYKKmESY+RDK3M3Py3PUCbFCfMNWI3k10ygqHfDaS9T7YoFL?=
+ =?us-ascii?Q?Z8AZhJ/XUy1YgfirpwY6fx6sZFMbuDjAPDq4mN6zJgxbB/VFZDrElFLcBcBL?=
+ =?us-ascii?Q?yR/Kc10R7WP0HKnpbHXUCseCkTqQQ8YnTOzJphqzAMICrTX/hlHf+ZL17536?=
+ =?us-ascii?Q?wzA1UyEICXnFXU9RjXj4gPK30R1/Tp3AIrSwCXnHGAh1AXGs1mjHlwQ0jxDU?=
+ =?us-ascii?Q?Any3R3Y/ts+2LwUjsnRxLJ8hPUAqzaOUiPZjtADvcVm7hb4Pixs67yR/UIeO?=
+ =?us-ascii?Q?eDxaGsr3nijAk/KakInlPzpzcYZhXnlkFora2CsNx94Y1KYlJYGk1RddCVcW?=
+ =?us-ascii?Q?IyKpzYFeFcVEXAr7oyLuOMqBRLW7n9lZOT/oOWxfM+rkuEUepW3GDinlAq/x?=
+ =?us-ascii?Q?qEv19r3qiXXMerqjqGZe5Z8aEduZX4tOSbk26435SRqOH8CvWr2n4rNrxjnu?=
+ =?us-ascii?Q?sbmh2LrTPJdNeFQ9+yFMws4JGA6AYpgPRA7PvxRv6z46vc+vHOQ3alNn64St?=
+ =?us-ascii?Q?eFYMwaHRkg9dooZ+ClBmV+leZq+OVNk1UO1fgAG5aO0kQhQWPH8kJ8tQVdE/?=
+ =?us-ascii?Q?Q6CgzzVdytFkYe1R8d130P7S8+kftKgF39E6Yd78ULwQpxQZoK26BjNnW2Ev?=
+ =?us-ascii?Q?YGioMs9wGUjM/8LcL18Il1LOlGp3tq2LQMOeWHqCNK05VlG3VIoCKq4Ex+kM?=
+ =?us-ascii?Q?j/bjg1DREkDST1ywumAjFm8HpQbr8R3NfTAK8/v5ZPnY/Jt5QeLwfFtmdvcY?=
+ =?us-ascii?Q?3zwaLgN5HMZWOYniiescGU2xXAJleNmG08GBsBJnkRQITSdhc4EY7BYVp5AC?=
+ =?us-ascii?Q?lIYZzXvfVhgHU+8hVEUVCfAnklBiTqpRY/NoQdnvV9THUsY4cGQf0tZlFvUe?=
+ =?us-ascii?Q?/bn0JQ0Rqe9CpKlYRdDWpycZlYc0T7bCGzRbPWAEIxCjLuku65GzNNq4dTBP?=
+ =?us-ascii?Q?SBp3D3hIvVsDMh46+jNhmeq6iXYz8FSxy790G6WkHpU8V7+Wtrmoly4NXAaW?=
+ =?us-ascii?Q?Waqmoa12ggvk9f26Vv5Ae2aqEFT+BSUsadlNgWQtYEV5yc7BBjVN4tpXGkbk?=
+ =?us-ascii?Q?SzsBDUp5uCVUor30Jd0n7BOVNvDSQ4TpOcIKbjyCd0ucijufgC18C9N0OCrW?=
+ =?us-ascii?Q?0m3IWDkW26C2sP+5PAJUkoqUlINEM8kWEgdfXFPAn60r1ZXghJhAFrs8FeLY?=
+ =?us-ascii?Q?lr6eSMs0mZuxmWXztV+ZDNPYODXPOpUBVxDEy7yDh2Hazj5wy9lXPwKAG8lo?=
+ =?us-ascii?Q?iX5I7ZYzOGgI5hMeqaq7Ey8kpdYlaEPomJqOq98PgOzS5yWe7XgpEq8Qx34N?=
+ =?us-ascii?Q?v8Cp3vAxtEwpQrh2CqJe9MR2JCwYJWvopYoS7a/XsznDYyn+HrkhnWdHaFCf?=
+ =?us-ascii?Q?Jjdx7tSs?=
+
+
+--0000000000008ba0fc0658d5631b
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Dear family,
+
+My name is Rami. I am writing to you from Gaza with a heart full of hope, b=
+ut also with a desperate need for help.
+
+My family and I are going through extremely difficult circumstances. We are=
+ struggling to secure the basic necessities of life, and every day brings n=
+ew challenges and uncertainty. My greatest wish is not for luxury or comfor=
+t =E2=80=94 I am simply asking for a chance to protect my family and provid=
+e them with food, safety, and the basic things that every human being deser=
+ves.
+
+I am reaching out because I have nowhere else to turn. Even a small amount =
+of assistance could make a tremendous difference to my family at this diffi=
+cult time. Your support could help us get through another day and give us a=
+ little hope in circumstances that have taken so much from us.
+
+I would be deeply grateful for any assistance you can provide, whether fina=
+ncial support, humanitarian aid, or connecting us with a trusted organizati=
+on that can help.
+
+Please, if you are able to help, do not ignore this message. For my family,=
+ your kindness could mean the difference between despair and hope.
+
+Thank you sincerely for taking the time to read my story and for considerin=
+g helping us.
+
+With deepest respect and gratitude,
+
+Rami
+Email: [Your Email Address]
+Phone / WhatsApp: [Your Phone Number]
+Gaza, Palestine
+
+=D9=81=D9=8A =D8=A7=D9=84=D8=AC=D9=85=D8=B9=D8=A9=D8=8C =D9=A7 =D9=85=D8=A7=
+=D8=B1=D8=B3 =D9=A2=D9=A0=D9=A2=D9=A5=D8=8C =D9=A9:=D9=A1=D9=A2 =D9=85 Muam=
+l Muead <mnnww28@gmail.com <mailto:mnnww28@gmail.com> > =D9=83=D8=AA=D8=A8:
+
+
+	Nigga, if i had that type of money for this gpu, you wouldn't have found m=
+y email=20
+
+
+	On Fri, Mar 7, 2025, 9:52 PM Illphated <illphated@gmail.com <mailto:illpha=
+ted@gmail.com> > wrote:
+=09
+
+		Hey Mom,
+
+		Hope you're having a great day! I wanted to ask you about something=E2=80=
+=94I've been trying to play Fortnite, but my current video card just isn't =
+cutting it. The game lags a lot, and I can't really enjoy it the way I used=
+ to. This is the best one for the money https://www.amazon.com/GIGABYTE-Gra=
+phics-WINDFORCE-GV-R78XTGAMING-OC-16GD/dp/B0CGHQ32S2?pd_rd_w=3D736PX&conten=
+t-id=3Damzn1.sym.bb21fc54-1dd8-448e-92bb-2ddce187f4ac%3Aamzn1.symc.40e6a10e=
+-cbc4-4fa5-81e3-4435ff64d03b&pf_rd_p=3Dbb21fc54-1dd8-448e-92bb-2ddce187f4ac=
+&pf_rd_r=3DWCK6HVQK5NV3ZC4ZPJVJ&pd_rd_wg=3DVOh4Z&pd_rd_r=3Daf04f6ce-44f9-46=
+dc-ab8d-d1f27cebc31a&pd_rd_i=3DB0CGHQ32S2&linkCode=3Dll1&tag=3Dillphated01-=
+20&linkId=3Db7915697b030d91ad1c2f23ef0be70de&language=3Den_US&ref_=3Das_li_=
+ss_tl
+
+		I was wondering if we could maybe look into getting a new video card? It =
+would make a huge difference, not just for gaming but also for any school p=
+rojects or other things I use the computer for. I can help research good op=
+tions that aren=E2=80=99t too expensive!
+
+		Let me know what you think. Love you!
+
+
+--0000000000008ba0fc0658d5631b
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">Dear family,<div dir=3D"auto"><br></div><div dir=3D"auto"=
+>My name is Rami. I am writing to you from Gaza with a heart full of hope, =
+but also with a desperate need for help.</div><div dir=3D"auto"><br></div><=
+div dir=3D"auto">My family and I are going through extremely difficult circ=
+umstances. We are struggling to secure the basic necessities of life, and e=
+very day brings new challenges and uncertainty. My greatest wish is not for=
+ luxury or comfort =E2=80=94 I am simply asking for a chance to protect my =
+family and provide them with food, safety, and the basic things that every =
+human being deserves.</div><div dir=3D"auto"><br></div><div dir=3D"auto">I =
+am reaching out because I have nowhere else to turn. Even a small amount of=
+ assistance could make a tremendous difference to my family at this difficu=
+lt time. Your support could help us get through another day and give us a l=
+ittle hope in circumstances that have taken so much from us.</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">I would be deeply grateful for any as=
+sistance you can provide, whether financial support, humanitarian aid, or c=
+onnecting us with a trusted organization that can help.</div><div dir=3D"au=
+to"><br></div><div dir=3D"auto">Please, if you are able to help, do not ign=
+ore this message. For my family, your kindness could mean the difference be=
+tween despair and hope.</div><div dir=3D"auto"><br></div><div dir=3D"auto">=
+Thank you sincerely for taking the time to read my story and for considerin=
+g helping us.</div><div dir=3D"auto"><br></div><div dir=3D"auto">With deepe=
+st respect and gratitude,</div><div dir=3D"auto"><br></div><div dir=3D"auto=
+">Rami</div><div dir=3D"auto">Email: [Your Email Address]</div><div dir=3D"=
+auto">Phone / WhatsApp: [Your Phone Number]</div><div dir=3D"auto">Gaza, Pa=
+lestine</div></div><br><div class=3D"gmail_quote gmail_quote_container"><di=
+v dir=3D"ltr" class=3D"gmail_attr">=D9=81=D9=8A =D8=A7=D9=84=D8=AC=D9=85=D8=
+=B9=D8=A9=D8=8C =D9=A7 =D9=85=D8=A7=D8=B1=D8=B3 =D9=A2=D9=A0=D9=A2=D9=A5=D8=
+=8C =D9=A9:=D9=A1=D9=A2 =D9=85 Muaml Muead &lt;<a href=3D"mailto:mnnww28@gm=
+ail.com">mnnww28@gmail.com</a>&gt; =D9=83=D8=AA=D8=A8:<br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc soli=
+d;padding-left:1ex"><p dir=3D"ltr">Nigga, if i had that type of money for t=
+his gpu, you wouldn't have found my email </p>
+<br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri=
+, Mar 7, 2025, 9:52 PM Illphated &lt;<a href=3D"mailto:illphated@gmail.com"=
+ target=3D"_blank" rel=3D"noreferrer">illphated@gmail.com</a>&gt; wrote:<br=
+></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-=
+left:1px #ccc solid;padding-left:1ex"><div dir=3D"ltr"><p>Hey Mom,</p>
+<p>Hope you're having a great day! I wanted to ask you about something=E2=
+=80=94I've been trying to play Fortnite, but my current video card just isn=
+'t cutting it. The game lags a lot, and I can't really enjoy it the way I u=
+sed to. This is the best one for the money&nbsp;<a href=3D"https://www.amaz=
+on.com/GIGABYTE-Graphics-WINDFORCE-GV-R78XTGAMING-OC-16GD/dp/B0CGHQ32S2?pd_=
+rd_w=3D736PX&amp;content-id=3Damzn1.sym.bb21fc54-1dd8-448e-92bb-2ddce187f4a=
+c%3Aamzn1.symc.40e6a10e-cbc4-4fa5-81e3-4435ff64d03b&amp;pf_rd_p=3Dbb21fc54-=
+1dd8-448e-92bb-2ddce187f4ac&amp;pf_rd_r=3DWCK6HVQK5NV3ZC4ZPJVJ&amp;pd_rd_wg=
+=3DVOh4Z&amp;pd_rd_r=3Daf04f6ce-44f9-46dc-ab8d-d1f27cebc31a&amp;pd_rd_i=3DB=
+0CGHQ32S2&amp;linkCode=3Dll1&amp;tag=3Dillphated01-20&amp;linkId=3Db7915697=
+b030d91ad1c2f23ef0be70de&amp;language=3Den_US&amp;ref_=3Das_li_ss_tl" rel=
+=3D"noreferrer noreferrer" target=3D"_blank">https://www.amazon.com/GIGABYT=
+E-Graphics-WINDFORCE-GV-R78XTGAMING-OC-16GD/dp/B0CGHQ32S2?pd_rd_w=3D736PX&a=
+mp;content-id=3Damzn1.sym.bb21fc54-1dd8-448e-92bb-2ddce187f4ac%3Aamzn1.symc=
+.40e6a10e-cbc4-4fa5-81e3-4435ff64d03b&amp;pf_rd_p=3Dbb21fc54-1dd8-448e-92bb=
+-2ddce187f4ac&amp;pf_rd_r=3DWCK6HVQK5NV3ZC4ZPJVJ&amp;pd_rd_wg=3DVOh4Z&amp;p=
+d_rd_r=3Daf04f6ce-44f9-46dc-ab8d-d1f27cebc31a&amp;pd_rd_i=3DB0CGHQ32S2&amp;=
+linkCode=3Dll1&amp;tag=3Dillphated01-20&amp;linkId=3Db7915697b030d91ad1c2f2=
+3ef0be70de&amp;language=3Den_US&amp;ref_=3Das_li_ss_tl</a></p>
+<p>I was wondering if we could maybe look into getting a new video card? It=
+ would make a huge difference, not just for gaming but also for any school =
+projects or other things I use the computer for. I can help research good o=
+ptions that aren=E2=80=99t too expensive!</p>
+<p>Let me know what you think. Love you!</p></div>
+</blockquote></div>
+</blockquote></div>
+
+--0000000000008ba0fc0658d5631b--
