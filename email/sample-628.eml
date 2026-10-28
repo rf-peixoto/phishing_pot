@@ -1,317 +1,405 @@
-Received: from CH3PR19MB7612.namprd19.prod.outlook.com (2603:10b6:610:127::14)
- by MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Mon, 1 May 2023
- 17:37:01 +0000
-ARC-Seal: i=3; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
- b=mngFeR3n+1I7PV4tOa6ZuTZ43BhkRsytixYmDyT3M5Jks0B1evZsW97bhD+xPp2Q2IP/SRTtHKoGmpnZ3UzE+wH1XeIJgob9Vu7ppcwCeb9aGgtE7kFgQqgWHyOH6fdNM+804FG0bOpvmKktQVf0Ntvv2uwpe50fZ3RgZFivVfeJRgorPlgu8Cr9QDbzPInLT5DMRkK06+jPaN/W8lTvfpbg2VteMye0YOgjUKzKh8MD/6sr8sFvoXWzUTMcIvJPtW5ddDd/2hwHdVvKIX1q6lyur7ymthZhxdJHrVMfhNgZNr7NB9/YkXZVuw3PR2IXYlB+heeweDEm8fn3QqMLmg==
-ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xHjDBCqTBFVcpJ2G0cRmb2fnn4I/9TiS4TrAnRXzzfk=;
- b=eDURQ0ajcqQ3OCYIpF9qlFonMHFtTSVhZfBQTg2ztqOg98pmPCdWbmnXD6NxZZGKor72+NTzvPi+mX9RLieRmC4MjtYHZOhxQjDbcQvNdSgrWllxOtc/h6+V8tWssEiENaBXNNZtsb8vla8d6kir+GHJlCaJ3GgCvewGAufMj0nQZr3fIxoeqN+Vmd3MzC2JuTzp8cHQ3xEYzT4rzKUaxVigNyyD2eEdBpEEhxzfvGOl1FmAVVCjLCZaHAnwX/RlO+0+Y+Iy6xT2UinA+2H2dXLUnkLNb4SjJ6HIjs67J65SWjh9XcnUaT3J4BWP9BC2cfSFPJr9SIMRyEX1NunWAA==
-ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=pass (sender ip is
- 209.85.221.181) smtp.rcpttodomain=hotmail.com smtp.mailfrom=gmail.com;
- dmarc=pass (p=none sp=none pct=100) action=none header.from=hotmail.com;
- dkim=pass (signature was verified) header.d=hotmail.com; arc=pass (0 oda=1
- ltdi=1 spf=[1,2,smtp.mailfrom=phishing@pot]
- dkim=[1,2,header.i=@hotmail.com] dmarc=[1,2,header.from=hotmail.com])
-Received: from MW4P220CA0015.NAMP220.PROD.OUTLOOK.COM (2603:10b6:303:115::20)
- by CH3PR19MB7612.namprd19.prod.outlook.com (2603:10b6:610:127::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6363.19; Mon, 1 May
- 2023 17:37:01 +0000
-Received: from MW2NAM12FT081.eop-nam12.prod.protection.outlook.com
- (2603:10b6:303:115:cafe::9d) by MW4P220CA0015.outlook.office365.com
- (2603:10b6:303:115::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6340.30 via Frontend
- Transport; Mon, 1 May 2023 17:37:00 +0000
-Authentication-Results: spf=pass (sender IP is 209.85.221.181)
- smtp.mailfrom=gmail.com; dkim=pass (signature was verified)
- header.d=hotmail.com;dmarc=pass action=none
- header.from=hotmail.com;compauth=pass reason=100
-Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates
- 209.85.221.181 as permitted sender) receiver=protection.outlook.com;
- client-ip=209.85.221.181; helo=mail-vk1-f181.google.com; pr=C
-Received: from mail-vk1-f181.google.com (209.85.221.181) by
- MW2NAM12FT081.mail.protection.outlook.com (10.13.181.101) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6363.19 via Frontend Transport; Mon, 1 May 2023 17:37:00 +0000
+Received: from CY5PR10MB5962.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Tue, 15 Sep 2026 21:39:26
+ +0000
+Received: from DS7PR05CA0056.namprd05.prod.outlook.com (2603:10b6:8:2f::17) by
+ CY5PR10MB5962.namprd10.prod.outlook.com (2603:10b6:930:2d::17) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.428.8; Tue, 15 Sep 2026 21:39:24 +0000
+Received: from DM3NAM02FT041.eop-nam02.prod.protection.outlook.com
+ (2603:10b6:8:2f:cafe::83) by DS7PR05CA0056.outlook.office365.com
+ (2603:10b6:8:2f::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.9 via Frontend
+ Transport; Tue, 15 Sep 2026 21:39:24 +0000
+Authentication-Results: spf=none (sender IP is 20.223.163.40)
+ smtp.mailfrom=hc05c.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none
+ header.from=A7LYA5DJNZZTVOSQJG87D741ALBF;
+Received-SPF: None (protection.outlook.com: hc05c.com does not designate
+ permitted sender hosts)
+Received: from wllj.seejee.net (20.223.163.40) by
+ DM3NAM02FT041.mail.protection.outlook.com (10.13.5.133) with Microsoft SMTP
+ Server id 15.21.428.11 via Frontend Transport; Tue, 15 Sep 2026 21:39:23
+ +0000
 X-IncomingTopHeaderMarker:
- OriginalChecksum:93620FB94CBEFFBBC6F85F14C6110DF1CCB0E02F3886EE373E147829B43F322D;UpperCasedChecksum:A24079306D50598294B30F67D4114AA57C2D8D338D36C5BC08E9CE37889576AC;SizeAsReceived:11007;Count:57
-Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-440375334c1so887714e0c.2
-        for <phishing@pot>; Mon, 01 May 2023 10:37:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682962620; x=1685554620;
-        h=mime-version:content-language:accept-language:in-reply-to
-         :references:message-id:date:thread-index:thread-topic:subject:to
-         :from:dkim-signature:delivered-to:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xHjDBCqTBFVcpJ2G0cRmb2fnn4I/9TiS4TrAnRXzzfk=;
-        b=g3jLONkJWjj05zee16tjrBA1Ycdbl0hgR7Wbg0zHm4EYut1pw/6gtn/bhE2mRq/G5n
-         3WE2s9oveye5lqtsmHfd6GDtapNo7jHUJSjA2ZPxJJ1JDzYPgepRfdV5Z/jNeszcx52t
-         3p2UGXii3u80OPoz1LHahE8Ai0+VG1fJrYQhNF74eRbMHPPB0RARsVTW3MvvSXS31RkA
-         MVTqOBtt9gpSJafgP2yc41VJskHcXWVxHrlP5LdQYSO3xrNTlOIwZbqxnq7C1SCiWlLp
-         GyB7L4lFq3izRCmjIyuzhpaE36oVdBVmMHFKYRnn4pRrbOYlA4K96ZYauQ/EH+oW6mCi
-         AJ1A==
-X-Gm-Message-State: AC+VfDyWYnYYFEb0gBSrDdZJJNh3Srx4EK+dH6fQRtqUfoFMxz/rlt2g
-	XoAG84Rv+7/RwIhy9UErmY2Cv03yYnvtsEP+eYn+Ys6lDR60mj7uhg==
-X-Received: by 2002:a1f:2356:0:b0:448:15ad:a101 with SMTP id j83-20020a1f2356000000b0044815ada101mr6720225vkj.0.1682962620201;
-        Mon, 01 May 2023 10:37:00 -0700 (PDT)
-X-Forwarded-To: phishing@pot
-X-Forwarded-For: phish.me.again@gmail.com phishing@pot
-Delivered-To: phish.me.again@gmail.com
-Received: by 2002:a59:cd47:0:b0:3b8:6e6:9345 with SMTP id z7csp80490vqw;
-        Mon, 1 May 2023 10:36:58 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ6rifwjDPSeBnsCQMrf75fdBI4qCqbsNZYNDH17yPpGpA6/GbPZNqhY1IzoloXWR9BUOFYT
-X-Received: by 2002:a05:6402:1241:b0:504:8bff:8285 with SMTP id l1-20020a056402124100b005048bff8285mr6254357edw.14.1682962618768;
-        Mon, 01 May 2023 10:36:58 -0700 (PDT)
-ARC-Seal: i=2; a=rsa-sha256; t=1682962618; cv=pass;
-        d=google.com; s=arc-20160816;
-        b=cCqvqp+6RHRlENZBUAv1d7SvPLUPxmLLHJD7qXjTZBt0UoVn0A0kUe+CUwgPR94NY+
-         BhBjTgkP4GA3NQR3SaAIsCrgwWLXAY05t/38nKWlh/bDA6uJMmxSrPDriCoxa3pPAogZ
-         ajKyMmBG92myXHxCII+MNxgW7di5KPkEWCpu3M7HHiD8BWwXfTA6gwr8bGnfxTt5SYt9
-         rZmOfgVf8KOL/hEUDYccfsPYPyhgTH0nEd30TsVfetLo7GuJQqiz98fSxAfckzk/9hYD
-         AEBuiqcjVX1ITkVclGTC3fs1z0yoN/pne7DEgYNe4/UCD3kXR2nf/Tfb/FlecMWqYwd0
-         DvaQ==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
-        h=mime-version:content-language:accept-language:in-reply-to
-         :references:message-id:date:thread-index:thread-topic:subject:to
-         :from:dkim-signature;
-        bh=xHjDBCqTBFVcpJ2G0cRmb2fnn4I/9TiS4TrAnRXzzfk=;
-        b=EM/0FTaO59PtPSVFxDdf0mk7yE36HcgClluJ9Q8pCRXFgNFbrhTR0j+pmuCtfrhazx
-         caffZc4grrjpIWWMHgr9inxas6S1J5yCC9imIu++yFgXEF9E14tPpEmGyFToATRYHEr2
-         CHhhct35E//W/5vOOcFZT5m35kxTR4eLlaH0b9Iz0t4K4E+6tTgpLFxjLQxuySl1Ax/N
-         ivNp2+r3jr9tkJuErMXiwhqxE2L8s6Nxj5qdG/1ubkjiyJLBdGAph/ajtK2dTZElckSq
-         nz6rZ4AjIHy+oFfSk00N6WQrgqHznXc2UHFYvNH5BMlQR+i5Xn6M+GsIYscDF6Z5NAga
-         UEcQ==
-ARC-Authentication-Results: i=2; mx.google.com;
-       dkim=pass header.i=@hotmail.com header.s=selector1 header.b=fYiwVTAH;
-       arc=pass (i=1);
-       spf=pass (google.com: domain of phishing@pot designates 2a01:111:f400:fe59::81d as permitted sender) smtp.mailfrom=merciayanmact@hotmail.com;
-       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=hotmail.com
-Return-Path: phish.me.again+caf_=phishing@pot=hotmail.com@gmail.com
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12olkn2081d.outbound.protection.outlook.com. [2a01:111:f400:fe59::81d])
-        by mx.google.com with ESMTPS id h14-20020aa7c60e000000b0050bc67feb6fsi1849359edq.367.2023.05.01.10.36.58
-        for <Phish.me.again@gmail.com>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 May 2023 10:36:58 -0700 (PDT)
-Received-SPF: pass (google.com: domain of phishing@pot designates 2a01:111:f400:fe59::81d as permitted sender) client-ip=2a01:111:f400:fe59::81d;
-Authentication-Results-Original: mx.google.com;       dkim=pass
- header.i=@hotmail.com header.s=selector1 header.b=fYiwVTAH;       arc=pass
- (i=1);       spf=pass (google.com: domain of phishing@pot
- designates 2a01:111:f400:fe59::81d as permitted sender)
- smtp.mailfrom=phishing@pot;       dmarc=pass (p=NONE sp=NONE
- dis=NONE) header.from=hotmail.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=P4hOfED/om9hest8SAeuXRYt8ndpo8molKpmEQIH3xs9wuuaFNCBihX2/x5KDOVyRQMhsehhJ6928Vc+1qnS41pryUWxDSMYAG7CM9+vRIeI4goxf9PExYcnleTXlbFKCX6JnczSYVpGEr0A/xxfy9Rxbh7bNmwSv4FGjT3gz7GGSZYLd3QU/oVvVNG6Q14/aNmRSDaO7xamBYH+ai0auBsNIatDP2MnJ5yNkDK/Jmurd2fvXTVsE1vIWvf9Ze8yR+nS0EDPyUOH1yhD2S0l96+GzioWoQ5+U6ZJjOYFdpiCz8+3rO+lIbVr3ajB2yjavNiWkKlGGWARiHOzh64fHw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xHjDBCqTBFVcpJ2G0cRmb2fnn4I/9TiS4TrAnRXzzfk=;
- b=aDE4eDv4eSpXuiIrzk9jkofFNlmBt3UsuED+JUrpR1nqtWZw6d2nCyGZR74+EjJO1n2MGbKmwUvgQpEzjZb9nuVgKl2bLg1tITWoidR/kn9/6UjlSuGaVt4/+Zjyw5Z42Tx0B6QTkkfcn6PbNgemnZvrbvQLPzm+dyA5Mur8/ouJNSEWagLz6Am71em3dDddM5f4Z39Se7V+PJziu9DDDfdsRQzHEyr7+mDIuP9FFM7XmWwvzJTkY/Psm64TkWnuxC3MNgfe2282VEr638lri6oqQ+oDx/XRMwTXshfRHRmY1YvUmB7XMNSDRbWAdfECcCL+lyXrWnkukXvq3HIklA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xHjDBCqTBFVcpJ2G0cRmb2fnn4I/9TiS4TrAnRXzzfk=;
- b=fYiwVTAHRkFvR7hZjrB3AZpV9FXbwJzFFHaL+1kcNX6nNM1448/dh9RW4ne6iO0qirCyex0JNn/WEcc7amojiBzhROBtZbQeU5La3llPFIVD5fgHI7vzT7KqJKCB/8zI/I6hx3dolx1N7OiXfyYQYzl5cyrxgVsS1yfCuqCgB2qT7wQwD2LqoJV+AypGZIEPKySyPAAWWp3m4Z3dr8BrMGJnPkczcldvH+gnxf6E/PR8rxD2810Lk1CCu+DyOM/KQ7/Q8/H6nJxoFJXx7mitFKnxBl15+UgWXpq61xX2YWgdXj6973wqUrlw9CLVi3CQi2M5IZltOllsxM5GubwyCA==
-Received: from SA0PR04MB7370.namprd04.prod.outlook.com (2603:10b6:806:e5::23)
- by SA2PR04MB7642.namprd04.prod.outlook.com (2603:10b6:806:144::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6340.29; Mon, 1 May
- 2023 17:36:56 +0000
-Received: from SA0PR04MB7370.namprd04.prod.outlook.com
- ([fe80::db92:cf33:b50:9f7c]) by SA0PR04MB7370.namprd04.prod.outlook.com
- ([fe80::db92:cf33:b50:9f7c%3]) with mapi id 15.20.6340.030; Mon, 1 May 2023
- 17:36:56 +0000
-From: phishing@pot <phishing@pot>
-To: "phish.me.again@gmail.com" <Phish.me.again@gmail.com>
-Subject: Fw: Part-time Job Offer.
-Thread-Topic: Part-time Job Offer.
-Thread-Index: AQHZe9jqtZOGmgH75EGKDcKjugBpA69Fr1UF
-Date: Mon, 1 May 2023 17:36:56 +0000
-Message-ID:
- <SA0PR04MB7370420969E46718A901DC61B36E9@SA0PR04MB7370.namprd04.prod.outlook.com>
-References: <202305010258.3412AU8Q054238@omr-pvt-strict-0.cniteam.com>
-In-Reply-To: <202305010258.3412AU8Q054238@omr-pvt-strict-0.cniteam.com>
-Accept-Language: pt-BR, en-US
-Content-Language: pt-BR
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn: [IMD9su29hgHSpnOsKpUgqhIK/a1wEkO8PPZ3mR1A/LYPxS2WJtdAmf0/KwkyiLMa]
-x-ms-traffictypediagnostic:
- SA0PR04MB7370:EE_|SA2PR04MB7642:EE_|MW2NAM12FT081:EE_|CH3PR19MB7612:EE_|MN0PR19MB6312:EE_
-X-MS-Office365-Filtering-Correlation-Id: 02061c06-40e3-4a7e-66d5-08db4a6aab70
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original:
- 3bg/rk26H6JjhVyueesjYzodatiNNc+QolkCLYoZuVltzuAQDgpF1E7RFhC6dEAUtus5IkAaPUmQR8/E9di+C+HmV7Bp52ry0t7LCvuj8QnMSccYTyA482iGCVh/g1wvusQ5sQxcRmvlhKuxo+fyZU7aLm/xJVZ8YQP3IvL0D4iEhoYXLO0+FNgKC9mPaetb+hw6STViOLzzSmVdB+l+xmwPpYTzy0VNZpY6wnqsJE6utHJJK0ZmopOzvigytFuq69f7G8A0mNmCnHOwH7zbrqjX7GGytbm5MHFECDxNzzbyMcThFYmDgFrvJxiUhVHPqFwZAcXSHQ/0ADeXBe1JJwOdFZvEkOMpeFeEiliZZCJCGWdZRRaa9rMWkui7D/3QrgIt4+tdIJWOHjb0NQwFPdjjOWul8+dcVB5+/iFm+NzNn/yd2tfKVm8dw41nTmIumsd8wsUjYY3kEfqVz+m/BUwRy0qOi8ibqPy0KKv4c4ovkh4zNjZjIamuDHm/fUbPdCEbmqk1Q/ePOzr+JSNtRB/EER1U6hbYCBiVQA6/9eWTzdo2y+18UZOSfvm01a0H
-X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-Original-0:
- =?us-ascii?Q?9VAMkBHbD3VqAYnfG0iyDuTw2eNgYa9YRL1c2+zHr1wSPFzcKJqPglsJKDER?=
- =?us-ascii?Q?m3t+VTP6LsztHypYFsh4WIaifJIB5Y+eAE7aDks+qB8em8u9tFxOVaHgLE2m?=
- =?us-ascii?Q?sEB10kB6z60pKs/to9f7a8AexqrDTCra9ohps3z6b5ug8v4IHZ40eROb9Kn8?=
- =?us-ascii?Q?A1xcnSQuukCSh/NSQHRHL/P/c4RT0hpvWZWQJmwJjEff3wuMqFHbz8gW95BP?=
- =?us-ascii?Q?B4z99UkggC2180FmPSFDVRDtTsIC8NNwsiPyPNLtKCU6lBBoqiG3NIAfTnXY?=
- =?us-ascii?Q?2L5Dc7A47dSoqwdmFNNeDdQVqQ1MXU8GCMz4ivIEc0HbRHftumdXmhJFQS07?=
- =?us-ascii?Q?G7VgbRa7TW9pE2ys5jCJJRTaDFAJD6b0BFtvWdcvEsGe/tNetRivqMv9tMp7?=
- =?us-ascii?Q?LJ1EGh4XK8P0NLtBDLkvou2XhSoaw34xscWT9p00Dx+G+QNv72feLFs+m5rW?=
- =?us-ascii?Q?Cxqc7OI4W1Sx/Iw9Yu4mgamMQlf4P2gnrAGle/MAIK8MipEO1ICFMR8yIinc?=
- =?us-ascii?Q?RWVF7OcOxqdA8EYt6FVLPDXTqHZNuFBXwFKyhmwAMfGKygIKzU1vKo1buSK2?=
- =?us-ascii?Q?Ca7pVlS8TV/WZ03RgVtWf30aCNpQb5L5fvj3nUHxgVuU3ei5CuHbIhY7ZjSk?=
- =?us-ascii?Q?eRqlZ1AvQDnh3K48C8MaHgPiihMk+TVfcXI3qN1ExtX72kWV8jjB3rAWSvFq?=
- =?us-ascii?Q?w5m+lloGUCqAfMqCbGqX/S+Az3hgmcU15LlZuA28NZsNFR5LnYS7xQ/tQzDB?=
- =?us-ascii?Q?qldmTSCAe3lkGyvdA4YwPtvWDqBlzrRisjoya7Pur+dMUe8mPzIbCpGdueTD?=
- =?us-ascii?Q?9I4OqWPGly4TMDw7wIiHTNoRjhxmsGYxLmhF3U+UJuQmYtR2gyJ8SAtX4Ahb?=
- =?us-ascii?Q?QIjGL6+plwIJvpOy3mm00/a9K9/BHD+cXvjoBvA/QkSZMIw9EvxB2DsTaI5l?=
- =?us-ascii?Q?pZ8y91rjFtjv1qYDKND+sdi9ggjMh6S93UvGE0F08CsB5JO/gYD5k4M0tZV3?=
- =?us-ascii?Q?EAEG15jfoXJPW3rzq5Uw8MZJTIsMAUdyP8W9P6TXNTJpxIpWd9NfwYlWAGp+?=
- =?us-ascii?Q?gZ33Fe0m5PrRwoZCLsuBGiTEY920n8Yeu5vP0oZjxOvC+zG8JJWeRlJ5XAja?=
- =?us-ascii?Q?vUNlUW49D/wauaCIgQsU1uKfNGO68jX87YqVLAnja5gbIJ84pSisVcvuMYQU?=
- =?us-ascii?Q?HWSEaQOHJxgtqtJRnt2tSFa0XX44svhwqGG0z2qpgg7efh1WfgfKLwGGLhnE?=
- =?us-ascii?Q?KW2BUI1gQoHz+c/o4BHCrobr47JMdNODDuQvIqU91g=3D=3D?=
-Content-Type: multipart/alternative;
-	boundary="_000_SA0PR04MB7370420969E46718A901DC61B36E9SA0PR04MB7370namp_"
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR04MB7642
-X-IncomingHeaderCount: 57
-X-MS-Exchange-Organization-ExpirationStartTime: 01 May 2023 17:37:00.6316
+ OriginalChecksum:EC77B006E2E0AA25353925A2D4C63BAB05E58BBD105F88FB7458B93966BA1CE1;UpperCasedChecksum:F64286F14B1CB198CD5DF1245A0D69DD6927204823B98AEC6AFE3B06397A6E39;SizeAsReceived:509;Count:13
+MIME-Version: 1.0
+From: McAfee Account Services<QUA8TZO2@A7LYA5DJNZZTVOSQJG87D741ALBF>
+Subject: Action Required: Unable to process payment for your McAfee subscription
+Reply-To: reply-[nu_24]@in2.getdrip.com
+X-Complaints-To: abuse_rep@wllj.seejee.net
+X-Priority: 1
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset=UTF-8
+Date: Tue,15 Sep 2026 12:45:47 +0100
+To: phishing@pot
+Precedence: bulk
+Message-ID: <randomid2@wllj.seejee.net>
+X-Feedback-ID: feedback123:provider
+X-IncomingHeaderCount: 13
+Return-Path: wy8tcqmb1x@hc05c.com
+X-MS-Exchange-Organization-ExpirationStartTime: 15 Sep 2026 21:39:24.0153
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
 X-MS-Exchange-Organization-Network-Message-Id:
- 02061c06-40e3-4a7e-66d5-08db4a6aab70
+ 6c73ebe2-e2e5-4f3f-6439-08df1371cf4e
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- MW2NAM12FT081.eop-nam12.prod.protection.outlook.com
 X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic:
+ DM3NAM02FT041:EE_|CY5PR10MB5962:EE_|MW4PR10MB5749:EE_
 X-MS-Exchange-Organization-AuthSource:
- MW2NAM12FT081.eop-nam12.prod.protection.outlook.com
+ DM3NAM02FT041.eop-nam02.prod.protection.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 5/1/2023 5:35:01 PM
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
- bd35fa5f-6e2b-4cf2-c346-08db4a6aa917
+X-MS-UserLastLogonTime: 9/15/2026 9:03:14 PM
+X-MS-Office365-Filtering-Correlation-Id: 6c73ebe2-e2e5-4f3f-6439-08df1371cf4e
+X-Sender-IP: 20.223.163.40
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 209.85.221.181
-X-SID-PRA: MERCIAYANMACT@HOTMAIL.COM
-X-SID-Result: PASS
-X-MS-Exchange-Organization-SCL: 1
-X-Microsoft-Antispam: BCL:0;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 May 2023 17:37:00.5691
+X-SID-PRA: QUA8TZO2@A7LYA5DJNZZTVOSQJG87D741ALBF
+X-SID-Result: NONE
+X-Microsoft-Antispam:
+ BCL:0;ARA:1444111002|20103052903057|3069299007|20103052901057|6019299003|3600799018|5139299004|6100799021|3025599003|45200799018|87000799021|2120399003|46080799009|9400799043|39010799015|13020799009|260826003000599003|10300799038|1131999019|60050799012|6010799021|1290799033|58200799025|1680799066|970799063|34130799006|32020799003|51300799024|70000799018|9000799056|46110799015|35120799009|47200799027|2700799033|20103052909095|26120799003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2026 21:39:23.8054
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 02061c06-40e3-4a7e-66d5-08db4a6aab70
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6c73ebe2-e2e5-4f3f-6439-08df1371cf4e
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-AuthSource:
- MW2NAM12FT081.eop-nam12.prod.protection.outlook.com
+ DM3NAM02FT041.eop-nam02.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
  00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR19MB7612
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.3712760
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.6363.019
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR10MB5962
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.5143676
+X-MS-Exchange-Processed-By-BccFoldering: 15.21.0428.004
+X-MS-Exchange-Organization-SCL: 6
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-MS-Exchange-ExternalInOutlookResult: ConsumerDisabled
 X-Microsoft-Antispam-Mailbox-Delivery:
-	abwl:0;wl:1;pcwl:1;kl:0;dwl:0;dkl:0;rwl:0;ucf:1;jmr:0;ex:0;auth:1;dest:C;OFR:CustomRules;ENG:(5062000305)(90000117)(90012020)(91020020)(91040095)(9050020)(9095020)(9100338)(2008001134)(4810010)(4910033)(8820095)(9575002)(10195002)(9414026)(9310011)(9220031);
-X-Message-Info:
-	qZelhIiYnPkx84CNH6AeQs2r1mfbx475RiI5K0+Xb2fvrntBfTJ10N2zNIvcvtf7VgXmo/rIiDTiX9S4qaHZB/x7vGYi+20jHvRBv5kS27O7FHDEwY9E9qYduSWKdNrvkUqpBmNZ7QnWK2BUjHrUIA==
-X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0xO1NDTD0tMQ==
+	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9710001)(9610028)(9520007)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?yjat+lrv3Xln7+Fe5HDIzLCBkQxufWQqo3HsQiz5nW6CNzOl0VeV8ERlROue?=
- =?us-ascii?Q?8IQGGHBNPmkT56GxbU1gW3d7fKoqgeA9V+Psso2L9HEMKLB+6S+chMsnQHBZ?=
- =?us-ascii?Q?m8+5JBaWt1+f2Yu2WdNXsEck4V99XBw2EWKtojCMZ5b02g8woSQwLGklbZzw?=
- =?us-ascii?Q?rDtXrne+V9JXmPSmytxwZtEbaEB1zj7gg+5zHT4J9B/lyaoArszXdgF0gsd/?=
- =?us-ascii?Q?TKyVTXFz8mYKIFN/rECTEl/RiknenKvocpLAaJfjxpmkAfWVDCqvo6rdXC0x?=
- =?us-ascii?Q?jBV8tuzj43AQDyIRCLysfQscNNeXPvOh9E5Bznk/807G4SxZ/eOarbCrFRI7?=
- =?us-ascii?Q?VZ2qMtJVP/OmD+uTEBr6gdYy5gdDzTm26rIwTj+CnId9AptPnfBt2tMI9gb8?=
- =?us-ascii?Q?YOEx+nDu20o6OTR4CX7ef7j5wbF33pXUzE0ouvdsge+PsX4PlRuZFP4nh4xI?=
- =?us-ascii?Q?3+mB+v3Cczz/DPxjrkupVTP4T/rXGKWXdBqV8TCGl7PRIav+7cjCteK6fxGS?=
- =?us-ascii?Q?a4OEHDKcJW+/ocaCpQM7QUqgFCciNLInbMABkRUiD7SooE133bIDVyrPmCtO?=
- =?us-ascii?Q?W/qKVbZBPFBecdLnu5V73hIBfDrfi++REAJX7HFsKSHX1qqe6DhdFrKnmAZL?=
- =?us-ascii?Q?wtu4AvRjtTCACJD4VlZefMgjAFRfm2n0EgSH2gg+Nl1oVLIcopHHoDGmQucg?=
- =?us-ascii?Q?PVIhiPmCHkRqGPwo7txIlQ8z7DsL2FmdRF9gFxRusua1xsm77/FtT5QDR6zO?=
- =?us-ascii?Q?Sq2BlAVj/1TBsLldUeZU9j8Ffx68Sy5yjtYGvZPA/ZlPlmABqFuGdc9PtP46?=
- =?us-ascii?Q?6w6NJ/Mc3XZ6fFQEVDlbVMq0d0ZTkbPdb9wdvvJ2iHZZ8OcBpV1d+aRUneb/?=
- =?us-ascii?Q?Nx8Fv1ED94R7pLhXAn73dDW7QnRXdaqHi6OgRh9Lc1ZeiE9lIdRwbHjeJ5Lo?=
- =?us-ascii?Q?4idCNuIn8CdIUlLja80mkgoRvPY6gmOuswgDx8IM2smNZ/kON3bbr9+LWgWT?=
- =?us-ascii?Q?DXRKqjDZN8JPzn0UD2w3IK2gphDMSJL92M2WEry1DTZ0O7dl3nELd3uG4I9T?=
- =?us-ascii?Q?1fCtdtRpfhj1vyNqdloPuvZ5o0TwrIBtlsTipPs5Wj6EzHLeXwSHt65g6eDj?=
- =?us-ascii?Q?Hs8r0tZnJ9QUmO71PatrdaE3kBjpo3pHLRaxaL5DUaLhZAoj0T+pxZMe/smY?=
- =?us-ascii?Q?G9544RZSnrvcO9RXYVm2If5351xxPLVeJsJoqySrrWJ18ymodvlrB2GxxSfJ?=
- =?us-ascii?Q?pFRklBiyxEXSPElSUdd9FxKmvQTNbEsMEret+L3qd22n1xwYMCpxNkgOQsy6?=
- =?us-ascii?Q?3HpqgrsD2e8mG1N2nWJtwgUb?=
-MIME-Version: 1.0
+	=?us-ascii?Q?tWMnWwD5KIlXbPAoPKKlfzXJZKbG0R2chqIcFxNuTECkkQE2gU5UAZ7F6QlT?=
+ =?us-ascii?Q?Ih3w1XfG1S4ig+U51ASk1iTI+wQvRBlUeNar+VlFlV81sLhPis/14Pvbk7A6?=
+ =?us-ascii?Q?Y53aRrgj62UohHvbcneFODXMxa95t79o25pLFoyW2HW2TaoINE6A5xqJrn89?=
+ =?us-ascii?Q?adKEJ0aErMMmu0vJmAfIbGuBGUUtb3Qct7rXhmrjtB37S0SHWGRkHrHIAzW3?=
+ =?us-ascii?Q?MBIfBUaQrtsctp86eMgqpqdE0tpNRkM/9mDxIQ4r8tciyPxiu63Uo73WViRv?=
+ =?us-ascii?Q?vodHniEPVzID0/NbACdHDcJOIDFpYrvH1VROELDrjSGByoh5PHm2vLV1yr48?=
+ =?us-ascii?Q?O4WvE34B/oJHvwtWvzGZDnl5oEsVL2xDsmmjGYTGp13BBAHU+wXjG2XHuvzr?=
+ =?us-ascii?Q?uqGIs6M1PaGlH6RkwD/El8u0ciLRm32/3p4Jb4v3ULwQ+UFuU5L7JuHvlBe4?=
+ =?us-ascii?Q?himHxdiyYfcMnpSLWzC+boOiIJO82KhcMND9YkC5JZmE2JQuT8cNycoHdM6H?=
+ =?us-ascii?Q?9U78+aFDs2YaSovJT0+ZAqNwx1myr9RLQLd5yQwyXDfqvGWo7oGrDVG4hHOa?=
+ =?us-ascii?Q?/+QwzD7TqYwESsPYySvNt9qF7RoKWEA8XMUIWIxtjZ7oGQ563v0tIR52Eunp?=
+ =?us-ascii?Q?8i1T3pYbvTw9qagJ6SCYqersZwX5L3U9UEIl7ibiCua6r3u1k8CKAg706aco?=
+ =?us-ascii?Q?OW/GTAWvQCATEbA+1Qu02QDq3VWqnDY1U75/iAHHIEI0ChIixY9W2RbrTMzd?=
+ =?us-ascii?Q?QMRzMeUmgzj4c9xh96X+npurDpxmK+A7hJe8pffZm0S8OtMFluq3IKCGaQht?=
+ =?us-ascii?Q?VBE86ObKYVvwyED2hz3V3txlMRd+QoDN8OCtnxRhfgmsW1H0uMqW9C41Zc4O?=
+ =?us-ascii?Q?3xFZob/NxY7SzCzFetQbrPdPjvgTA6oSbDAPwdelD+iWo49OwjjrCJaI/yb7?=
+ =?us-ascii?Q?Co4QahnqdeObr6tfdh9ddG4foh3weEch4sncgnvkKJWYabv9pQ4wKUyWMg9R?=
+ =?us-ascii?Q?mBPzwFl2LHeYNJ4a+b93IMJXeohNn1MzA5FIxUiJ/72ZtTAK3vwpLDcur9SF?=
+ =?us-ascii?Q?TatEElcyqZpw4QFWP1Dv/IoylYa/jsSi0FxYuUwt/ZEXWoNyjfHbAL4ZaEP+?=
+ =?us-ascii?Q?bfboTTMvZLxNLMcTu9k2latUFLj/qtEal7hBRIMlKXCfWu/oK9dI61BF395S?=
+ =?us-ascii?Q?5bM9UAFRq5Wxs9quPXdCqAnO3j4pMiXzFpCg9qkAPWHUVcZhXup7OYhieJPs?=
+ =?us-ascii?Q?u5/MUfJWEdtux6u7Bw7xJsZ2fG5re3QvAUdKm8eLtGvPTebh/f5Oqq/GUkau?=
+ =?us-ascii?Q?6/bJK0bTlQZm4shAwAG8P4eiWoj/ZJhpo97k3BX/2iStu6BmrSkKXe6rB08k?=
+ =?us-ascii?Q?KWg9LNOMa9OYDFOf4Cr8YFg6j8/leuObQYEr59TTogI+vPhPJsVARWB2UFD0?=
+ =?us-ascii?Q?w7w0aPavoll4TAOjJSbt+MOWmJhTqVOt29CX11CbYTMtqYXRS7HlaPPC/aD5?=
+ =?us-ascii?Q?jqfuaTbFfG2PnthT4f9IzlTNh8AP+ExLJ6Bjmt7gJsdB3qog5onWD98tkh3m?=
+ =?us-ascii?Q?VFZcIi9i15Zrw8PrMFpTmonJe7vb8vT6Y0LAtltCUHT6Szbob0oWhwKtT7k3?=
+ =?us-ascii?Q?v/suFAb3dO4+GogjDqmhqyYSLV01GLB7yrPWhvuBesj1i+DEfymW44F0x0n1?=
+ =?us-ascii?Q?XQRhWQxHslH0oXWzv+QRiDQ7T/Ai0KZWbdfrS/Wd6z/DpSEXr++x/bsJkKns?=
+ =?us-ascii?Q?MCi4icbijBdtBF12ROxGFsABkOeD2aaAxIDcouM9EDDtOFIOSdZu38bYgGms?=
+ =?us-ascii?Q?E0MeGfD0jeUc2uiyjfnJs011IHwEkYwoXI+ViTU92QlsNnCJw+lewH5SuilD?=
+ =?us-ascii?Q?iBWFOZoj/gaBPJRN7p+LZm0CvHyiv21mYUvsNkyC/rzPECk3/WXtduSv6pBM?=
+ =?us-ascii?Q?MNxxLUiRCcvuGrJW3KCU9oIAGN7Wnt4F/9Lhbek9Gl/i6ffnWy3MeVpNFssh?=
+ =?us-ascii?Q?UG0sdiAaeY8Kya9zdg9XbzHmrDxh0JwUDMyAIiD7u2cL0ifnSDUZaZDM38Wm?=
+ =?us-ascii?Q?IQQ9DUM4YD3P0cnTRfQzwMuQpkxem1Toh+UxQYbRdVVcxrBmgsVTUzrVHPIi?=
+ =?us-ascii?Q?ljsQHPtkpn+Uo+NACk6C1yddja+S+53/VAQZoYcTmrxUv8rCrgiS1VG+Pr5Q?=
+ =?us-ascii?Q?CBKiwmPRQfseRJHcC9dCEbetbXGDjmsHbo93GX0tnCKINnijr3xUxC3PSsbe?=
+ =?us-ascii?Q?GbApeNzM/uN3D1h4R8uz4LX2+96BkSjFkfI//Lroe9NUDPnoU2ChtOBXQfZ8?=
+ =?us-ascii?Q?pzr1B+lbZLjMonEm/Nw6ROFpxFF7KSjdv/nkn/ZVYPzoeB9E5xxCqwfFUtT0?=
+ =?us-ascii?Q?HepQQVuzw9Wdo6FUCcXYCVvRfrwPWEBlp98V3JYh9rP7ZGhwXoEj8bG7H5+7?=
+ =?us-ascii?Q?VfMgE6lro9B0yChicD0h6gt0pzWslhJQRnvOibIOUHJKutCR7NsDaOWQy+oJ?=
+ =?us-ascii?Q?Z8fS6xR7kzmFq+qgqkMhuEWzAZ9yW1aRzj1VgoY0xmoDPLYfNB56Kr2404wr?=
+ =?us-ascii?Q?tZBmK6ouupG6uhu3JSx1eARwF5G4p91uJnnV+6avY2Ih2ZDMpa65/cYRKIYZ?=
+ =?us-ascii?Q?n3Mz8FjrYs3WuZARiPicWz32axguKEy+AMJXk/K4pIwW8KiQuSg6JXPpV+Cw?=
+ =?us-ascii?Q?JN03V97J0WZCj3HY47mpRgzOZNB13QiXQJY18HgB7ORyscczyMED+bMYeGZW?=
+ =?us-ascii?Q?HKu9bkRSLnV+2cgBovxHLdIq8O0cHspHf8/0zBB2ZSCkA8eIi1ND0TvAiTCo?=
+ =?us-ascii?Q?+ymxdzXRL3Ep5deh+I1vH/l3y3e//CQElU3SqbvNO8G7UIqichQQfao3DU04?=
+ =?us-ascii?Q?jFd8rZ3hL4Y1aUlsaSsoMaIqHRJNHwiIXmw0nZ6TCz1rHvTF8B+F5K1aJVOM?=
+ =?us-ascii?Q?j5VVcHqjo+T5i08+1ekUeJMkZR7Cit9Heyo75dqX9N6GIUh6jYM60YcEoohu?=
+ =?us-ascii?Q?rVN0jb8VSxJLkmwsGwEne+zpDKBhzPmC8aMc9kOY5OHRuyHmOXjhKzzYVsPL?=
+ =?us-ascii?Q?h6jMewUWOJiE0LzE9MO1C3gRXlxdUYLS8/HrqxH67wmnMXP/pE2rdT8nZeUQ?=
+ =?us-ascii?Q?AkYGSpQWeHqETNyL8QCVVNEKYNVenYNPASSkfVcf8ZPon/EZ++1pHcLP9DFn?=
+ =?us-ascii?Q?NBXGmInlXj7meOdMcteXvU3nYUd4ZZ9T7Lfr6G9UhZ6FFoWq1YME02jDSFjV?=
+ =?us-ascii?Q?s1RTwc6jePgW+8gGBTw8QhmZWxFs19djFecpzGJFkr94iwBLFc2/vCda2rMo?=
+ =?us-ascii?Q?bxUD0ZIRkS9y+6agqM8wHcxlTE2lbiQY0sR50GE8osY8gomuM5kIcGnYOdZ1?=
+ =?us-ascii?Q?Hm/bDGt94uo9OQThCK5BUvZUck8KU2dyaesjSVw8zfq0lDCwxMki+CXorLsu?=
+ =?us-ascii?Q?qhIPOOxjeBfuOAU2VHeERvnumx2wTDMX65PSSt8qwkartw5ruS9D2rNe4hns?=
+ =?us-ascii?Q?gTZ/lIOpyGy2EzCLgL7x5ST7eUL3N7jkifzQKnqmJdFYBLRmFq3Vr8VT3Ywt?=
+ =?us-ascii?Q?5K2Mj/x2ni5VTlIFLvsuQ1FXaKWq4Mdv+MRSjPTBP/xYXXby2pVNGhvTIyEN?=
+ =?us-ascii?Q?OITudYJYzs3sM0aALBPGzAK3jC5b3HkLgRH23NvOhBf+jcZdoSHnq3wQ382L?=
+ =?us-ascii?Q?84k0HKD4ut2JduuN9KpHpzLIkO9u21wWvMREi1FkiogbzLXTZc/0+sn6BVYA?=
+ =?us-ascii?Q?T5o3gawyUmn6hDLLN9ErlA8jDZkJy9TfDu7o/bQzP0WKeppNt6nJ/lXWhlpl?=
+ =?us-ascii?Q?OYMgQLH7YYtff/Ty02/OwMusL9rbSdRjGN/7rHkmmGUFqHmvPaTyaYaw7TcT?=
+ =?us-ascii?Q?hNLBj67FLTvdsCeJQiWRhl5fO14FxP0r3l+3EXo=3D?=
 
---_000_SA0PR04MB7370420969E46718A901DC61B36E9SA0PR04MB7370namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+<!-- START OF FILE template_1_payment_failed_clean.html --><!DOCTYPE html><html lang="en"><head>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antivirus Subscription Pending</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f8;
+            color: #333333;
+        }
 
-________________________________
-De: Patricia Krebs
-Enviado: domingo, 30 de abril de 2023 23:58
-Para: Recipients
-Assunto: Part-time Job Offer.
+        .email-wrapper {
+            width: 100%;
+            background-color: #f4f6f8;
+            padding: 30px 0;
+        }
 
-I am writing to share with you a job opportunity from YMCA. Currently, YMCA=
- is seeking a temporary Personal Assistant to support in the procurement an=
-d distribution of essential products and services to those affected by the =
-COVID-19 pandemic.
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
 
-This is a part-time and home-based role, providing flexible hours and a sal=
-ary of $800/week. If you are interested in making a meaningful impact in pe=
-ople's lives and expanding your professional network, we encourage you to a=
-pply for this position.
+        .header {
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
 
-If interested, contact Ms. Stephanie Minor for more details via email at st=
-ephanie.minor@ymca-jobs.org
+        .alert-banner {
+            background-color: #d32f2f;
+            color: #ffffff;
+            text-align: center;
+            padding: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
 
-Best regards,
-Patricia Krebs
-YMCA of the USA
+        .content {
+            padding: 30px;
+        }
 
---_000_SA0PR04MB7370420969E46718A901DC61B36E9SA0PR04MB7370namp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        .warning-box {
+            background-color: #fff5f5;
+            border-left: 4px solid #d32f2f;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+        }
 
-<html><head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
+        .warning-box h3 {
+            margin: 0 0 10px 0;
+            color: #b71c1c;
+            font-size: 18px;
+        }
+
+        .warning-box p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #424242;
+        }
+
+        .sub-text {
+            text-align: center;
+            font-size: 15px;
+            margin: 10px 0 25px 0;
+            color: #555;
+        }
+
+        .details-table {
+            width: 100%;
+            margin: 20px 0;
+            border: 3px dashed #d32f2f;
+            background: #fafafa;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .details-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eeeeee;
+            font-size: 15px;
+        }
+
+        .details-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .details-table td:nth-child(2) {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .text-red {
+            color: #d32f2f;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin: 35px 0 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #3b48f2;
+            color: #ffffff;
+            padding: 16px 40px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 18px;
+            box-shadow: 0 4px 6px rgba(59, 72, 242, 0.2);
+            text-transform: uppercase;
+        }
+
+        .badge-img {
+            display: block;
+            margin: 25px auto 0;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .footer {
+            text-align: left;
+            font-size: 12px;
+            color: #666;
+            padding: 25px 30px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+            line-height: 1.5;
+        }
+
+        .footer a {
+            color: #3b48f2;
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
-<div></div>
-<br>
-<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
-<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
-yle=3D"font-size:11pt" color=3D"#000000"><b>De:</b> Patricia Krebs<br>
-<b>Enviado:</b> domingo, 30 de abril de 2023 23:58<br>
-<b>Para:</b> Recipients<br>
-<b>Assunto:</b> Part-time Job Offer.</font>
-<div>&nbsp;</div>
-</div>
-<div class=3D"BodyFragment"><font size=3D"2"><span style=3D"font-size:11pt;=
-">
-<div class=3D"PlainText">I am writing to share with you a job opportunity f=
-rom YMCA. Currently, YMCA is seeking a temporary Personal Assistant to supp=
-ort in the procurement and distribution of essential products and services =
-to those affected by the COVID-19
- pandemic.<br>
-<br>
-This is a part-time and home-based role, providing flexible hours and a sal=
-ary of $800/week. If you are interested in making a meaningful impact in pe=
-ople's lives and expanding your professional network, we encourage you to a=
-pply for this position.<br>
-<br>
-If interested, contact Ms. Stephanie Minor for more details via email at st=
-ephanie.minor@ymca-jobs.org<br>
-<br>
-Best regards,<br>
-Patricia Krebs<br>
-YMCA of the USA<br>
-</div>
-</span></font></div>
+    <div class="email-wrapper">
+        <div class="container">
+            <div class="header">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/McAfee_logo.svg/3840px-McAfee_logo.svg.png?utm_source=ru.wikipedia.org&amp;utm_campaign=index&amp;utm_content=thumbnail" alt="" width="170" style="max-width: 170px; height: auto; display: block; margin: 0 auto;">
+                <img src="//upload.wikimedia.org/wikipedia/commons/thumb/c/cf/McAfee_logo.svg/3840px-McAfee_logo.svg.png?utm_source=ru.wikipedia.org&amp;utm_campaign=index&amp;utm_content=thumbnail" alt="" width="170" style="max-width: 170px; height: auto; display: block; margin: 0 auto;">
+            </div><a href="http://ka0675976s2.fasteshop.site/cl/1019_rd/1012/0/1124/592/6a7b6900e9e36f6ecff097fe" style="color: inherit; text-decoration: inherit;">
+            <div class="alert-banner">McAfee Antivirus Subscription Pending. Action Required.</div>
+            <div class="content">
+                <div class="warning-box">
+                    <h3>Action needed: Protection status requires confirmation</h3>
+                    <p>The risk of malicious links and trackers is constantly rising. Get your protection active to help
+                        reduce exposure.
+                        <strong>Multiple payment attempts for your transaction have failed.</strong>
+                    </p>
+                </div>
+
+                <p class="sub-text">If your transaction is not confirmed, coverage cannot be established on your
+                    browsers and devices.</p>
+
+                <table class="details-table" cellspacing="0">
+                    <tr>
+                        <td style="color: #666;">Plan</td>
+                        <td>McAfee Antivirus Advanced - Individual</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #666;">Account Email</td>
+                        <td class="text-red">****@******.com</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #666;">Current Status</td>
+                        <td class="text-red">Payment Pending</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #666;">Total Due</td>
+                        <td class="text-red">$79.99 (60% off!)</td>
+                    </tr>
+                </table>
+</a>
+                <div class="btn-container">
+                    <a href="http://ka0675976s2.fasteshop.site/cl/1019_rd/1012/0/1124/592/6a7b6900e9e36f6ecff097fe" class="btn">RENEW SUBSCRIPTION NOW</a>
+                    <a href="http://ka0675976s2.fasteshop.site/cl/1019_rd/1012/0/1124/592/6a7b6900e9e36f6ecff097fe" style="color: inherit; text-decoration: inherit;">
+                    <img src="https://img.mailinblue.com/11931712/images/content_library/original/6a9416a848ea4ea54e89e84e.png" alt="" class="badge-img" width="450">
+                    <img src="//img.mailinblue.com/11931712/images/content_library/original/6a9416a848ea4ea54e89e84e.png" alt="" class="badge-img" width="450"></a>
+                </div>
+            </div>
+            <div class="footer">
+                <center>
+                    You may unsubscribe at any time by clicking <a href="http://ka0675976s2.fasteshop.site/un/1019_rd/1012/0/1124/592/6a7b6900e9e36f6ecff097fe">here</a>.
+                </center>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<br>    <!-- Tracking -->
+    <a class="tracking" href="http://ka0675976s2.fasteshop.site/op/1019_rd/1012/0/1124/592/6a7b6900e9e36f6ecff097fe">
+      <img src="http://ka0675976s2.fasteshop.site/xxxxxxxxxxxxxxxxxxxxxx" alt="">
+    </a>
+    
+
+                    <tr>
+                        <td align="center" style="padding:10px 20px 30px 20px;">
+        <br>        <br>        <br>        <br>        <br>        <br>
+                <br>        <br>        <br>        <br>        <br>        <br>        <br>
+                <br>        <br>        <br>        <br>        <br>        <br>        <br>
+                        <br>        <br>        <br>        <br>        <br>        <br>
+                            <a href="http://ka0675976s2.fasteshop.site/cl/1019_rd/1012/0/1124/592/6a7b6900e9e36f6ecff097fe" style="display:block; text-decoration:none;">
+
+                                <img class="creative" src="https://img.mailinblue.com/11931712/images/content_library/original/6a94177748ea4ea54e89e862.png" alt="" width="600" style="display:block;
+                                           width:100%;
+                                           max-width:560px;
+                                           height:auto;
+                                           margin:0 auto;
+                                           border:0;"><img class="creative" src="//img.mailinblue.com/11931712/images/content_library/original/6a94177748ea4ea54e89e862.png" width="600" style="display:block;
+                                           width:100%;
+                                           max-width:560px;
+                                           height:auto;
+                                           margin:0 auto;
+                                           border:0;">
+
+                            </a>
+
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+        <!-- UNSUBSCRIBE -->
+
+<tr>
+<td align="center" style="padding:15px 20px 35px 20px;background:#fafafa;">
+
+<a href="http://ka0675976s2.fasteshop.site/un/1019_rd/1012/0/1124/592/6a7b6900e9e36f6ecff097fe" style="text-decoration:none;">
+
+<img src="https://img.mailinblue.com/11931712/images/content_library/original/6a94179b549f42acc6963515.png" alt="" border="0" style="display:block;width:auto;height:10px;border:0;margin:0 auto;"><img src="://img.mailinblue.com/11931712/images/content_library/original/6a94179b549f42acc6963515.png" alt="" border="0" style="display:block;width:auto;height:10px;border:0;margin:0 auto;">
+
+</a>
+
+</td>
+</tr>
+    </table>
+    
+  </table>
+
 </body>
 </html>
 
---_000_SA0PR04MB7370420969E46718A901DC61B36E9SA0PR04MB7370namp_--

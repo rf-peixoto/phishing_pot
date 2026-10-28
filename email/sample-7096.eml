@@ -1,1282 +1,332 @@
-Received: from CY8PR10MB6588.namprd10.prod.outlook.com (::1) by
- MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Wed, 18 Feb 2026 02:38:14
+Received: from DS7PR19MB4568.namprd19.prod.outlook.com (::1) by
+ MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Wed, 29 Mar 2023 12:59:53
  +0000
-Received: from CWLP265CA0466.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:1d4::14)
- by CY8PR10MB6588.namprd10.prod.outlook.com (2603:10b6:930:57::21) with
+ARC-Seal: i=3; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
+ b=MXy1bpr1cGP0VcHX5imiqn7OUDY9jH9tGMHxonOZTXJft3mekO1EKH5Z4KKBw4le6ai3DN/6S4YDgf1Q4k1oJaioNAadnROlIFpBR5OMFH4qDsX9KQc7Xh9+57ZypR+R7ez1kg7kiSW6VwfwxyrqCUqX5wNJMPwcQKA4+vmLnJo3epW88dnEU+q8DStdPpGwlLpz4ty5sLIOyFi3Z894BU6JgU3TYzjJgrfu892xv9AfJVKU4FvMvZ90gihXyapXYmZw9xcDGuURLgk0E+vx1unA17PnyEpbpfZcW9B1afUBjkYadwbetHCfZwQ2g+1irw641a6/qnXgSIy9Uzpqiw==
+ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EPjBHmw8Rsboa2QMuuI+Ab+MrQSOIjb8bIIhpx6l5u4=;
+ b=Jp8z0BnAvrMobuhAGxKRLD79HyqYMyUB5Hq5ZWi0CyYq2fLfvgmjRaoXL0KoF2v9ANocYvU68ofCPB6XcAfKaRqzyz2yEBkGy3HKbIjJJuRUBmrDTtEJqto4CbWgDnUqVUsqmxEfPVHuej3gIvxB+JdhXWxM5HvXRFY7N3+9NtInWKlEKmVb22rDHnG/zGuiZ3sUKYM3ukxH6/CddksoGhagSe1BOay6kfdlkFtqeP8bK7Y9OAxYU1h2hSDkBETRahDizUhvjVpsl45lOXXJMA80nFRLdRfLERwRfgRW0CAyyACDlTr05mqu1aKOQbEo+VhiuHbAuTzoo+CT1ZqRNA==
+ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=pass (sender ip is
+ 209.85.217.46) smtp.rcpttodomain=hotmail.com smtp.mailfrom=gmail.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=hotmail.com;
+ dkim=pass (signature was verified) header.d=hotmail.com; arc=pass (0 oda=1
+ ltdi=1 spf=[1,2,smtp.mailfrom=phishing@pot]
+ dkim=[1,2,header.i=@hotmail.com] dmarc=[1,2,header.from=hotmail.com])
+Received: from SA0PR11CA0104.namprd11.prod.outlook.com (2603:10b6:806:d1::19)
+ by DS7PR19MB4568.namprd19.prod.outlook.com (2603:10b6:5:2d0::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.16; Wed, 18 Feb
- 2026 02:38:12 +0000
-Received: from AMS1EPF00000048.eurprd04.prod.outlook.com
- (2603:10a6:400:1d4:cafe::81) by CWLP265CA0466.outlook.office365.com
- (2603:10a6:400:1d4::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.16 via Frontend Transport; Wed,
- 18 Feb 2026 02:38:11 +0000
-Authentication-Results: spf=pass (sender IP is 5.255.97.24)
- smtp.mailfrom=devzish.com; dkim=pass (signature was verified)
- header.d=devzish.com;dmarc=bestguesspass action=none
- header.from=devzish.com;compauth=pass reason=109
-Received-SPF: Pass (protection.outlook.com: domain of devzish.com designates
- 5.255.97.24 as permitted sender) receiver=protection.outlook.com;
- client-ip=5.255.97.24; helo=server.efuzone.net; pr=C
-Received: from server.efuzone.net (5.255.97.24) by
- AMS1EPF00000048.mail.protection.outlook.com (10.167.16.132) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.12
- via Frontend Transport; Wed, 18 Feb 2026 02:38:11 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:16278EF20F3CF4FCC43995D8715B9EB89A07E90DECC1D152EADD3B9454CAD041;UpperCasedChecksum:5FB4E1AE97434A52C2CD70ECD58A1548ADDCADD13B274BB33FFA61A125885536;SizeAsReceived:2213;Count:20
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=devzish.com
-	; s=default; h=Content-Type:MIME-Version:Date:Subject:To:From:Reply-To:
-	Message-ID:Sender:Cc:Content-Transfer-Encoding:Content-ID:Content-Description
-	:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=6AOw9kAx5w1nMmBYmzEtpCrPwMs8hpXwJgEhnyLvlmw=; b=UP0B/OTVLwgQ9aCtiTPHq5pwHi
-	jEiICblQ95lUB0+eoDFvEnm8BGXZyF4ovTg25NAIDbdYxiLve8NhjsKZ1K/GaNNhRhTfG4zJ3/tWE
-	PyCzCVBKwQIHycOjQx/EoTaZ5uroDFBeME1ZFYQ4S8xHLqSlvDs6SoanpZG4Szneilbx3ac0a2kI8
-	ozDbG423Rj9OpodsRiEiUpfeewwWdU7FqA8GQn7Jx5ILwqQgCUHg+ddaSEvmKMgw34vRS4c62Sieg
-	p0y2cKcxgHvDXGVc0P+j3YgRogzZLVYENWhe8Cym9F1hsPy1xkQR/LCBB/Mc5KKO46hkjnJZnLD4b
-	EKiFzwGQ==;
-Received: from dynamic-176-003-104-151.176.3.pool.telefonica.de ([176.3.104.151]:19968 helo=109-236-82-42.hosted-by-worldstream.net)
-	by server.efuzone.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.99.1)
-	(envelope-from <abdullah@devzish.com>)
-	id 1vsXS6-00000002mTY-2wzD
-	for phishing@pot;
-	Wed, 18 Feb 2026 07:38:10 +0500
-Message-ID: <ae5359fc08cc02aa892be249bd6ff5ff88b6da64@devzish.com>
-Reply-To: Spotify Premium <spotify@premium.de>
-From: Spotify Premium <abdullah@devzish.com>
-To: phishing@pot
-Subject: =?utf-8?B?VGhlIHN1YnNjcmlwdGlvbiBpcyAwJCDigJQgYW5kIGl04oCZcyBmb3JldmVy?=
-	=?utf-8?B?ISBTcG90aWZ5IFByZW1pdW0g4oCUIGZyZWUgYWNjZXNzIHRvIGFsbCBmZWF0?=
-	=?utf-8?B?dXJlcyE=?=
-Date: Wed, 18 Feb 2026 05:38:08 +0300
-Content-Type: multipart/alternative; boundary="88fcb51e0e694340e34900bdf93c42351661"
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - server.efuzone.net
-X-AntiAbuse: Original Domain - hotmail.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - devzish.com
-X-Get-Message-Sender-Via: server.efuzone.net: authenticated_id: abdullah@devzish.com
-X-Authenticated-Sender: server.efuzone.net: abdullah@devzish.com
-X-Source:
-X-Source-Args:
-X-Source-Dir:
-X-IncomingHeaderCount: 20
-Return-Path: abdullah@devzish.com
-X-MS-Exchange-Organization-ExpirationStartTime: 18 Feb 2026 02:38:11.1483
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.37; Wed, 29 Mar
+ 2023 12:59:52 +0000
+Received: from SN1NAM02FT0004.eop-nam02.prod.protection.outlook.com
+ (2603:10b6:806:d1:cafe::c8) by SA0PR11CA0104.outlook.office365.com
+ (2603:10b6:806:d1::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6254.20 via Frontend
+ Transport; Wed, 29 Mar 2023 12:59:51 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.217.46)
+ smtp.mailfrom=gmail.com; dkim=pass (signature was verified)
+ header.d=hotmail.com;dmarc=pass action=none
+ header.from=hotmail.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates
+ 209.85.217.46 as permitted sender) receiver=protection.outlook.com;
+ client-ip=209.85.217.46; helo=mail-vs1-f46.google.com; pr=C
+Received: from mail-vs1-f46.google.com (209.85.217.46) by
+ SN1NAM02FT0004.mail.protection.outlook.com (10.97.4.226) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6254.20 via Frontend Transport; Wed, 29 Mar 2023 12:59:51 +0000
+X-IncomingTopHeaderMarker:
+ OriginalChecksum:2B61E6BFC9CDC5451F1D9987ECFA180F032908D2DEE9215C38672258652EAA36;UpperCasedChecksum:EFF2C05792C67480ACDE69452E6E371F7047E6E9DCCBC397E2E69C9CD3A0B8D2;SizeAsReceived:11726;Count:58
+Received: by mail-vs1-f46.google.com with SMTP id dg15so1589980vsb.13
+        for <phishing@pot>; Wed, 29 Mar 2023 05:59:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680094791;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature:delivered-to:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EPjBHmw8Rsboa2QMuuI+Ab+MrQSOIjb8bIIhpx6l5u4=;
+        b=ugGH1s8fsGM/EF6doqKM+yblgMlXvkVRpTs2w1tgUiIv1oc6Qeau0PAKh6OAczKgZe
+         KtV1X8FYGdRyF7WEhtEvfSLOZUBQbLPV42B0UXsdjyBWxgVHforZF3CkTnpVXkESqpOO
+         UmfzmNQSRek50G0Lub4iUBxPhC3bMjvB7Ktv6I22Zd9SeXSywQs6Ztjcl6nt+O613NVf
+         cyTaVJ/umsbx4lHqDdf+SJxKS742gbIUWYEhh2Ax1qcMXwSBwxiVmJqifqh2dPM2sdKt
+         +KCuscYjPB4r7voHWYWipuJ0qxXDsoQn0FGGkcXEZgq9S8mJEOT0ylvFzufrW/vg/7XK
+         Z+gw==
+X-Gm-Message-State: AAQBX9eSM+HxIc+0+ibgbBxFeKHF4TNcGME0PF9YKMDQ6sX6joApiQup
+	SBfp38S1MtdG+dNr4uX+NYesYF0SEuouQ562efP3odVE1t3FrGOY4Q==
+X-Received: by 2002:a67:c802:0:b0:416:2ad3:35ba with SMTP id u2-20020a67c802000000b004162ad335bamr11314171vsk.1.1680094791453;
+        Wed, 29 Mar 2023 05:59:51 -0700 (PDT)
+X-Forwarded-To: phishing@pot
+X-Forwarded-For: phish.me.again@gmail.com phishing@pot
+Delivered-To: phish.me.again@gmail.com
+Received: by 2002:a59:a6f2:0:b0:3b7:6e50:9d38 with SMTP id j18csp380639vqo;
+        Wed, 29 Mar 2023 05:59:50 -0700 (PDT)
+X-Received: by 2002:a05:6402:d7:b0:501:c4e3:9914 with SMTP id i23-20020a05640200d700b00501c4e39914mr17587194edu.33.1680094550726;
+        Wed, 29 Mar 2023 05:55:50 -0700 (PDT)
+X-Google-Smtp-Source: AKy350aXxda8DNSl1rNic6Uej2kRa7g7Pu8fmQMBHDlOZ1oOj69IgcMmk9s7kIHpB0o2+FaFosdR
+X-Received: by 2002:a05:6402:d7:b0:501:c4e3:9914 with SMTP id i23-20020a05640200d700b00501c4e39914mr17587152edu.33.1680094549772;
+        Wed, 29 Mar 2023 05:55:49 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1680094549; cv=pass;
+        d=google.com; s=arc-20160816;
+        b=yZdW2hxG3YP/rR7q8XZGfvZi2Y5o2JX//Bw8k++C+aOTBlzULHrpjfw5ay2xNUpOCo
+         ncvLDx4ow8j3dawEjpdYjToRDuh+pbpIViMCB26GipOUhtT/O5LSbZkhQHAlwkRaxoKV
+         eEXhe9l0Tv02t03SahkDNB5zSXGs9YCSZJ6uba4Ddjzdy4fRxUaq7JQvowDj2FFOxgl7
+         x72ohgYtIw9Bctsevwe/kCc+XHqnu+q1K6WrBUZGBlRv5dfPw1pYUMK88b4ytX1LLnvj
+         gxCdwrDwgGSWmRikTX+dB2nWqrSKYOKyZ0G/JmPHlhZL5xlBqvJ4ODhkVj0Fs7Fx5QXk
+         rlbw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=mime-version:content-language:accept-language:in-reply-to
+         :references:message-id:date:thread-index:thread-topic:subject:to
+         :from:dkim-signature;
+        bh=EPjBHmw8Rsboa2QMuuI+Ab+MrQSOIjb8bIIhpx6l5u4=;
+        b=Bx+OgYFNse/xC8fyfcmdfCea+zxKmBPf77aT14J/Lib7aLcZKOZlUzpPnr1bpRiJ6b
+         Oao3W4P6KtVWf6lwk0CEzbKKOhn+xzl+CQK9aS+HJnKd3WJnYhg8eURFEkqUhuXSGoSQ
+         r/2ZIsB3Mc1oS3S9bNzYa1mmauWMqnTSD/m2X0zSt+YxP67l6xyvapFa61f4AGcDv05Z
+         0krIcVzP7qltKiIWVwBdkRcrqGMJfpf46Dw1lHOcsm0BEfsRG/Xm7oShA/66sWYTz0AI
+         npU+t2N110TYKLdo01SmApD2goJalykVO4kGcQdi5Ed2+rh90i2YMKG8Mz2WD0KOlPMV
+         gKbw==
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@hotmail.com header.s=selector1 header.b=XcQ4xdAX;
+       arc=pass (i=1);
+       spf=pass (google.com: domain of phishing@pot designates 2a01:111:f400:7eab::81a as permitted sender) smtp.mailfrom=merciayanmact@hotmail.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=hotmail.com
+Return-Path: phish.me.again+caf_=phishing@pot=hotmail.com@gmail.com
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11olkn2081a.outbound.protection.outlook.com. [2a01:111:f400:7eab::81a])
+        by mx.google.com with ESMTPS id bo5-20020a0564020b2500b004ad73eb9374si31255606edb.147.2023.03.29.05.55.49
+        for <Phish.me.again@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Mar 2023 05:55:49 -0700 (PDT)
+Received-SPF: pass (google.com: domain of phishing@pot designates 2a01:111:f400:7eab::81a as permitted sender) client-ip=2a01:111:f400:7eab::81a;
+Authentication-Results-Original: mx.google.com;       dkim=pass
+ header.i=@hotmail.com header.s=selector1 header.b=XcQ4xdAX;       arc=pass
+ (i=1);       spf=pass (google.com: domain of phishing@pot
+ designates 2a01:111:f400:7eab::81a as permitted sender)
+ smtp.mailfrom=phishing@pot;       dmarc=pass (p=NONE sp=NONE
+ dis=NONE) header.from=hotmail.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=E7Z2MeOrJzLxHK+XQH0KwsNHOT6cuadHNUVxeIoPyOZSAEv9Xwo2yybJB3cjOD6OdZ3FtdSOhkU0j5LWbD8dHEFUEGuU8V1Smh68jR4mV0sPkrxVceZwwmwW8zlcuwujYEpL8WiUjBo3n0TTWfMjQQ/OlKGi9d9ogallUgFSZF86KSJBrqjQP+UkfOuVXSliceaBwfsOu6FJhAPcikyrdFqdkVBCIg2YWDjaFVdfXUkPtu7NGYoa9V/PKte0FIKB8k6JS8DcPQYQfNHETxCxURYyL7M4bSkibw+e+630jKmF7DGlrk0LRJW7gfMZw5zl2MqxSCtWyJC5T07ypxJ2ng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EPjBHmw8Rsboa2QMuuI+Ab+MrQSOIjb8bIIhpx6l5u4=;
+ b=DfsJwKLpnk3z6nogRa2iMgccN4pCyxauRl2T4H8Uz3Wrl57tRXlWFgSltWj4JSr9GysaEAvaa+IYDe+7IZRsEsnAQcMiq2RDY6CRGoU1V/nMaRHhdUBg6iBysThB0mpNCGUR/QbKSSFQ2knLB/NwmfrK4LOay/M8r7uXrFcalUKpBd5H4IGMxGvMLPDiA2ZYdp/6tVRUyN33vfG5wyOVa3RT9ibA927xrn73sq5ww0hQs3TVT3RRF/5fzf3kyRMxOkpyz+AKeqQSqxOTry5QO828v4HcRJ/78zubydeyWpwkDbWJ+Hidw43kE+A0Ovui9vQI1Lnd5disMyLcxBZrjg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EPjBHmw8Rsboa2QMuuI+Ab+MrQSOIjb8bIIhpx6l5u4=;
+ b=XcQ4xdAX+mMQk7nUZy4LMnRaT6UUZxxcsdA4nKw6qeUrspc9caxb3xuOLAwOCE8Sti6OzAo0P64Zf/NrNkzoX/8Go4v1ZAe7yPl65f0ef8+G8B20YPCS36kf3+ksiPjb961C2aazz5XPDFFhYfPYcm9cqoEcoxLROnL3gz8PVej4E2vwpL7XDpIXdZMy5hFSZZLHGU3Pp0GPePNpzmf5dq91HgZ1zNMafpWeBEryjqlmNuSgDxioC9HcC9qQKClveOin9gi4f2e3SwfQ8dQUYA4kyIikWcn/EyTY+IXRfZQmpr1fIKkF+XLubUcvkvt4kLLEAY9BA8vdxzNmY7RmbA==
+Received: from SA0PR04MB7370.namprd04.prod.outlook.com (2603:10b6:806:e5::23)
+ by MN2PR04MB6333.namprd04.prod.outlook.com (2603:10b6:208:1a5::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.41; Wed, 29 Mar
+ 2023 12:55:47 +0000
+Received: from SA0PR04MB7370.namprd04.prod.outlook.com
+ ([fe80::7c60:676e:956e:f79d]) by SA0PR04MB7370.namprd04.prod.outlook.com
+ ([fe80::7c60:676e:956e:f79d%6]) with mapi id 15.20.6222.030; Wed, 29 Mar 2023
+ 12:55:47 +0000
+From: phishing@pot <phishing@pot>
+To: "phish.me.again@gmail.com" <Phish.me.again@gmail.com>
+Subject: =?utf-8?B?Rnc6IPCfkoo=?=
+Thread-Topic: =?utf-8?B?8J+Sig==?=
+Thread-Index: AQHZYjhVTwzvDq8+20GubELhaC9/0K8RtxdS
+Date: Wed, 29 Mar 2023 12:55:47 +0000
+Message-ID:
+ <SA0PR04MB7370AFB0577C7B7D1F09E57DB3899@SA0PR04MB7370.namprd04.prod.outlook.com>
+References: <C4D8B7CE.032FE4E9@suddenlink.net>
+In-Reply-To: <C4D8B7CE.032FE4E9@suddenlink.net>
+Accept-Language: en-us
+Content-Language: pt-BR
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [u20cxmehX9tsFggoLgpRm5112RWMxyYE]
+x-ms-traffictypediagnostic:
+ SA0PR04MB7370:EE_|MN2PR04MB6333:EE_|SN1NAM02FT0004:EE_|DS7PR19MB4568:EE_
+X-MS-Office365-Filtering-Correlation-Id: 603a6c33-3008-4384-54fd-08db30557c30
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original:
+ 1Eu+6/GqQX6/65UUvo6HNWmU6acLXCrCB8lTveIZkNIyMZ9V7O1KCTSF2xYAoIvZAuTB0rW+TYl8uFzowM8fZcxx3CCO7zaSielY3ZTl20Plzgl1zTUOrPwfRLRDBTeJixfKuDVbWUUMDra6YnxtpByw+H+T+gVQ4DtKNhxunHK/vIqp11xLgb968FDgi369EwPn31QaT5f2gNnZ3autWrmxOwb3sLreWNo2OCAxlZd0HT0SD7/zE+IiH1hew1xFoT9Dh2XOq46KDeOpYttMfyO08lcIAyxpJCi5fRvzYE8dUpZeeTTpaZPi8lQb/0+lYpPAD2s2pM4vM9JfdrPCMd+46iXbhBJSf4yvf6ztWETla0Oftehm0/VIUuiOnCZOA6ey84C3Jsg+aJNBHuzOp2orCa6cdafffrk2SvMiR8afaxjwCI6apFl4iktBW3Y56lCIvSom8rL+e9kFbehIMy2g1qjvJHsErZgqCPwu7plZSUp4uF4+a1D88pfccBizbpxSkIofuuwxVmjqJpu55LU6qPglGYf5rJT6O1sqaxWeKDMVqq3xWFdg+Au0cTMiLUYUnoL+pZA1esf0nHT4Wsjglv8meLvFMTo1gZNA1hz8JMmFiCldoFftRJ84d6p+ST+P8ng6SkrO4EDk5t18sYt8nrjhaB1QDXeweC+XIMyx3vVsq5l6dMShgaiOJvx1i5D8QbDvuAkSDSPaO20Ed0Uq6Hu1Wa1UBwf5CKmOBO5UWNA9rpdyK1TinpfwwnZB6GGDX68BDcKM7sWa5R35fja3A06zOsaigPLby2PhyWFIq6NaIpjIQ5y3RogM4wQHg5NcEzBdRbTKY3W7tT/hPQ==
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0:
+ =?utf-8?B?ZEdmV3NLMWw0YlFmcWFEUXZqUWNaem9GM3Z6d04yaHUzNHdZb2pQVkhzN24y?=
+ =?utf-8?B?Q2xBRzEyYTRZYnI4Njd2QW9weUkvVmtPZDZ3VFc0MC8wWWtmaTB4Q0xQQ0Zk?=
+ =?utf-8?B?dE1SUytIc2UvSDZxcWVDZ1IvWFBhdVlLbm1lRUFGZXExd3l4ZTdVN295U1Ay?=
+ =?utf-8?B?VHNIcXU3dDQ1dG5zSmJBNnA0QjJXQWl6WXJjU0E2Zkw0aGpuSjNlamV5VERY?=
+ =?utf-8?B?bk0wYUhxU1JEdGpZd3RGQVRFcVpVb21nd0U0VUNkVm9pNHlDZmdnYWdrNzlp?=
+ =?utf-8?B?Nnl2Z3FSa2lsYkIrbFZHVmxYR2xxT1pQekl0RUJPd1Jid04zS3o0ZmFqZEJK?=
+ =?utf-8?B?MGlkZGdpNDd6SllPMC9OQkhoS2c2MkpSaXJaai9JSWZ3bXVwUWFPcGRZUlVo?=
+ =?utf-8?B?aEVXOHpodFdGSlV6Z3ZheUJxTk5qYmdVcVN6WUE3VzZCWlNIa1REWFpVNUd1?=
+ =?utf-8?B?cXdLbW5yamMwMDRnY3lrZHora29ieS92cEdXY1dvTjNXbG05MDNZRHpwK0VS?=
+ =?utf-8?B?bmUwQUlnM1VHNi9ueU8wUnRRRzBhWW5NL1RvRmRscmpzZXV3SXB6aFpoOERN?=
+ =?utf-8?B?eDFoQTV3Q01rdXhuNVNMcnVHUkxFcDYweXgrdFZ2cjBkajVnMXFzbVJodlhp?=
+ =?utf-8?B?UDFKMm1vTUMySUtkYmQ5MzJxckdvRHBxYzBvU2FVdk83SjVmSExud0JOYXBC?=
+ =?utf-8?B?TVo2Zi90ajQyY2FPV2I4Nmg4bm1RTDRWWE5Wcnl5UGdycXlGc3FKaDBxM2tF?=
+ =?utf-8?B?SUNwUEMvcnNyNlhWcTFPdmxuaW9xeGtXdnh3Ym9xS0ZJK2d5MWIrYVJsZkNJ?=
+ =?utf-8?B?Q0N1cnpWejc0WUc4VWJaOFowOWV2VDQyU3hpdlZCaGwvVEJuQ29yUUhLT1pD?=
+ =?utf-8?B?WWRNdFBpVXdhTms4WlZWemtNODdmbnUwSmVBOU93WUprNjFFTkNqNTlFZnZR?=
+ =?utf-8?B?dndQMkZIcTltUzVMUUZXQ1lmcUxvbVdjdGtNN01nYVdXWUQvZGdtOGxEUUNB?=
+ =?utf-8?B?Z1RXMjE5QlBhZVBMaXlUL2FCV05ZazhVS2xOWUt3SWowTHpxS2lwZUhaS0VX?=
+ =?utf-8?B?VkJ5QVgxMmdzU2tjSUFTSENnazNOK3pGT1N4bTI4dy82SExpUGk1R3ltQkhr?=
+ =?utf-8?B?emlnTFBvTXM4SmU5NHVBMGhGajNneWhhRlJLaHdFVmZwRW1WVTEwaVA4UHVk?=
+ =?utf-8?B?TldDK1c1ZWlBNk9XL1hmVmV1YlA1TzdBMmJZQmRjTStJZUZBYjN3TTJ1UTdV?=
+ =?utf-8?B?dU8zM3VtTDJYckU1TmVnNmlNcEFZejEzWTd4RjVZNlZqRk9YYnpkanAyQ1E3?=
+ =?utf-8?B?aHR5Q3o1YXF2Q0dQdnBzd2tKRG1nU3dwRjBkSVEvK0tadm1GY2FMTFRVQWFu?=
+ =?utf-8?B?a0lJdXRhb2pnckgzNHkySU5WdWg0MEI2QW5zMEczTTBMRG9KUnE3cWFwdUc5?=
+ =?utf-8?B?NGVTNEF0YngzQmNobFJNVTlWTXVpNnBOZnc5MHB0ajMya050cnQrZE9GWjdE?=
+ =?utf-8?B?RWFET1VUMEUxYXNEcUpzaHV1Nk9SalQxR1Q4SjNjVnJVZDF0cnRKc2grVmVj?=
+ =?utf-8?B?RUNMMzdPRDRQbTdYaVRSc3FWaklkSCtCRHV1SE9DTmtpWVZXSFZqd0Z1dTVv?=
+ =?utf-8?B?M1ZYVGx0aWczNzM5OFl2QTF1Z3VMb2c9PQ==?=
+Content-Type: multipart/alternative;
+	boundary="_000_SA0PR04MB7370AFB0577C7B7D1F09E57DB3899SA0PR04MB7370namp_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR04MB6333
+X-IncomingHeaderCount: 58
+X-MS-Exchange-Organization-ExpirationStartTime: 29 Mar 2023 12:59:51.6952
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: 958173e2-cc9b-48e3-4dac-08de6e96c1f6
+X-MS-Exchange-Organization-Network-Message-Id:
+ 603a6c33-3008-4384-54fd-08db30557c30
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ SN1NAM02FT0004.eop-nam02.prod.protection.outlook.com
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AMS1EPF00000048:EE_|CY8PR10MB6588:EE_|MW4PR10MB5749:EE_
-X-MS-Exchange-Organization-AuthSource: AMS1EPF00000048.eurprd04.prod.outlook.com
+X-MS-Exchange-Organization-AuthSource:
+ SN1NAM02FT0004.eop-nam02.prod.protection.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 2/18/2026 1:37:30 AM
-X-MS-Office365-Filtering-Correlation-Id: 958173e2-cc9b-48e3-4dac-08de6e96c1f6
+X-MS-UserLastLogonTime: 3/29/2023 12:49:41 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ b9069d00-9a0a-4689-1632-08db3054ea7a
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 5.255.97.24
-X-SID-PRA: ABDULLAH@DEVZISH.COM
+X-Sender-IP: 209.85.217.46
+X-SID-PRA: MERCIAYANMACT@HOTMAIL.COM
 X-SID-Result: PASS
-X-MS-Exchange-Organization-SCL: 5
-X-Microsoft-Antispam: BCL:0;ARA:1444111002|58200799021|10300799038|42300799018|46080799006|970799060|1680799066|9400799043|32080799006|69000799018|119000799006|34130799006|32020799003|461199028|51300799021|33080799003|9800799015|9000799056|2700799029|22090799003|84100799003|21090799003|30140799006|20103052909095|5149299006|13020799006|87000799018|5099299006|56899033|1370799030|1360799030|1380799030|20015499003|1602099012|22015499006|4302099013|440099028|3412199025|4601999015|30041999003|31110799003;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Feb 2026 02:38:11.0980
+X-MS-Exchange-Organization-PCL: 2
+X-MS-Exchange-Organization-SCL: 9
+X-Microsoft-Antispam: BCL:0;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Mar 2023 12:59:51.6640
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 958173e2-cc9b-48e3-4dac-08de6e96c1f6
+X-MS-Exchange-CrossTenant-Network-Message-Id: 603a6c33-3008-4384-54fd-08db30557c30
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource: AMS1EPF00000048.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource:
+ SN1NAM02FT0004.eop-nam02.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR10MB6588
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.0661105
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9632.007
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+ 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR19MB4568
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.7274783
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.6086.023
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
-X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+	abwl:0;wl:1;pcwl:1;kl:0;dwl:0;dkl:0;rwl:0;ucf:1;jmr:0;ex:0;auth:1;dest:C;OFR:CustomRules;ENG:(5062000305)(90000117)(90012020)(91020020)(91040095)(9050020)(9095020)(9100338)(2008001134)(4810010)(4910033)(8820095)(10010002)(9610025)(9560006)(10180021)(9414026)(9310011)(9220031);
+X-Message-Info:
+	qZelhIiYnPm8XPty+wcISHZ6dGe4ty/Ck5sqdkATcN81ThuVc/YL7zox+2xGH4+OWChixd/25/5/OTtNsjuwPdAMSRyMu6o/ck+1/QSGytdbNmxwKUG2Nu/Wchb9UR72BuVJb2g0hzs/dnnuXd7H+bihT8yBaw5GIZyecyCPEKchRcT+b1VHEcwem0yS69Vm1WyeF8X8Ed8=
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0xO0Q9MTtHRD0xO1NDTD0tMQ==
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?ZHFocVBmNFcxZXoyWm8xQXFqYzgvNVY1ZDZsVmJpWlNqZVJVc3YwSHJpMlFG?=
- =?utf-8?B?emJ3ekVSS0pCQW90alkxRmdMUGtqak9vd3dEVVcyUTJ3Q2o4bm1LZ0RoTXNa?=
- =?utf-8?B?TWRtTGgxY1RpV3ZCVysyMkorZ1JVb09IMWU4V2sxdGY0YkRkZ0ErWlVMaUJy?=
- =?utf-8?B?SGxzQlMxQWJzOEtJODl0dFcvMlA2MDdqRXdKYi9VbllFV2U5eGtyOU10bHB5?=
- =?utf-8?B?V2crWWIyQVFqVTFJbDMwcTUwWFhOTDErUjhobEtlbGJZS1FLRHk1c1JLTjRP?=
- =?utf-8?B?TGF4ZzJtZE5TaGMvSjVQaGpHV0dnUy9va1hHOExEK1cyTkpUazNidjhwaUs1?=
- =?utf-8?B?RFNmSVVVbVdma3FMdnRBRVRkTUdqN0RESjdqZXJYMzVpVDBzUmFMKzl3REJj?=
- =?utf-8?B?cEV0cUJra2pobXFnK2c5VWlXbUFlZUpCd0pEa2kzTjJoeDNCLzM2YUY4OHRj?=
- =?utf-8?B?RERqZ3ZidXRCN3NMWmZINXh1QVNoK3NFSE9DcTU5VXZkd3M1dUoySnRMc2lL?=
- =?utf-8?B?K2RtSnd3ZjBEZk9QZ3VUTVQvQndOVWQ3ZmFNOEZvMTdnN3NGeWpBSlJZdHVE?=
- =?utf-8?B?NnBPSGRuQzlKWW1mTll1OFpjb2dXcHhQd3RuYUpFbVRNRDY0SjdPN1hUZEkr?=
- =?utf-8?B?WjVsYmRBV0k2a0V5T3k5bHZpVEQwdEF1cEhCTGJUNEhqQktPR0t6c2RHSldy?=
- =?utf-8?B?ZWJNbTJtRTl6MG1rdGY3NnVnb2RGd2NtaHh1TnRFZ1ZEa01OaksvVmtraEly?=
- =?utf-8?B?NVlCRXB1Y2U2N2Y4ZDIyUE9Cd3lIVVdSMCtjUWQyY004ZFVpMG90YlcvVUhj?=
- =?utf-8?B?WDMraWcrN0VwNzFkMDRIeVlmYm5rd2JVSnExYUhsemNlaFNCeGJWMUM5K2JM?=
- =?utf-8?B?M2FjVlEvUHdPNXIwVWlRSEMyNmJ2QlVvU0M2dnVCZ2hQVklCeUgyS1NtNW1l?=
- =?utf-8?B?UGYvaTR3NFZML1c3OHJUbnN3VG9KaWdVTnRPa3BzTSs5SkgrWm4xbXMwM0xh?=
- =?utf-8?B?eC9HdFhjSTdvV1pFOTl3N3N2UnRyTG5MQTZXMVViMTc5SjVuckpBSVF0eXoz?=
- =?utf-8?B?eXgvYmZidkx6VUs0RmdjNFdXNDZIMFhwV2pSeW5VbmJKWG0zMmRhTkhRaWRT?=
- =?utf-8?B?bE9ZOEpnZytWUnB4blpzcFcxandwVjJIcCtneSsvckFIeDczSGdRd2o0VGhS?=
- =?utf-8?B?Q0ZGNmtGTk10R0k0bU1WejByeGoyVU92dEJtQUphd3hCNXUvYndsY1BQbEc2?=
- =?utf-8?B?WTIyUEJqM0hrU1JyK0RIYVd4OFMwZEkxbGFidjBzRGN4NmxMSVphOWZybjN1?=
- =?utf-8?B?ZnBhNDhxNWZ4RXFYMitBTzFDSGEvbEFNaFl3TkpqNVdpaW51OGtoMVhDRzMw?=
- =?utf-8?B?OEdkaHpCdnAyeVc5K0NQZjZPWUxUdkFuV2Y4SDBncEVlb2FqLzNENkJwU3Fj?=
- =?utf-8?B?ZHUvZFpDMFM2R3ZZWTM4STZTUEI0MDVMZjBMaVVmRk9NNDRpZStzUDM0YnJj?=
- =?utf-8?B?MFBqYUYzTERXR0lVVWNENG1MVUgvRnFXTThsR2EwVVpadVpPOWIrbkNZM2lD?=
- =?utf-8?B?NGVxR2pkSmdFOU5SbjRnYVRKQmc1SFpwR1Jqb0JwZ2hVMlp0ZkN0UUZleXI0?=
- =?utf-8?B?cVozNzY5MFRSZEh6Sk1ic29HdUxEOFJGOGpVSXdobkxiaVdzeFdQNmI1KzZh?=
- =?utf-8?B?TDMvWGJpa3hqenJXRzdnblAxaGFuODNFSVZ3TVljN1UrRXZURDVlSFc3cWth?=
- =?utf-8?B?TFhNQTRRNnpGVHhONmlxTDU4R3k2TytUS1N4YlJYTTlpVVlBaGJhYjZuOGlF?=
- =?utf-8?B?bFBwcVJFcFY0OFZ2SVZTaEtOYlRsNnlYUDF0a3dpVzFJRVVQSkE3ajRPWjlj?=
- =?utf-8?B?WHhVNzNwL1hQYTdWMHRJbHRzUXIreHdmYlVOQTFaNmM2bk5wN0xVZ0VLbGRv?=
- =?utf-8?B?YTFNbHNGNWxGSmRjZ2VWdTVIZElJNlVtOUZvOFd6bHl3RmpVdkI3UWpmbk9G?=
- =?utf-8?B?cEM2N21oUFlYTUFFc1VaOTlBR2gvRjZDZFV0WjBucHduY0czcFhnTldsUm1j?=
- =?utf-8?B?MTlQTjBIRGdwNzExT0s2WDQ1eVd3bXNDcnVhRGZkUENSMk9nN09oc1QraDFk?=
- =?utf-8?B?c3FGT2VwQU1DdlhOdnBqelZDWkZqcjBqUnlxUEpSYlFFMjhNcjRrQU9CTTFv?=
- =?utf-8?B?NDVBeEJrUU93ajREM1JVeS9IK3ZmbFA1M3p2NW5QdFlBQWRzRVVBWC94eGtq?=
- =?utf-8?B?Z3JCSUxQK3lYMGhvZTNMZmZxQTErRmY4SGRoa1AxczVJalNyWm9oQnlGRnl3?=
- =?utf-8?B?VUFNTFo4cVZQaFB3Vm5ZOEVGUytYbGpRcm1kalp1eFgzWWlSQ2E2cWFCMGZ6?=
- =?utf-8?B?WHFXaC96Rnc5ZGVITXBIYkh2V1lVVjE0dmljK2NkQnN6YXVoRC9PUk00WnFi?=
- =?utf-8?B?QTA1T3JHdk5Eem5RTWh5d0dDdDR5VHZnYi95dk1jdHhleVZDWWJHYWVhRU5z?=
- =?utf-8?B?T1BoTGtWOFFrVm1HU0diWnBUdkg4TGJKZ0pVL2tNdWNnWSszakYzejFGZ2My?=
- =?utf-8?B?REZFUENQTDJ1bjZPUGUvaUE5RUQyay84Z2hyY2QrYzNmK29DNTFjd3FJSEFP?=
- =?utf-8?B?eUpHOGJ6MHF6Y0dDKzR2Zlc1TVBTZHRYbnR1NE5sVWNGa1NEb0lBdVo5Kzd4?=
- =?utf-8?B?MS9hdFJuaVNnNGM2NFIxMEhIcUlwcVo4QTZ5MVRmYmtZUzhmRGl2M0s4eW5r?=
- =?utf-8?B?WFc2RFJNSzZmOFovRllnQmZMTmlZNVBobUQ3QS9jUURLSWJmOERvRm5yRFVp?=
- =?utf-8?B?TVJINEhrZGIwcnhDSVcvaFo3ZDF5RWFCVUJ4djZPWnNROEMvWTFtMGpWRFNB?=
- =?utf-8?B?NXFLUW9Da1lMZVNOQlVidUV3YkhOT2pqZXZZMG5iYkRFWVlWTWlFSU40VGJJ?=
- =?utf-8?B?cGZ2Mzhyd1UrT2ZWQnZaeG1MUFhqREdSdi9XYTZ0VlRBWUFldlhvbEdvdFhz?=
- =?utf-8?B?d2Nrcy9BVVdGcU5tY2dqOWFXaCtPcWkzUlRacTJRY1FsT0VPem13YnJ0SXBY?=
- =?utf-8?B?Mk1wRS9lcTJUT1Y3RldoYndMQk1RZnR0dEJEWlNjZnp4b01Uc1JwbW1YeTBy?=
- =?utf-8?B?QkxvVUowR25tQzFNa3Z3Y1Rac2FIc1JNaDg3RkNQQm13MXZnTTUyZ2Y4S3dI?=
- =?utf-8?B?Sm8rWWZISkpJMS93bGFCU0Nrai9QdldsQ1Q4TGxocElZZStlL21YQ2ROajZR?=
- =?utf-8?B?TEwwNzBXM2VlVjQ2RUlNMS9ybUtBUVdnS3dPMjlTa0tLYmlhSFhwcGdqNmJ6?=
- =?utf-8?B?TFlwMFB5anRvOGNDdU9TQWZCTUFUUFFaT256Um04MXptcVpGV2hJZ01hVnp6?=
- =?utf-8?B?cUVGQjBWbWQzZk9GWVNUam1wUTl0KzF5cU9FWTlYSTA4ajVidW5acGh4L0o3?=
- =?utf-8?B?d3dnaTE2TGcrR21HbUhxK0xsQ2phdmE2UERxRExRVk44RHIzWjNiZWtTTGVr?=
- =?utf-8?B?aCtzdVRyclZjYlpDNkt0NWF5WGI3WDVBdTVRS05xRjUreSsySVJkL3ZjV2pw?=
- =?utf-8?B?S00zVkM3WTVCNHZ0Y1hOYlJzRkg4WVVwc296bnJURkdZS1BBK1YzL2tlNW91?=
- =?utf-8?B?QmJCQUtwOFZrdmc3Wmp4NW5mbmtKVHAvMnJ6NjN5VU4wczBEQU1nVXRRTzRK?=
- =?utf-8?B?bEs5SEpNMkpMMGxZVGVWOEpIVFBzdktPeXhKT2VjdUkxSHF0TnhGcG41ekFk?=
- =?utf-8?B?Y2NoRmRWR3ZjMnVzbkZHMGsrQVhaa0NPRlhrMkprTDBKcE5oMEVsSklOZ0kw?=
- =?utf-8?B?RmdJZlVXSHNNQnBjbmFlUkp1MUd4WWZ4V0lEQmNvd0tYd0gxSVNLZjk3SmZn?=
- =?utf-8?B?SEk5VEhVNGdnNDIrUWEzS1JHN3BodlV2WEdxdnVQSHVzdjhMY1hRUk9UMnlS?=
- =?utf-8?B?QTgvSExaQmJ0Y1F6cnREOWVESys0aEd3Q25KamdGVkJKbUpQYTRNdEhzRzZa?=
- =?utf-8?B?MjV3ZitzM2wzMFdNY0ZPR00rVDRMQ1BRNUFnZTVzTWg2VzViUUczSVpEZWow?=
- =?utf-8?B?VHE4UUNzcHpsK0pVdjlJVHU2VURtaGkyTWRra3R1dmJ2a2NISG9UYXlEMStF?=
- =?utf-8?B?UThSUkJnRkFKNFUwZWVhaGxVeENjMnhuRktLWWJ3MG5mS29DdlcwN2ljemhp?=
- =?utf-8?B?SkZ2ZFAzaVUwdXpVeGtVSnIxaDZpZnNKQ1FqUGRmQjkyaG9DMlZoVDZkdXJy?=
- =?utf-8?B?RWIzUDJzWTRNRkRQSnk3SDRDd0cvZ29TdjRiRElhbUcrSm9HMmdPR1pRbEZL?=
- =?utf-8?B?ZWdqVUk2Z3A5WU1raTVUUEtoUGVsRFJJNTY1eHFmTllSNGRmZjJpckhMelJT?=
- =?utf-8?Q?BHL65?=
+	=?utf-8?B?bXNnT25YNGczZEtxM1hCakxBL2JaeFdoeU0rZVUvRHp2RmFzZDR0bmJlSXY0?=
+ =?utf-8?B?dVZNM3E5b2FaRFozSTNnSG5WQTBVdDlqcnVBSlRwVlZjeW1RUjJCc0xZS1gx?=
+ =?utf-8?B?T0VDNkxuV1hlKzJpNFIzRkhQQURKaHlpaSs2RWZLMzJ6S1NZQ05teEZmSGE2?=
+ =?utf-8?B?cDgvUWs1amJkSUpRb3oydjM4WVQ0aWZHNlQ1UmNWWHh1TEhNc284OUhxZ3ZS?=
+ =?utf-8?B?QXBFeVVIdUJlYWtocUU4R2RNODV0VHUwb28vWDlLSDFIQitxSEhtcy83WmxZ?=
+ =?utf-8?B?WUxSK2owMDVmRlJUbkowOHQxYkh0VWJPTHUrWjhOMk1YQzdubFc1aHdoSWRI?=
+ =?utf-8?B?NnFvVlkrYy94NVdKSWR5SWlISHd0amdBZTFCbU9WK1llcWpYTVI5eWkzbjVS?=
+ =?utf-8?B?QlJFQTZveU54REZpSi9rREpqUWVYZ0U4VmdsdWdWd1hsNGd6QVJVMGUrUkxR?=
+ =?utf-8?B?cWJ5VHM2cEYzN1lORU9DS3dEVXQwYjdtSHlnanFPTG1GVXNEbmhrN0NVMlNN?=
+ =?utf-8?B?Z0pSN2FpQUpVblEzQTJuOGkza2RpYWo3Yk9YeEFYQ0MvM0U5MUFiaGRFbGcr?=
+ =?utf-8?B?RmFNSkgwRDNxZWhzdlRGRlNTdVp5TExrcEs1VXZsbjNQTmdvS0FrVnVQcnNQ?=
+ =?utf-8?B?MzdVMTlOTFBodTd6Mjl4R1MraVdZVXRSNWl2djdhMzd5L3p3eFpGNTdsRVRN?=
+ =?utf-8?B?d0Q5NjNwWWgrVGpwczZ1MVEvYWNBUDlsaktNZWtsMzJLOEYybytqWXA3TUVM?=
+ =?utf-8?B?cjBTb0F1bkdTa3ExbzVkWXE4eEFmSmUyZ3pFZWJwaVVpUmNTbGZldExCTnU4?=
+ =?utf-8?B?VEc4WGpPczNMR0tOY1N4RUI0ZjV3UWVySCs4MUkvVzNtRlZvU0ZJald3R2pC?=
+ =?utf-8?B?aFEwZXFkZVhoSVRiNzVTczhjOG5FcUhFandDVE5Kb0k2SSsvZUhkU3g2TDBS?=
+ =?utf-8?B?YkxRaWFWanArV3VLNGFtR0FZVHBNNVVKcmhVNGhFVlRxUkRhSSsvRmN2Ny9Q?=
+ =?utf-8?B?UWVwVERSeUpnak16UkJSRGpEOFhoQm1BS01URU9iOFNSdnJ6bllMZkxqYTJ5?=
+ =?utf-8?B?clJiVUlMd1MreVEvZFJaZDNrUENLb1EwdTN4NkRiRU56b0FYbXNFWlVKTzRh?=
+ =?utf-8?B?V2w4djBsQXgvZXZiZmZ3ZVRDaE0wbm1QVGowSTdBRFl5WnRTbHFnQ2tFL20w?=
+ =?utf-8?B?VkNkTjZkYkVaNHByMzdlTHBRMUJSZjJoYjIzZ3gxVzVHcXNZMUlTOU9idnVw?=
+ =?utf-8?B?SVZYcFdtbWt4QWJYYjk4L1gvWEJlUjltQktndEhBa0dmYnpKWXVwMzZwZWpi?=
+ =?utf-8?B?UEI2MWZRckNlRjRRcDVtQ29ZdDltVWQwTHBrSXBvendYckZnUlg0R1VtVURa?=
+ =?utf-8?B?RFo4M085cXZURGJxY2FsN3p3RzdOVzU1clgwWE9DQlo4ZUtOcklwUHdrZWtY?=
+ =?utf-8?B?N3UzSEFONzhCMmw2bDRUOTB4OTBYTklHSEl1TWh5VXhyZDhlbXRVNjJXUDB4?=
+ =?utf-8?B?YzlQSGdqMFc1Uk1kS1dGTG5vQ0xJQ290Ynk4aFZLeTNvRFByTjNsRnduY0p5?=
+ =?utf-8?B?MDAyQ04zNEhaQVpKVHM1dWhYbjZCWXgzMkNvTStabk1IQW5leXYxLzFvSytv?=
+ =?utf-8?B?TFlmT1Jzay91dGxHMUJGQThnRE53TmRuNm5jR1J0dVYwZjZIRHFySDQ5Tk42?=
+ =?utf-8?B?RlNkbW1KMjNRc0UvT3FjbkN3TkJkZ3hKRjBOZ0hkY0xWci92YTJtK1l6eHA0?=
+ =?utf-8?B?NUJ3dExoeHkwMXpnMjNVWkFWN2I4UVl2Ym5nWWMzaVlmVURQTFE4c0dUMytX?=
+ =?utf-8?B?eXpXSXZCOHlEanRLVENiRjYvdzYySVhpL0FNU0Q1NUJMN2htakhKVFZRR1BO?=
+ =?utf-8?B?QnFtdnIxNU5YNW00L2lrU0NlKzh2d1ZHNCs2TStLWGo0ZE9VV05CeTZMemNT?=
+ =?utf-8?B?dkY0ZEt5SlhvL2JWeGFaRW1MaFVZWTZ2WUdSRXNMY2xLMndXZFVwTS9rVkJ6?=
+ =?utf-8?B?Q0huSkxSeHdtMW1iam94NFp1aTJnTmxldEN1UXRXenEyTGNYVVQ5NlZ6RGNa?=
+ =?utf-8?B?ZVpBR3ZQZjlQczc5bjJ6NTRpT3k5ZG9tYTFhNHhMc0J2U1hIUFVybEFPaGF0?=
+ =?utf-8?B?Y1o1RlRPREVLRFduSmtsWFlxeHVJTVY4RTJ2Q2ZJRmRNYTBiYnNyREZPblVH?=
+ =?utf-8?B?RFJDblNpZkZLR0N6OVhNamxmcmVjTXNadUMzMkdBeDUwTkVNZlFkbDMzU3pv?=
+ =?utf-8?B?Z3FLUVpxR3lXMlYrVnBYdVpranVlT3FPaHlHdlNwTW1KSjAzTUN5Nmw5bjYy?=
+ =?utf-8?B?R2ZhaUwxSzBBY3pRbHhpaHNLOUZCTDB2aXJsNzZad0RFaXgyMzVqbm9PY3B2?=
+ =?utf-8?B?Tmx1VGpQYlRjcmRsbGo0bURFeldZeUxkeExTTmJCZDE0VkVsVEh2NXBGYXRW?=
+ =?utf-8?Q?oJb6XBNrCn5JA3NgnxYw7Mu+rC5Ns3HfDqU=3D?=
 MIME-Version: 1.0
 
---88fcb51e0e694340e34900bdf93c42351661
+--_000_SA0PR04MB7370AFB0577C7B7D1F09E57DB3899SA0PR04MB7370namp_
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: base64
 
-Pick the music you
+DQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KRGU6ICpPTkxJTkUgVmxBR1JBYW5k
+Q2xBTGxTKiA8d29ybGV5dGN3QHN1ZGRlbmxpbmsubmV0Pg0KRW52aWFkbzogcXVhcnRhLWZlaXJh
+LCAyOSBkZSBtYXLDp28gZGUgMjAyMyAwOToxMQ0KUGFyYTogbWVyY2lhdmlyZ2Vuc0Bob3RtYWls
+LmNvbSA8bWVyY2lhdmlyZ2Vuc0Bob3RtYWlsLmNvbT4NCkNjOiBtZXJjaWF2aXRvcmlhdkBob3Rt
+YWlsLmNvbSA8bWVyY2lhdml0b3JpYXZAaG90bWFpbC5jb20+OyBtZXJjaWF4QGhvdG1haWwuY29t
+IDxtZXJjaWF4QGhvdG1haWwuY29tPjsgbWVyY2lheGF2ZXNAaG90bWFpbC5jb20gPG1lcmNpYXhh
+dmVzQGhvdG1haWwuY29tPjsgbWVyY2lheWFubWFjdEBob3RtYWlsLmNvbSA8bWVyY2lheWFubWFj
+dEBob3RtYWlsLmNvbT47IG1lcmNpYXphcmFuemFAaG90bWFpbC5jb20gPG1lcmNpYXphcmFuemFA
+aG90bWFpbC5jb20+OyBtZXJjaWF6dWVAaG90bWFpbC5jb20gPG1lcmNpYXp1ZUBob3RtYWlsLmNv
+bT47IG1lcmNpYl9sb3Vyb0Bob3RtYWlsLmNvbSA8bWVyY2liX2xvdXJvQGhvdG1haWwuY29tPjsg
+bWVyY2liaWVsQGhvdG1haWwuY29tIDxtZXJjaWJpZWxAaG90bWFpbC5jb20+OyBtZXJjaWJva3Ux
+MjNAaG90bWFpbC5jb20gPG1lcmNpYm9rdTEyM0Bob3RtYWlsLmNvbT47IG1lcmNpY2FtaWxvMTk5
+OUBob3RtYWlsLmNvbSA8bWVyY2ljYW1pbG8xOTk5QGhvdG1haWwuY29tPjsgbWVyY2ljYXJkb3Nv
+QGhvdG1haWwuY29tIDxtZXJjaWNhcmRvc29AaG90bWFpbC5jb20+OyBtZXJjaWNoYW5nQGhvdG1h
+aWwuY29tIDxtZXJjaWNoYW5nQGhvdG1haWwuY29tPjsgbWVyY2ljaGVyQGhvdG1haWwuY29tIDxt
+ZXJjaWNoZXJAaG90bWFpbC5jb20+DQpBc3N1bnRvOiDwn5KKDQoNClNVUEVSIFZsQUdSQSZDbEFM
+bFMuIEZPUiBZT1UgQ09VUE9OIDUlPGh0dHBzOi8vd3d3Lmdvb2dsZS5jb20vdXJsP3E9JTY4JTc0
+dHAlM0ElMkYlMkZzJTY5JTZkcGx5JTczJTYxJTZjZQ0KJTcwaSU2ZSU2Ny56b24lNjUlMkYlM0Zj
+cCUzRHMlNjElNmMlNjVzeCUyRiUzRlFqdCU3YSU2ZiU2OSU1NyUzMUIlMzclNjEmc2E9RA0KJnNu
+dHo9MSZ1c2c9QU92VmF3MTk2OEp5aWRJZGtwR3pfODFMU09Iej4NCg==
 
-love with Premium.
-
-GET FREE PREMIUM   =20
-
-Enjoy uninterrupted music, endless skips, and the freedom to listen to wh=
-atever you want, whenever you want. You no longer need to pay for Premium=
- to get the full Spotify experience.
-
-Premium lets you pick and play anything. Because sometimes there's one tr=
-ack you just really, really want. Try it now, free FOREVER.
-
-GET FREE PREMIUM   =20
-
-This offer is available for a limited time. Make sure to install the app =
-on your PC and register before May 1, 2026. Don't think =E2=80=93 act now=
-!
-
---88fcb51e0e694340e34900bdf93c42351661
+--_000_SA0PR04MB7370AFB0577C7B7D1F09E57DB3899SA0PR04MB7370namp_
 Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: base64
 
-<!DOCTYPE html><html xmlns=3D"http://www.w3.org/1999/xhtml"><head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
-<meta content=3D"width=3Ddevice-width" name=3D"viewport">
+PGh0bWw+PGhlYWQ+DQo8bWV0YSBodHRwLWVxdWl2PSJDb250ZW50LVR5cGUiIGNvbnRlbnQ9InRl
+eHQvaHRtbDsgY2hhcnNldD11dGYtOCI+DQo8L2hlYWQ+DQo8Ym9keT4NCjxkaXY+PC9kaXY+DQo8
+YnI+DQo8aHIgc3R5bGU9ImRpc3BsYXk6aW5saW5lLWJsb2NrO3dpZHRoOjk4JSIgdGFiaW5kZXg9
+Ii0xIj4NCjxkaXYgaWQ9ImRpdlJwbHlGd2RNc2ciIGRpcj0ibHRyIj48Zm9udCBmYWNlPSJDYWxp
+YnJpLCBzYW5zLXNlcmlmIiBzdHlsZT0iZm9udC1zaXplOjExcHQiIGNvbG9yPSIjMDAwMDAwIj48
+Yj5EZTo8L2I+ICpPTkxJTkUgVmxBR1JBYW5kQ2xBTGxTKiAmbHQ7d29ybGV5dGN3QHN1ZGRlbmxp
+bmsubmV0Jmd0Ozxicj4NCjxiPkVudmlhZG86PC9iPiBxdWFydGEtZmVpcmEsIDI5IGRlIG1hcsOn
+byBkZSAyMDIzIDA5OjExPGJyPg0KPGI+UGFyYTo8L2I+IG1lcmNpYXZpcmdlbnNAaG90bWFpbC5j
+b20gJmx0O21lcmNpYXZpcmdlbnNAaG90bWFpbC5jb20mZ3Q7PGJyPg0KPGI+Q2M6PC9iPiBtZXJj
+aWF2aXRvcmlhdkBob3RtYWlsLmNvbSAmbHQ7bWVyY2lhdml0b3JpYXZAaG90bWFpbC5jb20mZ3Q7
+OyBtZXJjaWF4QGhvdG1haWwuY29tICZsdDttZXJjaWF4QGhvdG1haWwuY29tJmd0OzsgbWVyY2lh
+eGF2ZXNAaG90bWFpbC5jb20gJmx0O21lcmNpYXhhdmVzQGhvdG1haWwuY29tJmd0OzsgbWVyY2lh
+eWFubWFjdEBob3RtYWlsLmNvbSAmbHQ7bWVyY2lheWFubWFjdEBob3RtYWlsLmNvbSZndDs7IG1l
+cmNpYXphcmFuemFAaG90bWFpbC5jb20gJmx0O21lcmNpYXphcmFuemFAaG90bWFpbC5jb20mZ3Q7
+Ow0KIG1lcmNpYXp1ZUBob3RtYWlsLmNvbSAmbHQ7bWVyY2lhenVlQGhvdG1haWwuY29tJmd0Ozsg
+bWVyY2liX2xvdXJvQGhvdG1haWwuY29tICZsdDttZXJjaWJfbG91cm9AaG90bWFpbC5jb20mZ3Q7
+OyBtZXJjaWJpZWxAaG90bWFpbC5jb20gJmx0O21lcmNpYmllbEBob3RtYWlsLmNvbSZndDs7IG1l
+cmNpYm9rdTEyM0Bob3RtYWlsLmNvbSAmbHQ7bWVyY2lib2t1MTIzQGhvdG1haWwuY29tJmd0Ozsg
+bWVyY2ljYW1pbG8xOTk5QGhvdG1haWwuY29tICZsdDttZXJjaWNhbWlsbzE5OTlAaG90bWFpbC5j
+b20mZ3Q7Ow0KIG1lcmNpY2FyZG9zb0Bob3RtYWlsLmNvbSAmbHQ7bWVyY2ljYXJkb3NvQGhvdG1h
+aWwuY29tJmd0OzsgbWVyY2ljaGFuZ0Bob3RtYWlsLmNvbSAmbHQ7bWVyY2ljaGFuZ0Bob3RtYWls
+LmNvbSZndDs7IG1lcmNpY2hlckBob3RtYWlsLmNvbSAmbHQ7bWVyY2ljaGVyQGhvdG1haWwuY29t
+Jmd0Ozxicj4NCjxiPkFzc3VudG86PC9iPiDwn5KKPC9mb250Pg0KPGRpdj4mbmJzcDs8L2Rpdj4N
+CjwvZGl2Pg0KPHN0eWxlPg0KPCEtLQ0KLS0+DQo8L3N0eWxlPg0KPGRpdj48YSBocmVmPSJodHRw
+czovL3d3dy5nb29nbGUuY29tL3VybD9xPSU2OCU3NHRwJTNBJTJGJTJGcyU2OSU2ZHBseSU3MyU2
+MSU2Y2UNCiU3MGklNmUlNjcuem9uJTY1JTJGJTNGY3AlM0RzJTYxJTZjJTY1c3glMkYlM0ZRanQl
+N2ElNmYlNjklNTclMzFCJTM3JTYxJmFtcDtzYT1EDQomYW1wO3NudHo9MSZhbXA7dXNnPUFPdlZh
+dzE5NjhKeWlkSWRrcEd6XzgxTFNPSHoiPlNVUEVSIFZsQUdSQSZhbXA7Q2xBTGxTLiBGT1IgWU9V
+IENPVVBPTiA1JTwvYT4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
 
-<style>body {
-width: 100% !important; min-width: 100%; -webkit-text-size-adjust: 100%; -m=
-s-text-size-adjust: 100%; margin: 0; padding: 0;
-}
-.ExternalClass {
-width: 100%;
-}
-.ExternalClass {
-line-height: 100%;
-}
-#backgroundTable {
-margin: 0; padding: 0; width: 100% !important; line-height: 100% !important=
-;
-}
-body {
-background-color: #fafafa; background-repeat: repeat; background-position: =
-center top;
-}
-body {
-color: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: nor=
-mal; font-size: 14px; padding: 0; margin: 0; text-align: left; line-height:=
- 1.3;
-}
-a:hover {
-color: #2795b6;
-}
-a:active {
-color: #2795b6;
-}
-a:visited {
-color: #2ba6cb;
-}
-h1 a:active {
-color: #2ba6cb !important;
-}
-h2 a:active {
-color: #2ba6cb !important;
-}
-h3 a:active {
-color: #2ba6cb !important;
-}
-h4 a:active {
-color: #2ba6cb !important;
-}
-h5 a:active {
-color: #2ba6cb !important;
-}
-h6 a:active {
-color: #2ba6cb !important;
-}
-h1 a:visited {
-color: #2ba6cb !important;
-}
-h2 a:visited {
-color: #2ba6cb !important;
-}
-h3 a:visited {
-color: #2ba6cb !important;
-}
-h4 a:visited {
-color: #2ba6cb !important;
-}
-h5 a:visited {
-color: #2ba6cb !important;
-}
-h6 a:visited {
-color: #2ba6cb !important;
-}
-table.secondary:hover td {
-background: #d0d0d0 !important; color: #555555;
-}
-table.secondary:hover td a {
-color: #555555 !important;
-}
-table.secondary td a:visited {
-color: #555555 !important;
-}
-table.secondary:active td a {
-color: #555555 !important;
-}
-table.success:hover td {
-background: #457a1a !important;
-}
-table.alert:hover td {
-background: #970b0e !important;
-}
-body.outlook p {
-display: inline !important;
-}
-@media only screen and (min-width: 768px) {
-  table.container {
-    width: 580px !important;
-  }
-  .mail .hide-for-desktop {
-    display: none !important;
-  }
-  .mail .hide-and-true {
-    display: none !important;
-  }
-  .mail .hide-and-false {
-    display: block !important;
-  }
-  .mail .hide-or-true {
-    display: none !important;
-  }
-}
-@media only screen and (max-width: 600px) {
-  .mail img {
-    max-width: 100% !important; max-height: 100% !important; padding: 0 !im=
-portant; width: auto !important; height: auto !important;
-  }
-  .mail .social img {
-    width: inherit !important;
-  }
-  .mail img.normal {
-    width: inherit !important;
-  }
-  .mail center {
-    min-width: 0 !important;
-  }
-  .mail .container {
-    width: 100% !important;
-  }
-  .mail .row {
-    width: 100% !important; display: block !important;
-  }
-  .mail .wrapper {
-    display: block !important; padding-right: 0 !important;
-  }
-  .mail .columns {
-    table-layout: fixed !important; float: none !important; width: 100% !im=
-portant; padding-right: 0px !important; padding-left: 0px !important; displ=
-ay: block !important;
-  }
-  .mail .column {
-    table-layout: fixed !important; float: none !important; width: 100% !im=
-portant; padding-right: 0px !important; padding-left: 0px !important; displ=
-ay: block !important;
-  }
-  .mail .wrapper.first .columns {
-    display: table !important;
-  }
-  .mail .wrapper.first .column {
-    display: table !important;
-  }
-  .mail table.columns > tbody > tr > td {
-    width: 100% !important; padding-left: 0 !important; padding-right: 0 !i=
-mportant;
-  }
-  .mail table.column > tbody > tr > td {
-    width: 100% !important; padding-left: 0 !important; padding-right: 0 !i=
-mportant;
-  }
-  .mail .columns td.one {
-    width: 8.333333% !important;
-  }
-  .mail .column td.one {
-    width: 8.333333% !important;
-  }
-  .mail .columns td.two {
-    width: 16.666666% !important;
-  }
-  .mail .column td.two {
-    width: 16.666666% !important;
-  }
-  .mail .columns td.three {
-    width: 25% !important;
-  }
-  .mail .column td.three {
-    width: 25% !important;
-  }
-  .mail .columns td.four {
-    width: 33.333333% !important;
-  }
-  .mail .column td.four {
-    width: 33.333333% !important;
-  }
-  .mail .columns td.five {
-    width: 41.666666% !important;
-  }
-  .mail .column td.five {
-    width: 41.666666% !important;
-  }
-  .mail .columns td.six {
-    width: 50% !important;
-  }
-  .mail .column td.six {
-    width: 50% !important;
-  }
-  .mail .columns td.seven {
-    width: 58.333333% !important;
-  }
-  .mail .column td.seven {
-    width: 58.333333% !important;
-  }
-  .mail .columns td.eight {
-    width: 66.666666% !important;
-  }
-  .mail .column td.eight {
-    width: 66.666666% !important;
-  }
-  .mail .columns td.nine {
-    width: 75% !important;
-  }
-  .mail .column td.nine {
-    width: 75% !important;
-  }
-  .mail .columns td.ten {
-    width: 83.333333% !important;
-  }
-  .mail .column td.ten {
-    width: 83.333333% !important;
-  }
-  .mail .columns td.eleven {
-    width: 91.666666% !important;
-  }
-  .mail .column td.eleven {
-    width: 91.666666% !important;
-  }
-  .mail .columns td.twelve {
-    width: 100% !important;
-  }
-  .mail .column td.twelve {
-    width: 100% !important;
-  }
-  .mail td.offset-by-eleven {
-    padding-left: 0 !important;
-  }
-  .mail td.offset-by-ten {
-    padding-left: 0 !important;
-  }
-  .mail td.offset-by-nine {
-    padding-left: 0 !important;
-  }
-  .mail td.offset-by-eight {
-    padding-left: 0 !important;
-  }
-  .mail td.offset-by-seven {
-    padding-left: 0 !important;
-  }
-  .mail td.offset-by-six {
-    padding-left: 0 !important;
-  }
-  .mail td.offset-by-five {
-    padding-left: 0 !important;
-  }
-  .mail td.offset-by-four {
-    padding-left: 0 !important;
-  }
-  .mail td.offset-by-three {
-    padding-left: 0 !important;
-  }
-  .mail td.offset-by-two {
-    padding-left: 0 !important;
-  }
-  .mail td.offset-by-one {
-    padding-left: 0 !important;
-  }
-  .mail table.columns td.expander {
-    width: 1px !important;
-  }
-  .mail .right-text-pad {
-    padding-left: 10px !important;
-  }
-  .mail .text-pad-right {
-    padding-left: 10px !important;
-  }
-  .mail .left-text-pad {
-    padding-right: 10px !important;
-  }
-  .mail .text-pad-left {
-    padding-right: 10px !important;
-  }
-  .mail .hide-for-small {
-    display: none !important;
-  }
-  .mail .show-for-desktop {
-    display: none !important;
-  }
-  .mail .show-for-small {
-    display: block !important; width: auto !important; overflow: visible !i=
-mportant;
-  }
-  .mail .hide-for-desktop {
-    display: block !important; width: auto !important; overflow: visible !i=
-mportant;
-  }
-  .mail .button-hide-for-small {
-    display: none !important;
-  }
-  .mail .button-show-for-desktop {
-    display: none !important;
-  }
-  .mail .button-show-for-small {
-    display: table !important; overflow: visible !important;
-  }
-  .mail .button-hide-for-desktop {
-    display: table !important; overflow: visible !important;
-  }
-  .mail .hide-and-true {
-    display: none !important;
-  }
-  .mail .hide-and-false {
-    display: block !important;
-  }
-  .mail .hide-or-true {
-    display: none !important;
-  }
-}
-</style></head>
-<body style=3D"width: 100% !important; min-width: 100%; -webkit-text-size-a=
-djust: 100%; -ms-text-size-adjust: 100%; color: #222222; font-family: Helve=
-tica, Arial, sans-serif; font-weight: normal; font-size: 14px; text-align: =
-left; line-height: 1.3; background: #fafafa repeat center top; margin: 0; p=
-adding: 0;" bgcolor=3D"#fafafa">
-<table class=3D"mail" style=3D"border-spacing: 0; border-collapse: collapse=
-; vertical-align: top; text-align: left; height: 100%; width: 100%; color: =
-#222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; fo=
-nt-size: 14px; line-height: 1.3; background: #fafafa repeat center top; mar=
-gin: 0; padding: 0;" bgcolor=3D"#fafafa">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td align=3D"center" class=3D"center" valign=3D"top" style=3D"word-break: b=
-reak-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border=
--collapse: collapse !important; vertical-align: top; text-align: center; co=
-lor: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: norma=
-l; font-size: 14px; margin: 0; padding: 0;">
-<center style=3D"width: 100%; min-width: 580px;">
-<table class=3D"container" style=3D"border-spacing: 0; border-collapse: col=
-lapse; vertical-align: top; text-align: inherit; max-width: 580px; margin: =
-0 auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; color: #222222; font-family: Helvetica, Arial, sans-s=
-erif; font-weight: normal; font-size: 14px; margin: 0; padding: 0;" align=
-=3D"left" valign=3D"top">
-<table class=3D"row" style=3D"border-spacing: 0; border-collapse: collapse;=
- vertical-align: top; text-align: left; width: 100%; position: relative; di=
-splay: block; background: transparent repeat center top; padding: 0px;" bgc=
-olor=3D"transparent">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"wrapper first last" style=3D"word-break: break-word; -webkit-h=
-yphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse =
-!important; vertical-align: top; text-align: left; position: relative; colo=
-r: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
- font-size: 14px; margin: 0; padding: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"twelve columns" style=3D"border-spacing: 0; border-collapse=
-: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 =
-auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; width: 100%; color: #222222; font-family: Helvetica, =
-Arial, sans-serif; font-weight: normal; font-size: 14px; margin: 0; padding=
-: 0px;" align=3D"left" valign=3D"top">
-<table style=3D"width: 100%; border-spacing: 0; border-collapse: collapse; =
-vertical-align: top; text-align: left; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left"><td class=3D"" style=3D"font-size: 1px; line-height: 0; word-br=
-eak: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; =
-border-collapse: collapse !important; vertical-align: top; text-align: left=
-; width: 100%; color: #222222; font-family: Helvetica, Arial, sans-serif; f=
-ont-weight: normal; background: transparent repeat center center; margin: 0=
-; padding: 20px 0px 0px;" align=3D"left" bgcolor=3D"transparent" valign=3D"=
-top">&nbsp;</td>
-</tr></tbody></table>
-
-
-
-</td>
-<td class=3D"expander" style=3D"word-break: break-word; -webkit-hyphens: no=
-ne; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important=
-; vertical-align: top; text-align: left; width: 100%; visibility: hidden; c=
-olor: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: norm=
-al; font-size: 14px; margin: 0; padding: 0;" align=3D"left" valign=3D"top">=
-</td>
-</tr>
-</tbody></table>
-</td>
-
-</tr>
-</tbody></table>
-</td>
-</tr>
-</tbody></table>
-
-<table class=3D"container" style=3D"border-spacing: 0; border-collapse: col=
-lapse; vertical-align: top; text-align: inherit; max-width: 580px; margin: =
-0 auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; color: #222222; font-family: Helvetica, Arial, sans-s=
-erif; font-weight: normal; font-size: 14px; margin: 0; padding: 0;" align=
-=3D"left" valign=3D"top">
-<table class=3D"row" style=3D"border-radius: 0px; -webkit-border-radius: 0p=
-x; -moz-border-radius: 0px; border-spacing: 0; border-collapse: collapse; v=
-ertical-align: top; text-align: left; width: 100%; position: relative; disp=
-lay: block; background: #dfcbba repeat center top; padding: 0px 0;" bgcolor=
-=3D"#dfcbba">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"wrapper first last" style=3D"word-break: break-word; -webkit-h=
-yphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse =
-!important; vertical-align: top; text-align: left; position: relative; colo=
-r: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
- font-size: 14px; margin: 0; padding: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"twelve columns" style=3D"border-spacing: 0; border-collapse=
-: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 =
-auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; width: 100%; color: #222222; font-family: Helvetica, =
-Arial, sans-serif; font-weight: normal; font-size: 14px; margin: 0; padding=
-: 0px;" align=3D"left" valign=3D"top">
-<table align=3D"left" style=3D"border-collapse: collapse; border-spacing: 0=
-; overflow: hidden; width: 100%; vertical-align: top; text-align: left; pad=
-ding: 0; border: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td align=3D"left" style=3D"text-align: left; word-break: break-word; -webk=
-it-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: colla=
-pse !important; vertical-align: top; width: 100%; color: #222222; font-fami=
-ly: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; mar=
-gin: 0; padding: 10px;" valign=3D"top">
-<!--[if mso]>
-<img alt=3D'298-2984317_spotify-hd-png-download-removebg-preview.png' src=
-=3D'https://app.makemail.ru/content/cd726ae8812ae1288ed7b93d953a36f1.png' w=
-idth=3D'130'>
-<![endif]-->
-<!--[if !mso]> <!---->
-<img alt=3D"298-2984317_spotify-hd-png-download-removebg-preview.png" class=
-=3D"left" height=3D"46" src=3D"https://app.makemail.ru/content/cd726ae8812a=
-e1288ed7b93d953a36f1.png" style=3D"width: 130px !important; height: 46px; o=
-utline: none; text-decoration: none; -ms-interpolation-mode: bicubic; max-w=
-idth: 100%; float: left; clear: both; display: block;" width=3D"130" align=
-=3D"left">
-<!-- <![endif]-->
-</td>
-</tr>
-</tbody></table>
-
-
-
-</td>
-<td class=3D"expander" style=3D"word-break: break-word; -webkit-hyphens: no=
-ne; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important=
-; vertical-align: top; text-align: left; width: 100%; visibility: hidden; c=
-olor: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: norm=
-al; font-size: 14px; margin: 0; padding: 0;" align=3D"left" valign=3D"top">=
-</td>
-</tr>
-</tbody></table>
-</td>
-
-</tr>
-</tbody></table>
-</td>
-</tr>
-</tbody></table>
-
-<table class=3D"container" style=3D"border-spacing: 0; border-collapse: col=
-lapse; vertical-align: top; text-align: inherit; max-width: 580px; margin: =
-0 auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; color: #222222; font-family: Helvetica, Arial, sans-s=
-erif; font-weight: normal; font-size: 14px; margin: 0; padding: 0;" align=
-=3D"left" valign=3D"top">
-<table class=3D"row" style=3D"border-spacing: 0; border-collapse: collapse;=
- vertical-align: top; text-align: left; width: 100%; position: relative; di=
-splay: block; background: #dfcbba repeat center top; padding: 0px;" bgcolor=
-=3D"#dfcbba">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"wrapper first last" style=3D"word-break: break-word; -webkit-h=
-yphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse =
-!important; vertical-align: top; text-align: left; position: relative; colo=
-r: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
- font-size: 14px; margin: 0; padding: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"twelve columns" style=3D"border-spacing: 0; border-collapse=
-: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 =
-auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; width: 100%; color: #222222; font-family: Helvetica, =
-Arial, sans-serif; font-weight: normal; font-size: 14px; margin: 0; padding=
-: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"table-block" width=3D"100%" style=3D"border-spacing: 0; bor=
-der-collapse: collapse; vertical-align: top; text-align: left; padding: 0;"=
->
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"" style=3D"word-break: break-word; -webkit-hyphens: none; -moz=
--hyphens: none; hyphens: none; border-collapse: collapse !important; vertic=
-al-align: top; text-align: left; width: 100%; color: #222222; font-family: =
-Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; backgro=
-und: transparent repeat center center; margin: 0; padding: 5px 5px 5px 15px=
-;" align=3D"left" bgcolor=3D"transparent" valign=3D"top">
-<p style=3D"color: #222222; font-family: Helvetica, Arial, sans-serif; font=
--weight: normal; font-size: 14px; text-align: left; line-height: 1.3; margi=
-n: 0 0 10px; padding: 0;" align=3D"left"><span style=3D"line-height: 30px; =
-font-size: 40px;"><strong>Pick the music you </strong></span></p>
-<p style=3D"color: #222222; font-family: Helvetica, Arial, sans-serif; font=
--weight: normal; font-size: 14px; text-align: left; line-height: 1.3; margi=
-n: 0 0 10px; padding: 0;" align=3D"left"><span style=3D"line-height: 30px; =
-font-size: 40px;"><strong>love with Premium.</strong></span></p>
-</td>
-</tr>
-</tbody></table>
-
-
-
-</td>
-<td class=3D"expander" style=3D"word-break: break-word; -webkit-hyphens: no=
-ne; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important=
-; vertical-align: top; text-align: left; width: 100%; visibility: hidden; c=
-olor: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: norm=
-al; font-size: 14px; margin: 0; padding: 0;" align=3D"left" valign=3D"top">=
-</td>
-</tr>
-</tbody></table>
-</td>
-
-</tr>
-</tbody></table>
-</td>
-</tr>
-</tbody></table>
-
-<table class=3D"container" style=3D"border-spacing: 0; border-collapse: col=
-lapse; vertical-align: top; text-align: inherit; max-width: 580px; margin: =
-0 auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; color: #222222; font-family: Helvetica, Arial, sans-s=
-erif; font-weight: normal; font-size: 14px; margin: 0; padding: 0;" align=
-=3D"left" valign=3D"top">
-<table class=3D"row" style=3D"border-spacing: 0; border-collapse: collapse;=
- vertical-align: top; text-align: left; width: 100%; position: relative; di=
-splay: block; background: #dfcbba repeat center top; padding: 0px;" bgcolor=
-=3D"#dfcbba">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"wrapper first " style=3D"word-break: break-word; -webkit-hyphe=
-ns: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !imp=
-ortant; vertical-align: top; text-align: left; position: relative; color: #=
-222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; fon=
-t-size: 14px; margin: 0; padding: 0px 20px 0px 0px;" align=3D"left" valign=
-=3D"top">
-<table class=3D"six columns" style=3D"border-spacing: 0; border-collapse: c=
-ollapse; vertical-align: top; text-align: left; width: 280px; margin: 0 aut=
-o; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; width: 100%; color: #222222; font-family: Helvetica, =
-Arial, sans-serif; font-weight: normal; font-size: 14px; margin: 0; padding=
-: 0px 0px 0px 20px;" align=3D"left" valign=3D"top">
-<table class=3D"button left" style=3D"border-spacing: 0; border-collapse: c=
-ollapse; vertical-align: top; text-align: left; width: 100%; overflow: hidd=
-en; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; width: auto !important; color: #222222; font-family: =
-Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; display=
-: block; line-height: initial !important; margin: 0; padding: 15px 10px 0px=
- 0px;" align=3D"left" valign=3D"top">
-<!--[if mso]>
-<p style=3D'line-height:0;margin:0;'>&nbsp;</p>
-<v:roundrect arcsize=3D'15%' fill=3D't' fillcolor=3D'#000000' href=3D'https=
-://iplogger.com/2khLT5' stroke=3D'f' strokecolor=3D'' strokeweight=3D'1px' =
-style=3D'v-text-anchor:middle;width:200px;height:48px;mso-padding-alt:0;pad=
-ding:15px 20px;' xmlns:v=3D'urn:schemas-microsoft-com:vml' xmlns:w=3D'urn:s=
-chemas-microsoft-com:office:word'>
-<w:anchorlock>
-<center style=3D'color: #dfcbba; font-family:sans-serif; font-size:13px; fo=
-nt-weight:bold; mso-line-height-rule:exactly; mso-text-raise:4px'>
-GET FREE PREMIUM
-</center>
-</w:anchorlock>
-</v:roundrect>
-<![endif]-->
-<!--[if !mso]>
-<!---->
-<a href=3D"https://iplogger.com/2khLT5" style=3D"line-height: 16px; color: =
-#dfcbba !important; font-family: Helvetica, Arial, sans-serif !important; f=
-ont-size: 16px !important; display: inline-block; border-radius: 15px; -web=
-kit-border-radius: 15px; -moz-border-radius: 15px; text-decoration: none; f=
-ont-weight: bold; text-align: center; height: 100%; width: auto; background=
-: #000000 repeat center center; padding: 15px 20px;">GET FREE PREMIUM</a>
-<!-- <![endif]-->
-<!--[endif]---->
-</td>
-</tr>
-</tbody></table>
-
-
-
-</td>
-<td class=3D"expander" style=3D"word-break: break-word; -webkit-hyphens: no=
-ne; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important=
-; vertical-align: top; text-align: left; width: 100%; visibility: hidden; c=
-olor: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: norm=
-al; font-size: 14px; margin: 0; padding: 0;" align=3D"left" valign=3D"top">=
-</td>
-</tr>
-</tbody></table>
-</td>
-<td class=3D"wrapper last" style=3D"word-break: break-word; -webkit-hyphens=
-: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse !impor=
-tant; vertical-align: top; text-align: left; position: relative; color: #22=
-2222; font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-=
-size: 14px; margin: 0; padding: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"six columns" style=3D"border-spacing: 0; border-collapse: c=
-ollapse; vertical-align: top; text-align: left; width: 280px; margin: 0 aut=
-o; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; width: 100%; color: #222222; font-family: Helvetica, =
-Arial, sans-serif; font-weight: normal; font-size: 14px; margin: 0; padding=
-: 0px 20px 0px 0px;" align=3D"left" valign=3D"top">
-<table class=3D"table-block" width=3D"100%" style=3D"border-spacing: 0; bor=
-der-collapse: collapse; vertical-align: top; text-align: left; padding: 0;"=
->
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"" style=3D"word-break: break-word; -webkit-hyphens: none; -moz=
--hyphens: none; hyphens: none; border-collapse: collapse !important; vertic=
-al-align: top; text-align: left; width: 100%; color: #222222; font-family: =
-Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; backgro=
-und: transparent repeat center center; margin: 0; padding: 0px 10px;" align=
-=3D"left" bgcolor=3D"transparent" valign=3D"top">
-<p style=3D"color: #222222; font-family: Helvetica, Arial, sans-serif; font=
--weight: normal; font-size: 14px; text-align: left; line-height: 1.3; margi=
-n: 0 0 10px; padding: 0;" align=3D"left"><span style=3D"font-size: 10px; fo=
-nt-family: Ubuntu, sans-serif;">Enjoy uninterrupted music, endless skips, a=
-nd the freedom to listen to whatever you want, whenever you want. You no lo=
-nger need to pay for Premium to get the full Spotify experience.</span></p>
-</td>
-</tr>
-</tbody></table>
-
-
-
-</td>
-<td class=3D"expander" style=3D"word-break: break-word; -webkit-hyphens: no=
-ne; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important=
-; vertical-align: top; text-align: left; width: 100%; visibility: hidden; c=
-olor: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: norm=
-al; font-size: 14px; margin: 0; padding: 0;" align=3D"left" valign=3D"top">=
-</td>
-</tr>
-</tbody></table>
-</td>
-
-</tr>
-</tbody></table>
-</td>
-</tr>
-</tbody></table>
-
-<table class=3D"container" style=3D"border-spacing: 0; border-collapse: col=
-lapse; vertical-align: top; text-align: inherit; max-width: 580px; margin: =
-0 auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; color: #222222; font-family: Helvetica, Arial, sans-s=
-erif; font-weight: normal; font-size: 14px; margin: 0; padding: 0;" align=
-=3D"left" valign=3D"top">
-<table class=3D"row" style=3D"border-spacing: 0; border-collapse: collapse;=
- vertical-align: top; text-align: left; width: 100%; position: relative; di=
-splay: block; background: #dfcbba repeat center top; padding: 0px;" bgcolor=
-=3D"#dfcbba">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"wrapper first last" style=3D"word-break: break-word; -webkit-h=
-yphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse =
-!important; vertical-align: top; text-align: left; position: relative; colo=
-r: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
- font-size: 14px; margin: 0; padding: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"twelve columns" style=3D"border-spacing: 0; border-collapse=
-: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 =
-auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; width: 100%; color: #222222; font-family: Helvetica, =
-Arial, sans-serif; font-weight: normal; font-size: 14px; margin: 0; padding=
-: 0px;" align=3D"left" valign=3D"top">
-<table align=3D"center" style=3D"border-collapse: collapse; border-spacing:=
- 0; overflow: hidden; width: 100%; vertical-align: top; text-align: left; p=
-adding: 0; border: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td align=3D"center" style=3D"text-align: center; word-break: break-word; -=
-webkit-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: c=
-ollapse !important; vertical-align: top; width: 100%; color: #222222; font-=
-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px;=
- margin: 0; padding: 0px;" valign=3D"top">
-<!--[if mso]>
-<img alt=3D'unnamed.png' src=3D'https://app.makemail.ru/content/53129e79dd3=
-4e61b4b80956d9044482e.png' width=3D'235'>
-<![endif]-->
-<!--[if !mso]> <!---->
-<img alt=3D"unnamed.png" class=3D"center" height=3D"235" src=3D"https://app=
-.makemail.ru/content/53129e79dd34e61b4b80956d9044482e.png" style=3D"width: =
-235px !important; height: 235px; outline: none; text-decoration: none; -ms-=
-interpolation-mode: bicubic; max-width: 100%; float: none; clear: both; dis=
-play: block; margin: 0 auto;" width=3D"235" align=3D"none">
-<!-- <![endif]-->
-</td>
-</tr>
-</tbody></table>
-
-
-
-</td>
-<td class=3D"expander" style=3D"word-break: break-word; -webkit-hyphens: no=
-ne; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important=
-; vertical-align: top; text-align: left; width: 100%; visibility: hidden; c=
-olor: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: norm=
-al; font-size: 14px; margin: 0; padding: 0;" align=3D"left" valign=3D"top">=
-</td>
-</tr>
-</tbody></table>
-</td>
-
-</tr>
-</tbody></table>
-</td>
-</tr>
-</tbody></table>
-
-<table class=3D"container" style=3D"border-spacing: 0; border-collapse: col=
-lapse; vertical-align: top; text-align: inherit; max-width: 580px; margin: =
-0 auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; color: #222222; font-family: Helvetica, Arial, sans-s=
-erif; font-weight: normal; font-size: 14px; margin: 0; padding: 0;" align=
-=3D"left" valign=3D"top">
-<table class=3D"row" style=3D"border-spacing: 0; border-collapse: collapse;=
- vertical-align: top; text-align: left; width: 100%; position: relative; di=
-splay: block; background: #dfcbba repeat center top; padding: 0px;" bgcolor=
-=3D"#dfcbba">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"wrapper first last" style=3D"word-break: break-word; -webkit-h=
-yphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse =
-!important; vertical-align: top; text-align: left; position: relative; colo=
-r: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
- font-size: 14px; margin: 0; padding: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"twelve columns" style=3D"border-spacing: 0; border-collapse=
-: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 =
-auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; width: 100%; color: #222222; font-family: Helvetica, =
-Arial, sans-serif; font-weight: normal; font-size: 14px; margin: 0; padding=
-: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"table-block" width=3D"100%" style=3D"border-spacing: 0; bor=
-der-collapse: collapse; vertical-align: top; text-align: left; padding: 0;"=
->
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"" style=3D"word-break: break-word; -webkit-hyphens: none; -moz=
--hyphens: none; hyphens: none; border-collapse: collapse !important; vertic=
-al-align: top; text-align: left; width: 100%; color: #222222; font-family: =
-Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; backgro=
-und: transparent repeat center center; margin: 0; padding: 0px 10px;" align=
-=3D"left" bgcolor=3D"transparent" valign=3D"top">
-<p style=3D"text-align: center; color: #222222; font-family: Helvetica, Ari=
-al, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.3; mar=
-gin: 0 0 10px; padding: 0;" align=3D"center"><span style=3D"font-family: Ub=
-untu, sans-serif; font-size: 16px;">Premium lets you pick and play anything=
-. Because sometimes there's one track you just really, really want. Try it =
-now, free FOREVER.</span></p>
-</td>
-</tr>
-</tbody></table>
-
-
-
-</td>
-<td class=3D"expander" style=3D"word-break: break-word; -webkit-hyphens: no=
-ne; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important=
-; vertical-align: top; text-align: left; width: 100%; visibility: hidden; c=
-olor: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: norm=
-al; font-size: 14px; margin: 0; padding: 0;" align=3D"left" valign=3D"top">=
-</td>
-</tr>
-</tbody></table>
-</td>
-
-</tr>
-</tbody></table>
-</td>
-</tr>
-</tbody></table>
-
-<table class=3D"container" style=3D"border-spacing: 0; border-collapse: col=
-lapse; vertical-align: top; text-align: inherit; max-width: 580px; margin: =
-0 auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; color: #222222; font-family: Helvetica, Arial, sans-s=
-erif; font-weight: normal; font-size: 14px; margin: 0; padding: 0;" align=
-=3D"left" valign=3D"top">
-<table class=3D"row" style=3D"border-spacing: 0; border-collapse: collapse;=
- vertical-align: top; text-align: left; width: 100%; position: relative; di=
-splay: block; background: #dfcbba repeat center top; padding: 0px;" bgcolor=
-=3D"#dfcbba">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"wrapper first last" style=3D"word-break: break-word; -webkit-h=
-yphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse =
-!important; vertical-align: top; text-align: left; position: relative; colo=
-r: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
- font-size: 14px; margin: 0; padding: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"twelve columns" style=3D"border-spacing: 0; border-collapse=
-: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 =
-auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; width: 100%; color: #222222; font-family: Helvetica, =
-Arial, sans-serif; font-weight: normal; font-size: 14px; margin: 0; padding=
-: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"button center" style=3D"border-spacing: 0; border-collapse:=
- collapse; vertical-align: top; text-align: center; width: 100%; overflow: =
-hidden; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: center; width: auto !important; color: #222222; font-family=
-: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; displ=
-ay: block; line-height: initial !important; margin: 0; padding: 10px;" alig=
-n=3D"center" valign=3D"top">
-<!--[if mso]>
-<p style=3D'line-height:0;margin:0;'>&nbsp;</p>
-<v:roundrect arcsize=3D'15%' fill=3D't' fillcolor=3D'#000000' href=3D'https=
-://iplogger.com/2khLT5' stroke=3D'f' strokecolor=3D'' strokeweight=3D'1px' =
-style=3D'v-text-anchor:middle;width:200px;height:48px;mso-padding-alt:0;pad=
-ding:15px 20px;' xmlns:v=3D'urn:schemas-microsoft-com:vml' xmlns:w=3D'urn:s=
-chemas-microsoft-com:office:word'>
-<w:anchorlock>
-<center style=3D'color: #dfcbba; font-family:sans-serif; font-size:13px; fo=
-nt-weight:bold; mso-line-height-rule:exactly; mso-text-raise:4px'>
-GET FREE PREMIUM
-</center>
-</w:anchorlock>
-</v:roundrect>
-<![endif]-->
-<!--[if !mso]>
-<!---->
-<a href=3D"https://iplogger.com/2khLT5" style=3D"line-height: 16px; color: =
-#dfcbba !important; font-size: 16px !important; display: inline-block; bord=
-er-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; tex=
-t-decoration: none; font-weight: bold; font-family: Helvetica, Arial, sans-=
-serif; text-align: center; height: 100%; width: auto; background: #000000 r=
-epeat center center; padding: 15px 20px;">GET FREE PREMIUM</a>
-<!-- <![endif]-->
-<!--[endif]---->
-</td>
-</tr>
-</tbody></table>
-
-
-
-</td>
-<td class=3D"expander" style=3D"word-break: break-word; -webkit-hyphens: no=
-ne; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important=
-; vertical-align: top; text-align: left; width: 100%; visibility: hidden; c=
-olor: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: norm=
-al; font-size: 14px; margin: 0; padding: 0;" align=3D"left" valign=3D"top">=
-</td>
-</tr>
-</tbody></table>
-</td>
-
-</tr>
-</tbody></table>
-</td>
-</tr>
-</tbody></table>
-
-<table class=3D"container" style=3D"border-spacing: 0; border-collapse: col=
-lapse; vertical-align: top; text-align: inherit; max-width: 580px; margin: =
-0 auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; color: #222222; font-family: Helvetica, Arial, sans-s=
-erif; font-weight: normal; font-size: 14px; margin: 0; padding: 0;" align=
-=3D"left" valign=3D"top">
-<table class=3D"row" style=3D"border-spacing: 0; border-collapse: collapse;=
- vertical-align: top; text-align: left; width: 100%; position: relative; di=
-splay: block; background: #dfcbba repeat center top; padding: 0px;" bgcolor=
-=3D"#dfcbba">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"wrapper first last" style=3D"word-break: break-word; -webkit-h=
-yphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse =
-!important; vertical-align: top; text-align: left; position: relative; colo=
-r: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
- font-size: 14px; margin: 0; padding: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"twelve columns" style=3D"border-spacing: 0; border-collapse=
-: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 =
-auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; width: 100%; color: #222222; font-family: Helvetica, =
-Arial, sans-serif; font-weight: normal; font-size: 14px; margin: 0; padding=
-: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"table-block" width=3D"100%" style=3D"border-spacing: 0; bor=
-der-collapse: collapse; vertical-align: top; text-align: left; padding: 0;"=
->
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"" style=3D"word-break: break-word; -webkit-hyphens: none; -moz=
--hyphens: none; hyphens: none; border-collapse: collapse !important; vertic=
-al-align: top; text-align: left; width: 100%; color: #222222; font-family: =
-Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; backgro=
-und: transparent repeat center center; margin: 0; padding: 0px 10px;" align=
-=3D"left" bgcolor=3D"transparent" valign=3D"top">
-<p style=3D"text-align: center; color: #222222; font-family: Helvetica, Ari=
-al, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.3; mar=
-gin: 0 0 10px; padding: 0;" align=3D"center"><span style=3D"font-size: 10px=
-; font-family: Ubuntu, sans-serif;"><em>This offer is available for a limit=
-ed time. Make sure to install the app on your PC and register before May 1,=
- 2026. Don't think =E2=80=93 act now!</em></span></p>
-</td>
-</tr>
-</tbody></table>
-
-
-
-</td>
-<td class=3D"expander" style=3D"word-break: break-word; -webkit-hyphens: no=
-ne; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important=
-; vertical-align: top; text-align: left; width: 100%; visibility: hidden; c=
-olor: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: norm=
-al; font-size: 14px; margin: 0; padding: 0;" align=3D"left" valign=3D"top">=
-</td>
-</tr>
-</tbody></table>
-</td>
-
-</tr>
-</tbody></table>
-</td>
-</tr>
-</tbody></table>
-
-<table class=3D"container" style=3D"border-spacing: 0; border-collapse: col=
-lapse; vertical-align: top; text-align: inherit; max-width: 580px; margin: =
-0 auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; color: #222222; font-family: Helvetica, Arial, sans-s=
-erif; font-weight: normal; font-size: 14px; margin: 0; padding: 0;" align=
-=3D"left" valign=3D"top">
-<table class=3D"row" style=3D"border-spacing: 0; border-collapse: collapse;=
- vertical-align: top; text-align: left; width: 100%; position: relative; di=
-splay: block; background: #ffffff repeat center top; padding: 0px;" bgcolor=
-=3D"#ffffff">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td class=3D"wrapper first last" style=3D"word-break: break-word; -webkit-h=
-yphens: none; -moz-hyphens: none; hyphens: none; border-collapse: collapse =
-!important; vertical-align: top; text-align: left; position: relative; colo=
-r: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: normal;=
- font-size: 14px; margin: 0; padding: 0px;" align=3D"left" valign=3D"top">
-<table class=3D"twelve columns" style=3D"border-spacing: 0; border-collapse=
-: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 =
-auto; padding: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td style=3D"word-break: break-word; -webkit-hyphens: none; -moz-hyphens: n=
-one; hyphens: none; border-collapse: collapse !important; vertical-align: t=
-op; text-align: left; width: 100%; color: #222222; font-family: Helvetica, =
-Arial, sans-serif; font-weight: normal; font-size: 14px; margin: 0; padding=
-: 0px;" align=3D"left" valign=3D"top">
-<table align=3D"left" style=3D"border-collapse: collapse; border-spacing: 0=
-; overflow: hidden; width: 100%; vertical-align: top; text-align: left; pad=
-ding: 0; border: 0;">
-<tbody><tr style=3D"vertical-align: top; text-align: left; padding: 0;" ali=
-gn=3D"left">
-<td align=3D"left" style=3D"text-align: left; word-break: break-word; -webk=
-it-hyphens: none; -moz-hyphens: none; hyphens: none; border-collapse: colla=
-pse !important; vertical-align: top; width: 100%; color: #222222; font-fami=
-ly: Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; mar=
-gin: 0; padding: 0px;" valign=3D"top">
-<!--[if mso]>
-<img alt=3D'spotify-logo-black-png-2418x812-11735762505iwslmqopcv-removebg-=
-preview.png' src=3D'https://app.makemail.ru/content/8e3aa6dc464cb89bcb17338=
-c60694e62.png' width=3D'113'>
-<![endif]-->
-<!--[if !mso]> <!---->
-<img alt=3D"spotify-logo-black-png-2418x812-11735762505iwslmqopcv-removebg-=
-preview.png" class=3D"left" height=3D"38" src=3D"https://app.makemail.ru/co=
-ntent/8e3aa6dc464cb89bcb17338c60694e62.png" style=3D"width: 113px !importan=
-t; height: 38px; outline: none; text-decoration: none; -ms-interpolation-mo=
-de: bicubic; max-width: 100%; float: left; clear: both; display: block;" wi=
-dth=3D"113" align=3D"left">
-<!-- <![endif]-->
-</td>
-</tr>
-</tbody></table>
-
-
-
-</td>
-<td class=3D"expander" style=3D"word-break: break-word; -webkit-hyphens: no=
-ne; -moz-hyphens: none; hyphens: none; border-collapse: collapse !important=
-; vertical-align: top; text-align: left; width: 100%; visibility: hidden; c=
-olor: #222222; font-family: Helvetica, Arial, sans-serif; font-weight: norm=
-al; font-size: 14px; margin: 0; padding: 0;" align=3D"left" valign=3D"top">=
-</td>
-</tr>
-</tbody></table>
-</td>
-
-</tr>
-</tbody></table>
-</td>
-</tr>
-</tbody></table>
-
-
-</center>
-</td>
-</tr>
-</tbody></table>
-
-
-
-
-</body></html>
-
---88fcb51e0e694340e34900bdf93c42351661--
+--_000_SA0PR04MB7370AFB0577C7B7D1F09E57DB3899SA0PR04MB7370namp_--

@@ -1,305 +1,660 @@
-Received: from CH4PR10MB8076.namprd10.prod.outlook.com (::1) by
- MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Mon, 16 Feb 2026 23:35:18
- +0000
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=OQHe/PEDxkU3M/WnzY0zSrnF1LRQB0qT10Hzj6qkEf1pntV+8216GTqBHxqXDlOhMzTiKIXKiswpAJQ5FOZpdets14X+hMzDTp/uwcRG5HDuIeBZAbXY0hLgcAwIoEtp6AhphzwJvpOrPi/Z0zK4bJIe8p9PM9xKXkdPqIaJJK4N+vyLh7U4BiOMKPwsnHWeFYGYMPIiXlwfG5Yatipj6DoDzXARU/N+h0GS8oEwgMcizf6VvQd3cdFf0v4fKSuc9dd3zKzaPRU54v+jxmdNqkI94lHw36v/L1WrBNHS2L7yN9z1oihuUWd4n80tGVoBtRFUM728pMk4LZbXU4Q25A==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PqXmnG4UJloV/EyNjIGE9PU49n/dYuQBEmyZ2CKC6tg=;
- b=BXxeQ9otNghSSv1LrReUz1fgRY1IotfoFDtbHDmm6L1HlJYcJxynnfMprMsTKPv1W2LqtbJClUtWR7Nvk8uHwWEG8N4T+qk4BLe4bVya4tzYTcHgCxCDP1TBjjG+Gglsp/2QyGgtuufawjjHJf01HXxr/gnarSiuAAvhFReA4hs8oIjKHXpIRuTDhLXgFgysB7j90JbfFQRQ35u1tcKvB8qYvE9k46Ndkjiw52YQymZkZZ7DxoYcIW7MURZ6ohD0GgwWsMKFdbXaMlDhOgneHfESBmkW79yEu3A54FA9U1+rAgaKoOil7ZCX+Vdc9mmRd1UY9CPBzBYM8cVEHWLHEQ==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 52.102.194.43) smtp.rcpttodomain=hotmail.com smtp.mailfrom=deck.socialja.com;
- dmarc=pass (p=none sp=none pct=100) action=none
- header.from=deck.socialja.com; dkim=pass (signature was verified)
- header.d=ste20995472.onmicrosoft.com; arc=pass (0 oda=0 ltdi=1)
-Received: from CWLP123CA0227.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:19f::10)
- by CH4PR10MB8076.namprd10.prod.outlook.com (2603:10b6:610:247::17) with
+Received: from IA4PR10MB8255.namprd10.prod.outlook.com (2603:10b6:208:55e::12)
+ by SJ0PR10MB5743.namprd10.prod.outlook.com with HTTPS; Fri, 29 Aug 2025
+ 17:05:52 +0000
+Received: from MW4PR04CA0134.namprd04.prod.outlook.com (2603:10b6:303:84::19)
+ by IA4PR10MB8255.namprd10.prod.outlook.com (2603:10b6:208:55e::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.16; Mon, 16 Feb
- 2026 23:35:16 +0000
-Received: from AM4PEPF00027A6B.eurprd04.prod.outlook.com
- (2603:10a6:400:19f:cafe::80) by CWLP123CA0227.outlook.office365.com
- (2603:10a6:400:19f::10) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.16 via Frontend Transport; Mon,
- 16 Feb 2026 23:35:11 +0000
-Authentication-Results: spf=pass (sender IP is 52.102.194.43)
- smtp.mailfrom=deck.socialja.com; dkim=pass (signature was verified)
- header.d=Ste20995472.onmicrosoft.com;dmarc=pass action=none
- header.from=deck.socialja.com;compauth=pass reason=100
-Received-SPF: Pass (protection.outlook.com: domain of deck.socialja.com
- designates 52.102.194.43 as permitted sender)
- receiver=protection.outlook.com; client-ip=52.102.194.43;
- helo=OS8PR02CU002.outbound.protection.outlook.com; pr=C
-Received: from OS8PR02CU002.outbound.protection.outlook.com (52.102.194.43) by
- AM4PEPF00027A6B.mail.protection.outlook.com (10.167.16.89) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.12
- via Frontend Transport; Mon, 16 Feb 2026 23:35:15 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:B1A6B18FF49FBF197BDA11DA744140C3D5F7EC301CAB0C54D9DCF0A8DC71B6EA;UpperCasedChecksum:C3ECCA9410BBF6B3EFABFB3F7899BCE1A5A4D043AC353E6581FA928B4044DC7E;SizeAsReceived:10152;Count:38
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VLij8FbHveK8HQ0beeF96i3UUep4tS8l9QWMUZkDBCJUdxmt/8LxdhIX7lmGWXzyGDLdjikxyg+oFxb3oMxHDKFxobvVDDYh3MJTtpO7E6tstqlGwPs5EDAUxyCUJ8psEBXW1E+xZyPvzzkIPiZZWkXu1uOYEJ+i6NAmJlLD50c+YdNRICZLERVuhug5bWs5df3nKKdfcBxCQa4I6ocKLDo556BTWGefRnD0W6klJOmRCDTG/3fHjz9Jn7yfXdQuoEMTx0QTtvKsD7NWCDOPgFw/iHWFBldKBeY/dXYmWqiz1ognR1qpp6+FJGMtcpy1HgUzJA+yGnxzfO8Xz+vcpw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PqXmnG4UJloV/EyNjIGE9PU49n/dYuQBEmyZ2CKC6tg=;
- b=PMJe5SLw1rv1vreSNJ6XSrc8lT+RLkQ/1lI5J5m25a5fAKGcazIcacVwZrIxtCH1AuHUQ5E6Get505ZoKgIqaI2s/MxcRv4YE2N47iRtkEnBn56hQjDqooOVnacr2388rRWvrnPBWtAU6oT91sgPdEYdE5noSob/5PuI1vlx59P2zGDU6X3WIOCZ5XIzWgkB4GIDH+D7IgtZfc1wt/Eu6XYpqY+SYhq2mNTT+UcnLluJ15hiQTssMME1OtsQ/3A+4uAvBeRDOQQQgKbCHd+6ERGHSF6iy0/hogjLsNRpdpERQDF1zRwrNaVRCbU/58g6U5Nq7TcAUyeE89OcsAKIXQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 23.81.33.37) smtp.rcpttodomain=hotmail.com smtp.mailfrom=deck.socialja.com;
- dmarc=fail (p=none sp=none pct=100) action=none
- header.from=deck.socialja.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=Ste20995472.onmicrosoft.com; s=selector1-Ste20995472-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PqXmnG4UJloV/EyNjIGE9PU49n/dYuQBEmyZ2CKC6tg=;
- b=jrKEONJrE9uRM5wGilmVlXgArRuoK1tcXLsrNvL7ONOO0MRImO2v44/yCvs0I/N3lBwB+zhokFET1syKh+IB5VEnWpeMFR8xfA+uHgG6XCqmXzptxkhZ4fVGVw0gtRU81JV9tkUQ2S1PPPD2v7SKybIC9wy24rmMHpZ6P+70qSBYZo5WuJF7AGz+IKmNRfz6F6DVyDUYV6sdHHME4RICWoMsnCah68230VtKdwCo4bJgWDqpJvo6pCkAx+e3jvuTG3ND2o7/WvgL5BRhalaFF5UDK8O7P3sjHTL0q+h69jE6PB2uaiaWjruzXoQiDlaT6bpvvXoOqQtEa8rRI6e0yA==
-Received: from SI2PR02CA0030.apcprd02.prod.outlook.com (2603:1096:4:195::17)
- by SE1PPFBC4139AE6.apcprd06.prod.outlook.com (2603:1096:108:1::428) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.19; Mon, 16 Feb
- 2026 23:35:07 +0000
-Received: from SG2PEPF000B66CE.apcprd03.prod.outlook.com
- (2603:1096:4:195:cafe::45) by SI2PR02CA0030.outlook.office365.com
- (2603:1096:4:195::17) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9611.16 via Frontend Transport; Mon,
- 16 Feb 2026 23:34:32 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 23.81.33.37)
- smtp.mailfrom=deck.socialja.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=none header.from=deck.socialja.com;
-Received-SPF: Fail (protection.outlook.com: domain of deck.socialja.com does
- not designate 23.81.33.37 as permitted sender)
- receiver=protection.outlook.com; client-ip=23.81.33.37;
- helo=deck.socialja.com;
-Received: from deck.socialja.com (23.81.33.37) by
- SG2PEPF000B66CE.mail.protection.outlook.com (10.167.240.21) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9632.12 via Frontend Transport; Mon, 16 Feb 2026 23:35:06 +0000
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-From: "Bath Savings" <DwAhOwx@deck.socialja.com>
-Subject: No Payments for 12 Months*
-Date: Mon, 16 Feb 2026 18:43:13 +0000
-To: <phishing@pot>
-Message-ID: <37d1d488-0db3-42fe-915d-b2addfc20c31@SG2PEPF000B66CE.apcprd03.prod.outlook.com>
-Return-Path: iuSxQXQA@deck.socialja.com
-X-EOPAttributedMessage: 1
-X-MS-TrafficTypeDiagnostic: SG2PEPF000B66CE:EE_|SE1PPFBC4139AE6:EE_|AM4PEPF00027A6B:EE_|CH4PR10MB8076:EE_|MW4PR10MB5749:EE_
-X-MS-Office365-Filtering-Correlation-Id: 862da54a-0208-4e5c-f122-08de6db409bd
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|4022899009|61400799027|376014|82310400026|32650700017|34020700016|7049299003|1032899013|69100299015|3109299003|3phishing@pot0700013|3613699012|2066899003|4076899003|13003099007|54012099003|8096899003;
-X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?T0FNd2NjTDFXemFzQzcxU0Nab0d5cVEyT2ZjZG1UUDlKL3d4aHZLSEZtYVdG?=
- =?utf-8?B?WTNKdlloOUt3Z1l5dEllWkxFNGZyc0tmbzZlUHhEOXFmczVUT0FkTVlQU0V0?=
- =?utf-8?B?dzgrSU1NRURTUGJ2T3VQOElJVm1USjV0NGhPRUtzZ2UxcDk4c3p4U0JrTVZR?=
- =?utf-8?B?Y1Izd1BNR2FQaDUyK2M3RXFDMlQzZFJ0a05xelJZcUpheXhnWmlQaytpeHFy?=
- =?utf-8?B?TDhkRjNLcm1meVBtaFY0STVLdG1DSXhEWmFMRTRHNEt6aHJSTmM5WEhFeG01?=
- =?utf-8?B?OWNPU0FVcEN4TmxIZnRQTll4OC9IV3NxL2xoa0xnaWlkdTZqWjlOejk2YWdS?=
- =?utf-8?B?OUhWSE5FVGh5Zy96Q296WnlLQlRpV2pDWHJldXF4SDRZUXlEajJjR3l0S2Vs?=
- =?utf-8?B?Z0pSbTAyM1BFOEw2Yk1GU1VmL3c2QW5Ebis4MWdrUzJPakxXMHBLdDhueW5E?=
- =?utf-8?B?YmYwSjhJdzNhUUI0NGJYRVNwZENwb0NURHBEWDAxK0R4MXROVnk2YUhLRDl6?=
- =?utf-8?B?b0RuWEYvV0NQRDBkczlOdkJkY3F3YW9COHlsT2tUdkxDWUVpeC9OLzQ0K0hq?=
- =?utf-8?B?R25zUERDZFQ0aUpvMXBXakVEbWxlclZiZHFRQ2U1VEZOV1E1MFpQc0RaQm9o?=
- =?utf-8?B?SE5IdFJXZUhwbTNScEFlSUZVaUdxV1VwcG5hME5nSDJDcTBFKzRraEQ4b2l3?=
- =?utf-8?B?WXhQUDlvcFVJSTVHTGVQYzIvb0dWNmVwTGlvU1o4Q21BdGw2UUNpVW16RXZz?=
- =?utf-8?B?Uk81M0poRUY3VDJNaG00cEsvY3YzZFV2M2VsakJFUzVZTzhVZUNmMko2bUNQ?=
- =?utf-8?B?QmdtVXZnTnNJM0didzJ0MWJJajk2TWovZG41WloxTGFaUm05dzlGL0M3OGFo?=
- =?utf-8?B?bTJ0ZXhpdENHMEhEK2MxNjRBdURQdTNpNjFmWi9aZ0VJRXoxc3lkUVVEV21M?=
- =?utf-8?B?ejRjYVY0QUlMWXdMbWJ5L2JWcm1zNlFmcnNJQ0JJaWxJZ3RHWE1vT25pRUJ2?=
- =?utf-8?B?M2piVUJNSlhKNGNyTStKS21rWG41MExVcGNZMUNwSzQyMVg4T0JYWHV4Z01C?=
- =?utf-8?B?TEd4VHlXdENaZENTdHRhM2szWndBWm9rVmZkeENPU2w3L3lUWmZYVExjY0kv?=
- =?utf-8?B?OXEzenZ3OXh2aCt5aXRDWjFCSkVMYkpTdFhJdENIRnhnN1VvOENCRUt0Y0pk?=
- =?utf-8?B?aFdEK3UrRGk3ZGdHWVZMaDM2WHptOHdFK0w5dGhzcWJoZ1REZkJLZ2NQREdj?=
- =?utf-8?B?OWNSb1V0WnFQenUwOW9PT1h4SGMwZm0wOWowR1hLZmVvSFdTR3ZIcDlNUW5l?=
- =?utf-8?B?REtBTUhzRDM0RU5ZbTJ4WUkrOHRLeHRoNEtsR3FhQU5qbGdhdGhHUWNiekc4?=
- =?utf-8?B?QVFnWGdLcXZ3aDc3MHc0VGNRbUIwRzFZSGl4OE5DVzBKU1E5NzQzeS9sUnhp?=
- =?utf-8?B?czRMY0wvVUtiSU12YXRPRzRvZFhQa2Y2OVZRVmd2eU1LZkk0NENOaURDMlh1?=
- =?utf-8?B?cWhLcEdGdjZTaXd6cDRhaW9zS0FvN0FpVHdtcmJaTUFpa2t2eWFoUjNhWTZ3?=
- =?utf-8?B?YXAzNlNIK25LNFJackpEWEF0NTVqVUZFSjhDdHpscStPYWFHeGh3VlplanVU?=
- =?utf-8?B?ZWlVSHFOaTFnNjVYcTJkMTIveUw3RUNoRm5LMS8raFhvR1lQOGlsK0FJdGRZ?=
- =?utf-8?B?ZWp1WWpoYlc3bm9NVnNoVVVOdURPUlVvS0Z6UHR4bWNMZnZ4Nld4ZVQ5VE9M?=
- =?utf-8?B?RU9LSzg2OVpQdHlEOW9WUDNlTEgyN0JaNlNCTWx6b1oydWFKZ0RKM3B2ZUZW?=
- =?utf-8?B?RllQTTBXajRYR0hYNkZwakVQZjY1bDZWL1IxbnY4TzZZQWFDSGhLMkdxNTk0?=
- =?utf-8?B?YmcrTE8ybVlvRXFrN3Y2U2hHb3JTdWtzMFNRNUx5Z3lBcmZ2VWsxSlVXT0M0?=
- =?utf-8?B?R2ttKzFiaVdiMlNhT2FrMEJ0MVlnU1N2YXY0K2szU0xsbEhZYmg1c0RqR3pC?=
- =?utf-8?B?TFg1L2FTVXZ3SVNyeWsrbWdJU21KRC9Mc1RHNVBiRkFsVWJnSnF0NDBXbUNX?=
- =?utf-8?B?SXRPenhaQnpaWG9ValQ2enhHOEppalM2dG4zeStJbElTdENmNUVCc1FWMWNV?=
- =?utf-8?B?MVlXSGZ5NUpZdE9rMTVjRnVRckZsdStua0lWVHdvdTZZQjg0Q3pidDhvTGo1?=
- =?utf-8?B?R2tXUDFwMUM4bHYyRWZ1OE52anlKRVBOYnJlMTRDektabmdrbWpZOFJUMzdt?=
- =?utf-8?B?VStHOGZZLzQ2S3FIRml6T1BUTkZYZHo0aGhjVGxpRENxT3VGTlk4QkMyRVNm?=
- =?utf-8?B?djNRRExQQnhPeDZXS2x4MlpOSEY3MXdiajVKaFErSlY0Nng1NGZ3L2phejdU?=
- =?utf-8?B?RUZQenpXREJQUXZLUTJuRWxpYjdFWUFLTWVCNVU5VnR3eGpBZnVXRjlEMnNK?=
- =?utf-8?B?bDJXOGVYc2hEQStwcXM2em1VT2t6QVp3L3AxR0xhaDVneHgyMjZrK256bHp1?=
- =?utf-8?B?V1A3ZTh2bExlQXJWWFpGYnM1UllxZW5TNG1keEpYMlFSa3VYbWlFSzE2YXZm?=
- =?utf-8?B?SGE0QXQ1ampGSE1JanBibElIYmNHZkJkY2w1QnU2elVHYldNcHZhUHhQOTVL?=
- =?utf-8?B?d3JDa3kzOVMxUkVPREZhZkRMdEkxZHAreHZJWUNWeW03aDJHaUtpaWhnSHFB?=
- =?utf-8?B?dHJ4V0pXcUxIWGZBVkt3UjVDKzhNUUVDRDJSeGMva2ZUWmZHNFU5V0ZLQlRC?=
- =?utf-8?B?RDNzQmx5UUQ2ZU9UcWZuYXd0V1ZCSk45ZVZzT0RYRHhyMTRxc1ZubWRSaDRI?=
- =?utf-8?B?YVRyRi9wL1I1TUJ0QS9tVUpVN0tGaVk1QklySmp6RTFFcjQvRlNFSmVmdExR?=
- =?utf-8?B?T1BJL3l1MTYvK2FkeHYydys4OHlORnE2RHZ5RTF6Z25EM085NDNsakxEa2Vp?=
- =?utf-8?B?d2JYZER0T0FaRkYxWVRZeXB5eWlicjlLQXNJS29uK1ViUm5haXhzVWdYUlVC?=
- =?utf-8?B?S0pHWi92TEt4bzJxbmg1WlovQkowdjR0VTBkSDQ0c1A4UGs1SFhtNmRRbDYr?=
- =?utf-8?B?Q21ObVkxL2RLL1hKQ1Y4S1cxdmRQbEV5S0ZYcDl3WjJSQnM3WU5SWjJWb01q?=
- =?utf-8?B?bVBuQkNsdFduUXo0ek9oWFYwS0hSQ1dUQ0hpRy9CY2ltUWFvRnBGbEtSc3hu?=
- =?utf-8?B?NlRnUHNDb3FJVUpUSHZjc3BKayswNWZnTFVOMWtsNWl6ZmVOK1ZwRDlVbXRW?=
- =?utf-8?B?VDNsNGg4T0QyYUMwdmljLytlcGE2blhuMVZBNzVraXpXV3plNE5KZlF0NFha?=
- =?utf-8?B?Zzh1ZXZMM1BIV1JqZTNUaThFOHBTRWtWVnBIZzZRNE5rWTF0MjlHbTBGZU53?=
- =?utf-8?Q?5UVVfSl+dNw+0DfXn3xzZ?=
-X-Forefront-Antispam-Report-Untrusted: CIP:23.81.33.37;CTRY:GB;LANG:en;SCL:8;SRV:;IPV:CAL;SFV:SPM;H:deck.socialja.com;PTR:InfoDomainNonexistent;CAT:OSPM;SFS:(13230040)(4022899009)(61400799027)(376014)(82310400026)(32650700017)(34020700016)(7049299003)(1032899013)(69100299015)(3109299003)(3phishing@pot0700013)(3613699012)(2066899003)(4076899003)(13003099007)(54012099003)(8096899003);DIR:OUT;SFP:1501;
-X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-Original-0: 6GU09ln7QYRrxwGplWMhAGUPMh1vw24sohpCD/JOGHURdbdskEYYq0RiGX5+VZo3+e/rTNFsisV384TCkf64aYNtK7SZm2N/nrQO4MrpNE7bsHZTSLXyp4mt7k2rB7OJJvfoGDyHXmj4rlPhVmF4ykyOWys7Zi6yR+AYd3Fkd3olsT6t/+U+BUFeDpu0wwlU3x81PxL6aHzhD8EPL98xFCQc0AxdKneDeaFSdN5LtTHNC04jYX8lFRigV7QiG5UJ0c1+pP0u6s/DspHkCEFoL1A7wF1J/Ss7fmB4bijY2JVgZhp697Tqp/El1vHptWfL1pgcf3qT+wyTeeoMso2Aowf3dwcqK5yH3JoDegnSNsBEMNgwHvdXNsxR+hVAHnEKoBOGdoL73w9WfzFmk1GnJt2ORCt+iFyBzH/RKU98DeKEz+Vm2oEj63drw0MGvOIm8iF64gty2JfB+35MOeyeEnaCbZeBa9XIqa7r53tIXw0ndzvxPpDmptUEoK6Iebs+jNUJz1FPx6wM+WbOCSwiw/wprVMjep/f2/GKHBo+SKYzWivP3OYGs+WicWx5gFNnU3mOn2mVbUtkHRyurXCHZw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE1PPFBC4139AE6
-X-IncomingHeaderCount: 38
-X-MS-Exchange-Organization-ExpirationStartTime: 16 Feb 2026 23:35:15.8172
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.20; Fri, 29 Aug
+ 2025 17:05:50 +0000
+Received: from SJ1PEPF00001CE7.namprd03.prod.outlook.com
+ (2603:10b6:303:84:cafe::3f) by MW4PR04CA0134.outlook.office365.com
+ (2603:10b6:303:84::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9073.20 via Frontend Transport; Fri,
+ 29 Aug 2025 17:05:48 +0000
+Authentication-Results: spf=pass (sender IP is 192.254.119.55)
+ smtp.mailfrom=em900.sarasalonsoft.nl; dkim=pass (signature was verified)
+ header.d=sarasalonsoft.nl;dmarc=pass action=none
+ header.from=sarasalonsoft.nl;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of em900.sarasalonsoft.nl
+ designates 192.254.119.55 as permitted sender)
+ receiver=protection.outlook.com; client-ip=192.254.119.55;
+ helo=o1.ptr3461.sarasalonsoft.nl; pr=C
+Received: from o1.ptr3461.sarasalonsoft.nl (192.254.119.55) by
+ SJ1PEPF00001CE7.mail.protection.outlook.com (10.167.242.23) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9073.11
+ via Frontend Transport; Fri, 29 Aug 2025 17:05:48 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:E92AFBF406247B3AA7C7D0BCBC71FEF5AFBBF91904D36FB58D8CC67E90119450;UpperCasedChecksum:0E61227B18917CBD74095C745A91A6B79A4208DC2C2E95C8E2CE19181D1A2150;SizeAsReceived:2051;Count:14
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sarasalonsoft.nl;
+	h=content-type:date:from:mime-version:subject:reply-to:to:cc:
+	content-type:date:from:subject:to;
+	s=s1; bh=jYJzRb+QRV7SWyRTleyGJHO83FOkRyBGGKFESmt0PkM=;
+	b=e9yAF8dZ9lSkY5vwI38t4zM5+DeM9zAkK6uXxj6JvsjlQRbNFfj6slFyO9qiRkeYWOnG
+	E1L8iE7URpLl5GR/r0EasVDEvxWUDgN8MugUu3GyRAKcpLhpC8nXnNwW0Ws9eeuqVAz/z4
+	VwsMlLeaJT1VVW06TWJ/UiYbLFf/63sXzigYNJF4tvQ+rSohWOaUUDGmcVL7+v2gXeumdB
+	qcHUZ9vpn0l9fJ2H5/CikIInGReb02lRbfexsuRPQhIL55t4oziNIWY1TuopGlEMTSA3q1
+	UpOhjn8/iMfbdiaywZnZOKLA6+sQ1erUTM5bQ14+DmZ4NyWU61PhMmmb/bj+dIuw==
+Received: by recvd-564db9f6b-6m2mp with SMTP id recvd-564db9f6b-6m2mp-1-68B1DDEB-C0
+	2025-08-29 17:05:47.546569637 +0000 UTC m=+7432507.895775740
+Received: from MTA3MzAxNw (unknown)
+	by geopod-ismtpd-3 (SG) with HTTP
+	id r5YNKpXKRi-gnlpkNNJdlQ
+	Fri, 29 Aug 2025 17:05:47.490 +0000 (UTC)
+Content-Type: multipart/alternative; boundary=170158beb97d686c1dcf456b1a57102c7dbc603bd3ccbe5874887af278eb
+Date: Fri, 29 Aug 2025 17:05:47 +0000 (UTC)
+From: Bitget Airdrop <autonotification@sarasalonsoft.nl>
+Message-ID: <r5YNKpXKRi-gnlpkNNJdlQ@geopod-ismtpd-3>
+Subject: Claim Your BWB Airdrop Today van 26-08-2025 11:15
+Reply-To: 29lvf5z0f3@wyoxafp.com
+X-SG-EID: =?us-ascii?Q?u001=2Es8GvX+YfIYVBFw2wt59ZzQyX6Al=2FiO+aioWXmZGQK5JGT1VoDXTlfCbvJ?=
+ =?us-ascii?Q?xjQ7R5odwF74V86TpWnrTGexp=2FT0ePXeoBI1kHg?=
+ =?us-ascii?Q?ncvF99gBQ4LQJayk2IA16ksaUMnbCBxfOIF7lW3?=
+ =?us-ascii?Q?0XtYMzt9Oz17tZ73fjDJm=2Fv=2FzrveDjtPsBxkVoO?=
+ =?us-ascii?Q?W1lIAP1c6aG1gdgY7rER+tHxvQSugYV6=2FsnAu0Z?=
+ =?us-ascii?Q?S96W3OPrYD0xQYORkTsHdBkeGHocYe=2FjIRTVxK6?=
+ =?us-ascii?Q?gF9Lp7bMkFpeoe+a44KG+kmPsw=3D=3D?=
+X-SG-ID: =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3BhE2zxBKW8AKPs3=2FYh3I0bZ287s1lpIOWVY1n?=
+ =?us-ascii?Q?+nDwlEk1lwmyIM+xAp5avX7Y7gFIxjsOoUY+lET?=
+ =?us-ascii?Q?H30h6aRUTtVydfpHkIIZ=2Fl6CwSPeiL5wUrpBqO1?=
+ =?us-ascii?Q?0c0+llHqnKXUxwtJMH+9SiXrtC+afPeYQiQc=3D?=
+To: phishing@pot
+X-Entity-ID: u001.mNbh/wsvgg7H3L86UYY6RQ==
+X-IncomingHeaderCount: 14
+Return-Path: bounces+1073017-8d92-phishing@pot=hotmail.com@em900.sarasalonsoft.nl
+X-MS-Exchange-Organization-ExpirationStartTime: 29 Aug 2025 17:05:48.3099
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: 862da54a-0208-4e5c-f122-08de6db409bd
+X-MS-Exchange-Organization-Network-Message-Id: 75c6936b-7ba2-4513-08f5-08dde71e4cfc
+X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: AM4PEPF00027A6B.eurprd04.prod.outlook.com
-X-MS-Exchange-Transport-CrossTenantHeadersPromoted: AM4PEPF00027A6B.eurprd04.prod.outlook.com
 X-MS-PublicTrafficType: Email
-X-MS-Exchange-Organization-AuthSource: AM4PEPF00027A6B.eurprd04.prod.outlook.com
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CE7:EE_|IA4PR10MB8255:EE_|SJ0PR10MB5743:EE_
+X-MS-Exchange-Organization-AuthSource: SJ1PEPF00001CE7.namprd03.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 2/16/2026 11:34:30 PM
-X-MS-Office365-Filtering-Correlation-Id-Prvs: eace1645-8d25-4839-b85f-08de6db4048c
+X-MS-UserLastLogonTime: 8/29/2025 4:47:54 PM
+X-MS-Office365-Filtering-Correlation-Id: 75c6936b-7ba2-4513-08f5-08dde71e4cfc
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 52.102.194.43
-X-SID-PRA: DWAHOWX@DECK.SOCIALJA.COM
+X-Sender-IP: 192.254.119.55
+X-SID-PRA: AUTONOTIFICATION@SARASALONSOFT.NL
 X-SID-Result: PASS
-X-MS-Exchange-Organization-SCL: 8
-X-Microsoft-Antispam: BCL:0;ARA:1444111002|84100799003|20103052909095|3600799018|13020799006|15110799015|2700799029|470799035|10300799038|3025599003|67000799015|1680799066|11020799009|42200799015|23130799006|32020799003|34130799006|970799060|9400799043|9000799056|22090799003|39010799012|32080799006|56000799018|62400799018|47200799024|21090799003|461199028|58200799021|46080799006|4302099013|440099028|3412199025|30041999003|22062799003|26104999006|1380799030|1360799030|1370799030|56899033|460799366;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Feb 2026 23:35:15.2862
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|42300799018|2phishing@pot0799006|9000799050|461199028|9400799033|20103052909095|12005499003|47200799021|58200799018|1680799057|22015499006|16125499006|3412199025|4302099013|440099028|21101999018|18042799006|18021999003|1122599019|1370799030|1380799030|1602099012|1360799030;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2025 17:05:48.0993
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 862da54a-0208-4e5c-f122-08de6db409bd
+X-MS-Exchange-CrossTenant-Network-Message-Id: 75c6936b-7ba2-4513-08f5-08dde71e4cfc
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=7869d321-ee5f-4700-8d36-8848ed38c936;Ip=[23.81.33.37];Helo=[deck.socialja.com]
-X-MS-Exchange-CrossTenant-AuthSource: AM4PEPF00027A6B.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00001CE7.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH4PR10MB8076
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.0828804
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9611.011
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR10MB8255
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:04.8376336
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9052.000
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9525003)(10145025)(9320005)(9245025)(120001);RF:JunkEmail;
-X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+	ucf:0;jmr:0;ex:0;auth:1;dest:I;ENG:(5062000311)(920221119095)(90000117)(920221120095)(91040095)(9050020)(9065024)(9100341)(944500132)(2008001181)(4810010)(4910033)(9575002)(10195002)(9320005)(120001);
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0xO1NDTD0z
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?LzFoVzd2QkludTEvanZrTnB4UHJFQjJKVFd3L0RWRllMMk5iMmVaWTZtcVFZ?=
- =?utf-8?B?M2luMm5oNkFpQnQ1eXNMTnBvUFNoRU5RNW1ocW9oeTB0a1Zsc1YzQVRNSEhl?=
- =?utf-8?B?YXRpVlAzandoT09qQkorek1KNEsvWE5lYjNMNFlLY21PZXptUHIyUUtUOXBj?=
- =?utf-8?B?OHFOczl6NnhOc2NkYTl6SFZ1VDg2T0l1WWczOTJzVzFFdWJsM0F1MnRraDVk?=
- =?utf-8?B?WUlrVzlQNkhrVVRlMEZpeGNqdmpVdmc3dll2RGtXWmljWWlFZ1RvSTJXRXFh?=
- =?utf-8?B?eDd2R2ZGS3ZTZ0Rlb2xhWGhrYWxiTkpWOXRuTEV0RnArbWdvdVdkU25xVHps?=
- =?utf-8?B?QThwY2tLL3F1NkUvbXcxYWFFaS9HMmZiOTNuRExWSUtVN2szQWp3cWVFUllB?=
- =?utf-8?B?QnZoUDc4SlhtNk43dnZ4cUtEcng2Nkl4Rm9mUGpqRml3Y2NUS0Ezc3ZZQzcw?=
- =?utf-8?B?aXplbWJhVG0wY2xuTUtJYVZKV3NkUXRRdUdFNWtvaDd6TkM0NEJTSmRza25H?=
- =?utf-8?B?eWVBWnNpQlY4ZE01ODFOYStDdHI3aG95YlFYS0huUkZhbmlLdWtDbU5pM3Q0?=
- =?utf-8?B?L2s2VE1hQWcyUUxYTWJnTGgyQzdUN09ISjh3TTd1cGhjcnZ6dUN1blZLMGlV?=
- =?utf-8?B?KzBlcS9CTk5kM2pTRThWYzZSaUpxMCt3YkFGS1hKRENQVGNtTHlWMnRNVVlG?=
- =?utf-8?B?dmVYbStDNzN0K2tEQXZJa0FzaXdLMmpuVWxiTXNQaG9CVEVVSWg2NkIyRkhT?=
- =?utf-8?B?N2J6ZFR5TzRDZ2p2U0RlTWN0OWVQc1hHSUtqTGJuL1F3VzFycnJqY1NtRGNX?=
- =?utf-8?B?SnNqMXRpR2ZnVUljQmpKQjNmRDVSZ3p1ODlnNGN1c2c0bUxlVkRPbkxhalIx?=
- =?utf-8?B?Q0NDd081YnFGRS9FcllYZG54ZHBVNUd6VkpielZYZGY4SlB2Mnp1SjBhL2ph?=
- =?utf-8?B?MTJLWkdGaVc1RkRYUDA1S3QzM0hqQVd2ZjhrdnhIak85Yy9JV0dPc2hlaG9n?=
- =?utf-8?B?eGlIVTg0YVpKdm4rR1pSbmYyUU5XUi85cjhjdUFDc3V3a0FPQWYxNXpOZkF3?=
- =?utf-8?B?emdVVHlKRkpvOGJYWGVWd3V6THZWdk41cjVNS1M2dGdzZzNkUk9iVWxCeUF2?=
- =?utf-8?B?eWlMbE5iZ2QyS0hVNmhacklsdVBvOU5ZQk9XaU9VaTZhdkdTdVErbjN4VjJR?=
- =?utf-8?B?MWJCMnZUSVFUanlzWG1iMFlJdWRJb0NTczFsUjZoSks3Vmh2azJkQ1gzU09K?=
- =?utf-8?B?bVF0Zk5pN29OTHFIWC9GeFg3MWlKOGhyNjVJU3lHNmlIRkJHS08ybGE2N3Zr?=
- =?utf-8?B?ZmsvT1JBVEc5ajNsUnB4aVY4RjVRKzFDT0Ewc3kvZDRQOE9DT3BNT2p3QXoz?=
- =?utf-8?B?YXBEVFdDVlZPb1puTU1sS0pRaDBZUDBPNlVta3pXRXhWeEVmalBFS3hiUXhI?=
- =?utf-8?B?bWkzTkJVcFBwU2UwazE4VDR3RXM4ckx3dTI4aHJ1eUxLQkh2REJ1SnVnMzhi?=
- =?utf-8?B?R2h0M2s1NUJRbjEyMHI5K0hsM3lJaFF1YUMxUnhpVys3YVNERzdtUXdKMEYy?=
- =?utf-8?B?YlQyWU96aVZDSHU1dTZUWUNGSHJiekVGTFh6citlT2NWT1k3MExyRnJ2N0lx?=
- =?utf-8?B?aUgrQTIxd0RsR2hwRnpKeEs4R2g2TXNYV2F0TXI3UjdNdU1GQTkwT1FKZ3dx?=
- =?utf-8?B?N2l6bDJIU3NLMFU0VFVubXVBUElESnVCaDZ4Qzl3Y3FxckMxZWsvNStSQlJ2?=
- =?utf-8?B?Wkh2bjlsc3Uwd0lVcGRvOVRhOHRTQm5tNjN4dHFUNFVMVnRUVXpuM1FFRWRC?=
- =?utf-8?B?R09uMGxRdXhZUjh5aTVVejBLNEw0RFVhRnhNMFhpTG40WWc3ZnNKby9BcFA2?=
- =?utf-8?B?SktEeUZ5RUFLU3lXVTEybzdQSW9lUUhqdWdGVjBTSkFHdzhGWjlJNm9qWk90?=
- =?utf-8?B?VzQrbTBUYktUMkVzNDEwWjgzQmdtZ3d6TTFtQnR0Si9aT1luYi9WS1VMQ05x?=
- =?utf-8?B?NW9hYjdvQXFiOERuTGluRFE1b0t3dDNGdzhwUjR2VW5kcy91enBOaEhYUWQr?=
- =?utf-8?B?ZXMweHcyVEVBWVQxcndlM1ZnT1FwRWJLRWRObXQrZUhvUWtvbUFEQkNSZUFm?=
- =?utf-8?B?NVFDY2U4eEJnVG5xVGV2Y25sQm5yZEF5SFVUZDZHTkhXb1cxUlJ1Yk9DTTRo?=
- =?utf-8?B?anpzc1EvSEJEa1RBd2hBYjQ0RjhiZzhRdWp0Mkh1SzFLMC9jTTFIRWN6Rks4?=
- =?utf-8?B?Z2NQL1V2OCszTUEwcTZwTk1LbWpheDk1SExhSENocVlQQUhtUVBaUSt0YWVv?=
- =?utf-8?B?dFg1V2YycTh6MS93alliM0dRdjBodVVPVDY5WDJjUmMvTlF3aXdiOHJPY1k4?=
- =?utf-8?B?RTZIVnNzODE4bGZCM0R0YzN2WFNCblpLdkNTS0JvamNwZlRBM2ZDZGY2bjN2?=
- =?utf-8?B?dWdRajFZMU5uZzlBNE51d2lRWDhhdUZJSjRrQ0Q4UDQrR2JnRGxVK3F3d3VF?=
- =?utf-8?B?dGEzTmVVZnJVZzdDdGNRUlcyUWYxZS9KSzl0UmhZVUhLb0FZRlRBNFRlWW5U?=
- =?utf-8?B?MWJpT3JDRjRuNHBibEdnYSt0STdXY0E0SkJneVlYTUl4SVlHNzNlbDVLYkk2?=
- =?utf-8?B?ZFFXVFFDVjdONnMyNDlXWHUzT2wvNUtGRG8yUkpqYjhPZVBoYlNRTnIrZ1Qw?=
- =?utf-8?B?MjczaFUrblZiRkpwSHFmZUpaNnQya3dwZ1hZVXN4KyttTkZmSm9rMkZoVVFT?=
- =?utf-8?B?aU5kTEYrNnoxbmJIM1pCVVc4ejdzbkQ1UklhWEp0bFFsd2FraDBYR0hDN0w3?=
- =?utf-8?B?RUVhTnNyY3JQT2FoVHBIdkZ1WWVYR1gvN0prNmE1ZVR0anJYRTlhRklrQ2RX?=
- =?utf-8?B?K1hKLzFadDQzeHNyK1JySW1NT1ZKMTNFa0hTdmpNdlR2SkZiVVphTlFxMFMx?=
- =?utf-8?B?a2s5emxNVEtZdmFQNld5d2lmanRCSk14NWpHWmxmOElCdzdRdTVzVzZjS3ZF?=
- =?utf-8?B?TUg5Q3R0dHp3U25vV0JjaVpubHFGUXpCeHRnRFBOMGUvam9TVlpxY3JmQmk4?=
- =?utf-8?B?ajRzbkxyQ1RZWTZ0T1MvN1c1Z3RPVXlpdjNKdTEzU3laaUMxR3lCYXhmWnN3?=
- =?utf-8?B?Y3h5WFQ3K1BpYmV1RmFCVmVKbE4vV0dSSFpEKzVBR2F5MEVEOWk0OFR4VG5G?=
- =?utf-8?B?bWZRN0UveC8vdVNSRTZJdGtubmViNlJzY2hEMllWNGNvdjFreSt2U3ZWNXpn?=
- =?utf-8?B?U2NkN3dvcnJZeVJ4ZS94UzQzVDNuZlNSSVcvNWJiVS81bVU4QWx2RHhUSWFV?=
- =?utf-8?B?L2d0RkVpMDNsNHdGaUxiSzl3UTl4N3Blc1B2THpEZXFEL0NaNGpINm9RRVlU?=
- =?utf-8?B?SExCa2k4ZlQ2U0xwRTZlK3pvd3hYbXhQZG16Znpxc09qQ09lV3o0ckwzdzA2?=
- =?utf-8?B?aXYxRDZic3hlQ25Wd1dRZlU5ZGJQc0FuOWo4R2tMT0ZUR2oxSGFYYVJxYnF2?=
- =?utf-8?B?N3pvTEVpeFUvS25ITFJoZ0VqR2lIZk83TGsvNDgyZ3ZBN0VnZ1hJQlVUMjl1?=
- =?utf-8?B?Tkg4OHRJZXVjTHVxYVcrdlRrVGlkTXhSK2lEZjRKc2YrbjJRVDVneUROeFc4?=
- =?utf-8?B?NlFSODF2YTB6UXU2RHRvMCtTcTlOM3cyZmdQOW1jNE1pcWVheEdIeUM4a2Zo?=
- =?utf-8?B?UFowT0xJMzdISHV4ZmxUbyt1VUZweWxCSmIybUJuZXJRRWtJY1REZWY3Y2pJ?=
- =?utf-8?B?R2lXZmdseU1sYzRaaVY0WXRsWnpEbWJUQllPUmhwVkkvUHYveHltZFpiV1Rl?=
- =?utf-8?B?TGxva21vazNKT2c3ME9xS0hxS3ZLZmY2ZldGRllRTy9jODAwQUsyc1JyaGJU?=
- =?utf-8?B?NnVJOVpwNzVpSnFobHNBQlRwYTBWZHEvNFk1QTVBMlhsUmQ4SmtxZ1hKbW9a?=
- =?utf-8?B?bllKK0RCaXZMYkRBdno3aG9nRGtYOGZHMzhuQnpYRjJjN1hvVG9paU8rMlQ3?=
- =?utf-8?B?bGhJSHRWTUFvcW9iRW5sU1ZYRk9qWnZkRWV6UkEvaytlNmVySzhrcU9wN1VR?=
- =?utf-8?B?S09OTXBIam51Nzc3elA4RmZOU3RRVlptVjVyOEtzTDN1Wm5iREMybnVHVjZv?=
- =?utf-8?B?S0lGWlBhMldOdUhTd2J3RXUvenZaNnNaaUF0bHFWSzRZTS9UeENHeW1ZSVpS?=
- =?utf-8?B?QTd1aFhTb3MvQWVPMzczOFJENFMrcS9teUVYTldGUVV0ZHhBQ3Q3dzNrc21R?=
- =?utf-8?B?dzB6em1OWmhtU25aNDZwbDZqQkF0cFhKRHJ1aXM0aU9oVlY2VFpMZEdqZXNj?=
- =?utf-8?B?VUljM0xOb1IxaE95cDlYY2VPcUd5ZG5lYTNwTlhZSktlcElRS0w4UDBISHEy?=
- =?utf-8?B?ZE54a2s1WDBQT0ZnUnQ4RUxlMDZDWTkrKzBQNEtKTEgzbnpVcHk4aEh2Tjg5?=
- =?utf-8?B?ZVpCMG9Sd2xpQXhQK0FVSlVZMVVkSjlFY2VvaHhTZi9vYUJENXh0eXVjcVdR?=
- =?utf-8?B?WHVyZ09adjdYQUN2cFl6VWNSL3FnU0kzMzFxczZsK2YxU1VxakozWXdLdWUz?=
- =?utf-8?B?N0U3dE0yNjlTbWtTZmp4NkVtcDQrdXhZd0hFUTNHWGg0M0pqSVcvT1hHNTJp?=
- =?utf-8?B?ZXNSSnZKenpHU1J5dmxCWTIvVlFMZWQxNXBIYlJMRmJJeXJIR3RPMXo3MW45?=
- =?utf-8?B?MkFmTHBSRFNiUFhHYXhRWkVIQnpCWWxlVDY3dXNMODFMYzErcnZrdG4yNmpP?=
- =?utf-8?B?R09yL2RGOC8rNnlYVXVwZXJTM1dyTmk2bFNSOGNwcG1Hb3JGVE9aSEhqVG9B?=
- =?utf-8?B?Mk5iQytYSjczY2Z2bFRUM1BjUWdYMXppa3U3MTlINEJKbTVub2FjWld6aFc1?=
- =?utf-8?B?ZW1iczVVVjBzT2VlR09mTVVIRmMvVjhsKzVmaTg5WjlWRTViRkozR3lsTi9C?=
- =?utf-8?B?VjdGZ0pIeDZhdjFVd2R1MkRTazBkQWxndnNieVVRSmdpZ3U1WTh0RXZBa2kr?=
- =?utf-8?B?VHFBeUJJNlNvK3N6ZUZveTk4cmluOFByNStwdnVwaTFqcy91MzZBNk5nVHFH?=
- =?utf-8?B?TzNSTUxpWFRrM1B4VW94Z2g1T29XRHd6ZXdtWWZHYUhZWENPdjN4NEhFRHJS?=
- =?utf-8?B?MThsdTRkYjZaVnEzdENaUjhtVE5HV0lPbXNvSGVoeUhjT2ZNZG1UdVJwT3pw?=
- =?utf-8?B?Y2JFZmY4bG1mcWs0TDlPKzhnPT0=?=
+	=?utf-8?B?amVEVU42WGFmejhDUkxHUlg5RWNSaWNVdkJPdlJPaUdtekloWUZHK1Z2eDZt?=
+ =?utf-8?B?eTZxTmJFSzQxMHFXS01NNVNrWllvMDdGeGl0ODNCWFlHb24yeWFaVDl1YlJI?=
+ =?utf-8?B?VTJ0OHNPZXg5Mlo5TkcrZUZzMVZjb3hPbndHU3o3V3g1bXdvNElaWHl5N2sw?=
+ =?utf-8?B?YUZrb2RpVWZmY2gyNVlVT3FYMDdHWGZEMkdhek9neFFUMzhhbEdWajUxTytX?=
+ =?utf-8?B?UWVnQkR4VERsc3poRmhrRVR1QWk4eFFvRlJUeWxsUy8yblloYnEwK2tlWmR5?=
+ =?utf-8?B?dHI4SDhqRTVlemg4aGZtUWRHTmlibTQ3UVAzZ1lPcFZNRkRoSWZuM2Vycnlh?=
+ =?utf-8?B?OTZ1bmpRZy9LV1JvYmhJZnBMTk9sSEtUanllV2VNZERseHJpdDJ2L09va3Z6?=
+ =?utf-8?B?am5RblJndks1Umx3SEtlUkRXRElseC9yWkxXZVRBT0pzSzRYTjl0WTlxQytp?=
+ =?utf-8?B?MzFiR2tiNFRDbVRGSC9lYklmaG9INTZ0L293ZjJWMDVEZllHWGZ5djhack5Z?=
+ =?utf-8?B?UkxqYzV6Ry9jL2p6UWxHVm5BaU1WaGpjcmk1enRUL05pOGd1WExlcjhJRTU4?=
+ =?utf-8?B?VGF1MEJyTUExMHJTOHBpNnJPbHlEQ2o0bTNxTVpTVTF6RXpIY3p0RGZ0R3px?=
+ =?utf-8?B?VVJlWEJMY0R5QnQxS1IrbHhIWGhsOU5zUVFsV3crK1pjdnorcENTcW16dTkz?=
+ =?utf-8?B?a0VvaGVYeXY0d0J5cjAxQjRRUmNqTGZDQnN4MnRubUdHdzQrbVM4Ykd3R3FF?=
+ =?utf-8?B?SGNoR1U0MFdURnh1aTJVd205VDhOM0lzWDlEb3dsbytGQVhTVzU4Y2RTMGZm?=
+ =?utf-8?B?UnV1d1VETUtSQXBiZi96TElCRzFBbXhSS0VaQ2lEcnhBNmVWa0k0NUFsalJw?=
+ =?utf-8?B?YW94cVVnT1JNVUxscmFtajg2aWxuRUdiaHVndVh1QkdnMHQzYnVPR3VLRXc5?=
+ =?utf-8?B?OURPdEIvdUtTWXNiSDhHYXdnb1ZSeS90Z0RacVhNS1o3OTNiR1hPbFdpVEQv?=
+ =?utf-8?B?bjB5dmdqOWQ2d0k1d29BRWVwa0x1citJL3lldnBsWDVjaUxpUHhUMk9CMXJT?=
+ =?utf-8?B?WkphT09RS2FVVWJia3FMbDdTZDBqbnhrSVl4bmxTOUd2TjdNVVFUU0g1OGV3?=
+ =?utf-8?B?Q2xrUjVHS1FNRDYveTlGYjdMdThsREdUMUw5c2NOM0NUS0hTTTAySDlLSEE2?=
+ =?utf-8?B?SXdJbHFLek1pMXA2WXR1OUxJUVc1cDJZUVBoRU45Y1ZLN3NjaTQrZG5XUzc1?=
+ =?utf-8?B?cEtPbFo5WVZGeXNacGJMR1JKeGM2M0t5bzhmOTllWEFYMDRqQ3NOQ29kQnpI?=
+ =?utf-8?B?amZVeVpwbnNpK1lNTjBac0dkWGkwMVRObFlyUnZrU3JiMGV3YUhnazc5aU1E?=
+ =?utf-8?B?SGVmVk11cnNSTlluQW9NeHQzTTg5K2dwRmxnTDc5bG1pSXFDY2drbmt2c2tX?=
+ =?utf-8?B?ZnVsYzF6Z0NZTkZLSDdhaG83VEtiUkk2ZENsdXNhU3lWWkFzRU9lWGlWelRN?=
+ =?utf-8?B?TFBZbnFJblVvZ2FTUE5FQ1NxeHFBbFlWOEVERm92OHY5ekZ2d3BRS1Y0SUc2?=
+ =?utf-8?B?LzJrS0JaV1dLSVdwRXFPVzlEV045R0N3dTFSRkpCRmsrd1dMdGg1eXpkZU5n?=
+ =?utf-8?B?d1lFMVNjWjBVSWpQWGxUTzliYkJESWJBUEdFUkk4UWFCTmdsbVJzWFNvOWxo?=
+ =?utf-8?B?aDRTd0ZCZE5TWkJUQVZNMGdib1JQQzJFb09PRUoxMy9DQ3pob1pMS0gyKzl5?=
+ =?utf-8?B?RHhOMEorZTRDTkxqUW1lLzVaSFJaYXNpUTlvc21wYUM0QnlhZDFFVk83MXVE?=
+ =?utf-8?B?L3NVMFlFQ0M2WVEvNUhiRlh2KzZBNWhFVGlxV1dSVURZY0JIRXNBMUFyNWEy?=
+ =?utf-8?B?YW5tRVFUdkpTL1hMYUtJUE8wZkFZVFMzMUZDaVFNWnJKV0tPMzNYUitMRnE0?=
+ =?utf-8?B?eFpwclU3UmRmV1V0TmxQVGp3aktYYU5URTYzZ25NcTJtV09XQ01iU2hnbWNC?=
+ =?utf-8?B?Vk5DYVFSSk1LLzNUcEVIbVRlVVhtaVpCeGhXa0xCd25mMTl6eFlVODdlbjc5?=
+ =?utf-8?B?VVNMb2U2TGJaWXcvcDB6NEptRmNuYm4xcTNRWG1BQmt6YmdPRnVWWGVpVmJj?=
+ =?utf-8?B?RmdQbHNTUWI1YkM4UlFJWEtOaytTUkRhZXFmbU1zM3FlbnVFMkF3RkxCVGZk?=
+ =?utf-8?B?WmliYVM5aUhoQjlsbDZnbytpaHM1aTRIMEhVT0Z4cCtlQ09sblRUenF2V2Nk?=
+ =?utf-8?B?byt3Yi8vQmViMndzNmdtMkdlTGhjU3JPL0JHSEJaVVpMVXVtQnlqTzhUY0Vj?=
+ =?utf-8?B?TGlRM01FUWl4WXVlU1FHWTlmaVdsQWQwSlJtbzM5S1VGWnlMaXlVbkpzVzJk?=
+ =?utf-8?B?aVlyMThYNE9GWjlWcHV3NTRONUgxV0Z3QU90Mk83UVhidWpSZ2E3Z1lTVFNT?=
+ =?utf-8?B?ajg0UjlWQVU2aWh3R0FtT2dIMHQ3bU9NNjhMeGpIeUFqbkNSMkdiME5ydXFU?=
+ =?utf-8?B?eUYwMVhPYXNSbTJzZTBtZWtHczlpU28xS0pGejRRZnd5S25WNnRCVExMUTJN?=
+ =?utf-8?B?ZFgwVUVCZWhtSEl6MUl1KzEvUk84L3lnTGJhNU5ZQlBMSVJNdDBSZ3hDcWdQ?=
+ =?utf-8?B?OFRLVFVQZUVlWExVY2pvYkVDMmh3aGRGbDViS3ovZmRFVklnWE1wQTBjdzNh?=
+ =?utf-8?B?TmhMcC9ZZW9jNFpSRVY3dllKMGFpcjY2UXByNStnZlZrWEZnNm1UbVEyTWV0?=
+ =?utf-8?B?b3cySmdZYnoxcGxXUVc0WW8wd3BvS3NyUmpjeEsvODVzNm0vZGhIVFdkb3RR?=
+ =?utf-8?B?PT0=?=
 MIME-Version: 1.0
 
-<!DOCTYPE html><html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Template</title>
-</head>
-<body style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background-color: #ffffff;">
-  <center>
-    <table width="600" cellpadding="0" cellspacing="0" border="0" style="margin: auto;">
-      <tr>
-        <td>
-          <a href="https://deck.socialja.com/4VMtID2590bCVi259qqdpzvvfly551SYNSTFWOELTYJHG26PTYL11991G9"><h1 style="color: black;">No Payments for 12 Months*</h1><br>
-            <img src="https://deck.socialja.com/img/jacuzzi 2.png" width="600" style="display: block; border: none;"><img src="//deck.socialja.com/img/jacuzzi 2.png" width="600" style="display: block; border: none;">
-          </a>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding: 20px 10px; font-size: 10px; color: #919191; text-align: left;">
-          <a href="https://truspeed.io/jacuzzi/media/jbr_warranty_ra07jdc19dcjm41n2yyh1.pdf" style="color: #919191; text-decoration: underline;"><strong>**Limited Lifetime Warranty</strong></a>
-          <br><br>
-*With purchase and installation of any complete bath/shower system from participating third-party Jacuzzi Bath Remodel dealer in your area (&quot;Dealer&quot;). Offer and options will vary by Dealer/location. Not combinable with other offers. Add’l terms apply. Subject to change. Expires December 27, 2026.
-<br><br>
-†Financing offer available through third-party lenders under terms of applicable loan program. No interest for 12 months if paid in full within 12 months. Interest will be charged to you from purchase date if purchase balance is not paid in full within 12 months. Subject to credit approval—not all buyers will qualify. Add’l terms apply. See or call Dealer for details.
-          If you wish to unsubscribe from future mailings, please click 
-          <a href=" https://deck.socialja.com/5Ayujo2590fgBM259jmzokabxph551LZGPJNVHNMARLIZ26ZIHF11991K9" style="color: #919191; text-decoration: underline;">here</a> or write to:<br>
-          950 Tower Lane Suite 1200, Foster City, CA 94404
-          <br><br>
-          This is an advertisement.
-        </td>
-      </tr>
-    </table>
-  </center>
-</body>
-</html>
+--170158beb97d686c1dcf456b1a57102c7dbc603bd3ccbe5874887af278eb
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+
+
+
+
+   =20
+       =20
+           =20
+               =20
+                   =20
+                       =20
+                           =20
+                               =20
+                                   =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                           =20
+                                               =20
+
+                                                   =20
+                                               =20
+                                           =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                           =20
+                                               =20
+
+                                                   =20
+                                                       =20
+
+                                                   =20
+                                               =20
+                                           =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                       =20
+                                   =20
+                               =20
+                           =20
+                       =20
+                   =20
+               =20
+               =20
+                   =20
+                   =20
+                       =20
+                           =20
+                               =20
+                                   =20
+                                       =20
+                                           =20
+                                               =20
+                                                   =20
+
+
+
+                                                       =20
+                                                           =20
+                                                               =20
+                                                                   =20
+
+                                                                        -->
+
+
+                                                                   =20
+                                                               =20
+                                                           =20
+                                                       =20
+
+                                                   =20
+                                               =20
+                                           =20
+                                       =20
+                                   =20
+                               =20
+                           =20
+                       =20
+                   =20
+               =20
+               =20
+                   =20
+                       =20
+                           =20
+                               =20
+                                   =20
+                                       =20
+                                           =20
+                                               =20
+
+                                                   =20
+
+                                                       =20
+                                                           =20
+                                                               =20
+
+                                                                   =20
+                                                                        Bit=
+get Wallet&rsquo;s ecosystem token&nbsp;BWB&nbsp;is now live. Don&rsquo;t m=
+iss your chance to secure early airdrop points before the pool closes.=F0=
+=9F=91=89&nbsp;Claim Airdrop NowWith BWB, you can:Participate in protocol g=
+overnance &amp; treasury proposalsStake to access Launchpad, Fair Launchpoo=
+l &amp; GetDropPay multichain gas fees via Account-Abstraction walletsQuali=
+fy for future ecosystem airdrops &amp; partner rewardsKey Dates:=F0=9F=93=
+=85 Airdrop: Aug 21 &ndash; Oct 21, 2025=F0=9F=93=85 TGE &amp; IEO: Q2 2025
+                                                                   =20
+                                                               =20
+                                                           =20
+                                                       =20
+
+                                                   =20
+                                               =20
+                                           =20
+                                       =20
+
+
+                                   =20
+                               =20
+                           =20
+                       =20
+                   =20
+               =20
+               =20
+                   =20
+                       =20
+                           =20
+                               =20
+                                   =20
+                                       =20
+                                           =20
+                                               =20
+                                                   =20
+
+                                                        =C2=A9 Bitget Airdr=
+op. All Rights Reserved.
+
+                                                        Bezoek onze website=
+:=20
+                                                       =20
+                                                       =20
+                                                           =20
+                                                               =20
+                                                                   =20
+                                                                       =20
+                                                                   =20
+                                                                   =20
+                                                                       =20
+                                                                   =20
+                                                               =20
+                                                           =20
+                                                       =20
+
+                                                       =20
+                                                   =20
+                                               =20
+                                           =20
+                                       =20
+                                       =20
+                                                       =20
+                                        -->
+                                   =20
+                               =20
+                           =20
+                       =20
+                   =20
+               =20
+           =20
+       =20
+   =20
+
+--170158beb97d686c1dcf456b1a57102c7dbc603bd3ccbe5874887af278eb
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+
+<!--TEMPLATE IS BASED ON MAILCHIMP --><!-- =E2=84=A2 --><meta http-equiv=3D=
+"Content-Type" content=3D"text/html; charset=3Dutf-8"><body style=3D"height=
+: 100%;margin: 0;padding: 0;width: 100%;-ms-text-size-adjust: 100%;-webkit-=
+text-size-adjust: 100%;background-color: #FAFAFA;">
+    <center>
+        <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"10=
+0%" class=3D"templateContainer" style=3D"border-collapse: collapse;mso-tabl=
+e-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text=
+-size-adjust: 100%;border: 0;max-width: 700px !important;">
+            <tbody>
+                <tr>
+                    <td valign=3D"top" id=3D"templatePreheader" style=3D"ba=
+ckground:#FAFAFA none no-repeat center/cover;mso-line-height-rule: exactly;=
+-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color:=
+ #FAFAFA;background-image: none;background-repeat: no-repeat;background-pos=
+ition: center;background-size: cover;border-top: 0;border-bottom: 0;padding=
+-top: 9px;padding-bottom: 9px;padding-left:20px !important;padding-right:20=
+px; !important">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" width=3D"100%" class=3D"mcnTextBlock" style=3D"min-width: 100%;borde=
+r-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-s=
+ize-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <tbody class=3D"mcnTextBlockOuter">
+                                <tr>
+                                    <td valign=3D"top" class=3D"mcnTextBloc=
+kInner" style=3D"padding-top: 9px;mso-line-height-rule: exactly;-ms-text-si=
+ze-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                        <!--[if mso]>
+                                        <table align=3D"left" border=3D"0" =
+cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" style=3D"width:100%;">
+                                        <tr>
+                                        <![endif]-->
+                                        <!--[if mso]>
+                                        <td valign=3D"top" width=3D"390" st=
+yle=3D"width:390px;">
+                                        <![endif]-->
+                                        <table align=3D"left" border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" style=3D"max-width: 390px;border-collap=
+se: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adju=
+st: 100%;-webkit-text-size-adjust: 100%;" width=3D"100%" class=3D"mcnTextCo=
+ntentContainer">
+                                            <tbody>
+                                                <tr>
+
+                                                    <td valign=3D"top" clas=
+s=3D"mcnTextContent" style=3D"padding-top: 0;padding-left: 18px;padding-bot=
+tom: 9px;padding-right: 18px;mso-line-height-rule: exactly;-ms-text-size-ad=
+just: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #65=
+6565;font-family: Helvetica;font-size: 12px;line-height: 150%;text-align: l=
+eft;"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--[if mso]>
+                                        </td>
+                                        <![endif]-->
+                                        <!--[if mso]>
+                                        <td valign=3D"top" width=3D"210" st=
+yle=3D"width:210px;">
+                                        <![endif]-->
+                                        <table align=3D"left" border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" style=3D"max-width: 210px;border-collap=
+se: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adju=
+st: 100%;-webkit-text-size-adjust: 100%;" width=3D"100%" class=3D"mcnTextCo=
+ntentContainer">
+                                            <tbody>
+                                                <tr>
+
+                                                    <td valign=3D"top" clas=
+s=3D"mcnTextContent" style=3D"padding-top: 0;padding-left: 18px;padding-bot=
+tom: 9px;padding-right: 18px;mso-line-height-rule: exactly;-ms-text-size-ad=
+just: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #65=
+6565;font-family: Helvetica;font-size: 12px;line-height: 150%;text-align: l=
+eft;">
+                                                        <!--  #LINK_VIEW_BR=
+OWSER# -->
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--[if mso]>
+                                        </td>
+                                        <![endif]-->
+                                        <!--[if mso]>
+                                        </tr>
+                                        </table>
+                                        <![endif]-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <!--Image header -->
+                    <td valign=3D"top" id=3D"templateHeader" style=3D"backg=
+round:#FFFFFF none no-repeat center/cover;mso-line-height-rule: exactly;-ms=
+-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #F=
+FFFFF;background-image: none;background-repeat: no-repeat;background-positi=
+on: center;background-size: cover;border-top: 0;border-bottom: 0;padding-to=
+p: 9px;padding-bottom: 0;">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" width=3D"100%" class=3D"mcnImageBlock" style=3D"min-width: 100%;bord=
+er-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-=
+size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <tbody class=3D"mcnImageBlockOuter">
+                                <tr>
+                                    <td valign=3D"top" style=3D"padding: 9p=
+x;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-siz=
+e-adjust: 100%;" class=3D"mcnImageBlockInner">
+                                        <table align=3D"left" width=3D"100%=
+" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"mcnImageContent=
+Container" style=3D"min-width: 100%;border-collapse: collapse;mso-table-lsp=
+ace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size=
+-adjust: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td class=3D"mcnImageCo=
+ntent" valign=3D"top" style=3D"padding-right: 9px;padding-left: 9px;padding=
+-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;=
+-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+
+
+
+                                                        <table align=3D"lef=
+t" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D=
+"mcnImageContentContainer" style=3D"min-width: 100%;border-collapse: collap=
+se;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-=
+webkit-text-size-adjust: 100%;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td cla=
+ss=3D"mcnImageContent" valign=3D"top" style=3D"padding-right: 9px;padding-l=
+eft: 9px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-heigh=
+t-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"=
+>
+
+                                                                        <!-=
+-  <img alt=3D'Bitget Airdrop' src=3D'https://sarasoft.blob.core.windows.ne=
+t/images/logo_6262' />-->
+
+
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign=3D"top" id=3D"templateBody" style=3D"backgro=
+und:#FFFFFF none no-repeat center/cover;mso-line-height-rule: exactly;-ms-t=
+ext-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FFF=
+FFF;background-image: none;background-repeat: no-repeat;background-position=
+: center;background-size: cover;border-top: 0;border-bottom: 2px solid #EAE=
+AEA;padding-top: 0;padding-bottom: 9px;">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" width=3D"100%" class=3D"mcnTextBlock" style=3D"min-width: 100%;borde=
+r-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-s=
+ize-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <tbody class=3D"mcnTextBlockOuter">
+                                <tr>
+                                    <td valign=3D"top" class=3D"mcnTextBloc=
+kInner" style=3D"padding-top: 9px;mso-line-height-rule: exactly;-ms-text-si=
+ze-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                        <table align=3D"left" border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" style=3D"max-width: 100%;min-width: 100=
+%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms=
+-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width=3D"100%" cla=
+ss=3D"mcnTextContentContainer">
+                                            <tbody>
+                                                <tr>
+
+                                                    <td valign=3D"top" clas=
+s=3D"mcnTextContent" style=3D"padding-top: 0;padding-right: 18px;padding-bo=
+ttom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-ad=
+just: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #20=
+2020;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: l=
+eft;">
+
+                                                        <table align=3D"lef=
+t" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"max-width: 100=
+%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table=
+-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" wi=
+dth=3D"100%" class=3D"mcnTextContentContainer">
+                                                            <tbody>
+                                                                <tr>
+
+                                                                    <td val=
+ign=3D"top" class=3D"mcnTextContent" style=3D"padding-top: 0;padding-right:=
+ 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;=
+-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break=
+-word;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 15=
+0%;text-align: left;">
+                                                                        <p =
+data-olk-copy-source=3D"MessageBody" data-start=3D"295" data-end=3D"439">Bi=
+tget Wallet=E2=80=99s ecosystem token&nbsp;<strong data-start=3D"339" data-=
+end=3D"346">BWB</strong>&nbsp;is now live. Don=E2=80=99t miss your chance t=
+o secure early airdrop points before the pool closes.</p><p data-start=3D"4=
+41" data-end=3D"474"><a title=3D"https://track.pstmrk.it/3s/t.co%2FuOljwPW8=
+Tj/3TIB/f62-AQ/Aw/dcbeea8a-3d3f-460c-8351-9e52adec8c8f/5/q__JVlcsOW" data-l=
+inkindex=3D"0" data-auth=3D"NotApplicable" rel=3D"noopener noreferrer" targ=
+et=3D"_blank" href=3D"https://track.pstmrk.it/3s/t.co%2F0BjfiZ04bH/3TIB/u6_=
+-AQ/Ag/0cc64a46-4362-4420-b169-639b6a8ef64b/3/gOxY0dV7x6">=F0=9F=91=89&nbsp=
+;Claim Airdrop Now</a></p><p data-start=3D"476" data-end=3D"496">With BWB, =
+you can:</p><ul data-start=3D"497" data-end=3D"733"><li data-start=3D"497" =
+data-end=3D"556"><p data-start=3D"499" data-end=3D"556">Participate in prot=
+ocol governance &amp; treasury proposals</p></li><li data-start=3D"557" dat=
+a-end=3D"613"><p data-start=3D"559" data-end=3D"613">Stake to access Launch=
+pad, Fair Launchpool &amp; GetDrop</p></li><li data-start=3D"614" data-end=
+=3D"673"><p data-start=3D"616" data-end=3D"673">Pay multichain gas fees via=
+ Account-Abstraction wallets</p></li><li data-start=3D"674" data-end=3D"733=
+"><p data-start=3D"676" data-end=3D"733">Qualify for future ecosystem airdr=
+ops &amp; partner rewards</p></li></ul><p data-start=3D"735" data-end=3D"81=
+1"><strong data-start=3D"735" data-end=3D"749">Key Dates:</strong><br data-=
+start=3D"749" data-end=3D"752">=F0=9F=93=85 Airdrop: Aug 21 =E2=80=93 Oct 2=
+1, 2025<br data-start=3D"785" data-end=3D"788">=F0=9F=93=85 TGE &amp; IEO: =
+Q2 2025</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign=3D"top" id=3D"templateFooter" style=3D"backg=
+round:#FAFAFA none no-repeat center/cover;mso-line-height-rule: exactly;-ms=
+-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #F=
+AFAFA;background-image: none;background-repeat: no-repeat;background-positi=
+on: center;background-size: cover;border-top: 0;border-bottom: 0;padding-to=
+p: 9px;padding-bottom: 9px;">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" width=3D"100%" class=3D"mcnDividerBlock" style=3D"min-width: 100%;bo=
+rder-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-tex=
+t-size-adjust: 100%;-webkit-text-size-adjust: 100%;table-layout: fixed !imp=
+ortant;">
+                            <tbody class=3D"mcnDividerBlockOuter">
+                                <tr>
+                                    <td class=3D"mcnDividerBlockInner" styl=
+e=3D"min-width: 100%;padding: 10px 18px 25px;mso-line-height-rule: exactly;=
+-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                        <table class=3D"mcnDividerContent" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"mi=
+n-width: 100%;border-top: 2px solid #EEEEEE;border-collapse: collapse;mso-t=
+able-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-t=
+ext-size-adjust: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style=3D"mso-line-h=
+eight-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 10=
+0%;">
+
+                                                        <br>=C2=A9 Bitget A=
+irdrop. All Rights Reserved.<br>
+
+                                                        Bezoek onze website=
+: <a href=3D"" style=3D"color:#aaaaaa" target=3D"_blank"></a>
+                                                        <br>
+                                                        <table a=3D"" style=
+=3D"border-collapse:collapse">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td val=
+ign=3D"top" style=3D"padding:0 10px">
+                                                                       =20
+                                                                    </td>
+                                                                    <td val=
+ign=3D"top" style=3D"padding:0 10px">
+                                                                       =20
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                        <span style=3D"font=
+-size:12px;color:#a0a0a0"><!--#UNSUBSCRIBELINK#--></span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--
+                                                        <td class=3D"mcnDiv=
+iderBlockInner" style=3D"padding: 18px;">
+                                                        <hr class=3D"mcnDiv=
+iderContent" style=3D"border-bottom-color:none; border-left-color:none; bor=
+der-right-color:none; border-bottom-width:0; border-left-width:0; border-ri=
+ght-width:0; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0;"=
+ />
+                                        -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+</body>=
+
+--170158beb97d686c1dcf456b1a57102c7dbc603bd3ccbe5874887af278eb--

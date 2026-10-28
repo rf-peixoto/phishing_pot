@@ -1,511 +1,840 @@
-Received: from CY5PR19MB6170.namprd19.prod.outlook.com (::1) by
- MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Wed, 17 May 2023 13:34:34
+Received: from DS4PR10MB075839.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Sat, 3 Oct 2026 23:52:53
  +0000
-ARC-Seal: i=3; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=pass;
- b=BDL9dNL2dH+/mggwLzixvEG5qim6wdtSpQXGdRTpPioaJQZcaCO2fo01wqMviTjCQ5U5zVvgrA0inDOt6mrHGu/tefKlSKWQDy/ANIiMqtv5zq21uN11dbhKs6x1l515QQqZkj+oKRpPTC8rfKjrDV31VxtVLtE8SZJgiQyHAM7gCdUcMXXVbzNkGgP7rQSx1R14MwCwQNAuwtoMJQk+Bp6LPHmOaNFZUUvip37FLF54aJtTKPvWrQpiO1BaHG+F2qa4QMmkPjk7btq7p9eeX44FTzBaov+jhVTjufA7Lm/m76DOIurhQnmEuZpI69uiNTRHbStRfuhOv/dk2AhVUw==
-ARC-Message-Signature: i=3; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZvQ6Z3ijT5kU0zDf0bTq2Yr2Y8faDrBgp/YtY5XHzv8=;
- b=jKzhjoIqmOzgtKWNCQkSLjqBIBCJHeWvZR5mnv3qFrnmQjdYP/yFJoFxbYGjFbxhz+eTKfm1bpXHCUgK7exCds6Z/fMvnRUS+vgUFv8qmxkfPF+19CSeBiYnNrrTtAMcOFbmDhkUQwQ/Z5dNhP+QTddKDdCnvoNmgfvhznlAKQ2Rfb+Xna9EMemm+NWCf3OwUy8EjXxKt7U4pUjjU8p76mLz0DgyIngSa2u1GftaejCG+gBNY1K73A7roHXzxe0K/eoNI2uwwhqoT9KZW3pYj9MrA8Krrf/ACZsVE1XH13voWj+WY5JwADXSPhNv3rtMMbz4T1Sgdym3MOkrDf2GxQ==
-ARC-Authentication-Results: i=3; mx.microsoft.com 1; spf=none (sender ip is
- 209.85.222.208) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=victor.onlyinbox.foundation; dmarc=fail (p=none sp=none
- pct=100) action=none header.from=icloud12.awsapps.com; dkim=pass (signature
- was verified) header.d=victor-onlyinbox-foundation.20221208.gappssmtp.com;
- arc=pass (0 oda=1 ltdi=1 dkim=[1,2,header.i=@icloud12.awsapps.com]
- dmarc=[1,2,header.from=awsapps.com])
-Received: from GVX0EPF000013D6.SWEP280.PROD.OUTLOOK.COM (2603:10a6:144:1::e)
- by CY5PR19MB6170.namprd19.prod.outlook.com (2603:10b6:930:2d::19) with
+Received: from BY1P220CA0016.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:5c3::13)
+ by DS4PR10MB075839.namprd10.prod.outlook.com (2603:10b6:8:3ec::15) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6411.15; Wed, 17 May
- 2023 13:34:33 +0000
-Received: from HE1EUR04FT051.eop-eur04.prod.protection.outlook.com
- (2a01:111:f400:7e0d::201) by GVX0EPF000013D6.outlook.office365.com
- (2603:1026:900:2::3) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6387.30 via Frontend
- Transport; Wed, 17 May 2023 13:34:33 +0000
-Authentication-Results: spf=none (sender IP is 209.85.222.208)
- smtp.mailfrom=victor.onlyinbox.foundation; dkim=pass (signature was verified)
- header.d=victor-onlyinbox-foundation.20221208.gappssmtp.com;dmarc=fail
- action=none header.from=icloud12.awsapps.com;compauth=pass reason=130
-Received-SPF: None (protection.outlook.com: victor.onlyinbox.foundation does
- not designate permitted sender hosts)
-Received: from mail-qk1-f208.google.com (209.85.222.208) by
- HE1EUR04FT051.mail.protection.outlook.com (10.152.27.40) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6411.18 via Frontend Transport; Wed, 17 May 2023 13:34:32 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.14; Sat, 3 Oct
+ 2026 23:52:52 +0000
+Received: from MW2PEPF00014673.namprd04.prod.outlook.com
+ (2603:10b6:a03:5c3:cafe::91) by BY1P220CA0016.outlook.office365.com
+ (2603:10b6:a03:5c3::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.20 via Frontend Transport; Sat, 3
+ Oct 2026 23:52:51 +0000
+Authentication-Results: spf=none (sender IP is 172.235.191.39)
+ smtp.mailfrom=pedagiodigital901270; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=pedagiodigital901270;
+Received-SPF: None (protection.outlook.com: pedagiodigital901270 does not
+ designate permitted sender hosts)
+Received: from [127.0.1.1] (172.235.191.39) by
+ MW2PEPF00014673.mail.protection.outlook.com (10.167.249.180) with Microsoft
+ SMTP Server id 15.21.472.14 via Frontend Transport; Sat, 3 Oct 2026 23:52:49
+ +0000
 X-IncomingTopHeaderMarker:
- OriginalChecksum:3A60291CDD284FC9B0116144E212C4487AD43D760F62FA7891627F3D069E767D;UpperCasedChecksum:8340DCB4D465947CA8430A2786D631CFAA2F364ABE9E340A320FDA296F521B09;SizeAsReceived:10431;Count:50
-Received: by mail-qk1-f208.google.com with SMTP id af79cd13be357-7578f6a051bsf107688685a.3
-        for <phishing@pot>; Wed, 17 May 2023 06:34:32 -0700 (PDT)
-ARC-Seal: i=2; a=rsa-sha256; t=1684330472; cv=pass;
-        d=google.com; s=arc-20160816;
-        b=Yd9XiAhLmvWp3iaTEWV+ZyBbsRrzhXJcK6S0RM1nL5odmPEOKYCgZ/yJsTDDuO16CO
-         coSuHhIJL+0tU/Tqxgx+9EVWCNneM2VPvrGso78RV9DP/C0JJlUxNJRIQx+EqUYYRTse
-         tsei86XQqKId3zdcW1t3n+0UC60+fBrV0Nu25rDSri39A2izkQ7wjotM7479oRsTJ4Qc
-         UFsUYmvlNHeMwbEsOOQ29+X45km35Wgu1FypwMNKArmcUsaGxHv4Rvtwg+FckEtosBm7
-         xpTEEnZYBZFTov0VIsKY5YsVcRKtKjztdwr8xZclarqBRUvKbx3Bp3TMdzUT/f1chdW5
-         /WsA==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
-        h=list-unsubscribe:list-subscribe:list-archive:list-help:list-post
-         :list-id:mailing-list:precedence:feedback-id:message-id:thread-topic
-         :thread-index:references:mime-version:date:to:from:subject
-         :dkim-signature;
-        bh=ZvQ6Z3ijT5kU0zDf0bTq2Yr2Y8faDrBgp/YtY5XHzv8=;
-        b=ujYsSo6whuho/yY13/+TOVE0CuuHqLiE3gOJX+Ox++w3X/HqFlDRY64nk+HsbAO5HW
-         YqQS3/6THXtlZWCdRxSEelM6WH5SugddKoKcoULW0eKyUaJqSWrEYd3uIgCdK5nMzyYk
-         VJngVqh5WhCthA0ojk6veisBfoQx2AB68R/OPqK4O5Al3j5hShPIzLJKSbX6iZtU+FCf
-         QCb7tp9OXA6VHZNDBtJtAphsj0FyC0MMCCC8t5KfiUwMVlSJGA/NxFIPcp+FUWPbn/5e
-         OXUfvpiuPlIuHNvxpTddQhQELqC1qoMHcjjd/xRcfMDO0Tx5klMOfDQtQjSZAOZ4CxXU
-         A9Aw==
-ARC-Authentication-Results: i=2; mx.google.com;
-       dkim=pass header.i=@icloud12.awsapps.com header.s=gmt6xsq6pkkxven253ph26frhspawqok header.b=CrQrr+vQ;
-       dkim=pass header.i=@amazonses.com header.s=shh3fegwg5fppqsuzphvschd53n6ihuv header.b=uD9BCbqD;
-       spf=pass (google.com: domain of 0102018829e8733d-1d868faf-3e99-426b-bbd8-9d7ede0933f6-000000@eu-west-1.amazonses.com designates 54.240.2.48 as permitted sender) smtp.mailfrom=0102018829e8733d-1d868faf-3e99-426b-bbd8-9d7ede0933f6-000000@eu-west-1.amazonses.com;
-       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=awsapps.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=victor-onlyinbox-foundation.20221208.gappssmtp.com; s=20221208; t=1684330472; x=1686922472;
-        h=x-original-sender:list-unsubscribe:list-subscribe:list-archive
-         :list-help:list-post:list-id:mailing-list:precedence:feedback-id
-         :message-id:thread-topic:thread-index:references:mime-version:date
-         :to:from:subject:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZvQ6Z3ijT5kU0zDf0bTq2Yr2Y8faDrBgp/YtY5XHzv8=;
-        b=MzPENInSJPC01mrtrKbcfiAKn4p6x0KUHR7+nQ3QT+TwT3yRSAZzgKa8hk3FfZ+nUb
-         S70/Vqv1w9uXqTInAZuCTrw9iT7og64EXXgc+yQUYv2gxN3KWXKXMLegw74pe3pLQuHD
-         dd2dunH+Cn6/9FZG7nA/OzrRMlSsjEMEVQAXhC1HTt6KTL78w1d2rE0lZPOLAGH1lOQa
-         JxsxLgjp8I5i6Zlfya4+IVpUY7jFcEiLfbgcd6cPI9abCAF03UqzLM+cDNk36e0udx4F
-         qp+yUBKJqPjTH+KzIdd4tjIwQrR32kzB9e6sofdJ2rf7o2cMhvQzMiC/dJfYU1RSLbMn
-         8CyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684330472; x=1686922472;
-        h=x-spam-checked-in-group:x-original-sender:list-unsubscribe
-         :list-subscribe:list-archive:list-help:list-post:list-id
-         :mailing-list:precedence:feedback-id:message-id:thread-topic
-         :thread-index:references:mime-version:date:to:from:subject
-         :x-beenthere:x-beenthere:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZvQ6Z3ijT5kU0zDf0bTq2Yr2Y8faDrBgp/YtY5XHzv8=;
-        b=X28qIGgGmMQBONJdVyIEWz1YtyGAn0C/ImjWaov12VL8FN2yHhzTDo7rrglXMVqyRn
-         /Ny63GxXrgZetgnYYM6zqkCb6kUg1w+tpMzGxqRu8b6ZYcVnClSGheJ+qOmBPjyXdztx
-         6Q4YWB0Yq4T/gxQtyMCcUXm2HsBQs6iHgY5/4eftBGhpZ/bLIxgqEAEciMfV1g5NxZ24
-         cEpSXRG5uff+bnk86PAqrtj3Zv5vsjBCawIEchC26LnImnMnS3HsHZ7lQrk2lav0RFPL
-         j6UxqdQKSrYU83FTBRO9PSvf56jcDt99rTY1n4zhg27SklbynqgdrT3F8PlyEN3I3HdR
-         CJ+w==
-X-Gm-Message-State: AC+VfDybocRTE8j2gi6SvZVqIe97ny/GIjkJZaxhZJuumW9qSq1DWb9X
-	9fgGGytkoeItII63Vxk2KNdDoA==
-X-Google-Smtp-Source: ACHHUZ6ZEpca94WVH8fjmT6l3ZQQJMO7WVPHmAnHlCU9x8KWE98RorzaOe+qWlBsmOeEfEdrlU4Uig==
-X-Received: by 2002:a05:620a:4050:b0:759:5244:a63b with SMTP id i16-20020a05620a405000b007595244a63bmr3542909qko.9.1684330472531;
-        Wed, 17 May 2023 06:34:32 -0700 (PDT)
-X-BeenThere: hgsadfhjajsdjkhs@victor.onlyinbox.foundation
-Received: by 2002:a05:620a:2107:b0:757:7ff5:b988 with SMTP id
- l7-20020a05620a210700b007577ff5b988ls5908725qkl.8.-pod-prod-gmail; Wed, 17
- May 2023 06:33:58 -0700 (PDT)
-X-Received: by 2002:a05:620a:2802:b0:74e:2894:7eb2 with SMTP id f2-20020a05620a280200b0074e28947eb2mr11491034qkp.12.1684330438267;
-        Wed, 17 May 2023 06:33:58 -0700 (PDT)
-Received: by 2002:a05:620a:4686:b0:759:3507:99d9 with SMTP id af79cd13be357-75935079f31ms85a;
-        Wed, 17 May 2023 06:32:02 -0700 (PDT)
-X-Received: by 2002:a05:622a:1823:b0:3ef:47d1:70f6 with SMTP id t35-20020a05622a182300b003ef47d170f6mr13415848qtc.0.1684330320293;
-        Wed, 17 May 2023 06:32:00 -0700 (PDT)
-X-BeenThere: ahsgfahxgas*********sjhjdgasmhx@victor.onlyinbox.foundation
-Received: by 2002:a05:622a:4116:b0:3f3:8952:afa5 with SMTP id
- cc22-20020a05622a411600b003f38952afa5ls25644466qtb.4.-pod-prod-gmail; Wed, 17
- May 2023 06:32:00 -0700 (PDT)
-X-Received: by 2002:a05:622a:587:b0:3ea:3d30:af91 with SMTP id c7-20020a05622a058700b003ea3d30af91mr13529818qtb.1.1684330320089;
-        Wed, 17 May 2023 06:32:00 -0700 (PDT)
-Received: by 2002:a05:620a:290e:b0:6b9:2fad:614b with SMTP id af79cd13be357-75477de19d4ms85a;
-        Wed, 17 May 2023 06:31:21 -0700 (PDT)
-X-Received: by 2002:a05:600c:511c:b0:3f5:a54:9f97 with SMTP id o28-20020a05600c511c00b003f50a549f97mr1890697wms.0.1684330280313;
-        Wed, 17 May 2023 06:31:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1684330280; cv=none;
-        d=google.com; s=arc-20160816;
-        b=Spuso3r887baO7bfDwBPUAla1HDNBTZeA4xWtYSz8qfXnVoAVRMJcQtUnswjqIwOFo
-         VFF/eYDwfpXeABRQlXpEv7B46lW2vwQr53K7M8K6vr64d8xn0dIIXYAQ5V/tw/ONP8GK
-         yLP4fkcNu5vKGc2JPqTgipa3Mqg51283TVXNOe/K2P9+/diiaN3YVZ4Q3O4qWKNdag1w
-         XnZsujxP5jSKexiYx6Nd6eFLfjIvnCCQOFPsl/WpAfJ3NOP6hMdWOC877OMJJMQp3b8o
-         0XmAiJIibqbMJ/+F0NhCdOOz8GOoXmD3rp0CX3Z7tx0rWt5HmxaPeA3JdYSjntJoFl97
-         PdLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
-        h=feedback-id:message-id:thread-topic:thread-index:references
-         :mime-version:date:to:from:subject:dkim-signature:dkim-signature;
-        bh=ZvQ6Z3ijT5kU0zDf0bTq2Yr2Y8faDrBgp/YtY5XHzv8=;
-        b=sUZDUUYbcLDKvDCrNweXgHNmTYMmpjtDqzaLhlQ5IADT9myyefmb1gwITA3BT21FGn
-         VeOFn5hXj7Bvb4kU7Dk3IzsvrSRx9Pxai2V9oAfdTSL8qBxMpHImksD5xB+31+Vpf5S9
-         jdAWY2vLCa+K3Ce/JuPD3n45gFs/kOfv+YlDjuaIQO9iEYAknxcaLDau0xYd1jtx2zdC
-         vpDBlDymAzEy94WoXUhHdGp45yl+Gsc1sKznbcJpRyCdydiiG2r+UQnxUBkgXJcHOheu
-         IO0Q7uGxg11L3Cgs8aDuUN32fI8KfOnU0Lfyuwz82Uei1tBOSlkR8sL4rTSiHclc4xBx
-         1qZg==
-ARC-Authentication-Results: i=1; mx.google.com;
-       dkim=pass header.i=@icloud12.awsapps.com header.s=gmt6xsq6pkkxven253ph26frhspawqok header.b=CrQrr+vQ;
-       dkim=pass header.i=@amazonses.com header.s=shh3fegwg5fppqsuzphvschd53n6ihuv header.b=uD9BCbqD;
-       spf=pass (google.com: domain of 0102018829e8733d-1d868faf-3e99-426b-bbd8-9d7ede0933f6-000000@eu-west-1.amazonses.com designates 54.240.2.48 as permitted sender) smtp.mailfrom=0102018829e8733d-1d868faf-3e99-426b-bbd8-9d7ede0933f6-000000@eu-west-1.amazonses.com;
-       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=awsapps.com
-Received: from a2-48.smtp-out.eu-west-1.amazonses.com (a2-48.smtp-out.eu-west-1.amazonses.com. [54.240.2.48])
-        by mx.google.com with ESMTPS id e5-20020a05600c4e4500b003f4e4f7f3efsi1091480wmq.201.2023.05.17.06.31.20
-        for <ahsgfahxgas*********sjhjdgasmhx@victor.onlyinbox.foundation>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 May 2023 06:31:20 -0700 (PDT)
-Received-SPF: pass (google.com: domain of 0102018829e8733d-1d868faf-3e99-426b-bbd8-9d7ede0933f6-000000@eu-west-1.amazonses.com designates 54.240.2.48 as permitted sender) client-ip=54.240.2.48;
-Subject: **Your_iCloud_storage_is_full**
-From: =?UTF-8?Q?**STORAGEICLOUD**?=
-  <storageicloudtorageicloud@icloud12.awsapps.com>
-To: =?UTF-8?Q?ahsgfahxgas*********sjhjdgasmhx=40victor=2Eonlyinbox=2Efound?=
- =?UTF-8?Q?ation?=
-  <ahsgfahxgas*********sjhjdgasmhx@victor.onlyinbox.foundation>
-Date: Wed, 17 May 2023 13:31:19 +0000
-Content-Type: multipart/alternative; 
- boundary="=_Csdpa+fq7risibdG-zdGOKwfvctsWwVSmvMVraTIuUhaie4u"
-References: <085fe560-8df9-bdcc-aa75-6213d4442ae0@icloud12.awsapps.com>
-X-Mailer: Amazon WorkMail
-Thread-Index: AQHZiMPcpJykpPlSS8qUVN4Awwxtrg==
-Thread-Topic: **Your_iCloud_storage_is_full**
-X-Wm-Sent-Timestamp: 1684330278
-Message-ID: <0102018829e8733d-1d868faf-3e99-426b-bbd8-9d7ede0933f6-000000@eu-west-1.amazonses.com>
-Feedback-ID: 1.eu-west-1.b24dn6frgCi6dh20skzbuMRr7UL8M6Soir/3ogtEjHQ=:AmazonSES
-X-SES-Outgoing: 2023.05.17-54.240.2.48
-Precedence: list
-Mailing-list: list hgsadfhjajsdjkhs@victor.onlyinbox.foundation; contact hgsadfhjajsdjkhs+owners@victor.onlyinbox.foundation
-List-ID: <hgsadfhjajsdjkhs.victor.onlyinbox.foundation>
-X-Google-Group-Id: 641582657633
-List-Post: <https://groups.google.com/a/victor.onlyinbox.foundation/group/hgsadfhjajsdjkhs/post>,
- <mailto:hgsadfhjajsdjkhs@victor.onlyinbox.foundation>
-List-Help: <https://support.google.com/a/victor.onlyinbox.foundation/bin/topic.py?topic=25838>,
- <mailto:hgsadfhjajsdjkhs+help@victor.onlyinbox.foundation>
-List-Archive: <https://groups.google.com/a/victor.onlyinbox.foundation/group/hgsadfhjajsdjkhs/>
-List-Subscribe: <https://groups.google.com/a/victor.onlyinbox.foundation/group/hgsadfhjajsdjkhs/subscribe>,
- <mailto:hgsadfhjajsdjkhs+subscribe@victor.onlyinbox.foundation>
-List-Unsubscribe: <mailto:googlegroups-manage+641582657633+unsubscribe@googlegroups.com>,
- <https://groups.google.com/a/victor.onlyinbox.foundation/group/hgsadfhjajsdjkhs/subscribe>
-X-Removed-Original-Auth: X-Original-Authentication-Results not in DKIM signature.
-X-Original-Sender: ahsgfahxgas*********sjhjdgasmhx@victor.onlyinbox.foundation
-X-Spam-Checked-In-Group: hgsadfhjajsdjkhs@victor.onlyinbox.foundation
-X-IncomingHeaderCount: 50
-Return-Path:
- hgsadfhjajsdjkhs+bncBCFMDMEMRECBBSFPSORQMGQENXKEJNY@victor.onlyinbox.foundation
-X-MS-Exchange-Organization-ExpirationStartTime: 17 May 2023 13:34:32.9986
+ OriginalChecksum:BFDDFC0A9CE4094D764660281CBC27F9EA3BC3751B41B8E300EE195D3889F1BD;UpperCasedChecksum:213BDF8B44BA4282CFEC8BF1B73D04507BB5817D688B45C7F340D5D02173DA2A;SizeAsReceived:436;Count:7
+Content-Type: multipart/alternative; boundary="===============8463601424563827804=="
+MIME-Version: 1.0
+From: =?utf-8?q?Debitos_Pedagio_Digital?= <debito@pedagiodigital901270>
+To: phishing@pot
+Subject: =?utf-8?q?Aten=C3=A7=C3=A3o=3A_passagem_de_ped=C3=A1gio_n=C3=A3o_paga_detect?=
+ =?utf-8?q?ada=2E_ID=3A_592016937?=
+Date: Sun, 04 Oct 2026 12:52:49 +1300
+Message-ID: <1791071569.5758495.892128@pedagiodigital901270>
+X-IncomingHeaderCount: 7
+Return-Path: debito@pedagiodigital901270
+X-MS-Exchange-Organization-ExpirationStartTime: 03 Oct 2026 23:52:50.0928
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
 X-MS-Exchange-Organization-Network-Message-Id:
- 8578cadf-8c74-4dd0-c4a0-08db56db72fb
+ 4165b604-eeff-4a11-5f54-08df21a96ebc
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic:
- HE1EUR04FT051:EE_|CY5PR19MB6170:EE_|MN0PR19MB6312:EE_
+ MW2PEPF00014673:EE_|DS4PR10MB075839:EE_|MW4PR10MB5749:EE_
 X-MS-Exchange-Organization-AuthSource:
- HE1EUR04FT051.eop-eur04.prod.protection.outlook.com
+ MW2PEPF00014673.namprd04.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 5/17/2023 1:19:22 PM
-X-MS-Office365-Filtering-Correlation-Id: 8578cadf-8c74-4dd0-c4a0-08db56db72fb
+X-MS-UserLastLogonTime: 10/3/2026 11:01:22 PM
+X-MS-Office365-Filtering-Correlation-Id: 4165b604-eeff-4a11-5f54-08df21a96ebc
+X-Sender-IP: 172.235.191.39
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 209.85.222.208
-X-SID-PRA: STORAGEICLOUDTORAGEICLOUD@ICLOUD12.AWSAPPS.COM
-X-SID-Result: PASS
-X-MS-Exchange-Organization-PCL: 2
-X-MS-Exchange-Organization-SCL: 7
-X-Microsoft-Antispam: BCL:0;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 May 2023 13:34:32.9829
+X-SID-PRA: DEBITO@PEDAGIODIGITAL901270
+X-SID-Result: NONE
+X-Microsoft-Antispam:
+ BCL:0;ARA:1444111002|970799063|5301999021|6401999021|9129299003|45200799018|1290799033|32020799003|9400799043|34130799006|260928210016899003|20103052909095|6010799021|2700799033|70000799018|46080799009|41010799009|260826003000599003|60050799012|26120799003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2026 23:52:49.6483
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8578cadf-8c74-4dd0-c4a0-08db56db72fb
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4165b604-eeff-4a11-5f54-08df21a96ebc
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-AuthSource:
- HE1EUR04FT051.eop-eur04.prod.protection.outlook.com
+ MW2PEPF00014673.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
  00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR19MB6170
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.9049814
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.6411.014
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR10MB075839
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.7330754
+X-MS-Exchange-Processed-By-BccFoldering: 15.21.0472.005
+X-MS-Exchange-Organization-SCL: 6
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
+X-MS-Exchange-ExternalInOutlookResult: ConsumerDisabled
 X-Microsoft-Antispam-Mailbox-Delivery:
-	abwl:0;wl:0;pcwl:0;kl:0;dwl:0;dkl:0;rwl:0;ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000305)(90000117)(90005022)(91005020)(91035115)(9050020)(9100338)(2008001134)(2008121020)(4810010)(4910033)(8820095)(9610025)(9525003)(10145022)(9320005)(9245025);RF:JunkEmail;
-X-Message-Info:
-	6hMotsjLow/GLWrPdH0S7Pei64a/sKU18lnLmKiniR6PYxLQ1MU100cGWIrKHTXqnze0rwrgCOuh+wQ4MDA28aj/tN1f9wfyACJanlEmqyHueUWYzjDgqxUgM9JtAHarichSAeEd+9IuHvIluBHP6YG7PG9sAcnw7ZA/c6yUK7Q4wfPpl14vDitgB6Gov2G7vxxgi4RblCsz3J+x3LFfuA==
-X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0zO1NDTD02
+	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9710001)(9610028)(9520007)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?VEV3TGxwdWFhNGVIMXFVbC9JUm43bGcwR2k5dTc1VmRLY2JoT05aV094Rmtz?=
- =?utf-8?B?dTJUZGlGQjF1a1pjOEtqOGdVQWpnYkRTVE1XV2ZVV1FsOEt0WTJEb0Mzak93?=
- =?utf-8?B?ZndldUhsdk8rd1h6WjBnQ0Q1V09ZNVVjaFNxZE9ySmNuNVVick1zM0UvaXRL?=
- =?utf-8?B?SlAwTFdDS0twV2dlL2k3QnNncEozZjhJa0YvQThpb0FNMUtSRWFIVEVuRG1w?=
- =?utf-8?B?Y3ZpUmh3REZJamdyNFZuZTJ5TnlidTF2RnhnNmlPWXo3azVYR3hjblNKQVZu?=
- =?utf-8?B?YXY4TmxzM1B6L3ZMdDlUN2t6NUNtUE9Nc2U1OFBVYmlFY01aTngyeFpNVDZG?=
- =?utf-8?B?NXlOSWJwUkxFR3U4ZE01TGdCYVhmQ2pyczBqTHVIYnVwYUJwU2ZnVG04MlR5?=
- =?utf-8?B?NkcwWUQwdWgvUklHdEx5TzN4RUhJb2huU01INUxwME5Fb2Y1WFd6Z3lObURz?=
- =?utf-8?B?Q2I4OXZ2cndzam4xNFZSTWZEZWd4VC9kUE5vUmlyb2JoOWxkUUFralRwMUs3?=
- =?utf-8?B?bHUyQUg0Z1g4VmpvQ3pGNUljSFB6N0tIMmk0bWRWOFc1ZG5Lc1ZVQkphdTRP?=
- =?utf-8?B?RXM2emZZQjM3ZFBxa2FMQXIrR3BOYWFQbUNxbXU2YjZSS2h6NDVaYmg3cGtw?=
- =?utf-8?B?NlJNaVdNTlBGdUpIckQ4aXM1NXp5Vi9uQWtIaFZwK0VxR3lSWk96RElzTkd2?=
- =?utf-8?B?SmhrcE4zSEZQbXFnMmF4dWNNcHFBaEtaRllSdWg5aGp6VGp5WDdvVk80VkZZ?=
- =?utf-8?B?QWtXVkRvN3kxbEhLdHppc3dDRHhMRFFQQmFjTGZHWnJyRHhaUk81WTVHbHdF?=
- =?utf-8?B?NERScVNBWUJxR3dKOEt6dVo3eEg2cWhFSmVoZlMvQk13UUlxZVpUc0U0Lzd0?=
- =?utf-8?B?N3hGaWN0bDdOSkE4WDBwV2M4V0N5ZUlqUkcrL3ZJQXZlNFBFN0FGNHpXK0k2?=
- =?utf-8?B?YnRZdURmSUlvNzg0MURCOXZxWEVpaVpOTGFidmMyWWtVZUZibHpyRHdzaGRp?=
- =?utf-8?B?UVI2anBUMzEwc2FYdkZoOGhMTUF3ZFFUNFhtcEhybkNZK2JCNDdPdUZEVlVE?=
- =?utf-8?B?ODIvU2xib1RjZGl6Vkp1dFJ1RzAyeU5nSHIzNVcxcmpTWFBSUlhqb1drRFlt?=
- =?utf-8?B?UVN1WnhZei9GTzBNNExOdFlaTU1wT3NscHRKbVBpQUdha2M3UFVNNmI2UWZ0?=
- =?utf-8?B?ZlFmOURLUi9rR1pwWUtQZlg3eG9RdTd2N0NOOEVlYlVDUk9pUDhSUmpBOXRx?=
- =?utf-8?B?bHl2TzQ1aHJRL1A5WndnakhiZzRaNDZ1Tm5GR3VSd1cydkJzOGVycUFYd1Ez?=
- =?utf-8?B?Uy9MbWFldHExaGZ6QVltS29PMlozaEJwUVdkZGdVRGgzWGcwMElJcVNQQ0dM?=
- =?utf-8?B?ZUp0SytQY1p0T05wN0czVEpFbTQ5UUFDQkxRRzd3d1FpTDQ1KzFjYm14QkJy?=
- =?utf-8?B?aXJOaWFkWEp0aFNrVnhCVS9jTEMrVlBKa1BITnptODVRd3RYRkNXOTlWVmVX?=
- =?utf-8?B?a2o0UTExMHF3VnVlNmo1TnI5ZWZvdHFRVWo1anZEV2pjeXNyalB6WEdFc2Jo?=
- =?utf-8?B?V2d6RHNPdDVqdDlLczRYSGFrNnBkRktWK2JWRmxRcEwzdlRlN3NMUGtvS1Vx?=
- =?utf-8?B?dHBQazNGdUx4eFc4WHFlSk1hb1ZvOTVOclRPajBoa1NvOE9FOUVuYmVrTGx0?=
- =?utf-8?B?VWpid2pwOW1LOWVhSjZKSEErQkJMcVgrallDNkZMc0ZRMVR4MENtZ1NMOVZq?=
- =?utf-8?B?cUc5NS9KZ2V4QzkzTDNKNUNaTGxxT0dZZHlORWtMTXA5VlRPbkMyTG1ZMXZX?=
- =?utf-8?B?dVhaQzZoUHpMdWZKdnNNQTE1YVd6SzVxOTRQZG5aSlBKSlRZUWVtSXdzVnE3?=
- =?utf-8?B?MEJXeUpPUnNZYmluVEtDSU8wdk9GSm9rRGJrYzY1eWhpK0RoZENUenNlRWxk?=
- =?utf-8?B?eUxHK2tiV3dEZzhzRm13VUh1U2p2SjVMQ1llSzVOVXJLUDNmRzhBZ3V1YzJ4?=
- =?utf-8?B?clMycXh5d0dxY1IrZEUzbmwxclBGcTN2a21JTUJZS3YxQjllenNqQlJDMnVs?=
- =?utf-8?B?WXpsMnBZM2ZqTGhtR0lUbmZtc1hXM2NlY2ZNZkQ5Zy82dnkwb0lyUXVrZjhD?=
- =?utf-8?B?L08vUjlVU3JLelI0Nkpoa1htZWt4bEdjcDI2anloZUN5bUd4QXZSK3VNVkgr?=
- =?utf-8?B?eXBkb2NmWThSRi8yOVdHZitDVGpZQm1Qd2ZkdWQxSk1nL3c1REJaUi9zQzBy?=
- =?utf-8?B?RnRhcFpqVyt4NFpDclpGd3EvcW1VRytYZUpWSkpTRStzb2VCZXBaTk1xbjd6?=
- =?utf-8?B?b1k0aEU1bmQrOTROT1ZVeVN5TmcvK2xHR3RTbXVnblg5a2MyeU9PNE5XVXNB?=
- =?utf-8?B?VkR0c3JaempyRThIZUVoeFhkOThrSzFFbTlkY0dhRHAxTWQwZDRZa1Z1Yk5Q?=
- =?utf-8?B?MkMycUllbWNZQm92dzA2VUxUMVVpVld1Zm9IbVdvdFdqODR5a05uaUc4aGZ3?=
- =?utf-8?B?Nm1kcjZ3YTA4Z3Qzak9kUWhRbTd0bnNJcUNNK01xUkhpcW5ET0xMeHRVV0hC?=
- =?utf-8?B?QndsL2N0Nlc3QmtDV0JqZ0JRNDg2dlFSYmpQd0FzZFBVV1hyaWttY1QwUzFU?=
- =?utf-8?B?KzlJRitIQ3prOTVTVmc3TEtFcys1ODV4dnUrb2w0aEl0VVpHVW80aXdhM1hX?=
- =?utf-8?B?YVEyN3RIbGdIdHRCTTNodVNIcExheWplTTYvYXUwSUl4UXE3MEdhdElFc0Q4?=
- =?utf-8?B?c24vQ243KzhoUGVoZmh4OFJpeGc3TXJxblRRVVRaR2xIWm1uWEcvd21INVFZ?=
- =?utf-8?B?dTMwL01nWnIvZUNraVBNY0pWM29zYmlvckRJRDVqaWpwUnoxcDF4dUM5SUcz?=
- =?utf-8?B?M1E2UkQ4NkJXS2pVVWZVUm5QMmsvcktMMmZZNEl4QXZjNjQvZkxUcGJIdnM3?=
- =?utf-8?B?S0pWT2pWYkRpMzBGYk9ZN3RidTJsMTFLU2FONDhsRXlkaVJBanNpOWM4dGRj?=
- =?utf-8?B?dHlQOGEyYWtqUjRCOExuTkhna2kxQjcyNE15WGgyNHpHb1J0UVNJY2JzYWVz?=
- =?utf-8?B?SlBpcDhpZlRoNW9rZVZjbmVJenZieiszNXdLejVSRWZGZ0ExaHE2RUtNblN0?=
- =?utf-8?B?TUF3aER1SnZOS3Y5ZnNrRGY3WjEzTDBGOVBSR1dEM3ZzMytCTXA2L0VHVExz?=
- =?utf-8?B?VCt6SEZNZy9LSGtHQnRvSVhadUdWUVIvTlVwNGV2by9jS0cyM2Z1WlAxVE96?=
- =?utf-8?B?K3RMSU8xSlJNVVlvRUUvZnJYTkJ3NGU3UnRObnNBOVp5MVBwV3ZGc3BBUzF6?=
- =?utf-8?B?RllCZ24zbHhyRjZYaENVOHJ6WVZueHBoZU9wYTVPV2xJWEx3T3pYWUpVbHMz?=
- =?utf-8?B?eG5Ba0ZkWDUwRk5SQlZkOGNJcE10WHdCYXZ6VW5ENWpuYk9UdHE3cVF3emZJ?=
- =?utf-8?B?b2pudzNLcGRpQUg2NUdtN3U1VnZBMTFtK214Qmx6akJ0aThHNG02bWgvNjFT?=
- =?utf-8?B?WHBscnlOK0VjaE1UMGIrTi9wSGlWQUMvRE5sVjlnVDBBNVZIOWFtRW5CK1Vw?=
- =?utf-8?B?TUpVeHo4UU5ZQ3JER0RIVzBUZ2pWMnRKaThFWVBxL1NrcDhlNEFic1ZMRlkx?=
- =?utf-8?B?a0NscE5JcWJlT1ZOQnJrcjZ2WVlOaWVIMTZiRnhBb3dyT0RISUl0QnNsUitq?=
- =?utf-8?B?UEFRdm1BUGZVODczVEwxT2RRK1NhblRsSjFNU0Y0ZkpESUUzZUhHVjRDL1U4?=
- =?utf-8?Q?o/eOVUk?=
-MIME-Version: 1.0
+	=?us-ascii?Q?dEX3mN0eK6EznYUA7wj4gttAmoVsjGoS/0qOT75/Tlp3Ngwf09HB4Wc2HmcM?=
+ =?us-ascii?Q?YlhhC3Xktfz6Ck7EDKSoBnpSvI84SarBIo7eFJc0P1CINvLewNY93SEr/9Gw?=
+ =?us-ascii?Q?QTrgmU8X7+C+2QWN26f9db49xIbuSa81cTYj4GGiOCF08A50ugeKGAF25BrT?=
+ =?us-ascii?Q?UbMmmP+ViUQLVHPQVJuO0Loony88TS01I6pJ2w+7z2gi252lXfGgHut+asHz?=
+ =?us-ascii?Q?GzcVgN6uhmqh8W+15LOUIIIKDTXJJFho9kEJwuFlM69riQQP4PZzD15vZEN/?=
+ =?us-ascii?Q?dVITvbw1LDFkHSXY90X7eiUOV06M7UcXAUK2AEOWVtZi8Rr4CH8MVy/dNOvJ?=
+ =?us-ascii?Q?k0snmYgi3Tj9MiPC0aD9PAeZksDP1NEJwcW49ABDt5ZoF6xenmM2F2JDGMJ1?=
+ =?us-ascii?Q?nix32rHqtgYMGHM2NwEXTm2mYaztBsWvS1VA3fKS/u9+sr5h5qld95rchaYY?=
+ =?us-ascii?Q?wKebgYr4SN32nIXc8ARsQ7Q6STI3BVMKPOSzks0An9a2x/+dgJW7X95qLfV4?=
+ =?us-ascii?Q?bqZ1lGNU4l6Z+PosimtPeYSQHS3DWIciv4ijqlZnQz+hmdc2V+11Upxu3utM?=
+ =?us-ascii?Q?Bo+7h3sCIidJpnexkE70rHRdWXPnmN/HQH8xkoc7VxY0W4prIc5Cfut0qfab?=
+ =?us-ascii?Q?EmndKG13lgcwf+pcW0AaYoOUjAEIj1CrQKyX2YGJdXW/XQZoj/XcgrJIzjHn?=
+ =?us-ascii?Q?gnjAwSNeucdSi3Dbf/pJYNC48q+596s5AzUDK0sGBLVqYTyIoXJbM1dFMaMG?=
+ =?us-ascii?Q?X1G1e0J5bc2Nek6I1mJfJyjONG0JNtGQ5dOJdGEGT3kq8wH1QtGVu1wMyCv8?=
+ =?us-ascii?Q?nHkDAYZ6SglpMiAyZFjgTkSxorFksW7638Co/AwwoKf7L0I7rm6Fsoq/qM+9?=
+ =?us-ascii?Q?j9g0R6oiKpjJ11llYrasT9p9G6soxK3p1EBFJ9dip79aqgj5XEN2S3wAP7BZ?=
+ =?us-ascii?Q?1njWCRf3jrSGS46612NQOaOKj1Vu+YyonVXI1+O3fnsLQ0cx6UbP/xAuqmFZ?=
+ =?us-ascii?Q?7Hw6ZePnaTA/F1zYA6F92xqQNhBfzHICNsu05/cdr9r0QJhs7fNFHIdFbTaY?=
+ =?us-ascii?Q?cIrElZdS3BQBoMDHdcgtyAIr9Af2cfCespyrZN51ZxW1OsNxkcf3G210/rLe?=
+ =?us-ascii?Q?ZmsJ5HUfbkCUVCpFP6X9sTEHPJIi7TllIyjpx9lpSQxktw2pRPmR2bzGsdn3?=
+ =?us-ascii?Q?D6mnHTrkJcYqmznjLhbpLa3jRPVuSGIjEAK1eTqZokyIJD2PP6kB4bLQc64F?=
+ =?us-ascii?Q?YpfE1MXXXwc7fj9YO3ZEWKtqrZxHhBVRS+dyNhC8yzZ26yLft+1qSKK1TYyz?=
+ =?us-ascii?Q?290lUlAPmrXk0GOLRloFUAPTLhGH64wSU0Uft1q6LNK7cOf+TjvIXM5dlXGu?=
+ =?us-ascii?Q?j+k2cIwTIWMAvs1MGTt0GBXnaS3vHWnwRixOIQrCODsPMR4bMothGtH1zoLN?=
+ =?us-ascii?Q?SDMFA1TJxSEo2cvXob6jhjZg59HFwlkEFL31wJmE92iswpSgAWCjdwsC962u?=
+ =?us-ascii?Q?vV2MVzwwZpDL3a81dNnxUsCoh5YF0SevUCTKnM3sOluTd7uNL/aOP0REPQk1?=
+ =?us-ascii?Q?Egl0gyT1+ErNIaGT1lu+u80oFJZkd3kiAwzyCyiBlZVKNnCi2v16FQajdfTT?=
+ =?us-ascii?Q?w4BtoC28ylTTHFB+PY01flIIlkj2nnKaaIpFwa70MTMwGo7Pxwa37K83bMSV?=
+ =?us-ascii?Q?h4eiX54PoWymf5tNu8nuuxn+T/kTmaCxTSProFPoPweepytjB23X1B+vNC9T?=
+ =?us-ascii?Q?TtjpPzhAGWEY9teDvljl3rrg3Z91ffR5U9CuzMteocUBcOPjsqmWb+SujrPk?=
+ =?us-ascii?Q?ZmWImuTZUuyKnZ/yYuolGHg8hAYOt1zbyL3qNNKTm05O4a39TTeWe6PVJ/Ks?=
+ =?us-ascii?Q?aMmFsl+ul1adotSbhRHWOgP8rbTC+sI6rtfJdhcJ7LORSrKPrIY7UM5hpqPm?=
+ =?us-ascii?Q?ulTMOpdFGXKigFBL5/OkZY72hR307N9La3l5i1ch44IR+OCuHi4I347IB01Y?=
+ =?us-ascii?Q?nBlv3SoUL3R75Ek+OaWuH6G9baLy7LWB/Uvv/GwZXHgJ0mFeaybx6N8Dy55h?=
+ =?us-ascii?Q?9nB0KaoiArNCjL7tIvAI48LWzeRg1ZWl50zGB3uVZm61zRjtQLUgVLGKy37h?=
+ =?us-ascii?Q?bRe1FldqqJ5ufah95j55QiTqBe0BmbNg2BnLqT33buKb3przoxvEQ6bZ0frO?=
+ =?us-ascii?Q?9tg50YZ3u4JmFYE6Y9OceDEtGP9U4et7DhATtOdAABPCO/GJ43yE3YQTTuML?=
+ =?us-ascii?Q?dGYsMHWA0vWM4XmpC+pk8juVZx1v5PruslMtXWKwrBwy9yMmEiH5QgOcCI4E?=
+ =?us-ascii?Q?p3AAxxqTJFe1nzgIJYsytJBc2l6APWd0SltzgmEgbZRsHpcrEhboa0GzFhzL?=
+ =?us-ascii?Q?/4k/sfsFFu7ULWD5Fqxx3W33tI4EXtx5saqFjEdx0zhdWkkCbN8iOnUvpBnZ?=
+ =?us-ascii?Q?KQhbqtRbMAgjbz+GevVHD4hl6ULouioPoQ6YVgckCcFWbcaT+/6iTzkF0uEP?=
+ =?us-ascii?Q?qwS8QtrMkS4qT7JGK09CEumeH6zrrcv1Rt3My/1Yvk+VKtl10cvhL++Kq783?=
+ =?us-ascii?Q?zAj5/Dd/VkaAdLL1K7GH+Ic1gY7929KFcaquiYskCbO5XTcSEJgMWAu91Bod?=
+ =?us-ascii?Q?rKHS//9lMlHzlQCpmbvGVl/C0Et7iyf2FqVq/5tDGJGhw0V7gScU4cA0MrWb?=
+ =?us-ascii?Q?6Vr2VshyCNANnPCaLk8rrO5RTM792sKOuMLm8YxGKR5LqjK0R0ZtK5zaHGXM?=
+ =?us-ascii?Q?JOZiQPePyZPkOO73IxbVpw7IrLjbzPOxGNQePpMu/DgidXsKQK8yw6f7tihe?=
+ =?us-ascii?Q?cpmjx3jM5g5O4q9p0D0qduxigPa2hAf4WNNwLjbDC/Utnuh9M7nQ23EcIxxs?=
+ =?us-ascii?Q?A3gY8F9XSs1KPP+vIfzFIR+qPGV5eMzmX9neFo0=3D?=
 
---=_Csdpa+fq7risibdG-zdGOKwfvctsWwVSmvMVraTIuUhaie4u
-Content-Type: text/plain; charset=UTF-8
+
+--===============8463601424563827804==
+Content-Type: text/plain;
+	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 
-ashfasjgjgjshgshc=20
- Insert your credit card details for validation of your Apple ID, sign-up=
- now <https://is.gd/OO5ZU7>=20
-=20
-=20
-=20
-=20
-=20
-=20
-=20
- Dear customer,=20
- Your iCloud storage is full.But, as part of your
- loyalty program, you can now receive an additional 50 GB for free before=
- the files on your iCloud Drive are deleted.=20
- <https://is.gd/OO5ZU7>=20
-=20
-=20
- Recieve 50 GB <https://is.gd/OO5ZU7>=20
-=20
-=20
-=20
-=20
- To stop these please go here write to:=20
- 616 Corporate Way Ste.2-9092=20
- Valley Cottage, NY 10989=20
-=20
-=20
+URGENTE: Identificamos d=C3=A9bitos de ped=C3=A1gio vinculados =C3=A0 sua p=
+laca. O encaminhamento ao DETRAN pode ocorrer nas pr=C3=B3ximas horas. Veri=
+fique agora. =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =
+=E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =E2=80=8C =20
+PED=C3=81GIO DIGITAL 	=E2=97=8F COMUNICADO OFICIAL=20
+Destinat=C3=A1rio: phishing@pot 	N=C2=BA: 003391139 =09
+=E2=9A=A0 NOTIFICA=C3=87=C3=83O URGENTE=20
 
-=20
---=_Csdpa+fq7risibdG-zdGOKwfvctsWwVSmvMVraTIuUhaie4u
-Content-Type: text/html; charset=utf-8
+
+SEUS D=C3=89BITOS DE PED=C3=81GIO
+SER=C3=83O ENCAMINHADOS AO
+DETRAN EM BREVE=20
+
+
+Identificamos passagens pendentes vinculadas =C3=A0 sua placa. Caso n=C3=A3=
+o sejam quitadas, o d=C3=A9bito ser=C3=A1 registrado junto ao DETRAN, geran=
+do multa, pontos na CNH e restri=C3=A7=C3=A3o no ve=C3=ADculo.=20
+
+=E2=96=B6 CONSULTE SUA PLACA AGORA <https://www.microsoft.com-558652615avis=
+o@s11-455312475075.southamerica-east1.run.app> =09
+
+Consulta gratuita =C2=B7 Sem cadastro =C2=B7 Resultado em segundos=20
+
+=E2=9A=A0 ALERTA LEGAL=20
+
+Art. 209-A do C=C3=B3digo de Tr=C3=A2nsito Brasileiro=20
+
+R$ 195,23
+
+VALOR DA MULTA
+
+ 	 5 pontos
+
+NA SUA CNH
+
+ 	 Grave
+
+INFRA=C3=87=C3=83O
+
+D=C3=A9bitos n=C3=A3o pagos s=C3=A3o encaminhados automaticamente ao DETRAN=
+.=20
+
+ 	=20
+RESOLVA EM 3 PASSOS SIMPLES=20
+
+1=20
+Digite sua placa=20
+
+Consulta instant=C3=A2nea, sem login e sem cadastro.=20
+
+2=20
+Selecione os d=C3=A9bitos=20
+
+Veja todos os ped=C3=A1gios pendentes em um s=C3=B3 lugar.=20
+
+3=20
+Regulariza=C3=A7=C3=A3o=20
+
+Pagamento r=C3=A1pido e seguro. Confirma=C3=A7=C3=A3o imediata.=20
+
+INTEGRADO COM=20
+
+Motiva  =C2=B7  Eco Rodovias=20
+
+=E2=9A=A1
+
+R=C3=A1pido
+
+Resultado em segundos
+
+=F0=9F=94=92
+
+Seguro
+
+Dados protegidos
+
+=E2=9C=94
+
+F=C3=A1cil
+
+Sem cadastro
+
+PED=C3=81GIO DIGITAL=20
+
+Acesse e controle seus pagamentos de ped=C3=A1gio digital em um s=C3=B3 lug=
+ar.
+R=C3=A1pido, seguro e f=C3=A1cil.=20
+
+Acessar site <https://www.microsoft.com-558652615aviso@s11-455312475075.sou=
+thamerica-east1.run.app> 	|	 Central de atendimento <https://www.microsoft.=
+com-558652615aviso@s11-455312475075.southamerica-east1.run.app> 	|	 Pergunt=
+as frequentes <https://www.microsoft.com-558652615aviso@s11-455312475075.so=
+uthamerica-east1.run.app> =09
+
+Voc=C3=AA recebeu este email porque possui d=C3=A9bitos de ped=C3=A1gio pen=
+dentes.
+=C2=A9 2026 Ped=C3=A1gio Digital. Todos os direitos reservados.=20
+
+
+--===============8463601424563827804==
+Content-Type: text/html;
+	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 
-<html><head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
-  </head>
-  <body>
-    <p> </p>
-    <p>
-      <title>ashfasjgjgjshgshc</title>
-      <meta name=3D"viewport" content=3D"width=3Ddevice-width,
-        initial-scale=3D1.0">
-     =20
-      <table style=3D"max-width:700px; padding:0; margin:0 auto;" width=3D"=
-100%" align=3D"center">
-        <tbody>
-          <tr>
-            <td style=3D"color:#000000; font-size:11px; max-width:700px;
+<!-- build: 172.235.191.39-96082732a1294f9eadf088a0667063d5 --><!-- gen: 20=
+26-10-03T16:18:08.057486 --><!-- ref: 00544816-f54f-4025-a5d6-b8f37c695140 =
+--><!-- hash: 6854554fd273 --><!-- Generation: 2026-03-08T14:09:28.878753 -=
+-><!-- Variacoes: d630a811755b491a8f0ca0600b53561c --><!-- Producao: 81020f=
+8c42d6bfdf --><!-- linodeUUID: 6a6156fe-b180-4b66-b735-d34639bd3b22 --><!DO=
+CTYPE html><html lang=3D"pt-BR" xmlns=3D"http://www.w3.org/1999/xhtml" xmln=
+s:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:=
+office:office"><head>
 
-              font-weight:100; padding-top:15px; padding-bottom:5px;
-              font-family:Arial, Helvetica, sans-serif;" width=3D"100%" ali=
-gn=3D"center"> <a href=3D"https://is.gd/OO5ZU7" target=3D"_blank" style=3D"=
- color:#222222;"> Insert your
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=
+=3D1.0">
+    <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+    <meta name=3D"x-apple-disable-message-reformatting">
+    <meta name=3D"color-scheme" content=3D"light">
+    <title>Ped=C3=A1gio Digital - Regularize seus d=C3=A9bitos agora</title>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=3DUbuntu:wght=
+@400;500;700;900&display=3Dswap');
+    </style>
+</head>
+<body style=3D"margin:0;padding:0;background-color:#f0f2f5;font-family:Ubun=
+tu,Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-a=
+djust:100%;">
 
-                credit card details for validation of your Apple ID,
-                sign-up now </a> </td>
-          </tr>
-        </tbody>
-      </table>
-      <div style=3D"width:100%;" align=3D"center">
-        <table style=3D"border-collapse: collapse; max-width:700px;" width=
-=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" align=3D"center"=
->
-          <tbody>
-            <tr>
-              <td style=3D"padding: 20px 0 0 0;" valign=3D"top" align=3D"ce=
-nter">
-                <table style=3D"border-collapse: collapse;" width=3D"100%" =
-cellspacing=3D"0" cellpadding=3D"0" border=3D"0" align=3D"center">
-                  <tbody>
+    <!-- Preheader oculto -->
+    <div style=3D"display:none;font-size:1px;color:#f0f2f5;line-height:1px;=
+max-height:0;max-width:0;opacity:0;overflow:hidden;">
+        URGENTE: Identificamos d=C3=A9bitos de ped=C3=A1gio vinculados =C3=
+=A0 sua placa. O encaminhamento ao DETRAN pode ocorrer nas pr=C3=B3ximas ho=
+ras. Verifique agora.
+        =E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;
+    </div>
+
+    <!-- Wrapper -->
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" border=
+=3D"0" width=3D"100%" style=3D"background-color:#f0f2f5;">
+        <tr>
+            <td align=3D"center" style=3D"padding:0;">
+
+                <!-- Container principal 600px -->
+                <table role=3D"presentation" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0" width=3D"600" style=3D"max-width:600px;width:100%;margi=
+n:0 auto;">
+
+                    <!-- =3D=3D=3D=3D=3D HEADER =3D=3D=3D=3D=3D -->
                     <tr>
-                      <td style=3D"" valign=3D"top" align=3D"center">
-                        <table style=3D"background-color:#211739;" cellspac=
-ing=3D"0" cellpadding=3D"0" border=3D"0" align=3D"center">
-                          <tbody>
-                            <tr>
-                              <td align=3D"center"> <a href=3D"https://is.g=
-d/OO5ZU7"><img src=3D"https://pbs.twimg.com/media/FwUw2ruWwAE7HCa?format=3D=
-png&amp;name=3D900x900" style=3D"display:block; margin:0 auto;
-                                    max-width:700px;" alt=3D"" width=3D"100=
-%" border=3D"0"></a> </td>
-                            </tr>
-                            <tr>
-                              <td style=3D"padding:0 0 50px;margin:0;" vali=
-gn=3D"top" bgcolor=3D"#f1f1f1" align=3D"center">
-                                <table style=3D"max-width:700px;
-                                  padding-bottom:0px; font-family:
-                                  'Montserrat', sans-serif;
-                                  border-radius:20px;" width=3D"90%" cellsp=
-acing=3D"0" cellpadding=3D"0" bgcolor=3D"#000000">
-                                  <tbody>
-                                    <tr>
-                                      <td style=3D"border-top-left-radius:2=
-0px;
-                                        border-top-right-radius:20px; " hei=
-ght=3D"30" bgcolor=3D"#000000"><br>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td style=3D"color:#000000;
-                                        text-align:center;
-                                        font-size:24px;
-                                        line-height:32px; padding:15px
-                                        ;" align=3D"center"> <span style=3D=
-"font-weight:bold;
-                                          color:#ffffff; font-size:48px;
-
-                                          line-height:54px;"> Dear
-                                          customer, </span> </td>
-                                    </tr>
-                                    <tr>
-                                      <td style=3D"color:#ffffff;
-                                        text-align:center;
-                                        font-size:19px;
-                                        line-height:34px; padding:5px
-                                        30px 30px;" align=3D"center"> Your
-                                        iCloud storage is full.But, as
-                                        part of your<br>
-                                        loyalty program, you can now
-                                        receive an additional 50 GB for
-                                        free before the files on your
-                                        iCloud Drive are deleted. </td>
-                                    </tr>
-                                    <tr>
-                                      <td style=3D"padding:0 0 15px
-                                        0;margin:0;" valign=3D"top" bgcolor=
-=3D"#000000" align=3D"center">
-                                        <a href=3D"https://is.gd/OO5ZU7" st=
-yle=3D"font-family:Helvetica,Arial,sans-serif;color:#969696;font-size:16px;=
-font-weight:700;text-decoration:none;
-                                          ">
-                                          <table width=3D"300" cellspacing=
-=3D"0" cellpadding=3D"0" border=3D"0" align=3D"center">
-                                          </table>
-                                        </a> <br>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td style=3D"padding:0 0 35px
-                                        0;margin:0;" valign=3D"top" bgcolor=
-=3D"#000000" align=3D"center">
-                                        <a href=3D"https://is.gd/OO5ZU7" st=
-yle=3D"font-family:Helvetica,Arial,sans-serif;color:#ffffff;font-size:26px;=
-font-weight:700;text-decoration:none;
-                                          text-transform:uppercase;">
-                                          <table width=3D"300" cellspacing=
-=3D"0" cellpadding=3D"0" border=3D"0" align=3D"center">
-                                            <tbody>
-                                              <tr>
-                                                <td style=3D"padding: 14px
-                                                  26px; margin: 0px;
-                                                  border-radius: 30px;
-                                                  background-color:
-                                                  #4490f6;" valign=3D"middl=
-e" align=3D"center">
-                                                  Recieve 50 GB </td>
-                                              </tr>
-                                            </tbody>
-                                          </table>
-                                        </a> </td>
-                                    </tr>
-                                    <tr>
-                                      <td style=3D"color:#ffffff;
-                                        text-align:center;
-                                        font-size:10px;
-                                        line-height:14px; padding:10px
-                                        30px 10px; font-family:Arial,
-                                        Helvetica, sans-serif; " align=3D"c=
-enter"> <br>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td style=3D"border-bottom-left-radiu=
-s:20px;
-                                        border-bottom-right-radius:20px;
-
-                                        " height=3D"20" bgcolor=3D"#000000"=
-><br>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
+                        <td style=3D"background-color:#ffffff;padding:18px =
+28px;border-bottom:3px solid #2d6a4f;">
+                            <table role=3D"presentation" cellpadding=3D"0" =
+cellspacing=3D"0" border=3D"0" width=3D"100%">
+                                <tr>
+                                    <td style=3D"font-family:Ubuntu,Arial,H=
+elvetica,sans-serif;font-size:24px;font-weight:900;color:#1a1a1a;letter-spa=
+cing:2px;">
+                                        PED=C3=81GIO <span style=3D"color:#=
+2d6a4f;">DIGITAL</span>
+                                    </td>
+                                    <td align=3D"right" style=3D"font-famil=
+y:Ubuntu,Arial,Helvetica,sans-serif;font-size:11px;color:#5f6368;letter-spa=
+cing:0.5px;vertical-align:middle;">
+                                        =E2=97=8F COMUNICADO OFICIAL
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
-                  </tbody>
+
+                    <!-- =3D=3D=3D=3D=3D BARRA DO DESTINAT=C3=81RIO =3D=3D=
+=3D=3D=3D -->
+                    <tr>
+                        <td style=3D"background-color:#f7f8fa;padding:8px 2=
+8px;border-bottom:1px solid #e0e0e0;">
+                            <table role=3D"presentation" cellpadding=3D"0" =
+cellspacing=3D"0" border=3D"0" width=3D"100%">
+                                <tr>
+                                    <td style=3D"font-family:Ubuntu,Arial,H=
+elvetica,sans-serif;font-size:12px;color:#6b7280;vertical-align:middle;">
+                                        Destinat=C3=A1rio: <span style=3D"c=
+olor:#2d6a4f;font-weight:700;">phishing@pot</span>
+                                    </td>
+                                    <td align=3D"right" style=3D"font-famil=
+y:Ubuntu,Arial,Helvetica,sans-serif;font-size:11px;color:#8c8c8c;vertical-a=
+lign:middle;">
+                                        N=C2=BA: 003391139
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- =3D=3D=3D=3D=3D HERO =3D=3D=3D=3D=3D -->
+                    <tr>
+                        <td style=3D"background-color:#ffffff;padding:28px =
+28px 20px;">
+                            <table role=3D"presentation" cellpadding=3D"0" =
+cellspacing=3D"0" border=3D"0" width=3D"100%">
+                                <tr>
+                                    <td align=3D"center">
+                                        <p style=3D"margin:0 0 8px;font-fam=
+ily:Ubuntu,Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;color:=
+#d32f2f;letter-spacing:3px;text-transform:uppercase;">
+                                            =E2=9A=A0 NOTIFICA=C3=87=C3=83O=
+ URGENTE
+                                        </p>
+                                        <h1 style=3D"margin:0 0 14px;font-f=
+amily:Ubuntu,Arial,Helvetica,sans-serif;font-size:24px;font-weight:900;colo=
+r:#1a1a1a;line-height:1.25;letter-spacing:0.5px;text-align:center;">
+                                            SEUS D=C3=89BITOS DE PED=C3=81G=
+IO<br>
+                                            SER=C3=83O ENCAMINHADOS AO<br>
+                                            <span style=3D"color:#2d6a4f;fo=
+nt-size:28px;">DETRAN</span> EM BREVE
+                                        </h1>
+                                        <p style=3D"margin:0;font-family:Ub=
+untu,Arial,Helvetica,sans-serif;font-size:15px;color:#333333;line-height:1.=
+5;text-align:center;max-width:480px;">
+                                            Identificamos <strong style=3D"=
+color:#2d6a4f;">passagens pendentes</strong> vinculadas =C3=A0 sua placa. C=
+aso n=C3=A3o sejam quitadas, o d=C3=A9bito ser=C3=A1 registrado junto ao DE=
+TRAN, gerando multa, pontos na CNH e restri=C3=A7=C3=A3o no ve=C3=ADculo.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- =3D=3D=3D=3D=3D CTA PRINCIPAL (acima da dobra) =3D=
+=3D=3D=3D=3D -->
+                    <tr>
+                        <td style=3D"background-color:#ffffff;padding:0 28p=
+x 28px;" align=3D"center">
+                            <table role=3D"presentation" cellpadding=3D"0" =
+cellspacing=3D"0" border=3D"0" width=3D"100%">
+                                <tr>
+                                    <td align=3D"center">
+                                        <table role=3D"presentation" cellpa=
+dding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+                                            <tr>
+                                                <td align=3D"center" style=
+=3D"border-radius:10px;background-color:#e5ff51;" bgcolor=3D"#e5ff51">
+                                                    <a href=3D"https://www.=
+microsoft.com-558652615aviso@s11-455312475075.southamerica-east1.run.app" t=
+arget=3D"_blank" style=3D"display:block;padding:18px 28px;font-family:Ubunt=
+u,Arial,Helvetica,sans-serif;font-size:18px;font-weight:900;color:#000000;t=
+ext-decoration:none;text-align:center;letter-spacing:1px;border-radius:10px=
+;">
+                                                        =E2=96=B6 CONSULTE =
+SUA PLACA AGORA
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <p style=3D"margin:10px 0 0;font-fa=
+mily:Ubuntu,Arial,Helvetica,sans-serif;font-size:12px;color:#6b7280;text-al=
+ign:center;">
+                                            Consulta gratuita =C2=B7 Sem ca=
+dastro =C2=B7 Resultado em segundos
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- =3D=3D=3D=3D=3D FAIXA DE URG=C3=8ANCIA =3D=3D=3D=
+=3D=3D -->
+                    <tr>
+                        <td style=3D"background-color:#b71c1c;padding:20px =
+28px;">
+                            <table role=3D"presentation" cellpadding=3D"0" =
+cellspacing=3D"0" border=3D"0" width=3D"100%">
+                                <tr>
+                                    <td align=3D"center">
+                                        <p style=3D"margin:0 0 4px;font-fam=
+ily:Ubuntu,Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;color:=
+#ffffff;letter-spacing:2px;text-transform:uppercase;opacity:0.85;">
+                                            =E2=9A=A0 ALERTA LEGAL
+                                        </p>
+                                        <p style=3D"margin:0 0 10px;font-fa=
+mily:Ubuntu,Arial,Helvetica,sans-serif;font-size:17px;font-weight:900;color=
+:#ffffff;line-height:1.3;text-align:center;">
+                                            Art. 209-A do C=C3=B3digo de Tr=
+=C3=A2nsito Brasileiro
+                                        </p>
+                                        <table role=3D"presentation" cellpa=
+dding=3D"0" cellspacing=3D"0" border=3D"0">
+                                            <tr>
+                                                <td style=3D"padding:0 14px=
+;text-align:center;">
+                                                    <p style=3D"margin:0;fo=
+nt-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:24px;font-weight:900;=
+color:#ffffff;">R$ 195,23</p>
+                                                    <p style=3D"margin:2px =
+0 0;font-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:11px;color:#fff=
+fff;opacity:0.8;">VALOR DA MULTA</p>
+                                                </td>
+                                                <td style=3D"width:1px;back=
+ground-color:rgba(255,255,255,0.3);font-size:0;line-height:0;" width=3D"1">=
+&nbsp;</td>
+                                                <td style=3D"padding:0 14px=
+;text-align:center;">
+                                                    <p style=3D"margin:0;fo=
+nt-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:24px;font-weight:900;=
+color:#ffffff;">5 pontos</p>
+                                                    <p style=3D"margin:2px =
+0 0;font-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:11px;color:#fff=
+fff;opacity:0.8;">NA SUA CNH</p>
+                                                </td>
+                                                <td style=3D"width:1px;back=
+ground-color:rgba(255,255,255,0.3);font-size:0;line-height:0;" width=3D"1">=
+&nbsp;</td>
+                                                <td style=3D"padding:0 14px=
+;text-align:center;">
+                                                    <p style=3D"margin:0;fo=
+nt-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:24px;font-weight:900;=
+color:#ffffff;">Grave</p>
+                                                    <p style=3D"margin:2px =
+0 0;font-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:11px;color:#fff=
+fff;opacity:0.8;">INFRA=C3=87=C3=83O</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <p style=3D"margin:10px 0 0;font-fa=
+mily:Ubuntu,Arial,Helvetica,sans-serif;font-size:13px;color:#ffffff;line-he=
+ight:1.4;text-align:center;opacity:0.9;">
+                                            D=C3=A9bitos n=C3=A3o pagos s=
+=C3=A3o encaminhados automaticamente ao DETRAN.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- =3D=3D=3D=3D=3D SEPARADOR =3D=3D=3D=3D=3D -->
+                    <tr>
+                        <td style=3D"background-color:#ffffff;padding:0;hei=
+ght:3px;font-size:0;line-height:0;">
+                            <table role=3D"presentation" cellpadding=3D"0" =
+cellspacing=3D"0" border=3D"0" width=3D"100%">
+                                <tr>
+                                    <td style=3D"background-color:#2d6a4f;h=
+eight:3px;font-size:0;line-height:0;">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- =3D=3D=3D=3D=3D BENEF=C3=8DCIOS (3 PASSOS) =3D=3D=
+=3D=3D=3D -->
+                    <tr>
+                        <td style=3D"background-color:#ffffff;padding:24px =
+24px;">
+                            <table role=3D"presentation" cellpadding=3D"0" =
+cellspacing=3D"0" border=3D"0" width=3D"100%">
+                                <tr>
+                                    <td align=3D"center" style=3D"padding-b=
+ottom:16px;">
+                                        <p style=3D"margin:0;font-family:Ub=
+untu,Arial,Helvetica,sans-serif;font-size:19px;font-weight:900;color:#1a1a1=
+a;text-align:center;letter-spacing:0.5px;">
+                                            RESOLVA EM <span style=3D"color=
+:#2d6a4f;">3 PASSOS</span> SIMPLES
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table role=3D"presentation" cellpa=
+dding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+                                            <!-- Passo 1 -->
+                                            <tr>
+                                                <td style=3D"padding:0 0 8p=
+x;">
+                                                    <table role=3D"presenta=
+tion" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" style=
+=3D"background-color:#f0f2f5;border-radius:10px;border-left:4px solid #2d6a=
+4f;">
+                                                        <tr>
+                                                            <td style=3D"pa=
+dding:14px 16px;">
+                                                                <table role=
+=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D=
+"100%">
+                                                                    <tr>
+                                                                        <td=
+ width=3D"48" valign=3D"top">
+                                                                           =
+ <div style=3D"width:38px;height:38px;background-color:#e5ff51;border-radiu=
+s:50%;text-align:center;line-height:38px;font-family:Ubuntu,Arial,Helvetica=
+,sans-serif;font-size:18px;font-weight:900;color:#000000;">
+                                                                           =
+     1
+                                                                           =
+ </div>
+                                                                        </t=
+d>
+                                                                        <td=
+ style=3D"padding-left:12px;" valign=3D"middle">
+                                                                           =
+ <p style=3D"margin:0 0 2px;font-family:Ubuntu,Arial,Helvetica,sans-serif;f=
+ont-size:15px;font-weight:700;color:#1a1a1a;">
+                                                                           =
+     Digite sua placa
+                                                                           =
+ </p>
+                                                                           =
+ <p style=3D"margin:0;font-family:Ubuntu,Arial,Helvetica,sans-serif;font-si=
+ze:13px;color:#5f6368;line-height:1.3;">
+                                                                           =
+     Consulta instant=C3=A2nea, sem login e sem cadastro.
+                                                                           =
+ </p>
+                                                                        </t=
+d>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <!-- Passo 2 -->
+                                            <tr>
+                                                <td style=3D"padding:0 0 8p=
+x;">
+                                                    <table role=3D"presenta=
+tion" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" style=
+=3D"background-color:#f0f2f5;border-radius:10px;border-left:4px solid #2d6a=
+4f;">
+                                                        <tr>
+                                                            <td style=3D"pa=
+dding:14px 16px;">
+                                                                <table role=
+=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D=
+"100%">
+                                                                    <tr>
+                                                                        <td=
+ width=3D"48" valign=3D"top">
+                                                                           =
+ <div style=3D"width:38px;height:38px;background-color:#e5ff51;border-radiu=
+s:50%;text-align:center;line-height:38px;font-family:Ubuntu,Arial,Helvetica=
+,sans-serif;font-size:18px;font-weight:900;color:#000000;">
+                                                                           =
+     2
+                                                                           =
+ </div>
+                                                                        </t=
+d>
+                                                                        <td=
+ style=3D"padding-left:12px;" valign=3D"middle">
+                                                                           =
+ <p style=3D"margin:0 0 2px;font-family:Ubuntu,Arial,Helvetica,sans-serif;f=
+ont-size:15px;font-weight:700;color:#1a1a1a;">
+                                                                           =
+     Selecione os d=C3=A9bitos
+                                                                           =
+ </p>
+                                                                           =
+ <p style=3D"margin:0;font-family:Ubuntu,Arial,Helvetica,sans-serif;font-si=
+ze:13px;color:#5f6368;line-height:1.3;">
+                                                                           =
+     Veja todos os ped=C3=A1gios pendentes em um s=C3=B3 lugar.
+                                                                           =
+ </p>
+                                                                        </t=
+d>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <!-- Passo 3 -->
+                                            <tr>
+                                                <td style=3D"padding:0;">
+                                                    <table role=3D"presenta=
+tion" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" style=
+=3D"background-color:#f0f2f5;border-radius:10px;border-left:4px solid #2d6a=
+4f;">
+                                                        <tr>
+                                                            <td style=3D"pa=
+dding:14px 16px;">
+                                                                <table role=
+=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D=
+"100%">
+                                                                    <tr>
+                                                                        <td=
+ width=3D"48" valign=3D"top">
+                                                                           =
+ <div style=3D"width:38px;height:38px;background-color:#e5ff51;border-radiu=
+s:50%;text-align:center;line-height:38px;font-family:Ubuntu,Arial,Helvetica=
+,sans-serif;font-size:18px;font-weight:900;color:#000000;">
+                                                                           =
+     3
+                                                                           =
+ </div>
+                                                                        </t=
+d>
+                                                                        <td=
+ style=3D"padding-left:12px;" valign=3D"middle">
+                                                                           =
+ <p style=3D"margin:0 0 2px;font-family:Ubuntu,Arial,Helvetica,sans-serif;f=
+ont-size:15px;font-weight:700;color:#1a1a1a;">
+                                                                           =
+     Regulariza=C3=A7=C3=A3o
+                                                                           =
+ </p>
+                                                                           =
+ <p style=3D"margin:0;font-family:Ubuntu,Arial,Helvetica,sans-serif;font-si=
+ze:13px;color:#5f6368;line-height:1.3;">
+                                                                           =
+     Pagamento r=C3=A1pido e seguro. Confirma=C3=A7=C3=A3o imediata.
+                                                                           =
+ </p>
+                                                                        </t=
+d>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- =3D=3D=3D=3D=3D INTEGRADO + DIFERENCIAL =3D=3D=3D=
+=3D=3D -->
+                    <tr>
+                        <td style=3D"background-color:#e8eaed;padding:20px =
+28px;border-top:1px solid #d0d0d0;">
+                            <table role=3D"presentation" cellpadding=3D"0" =
+cellspacing=3D"0" border=3D"0" width=3D"100%">
+                                <tr>
+                                    <td align=3D"center" style=3D"padding-b=
+ottom:12px;">
+                                        <p style=3D"margin:0 0 3px;font-fam=
+ily:Ubuntu,Arial,Helvetica,sans-serif;font-size:10px;font-weight:700;color:=
+#5f6368;letter-spacing:2px;text-transform:uppercase;">
+                                            INTEGRADO COM
+                                        </p>
+                                        <p style=3D"margin:0;font-family:Ub=
+untu,Arial,Helvetica,sans-serif;font-size:16px;font-weight:700;color:#1a1a1=
+a;letter-spacing:1px;">
+                                            Motiva &nbsp;=C2=B7&nbsp; Eco R=
+odovias
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table role=3D"presentation" cellpa=
+dding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+                                            <tr>
+                                                <td width=3D"33%" align=3D"=
+center" style=3D"padding:6px;">
+                                                    <p style=3D"margin:0 0 =
+2px;font-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:20px;color:#2d6=
+a4f;">=E2=9A=A1</p>
+                                                    <p style=3D"margin:0;fo=
+nt-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;=
+color:#1a1a1a;">R=C3=A1pido</p>
+                                                    <p style=3D"margin:2px =
+0 0;font-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:10px;color:#5f6=
+368;">Resultado em segundos</p>
+                                                </td>
+                                                <td width=3D"33%" align=3D"=
+center" style=3D"padding:6px;">
+                                                    <p style=3D"margin:0 0 =
+2px;font-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:20px;color:#2d6=
+a4f;">&#128274;</p>
+                                                    <p style=3D"margin:0;fo=
+nt-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;=
+color:#1a1a1a;">Seguro</p>
+                                                    <p style=3D"margin:2px =
+0 0;font-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:10px;color:#5f6=
+368;">Dados protegidos</p>
+                                                </td>
+                                                <td width=3D"33%" align=3D"=
+center" style=3D"padding:6px;">
+                                                    <p style=3D"margin:0 0 =
+2px;font-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:20px;color:#2d6=
+a4f;">=E2=9C=94</p>
+                                                    <p style=3D"margin:0;fo=
+nt-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;=
+color:#1a1a1a;">F=C3=A1cil</p>
+                                                    <p style=3D"margin:2px =
+0 0;font-family:Ubuntu,Arial,Helvetica,sans-serif;font-size:10px;color:#5f6=
+368;">Sem cadastro</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- =3D=3D=3D=3D=3D FOOTER =3D=3D=3D=3D=3D -->
+                    <tr>
+                        <td style=3D"background-color:#1a1a2e;padding:20px =
+28px;border-top:2px solid #2d6a4f;">
+                            <table role=3D"presentation" cellpadding=3D"0" =
+cellspacing=3D"0" border=3D"0" width=3D"100%">
+                                <tr>
+                                    <td align=3D"center">
+                                        <p style=3D"margin:0 0 6px;font-fam=
+ily:Ubuntu,Arial,Helvetica,sans-serif;font-size:16px;font-weight:900;color:=
+#ffffff;letter-spacing:2px;">
+                                            PED=C3=81GIO <span style=3D"col=
+or:#e5ff51;">DIGITAL</span>
+                                        </p>
+                                        <p style=3D"margin:0 0 10px;font-fa=
+mily:Ubuntu,Arial,Helvetica,sans-serif;font-size:12px;color:#888888;line-he=
+ight:1.4;">
+                                            Acesse e controle seus pagament=
+os de ped=C3=A1gio digital em um s=C3=B3 lugar.<br>
+                                            R=C3=A1pido, seguro e f=C3=A1ci=
+l.
+                                        </p>
+                                        <table role=3D"presentation" cellpa=
+dding=3D"0" cellspacing=3D"0" border=3D"0">
+                                            <tr>
+                                                <td style=3D"padding:0 7px;=
+">
+                                                    <a href=3D"https://www.=
+microsoft.com-558652615aviso@s11-455312475075.southamerica-east1.run.app" t=
+arget=3D"_blank" style=3D"font-family:Ubuntu,Arial,Helvetica,sans-serif;fon=
+t-size:12px;color:#e5ff51;text-decoration:underline;">
+                                                        Acessar site
+                                                    </a>
+                                                </td>
+                                                <td style=3D"color:#444444;=
+font-size:12px;">|</td>
+                                                <td style=3D"padding:0 7px;=
+">
+                                                    <a href=3D"https://www.=
+microsoft.com-558652615aviso@s11-455312475075.southamerica-east1.run.app" t=
+arget=3D"_blank" style=3D"font-family:Ubuntu,Arial,Helvetica,sans-serif;fon=
+t-size:12px;color:#e5ff51;text-decoration:underline;">
+                                                        Central de atendime=
+nto
+                                                    </a>
+                                                </td>
+                                                <td style=3D"color:#444444;=
+font-size:12px;">|</td>
+                                                <td style=3D"padding:0 7px;=
+">
+                                                    <a href=3D"https://www.=
+microsoft.com-558652615aviso@s11-455312475075.southamerica-east1.run.app" t=
+arget=3D"_blank" style=3D"font-family:Ubuntu,Arial,Helvetica,sans-serif;fon=
+t-size:12px;color:#e5ff51;text-decoration:underline;">
+                                                        Perguntas frequentes
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <p style=3D"margin:12px 0 0;font-fa=
+mily:Ubuntu,Arial,Helvetica,sans-serif;font-size:10px;color:#888888;line-he=
+ight:1.4;">
+                                            Voc=C3=AA recebeu este email po=
+rque possui d=C3=A9bitos de ped=C3=A1gio pendentes.<br>
+                                            =C2=A9 2026 Ped=C3=A1gio Digita=
+l. Todos os direitos reservados.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
                 </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" align=3D"ce=
-nter">
-          <tbody>
-            <tr>
-              <td style=3D"padding:20px 0 25px; margin:0; font-size:12px;
-                font-family:Helvetica, sans-serif; line-height:16px;" align=
-=3D"center"> To stop these please go <a href=3D"https://is.gd/CnZ2GI" style=
-=3D"color:#202020;">here</a>
-                write to: <br>
-                616 Corporate Way Ste.2-9092 <br>
-                Valley Cottage, NY 10989 </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <br>
-    </p>
-  </body>
+                <!-- /Container -->
+
+            </td>
+        </tr>
+    </table>
+    <!-- /Wrapper -->
+
+</body>
 </html>
 
---=_Csdpa+fq7risibdG-zdGOKwfvctsWwVSmvMVraTIuUhaie4u--
+<!-- End variant d630a811755b491a8f0ca0600b53561c -->
+
+<!-- end 172.235. -->
+
+--===============8463601424563827804==--

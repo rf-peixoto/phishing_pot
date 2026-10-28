@@ -1,401 +1,236 @@
-Received: from BN0PR10MB4997.namprd10.prod.outlook.com (::1) by
- MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Wed, 3 Dec 2025 00:36:50
+Received: from CH3PR05MB9412.namprd05.prod.outlook.com (::1) by
+ SA3PR05MB9699.namprd05.prod.outlook.com with HTTPS; Tue, 18 Feb 2025 18:44:52
  +0000
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
- b=I0Yjz6nC3wWLDSaGjfAInsqNp5qfdH8td6261exu2tb+VvMFXSYqNPScGtRmkBbuSPhYWjsj+ZkHhHLNWtUo1PHe1UboiWfHWZrjvc9nSzZk3/gIKnvX4gyW55Z6fh/i58NN7Aa6EMPD8zNFW2vf/XLaqfg8vVyF9TfHXEEwhtbybkoZAAkjpx+4HZyau8CvM+ww2obrm/KmvsNJM+6mPmEo14hh0fK/8e/XLWIxBh6KvqNvsAbOlYglvXTd3SD/ECwUxKuQ/dDwdftDko1146mNIrPmW2FBsG0g+39Dg5VI0QOdjbIHjwhYhSd8yF4qtEREvuRuBqlZu64uCRgfWQ==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qjPFcvCXRUpZzJndnskiSHpliyz6oETILFTkQHnEu5w=;
- b=Nvts2UVZkoKWgmwjG50bVqTsgHA92tH7Xsl0v/+6LtD2Sd8/+sSuCN3kb5T2f2jW46hspYArhcLRnBGsVLVQqG92r1KOIA+Q1n4kfkvT5+hnFuJvh3MGDb3Ai10h4FBk1uG9o8RDeLg/lHCdhLLZ5M61vKAQKrGFivUefJhEVgpNy++wQnc5wY/ILI/1CdqH99UpeK6Fo4aHSUeCjB4sveXXflvkmr0nzhJykHex9g6craA3GrUrUjD103P6hbfuJbJ2YV87vvYOv+dQ4KWnOJ7VSWBslgO918iVJc1QhxQnbMdCbKODJllY992OCa3pLBvx1mRWd9a6CNJnLRGQ5w==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 52.102.202.60) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=tra20232992.onmicrosoft.com; dmarc=none; dkim=none (message not
- signed); arc=fail (48)
-Received: from BY3PR10CA0001.namprd10.prod.outlook.com (2603:10b6:a03:255::6)
- by BN0PR10MB4997.namprd10.prod.outlook.com (2603:10b6:408:12b::20) with
+Received: from CH0P221CA0002.NAMP221.PROD.OUTLOOK.COM (2603:10b6:610:11c::10)
+ by CH3PR05MB9412.namprd05.prod.outlook.com (2603:10b6:610:148::6) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.9; Wed, 3 Dec
- 2025 00:36:48 +0000
-Received: from SJ1PEPF000023DA.namprd21.prod.outlook.com
- (2603:10b6:a03:255:cafe::3) by BY3PR10CA0001.outlook.office365.com
- (2603:10b6:a03:255::6) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9366.17 via Frontend Transport; Wed,
- 3 Dec 2025 00:36:44 +0000
-Authentication-Results: spf=pass (sender IP is 52.102.202.60)
- smtp.mailfrom=tra20232992.onmicrosoft.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=;
-Received-SPF: Pass (protection.outlook.com: domain of
- tra20232992.onmicrosoft.com designates 52.102.202.60 as permitted sender)
- receiver=protection.outlook.com; client-ip=52.102.202.60;
- helo=SEYPR02CU001.outbound.protection.outlook.com; pr=C
-Received: from SEYPR02CU001.outbound.protection.outlook.com (52.102.202.60) by
- SJ1PEPF000023DA.mail.protection.outlook.com (10.167.244.75) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9412.0
- via Frontend Transport; Wed, 3 Dec 2025 00:36:48 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:0D7D211B12D3588BAD86CC06C95DD10BC552D0DD06C1A79839CB16D06F216587;UpperCasedChecksum:2D1A9BA8CAE23913B338672836BED54CAD1AF90925CCF76D36EC00EDE500DAA4;SizeAsReceived:8152;Count:35
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sMMp23W5ymc6vI036iEK6eDY80LoUY20jxZbMYlErakq24aK6tXaaQjwBUJMJ0Kc8ugG0PjsNw+nk++iwYk3QrKWrbIJkBpyGjNiVX3dygHO09YVkXMyY3i7jkTZ4d2EXAwiapow4IqaUwKNF2jvOGK8FE06x/2TP8C720kjL/GFuydA7XXpoqDb7le8q9G01K5SCMXC/dQLma9vfk7FjgjO4GV+XPqcRe676awclBGj/szCfAM3vSK+95HW3XYb7CKCR0BtlhXIZ9H1RYfJ7N2ltMJiOq2sBzivKROv96YR+Zgr4fJUE06EvVX2gqG/mDj0kXmdACme9o7u7+PxGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qjPFcvCXRUpZzJndnskiSHpliyz6oETILFTkQHnEu5w=;
- b=rOMtqQLrcB1CFJElid2j1ZmBkP75ZIwwV78U9yHD/TaTAFWh6/+MquE/YyDW5OIbDavvF6PNCLzKG1vc+3ColldxewBj4EZV0BvXKYpT8pacFWCZuu2OR5jXR3rosEoKDyUtNN4AStzgqifjX+tniz/IeuiEDHMZ28SFvoreOw/QmYZ4GpByPqIGD2h/jdA9rfgAOWlpKRiYTgwv8AyS1rvIqo8Pkq5/+7zqlaerzvDhOhpLiHE7QLgC+9kgNbA4g092rrUqfg5boKvl8lTJ9NAphg/l591CqhCWHQJvY37PXnIER+r7lxJc+q8arDgl/EUEz5qTFmCxNTnRstPd0w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 184.107.178.49) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=tra20232992.onmicrosoft.com; dmarc=none; dkim=none (message not
- signed); arc=none (0)
-Received: from SG2PR01CA0177.apcprd01.prod.exchangelabs.com
- (2603:1096:4:28::33) by TYUPR01MB5140.apcprd01.prod.exchangelabs.com
- (2603:1096:400:35d::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.17; Wed, 3 Dec
- 2025 00:36:46 +0000
-Received: from SG1PEPF000082E7.apcprd02.prod.outlook.com
- (2603:1096:4:28:cafe::32) by SG2PR01CA0177.outlook.office365.com
- (2603:1096:4:28::33) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9366.17 via Frontend Transport; Wed,
- 3 Dec 2025 00:36:40 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 184.107.178.49)
- smtp.mailfrom=tra20232992.onmicrosoft.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=;
-Received-SPF: Fail (protection.outlook.com: domain of
- tra20232992.onmicrosoft.com does not designate 184.107.178.49 as permitted
- sender) receiver=protection.outlook.com; client-ip=184.107.178.49;
- helo=tra20232992.onmicrosoft.com;
-Received: from tra20232992.onmicrosoft.com (184.107.178.49) by
- SG1PEPF000082E7.mail.protection.outlook.com (10.167.240.10) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9388.8 via Frontend Transport; Wed, 3 Dec 2025 00:36:45 +0000
-Date: Wed, 3 Dec 2025 00:36:45 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.18; Tue, 18 Feb
+ 2025 18:44:51 +0000
+Received: from DS3PEPF000099DB.namprd04.prod.outlook.com
+ (2603:10b6:610:11c:cafe::43) by CH0P221CA0002.outlook.office365.com
+ (2603:10b6:610:11c::10) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8466.15 via Frontend Transport; Tue,
+ 18 Feb 2025 18:44:50 +0000
+Authentication-Results: spf=none (sender IP is 172.236.51.6)
+ smtp.mailfrom=correios; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=correios;
+Received-SPF: None (protection.outlook.com: correios does not designate
+ permitted sender hosts)
+Received: from localhost.members.linode.com (172.236.51.6) by
+ DS3PEPF000099DB.mail.protection.outlook.com (10.167.17.197) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8466.11
+ via Frontend Transport; Tue, 18 Feb 2025 18:44:50 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:586702644E6AFF4E93DA5F0B4F805FD398AFD09274DDD43B5E4A87A275FE3AE7;UpperCasedChecksum:1D4173158E68EB168E2DA38E991F48CD5A38E254791743437DCE3A8E4C54CE0F;SizeAsReceived:523;Count:9
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by localhost.members.linode.com (Postfix) with ESMTPS id EB92826135
+	for <phishing@pot>; Tue, 18 Feb 2025 18:44:47 +0000 (UTC)
+From: Correios <contato@correios>
 To: <phishing@pot>
-Subject: Beenden Sie Abonnementbeschränkungen mit Flixy
-Content-Transfer-Encoding: 8bit
-From: "Streaming-Steuerung" <69ph1yrakadm@63x8gm8yh44c.com'>
-Content-Type: text/html; charset="UTF-8"
-Message-ID: <902f9d0a-d05c-4895-b370-ae4e3e069679@SG1PEPF000082E7.apcprd02.prod.outlook.com>
-Return-Path: o7xdlbj8diul@tra20232992.onmicrosoft.com
-X-EOPAttributedMessage: 1
-X-MS-TrafficTypeDiagnostic: SG1PEPF000082E7:EE_|TYUPR01MB5140:EE_|SJ1PEPF000023DA:EE_|BN0PR10MB4997:EE_|MW4PR10MB5749:EE_
-X-MS-Office365-Filtering-Correlation-Id: 315ab0ef-c64c-46dc-f353-08de32040b50
-X-MS-Exchange-SenderADCheck: 2
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|39440400008;
-X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?Y2NlemZTQ0JJSzEyM05EOVY4R0RmMjlod1ZaU01UL0Fhc3p2UG1YNXp1SHhs?=
- =?utf-8?B?SFYrOVVzZlNXMkVnaWNRMDdtTDVRMDJxR2R4cy9UbjVCbjlHR1lwRlhBeFV5?=
- =?utf-8?B?WmVKbGkwZFh0eGdoUHFUTm5PbzlnNm5Ibjd4RktDT29TaVZ0YVF2NVlUck9r?=
- =?utf-8?B?ZHJDT21jRjU4Vm5LanduZ1NjTEVKUjNMOW1BUjdXSlpLaXdmTFBpdGFMZTJz?=
- =?utf-8?B?YjF5Tkkva2JEK0lKZjBNTVN0QU9YWU8wRXc3Ym1lMVpkc2ttVExsc1RmblRN?=
- =?utf-8?B?R1pMRXdUbElrVFdXV1NSY2k0a2Q2b29hQmtFaHZiSGFHYkRNOEd2dE5UOHhl?=
- =?utf-8?B?YzM0eCtsL1gvV3Jlemk5ODJERHFiMEtLRnk3blNSZi8rMXNxZld1cFpPUXJB?=
- =?utf-8?B?YzI5NDFxNHNDek15L1NzR2pmdUtDZ1BweEpFelkxa1VtWXBLbk1zNCtEWnZO?=
- =?utf-8?B?cXRJY0ZnWXF1Wi9Sc2IrSWtEODUyM291c0lWQ1B1eUNrbC9kYWlUcmx5dWwr?=
- =?utf-8?B?andxNUlkendwamZBWkt6YkFJQU1zcWZYY3RyTlpFUXBDMW9Hbk1neU5CYkt6?=
- =?utf-8?B?QXByYmthNjdWSklaWkhwMUpQYi8wMDljclB0WjVaQjVZZTNpSnVuZ1JScGJo?=
- =?utf-8?B?cXVXYUlXQ1I1KzhEanhGUXdYMzB3d2JjZlRhOUtvcHh3dnVnS01QdEV3MlFX?=
- =?utf-8?B?TTREa05xNlB1NzNTRC9DN2xvR1JGWlVyRGg2dkRXb2RCTEo4czBXQ3dSZTRl?=
- =?utf-8?B?bHkvL2hRUDZmMDhUcXJuRXM2Y0JyVUtYUUd0bUx3Ync0TFFmRGdDcjBKVURy?=
- =?utf-8?B?K09VbDFDTUJhdTVmaFhiUHVPKzg3cVpucFBzd3gyMTFhZ2xkb1BnOG5OeHpE?=
- =?utf-8?B?eGY4RE9xREhaVis4Z1liNXpTcU0zRlJrRFdLZGQ4TWlXY0ZzV0dzNUhvM0ZF?=
- =?utf-8?B?aXl4WncrS090azJnQmxDdWVoUGtGU1ZKNGtONFlLWmRQMEdvMzhsRU1Cazh1?=
- =?utf-8?B?S3Q2a25Ma3RBZjBXdGErK1VZRVNTb2hYSk9xVHFXZU9TekkxcitCc3RkMXRF?=
- =?utf-8?B?WjB3MFNOcTZ1K3dUWFljcW91UjZGdm50eGYyUlBhN3BtMjBZOUY2R2phNFJJ?=
- =?utf-8?B?dU1ueW1KWVp2L0lqVWVIYzc5ZGt4RW1rVm9xVW9BNXYxSmZRWnh4VnRoYm5q?=
- =?utf-8?B?M0w5N2lqMXVrWEhIamFyb0hmU3RvSm5oTHB6ZWJIeHhkRS9MM2ZldkdKTHl1?=
- =?utf-8?B?RlNNWFQ3MzZYanNFN1ArZXN4S28vb1lQNVJORjdiRWhXWm1xNzZEOCtwdkhv?=
- =?utf-8?B?TWo4L241bVdlS2pPNGhSZ0o5bjBBVHdMYWFTWjRFSHBCRVEvOXM4bExodkEz?=
- =?utf-8?B?VFU3UE9OOTNNQ1VzejNQZEJLeXRSTlV6Z2hDekovM1poTlhVcU1tL3ZvYTZC?=
- =?utf-8?B?RVpwOGoyVjFzbXgzMFNlZFVLTXVWUkxZOElWTlYvTDBnbk02NnRJL0tvRW54?=
- =?utf-8?B?VVB0bUUyK3dZdlZZZUJKUG81YWZ5akJVWFp5R0pDaXJCck9RS1lBL2hQTnpr?=
- =?utf-8?B?WlFFdnZ5MldNelJYbi9XeHVIWFlONnY0ZlZwOVAwTEhaT1pzekxGa0NxZk5y?=
- =?utf-8?B?NnR1eUZGdHV5bFErOWpDN0ZzcHdvcllydE8yaExnU1lkdFJOWUZ3S0hxZHdo?=
- =?utf-8?B?UVBuVDRpTDNMYjVMcDhLTEZ3VTlVckZsajlsNjU3MWRCWFpBT3lUNnM5Y3FO?=
- =?utf-8?B?bEJXOU9JNFZ1MHI0NjB5dnA1aXFGRlp2TklhaWxOaDF0MHkySWJTYVdrV2s4?=
- =?utf-8?B?c28zYnhSQ3VLR0NVTWhkRW1YS1JVcGc2V2JYWHR2SGdGaGFLaCt3RWNmb2h5?=
- =?utf-8?B?NzVrWmJ1Y1BtZE45SzQwUzVBcGwzWEVxVmVEMFRnaC94QUpmVUlNSWZ6Mkgx?=
- =?utf-8?B?VWVVZzRKUnJoSkMyQmlMOHo2OUw2b1RmUVpJRHd4MXkwNEJROHdwOGRmV0Ey?=
- =?utf-8?B?M3Zlc1hPWGtoV2RlR1RUeHdYcmVwV1FLWnpHR2oyV2NpYmRmazFtY0N2WDJp?=
- =?utf-8?B?cjJueTZIQ2tDblNsSmNuOWtLSlFMVnRXQ0V3RStFY2FJSWt4UWN4L21sNEdU?=
- =?utf-8?B?U2lBMktrWjA3NlJ5WVVvWGxsUG9LU21BSzNZS2U4VkdTbXNSRGtzZ0FQb0Za?=
- =?utf-8?B?WVZxR0VEb0ZEL3pYeGxualFEczl3VDFjWHByb0JkUkNpek1WaGowZlZRUlhQ?=
- =?utf-8?B?alZPRCtnNjdkNkpkL3F6SFR0cHFYdlk2SHFZak8zc0tDdk0yRnlaZW8vdldM?=
- =?utf-8?B?bUJxcS8yRkJGbElWWDhseEpvM3FOSGhwU2t4eVFmM1M1TVZNOSszbDN0aU9u?=
- =?utf-8?B?L2xCaWZTblBEZDdhVXVXRXpoMGxwRm1GMWpFQnkyMXRnT09YdHZUMWFnd1lI?=
- =?utf-8?B?dzdqbjFmWC9GZ040Z2tpSzRzNnlCV3NTZFpEQmtkQWZaMWs2N0VEWXJ1cEo3?=
- =?utf-8?B?ZXVhaU9HN3Q1b0N5ZHNBUGxMbU5vWjNCSUFWaU44VFV5Vzhqa2pDclRkRjc3?=
- =?utf-8?B?SlRDV2c5emF5S2NHMzFUbFRSKzJzZjNYaVhHVUNQSVIyb3FiMjZiaTFxYlVi?=
- =?utf-8?B?eHNKVlVjNFlBNnJiMlZoRU8wUmRQN2xXKzdyYjQzYnlIekRDTGtqOVVHbkxW?=
- =?utf-8?B?WWRuUzVha0JUR0IzOHJJR09DWFE3eDhhT2VXanFRdEVMdzR0MkVTTzRoRzVk?=
- =?utf-8?B?Q3pIM0xRTk9zYXh4UnZkaldlYzdCb1hSWkY3YzV6ZkdENS9qTHJxU1lPVUxN?=
- =?utf-8?B?ZGpySGJWdncrTFkyZEQ4eHRWcWRNRWVGeElTY3BlZUVIVktyWDRPU29ZbDFz?=
- =?utf-8?B?UkpPRUFJRkxFMVZleEdlbFE5NHI3MzZRbzcwV1pYaktqTUJCSHROb1Z1bFJp?=
- =?utf-8?B?d1FUdnczV1AyZ3MvWGN6ZGtGdGx4UlRGRXlpWFFLNHNjOXREa0p5ZVkxK0w1?=
- =?utf-8?B?ejE4REE4N0t3UXpjaGFJYVJMeTh2Q3NUeXI0VWdzSXhRbWhHOWpNY0VDMTFq?=
- =?utf-8?B?MGdBMXB1ckcxa1VRPT0=?=
-X-Forefront-Antispam-Report-Untrusted: CIP:184.107.178.49;CTRY:CA;LANG:de;SCL:9;SRV:;IPV:CAL;SFV:SPM;H:tra20232992.onmicrosoft.com;PTR:InfoDomainNonexistent;CAT:OSPM;SFS:(13230040)(39440400008);DIR:OUT;SFP:1501;
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYUPR01MB5140
-X-IncomingHeaderCount: 35
-X-MS-Exchange-Organization-ExpirationStartTime: 03 Dec 2025 00:36:48.4301
+Subject: phishing@pot Ferreira Peixoto, sua entrega foi retida.
+Message-ID: <5ceda8fa-bf2c-07da-0c3d-31c40f895771@correios>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 18 Feb 2025 18:44:47 +0000
+Content-Type: text/html; charset="utf-8"
+X-IncomingHeaderCount: 9
+Return-Path: contato@correios
+X-MS-Exchange-Organization-ExpirationStartTime: 18 Feb 2025 18:44:50.8582
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: 315ab0ef-c64c-46dc-f353-08de32040b50
+X-MS-Exchange-Organization-Network-Message-Id: 06f1d397-6cac-4c1c-f26b-08dd504c53b4
+X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: SJ1PEPF000023DA.namprd21.prod.outlook.com
-X-MS-Exchange-Transport-CrossTenantHeadersPromoted: SJ1PEPF000023DA.namprd21.prod.outlook.com
 X-MS-PublicTrafficType: Email
-X-MS-Exchange-Organization-AuthSource: SJ1PEPF000023DA.namprd21.prod.outlook.com
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099DB:EE_|CH3PR05MB9412:EE_|SA3PR05MB9699:EE_
+X-MS-Exchange-Organization-AuthSource: DS3PEPF000099DB.namprd04.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 12/3/2025 12:29:22 AM
-X-MS-Office365-Filtering-Correlation-Id-Prvs: c08c44dc-f6b8-4bbd-0c57-08de32040a00
+X-MS-UserLastLogonTime: 2/18/2025 6:44:05 PM
+X-MS-Office365-Filtering-Correlation-Id: 06f1d397-6cac-4c1c-f26b-08dd504c53b4
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 52.102.202.60
+X-Sender-IP: 172.236.51.6
+X-SID-PRA: CONTATO@CORREIOS
 X-SID-Result: NONE
 X-MS-Exchange-Organization-SCL: 9
-X-Microsoft-Antispam: BCL:0;ARA:1444111002|87000799018|461199028|9800799015|51300799021|67000799015|9400799040|13020799006|70000799015|32080799003|63100799012|18030799003|50300799015|6010799018|46080799006|20103052909095|58200799018|47200799021|39010799012|26120799003;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Dec 2025 00:36:48.0930
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|20103052903057|45200799018|20103052901057|9400799030|461199028|6010799018|2phishing@pot0799006|70000799015|20103052909095|1720799027;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Feb 2025 18:44:50.4519
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 315ab0ef-c64c-46dc-f353-08de32040b50
+X-MS-Exchange-CrossTenant-Network-Message-Id: 06f1d397-6cac-4c1c-f26b-08dd504c53b4
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=d8b28418-268e-43ca-8df3-960bcc4681e9;Ip=[184.107.178.49];Helo=[tra20232992.onmicrosoft.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000023DA.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099DB.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR10MB4997
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.9270512
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9388.003
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR05MB9412
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.0559100
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8445.012
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90002001)(91000020)(91036095)(91040095)(9050020)(9055020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10010005)(10005027)(9540006)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
+	wl:1;pcwl:1;ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90012020)(91020020)(91040095)(9050020)(9075021)(9100341)(944500132)(2008001181)(4810010)(4910033)(9710001)(9610028)(9520007)(10103005)(9439006)(9310011)(9215007)(120001);RF:JunkEmail;
 X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?Q0FLaHQxQTJFbXZydmdOclNTWmltTEpMaFhZZE9EeEh6RXJCTHlZZGpDNkdX?=
- =?utf-8?B?NmdXekVxZXJHa0xUeUJiOVdkclRnaytyMGFuYVZia0xqTG1GaXRyQW5CeUY2?=
- =?utf-8?B?TmtRUzJNZkYvS1Z5QzBuTERrYUdDcTA2YVNFU2d4d3pyRDM3TXQwMWIycjJo?=
- =?utf-8?B?M2JMNDlhRjd2S0lHMjRLLzZFWTgvSkp2NE9qQXNQT0JwQ2dqWmVxVVBHN1Vl?=
- =?utf-8?B?dmRSSGplVHBIWG5NelY0S25lRzUrR3FqWmlwWHJ2ZzI5ZlJkY3ZqU3I0QTk4?=
- =?utf-8?B?VjhIbWxUSS8yNndHbTdtYUZFRmlKWFpBeHpnMEY1TXBHQ0VUa2hRdC9xZ1NV?=
- =?utf-8?B?Y3pMNnV6R1VBdktXRVNTVk10dnV2aW9SYTNFMnUxbnZCTUZMRUppblV3cjJU?=
- =?utf-8?B?TTMxc2QwTmRiZGpwd21icmFybTB1MDdIbThXaFZMT1VJbHVzNm1IcFBzanVv?=
- =?utf-8?B?aS9zS1FFaVk5MXhibjlubGJEeEh2a3B6RnFMc3NYdkZXSjVMOXg3WFFrbStn?=
- =?utf-8?B?WFRKTW5Oa2wxUjdxVWhwc0dHZE9YMjlFS0psL2JqVEkwaXVHRlFMandGenk1?=
- =?utf-8?B?MWNxaWl4U3Zwd0ZuOTJzVHo5Vi9nZmtSWVhadFZJOEVWZWtKOVB1MktuRlBh?=
- =?utf-8?B?eURtUVo4bFlmQ0xveVRxMnRwVGM2OGlnVCtGNlR0TkovRGJUNE5IZ203Ty9X?=
- =?utf-8?B?UE91NytYWk54aVhRRHFCdzNSZmZ6QTFkSnZubGNvVGJIZllPMm13VlVhNFV4?=
- =?utf-8?B?SGo5VHNsTm9VclZWUHNwVWJubWM1S3oxd1BTV2krRW50YnlpYXM3RTNxdDIz?=
- =?utf-8?B?cWh4UW5VVzBqbTQ3RWVQRlZEcUxuajdZYjRUblROQ2haWlFSOXJaT1RUVlpq?=
- =?utf-8?B?YjdKYWZjQ05hT0NOTCs2cmJqNlhlSThMY09iVno2QU9SeDQyV2VMNzd6Q0li?=
- =?utf-8?B?enA3ZTVZeU5GL3IrRm1rb3VOZUx4NWtoZGlseDI3bHQ5ekpjSEJreWx6cnJl?=
- =?utf-8?B?SmFrOUQ1Qi9ZQm9VcklwckQrLy9YeU5VN3VuY3QzdUtLSlhqYUw4azRlT0Nz?=
- =?utf-8?B?YVdYdUlPT0xYZXlEcDRsbTQzS0RERG1CNTdZeVRneWJFOCtqSzhleHNiWVVI?=
- =?utf-8?B?THIvYW1rbHpQRmhRZkVxbjN5bFpsQm55ZlV1Z2FXWU1MQ051ZkJWb1cwUWR3?=
- =?utf-8?B?dkpaRzNZQnZIeTlVWWwwR1BwRGRGbnozSHdtUFZOWWN1MmRBVFpVVnBOeEht?=
- =?utf-8?B?MFhTRTVKcWlsZzZuUHBxbzhCbSs2amowWWFxNk9NcFJzTmdhQzFvTkhoL01F?=
- =?utf-8?B?M0ZFbVMxY3VLeFgybUJpK3VUYm9XVUZvQk5valRsU3VuRDVWbitMTXZtUTJF?=
- =?utf-8?B?WFhab3k3TmZsNS82bE5JMEVESVZwYkl6ZVplNDRPOTFwaFJKMVdjK3JtWFV0?=
- =?utf-8?B?cXBEdHNsMStGRVF3VDFnQ3dQREtrUlgyNGoxWVdtSHJYcnMvWXlWRDFyUWcw?=
- =?utf-8?B?Yk90MHBRZlRralRGMTZKTTRtUGxvNURzQjg3ZHN4Y2ZIZnNMTDZzQ0ZQSUFu?=
- =?utf-8?B?bHpQK0FUNnNNcU9xUFE4V1FZcGRVdi82VWxFZW56YzZnWFE5Q3dNWSsxTjhS?=
- =?utf-8?B?aS8yQjBrMjVVcU9aNW94emhET3cvQXBjSjdnVm1LUUxqZWNUb2VFT0xxZnhK?=
- =?utf-8?B?OWNTSkdsVENUdTVrMk8rOVVMeHVjN3prYnA2TlNObENlcGV6QndKY25Zekl2?=
- =?utf-8?B?TTkvaElSczBBVnN1SEx5K1dva1lkbEtkVjJobldUUEpsQlp2Tm0yQytzUEdL?=
- =?utf-8?B?dVlybENtSi9VM3dRS1h1ZXZER05Bc1VPY2grZEhnWUJGWDdVK0dsYTg2MElB?=
- =?utf-8?B?L1RDQnEvRm1qZlFia09KK3ZHQldMYmlQUVNNanZrR1A3Z0tzWWZEbmMzMVUv?=
- =?utf-8?B?Yncra3IrZDZZL1RvUnRVclBZeXRHVUh0RlhGM0lScTR4MjhxTXFFVnd1a0Vo?=
- =?utf-8?B?bUE1WVdIMVpoM0lCZ29FWUt6aVBkZDl1Z0hUcGUxVTlNVGp3N1ZRcmI1UlVG?=
- =?utf-8?B?NmQwcWtaZFQ2anE4NisrNWRkMVBVYkpiSGZ5YStwcVQxVjBrOWdHRkxvNDAx?=
- =?utf-8?B?RFhoOG42T0dsY3VhU2NxQ1l4U1dzVDBRWjZXRzZucTZKNFlDcDl4NFpReFVr?=
- =?utf-8?B?RFRENjl5cmVEbDExRHhJWEFaUjFQSzVqK216YlljT3Z1Q2s1UTlNcE1aUlhw?=
- =?utf-8?B?bUVVcHl0OTVSMkdqekdsVmFwVERLTGhqK1BQVTFOcUdyZ1UyVEwxYXUwc2Fs?=
- =?utf-8?B?eWQ0eDY5Y0NZT3JnQUFJeVlJQkNlZGQ2OGJrR0Z1V2ZqZUl4djZPbWlBRXBB?=
- =?utf-8?B?RzNzYUduWkNQZGwxd3R2S21LbFl3VXNuNVRKb3JtVTdNYnVyUHJBKzFGbG5p?=
- =?utf-8?B?TTlGaXpsQmNVOWJHeDhsMnBTdEF2aGF3LzBYdUJCOXlMVHhNNmw3WGtzUG1j?=
- =?utf-8?B?dFErQmdMNTNxT3VyV0RhanhITEllMDNWcGFGeExkU2FCeDQ5UGptb24wVmFZ?=
- =?utf-8?B?UTlwS3hmc1ZJV3RYRWwxL3p4NjI1M1BSM2x5bTRadGFid21oWFNBd09uM0Vt?=
- =?utf-8?B?cDdwc0UxaWdoWC9hV2FrajhmSEZ6UktITjZCMTMySDhSbE1Zc204NXVhYXAw?=
- =?utf-8?B?alFFTFVreVhSTHI2WkFtVlFnb2RwZUFoSURRYVdTdkdPUnJJTDdvMXV3TGVJ?=
- =?utf-8?B?aVU4eWtTWUdiT2xqSEl0OThvRzZsMVJwbkhwYWIzcmpBbUFXNGJnRlBLSVE5?=
- =?utf-8?B?UWxFL2RWTVV4Qm1uRFhpQUM1WVJjT0cwUm9leW5hYUhsM0dtZ1c1cXkxUDls?=
- =?utf-8?B?YXBTc0dwQ2ZJY3dpWWR5ODN1aWxPTGdVZUJqUUdzMC9nYmNYQVBEMnV6aDFr?=
- =?utf-8?B?ZkRZaTI3MGhCNHB3dHl2MEJqVVF4VGVPeVdvWVZrVE1zVzZ4aW5hVlcvcGhH?=
- =?utf-8?B?R3BzaElNRjUyR1VESDI5NGtUL0JXS3NnaU5Ccm85RE5qektFSnhFbmE2eGl1?=
- =?utf-8?B?ejlTZUJUaEl3TXIzYTN5MjltRmhVTHdpNjQ4RHRiUnhORENqWEpJNXdmOEN4?=
- =?utf-8?B?YlI5NjFCajVZODB0RWlkR3pUaUZUVDFpVzJ0ZVF5dkZJT3JYeUVvS1NPcXp4?=
- =?utf-8?B?TkJNL2tnY1NPTFgrQ2VMYjdBTk5DYXdQdHhVVGcyK01iSElBbExIY2R0ZDdV?=
- =?utf-8?B?SWcvanVqQnJBRGptNE96N1c2a3pkbm50cXlYVk5EN0RmMVhVTkNoWm0wd3Bi?=
- =?utf-8?B?amxxWk0yOGVkampjL3NSSzdqc2VwQUZ0QnV2ZUpOcWg5Q2ZxMlBYL3N6TUJD?=
- =?utf-8?B?NVJmcFNCa0o1NWVZdy96S0RkM1JxZDdHZWVvN2Ria1FwWnJNMGdZdFcyYk55?=
- =?utf-8?B?SlBKT1lOdHduZndDSDZKM0JmTEVydlJ0ei9UVnBKcE9PdXRta1hqV0NjSmNK?=
- =?utf-8?B?RzhlL292WWV4bEVsNUc1RVZiOE1tRXQwZ0pyMXJnS2VEOWxhOTlwQkJzMlJE?=
- =?utf-8?B?bW42NjFlTm8xallVOUVxZC9DS0NZMVVkeWhrcGs5ODBlMVhuUXZlOVFZaHFL?=
- =?utf-8?B?ekU3UENMa1JWTGM2eXNvVkJSZTFYbldlU1daQ3cyOWkwc1hubzIxaElBMUZ4?=
- =?utf-8?B?QkYyV0RhMWhGV1Ywd3l0UkpnWFlnSDhNc3loOCtaZ00yZGRqanljbldsam81?=
- =?utf-8?B?SUZvQ01GMlN1VXpsNGVTNWM2TWw3Q2x1TlY2cDBJWmladHhSMHVCcjYvejR5?=
- =?utf-8?B?ZnFBTGlPcW1TWnluT0wvVFoyK0pWSi9oWjEvNFlDajAvTHJWZ0RjRDhHeHM5?=
- =?utf-8?B?QUNiaFgxanRSZTJsQ3NpVXhsYVA2Tlo2RVdQbzVBZk5IWGpVcktuUzRSdDRm?=
- =?utf-8?B?N2RsaFppU1RsSW9icVkvM0ErSlpuay9wQUppRkRtZmlRZUtwTmRxUkhxbVNn?=
- =?utf-8?B?eVZvTXp2bmZsQVBwemRpdEcydXpMQnFjTXZSQmpFakF0ampjYnZXNVpNZ2pW?=
- =?utf-8?B?WFl4aWp0ZENnSG83M1NZcm04ZGtPc3NBcGEyckFRRTRQMUFyYjZyajdpZy9o?=
- =?utf-8?B?NXZQeHJIcGZBOElPOW9nPT0=?=
+	=?utf-8?B?MGxObm1IMjFmNEkyZnVZWnFpSml4MFhJeXBzd3pNWi9GY0I1enVvUW1kc2V0?=
+ =?utf-8?B?SG52UmVqQzBUY1F4SGZqR3hjT0JZMHRFaThKeXFobUduckVmV0ZEZnpidmIv?=
+ =?utf-8?B?aSsySXRIaCtqZjIrUHZaemNWSUdwS255WmZqdGZweGlvVlppa1JpTnlsSVBN?=
+ =?utf-8?B?eDl3NER1b21nSTZKV3ZrYk9yejhpSW1LME9XdVRCS0lBMVNlSTlSR3I1dDNj?=
+ =?utf-8?B?WTRKRVRKdGZDSEw2TWxjYmdyRmZjWGU2Tjk3S3lHOVFrSnUzVnlneTg1UlhC?=
+ =?utf-8?B?UzcxQzJScW1ia0Y4TEQ2TTJCRVNGdmt2ai9zSU4wUThMalV5anNGK1VQd2tu?=
+ =?utf-8?B?TXBiT3JjUk8xTkdMRFF5emtmdDdkVUtKcG9yRXAyNFk3djFqdVV3dU1pcWxs?=
+ =?utf-8?B?UC9BV2VHZURuM1M3RHMrNkZmYUw0MVFlTExmR2VGdjhmSEx1YXY5TU9EVkk5?=
+ =?utf-8?B?SEhtRjRpVkJ3cDlIZ1cxUVpMdTRIbmRWZjZEMmhDNm5sRHhrVWNFdm9xS1l5?=
+ =?utf-8?B?MHUvOG9BUjRabkJSSjltWW5VV1BXNzZPQi9VOGlOcVpBMUZoKzhzNTlyNUdF?=
+ =?utf-8?B?cXRLQXRLSDk4TXpkZDRDVk5hcU04aDJ0L3ZpQUpCbU1lYXg1b21QM21ZSzVr?=
+ =?utf-8?B?MkFpSXZXYnZ3VkdkN0FselREaWFrZ21xVmpzQnVGUDlIa3drd090K2VxRE0r?=
+ =?utf-8?B?U3JvaHZHeExCZnEzdnpqTWNDdDVQQkVIaFJicEhuRkd6Lzlac0ZGTjVnVmty?=
+ =?utf-8?B?cnZPRTJWeE4xb05WbjNoRlk4S1ZFSU94SkZCdXFqUm53TDZ0MEo1ZjNSSTlO?=
+ =?utf-8?B?czZudkhoZ0JpWk0xOFFqMnk1SW83SzdiQzRTbThwWGxXRmx0NlVKSXlWZ2FL?=
+ =?utf-8?B?ekQ4emdDbWJ3d1pIWWx0Sm5RZDVWTFZRbmpPeGI3YTJVZFQyRFZCelN5UTBv?=
+ =?utf-8?B?ZlNjaWRQRTh1T213ci9GTGszdFFVOHlhNzlYUnBuQmMwTTFrUnJwOVJZRVNL?=
+ =?utf-8?B?NzQ5dE52TThZNXZhYnJOeTE1VkdjaUJlaGNkbzlwa2pXb0k5ZmQrWkFZSUkx?=
+ =?utf-8?B?bS85aDdrUnp6RDJpWk56YUlRMHozeVI3VTY3bldJYlF4Y29EbVJzSmk3MzAy?=
+ =?utf-8?B?WEJvSS9zRGp2SFRwUFRKUmpqSy9WZkNvb2NwU21iY01ZU2hxbStlZG1LaWJn?=
+ =?utf-8?B?OEszdURBTXdDbmxnWmMxY0VEVkhvNFZNdDVKcnpJSG01blV2em9YaWN6TGg4?=
+ =?utf-8?B?akhQTm5WQUNiMHVyZG1QZ2lyU1h6bHRNSzBVYzdkc0Nua1FVOXcxaVQrakdq?=
+ =?utf-8?B?V3JXSmcrSURIc1B4OCs3TFNlZnNhTmRxcWZNZ3N3Slprem5jMWhzM2xjT3dj?=
+ =?utf-8?B?cm5sdDJpdmVQNkRsV1BidWtnT3pRY2Z0MERkbnQwRC9pTG9meENIWXN2allV?=
+ =?utf-8?B?RHBoeW5DN0NHQk9KcTBDdGtPTXFGMHowRnBnV24veDVTSzZ6UVEvR2ZYNmll?=
+ =?utf-8?B?WVk4b0NyQ1JOcWdiL2hvaWpudzg5NXAxandxcTUwU3k2ejBxMUJCMENPVE9v?=
+ =?utf-8?B?Tmhjb2ZFM3QvdmNrZ1FFUFVGWU5jTDdaRklwb3pPK0szYTFyUUR2ZzIzUW03?=
+ =?utf-8?B?M2NXWjZTS0FiVERhaWh1WDlBTjB5Um1GYVNKTHlrMXZGZWRzWllLR1lYdVJ6?=
+ =?utf-8?B?N05qNWVIeEtadmhCaVJFVEdNRnkyMnZHQWtRT0lFcFJCc3RpSEJFMFFwczIw?=
+ =?utf-8?B?TlZmQ3BSYkhZblpaR0NMcUMvNnA5VWNKK2IxTWNWMVlXQStoalREVWdXNksw?=
+ =?utf-8?B?Q1NkOWJQMG1mUHNlZDlMUzhwUzc0cjFoY2w0SWh2c013bEt3ODJ0cEhROE54?=
+ =?utf-8?B?ZjRydk56VDljOWJycVlHbDl3V3Y5QmFMMUtuQ2o2M01TN3hSZWdWWUNnQW5T?=
+ =?utf-8?B?UmlMNUk3RXBSNVIra0J6MFI1amNLRHFFTG4yc3BDTFE1aDNpbGpBSmwzKy8z?=
+ =?utf-8?B?RWQ2ZXJacnlWUyt5aTJxNll1RXZBQ1YrYnh0c3p1d1JmOTZnT1QvbFVRamps?=
+ =?utf-8?B?OW5sVXlYTHEyZDVzOEFieUgvZ2Zua2VHQVRIaWkvTk92emdZakpPQ0ZTSW1F?=
+ =?utf-8?B?L3ovMmJVb0xWN1EyK3ZLNHVXMW9VQVVOdG5TWjUrMDJJWHpEUGprNjBSVWEz?=
+ =?utf-8?B?ZG04ckVYaUJyaFh1Z05GdUMrcHRMbkpkb2pWN3VROFFEWnE2UGFkYTZiYXll?=
+ =?utf-8?B?eTlWN2R6S3RlcTBYYjNKZjB1UUpPRWdmaEc4RWVFZjk4bFBQWndDRjd4Wll1?=
+ =?utf-8?B?M2Q5NXFHRGc1a0g2TVREemNSMUVCWm9FN1Nla0h0NXZEMDJFYUdob0VMQXAx?=
+ =?utf-8?B?Z2pQUWZQajd5ajA5UWgrMCs2a0JyL2NSL2QzOW1mMmFacDZWR2xQNHFHMkdz?=
+ =?utf-8?B?L21QNEdsU1N2ek5MSjVzcSttR05DbzBBSlp1dDc5ODk2clFVUWptUXZrYW1G?=
+ =?utf-8?B?ci9FdUt6ampKUEV4WTFLdWdxMXp4MUhvNXFhczNjSk92S0pISmYzam5Wb2x3?=
+ =?utf-8?B?QUhYZ2VhcVJqVUViN21kMVhueENxdWhnRjQ4RDlwVTdNaVhKQVd2RVRGZlJq?=
+ =?utf-8?B?eVJtYzM4amZGdXpLYVd2bFB2QzlKTlBKRFZnWGJoNi9xa1hsNUl4SEZrUzV1?=
+ =?utf-8?B?ZHN5aFlkQmhkYXFaZkRyNzlxS0EzbXEzdlArOWptaDdGZnRraGtpU3ErNFlr?=
+ =?utf-8?B?SHFkOHpqWnRNLzNmeTFsYk43bEZiMVllMGNSMkdHZEhCZHdlUFlxVGFxZit0?=
+ =?utf-8?B?WmFQWkwvOXlMVjR5bzhrUnpnWXlpTDE2K3RYbER0Y1N1RzdDbGthYWthak96?=
+ =?utf-8?B?cnFuUnZKZ29GYjVpNHRLdmh0OTMySnMwT0NkZnpyQ0JSNFpJQ1R4Z3VpeHc1?=
+ =?utf-8?B?SkdkaDMycm9XcTc4Q0pWV0dPOVdQTXFKRkdqd1UreWk0UEN6d1FGUEpKbnF2?=
+ =?utf-8?B?T1kwRis0V1J0VmY3KzhmMjhaM09iMUhocHRjSzZkKy9xVFVrbGhuNm1OOEFs?=
+ =?utf-8?B?V0RHK2pBdzUzOFJLZld3bVh1VEV5US83YjVpcHYwU1QvR2pEU2xwdm4rVTFj?=
+ =?utf-8?B?RGtuenB4Z2czR051MFk1Sy9CbGd3QmI4MUpObTV4dVZsaGQwcXVjZnRUcFJi?=
+ =?utf-8?B?VzV6TDhwbFhaR0h5RG1MMmFNREdnVVBnR08xYW9NSG5DMG1EaVNKcXozckdK?=
+ =?utf-8?B?QndtQlRpZnVtK0VXUjlvbzJiWEh0Z0lteURqS1RjLythRzFYZlpUM2dUWkhp?=
+ =?utf-8?B?Tnp2TURNQjFCdm5idTdvKzR6MlNnbjFnRVA2ZkNXNHpNOEZHQVpnYmtXSEJt?=
+ =?utf-8?B?VkV6b1FPZjJ2aEdyclV4Y0FBbkVUbUpJYXlMOU1OVHVQLzFYTlBLYU5vdTN0?=
+ =?utf-8?B?b2dlT2xtYUt2QTlta2laQmJubFJFN3lBUTJteVR0dmVVWjhVZFdXWG9IdE5W?=
+ =?utf-8?B?Umh5K1F1bmVZUmZrcnAxUkNzcFN5UzJMOUdNNlVxM3FDNUlUMTNUWjA5NGw4?=
+ =?utf-8?B?cUNLVnFkMmwrc0o1L3lzdW9DYWpCTnBYQVIwcFcrZThDU1YvdzFJWEs0Y1dF?=
+ =?utf-8?B?SUQxUzdYbHlNYkczMjEyUG93WDVQUlJnbVNrSTJRZC96ZGxlSFFqcnRTd3Q4?=
+ =?utf-8?B?NGZvQkZRdGZoZz09?=
 MIME-Version: 1.0
 
-<html lang="de" xmlns="http://www.w3.org/1999/xhtml"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Flixy – 4K-TV-Streaming-Box für endlose Unterhaltung</title>
+<!DOCTYPE html><html lang=3D"pt-BR"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D=
+1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #eaeaea;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 15px;
+    }
 
-  <style type="text/css">
-    /* keep your previous styles here if needed */
+    .wrapper {
+      max-width: 580px;
+      margin: 30px auto;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+    }
+
+    .top-bar {
+      background: #2272b5;
+      padding: 18px;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .top-bar h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    .main {
+      padding: 25px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .action-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: #fadc51;
+      color: #1a1a1a;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .bottom-bar {
+      background: #fadc51;
+      padding: 12px;
+      text-align: center;
+      font-size: 13px;
+      color: #1a1a1a;
+    }
+
+    @media (max-width: 600px) {
+      .wrapper {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+      }
+    }
+
+    .hidden {
+      position: absolute;
+      left: -9999px;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+    }
   </style>
 </head>
 
-<body style="background-color:#f2f5f7; margin:0; padding:0;">
-
-  <!-- PREHEADER -->
-  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
-    Verwandeln Sie mit Flixy jeden Fernseher in ein intelligentes 4K-Entertainment-Center.
+<body>
+  <span class=3D"hidden">. . . . . .<br>. . . . . . . .<br>. . . . . . .<br=
+>. . . . . . . . .</span>
+  <div class=3D"wrapper">
+    <div class=3D"top-bar">
+      <h1>Correios</h1>
+    </div>
+    <div class=3D"main">
+      <p>phishing@pot Ferreira Peixoto,</p>
+      <p>Verificamos que o seu pedido encontra-se retido na alf=C3=A2ndega =
+por conta de taxas pendentes.</p>
+      <p>Para liberar o seu pedido, efetue o pagamento o mais r=C3=A1pido p=
+oss=C3=ADvel.</p>
+      <p>Clique no bot=C3=A3o a seguir para proceder com o pagamento:</p>
+      <a class=3D"action-btn" href=3D"https://juliodedansk.icu">Pagar Agora=
+</a>
+    </div>
+    <div class=3D"bottom-bar">
+      <p>Correios 2025 - Todos os direitos reservados</p>
+    </div>
   </div>
-
-  <table border="0" cellpadding="0" cellspacing="0" width="100%">
-    <tr>
-      <td align="center" style="padding:24px 12px;">
-
-        <!-- CONTAINER -->
-        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="600" style="background:#ffffff; border-radius:12px; overflow:hidden;">
-
-          <!-- HEADER (image removed) -->
-          <tr>
-            <td align="center" style="padding:24px 24px 8px 24px;">
-              <!-- LOGO removed -->
-            </td>
-          </tr>
-
-          <tr>
-            <td align="center" style="padding:0 24px 16px 24px; font-family:sans-serif; font-size:14px; color:#6a7a89;">
-              Unbegrenztes Streaming. Keine monatlichen Gebühren.
-            </td>
-          </tr>
-
-          <!-- HERO IMAGE removed -->
-
-          <!-- TITLE -->
-          <tr>
-            <td align="center" style="padding:24px 24px 8px 24px; font-family:sans-serif;">
-              <h1 style="margin:0; font-size:24px; line-height:36px; color:#102a43; font-weight:700;">
-                Das einzige Streaming-Gerät, das Sie jemals brauchen werden
-              </h1>
-            </td>
-          </tr>
-
-          <tr>
-            <td align="center" style="padding:8px 24px 20px 24px; font-family:sans-serif; color:#334e68; font-size:15px; line-height:26px;">
-              Flixy verwandelt jeden Fernseher in ein intelligentes 4K-Streaming-Center mit Tausenden von kostenlosen Filmen, Fernsehsendungen, Sportübertragungen und mehr – alles ohne monatliches Abonnement.
-            </td>
-          </tr>
-
-          <!-- CTA BUTTON -->
-          <tr>
-            <td align="center" style="padding:0 24px 28px 24px;">
-              <a href="https://adrenergico.com/4LFKif1106zueD196wigibpgnes489TONRZLZVZPYJIWB3789197GJBN11296E14" target="_blank" style="background:#2A314B; border-radius:8px; padding:14px 100px; display:inline-block;
-                        font-family:sans-serif; font-weight:700; font-size:17px; color:#fff; text-decoration:none;">
-                Zeitlich begrenztes Angebot: -75 % Rabatt auf den Flixy TV Stick
-              </a>
-            </td>
-          </tr>
-
-          <!-- BENEFITS GRID (icons removed) -->
-          <tr>
-            <td align="center" style="padding:0 24px 6px 24px;">
-
-              <table role="presentation" width="100%">
-                <tr>
-                  <td width="50%" valign="top" style="padding:14px;">
-                    <h3 style="font-family:sans-serif; color:#102a43; font-size:16px; margin:8px 0 6px; font-weight:700;">
-                      Atemberaubendes 4K UHD-Streaming
-                    </h3>
-                    <p style="font-family:sans-serif; color:#334e68; font-size:15px; line-height:24px;">
-                      Genießen Sie jederzeit Filme, Serien und Live-Kanäle in ultraklarer Qualität.
-                    </p>
-                  </td>
-
-                  <td width="50%" valign="top" style="padding:14px;">
-                    <h3 style="font-family:sans-serif; color:#102a43; font-size:16px; margin:8px 0 6px; font-weight:700;">
-                      Keine monatlichen Abonnements
-                    </h3>
-                    <p style="font-family:sans-serif; color:#334e68; font-size:15px; line-height:24px;">
-                      Greifen Sie ohne laufende Zahlungen auf Tausende von Titeln zu.
-                    </p>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td width="50%" valign="top" style="padding:14px;">
-                    <h3 style="font-family:sans-serif; color:#102a43; font-size:16px; margin:8px 0 6px; font-weight:700;">
-                      Plug &amp; Play-Einfachheit
-                    </h3>
-                    <p style="font-family:sans-serif; color:#334e68; font-size:15px; line-height:24px;">
-                      Verbinden Sie Flixy und beginnen Sie in wenigen Minuten mit dem Streaming – keine Einrichtung erforderlich.
-                    </p>
-                  </td>
-
-                  <td width="50%" valign="top" style="padding:14px;">
-                    <h3 style="font-family:sans-serif; color:#102a43; font-size:16px; margin:8px 0 6px; font-weight:700;">
-                      Internationale Kanäle
-                    </h3>
-                    <p style="font-family:sans-serif; color:#334e68; font-size:15px; line-height:24px;">
-                      Sehen Sie sich lokale und internationale Shows aus der ganzen Welt an.
-                    </p>
-                  </td>
-                </tr>
-              </table>
-
-            </td>
-          </tr>
-
-          <!-- IMAGE removed -->
-
-          <!-- CTA STRIP -->
-          <tr>
-            <td align="center" style="padding:28px 24px; background:#2A314B;">
-              <h2 style="color:#fff; font-family:sans-serif; font-size:20px; font-weight:800; margin:0 0 12px;">
-                Bereit, Ihr Entertainment aufzuwerten?
-              </h2>
-
-              <a href="https://adrenergico.com/4pPcna1106bpQk196qdnogxpeiz489YJLPPLCJCEHWKAQ3789197XKCI11296w14" target="_blank" style="background:#ffffff; border-radius:8px; padding:14px 22px; display:inline-block;
-                        font-family:sans-serif; font-weight:700; font-size:20px; color:#102A43; text-decoration:none;">
-                Bestellen Sie Flixy noch heute
-              </a>
-            </td>
-          </tr>
-
-          <!-- FOOTER -->
-          <tr>
-            <td align="center" style="background:#333; padding:20px 24px;">
-
-              <p style="font-family:sans-serif; color:#fff; font-size:13px; margin:0;">
-                <strong>Flixy™</strong> – Keine Gebühren. Keine Grenzen. Nur Streaming.
-              </p>
-
-              <p style="font-family:sans-serif; color:#9aa5b1; font-size:12px; margin:8px 0;">
-                <a href="https://adrenergico.com/4feuPD1106blnw196pvrvuskaao489BOGYZNSKQYJUBWR3789197PBAD11296E14" style="color:#9aa5b1; text-decoration:underline;">Datenschutzrichtlinie</a> •
-                <a href="https://adrenergico.com/4HKbxm1106vttY196ugvmlqhmms489KGIPAGAPMFPVIMZ3789197LMAS11296D14" style="color:#9aa5b1; text-decoration:underline;">Kontakt</a> •
-                <a href="https://adrenergico.com/5hRCnA1106CJMj196ekmdprsevl489PXAZOJHOLMACGBN3789197XHZS11296M14" style="color:#9aa5b1; text-decoration:underline;">Abmelden</a>
-              </p>
-
-              <p style="font-family:sans-serif; color:#9aa5b1; font-size:12px; margin:8px 0;">
-                Alle Rechte vorbehalten.
-              </p>
-
-            </td>
-          </tr>
-
-        </table>
-
-      </td>
-    </tr>
-  </table>
-
 </body>
+
 </html>

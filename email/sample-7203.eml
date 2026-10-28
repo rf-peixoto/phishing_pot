@@ -1,276 +1,234 @@
-Received: from PH7PR10MB7087.namprd10.prod.outlook.com (::1) by
- MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Mon, 2 Mar 2026 16:21:47
+Received: from DS5PPFAB2BB8969.namprd20.prod.outlook.com (::1) by
+ SN7PR20MB5311.namprd20.prod.outlook.com with HTTPS; Mon, 23 Jun 2025 12:59:49
  +0000
-Received: from BL1PR13CA0284.namprd13.prod.outlook.com (2603:10b6:208:2bc::19)
- by PH7PR10MB7087.namprd10.prod.outlook.com (2603:10b6:510:27f::12) with
+Received: from SJ0PR05CA0066.namprd05.prod.outlook.com (2603:10b6:a03:332::11)
+ by DS5PPFAB2BB8969.namprd20.prod.outlook.com (2603:10b6:f:fc00::81c) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.18; Mon, 2 Mar
- 2026 16:21:44 +0000
-Received: from BL6PEPF0001AB4B.namprd04.prod.outlook.com
- (2603:10b6:208:2bc:cafe::df) by BL1PR13CA0284.outlook.office365.com
- (2603:10b6:208:2bc::19) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9654.21 via Frontend Transport; Mon,
- 2 Mar 2026 16:21:32 +0000
-Authentication-Results: spf=pass (sender IP is 209.85.222.72)
- smtp.mailfrom=node-worker-prod.firebaseapp.com; dkim=pass (signature was
- verified) header.d=firebaseapp.com;dmarc=permerror action=none
- header.from=node-worker-prod.firebaseapp.com;compauth=pass reason=111
-Received-SPF: Pass (protection.outlook.com: domain of
- node-worker-prod.firebaseapp.com designates 209.85.222.72 as permitted
- sender) receiver=protection.outlook.com; client-ip=209.85.222.72;
- helo=mail-ua1-f72.google.com; pr=C
-Received: from mail-ua1-f72.google.com (209.85.222.72) by
- BL6PEPF0001AB4B.mail.protection.outlook.com (10.167.242.69) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9654.16
- via Frontend Transport; Mon, 2 Mar 2026 16:21:44 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:CC97685CA60A709D953F72B7A79A9318861717A943CB318047101094F8CF2C74;UpperCasedChecksum:79235958FF17096FD6A28E3A9720BAE3AD87EA39EF9CCC2BA8F3B1C8E8B39C71;SizeAsReceived:2397;Count:13
-Received: by mail-ua1-f72.google.com with SMTP id a1e0cc1a2514c-94ac3fcea3bso57740075241.1
-        for <phishing@pot>; Mon, 02 Mar 2026 08:21:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=firebaseapp.com; s=20230601; t=1772468504; x=1773073304; darn=hotmail.com;
-        h=to:from:subject:date:message-id:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Pe22feJrEgio0tFUI+9AA0U77sQSOpwaW916lm+iT+g=;
-        b=OqlqFuMqCL6AN54NDXfRyhKtCFqZ+gIyn44BI2woomWFpx/xebEpXQXcfpHm9D3Man
-         z3C94fthVtdotvKq7Y2BUKy+WZ2gIzDxLrV/T3q5LR07TMsM9DOV4pdtx0BdWtS3rCcg
-         46v0foU8B6VRSiXrwRzNsT2KA8ls6f7v/mW3tXAbXy287slk/jhhUSe1LX6wYN9kb4zK
-         GvICM/sRLUQiLsydP3HwNlZIhYVT4pub5weFgQ88kwSskwDiLpiI5AsGKwKsreOk7owJ
-         kHaVZHV+xBF6pcN1I1pugZfFvRTN5bPHvyGcmfoeGKFNupzbCGeyV7lcQSI2f1Bx7soJ
-         bqGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772468504; x=1773073304;
-        h=to:from:subject:date:message-id:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pe22feJrEgio0tFUI+9AA0U77sQSOpwaW916lm+iT+g=;
-        b=RhOKiqCSPgH4q7BM9Z96d4jPFyzwhaZaaGx90tM/wU+JauMKFoQX8CLc069apESDB8
-         khY/wvDsmYwaI9VlEvAhZ3kv6rQtF9m+L37t3CxaVgMqtUr01Rp00dCDapvGDseAdAv1
-         DI7Gqnd8tbid7y2F0FH9uYqFB2XG1OnB3bgdb2JH8R/SkHTyzLM0hgry9pXjzfDAfWXl
-         v5dDpC/Q/ATJQPySBLtsmtZ8mdnzOPHszXJ2k4vJ8Xt2Ek1gB13f5louaaFM43i1AaHp
-         RymgpxBQ3KHbM6UKp4E9sr0fc83a5YQJEfOeZUDfNYVT9CDsth6A9eDGEL87HjzzDqHZ
-         4KaQ==
-X-Gm-Message-State: AOJu0YyORMEGjKbXh7evVDGblXFLjzvgRn6flIalvjEftnao/4h/gKyr
-	pHo0qHeVi4eSmYQfaFCKvbru9dnf9T+ltpth2TrhuIMgDlz2kV0yHe8j6uU3Fr6YNqXK6CSuclg
-	ROIGTSD826A==
-X-Received: by 2002:a05:6102:c86:b0:5ff:2871:f593 with SMTP id
- ada2fe7eead31-5ff3228a1edmr6417759137.7.1772468504474; Mon, 02 Mar 2026
- 08:21:44 -0800 (PST)
-Reply-To: service@reisevorteil-de.de
-Message-ID: <00000000000095b623064c0cfbcf@google.com>
-Date: Mon, 02 Mar 2026 16:21:44 +0000
-Subject: =?UTF-8?Q?=F0=9F=9A=86Ihr_100=E2=82=AC_Bahngutschein_wartet_auf_Best=C3=A4tigung?=
-From: Reisevorteil Deutschland <noreply@node-worker-prod.firebaseapp.com>
-To: phishing@pot
-Content-Type: multipart/alternative; boundary="00000000000095b616064c0cfbcc"
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.21; Mon, 23 Jun
+ 2025 12:59:47 +0000
+Received: from SJ1PEPF00001CE2.namprd05.prod.outlook.com
+ (2603:10b6:a03:332:cafe::47) by SJ0PR05CA0066.outlook.office365.com
+ (2603:10b6:a03:332::11) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8880.16 via Frontend Transport; Mon,
+ 23 Jun 2025 12:59:45 +0000
+Authentication-Results: spf=pass (sender IP is 20.218.92.88)
+ smtp.mailfrom=mesityella.com; dkim=none (message not signed)
+ header.d=none;dmarc=bestguesspass action=none
+ header.from=mesityella.com;compauth=pass reason=109
+Received-SPF: Pass (protection.outlook.com: domain of mesityella.com
+ designates 20.218.92.88 as permitted sender) receiver=protection.outlook.com;
+ client-ip=20.218.92.88; helo=dqockynh.mapiaule.com; pr=M
+Received: from dqockynh.mapiaule.com (20.218.92.88) by
+ SJ1PEPF00001CE2.mail.protection.outlook.com (10.167.242.10) with Microsoft
+ SMTP Server id 15.20.8880.14 via Frontend Transport; Mon, 23 Jun 2025
+ 12:59:44 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:5641E5119D654584B862ADFB514104219FDB6E0C6A20719F4717D53E494B925C;UpperCasedChecksum:98F936D8CAC1A8474956CDFF1D60D7AC6584A9BEE0DEA4010675E966C632FD3F;SizeAsReceived:337;Count:8
+From: "McAfee"<info@mesityella.com>
+Sender: "McAfee"<newsletter@McAfee.com>
+Date: Mon, 23 Jun 2025 13:10:39 +0200
+Subject: 72 % Rabatt lauft bald ab: Jetzt verlangern
+Message-ID: <ibyl4Ha5hVAEBYbwwAyp.03600783285505@mesityella.com>
+Content-Type: text/html; charset="UTF-8"
 X-IncomingHeaderCount: 13
-Return-Path: noreply@node-worker-prod.firebaseapp.com
-X-MS-Exchange-Organization-ExpirationStartTime: 02 Mar 2026 16:21:44.7008
+To: <phishing@pot>
+X-IncomingHeaderCount: 8
+Return-Path: noreply.17809@mesityella.com
+X-MS-Exchange-Organization-ExpirationStartTime: 23 Jun 2025 12:59:45.7007
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: 3abb8cd8-ed3a-466d-0c8b-08de7877cbb1
+X-MS-Exchange-Organization-Network-Message-Id: ba2ea34e-f9da-4c48-6539-08ddb255d41b
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB4B:EE_|PH7PR10MB7087:EE_|MW4PR10MB5749:EE_
-X-MS-Exchange-Organization-AuthSource: BL6PEPF0001AB4B.namprd04.prod.outlook.com
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CE2:EE_|DS5PPFAB2BB8969:EE_|SN7PR20MB5311:EE_
+X-MS-Exchange-Organization-AuthSource: SJ1PEPF00001CE2.namprd05.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 3/2/2026 4:17:35 PM
-X-MS-Office365-Filtering-Correlation-Id: 3abb8cd8-ed3a-466d-0c8b-08de7877cbb1
+X-MS-UserLastLogonTime: 6/23/2025 12:51:53 PM
+X-MS-Office365-Filtering-Correlation-Id: ba2ea34e-f9da-4c48-6539-08ddb255d41b
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 209.85.222.72
-X-SID-PRA: NOREPLY@NODE-WORKER-PROD.FIREBASEAPP.COM
+X-Sender-IP: 20.218.92.88
+X-SID-PRA: INFO@MESITYELLA.COM
 X-SID-Result: PASS
-X-MS-Exchange-Organization-SCL: 6
-X-Microsoft-Antispam: BCL:0;ARA:1444111002|45200799018|9020799019|970799060|46080799006|9400799043|60050799003|58200799021|32020799003|2700799029|34130799006|11119299006|3069299007|69000799018|70000799015|20103052909095|13020799006|51300799021|9800799015|87000799018|461199028|1360799030|1370799030|1380799030|56899033|3412199025|440099028|30041999003;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 16:21:44.6601
+X-MS-Exchange-Organization-SCL: 9
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|461199028|33080799003|2phishing@pot0799006|9000799050|42200799015|970799057|9400799033|1680799057|2700799026|20103052909095|3600799018|1131999016|29080799003|10300799035|56000799018|32080799003|28110799003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2025 12:59:44.5148
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3abb8cd8-ed3a-466d-0c8b-08de7877cbb1
+X-MS-Exchange-CrossTenant-Network-Message-Id: ba2ea34e-f9da-4c48-6539-08ddb255d41b
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB4B.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00001CE2.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB7087
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.4306493
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9654.014
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS5PPFAB2BB8969
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:05.2712305
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8857.014
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10010005)(9610028)(9560006)(10180024)(9320005)(9245025)(120001);RF:JunkEmail;
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9710001)(9610028)(9520007)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
 X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?Q3hRdU9Sa2d0S25SM0xoT3RNV2ZKWU9KckN6TmpVZkVRNitKOTBHaUNVSUhx?=
- =?utf-8?B?ZTFYc0FhWHlEbGpuWkUvbG1JOFZRNWJuNVorUThkMi9NdXNvS21TbUZnUjdz?=
- =?utf-8?B?a3NsR0dZdE03VEY2SXkxWCtMNllicmcwaW5GL3NrZVZlTDc0R2wwTXU3VS9t?=
- =?utf-8?B?ZlR3YkdOVWxidFJUYkp5UzV5MEZBbEE0dmxSeURxaytMd3FzSUYyYW9pcWNq?=
- =?utf-8?B?bTBqNFlpV1BSTFN2d3hxM08zMTIreFBKWEgraEV6SkIvUWo0SXFudll3MnRT?=
- =?utf-8?B?RDNDbEdYTFpQRmxNZTlJcGFIUE9VUjA1VDlpb3FieXZDQi85ODJoQ0dYd0hZ?=
- =?utf-8?B?MHhXcVZhMFZqYlF1T3FScXQxY2g1ZTZUOVY0eXl2Q295Y2svV2N6SGlLMHph?=
- =?utf-8?B?MmNybGRvbEJjZU9KN3l6a2w0YmRTcWd3Y3ViMVI5QVBsaDdwR2M1OTBqMUU3?=
- =?utf-8?B?RURMMW5QMEcxb2w2RE83Z21qSDZ4Z0Q2Zis0Yy9US1BrUW5scXJ2MnRTUWxh?=
- =?utf-8?B?NUc4cllMTmoyRThnQWlmSjkzYmtuK29jOFZIdWkxcGpqSmljQ1llQXZSMGlx?=
- =?utf-8?B?eVExK1ZpMnowdjkwWE5oUjcrWnAzQ0RRVVdXT2JnSVprNVlCUFBxSGdjcEVD?=
- =?utf-8?B?bHJuc1lKaDdoTDN1TWE3cDdYb3pJNU1nbWZ5NDgxN0UrMWdVYmdHd0huWk01?=
- =?utf-8?B?TDA1Y3AxU014ZXF2NVBwM1hnWGJJSmtnbzNFNCtLdWhCSHlRek5IV0VUYVpp?=
- =?utf-8?B?bjIrWWM5WG5KVmxLVk16ZmlvNEJmNUl1OUNQV0I2ejlyRG1XN1hxTFV1N3NE?=
- =?utf-8?B?QnZJRHhWMHVUckJhLy9obGRZQ3VPUFFXWFNUZU1sQmlzY20yZG03U2lkaldp?=
- =?utf-8?B?Nm15YmxmcW1VUlJwZ2h6d00rQ0lDbnlmRmpmTEc1c2pBTHREK3c4WHZMS3Q0?=
- =?utf-8?B?cTFWejhSNXF3SnFwYmVYcmR2cHJacytTYlBhdUtFM0cyNmZtSFZCMlNtdmRR?=
- =?utf-8?B?eGpsQTNTYTBSTGpWOVgyYjVNSG5UWWdZODFnNzhIRVlHL2E5Zzd1bGs3cVla?=
- =?utf-8?B?cHlLU2NVRDJTQVJKYWtTZjIvYlhQQUMzY1RjOVQwNDc4cFFmT0xJeGp4RHFN?=
- =?utf-8?B?UlVUSWRoOWlieCtCM3RPM2pBZEZSQ21PUlR3TnhvbmZ1T1VFVlhBTDJidzIv?=
- =?utf-8?B?ZUtXMGJHeE1ZVFNLZm9lQjhCRUwwSy8yMFJOVXZWaXFwZ0EzdVk3dHFIUG5h?=
- =?utf-8?B?RVJ2T0dqREFzNzREVmc1YVRQenhscDdqUUZ5YlpyYmlWcXJ5T2huUFFkQitM?=
- =?utf-8?B?Y3l2SzBXVythbCt0U2VQL0F2WHpqRDk0U2g1V216ZVphU0w1Q2JFL2lhQVUx?=
- =?utf-8?B?Um1ZOE5zOFVJV1U3SzdVeStkaDZQUDlyd0VDMUJlMUF2c1EwMDJTSkdlOTBp?=
- =?utf-8?B?cEpQUkRVRk9JekNkK0Y2Tm0wUy9zN0l0UFpheWJ0b3Z3UkNTOHV1K0xtL2xS?=
- =?utf-8?B?SFVDOHZrNWtqTEF2NlpHMHl1SHQyYnZVVDFXTEhIckY5YkwySlBvQ1BFSnVP?=
- =?utf-8?B?NzJrQ1ZjS0ZFMGllMkI5aXIvYjE1U0JIOUFLVlJrUnlPRThrYlhmVERheDdI?=
- =?utf-8?B?MWV4eUZpQjZ2OVBzNUtpS3VZbDUyRittVm9sM3RTSTNJbG1PdTVvUUdUcFNk?=
- =?utf-8?B?ZUNtN1E5WllMSzdpNW9sa01YL0tsN05MbmNlL3d4UitaTGpnTHMrSUJZUjAr?=
- =?utf-8?B?S2dIYTNJSXBWRVE0ZUlzb0FpcWVYTThvRlJGLzJXWUJWeHYrSVNWUzVOWkxI?=
- =?utf-8?B?RnFMTm9qK2lsV1ZrT3hQVkJnaGthUDlpN3l0MDMwL2g1aldnd1FiQURZSmdm?=
- =?utf-8?B?SERINENjQzh4OWdrOTRnT2s4ZG5IWUU3cmFFU3gwNzVnREQ2eVkzbFZoQlQv?=
- =?utf-8?B?OUh5WGY1R1RVVHhpbUVwdUtUOWtDZkRnVk1nNHd5bXNFVnBjVXhVdjRHZ3g1?=
- =?utf-8?B?eDdkd3hqM1F4QW14TDZZcGZyZ0ZtaXZBa091aElaZG8zcTZpUFdmSjFuR3JM?=
- =?utf-8?B?bnJUVnVaL3JrNTlFamk1VVNJUWZ3YmZpdDgzU1kxQWhnMm15dEEyR1N3aXVW?=
- =?utf-8?B?WktwRkNHaTZIY2lrWFZQK3llZWlMVkpYOGc5RmFYUXFkSHVtRU1IOFVXNTY2?=
- =?utf-8?B?aCtENHZqMmVOMldmSUEzRUVRMTJDYmYwS010djRlaUdXRTg0NHlCMDFSdjNC?=
- =?utf-8?B?WHlOWHNkcFpVaVZDbTYzTjlvWUJPc3pweFNoL1pJSDhjMDdQZmNLQ3NNeEVn?=
- =?utf-8?B?Yys4MzdtbkJ0Wnp1alRJczF3WnlFbzgxV0N6b2xWVUdxNjNVN1RJZHZYaGVj?=
- =?utf-8?B?RHFDZGVrUTBFT3k5Q2NsR2gzZnhKVDNtc1A2MUpFc2lXN1FwMDQrUGJoZVFJ?=
- =?utf-8?B?dkhua3loekJjV3dFWHZBcVRNQXBHa1RmeHBaS3htSndCZDYxRG8yNm8vZTZo?=
- =?utf-8?B?YUxVVzcwemF1Uktjd3FrdVVEa0RtZ3Nzc0EyV1FLOXBHSDZkTTk4NWtRTUJJ?=
- =?utf-8?B?NDVFT2VxZGZrZGtUTkJEVmV0ZkdMWjNXVC9HOUZtbElROXlhK00renZTVVJJ?=
- =?utf-8?B?US9LMXg0a2RtSU04SXZwWTh1ZGg0eU0vT1NQbnEwSGdMUGFPK1NQUjc3cmVK?=
- =?utf-8?B?VFFZUlVpelUvelBMQjFpQ25meGQxMzVWaTc4dXVCQ05RcnRyUHVwNWtHS2Fx?=
- =?utf-8?B?NW5oY3E4eDgxQ2ZoT2J6OEFrZkFNWEtLd0NwdGdZNUNmdFFSWmEydEtLZmVz?=
- =?utf-8?B?OExzMndUdEFSL0VEMmh0SHBScURmY0xPMStNZENFZjlLdXUwYURWakhkYWZ0?=
- =?utf-8?B?UWtPK1V0UDA1VkZCK0dhL1l2UGxkcWhHTUVTTGM2VTROa3pPMkNwTW1kUjAr?=
- =?utf-8?B?clV6b2dKVkowc3pFWEVyU1JzdVE4Yk5wS0tHNWZSL0oyTlJyQi9pSTUxV3di?=
- =?utf-8?B?Qm92NHVxRENXTnlBMzZQRlgrZ25leEJIak8zU3NXYlpRd1d2NHVRMmkxZkpK?=
- =?utf-8?B?dHFoSEFBd3lONHJuL1BiRGh0R2x2VDhNVnVoWE5PT2RDMitmNlVDWjdHZWtX?=
- =?utf-8?B?bFdJNjJwZlhGYjdaLzYxQVpzV0NnNGhYWmp0bkhFakgwTWdQbjRnWDRLcDVr?=
- =?utf-8?B?ZXVWV1pNRytSRDJyWkEzQ2xleWl5QXdkeHFXMzhVbDFLTithNi9wZDRkTSs2?=
- =?utf-8?B?K3Qva3V4WjdPZDd0QnJUbjE4bXUyZlhUR24zRndZTFdDa1dDcy84aEJoVHZh?=
- =?utf-8?B?QmZHL1dVQy9vRDFIS1krL0hDRitYZGVNa1FlWGZJVW1Jdy9YL2tMTW1IWWlz?=
- =?utf-8?B?WE1VdFdVT20zcTU2MG41bk83NnJYaWZhcS9qV0J3K3BPM0ZzTi9yZUlpc0o3?=
- =?utf-8?B?bms2TElzWitmNE4xRlZ0ODFNRDdmTHlVVjVtanNLeU9PMHlMMjllS1BsYWF0?=
- =?utf-8?B?VEs0ZFArSG00TzdrNXRsRndWNW1VTUt3eXZMdkN1Tm1nTUlKaGhyMzV2TEhW?=
- =?utf-8?B?Q0JDbTFFZTFkTms2am9uOVF3WUliTURvS1FLZzU0Smw2TDVkeCs0SWozNDhm?=
- =?utf-8?B?WGpOdEYvY3hldk5VSVh0MWZIcGFOWmliOHlSdzBLa1RMSHkydWV3aWlsRW9Y?=
- =?utf-8?B?ejVxd0hHandZN2tzdmZsaTRJWHlKMCsxNVk1bWx5T1JLMURDVU5KcUJVZzJs?=
- =?utf-8?Q?xIUrMDA?=
+	=?utf-8?B?akkzeWVNY2RRS1pNY21WbmM0OWlQRW1YWmVqUHZSTlFhYWM5NDBVRXdoclJr?=
+ =?utf-8?B?Ym1rY0FDeGFlNjVGM3hwY0YycnY0dGY2V1FLVElEMEFrTVYvN1J0VjBlTGFl?=
+ =?utf-8?B?WURLZlBRczVTMHFZM3VCZldlT2NmT0ZkT2NDNEVGdlEzRENNKy9MQXlSRkEw?=
+ =?utf-8?B?R1hQTGJUbmpEWGFJdFlUakh5WmY0RWRSL21Xb2pXeHRMMFhISjMxaU8wSXli?=
+ =?utf-8?B?RW1maGhsUExXN0FQSGVJcFlTM05OM1d6U1NjekduV3pwYW5kNitQRzBWM05O?=
+ =?utf-8?B?K3NVQi9DdDExaEM2cFh4M1V2YmxxVElCUXJOczZUNVgrTDJuMmRObFlJWEs2?=
+ =?utf-8?B?ZFNQS1VpZFFQbUdXZm9xcVNPSXMvV2c3UTEyZmhxbEpYTUhlM0ZhMTlNNUx1?=
+ =?utf-8?B?T2VNY3BSeHJ1SlU3TldNYTdST3FqVXJYcWwwZVdVcGFiTEhxam85YlNldVJj?=
+ =?utf-8?B?MGRqUUxwRmZtdEttdzJVajNKUlhMUEVVem00VmlhTWhKNng0bjJZcmduRTVk?=
+ =?utf-8?B?SUtwbGE5R1g4Vk1Sd1lIUXhvRDVndjR6TzBZaUI4LzUzTTFpdy9ROEZCbkFr?=
+ =?utf-8?B?cm8zVTRCdFNQV0YzRUxscnExRDF6elFZWS9RQVdpZzB6NFlrQ3k4dnkrOWNC?=
+ =?utf-8?B?SzliS3ZkcXhOeVBEZmZEZ0NlSDM2OXZtZzR0dkEyUWdSbkFjM0JlNDdIczk4?=
+ =?utf-8?B?eVMweUt1clBOQSthUlJJMHFaaXFSeDczM0ExRHkzRHZZaDRtL3RRUGJ2ajdL?=
+ =?utf-8?B?YTNLSEZLajhGeFYxSmhvMVJQbXlhYUhEV09ZY1Rvclpuek1iOXEvcjIvQlNk?=
+ =?utf-8?B?MFBEY0ttaDNzUW5RUG9IRGdaRWZmKy9CSVZwSnp2Nmd5V2xsUWkrd3MxemdL?=
+ =?utf-8?B?UnRaWjJrWFIvREdMMlJLbWlTbHV5cUg0a1liMTVkc0VDUEMwcFhmOGVUaDZv?=
+ =?utf-8?B?Q09CKzNVQUQ4ZngwWVVWTUtLK0Q2UDRUc3lvR3RjelAzRGVvN3VXTXZteTkr?=
+ =?utf-8?B?ak52RHhyRDhKTXhST0xKWXdtbFB4QkxJTURQeFEzMGJ3ZGtFV1RrMVRSQ1ln?=
+ =?utf-8?B?QzhNajQwZlZ0d0c2NlUxNmxabTdLMmU1Y3hmK1dzeUJWV3dhUlVpVVV4QW5n?=
+ =?utf-8?B?OVJNdTFyY2d0eUN1dktHb01qSTJjcGV4M2svdW1ha01uUkwwL2RsbnZ3QXlN?=
+ =?utf-8?B?cmNZcmNSVzhCV2ZSNEdLV3RBUSt3cUZWcWhMZHA1V1ZDSVhlT0VESThldUtO?=
+ =?utf-8?B?dkU1L0ZINUFReGpEaXZpbjhEQXN3STJDSFc3bkRTdHFNK3VHYjR6eW5BUDIx?=
+ =?utf-8?B?cHIwck1NYTlaUk1wUjdscElnOFEvYkNtcUZ0dFQ1dE1LVjZQWGF5QnhjZ2Fl?=
+ =?utf-8?B?ZDYvazlob0pabS9ISGN1a1J2VlRGWmdzMEtUYVZHV3I3WGVhcXpTd3B2a1Z1?=
+ =?utf-8?B?bU9PeHFhMnVFQllVSHFidUdxZFRRcGx0dXJ1K2grbGVKeU11TU8xZkZXenNY?=
+ =?utf-8?B?L1d1Wm1OdHZRQldZMzhYaFZ1SVVVK1VOYWdQY0R0cEc1MlV6bXhQbzJZODA3?=
+ =?utf-8?B?bHl4TFVjRkR6c2szRGFDTzJaYzJJUFdHc3BsT1VIanlGSHk5ZVBESW8ra0VO?=
+ =?utf-8?B?NmxkbkpURFd1SGVyOVlpbHQyU0I2djFraThmczhDYjdmc0toRXRWZlEwTG9j?=
+ =?utf-8?B?NXoyOUdVZWpQNDh5VkFzZFZxYXhJS0xZckFDNWFRT2J3WTVXZXNXcmgxcXRr?=
+ =?utf-8?B?Y0hQU1ZISm5Lb0dZbFVTMmRZQU91eUxoVFl4MU1QaUM2THJoT1QvL2xsN1dp?=
+ =?utf-8?B?K01vQjJrc3pSc0dXWWc5Y01HN3FBZFlRREN0cHk0d3JtWFVwRnEwSzZ0S000?=
+ =?utf-8?B?ek1SNlFnR2NtQ2xVRTh2TjlReG4ybnVkVnVmQ1Y5ZzBNLzNoYmszMGNhOFFV?=
+ =?utf-8?B?N28ySDhQaW1xU3Nna0Mrck1ZSmZqcGFsYmhPWGw4MTVFSGNObHgxTjJuS0xI?=
+ =?utf-8?B?RExCYXJOaFJlWldSRFB3d25yemxBc2hzeEt2dGVQcUFCMHE3VkplRUtQUFI3?=
+ =?utf-8?B?RytwU2RyL2tJMmhvNUorUmxCQkxPTlBodFBraklwV2JSVFIwc1dJbzRYYStL?=
+ =?utf-8?B?OUxjOER6ZGpvNDJKSjdmbUNTWElNMmY3NExVU3czT0RYSmorM1pwUDdGVFVo?=
+ =?utf-8?B?K3dPVnBPK2taS2xOUFdaMTFyWW5rVitvUmY0dUZmbk5sVzJjY2lyOVY2NTdj?=
+ =?utf-8?B?VEZUZTI3WncvTngzSlAyRWQzQ0k0blJud251eWRjYzVBMkYxNUFiY09uSkxF?=
+ =?utf-8?B?cHd4STZUdC94WnJhV0dWaFR3R3ZLRjZyRVBlV2VNczFtcWJpUW1MVHBkYVN3?=
+ =?utf-8?B?anI0Sy8wbHVEWE51YU9wdVZUT2t5MmU3K05QTE04YmNZaGFYaFVzNEZoMnM2?=
+ =?utf-8?B?TU1pVGVaQkZ2RnFXTEFoVVJkeGZBQjZDdlkxL2IrU1RtdzhhK3puOWZZWllv?=
+ =?utf-8?B?VWM1aEd5Z3hlazAxNHJTSXEzNTVvaHltdWRYMG4vMW1DcDlMZUhTNVh4Y3VE?=
+ =?utf-8?B?Nmg3NngwRTh6ZXlZcE1pRDJXYTdHb3FtWGc0SDlnbXgvL2U3R2kwZXRmVEIw?=
+ =?utf-8?B?bWxjc21UZjEvVm9HT3NrL0ZpRG5XWUdNNUk0N0g3Lzh3L2pHVUkyMWkwQy9z?=
+ =?utf-8?B?eXpkbTdINXdUMmNhMUZXUDc1VmFsWCt0dm9DNGk5dlhPZGhQNXB3VVJEYUtp?=
+ =?utf-8?B?QTBNdWdOOFdhdERUckVvY2JvUzNCcjZDMTBRdmJXRTFCTUVEUGlUUTBXTzd4?=
+ =?utf-8?B?YU43YTArbnhJMGNXcXVXV1Z2Q0Y5Y25hay80VFNXSHFoSWxWSUliV250Q1FJ?=
+ =?utf-8?B?QkROWEp2bk1uempoNDBvWjdUak9jZXZCaGtpZVQybmtKK0o3U2FLSHBaWjBF?=
+ =?utf-8?B?ZmxPeTBjUitCVmpaM21RbkFFTlBhMWRLZStia1NVSUd3blBQQ2tkSkYzYjFh?=
+ =?utf-8?B?b3VuSHl0d2lHc09jY2hMTDMySTg1MlpqNXdRTnpQMUFjMTNjaTBLV0hMVTV1?=
+ =?utf-8?B?NG85M3ZNZktrWkhscGxlVjA4TG8xRTFkbmE5aXVqcmdIUjI1eHBWZHVsd3k4?=
+ =?utf-8?B?a0Rvc2xVdVVIRnRYQkRVdWJUMnFTRUJRZlJIY2VzbXZWbzYvb2MwTlpsZXo2?=
+ =?utf-8?B?eUdkd3VRNnk1eWV4SDU4czcwdTVWdjR0Z0FFcUNGQWd2czN2RjRpbjQ2VXh6?=
+ =?utf-8?B?KzZ2Y25xSDJxZ0JsYWI4TVE0bklxY2hDYk5pMUJKMEpzejdXNWRXckthaUcx?=
+ =?utf-8?B?Q3NTWnkrR1pMR1ZPTXpPMmFySFVjN0xMdjBoRXRUY2p0N2ZnNnJjcUp1TXhv?=
+ =?utf-8?B?THJHZmlCYU5QSnZFcWZQUU9rcW5lZGZMM0g1Z0NYL05VNVE1Wlh0SHp1UXlD?=
+ =?utf-8?B?R1AyeDNPWiszUnBKdFhjU2pZQnJCSkU2anQrOGVialU4cjl5cGoyT3l0UVVz?=
+ =?utf-8?B?SnB4cUZ4cncvZmNTUjlKMkZUd2dPN2dGR01OOWNtS3MvTmFJTUxZcVBueHFj?=
+ =?utf-8?B?OEl3VFpvenZOWEh0ZW02QXBCSWQxK1lOcFR1T2N6Q2RFLytkOTZ2eVd2YUYx?=
+ =?utf-8?B?dnJFeXZHcFVHdlFtaXlnY1ZDOCtscDZCREpGQ2hFd1BrYkRqZXo1RzRodXh5?=
+ =?utf-8?B?TWZpWU5JbVdKSGdRUGIvTndDRFRWaWVzSzV0NzlpUmh6dGcwa1FFNGVJdThM?=
+ =?utf-8?B?b2pXdE8vQXl2T0twczRqcEJGWVJTaFFuWE9hRFZFNVRKSElWV002TWlvR2NI?=
+ =?utf-8?B?dTNXdG96S0xtS2d6eWs5NWNJNGlRZTB5Y3Y5ZjFtaWRuRlJULzBCa1ZWbmNO?=
+ =?utf-8?B?NWZSUGluNlZPbDYzQXE4ZFpibk1yVzROQ2M2OWFybm9qYW5Rbmt6MlhkNnEr?=
+ =?utf-8?B?Ni9TZ0hWQ09SQU5PcHZ5VGNUTm1TcUlhMENFb0pXYUg0Y2J3SnhkN3lYVmg3?=
+ =?utf-8?B?VmRtUmQ5ZldWY0g4MG5yOStRZkVhU3E4R0xIc0RBK2NkYS9uMGRaTTlQZlp5?=
+ =?utf-8?B?a1NFei9TQ0NxYU0wd1NDT05MWVBROVB5RzMydHVTUFcvS0p4YTF5NWovM1hv?=
+ =?utf-8?B?UXZYZjdhV2VrSWJRTzZyUmo1OHRSdGQ5NW5NazJRTk9qWFlOREdIRzBsa2c4?=
+ =?utf-8?B?Y0ZtYVY1VnUxSEtTaUJpaXNXV2NVWE5iT3lvV3YwYUxZdXU0ZjRia3lodUpY?=
+ =?utf-8?B?WHVobi9VWXp1REpYMjJHYkQvcyswT1piTGVBUlU5Z05iNkEvbzc5OTJLQllS?=
+ =?utf-8?B?ZW1MVzNZOU1oZW85MzRQK2RsMm04K2ZwQ0dWcHZBdCsrd1JBSGMrbWJOQzBu?=
+ =?utf-8?B?emRWdnpnUk9jbW50dm1Ib3MzL011ajI1eUd3VWZEK011OWVMcnpiSkt4SFNN?=
+ =?utf-8?B?eVRrSDFKU1lud1N0b1k3S0puQm1xRVdlTTcxQjVidnpvYitnMTBKSDVhN3NB?=
+ =?utf-8?B?a1FGUmtwU3ZqbDh4eXJmaDBSUkR6a2MzZUl5TnhzTjQ0d0s0eWNNUG44blRJ?=
+ =?utf-8?B?WGJwNkI4eU45QWxoLzhVUE05SGNTMDZxYXFuZSt0WWFvM1IwbnNyUlZySkU4?=
+ =?utf-8?B?ZmFDY1lpWXFTcUNyUVUrdTBNU1ZoR1VmcHB5dmJVOVQvT0YzalAyN0sxT3k5?=
+ =?utf-8?B?ZjRUR0o4M01qNEN6dVZ3M0hZRU5HUkpNR3BPVlJaK2hUSUUyVDB3RURWM3lI?=
+ =?utf-8?B?V042bXZ6cEt1dEZRN0tQTEwrTDVIUU1GUVpmMGp1aW93NjVGVnlTQ2kwaFB2?=
+ =?utf-8?B?dmhpUjRKOUVxUVJKZ2k2MjBxMGxYTDdJemRCMDZwMzFjM1JaOE8vcDJ1N2tP?=
+ =?utf-8?B?V3Y2UENqamRQaGkrQmhSK0xFSUJGNUwwM05jR1FPS1hqcjR2VnVMMmVjeFB1?=
+ =?utf-8?B?MWt3VGJRPT0=?=
 MIME-Version: 1.0
 
---00000000000095b616064c0cfbcc
-Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
-Content-Transfer-Encoding: base64
+<html lang="de"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<body style="font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;">
 
-RVhLTFVTSVZFIEFLVElPTg0KDQoxMDDigqwgQmFobmd1dHNjaGVpbg0KDQpIZXV0ZSB2ZXJmw7xn
-YmFyIGbDvHIgYXVzZ2V3w6RobHRlIFRlaWxuZWhtZXINCg0KDQoNClNpbmQgU2llIGF1c2dld8Ok
-aGx0IHdvcmRlbj8NCg0KQmVhbnR3b3J0ZW4gU2llIDMga3VyemUgRnJhZ2VuIHVuZCBwcsO8ZmVu
-IFNpZSBzb2ZvcnQsIG9iIFNpZSBzaWNoIGVpbmVuICANCkd1dHNjaGVpbiBpbSBXZXJ0IHZvbiAx
-MDDigqwgc2ljaGVybiBrw7ZubmVuLg0KDQoNCkpFVFpUIFRFSUxORUhNRU4g4oaSDQoNCg0KRGF1
-ZXI6IHdlbmlnZXIgYWxzIDYwIFNla3VuZGVuDQoNCg0KRGFzIGdlbmFubnRlIFVudGVybmVobWVu
-IGlzdCBrZWluIFNwb25zb3Igb2RlciBWZXJhbnN0YWx0ZXIgZGllc2VyIEFrdGlvbi4NCg0KDQoN
-Cg==
---00000000000095b616064c0cfbcc
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+<div style="background-color: #fff; border: 1px solid #ddd; border-radius: 10px; width: 600px; padding: 0; box-shadow: 0 0 15px rgba(0,0,0,0.2);">
+    <div style="text-align: center; padding: 20px; background-color: #fffff; border-bottom: 1px solid #7f0000; position: relative; overflow: hidden;">
+        <div style="background:#fffffff;color:#ffffff;padding:0px;font-size:32px;font-weight:700;padding:20px;text-align: center">
+            <a href="http://ecwalkers.com/cl/2524629_md/31/24818206/19499/897/109207">
+                <img src="https://pbs.twimg.com/media/Ggaa8hfWQAAGfqp?format=png&amp;name=small" width="300px"><br>
+                <img src="//pbs.twimg.com/media/Ggaa8hfWQAAGfqp?format=png&amp;name=small" width="300px">
+            </a>
+        </div>
+        <div style="content: ''; position: absolute; top: 50%; left: 50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 70%); transform: translate(-50%, -50%); z-index: 0;"></div>
+    </div><a href="http://ecwalkers.com/cl/2524629_md/31/24818206/19499/897/109207" style="text-decoration: none; color: inherit; font-weight: normal;">
+    <marquee bgcolor="#AF0707" hspace="0" scrolldelay="100" width="100%">
+        <div style="text-align: center; padding: 20px; background-color: #AF0707; color: #fff; font-size: 24px; font-weight: bold; border-bottom: 1px solid #c62828;">
+            Ihr McAfee-Abonnement ist abgelaufen
+        </div>
+    </marquee></a><a href="http://ecwalkers.com/cl/2524629_md/31/24818206/19499/897/109207" style="text-decoration: none; color: inherit; font-weight: normal;">
+            <div style="padding: 20px; text-align: center;">
+        <p style="margin: 15px 0; line-height: 1.6; font-size: 16px; color: #333;">Ihr McAfee Total Protection-Abonnement für Windows ist heute abgelaufen</p>
+        <p style="margin: 15px 0; line-height: 1.6; font-size: 16px; color: #333;">Ohne Verlängerung <strong>könnten Ihre Geräte Viren, Malware und Identitätsdiebstahl ausgesetzt sein.</strong></p>
+        <p style="color: #c62828; font-weight: bold; font-size: 16px;"><strong>Es ist sofortiges Handeln erforderlich! Ihre Geräte sind nicht geschützt und in Gefahr...</strong></p>
+        <div style="background-color: #fafafa; border: 1px solid #ddd; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: left;">
+        <a href="http://ecwalkers.com/cl/2524629_md/31/24818206/19499/897/109207" style="text-decoration:none;color:#000000">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 12px; vertical-align: top; font-size: 16px; color: #333; font-weight: bold; color: #555;">Konto-ID:</td>
+                    <td style="padding: 12px; vertical-align: top; font-size: 16px; color: #333; font-weight: normal;"><strong>05708600 DE</strong></td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; vertical-align: top; font-size: 16px; color: #333; font-weight: bold; color: #555;">Benutzer:</td>
+                    <td style="padding: 12px; vertical-align: top; font-size: 16px; color: #333; font-weight: normal;"><strong>phishing@pot</strong></td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; vertical-align: top; font-size: 16px; color: #333; font-weight: bold; color: #555;">Seriennummer:</td>
+                    <td style="padding: 12px; vertical-align: top; font-size: 16px; color: #333; font-weight: normal;">
+                        <span style="display: inline-block; padding: 6px 12px; border: 2px solid #ddd; border-radius: 6px; margin: 0 5px; background-color: #ffe0e0; font-family: monospace; font-weight: bold; color: #c62828;">g0ak</span>
+                        <span style="display: inline-block; padding: 6px 12px; border: 2px solid #ddd; border-radius: 6px; margin: 0 5px; background-color: #ffe0e0; font-family: monospace; font-weight: bold; color: #c62828;">1254</span>
+                        <span style="display: inline-block; padding: 6px 12px; border: 2px solid #ddd; border-radius: 6px; margin: 0 5px; background-color: #ffe0e0; font-family: monospace; font-weight: bold; color: #c62828;">g0ak</span>
+                        <span style="display: inline-block; padding: 6px 12px; border: 2px solid #ddd; border-radius: 6px; margin: 0 5px; background-color: #ffe0e0; font-family: monospace; font-weight: bold; color: #c62828;">g0ak</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; vertical-align: top; font-size: 16px; color: #333; font-weight: bold; color: #555;">Rabatt:</td>
+                    <td style="padding: 12px; vertical-align: top; font-size: 16px; color: #333; font-weight: normal;">
+                        <div style="display: inline-block; padding: 4px 12px; background-color: #c62828; color: #fff; font-size: 16px; font-weight: bold; border-radius: 25px; box-shadow: 0 0 10px rgba(0,0,0,0.3); position: relative; overflow: hidden; text-align: center;">
+                            <span style="position: relative; z-index: 1;">95,89 % RABATT</span>
+                            <div style="content: ''; position: absolute; top: -25px; right: -25px; width: 150%; height: 150%; background-color: #b71c1c; transform: rotate(-30deg); z-index: 0;"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; vertical-align: top; font-size: 16px; color: #333; font-weight: bold; color: #555;">Angebot gültig bis:</td>
+                    <td style="padding: 12px; vertical-align: top; font-size: 16px; color: #333; font-weight: normal;"><strong>30.06.2025</strong></td>
+                </tr>
+            </table>
+        </div>
+        <a href="http://ecwalkers.com/cl/2524629_md/31/24818206/19499/897/109207" style="display: inline-block; padding: 12px 25px; background-color: #d32f2f; color: #fff; text-decoration: none; border-radius: 5px; margin-top: 20px; font-size: 18px; font-weight: bold;">JETZT VERLÄNGERN</a>
 
-<!DOCTYPE html><html lang=3D"de"><head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
-<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
-0">
-<title>100=E2=82=AC Bahngutschein</title>
-</head>
-
-<body style=3D"margin:0; padding:0; background-color:#f4f4f6; font-family: =
-Arial, Helvetica, sans-serif;">
-
-<table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" bgco=
-lor=3D"#f4f4f6">
-<tr>
-<td align=3D"center" style=3D"padding:40px 15px;">
-
-<table width=3D"600" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=
-=3D"max-width:600px; background-color:#ffffff; border-radius:18px;">
-
-<tr>
-<td style=3D"padding:50px 35px; text-align:left;">
-
-<!-- RECTANGLE BLOCK -->
-<table width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" styl=
-e=3D"border:2px solid #d10000; border-radius:16px;">
-<tr>
-<td style=3D"padding:35px 30px;">
-
-<div style=3D"font-size:12px; letter-spacing:2px; color:#d10000; font-weigh=
-t:bold;">
-EXKLUSIVE AKTION
+        <div style="font-size:18px;padding:10px;color:#000000" align="left">
+            <p style="font-size: 16px;line-height: 1.5;margin-top: 20px;color:black">
+                Sehr geehrte(r) phishing@pot,<br><br>
+                Trotz mehrerer Nachrichten und Warnungen haben wir keine Antwort erhalten. <strong>Ihr Schutz vor Cyberbedrohungen ist ernsthaft gefährdet.</strong><br><br>
+                Verlängern Sie Ihr Abonnement sofort, um kontinuierlichen Schutz vor Cyberangriffen und Hackern zu gewährleisten. <strong>Ihre Sicherheit ist unsere Priorität.</strong>
+            </p>
+        </div>
+    </div>
+    <div style="font-size:13px;background-color: #b71c1c; color: #fff; padding: 15px; text-align: center; border-radius: 0 0 0px 0px;">
+        <span style="font-size:10px;">©</span> 2025 McAfee<span style="font-size:7px;">™</span>. Alle Rechte vorbehalten<br>
+    </div>
+    <div align="center" width="100%" style="font-family:Helvetica, Arial, sans-serif; font-size:10px; color:#202020; line-height:15px; padding-bottom:10px;">
+        <br>Wenn Sie keine weiteren E-Mails erhalten möchten, <a href="http://ecwalkers.com/un/2524629_md/31/24818206/19499/897/109207" style="color:#000000;">melden Sie sich hier ab</a>
+        <br>
+    </div>
 </div>
-
-<div style=3D"font-size:34px; font-weight:800; margin-top:15px; color:#d100=
-00;">
-100=E2=82=AC Bahngutschein
-</div>
-
-<div style=3D"margin-top:12px; font-size:16px; color:#555555;">
-Heute verf=C3=BCgbar f=C3=BCr ausgew=C3=A4hlte Teilnehmer
-</div>
-
-</td>
-</tr>
-</table>
-
-<h1 style=3D"color:#111111; font-size:26px; margin-top:40px; line-height:1.=
-4;">
-Sind Sie ausgew=C3=A4hlt worden?
-</h1>
-
-<p style=3D"color:#555555; font-size:17px; line-height:1.7; margin-top:15px=
-;">
-Beantworten Sie 3 kurze Fragen und pr=C3=BCfen Sie sofort, ob Sie sich eine=
-n Gutschein im Wert von 100=E2=82=AC sichern k=C3=B6nnen.
-</p>
-
-<!-- CTA -->
-<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"margin-top=
-:35px;">
-<tr>
-<td align=3D"center" style=3D"background-color:#d10000; border-radius:10px;=
-">
-<a href=3D"https://playmodx.com/debahnha" style=3D"display:inline-block; pa=
-dding:16px 45px; font-size:18px; font-weight:bold; color:#ffffff; text-deco=
-ration:none;">
-JETZT TEILNEHMEN =E2=86=92
-</a>
-</td>
-</tr>
-</table>
-
-<p style=3D"color:#999999; font-size:13px; margin-top:18px;">
-Dauer: weniger als 60 Sekunden
-</p>
-
-</td>
-</tr>
-
-<tr>
-<td style=3D"padding:25px; text-align:center; font-size:11px; color:#888888=
-; border-top:1px solid #eeeeee;">
-Das genannte Unternehmen ist kein Sponsor oder Veranstalter dieser Aktion.
-</td>
-</tr>
-
-</table>
-
-</td>
-</tr>
-</table>
-
 </body>
-</html>=
 
---00000000000095b616064c0cfbcc--
+<img alt="" src="https://earningadvice.com/op/2524629_md/31/24818206/19499/897/109207" width="1px" height="1px" style="visibility:hidden">
+</html>

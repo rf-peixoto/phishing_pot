@@ -1,339 +1,900 @@
-Received: from DS0PR10MB8055.namprd10.prod.outlook.com (::1) by
- MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Sun, 8 Feb 2026 01:34:39
+Received: from CH4PR10MB8195.namprd10.prod.outlook.com (::1) by
+ MW4PR10MB5749.namprd10.prod.outlook.com with HTTPS; Sat, 4 Oct 2025 08:57:05
  +0000
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=fail;
- b=SCca4Ei7MMXxZ/JHLwneSuMV78ylchK3CMw19GaAxj7S55Ec5+CjYJdFv6xmcTFTWtLhz3kRi7mOoAcoGAw6TSupeqQJXVfj3ud1F801rLyOmO1O273c0qd72moRIiJcdxSMuQt5HneFao0Ar2ttCXjj/q5W9dGBmEeaRDnVHcBATaR/19NWiBo7c9zB6ZvKEfqFJzsoBV3i+EK3UvoQ9PEuUsF2+2rkTspJbpDjNPEE0+uCX1RdMMDOFEMFJ9nMuvgHY79WWI3ksvrooHbHTdz4TXMjxppa92N8QHz91Jw7pqgkgHOtW2TGhXZW583TDnyJsEIMfD5fIEgPTGqJWQ==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AaUYEtpiOXD8lb6SfaNWJkjWsksZP9IeddlpGVsX02I=;
- b=mXtlPCGwxiKKWylTs5REk1/urfsBubk68oBQEfV6SualdxmqDmFrsF/gdj1/BZo5a/fSRUFwqj7daFjjWHCNpAhoG3dmQpLmQq/uLMzmflL76ISq9Gcbeuf1PMXrHHymLFl0LmoGDSZ0SrjOWtJ9ogXvzrTHErDc0UQUBHzJH9rp6PWUb5a+x+A8Ne2mPgetyPrXXUOowgAqQqqDLNxyV+2/JSrCa6m5BztpROpNLMR7k9WuJY+FI0cXUe1XQtWAAqbnz387P78TZnK6VYdsmEO4LXlT4G9aWVDims047krnl8D5vqj/DXP5N1ldIdRmnx6fWNbzHp4nXmmWraP7MQ==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 52.102.202.63) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=ric20136326.onmicrosoft.com; dmarc=none action=none
- header.from=cloud-storagetga.com; dkim=none (message not signed); arc=fail
- (48)
-Received: from AS4P251CA0020.EURP251.PROD.OUTLOOK.COM (2603:10a6:20b:5d3::9)
- by DS0PR10MB8055.namprd10.prod.outlook.com (2603:10b6:8:1fc::7) with
+Received: from SA0PR13CA0024.namprd13.prod.outlook.com (2603:10b6:806:130::29)
+ by CH4PR10MB8195.namprd10.prod.outlook.com (2603:10b6:610:243::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.18; Sun, 8 Feb
- 2026 01:34:37 +0000
-Received: from AM4PEPF00027A6B.eurprd04.prod.outlook.com
- (2603:10a6:20b:5d3:cafe::e3) by AS4P251CA0020.outlook.office365.com
- (2603:10a6:20b:5d3::9) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.18 via Frontend Transport; Sun,
- 8 Feb 2026 01:34:33 +0000
-Authentication-Results: spf=pass (sender IP is 52.102.202.63)
- smtp.mailfrom=ric20136326.onmicrosoft.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none
- header.from=Cloud-Storagetga.com;compauth=fail reason=001
-Received-SPF: Pass (protection.outlook.com: domain of
- ric20136326.onmicrosoft.com designates 52.102.202.63 as permitted sender)
- receiver=protection.outlook.com; client-ip=52.102.202.63;
- helo=SEYPR02CU001.outbound.protection.outlook.com; pr=C
-Received: from SEYPR02CU001.outbound.protection.outlook.com (52.102.202.63) by
- AM4PEPF00027A6B.mail.protection.outlook.com (10.167.16.89) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.10
- via Frontend Transport; Sun, 8 Feb 2026 01:34:35 +0000
-X-IncomingTopHeaderMarker: OriginalChecksum:C9D9A0513FF64BE4273872A9F446A62C78BB994B7EAF49046BA5F096250C67A5;UpperCasedChecksum:1948544BDAFA22CBFB44608DB49D075AFE057EDD1004BD37579123ABF4E2BF4D;SizeAsReceived:7237;Count:38
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QeBruUtdeLT2eN1f8EdZXCn79w45OpjYoFsqtVo0wDpOZyDWXXTGLIj3fkfpVoqrgaFTcGv34gJLEsz3/nGWWr1jbu44BmJY1iTssZZVRaDDCK+g0O6A1zFVIwWcUUPNG4/dO5OhU7fZT6SDSd+oLAnd+ZTiuUnhTi0xGsw+OgmqbijWk+U9Ml6OuDQQyKWmJiW/OwimC5MVrp/q9Pi8gG5fLwBvfeyc5mbkPnTRB2Nqkftf+5Lessw5OlDkJDzXKVsJmZp9uL2jYg3R+ZX3R3oxYpFgw2EzrZN/SDKQJgWemXF/wjP6rrCRlwPNpsZPmDF3ln2uxnc7+Q2105uLpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AaUYEtpiOXD8lb6SfaNWJkjWsksZP9IeddlpGVsX02I=;
- b=taE+OfLOGSR8mwS9Dt1FXnf3SEFLVB3vXQ33BEbRr3brcw67BAZCmvAzcHT/GfPerwgNYzxndkFCKGylfnOgVHhRawI141Jg6HIAWZ1vqFR//U9i5SfpgqPZ+OlneDVKLaqRnfpbnCpSSNyRojRglewJ1np5OYd3peY6ZeFhXzXZCYQB87QkSJBuhW0IkagKqLkNaLOj4sccLz7foK+shciyVTM7d8ikzE7/orO3qead9lfTq2wG5IqDglxZ5TiBjLslpHtkCnWYvUF5NNtsI3nbcRq5NsAx5A1BSsgEkSRBs7QKjkzgBa4U120ykil1YoSq1ROpqTwMaRmelBSTwA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 64.120.94.224) smtp.rcpttodomain=hotmail.com
- smtp.mailfrom=ric20136326.onmicrosoft.com; dmarc=none action=none
- header.from=cloud-storagetga.com; dkim=none (message not signed); arc=none
- (0)
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.120.94.224)
- smtp.mailfrom=ric20136326.onmicrosoft.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=Cloud-Storagetga.com;
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Campaign-ID: 15758398
-X-Message-ID: 70200a8166a749fb9652cf546e58f0ef
-X-Feedback-ID: 20505725:15758398:17633:iterable
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-Subject: Your Storage Is at Risk – Fix Billing Now  80-UVTCJ
-From: "Cloud Security Team" <alert@Cloud-Storagetga.com>
-Feedback-ID: 20505725:15758398:17633:iterable
-Content-Length: 285239
-Message-ID: <32ef415a-fee0-4a0e-90a9-791a69940f5d@OSA0EPF000000CC.apcprd02.prod.outlook.com>
-To: Undisclosed recipients:;
-Date: Sun, 8 Feb 2026 01:34:32 +0000
-X-EOPAttributedMessage: 1
-X-MS-TrafficTypeDiagnostic: OSA0EPF000000CC:EE_|SEZPR06MB6037:EE_|AM4PEPF00027A6B:EE_|DS0PR10MB8055:EE_|MW4PR10MB5749:EE_
-X-MS-Office365-Filtering-Correlation-Id: fbf0c45e-1812-4a9d-e6c8-08de66b23813
-X-MS-Exchange-SenderADCheck: 2
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted: BCL:0;ARA:13230040|69100299015|3phishing@pot0700013|34020700016|82310400026|48200799018|61400799027|376014|4022899009|32650700017|52005299006|8096899003|4076899003|85622059|54012099003|27013499003|32550700048|15450700066;
-X-Microsoft-Antispam-Message-Info-Original: =?utf-8?B?ZFB0emlScFZ6QmVKT0FBR2x1aUZnU3MyUzFBYkUxcURKWWpGTmRYNlVMRnVu?=
- =?utf-8?B?NnJzSmJkVUpTaWpXanlGaTQ2S2dobG14czMzV1llaHp3RlkwKzloSjJlS1Zw?=
- =?utf-8?B?M1pqdlFLc3h1TisrRTdZZDV1VTBmanRzajlSQVhYWU1lV0c3clNiaWhMb3B4?=
- =?utf-8?B?bThselVCclFzVlVoaGpORnRML3UxaGZ3VFFnZE1QODZqZ0NwUWdrclo1cG5H?=
- =?utf-8?B?L2c3SXpPMWpRay8ydUtCcDRzUjdXWjMyOUhuYUZrd1FocFphb09wQnFwQXVN?=
- =?utf-8?B?cjl0SktFNU10bGRORldIeXlSdGp5Ni9VNkdMckJJT0tScWRWRmlrT2swS0hu?=
- =?utf-8?B?TDV1NTFxcEovQzJ0eWJzNTU4SGROdmJTUVhXVUQ5c2xvNlRMUmdUb0xsY1hu?=
- =?utf-8?B?cUxzck1NK3F6WTFlTWZaRHllUzNkM0xUdFVTNHlETW5wa3RwamlLQ1ZOajVn?=
- =?utf-8?B?ODNFcUlLRXY4eEFnTU5aRUsvWW4yaUg2Ry9PQkFsMjdyNk1MN1VBb1dPZzd5?=
- =?utf-8?B?aDMyNWxLZmhNU2prMlN0cmZteXRMU1V4aUxjRnp2eGZBTzZtdFpqRVl4Wnhx?=
- =?utf-8?B?NzdWRkR5QWR6Qis4amZVbTcveHAxbm5MUWZSWlpnTThBamxhanU0MGVCVmlV?=
- =?utf-8?B?ZkpvVEp4Uy9zMUdyTzh2emk4MWNpcVFvRHd2OGtrbVRudmpaRzc3Z2p1Z0c5?=
- =?utf-8?B?Ny94WXFLbGNvY251M3Roa3FaU0ZMbDZ3bEpLeTNkaVpzeVhob1JRTHMrbS9L?=
- =?utf-8?B?MmNReWd1a1ZsSkpzTmhoaVVmeGZTcjVsYlg2MTFORThHWHBVb1NYcjJCWk9k?=
- =?utf-8?B?MzFRMnIxZldXS1hTZkdoOFAvSnA0R1ZrRVMxaWZOSzQ5ZHBNYXAxSG1DVmRl?=
- =?utf-8?B?eFFQR3BRR2JleFhDRmNQTnk1MHhNb0Z3UmZDTlhMTDNqbzI0ajFJdDNhNUpn?=
- =?utf-8?B?ZkVxbU9aMEliWVlCUnRBOUFFUkZNR3RlLzBjUHBaK2p5Yk1DUlFCL2VUWDVl?=
- =?utf-8?B?TDR4a0VEakdkV3ZTb0xSY3pHZlBzQThwUmJLMVZlNGNHSzFRaENVMXdHY1Ro?=
- =?utf-8?B?VVdWbER4VnIzL1BjZDNhd0U4WGxqc3lUTk9PY1VwTnZGYmFFOHhVMkIrYzVB?=
- =?utf-8?B?Q09qM2xIOVQ3M3o1ZDA3Nk5hMnRFK1NVRW1ieHc4OWVKZnFQK1R4WWJGYzhl?=
- =?utf-8?B?allMYk5wTVh0MUtaYTFWejZPenMvVDVZZUFrNGdJWXBIWnBqZWNWem9nR21x?=
- =?utf-8?B?ZnJsYUlUS0RiVktYQmVQVHowYVpNMzhTVHdZZnNJUElsK1ZjbkthTGdWYUlB?=
- =?utf-8?B?RlJ5cnFBSTRBVkZpV2hpakY5cUJBaWRuYkc0RWtzclp5SStVTWJzd1N6bVQ1?=
- =?utf-8?B?KzJpdWVGdFJyM0NWSXdFeisxTjZFeHR5ZHphVkdZZVhyeWNaeXNRbmhpOWE3?=
- =?utf-8?B?NnFEUHZvTEdwUks0L1hLeU1pUUJaU2swbzgwNjlSRmVnZHpGb3FWRFhxczZX?=
- =?utf-8?B?RmVKSnFMeUc2ZW9Rb2wzbnNWTGlWM21QNjJudVp3NnhySmt0RTNnSTk4MVJq?=
- =?utf-8?B?Q1RxOHR0QXVoWWlkTDhNVU9wRlFDRE45akk2YXplR2RWSVpLKzVFaE1CZHhH?=
- =?utf-8?B?TTg0emdTdGQ4Mm9ZZkwyZ2gxdXB5VmU4Sk9ZaVduaGNpUURNK3ZUMS95V3R6?=
- =?utf-8?B?ejVld2JBak9jRkgrbWlDeFE5S0t1aS9wNFZkalJJWU90QWhKY2t2SndTYjFv?=
- =?utf-8?B?dG84WEhMVldWa1JpK0NEemNDTW9FWnE1TXZoNTFYUUNRUjkrR3JWZHVLQTNw?=
- =?utf-8?B?dENNYmxzRm1oaVU5bFJKcGpBcnhMRFpUaFhramRlYjVyaFNjb2NZZ24yd0tD?=
- =?utf-8?B?SWhwL293eXFrNFJiaUpzQTN6bE9FemNRcnRCdVVOcHF4TnFlMzB4K3l4VHlk?=
- =?utf-8?B?cWpHblE5aEJuQXlLWnc2L1FjWml3WjdiVEJrQllkVzk4OS80MkR2ZWJjQzNL?=
- =?utf-8?B?cGIvWlZ0MkRrMmF5Zm9qVjRvYUJzMFZUYkdSOUp2SGRQcldaam8ycjdnVlVF?=
- =?utf-8?B?ai9sN2Jqa2VSVUI0Y2U2U2VKRitEUXBxU0Q1a2NjQVZ3S1VGKzNXM0MvM0U4?=
- =?utf-8?B?ekVybFJmT1l0M3pQRXZLUW01NHVSaG1KcDlmMnBtTXE2RjNBQU9XYVdhck5K?=
- =?utf-8?B?NjZXTmNPYXJTSlcyQkttYWkyUldBb2ZTYnVWUlBhYVRSUkRDK2tqbTRBdlJr?=
- =?utf-8?B?WWcrcFd3WXFLamVsU1d5ZWhtNnVBPT0=?=
-X-Forefront-Antispam-Report-Untrusted: CIP:64.120.94.224;CTRY:SG;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:ric20136326.onmicrosoft.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(69100299015)(3phishing@pot0700013)(34020700016)(82310400026)(48200799018)(61400799027)(376014)(4022899009)(32650700017)(52005299006)(8096899003)(4076899003)(85622059)(54012099003)(27013499003)(32550700048)(15450700066);DIR:OUT;SFP:1501;
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB6037
-X-IncomingHeaderCount: 38
-Return-Path: j4qar7phr8@ric20136326.onmicrosoft.com
-X-MS-Exchange-Organization-ExpirationStartTime: 08 Feb 2026 01:34:36.4229
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9182.16; Sat, 4 Oct
+ 2025 08:57:03 +0000
+Received: from SN1PEPF000397B5.namprd05.prod.outlook.com
+ (2603:10b6:806:130:cafe::5e) by SA0PR13CA0024.outlook.office365.com
+ (2603:10b6:806:130::29) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9203.7 via Frontend Transport; Sat, 4
+ Oct 2025 08:57:03 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.222.66)
+ smtp.mailfrom=bruddad.com; dkim=pass (signature was verified)
+ header.d=bruddad-com.20230601.gappssmtp.com;dmarc=pass action=none
+ header.from=bruddad.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of bruddad.com designates
+ 209.85.222.66 as permitted sender) receiver=protection.outlook.com;
+ client-ip=209.85.222.66; helo=mail-ua1-f66.google.com; pr=C
+Received: from mail-ua1-f66.google.com (209.85.222.66) by
+ SN1PEPF000397B5.mail.protection.outlook.com (10.167.248.59) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9182.15
+ via Frontend Transport; Sat, 4 Oct 2025 08:57:03 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:1F2543CF9B494649BEA313EB262E8502F76C9835DBC7E7419FD36D667FA72AA3;UpperCasedChecksum:E9263FB04DC55ACCD37E0BC2C6F1965634BD6B7B1B9AB0AC99E869DCFD25656E;SizeAsReceived:3315;Count:22
+Received: by mail-ua1-f66.google.com with SMTP id a1e0cc1a2514c-8e0c90cac25so1783063241.1
+        for <phishing@pot>; Sat, 04 Oct 2025 01:57:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bruddad-com.20230601.gappssmtp.com; s=20230601; t=1759568223; x=1760173023; darn=hotmail.com;
+        h=to:subject:message-id:date:mime-version:list-unsubscribe:sender
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=l8Ys18KECOr365bxyR6Mf5BGx+FP6tPRnx5Y2CUMHDc=;
+        b=MkVnztWO6DZ4Jet/xtOmnamIN9HOhcrO2+qFWkbECXeWwXDAYRj+Z2QGa53xh1hA1i
+         aZ0RfBYkKDw6kX31BC3x6zx6mQDEVI2RRPqgrXjmkoaYTy2Pz/K4grjkIgcOs1zjgxg8
+         5+diOrSYmviIBcMqjR8xA520Rx5BWdrSJ0uAdxQSh1tWRlZPE7p/n5fM2OPkzg4/W02Q
+         Q+EkkLwSD6dIF1+mWTFiDFe/vcCVox374osmxOhi+nM8TtHI5XmAD9Jb6SAteCVwxC5Y
+         boPPnIlvd1SPE+tsGAjCZdnjkGJ7hApEpfTSvOl2e3k8p6Z+VueCN8KW28x990/NHF/e
+         k62A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759568223; x=1760173023;
+        h=to:subject:message-id:date:mime-version:list-unsubscribe:sender
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=l8Ys18KECOr365bxyR6Mf5BGx+FP6tPRnx5Y2CUMHDc=;
+        b=s9ge1r1QFaKONom1zgbQZ0JlCQ3TbslNPE5Jg8zBFGRqcuCIhPWpIpxgFm25fRphsh
+         w5mXx1ZXDisE0uuDfdQC8VGOej9jjd4ItDrvSsKPa9xhPWwZtcsBvtj7onfHiNBUo5zW
+         YKnyym/QZSEJo5iI4IGEbKJsT1f30wzXUxT9MExkuk+XGZwGJ14mazJz1z+Y1N8aOoo8
+         UJNDMPbx3LzfF2XZ1d8GdX7y8PUzarhWhaUHItJrot2kBzlIPB1mjioIBT/6oTCd/WVi
+         T+tRPfUb5WjxnoCxS7npwp/IJ7pFcfxPXH4WOClqal150kdfGnYVsvpJtFiulJVcGOyG
+         9mpw==
+X-Gm-Message-State: AOJu0YxIeSnh1O/ba7BtWo2qZ64wf9otIGkZ1QzdFMyr0umGgceQ1Kyf
+	BZOx3BJ+Wa6dodVVOvIyb7jGlM4Z2tVyUjyhUhhUeBi6bvaePgL0Z2Pez4xSHO+A9G9B2UaGSwK
+	qFkes4nrnnFJqK/FTnN90S5hgWxFfNi4oitCoQ0gXjwrT4yJOmc3bQhqq
+X-Gm-Gg: ASbGncuHZZVxonAAKU7rmsDLZyGWCOiCfCUABJZU/GHUpRA638bxgN4Xq5jOiAh4fVW
+	M139plV3Foa7GqYlcJgyxj2UzBdZoDBw1ogKva07v5lpSLf21I2+EKuEQnI5br9/X3qPxx2XJZ2
+	GVLE/ffcqIgRX/vbR230YpK9q8dwDBPu9Y4OMjnBbva0iuWDm3LWgaXMvTWsOcn3DaUxehxva5B
+	6hHLA30WBXT7VfvKMUr9DYAiPBaMoN36TejbTkHfUo/keokt6XZ72AR5ls=
+X-Google-Smtp-Source: AGHT+IG9uKa5mQYkrzlh/h2jKs8khAMJLSdEOYjdx4JugoTTakUKnDSfFJ1ksWO+qqWq8YQYH5ZRwaj/xTB/vu4CiAc=
+X-Received: by 2002:a05:6102:6881:b0:5b2:d28a:8937 with SMTP id
+ ada2fe7eead31-5d41cffa5f8mr2410579137.12.1759568222778; Sat, 04 Oct 2025
+ 01:57:02 -0700 (PDT)
+Received: from 1094010595766 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 4 Oct 2025 01:57:02 -0700
+Received: from 1094010595766 named unknown by gmailapi.google.com with
+ HTTPREST; Sat, 4 Oct 2025 01:57:02 -0700
+From: dupre.alfredo@bruddad.com
+Sender: <Dupre.Alfredo@bruddad.com>
+List-Unsubscribe: 6.FHIQFRHSHVKXQ@luxyinbox.site
+X-IncomingHeaderCount: 10
+Return-Path: dupre.alfredo@bruddad.com
+Date: Sat, 4 Oct 2025 01:57:02 -0700
+X-Google-Sender-Auth: EaCPPzrNhYnb8L5DtCokkjAXumM
+X-Gm-Features: AS18NWArSo7Usnns6Pkmq0ldhOtN1I2uiw7iPNZz98gc1NSof_rqAHsLOOhErI0
+Message-ID: <CAKxLNGae9npr4O5gFEDUZ-rk+i_DTnnf0U_mb2DYnRA0zuVW-g@mail.gmail.com>
+Subject: Erhalten Sie 250 EUR ohne Einzahlung und 100 Freispiele!
+To: phishing@pot
+Content-Type: multipart/alternative; boundary="000000000000e08e2f0640516698"
+X-IncomingHeaderCount: 22
+X-MS-Exchange-Organization-ExpirationStartTime: 04 Oct 2025 08:57:03.5620
  (UTC)
 X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
 X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
 X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
-X-MS-Exchange-Organization-Network-Message-Id: fbf0c45e-1812-4a9d-e6c8-08de66b23813
+X-MS-Exchange-Organization-Network-Message-Id: 321b83fd-b07c-4924-9c86-08de0323fcf1
+X-EOPAttributedMessage: 0
 X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
 X-MS-Exchange-Organization-MessageDirectionality: Incoming
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: AM4PEPF00027A6B.eurprd04.prod.outlook.com
-X-MS-Exchange-Transport-CrossTenantHeadersPromoted: AM4PEPF00027A6B.eurprd04.prod.outlook.com
 X-MS-PublicTrafficType: Email
-X-MS-Exchange-Organization-AuthSource: AM4PEPF00027A6B.eurprd04.prod.outlook.com
+X-MS-TrafficTypeDiagnostic: SN1PEPF000397B5:EE_|CH4PR10MB8195:EE_|MW4PR10MB5749:EE_
+X-MS-Exchange-Organization-AuthSource: SN1PEPF000397B5.namprd05.prod.outlook.com
 X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-UserLastLogonTime: 2/8/2026 1:21:10 AM
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 20d68b67-0a32-408f-91e7-08de66b235b6
+X-MS-UserLastLogonTime: 10/4/2025 8:48:27 AM
+X-MS-Office365-Filtering-Correlation-Id: 321b83fd-b07c-4924-9c86-08de0323fcf1
 X-MS-Exchange-EOPDirect: true
-X-Sender-IP: 52.102.202.63
-X-SID-PRA: ALERT@CLOUD-STORAGETGA.COM
-X-SID-Result: NONE
-X-MS-Exchange-Organization-SCL: 5
-X-Microsoft-Antispam: BCL:0;ARA:1444111002|9400799043|10300799038|46110799009|46080799006|39010799012|67000799015|58200799021|47200799024|970799060|34130799006|32020799003|62400799018|2700799029|36140799009|35120799006|461199028|15110799015|18030799003|70000799015|470799035|63100799012|20103052909095|1380799030|1370799030|1360799030|1602099012|460799366;
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Feb 2026 01:34:35.9321
+X-Sender-IP: 209.85.222.66
+X-SID-PRA: DUPRE.ALFREDO@BRUDDAD.COM
+X-SID-Result: PASS
+X-MS-Exchange-Organization-SCL: 9
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|12005499003|2phishing@pot0799006|9020799016|27045499008|33080799003|32040799009|29080799003|2700799029|461199028|28045499009|22070799003|3217299011|56000799018|6115599003|970799057|1131999016|42200799015|10300799035|20103052909095|1680799066|9400799040|9000799056|56899033|1370799030|1380799030|1360799030|1602099012|8516399012|18301999012|13082799006|6111999015|8011999015|4141999021|16125499006|440099028|3412199025|4302099013|17072799003;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Oct 2025 08:57:03.5366
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: fbf0c45e-1812-4a9d-e6c8-08de66b23813
+X-MS-Exchange-CrossTenant-Network-Message-Id: 321b83fd-b07c-4924-9c86-08de0323fcf1
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e08a8cb9-d74a-4f92-88a8-8eda63fe083b;Ip=[64.120.94.224];Helo=[ric20136326.onmicrosoft.com]
-X-MS-Exchange-CrossTenant-AuthSource: AM4PEPF00027A6B.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF000397B5.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB8055
-X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.6066083
-X-MS-Exchange-Processed-By-BccFoldering: 15.20.9587.013
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH4PR10MB8195
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.7839296
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.9182.015
 X-Microsoft-Antispam-Mailbox-Delivery:
-	ucf:0;jmr:0;ex:0;psp:0;auth:0;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(10005027)(9610028)(9540006)(10160021)(9320005)(9245025)(120001);RF:JunkEmail;
+	ucf:0;jmr:0;ex:0;auth:1;dest:J;OFR:SpamFilterAuthJ;ENG:(5062000311)(920221119095)(90000117)(920221120095)(90005022)(91005020)(91035115)(9050020)(9100341)(944500132)(2008001181)(2008121020)(4810010)(4910033)(9710001)(9610028)(9520007)(10115022)(9320005)(9245025)(120001);RF:JunkEmail;
 X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MjtHRD0xO1NDTD02
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?OVhQNGxqbmRCOXkwZXYvNHdiVHNWdzAzN25DMy92YjN0ODVpRU5rUGdnWmdK?=
- =?utf-8?B?YmZuM1dMZ1MwNk9oTWUrdVZJOXhBa3RsU01GYlZkWW1pSWNBODl4Rndodlhj?=
- =?utf-8?B?eHdJQmtyOWVXY05vaHA3V2Mxd3gwY2NPM1pHcDIrTUx2SUxYczhUQ1AzYnh3?=
- =?utf-8?B?R1ZFeFRiOG9IRi9PQXdkMXhqZFZmOUhlUWJNQjdoWlFnYjEzbyttU2ZqTzFt?=
- =?utf-8?B?dzJNTWZYY2FBd2dXMTJzdEZGalF5ZnpDaFlZOHRURHhlQ2RueEFFWXg3dXow?=
- =?utf-8?B?TzFWWTFIOXFGOG1INzJsc01BTmdnTmpVU0N6MXdmZ0VaUGJwNjQ1bUt3RkV1?=
- =?utf-8?B?enJZbUJiYUhIb1hpWnE5SmdFZlRsSVVBSWp5bDFhbHRGcXBIQTBPZVpuem1i?=
- =?utf-8?B?dnZMQXpwcHphYUplZnlFYzU5VUVVMDNCM2FaZFVlbi8zQk5BV3BlWVh2RHc2?=
- =?utf-8?B?RGVOVWZTcWVNMkNuUWkyeGF1a0NMYVFWVlRYU0k3bFRiTk1Za25rK0QzcjIz?=
- =?utf-8?B?b0pSeVFZTlp3b0dHMUh0c0NpYVF6eTlEVXA3M05PdHYxUFZydHpDYktwNm9q?=
- =?utf-8?B?QmpVYjczRW80anJKZ2VtY21iSm5ZRXBxdWl6ajhGRHRBOEZxWmNpT0FLWE9q?=
- =?utf-8?B?VllabG9uWXVZRmIwSng4eXdjY0VOYXpvUW1VQnNWNkk1Z29POTdkWjV4dE5a?=
- =?utf-8?B?dVRSQ0M3cGlzQXRKNWV0UFkzWE5aYUdlOEd0WFV3YUx6czR6SzFhRTFicXhC?=
- =?utf-8?B?dlpmMTlwTE9JUkpsSnVNMGxEbGY3RE1ubHFqQkIwdVBoUWRlcU5LTDh2Q2l3?=
- =?utf-8?B?OVBVb0VpN0dUMkpCdXI3dE95U2U3eWhodm0rTjUwYUpwS2ZMSDlmM2NYSW9v?=
- =?utf-8?B?OHJubS9uZXR5WTZMM3V6cGE5d28zM0Z4L0cwNW9RYjQ4OS9Kb0U0RW90alV2?=
- =?utf-8?B?a0V5ZG9LN1cvMzE1QzNCUzcyWDN5U0Q5TWNKY3ZtN3oyeU4vdWNRcUFFQVZB?=
- =?utf-8?B?Y24wMXhWQWNBT0R0cFBkNll4YXdnWTNUdEczLzBVZ1IvdDBQMWNQWGI4eFZL?=
- =?utf-8?B?b2ptRTB5a25acWJLazliTXFuWHIvUXZwaU90NE1zOWN6cXB6QkJaNUxMeXZ1?=
- =?utf-8?B?SVF2S3k3dFp5VFd5MkJHWStTK0pBd25VVzB4U0VSOHoxUVlpWmpTZlM2UEcw?=
- =?utf-8?B?UGVqNWhTVm1Tb05sZzhQTHE5dmZmdUtUWTNUc09QcnBLSnhoVnEreVJraEZN?=
- =?utf-8?B?Tm93Vmo0OUlVQkVxN28vUjdyUUVmSG96Ukp1OHBySDBZSjBaMmFZNGxQS2Jy?=
- =?utf-8?B?cDlHcXhhYWZvSFRoVzhXbHVaaXJMWXN6VUh6aUJSKy93cmVudHZPZmtvNTQy?=
- =?utf-8?B?dDgyVzVzOUVqcktwTFRNaWRkdGxpa0RwQUlJcXF2WlNLdkI1UE5qa3lrQ0ll?=
- =?utf-8?B?WjJSd0dCTFFTZ0c1WnFqUDlGWndzaDVMRGVTenl5WHdUdjI5UW9LMHZRNkVX?=
- =?utf-8?B?SFI3V29CM3BNRUJxRXZBZ3M0QWQ3RmNNd2pFVk9mNVV5UElOWjZGT2xqaVZH?=
- =?utf-8?B?WHRSTjdadGZ3NU1PVnhvcktxMUhCL2JCb3NUMVEyVDB6RTM1M2ZQWHRQNmxa?=
- =?utf-8?B?MXNicUFTMTYvN2EvZ1JRcDMrNW5mS0JDdE1vVEYvc2lEcUY0OHJGK0pmR21Y?=
- =?utf-8?B?S1lJWUxCRVZ3QmZJdTNvaS9DUmxqN1NVaFZGK2FIcHdLMlFheW1hUHlwQ3pG?=
- =?utf-8?B?M0MzUjBlYXhKeWZGeXJRT1hsb09wVlJxSFhQRzhVekZsZUdJV2pqMEJLcTRm?=
- =?utf-8?B?aFZDb3FRRXVpKy9Dck56aWk4SnBJaTQzU3pNWG4yTTlHQW5acUVzUW1WMXdx?=
- =?utf-8?B?M2tPNVRLNGplR0J4d1htVlV4R285RXh3SDU4NWFDWnBnd2tNaFpFT2NxSFY2?=
- =?utf-8?B?V0NZc3d1NVU1Q01PTlZyaFlzZXN1Z1lkL01OT1FWM3pON0JWbW9vZ2dyL1JJ?=
- =?utf-8?B?ZnN0d2RyVmR5RTI4VHhFV0wvTU9Pa3pYdkdtRko4VktSVTZVeUdGOHczcHNt?=
- =?utf-8?B?Qlc4c1ZtQXBoTGpSR24xV25kSm0rOUZQa1JJS2Q0VHpiZzcweTJUU1g3dHcx?=
- =?utf-8?B?ZWZkcEtYSmVVNlNYdGtNOHN0a0Y2MG55VFEzL3M0NlBLSXFndUpoVGlHcnQ1?=
- =?utf-8?B?TklHbWlYM1BtNkRKdTFMWjFydFpQemdqbmRVZDhGaTUxZEE4eEZhU293WjJN?=
- =?utf-8?B?V094bGMzZ2t5NTNsUitxb1BXaDdlZStONGV3STdIUlIxUjM1VHFlQUdLREZK?=
- =?utf-8?B?bUJZWUlEK2hLMXYrZzFVdFlmK2x6OTJiSkFCQitacDlVa2N3TnhrM1M1WTVs?=
- =?utf-8?B?VSs3SUZmOWlSYXFpdml6VG5Cam9uVENPei94bGhONEZTNlhQM1g3clhmZnZN?=
- =?utf-8?B?dzJObWsvSFVocloxbFU1Ti8xWDVadWFXR2pkT1hxSjcyeDd3S0VpTHlMa1ho?=
- =?utf-8?B?Z095a0hEdnVjTWo0MVlPeXdjckpsaTBMdkRlTG9UTG9sVVJ0R205UTdhM0dr?=
- =?utf-8?B?RGkvVFJUUFZZSmY1MWswS2ZkaCtLWHByUDZ2NEJlMGN4QmVyaUU3dkViNE45?=
- =?utf-8?B?bzlkUkdVYmN6U0V1UHJtclk5RmJQckEyN3p2aE9XbklOTUFmWlhwT241M2k5?=
- =?utf-8?B?akpoTTFueGxlS1VGeFFidkVHekkwem5TMEQ5dzV4cElCcVd6T3Z3YWVhaW1Y?=
- =?utf-8?B?ZHY2RENvaVJ3MEpDc2VjMURjQ1VXenRLUDdGMzJVSkVrNWhYK25uZlE4ZW5r?=
- =?utf-8?B?RGZxRkVtcDhPSi9LS3JVNTJILzdsSkpaai96QW5ENDV5Y0grcFNKZXRoNG5y?=
- =?utf-8?B?Zy9QanMvbm05QXRMVExiUW1nYVNlUGVTMlRIaVVTd1lxd2hRM1l6UmtEUlRs?=
- =?utf-8?B?WldUNFdqU3Y5K0JaQ0VlMFFKbTBqeXNuMWhHOGlXcTN3ZEJrVHRQZmNrYnZ4?=
- =?utf-8?B?R3dUWkFOL0w4NkFSN2Znb24xTlVjMTQwbFNsUjF5Q3hVOVdyMlBWTzdPSWYw?=
- =?utf-8?B?Rk9pNG5QdDhQbkdzUm5GR0x0bDBuemUzdmY0SGV4Z25vb2UxQytQQk9KaXNh?=
- =?utf-8?B?L21qWHdZZmZBVjQxRW5RZDRVL3c2UHU0SHB5WldrWG80NEtST0U0eUdqTnJp?=
- =?utf-8?B?a2ZhYmc2SXI0b3VCUCthNXBXc3RzT1F1Qko1Q3RDN29takpyWDBCZ29NRHlM?=
- =?utf-8?B?TlFxcndlbkNSUXgrMlJEMEdNd3lnMjhEYzc3ODlUSFB5a0lQTFlxcExMQTE5?=
- =?utf-8?B?Z3NETlZveC9rQlRnL1JrSi9IbEdna2tYcG95Zk1vUDUwMEE4dk5FTnZVakZy?=
- =?utf-8?B?N0w1R20xQURLZldEZlRDOXdOK3h4Uml1dExRYXc4bVRmRjFjdUh1YmdTSy9l?=
- =?utf-8?B?cUF5QVBwTms4Z1dPUEhnY0RwL3k2UEhneWVTZGI3VllCdmlwRGdhTjJsZGFN?=
- =?utf-8?B?dDJodWpCMVlJcVdseDFsaE1vcFJmUHlQNHY5MVBVOFA1S1hzRHZrUG1idFZl?=
- =?utf-8?B?ZzdlRE5XaDhlMXF2K3R5eXJRSk9YTzF3S2xnNGFSdUk2amJhV1ZraE9HbVFD?=
- =?utf-8?B?QVlLalU2UnphUW5qWnBGVEJyVkNuRzV3Z0JjSFVweWQxTnUvZ01WbDY5T3F6?=
- =?utf-8?B?enpkZ05od3VpdzAwT2FtaWVVQmxiYXg4TGh4TnBYdk1rZkgyb1dWTStvcXcr?=
- =?utf-8?B?S3FhRHN5ZUJES3ptbE9BMTZSOEwwdGhVZDEzRVAzYXJYNzZOeWFXOVFxc3I5?=
- =?utf-8?B?UVBERURXUzJYNVNSK0VOZXNrbnd0b1BWQXppVHNsamhhbGhGTGhVL1pDdFgr?=
- =?utf-8?B?S09nYVFnQWNlWlROSXVudWNQUFR1VGh3QUI5OUxnMlNMamlKSUhzRUFHU0Jp?=
- =?utf-8?B?NG9OSGo4RHVJVCtBaFVadlRqWUJ2R1N3b1hTUmF4TTJSMmllbDJXdFJDYTB1?=
- =?utf-8?B?NjJIbkFaQTVlZ1I0L0R3MVIxa2R5WmVHMWw5ektrWUNZSm51cExNc1hKZkdC?=
- =?utf-8?B?am82U2NhckpIYjZqK0FnWitnTi9OdzNWZCtQOGNrY1lnclA5R0Uxb3lBamtU?=
- =?utf-8?B?eVE0R3crd25CZmhQeHcrNGdUSEplbE45bUx0alFwT21ndmJVNGhKbDFSMkJi?=
- =?utf-8?B?UXFoWFlFT2ZZSTRxeWpBcjdNSCtmRDNzZ0JTM3Bsc3dzeXdDZHBqT1hHdTZ1?=
- =?utf-8?B?MDRVN25TbHN4eTk1eDNlYlZDdGVkRXFnd29nSWl4VTR0ZmszSjFubzdjTjF3?=
- =?utf-8?B?Y2FFcEszWGRUanBNTVBLMGM0Q2RlbWF5ajhsK0lQaVBXSUpBVjJCd3M5UFVY?=
- =?utf-8?Q?t1D7p?=
+	=?utf-8?B?cnU4UjhKNkpKd2ZMTWI3NGZPeGU4NWxTZjF0bVR1U2hZZjVzZUxZcmJNU21T?=
+ =?utf-8?B?MmpaS3VzYjlYUjFJVkpmMW1ZUE9DUU5DZ2JOcTZuRS9lakNhbnJSbGRuZHlF?=
+ =?utf-8?B?aVdXbFpMYmtsZXJEdDVHOGFUK1d3VXV0Tk5hWGk5Vm9aTDBvZXNHcnpDZHU2?=
+ =?utf-8?B?djBxTjh0WXJtRTdMeDJVZ21DYU1lTStJM1BTeFU3MnBZWE1mOGJ3NlJJVWln?=
+ =?utf-8?B?OE11SFhyRUZJQlRTQ2tZT0ozemdtS05VTzZiY0RlMmdBTVUvTHJ3UWw1Y3Va?=
+ =?utf-8?B?Q1Awc0pFcVNndjl5K3BWZGV1QW9xUWlIWk9LajdIc2o0c0x4K0lGemZrT09o?=
+ =?utf-8?B?c3RPYTJjd3BxNGpFTllncCtJcko4Sm1WM0hGVlE0cmVRd1ppSmhVZ2NEQk11?=
+ =?utf-8?B?NXRweFh5clIvdFFNYmZEUVFRRStja0hxWHhFcko4Rm0yTkZtckMwV1UrU2Q4?=
+ =?utf-8?B?Y3dxWjNOUVhCZ2lkNVFxV2pwWjBpWU8vSnVudy9FN1QyMGhsbUl3WmtBK2Fl?=
+ =?utf-8?B?ZEl5WlVMQWZqck1VaFNnb3g0QWp6V1RpZDVGbGowSEY5ZmExVjhselJUNFhS?=
+ =?utf-8?B?RWxSeDFnQ2N3UmFlNW9OOVlYM1ZDZXJCSENqOU1INityNXloZEFFZm9HSGFj?=
+ =?utf-8?B?WmdzM05rRDZLVnllRVUxV1k1UDdqU3pZcmdBZnZ2Z08yVFdkWkd1cER5Ymxk?=
+ =?utf-8?B?NVduWnRWTWt0SmE5T2doSEZsSENWOW1PSmNqUkR6YlgzbkRiSzJWV0JvOVNG?=
+ =?utf-8?B?RTZCalJwVUN1bzhHWnovTVBqYUtCQVN1VmlwTzFtdUJWeUFSZ21OYzhxTkJr?=
+ =?utf-8?B?VlMyakxoZGhwRGJqRGt4MHlsQkxYOC95L2xzSWU3bGFISUZzNTR6Z05zNE0v?=
+ =?utf-8?B?WE11NDhFcEhTV29JRVNxd3RSRjUyYWNPN0xrV1FkdXdBSkFaeU1tZDZLYmdT?=
+ =?utf-8?B?aVJrSkxGVndEZXBCdVZTQ2JEWFBEcDliRHNiZ1NrWFRkM1ZZVjl2YjY1SjZD?=
+ =?utf-8?B?MS9BS0RwbVIrQlg3WTVYNXp5RjdwRmdGTHZDaHNDOTd6K01CdWJJVmtScVd5?=
+ =?utf-8?B?cGdSaDFmNHI3R1IwQklXSisyd1JiSWFxS2ZLOUxrSXRUOHFwSFpEdkt0cWNW?=
+ =?utf-8?B?d2FxU2xoVUJMQXRwdmUvdVBuVVJIRFhoY3dMNEk4dVhpMUFTazVpQnVRclBt?=
+ =?utf-8?B?NVNpcmxhcVZKZGV1bkRaOGN1N2pPRHJCT0ZtdzNPcXM5N25oVVJrcFE5amdj?=
+ =?utf-8?B?aVVnNTlxa1NUQ2hGbFE4cUora2NSUWZZc2dFTmtCQWJDRkdvd2hUYnNZbW9J?=
+ =?utf-8?B?aW1seWRPa0sra1p4SWQ2SXgrV0VYUFk2Mi9jNjFLeXZFeElvbENkRkNadm9I?=
+ =?utf-8?B?L2pPSVIvd0V2ZEpPZ2Y0RG1FNHh2T1JJUEVpVmt4Y0VYZk1USWxzWGlKWFUz?=
+ =?utf-8?B?Y2hIeVM5TEZObTNjbjdqUVNJUjVUb2F5MytlUjdXWjR4S1B0N3E2UE1xVnN2?=
+ =?utf-8?B?bzJieVU0TzdpVG5hd1NBdVFkMGxPRXNyTEtuOUlmQ2FHcGNNRTZGUXErSGVB?=
+ =?utf-8?B?dHU3WkQ0ZGY4enlkK2FYUnNFR3lld091MEJRWmlzVzJPMVdJbzR5RmxkeFB0?=
+ =?utf-8?B?RnVEeVhrbElBajdQOTFtVklETklLQXpoU2h6cTM3U2FieTh5eGE3WVNKNmd3?=
+ =?utf-8?B?UkZnS3ZTUVhOOFJtSmFSa0o5cXhDbDRpblg5ZlJkNEtLSVliSmF3MEdTQzJE?=
+ =?utf-8?B?ZEpCV0Y4TE1mY0R3bk1wTUh2ZzRoRUU0NTErYXRETnlNbGlqNUpoUEdXc3hr?=
+ =?utf-8?B?czMvUHA3K084VjZhQzRYZjA4SFdhRVdUQWRacnlmdWhRWVZXdGZldEk4UDJt?=
+ =?utf-8?B?Sjc4ejQ5cUtXZEZsNEFMTHMxTjhlUXFsWUlEYk0ydkkzcXdnbGRMRXA3Njha?=
+ =?utf-8?B?MFFrK3l6eXpMT3hxcmZFK3JYZEphMWdQWTNEb0NGaXkyRXhDUVZIYU1JdUxp?=
+ =?utf-8?B?RDZsUitpT2trSFFlL2Q4bjJ4WGpXdkNJaFFSNWp0L3RUL1B1bW95Y29ON0hU?=
+ =?utf-8?B?d0lIMVpMTkdwTTZ6UitOMEpUM0ZpU0V5MWhsQnRGeUFSSEV2S1pWY1J3K3RO?=
+ =?utf-8?B?TStDNmlER1RsMHNpVjZmWlVLTFUvdzJ2SmhSdW02N1hzZnRqOEpzbmx4TmU3?=
+ =?utf-8?B?NzExaTVRTDlrSHQwUHJhaTRGQmRNT1hQeFVraDRWRC9BK3J4V1QvekVVWDdn?=
+ =?utf-8?B?aGJrSExxU2VDOGtxVHg2ZnRsMVFoRm40U1lnNDhSMll1V0hTT29aN0U2Tmxt?=
+ =?utf-8?B?Y25kZDR0ZXN4a3Z6QUVLWFpxUGdQbHA5VzNRSkdOd2h5ZU9EUFo5OWRYYjBn?=
+ =?utf-8?B?N2hqMTJIZkRwanZOWTRMN01tbGR4RGU1QVpyREg1S0s5aWRMYWtmUGtweDY2?=
+ =?utf-8?B?V3BUM3hLL2N3Vk9yNmVRY3IxaGRRYnhQNUo3SXhPR2twWkY0QlRYN2IvRktQ?=
+ =?utf-8?B?aXNvZjJmaWVHT1FSajlOeXRNbEVSOC9GdGltZnJnelhLVDdNT2ZpQWlOa3Ra?=
+ =?utf-8?B?aVVMWEsrejl4SDN4Z05JbERFU0pSeEg4cDVIbnU1bnY5WnVMc08yOG13ZkZY?=
+ =?utf-8?B?YlB2L08wbXdqaVlJc3lRNEtyN1BveG1ISWhSbUxEWEJGaWFZVkw1SVUwSzhk?=
+ =?utf-8?B?TkJEa2pWVTd1b2YzU3hSRVRSWVB6VzE1TGZXcVlsWFNybGVZMWk2NzQ2dkZw?=
+ =?utf-8?B?aXZCWHM5MnNDK3Y5aXZ0UXZrcFBwODVFTVdpWXZhS0pNYzV1Q1dpZmdtZzZN?=
+ =?utf-8?B?aDJRTGt4NDZvN2hwbFY4TmVBNm5ybXN3V3dBNlZYMWJoK2JoREFaaCtDMSt4?=
+ =?utf-8?B?VEZGMnkrRUd0U0wyemJ5ZXpGeUsrS3VXNFpVZHRSeFBUWFNuYmdHWW1EUnE3?=
+ =?utf-8?B?VnRiaWNTOWdId2Y2MlArbUtvejRiMzNrL29CSkQ2Y0JHTEFsR0M2RWpPRzEx?=
+ =?utf-8?B?bjNlN1cyaDNMaUU5ekVzRUNiaHF2bFVoZ0NtdkVqRTFEVElsb1Ruc1lZWStv?=
+ =?utf-8?B?OWdVQ0xLQStiOEVuZHpiVEFJcU1jN3BtZmNGMGFkS3l3bDk0RnRPU1FzUjE1?=
+ =?utf-8?B?Y3ZzQUQvRHNGdUUxdnVmVW85VnlCeE1UOXZueDh2ZmtnQWI2ZDFHYi9TODJZ?=
+ =?utf-8?B?NGtmMWQ1U1pxMld3dzRaenl4M2N0SldYSXJCMVNwdzdoK3lmMWFKeFkvNlRj?=
+ =?utf-8?B?dFdwWHlMcG0xNzFhN1BKcnR2Z0FmT1hCaTdjYmZ2bG9kTFp4UUgvVDluYWJa?=
+ =?utf-8?B?VFpkQ1F4WCtLNnZZRDJNanordFpZMk9xQ0pEWkplNytoVi9iWUlhZ0grSHBC?=
+ =?utf-8?B?YkZ2aXB0VVJETDcxSnY1N2tDREZzUGw3Qm1LVnEwakNhQW13UGpXSDVoekxs?=
+ =?utf-8?B?RkRuMEZ5aCtGMVNUTFZwbFpKcVRUOFBmUy9BM3pWQXJlQzJ2Rk54cGdpdmg0?=
+ =?utf-8?B?VGY0Szg4NmQraU5CcUh4MFA5a2tZYzFOMnM1bmhXVzFzaENSUGtmUFVLYnlp?=
+ =?utf-8?B?RzduRTBab29lRlRZMURBYUxWVjNBWjFrRWdMV0hweEw1MngyQUJwK1NML250?=
+ =?utf-8?B?L3hBYU9qb3hWYnVTRW1Db3hBdCtVWFhibXJCUXZ2MEllaXh0WVhZRU95YjhD?=
+ =?utf-8?B?MUp2SmZrV0xjNndVK0FNM1VvTW94VlVlTlhwV09aRWlWVmhSVk1pVjNQU2hn?=
+ =?utf-8?B?L2pacGNoYUtkSWZMVE02alpCNm1EaFhONE1xS0V6Q3JpUEVtWHp3ZkJZY2g0?=
+ =?utf-8?B?Tml2MDhxQ05USXhJMk5JTmQ3L0V6TVRqL3VhYjZOTHhXQTlGT3BDZkc4QnVo?=
+ =?utf-8?B?RkZyNS9lMk1LeVhMcEdtbUd5Njc0OUwrRGxiRk5nRXNDcUh5VE1VU2Z6bW1q?=
+ =?utf-8?B?K1hDV2RZU1ZvcWNuMFg4V3pHcTBHWDZNcmV2MWY1QVlIOGZsZlYyRE9WbFhk?=
+ =?utf-8?B?NmRaUUF0QjNNVEp5SzViUnFCZ3h0eVRlSXc2VkNlRndLL3MzZ3M0bURNVmRj?=
+ =?utf-8?B?ZWN3dWNlVWZZRlFlSHg5YUI5SFUyYmRwN280QVNwQTRETHdubE5yLzBqbVlj?=
+ =?utf-8?B?ZE50dGtYbzA2MG9nd2U1Y3FwbXhTbWg5ZGhYdzRpcFBmcTFrRmFocHNKNWpw?=
+ =?utf-8?B?OERzVEhMdVFVWThjbkZhMXhwVGxtWkVndU5UREY4c1k5VFBBSG9YL2RLWjZo?=
+ =?utf-8?B?bVlUdU5qSnl5VW9Cb0ZjbGptejNsZXRVTXlqRS85UmVaNEVLOHdVS3JSRDla?=
+ =?utf-8?B?ckdja2dOMUNzLy9QSVhCdEROUjllNnNXTXU5RkRuZmZ6V3BVeWNHU3NuMXJH?=
+ =?utf-8?B?bFp5ak40b0l3R1c4OVpaN1NUekozekR1MFMwVEwxSmtlZ0VDT0xWcmx5MVIr?=
+ =?utf-8?B?RUoyUjFJM2ZjV3IwMExBSGFIWjJ3QlROVnplM0ZHdndHT0VSSEdPU3JjR1FX?=
+ =?utf-8?B?emlnRTg1T0laRDR2VGlWbktsc3hOcnIxQUV4YVdWbGVHQStzRFoyUHBoSlgv?=
+ =?utf-8?B?REtlQkVoUEs5UDBnV1YvWFh5SzRZSWlIUnBpRUkyaW0renlhZk16YXBBWVRV?=
+ =?utf-8?B?Y2ZvdDdrZ0djWEZTRVlKNmpDUVZ5Mkl6U2FxZWtDQ2l4elMrTWFyZzY4RHE1?=
+ =?utf-8?B?SWV6b0M2QW5uZjV3Q0xhc2EzT0NIanNPSWRVeXoxS1FaTkh2cHozRTZ4UzRH?=
+ =?utf-8?B?YmliUURRbzlrUnR0eXJ3T0hISFJBeVBQeE9UMUtnd2hYWDhKT0JrWEZEcG1q?=
+ =?utf-8?B?U1FxREtTUFdQekRWNHhBVXRTS3dWc1F0WnRRZ1M1SE14TXl4NVNsTWJaRlpy?=
+ =?utf-8?B?YVAwQW1UdWhaanFBMGxMbHB0S0dQdkgrUTFHVFc0RlViMUoyMVlldW5mV0pt?=
+ =?utf-8?B?VHMwTHlZZC9SeWJyZU9lNDZITkx3TGtmZXYxVDI1UURtcUlKblpRSUEvRU1z?=
+ =?utf-8?B?USs4YzB1S2JObFlNWlVINkc3Z0tTVDJ3UTZwd1ZURi80dm9DanlEU21jNWNF?=
+ =?utf-8?B?VnY0TkVNeVFhbHlidUc0OGw2RlZLZkU4SUF1bkl5YUZpU1U5VlhPZWNlUzVZ?=
+ =?utf-8?B?N1h0dDNDZlNXcENDZ0NkNk0yaDgwOE1DNkhlelhpaWtCZDRpQ1gwNThzTGwz?=
+ =?utf-8?B?WmVjWjFqWTdVV3ZneE9RbG1tdzRFV3FCUGM5NzNrK1U1M3h6YmgzMnowU01U?=
+ =?utf-8?B?eDZoOHhRSU9lUFBFNFluMDVtNVdleGp6cjBqK3l3bEFpb0xrVmlEWXFmK1kw?=
+ =?utf-8?B?V3VjQ0l6dk95SDlPZlpxb3YwR0ZWM1lTbGZaaDdPL1l3bHdRN2NveE1DMFhZ?=
+ =?utf-8?B?ZHhaS1hPSTUvMjlCdnluTk9NemN1bVNrVTBDbTNndFN4bDlHYXY0a1BzSVhi?=
+ =?utf-8?B?Tm5kZEpLNWZ6R0djSWUrYmx1cFlaQ0JqdkdMYWErb0Z5RFZ0UlpNdGkwWG1a?=
+ =?utf-8?B?a3RJYmFKbEZYelV0NlBGS2Q5VHhTQVNuL0RuZlJ1QkVHS3hnaElSUFE3QjBQ?=
+ =?utf-8?B?RGxsODVFajNZajJUU2ZXdEhjUFhwWWNMcGJhWDVqY094UjM1cThMODZPYUcy?=
+ =?utf-8?B?TGdKdG9KMzNURFROWEg2aVErS3dtNDJBbVloZHkvWmFud3lrMU1TL3ByUTlU?=
+ =?utf-8?B?WEdNWTNoT2xpM01hUXlFOTN3RzI0bGFGanBvL2ZOSWlrS1FyNE1BU1VEVHRi?=
+ =?utf-8?B?OEhodnQ3NVM0Z0ZxVlZIZ3g0aU0rZzFEZUNrS3RGYzdwTGdaTXdDSkgrRkJJ?=
+ =?utf-8?B?d0dKa240dGFockpwcktDUT09?=
 MIME-Version: 1.0
 
-<!DOCTYPE html><html lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cloud Billing Issue</title>
-<style>
-  body { margin:0; padding:0; background-color:#ffffff; font-family:Arial, sans-serif; }
-  a { text-decoration:none; }
+--000000000000e08e2f0640516698
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+ qBet | Newsletter
+
+Sichern Sie sich 250 EUR ohne Einzahlung und 100 Freispiele!
+<http://morphino.click/4SzqlR816QqTl61ghgwpwdmbd84KQZEGLMCFBYYAMU26106XBEH6=
+1662p12>
+
+
+
+
+* Liebe/r phishing@pot*,
+
+* Hello Fortune * Herzlich willkommen bei Hello Fortune . Gewinnen Sie Geld
+und haben Sie Spa=C3=9F!
+
+*Sichern Sie sich 250 EUR ohne Einzahlung und 100 Freispiele!
+<http://morphino.click/4nZzPt816wXZu61pmlhgjvdwa84VXMHLNRWCCACWQW26106TRRZ6=
+1662S12>*
+
+Angebot nur heute g=C3=BCltig *=E2=8F=B0*
+
+=E2=9C=85* 1 - *  Sichern Sie sich 250 =E2=82=AC gratis!
+=E2=9C=85* 2 -* Er=C3=B6ffnen Sie Ihr kostenloses Konto
+
+Keine Einzahlung erforderlich, keine Verpflichtung!
+
+--000000000000e08e2f0640516698
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html lang=3D"EN"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><t=
+itle> qBet | Newsletter </title>
+
+<meta name=3D"x-apple-disable-message-reformatting">
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0 ">
+
+<link href=3D"https://fonts.googleapis.com/css?family=3DPoppins:300,400,600=
+,700,800" rel=3D"stylesheet">
+<link href=3D"https://fonts.googleapis.com/css2?family=3DMontserrat:wght@60=
+0&amp;display=3Dswap" rel=3D"stylesheet">
+
+<meta name=3D"format-detection" content=3D"telephone=3Dno">
+<style type=3D"text/css">
+html,
+body {
+Margin: 0 auto !important;
+padding: 0 !important;
+width: 100% !important;
+height: 100% !important;
+}
+
+* {
+-ms-text-size-adjust: 100%;
+-webkit-text-size-adjust: 100%;
+text-rendering: optimizeLegibility;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+.logo-div {
+background-color: #000 !important;
+height: 60px;
+}
+
+.ExternalClass {
+width: 100%;
+}
+
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+line-height: 100%;
+}
+
+
+div[style*=3D"Margin: 16px 0"] {
+Margin: 0 !important;
+}
+
+table,
+th {
+mso-table-lspace: 0pt;
+mso-table-rspace: 0pt;
+}
+
+.ExternalClass,
+.ExternalClass * {
+line-height: 100% !important;
+}
+
+table {
+border-spacing: 0 !important;
+border-collapse: collapse !important;
+border: none;
+Margin: 0 auto;
+direction: ltr;
+}
+
+div[style*=3D"Margin: 16px 0"] {
+Margin: 0 !important;
+}
+
+img {
+-ms-interpolation-mode: bicubic;
+}
+
+.yshortcuts a {
+border-bottom: none !important;
+}
+
+*[x-apple-data-detectors],
+.x-gmail-data-detectors,
+.x-gmail-data-detectors *,
+.aBn {
+border-bottom: none !important;
+cursor: default !important;
+color: inherit !important;
+text-decoration: none !important;
+font-size: inherit !important;
+font-family: inherit !important;
+font-weight: inherit !important;
+line-height: inherit !important;
+}
+
+u #body a {
+color: inherit;
+text-decoration: none;
+font-size: inherit;
+font-family: inherit;
+font-weight: inherit;
+line-height: inherit;
+}
+
+
+.a6S {
+display: none !important;
+opacity: 0.01 !important;
+}
+
+img.g-img div {
+display: none !important;
+}
+
+a,
+a:link,
+a:visited {
+color: #000000;
+text-decoration: none !important;
+}
+
+
+img {
+border: none !important;
+outline: none !important;
+text-decoration: none !important;
+overflow: hidden !important;
+}
+
+
+#MessageViewBody,
+#MessageWebViewDiv {
+width: 100% !important;
+min-width: 100vw;
+margin: 0 !important;
+zoom: 1 !important;
+}
+
+
+
+u+.body .glist {
+margin-left: 0 !important;
+}
+
+
+
+span.preheader {
+display: none !important;
+}
+
+p {
+margin: 0px !important;
+padding: 0px !important;
+}
+
+td,
+a,
+span {
+border-collapse: collapse;
+mso-line-height-rule: exactly;
+}
+
+.green-bullet {
+display: inline-block;
+width: 7px;
+height: 7px;
+border-radius: 5px;
+background-color: #26724e;
+margin-right: 5px;
+}
+
+.terms {
+margin-top: 5px !important;
+}
+
+@media only screen and (max-width:620px) {
+.em_main_table {
+width: 100% !important;
+}
+
+.em_wrapper {
+width: 100% !important;
+max-width: 100% !important;
+}
+
+.em_wrapper_two {
+width: 100% !important;
+max-width: 100% !important;
+display: block !important;
+}
+
+.em_hide {
+display: none !important;
+}
+
+.em_align_center {
+text-align: center !important;
+}
+
+.em_pad_top {
+padding-top: 20px !important;
+}
+
+.em_side_space {
+padding-left: 20px !important;
+padding-right: 20px !important;
+}
+
+.nopad {
+padding: 0 !important;
+}
+
+.em_full_width {
+width: 100% !important;
+height: auto !important;
+max-width: 100% !important;
+}
+
+
+u+.body .glist {
+margin-left: 25px !important;
+}
+
+.showphone {
+display: block !important;
+mso-hide: none !important;
+}
+
+u+.em_body .em_full_wrap {
+width: 100% !important;
+width: 100vw !important;
+}
+}
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 413=
+px) {
+.em_main_table {
+min-width: 375px !important;
+}
+}
 </style>
 </head>
-<body>
 
-<!-- Container -->
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#ffffff; padding:0; margin:0;">
-  <tr>
-    <td align="center" style="padding:24px 16px;">
-
-      <!-- Content Wrapper -->
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:540px;">
-
-<!-- Cloud Emoji Logo -->
-<tr>
-  <td align="center" style="padding-bottom:30px;">
-    <div style="font-size:82px; line-height:1;">☁️</div>
-  </td>
-</tr>
-
-<!-- Title -->
-<tr>
-  <td align="center" style="font-size:26px; font-weight:bold; color:#d40000; padding-bottom:18px;">
-    Billing Issue: Your Cloud<br>Access Will Be Suspended
-  </td>
-</tr>
+<body class=3D"em_body" style=3D"min-width:100%;background-color:#dbdbdb;ma=
+rgin:0 auto!important;padding:0">
+<a href=3D"http://morphino.click/4UQhsP816WJEG61qysbzqvryq84YQRKDDENWMMDGHZ=
+26106PGHV61662p12" style=3D"text-decoration:none&gt;
+&lt;table class=3D" width=3D"100%" border=3D"0" cellspacing=3D"0" cellpaddi=
+ng=3D"0" align=3D"center">
+<p style=3D"display:none">Sichern Sie sich 250 EUR ohne Einzahlung und 100 =
+Freispiele!</p>
+<table><tbody>
 
 <tr>
-  <td style="font-size:16px; color:#333333; line-height:1.6; padding-bottom:20px;">
-    ⚠️ Your payment didn’t go through. <strong>Cloud access is at risk.</strong>  
-    Update your billing now to keep your files safe and avoid automatic suspension.
-  </td>
+<td align=3D"center" valign=3D"top">
+<table align=3D"center" class=3D"em_main_table" width=3D"620" border=3D"0" =
+cellspacing=3D"0" cellpadding=3D"0" style=3D"table-layout:fixed">
+<tbody>
+<tr class=3D"logo-div">
+<td>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td class=3D"em_side_space">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" styl=
+e=3D"min-width:100%;background-color:#20122e;margin:0 auto!important;paddin=
+g:0">
+<tbody>
+<tr>
+<td>
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=3D"center">
+<tbody>
+<tr>
+<td>
+
+<a target=3D"_blank" style=3D"text-decoration:none;color:#333333" href=3D"h=
+ttp://morphino.click/4SzqlR816QqTl61ghgwpwdmbd84KQZEGLMCFBYYAMU26106XBEH616=
+62p12">
+
+
+<img src=3D"https://zupimages.net/up/25/39/p8jd.jpg" width=3D"100%" height=
+=3D"auto">
+
+<img src=3D"//zupimages.net/up/25/39/p8jd.jpg" width=3D"100%" height=3D"aut=
+o">
+
+
+
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
 </tr>
 
+<tr style=3D"background-color:#fff;color:#000!important">
+<td>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td width=3D"40" class=3D"em_hide">&nbsp;</td>
+<td valign=3D"top" class=3D"em_side_space">
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+<td height=3D"10" style=3D"line-height:1px;font-size:1px">&nbsp;</td>
+</tr>
+
+<tr>
+<td height=3D"20" style=3D"line-height:1px;font-size:1px">&nbsp;</td>
+</tr>
+
+<tr>
+<td class=3D"em_grey_txt" style=3D"font-family:'Poppins',Avenir,Arial,sans-=
+serif;font-size:16px;text-align:center;color:#000;line-height:24px;font-wei=
+ght:400">
+
+<div style=3D"text-align:center"><span style=3D"color:#110d21"><b> Liebe/r =
+ phishing@pot</b></span>,<br><br></div>
+<div style=3D"text-align:center"> <span style=3D"color:#110d21"><b> Hello F=
+ortune </b> </span> Herzlich willkommen bei Hello Fortune . Gewinnen Sie Ge=
+ld und haben Sie Spa=C3=9F!</div>
+<div><br></div>
+<div><span style=3D"color:#110d21;text-align:center"><b><a style=3D"color:#=
+110d21" href=3D"http://morphino.click/4nZzPt816wXZu61pmlhgjvdwa84VXMHLNRWCC=
+ACWQW26106TRRZ61662S12">Sichern Sie sich 250 EUR ohne Einzahlung und 100 Fr=
+eispiele!</a></b><br><br></span></div>
+<div style=3D"text-align:center">Angebot nur heute g=C3=BCltig
+
+<b>=E2=8F=B0</b></div>
+<div><br></div>
+<div>=E2=9C=85<span style=3D"color:#110d21"><b>  1  - </b></span>&nbsp; Sic=
+hern Sie sich 250 =E2=82=AC gratis!</div>
+<div>=E2=9C=85<span style=3D"color:#110d21"><b> 2 -</b></span>&nbsp;Er=C3=
+=B6ffnen Sie Ihr kostenloses Konto </div>
+<div>
+</div>
+<div></div>
+<div></div>
+<div><br></div>
+<div style=3D"text-align:center">Keine Einzahlung erforderlich, keine Verpf=
+lichtung!  <b> =E2=9D=A4=EF=B8=8F
+
+</b></div></td>
+</tr>
 
 
 <tr>
-  <td style="font-size:16px; color:#333333; line-height:1.5; padding-bottom:20px;">
-    If no action is taken, you risk permanent deletion of:
-  </td>
+<td height=3D"30" style=3D"line-height:1px;font-size:1px">&nbsp;</td>
 </tr>
 
-<!-- Risk Icons -->
 <tr>
-  <td style="font-size:16px; color:#333333; padding-bottom:16px;">
-    📷 Photos &amp; Videos<br>
-    📁 Documents<br>
-    📱 Device Backups
-  </td>
-</tr>
-
-<!-- Suspended Warning Emoji -->
+<td>
+<table width=3D"125" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=
+=3D"center">
+<tbody>
 <tr>
-  <td align="center" style="padding:20px 0;">
-    <div style="font-size:64px; line-height:1;">⚠️</div>
-  </td>
+<td valign=3D"middle" bgcolor=3D"#aa90f6" height=3D"50" style=3D"padding-le=
+ft:10px;padding-right:10px;font-family:'Poppins',Avenir,Arial,sans-serif;fo=
+nt-size:16px;text-align:center;border-radius:4px;color:#ffffff;font-weight:=
+500">
+<a href=3D"http://morphino.click/4pCsnI816lHQl61lcqqbwdwud84MVMMHKEHNFHHNNY=
+26106JBHK61662I12" target=3D"_blank" style=3D"text-decoration:none;color:#1=
+10d21;display:block;line-height:50px;width:auto;min-width:max-content">
+<strong> LOSLEGEN </strong>
+</a>
+</td>
 </tr>
-
-<!-- Countdown -->
+</tbody>
+</table><br><br>
+<table class=3D"em_grey_txt" style=3D"font-family:'Poppins',Avenir,Arial,sa=
+ns-serif;font-size:16px;text-align:center;color:#000;line-height:24px;font-=
+weight:400">
+<tr style=3D"background-color:#f2f2f2">
+<th style=3D"border:1px solid #ddd;padding:8px;text-align:center">Kontoname=
+ </th>
+<th style=3D"border:1px solid #ddd;padding:8px;text-align:center">E-Mail-Ad=
+resse </th>
+<th style=3D"border:1px solid #ddd;padding:8px;text-align:center"> Gratisbo=
+nus	</th>
+</tr>
 <tr>
-  <td align="center" style="font-size:18px; color:#333333; padding-bottom:10px;">
-    <strong>3 days until suspension</strong>
-  </td>
-</tr>
+<td style=3D"border:1px solid #ddd;padding:8px">phishing@pot</td>
+<td style=3D"border:1px solid #ddd;padding:8px">phishing@pot</td=
+>
+<td style=3D"border:1px solid #ddd;padding:8px">
 
-<!-- Progress Bar -->
+
+250 EUR + 100 Freispiele</td>
+</tr>
+</table><br><br>
+<table width=3D"125" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=
+=3D"center">
+<tbody>
 <tr>
-  <td align="center" style="padding-bottom:24px;">
-    <div style="width:100%; max-width:480px; height:10px; background:#e5e5e5; border-radius:20px; margin:0 auto;">
-      <div style="height:10px; width:45%; background:#e53935; border-radius:20px;"></div>
-    </div>
-  </td>
+<td valign=3D"middle" bgcolor=3D"#aa90f6" height=3D"50" style=3D"padding-le=
+ft:10px;padding-right:10px;font-family:'Poppins',Avenir,Arial,sans-serif;fo=
+nt-size:16px;text-align:center;border-radius:100px;color:#ffffff;font-weigh=
+t:500">
+<a href=3D"http://morphino.click/4PgCsj816HuAv61yjzpngcvyj84DNBSXOYKGIVZZKH=
+26106TTKZ61662W12" target=3D"_blank" style=3D"text-decoration:none;color:#1=
+10d21;display:block;line-height:50px;width:auto;min-width:max-content">
+<strong> ICH WILL DAS</strong>
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
 </tr>
 
-<!-- CTA Button -->
 <tr>
-  <td align="center" style="padding-bottom:18px;">
-    <a href="http://37-58-63-18.cloud.leaseweb.net/4lnuLN10384JICe76tlnuvfsrtk80CQEEMXUEISLVLVL285239MDFR430033x1" style="display:inline-block; background:#007aff; color:#ffffff; padding:14px 28px; border-radius:10px; font-size:17px;">
-       Update Payment Method
-    </a>
-  </td>
+<td height=3D"50" style=3D"line-height:1px;font-size:1px">&nbsp;</td>
 </tr>
 
-<!-- Ignore Link -->
 <tr>
-  <td align="center" style="font-size:14px; color:#666666; padding-bottom:20px;">
-    <a href="http://37-58-63-18.cloud.leaseweb.net/4cCPFJ10384DlaJ76dbaaeaxghj80IWRFKASFGWHMKFD285239OAVP430033l1" style="color:#666666;">Ignore &amp; Risk Data Loss</a>
-  </td>
+<td style=3D"text-align:center;font-size:35px;color:#110d21;font-weight:700=
+;font-family:'Poppins',Avenir,Arial,sans-serif">
+Top Casinospiele
+</td>
 </tr>
 
-
-<!-- Unsubscribe -->
 <tr>
-  <td align="center" style="font-size:12px; color:#999999; padding-top:30px; padding-bottom:10px;">If you no longer wish to receive these notifications, you can.<strong>
-    <a href="http://37-58-63-18.cloud.leaseweb.net/5DwyOF10384GiDr76jckwoznrdt80WGDIJIAMVHLXYTA285239JIOB430033S1" style="color:#999999;">Unsubscribe here</a></strong>
-  </td>
+<td height=3D"50" style=3D"line-height:1px;font-size:1px">&nbsp;</td>
 </tr>
 
-      </table>
-    </td>
-  </tr>
+<tr>
+<td>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" alig=
+n=3D"center">
+<tbody>
+<tr>
+<td width=3D"30%" style=3D"padding:15px;text-align:center">
+<a href=3D"http://morphino.click/4mAktI816cDox61njjytehaep84XCSTZTCHHCIYOFN=
+26106XZJO61662p12" target=3D"_blank">
+
+
+<img src=3D"https://qbet.ft-crm.com/media-api/serve/f89c3f66-ddbf-42a0-82b9=
+-3ea723f5e746_Thumb_-_Sugar_Rush.png" width=3D"100%" height=3D"auto">
+
+<img src=3D"//qbet.ft-crm.com/media-api/serve/f89c3f66-ddbf-42a0-82b9-3ea72=
+3f5e746_Thumb_-_Sugar_Rush.png" width=3D"100%" height=3D"auto">
+
+
+</a>
+</td>
+
+<td width=3D"30%" style=3D"padding:15px;text-align:center">
+<a href=3D"http://morphino.click/4RUpNz816kHDg61klhaainpox84NESDHIZDIRGRHPI=
+26106OVWT61662Q12" target=3D"_blank">
+
+
+<img src=3D"https://qbet.ft-crm.com/media-api/serve/e25201be-12e7-4327-bc1b=
+-4e26a3f468f7_Thumb_-_GOO.png" width=3D"100%" height=3D"auto">
+
+<img src=3D"//qbet.ft-crm.com/media-api/serve/e25201be-12e7-4327-bc1b-4e26a=
+3f468f7_Thumb_-_GOO.png" width=3D"100%" height=3D"auto">
+
+
+
+</a>
+</td>
+
+<td width=3D"30%" style=3D"padding:15px;text-align:center">
+<a href=3D"http://morphino.click/4CLNgR816nNYu61ehzlleokde84HNKBTHMOUCQZHCQ=
+26106CZCX61662l12" target=3D"_blank">
+
+
+<img src=3D"https://qbet.ft-crm.com/media-api/serve/732b202d-7d6c-4f9d-a251=
+-91575c7f0868_Thumb_-_Sweet_Bonanza.png" width=3D"100%" height=3D"auto">
+
+<img src=3D"//qbet.ft-crm.com/media-api/serve/732b202d-7d6c-4f9d-a251-91575=
+c7f0868_Thumb_-_Sweet_Bonanza.png" width=3D"100%" height=3D"auto">
+
+
+
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td width=3D"40" class=3D"em_hide">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+
+
+
+<tr style=3D"background-color:#fff">
+<td>
+<table style=3D"display:block;width:100%;overflow:hidden">
+<tbody style=3D"display:block;width:100%;overflow:hidden">
+<tr style=3D"display:block;width:100%;overflow:hidden">
+<td>
+<table style=3D"display:block;max-width:100%;overflow:hidden">
+<tbody>
+<tr style=3D"display:block;width:100%;overflow:hidden">
+<td height=3D"15" style=3D"line-height:1px;font-size:1px">&nbsp;</td>
+</tr>
+
+<tr style=3D"display:block;width:100%;overflow:hidden">
+
+</tr>
+
+<tr style=3D"display:block;width:100%;overflow:hidden">
+<td height=3D"50" style=3D"line-height:1px;font-size:1px">&nbsp;</td>
+</tr>
+
+<tr style=3D"display:block;width:100%;overflow:hidden">
+<td>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" alig=
+n=3D"center">
+<tbody>
+<tr>
+<td width=3D"140px"></td>
+<td width=3D"140px" style=3D"text-align:center">
+<a href=3D"http://morphino.click/4hZUBH816cziD61bmssnatpja84WKZBFXGXDOFHOVZ=
+26106RSJE61662e12" target=3D"_blank">
+
+
+<img src=3D"https://qbet.ft-crm.com/media-api/serve/f621af76-3e0d-4dea-9278=
+-8ed9b43786a4_icon_-_contact.png" aria-hidden=3D"true" border=3D"0" style=
+=3D"max-width:40px;display: inline-block;vertical-align: middle;">
+
+<img src=3D"//qbet.ft-crm.com/media-api/serve/f621af76-3e0d-4dea-9278-8ed9b=
+43786a4_icon_-_contact.png" aria-hidden=3D"true" border=3D"0" style=3D"max-=
+width:40px;display: inline-block;vertical-align: middle;">
+
+
+</a>
+</td>
+<td width=3D"40px"></td>
+<td width=3D"140px" style=3D"text-align:center">
+<a href=3D"http://morphino.click/4PRwZp816RIpV61esqmrrdtdf84IGWYCCSSHLDDDST=
+26106QBHX61662P12" target=3D"_blank">
+
+
+
+<img src=3D"https://qbet.ft-crm.com/media-api/serve/e32c7660-713b-4c8b-ba59=
+-7555c9ef1f1b_icon_-_Password.png" style=3D"max-width:40px;" aria-hidden=3D=
+"true" border=3D"0">
+
+<img src=3D"//qbet.ft-crm.com/media-api/serve/e32c7660-713b-4c8b-ba59-7555c=
+9ef1f1b_icon_-_Password.png" style=3D"max-width:40px;" aria-hidden=3D"true"=
+ border=3D"0">
+
+
+</a>
+</td>
+<td width=3D"140px"></td>
+</tr>
+<tr>
+<td width=3D"140px"></td>
+<td style=3D"font-family:'Poppins',Avenir,Arial,sans-serif;font-size:13px;t=
+ext-align:center;padding-left:0px;padding-right:0px;font-weight:400">
+<a href=3D"http://morphino.click/4DAUyP816ZBnB61egsxyvcnwd84AKBGEYWHQUFIRBF=
+26106ITFZ61662F12" target=3D"_blank">
+<span style=3D"vertical-align:text-top;color:#110d21!important;text-transfo=
+rm:uppercase">
+Support kontaktieren MEHR
+</span>
+</a>
+</td>
+<td width=3D"40px"></td>
+<td style=3D"font-family:'Poppins',Avenir,Arial,sans-serif;font-size:13px;t=
+ext-align:center;padding-left:0px;padding-right:0px;font-weight:400">
+<a href=3D"http://morphino.click/4AeSay816FEaw61ogtimumwos84WNIURHLUKZNPKZP=
+26106YFSW61662L12" target=3D"_blank">
+<span style=3D"vertical-align:text-top;color:#110d21!important;text-transfo=
+rm:uppercase">
+PLUS
+</span>
+</a>
+</td>
+<td width=3D"140px"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+
+<tr style=3D"background-color:#fff">
+<td height=3D"40" class=3D"em_hide" style=3D"line-height:1px;font-size:1px"=
+>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr style=3D"background-color:#110d21;color:#fff">
+<td>
+<table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+<tbody>
+<tr>
+
+<td width=3D"75%" style=3D"padding:0px 40px 20px 40px;font-family:sans-seri=
+f;font-size:10px;text-align:left">
+<br><br><br><br>
+<span>
+Copyright =C2=A9 2025 Hello Fortune .com, alle Rechte vorbehalten. Gl=C3=BC=
+cksspiel kann s=C3=BCchtig machen, spielen Sie also verantwortungsbewusst. =
+Wenn Sie den Erhalt dieser E-Mails abbestellen m=C3=B6chten, k=C3=B6nnen Si=
+e dies tun, indem Sie hier
+<a href=3D"http://morphino.click/4AHUxU816dnxW61xihpohgvwp84OAMRFHALMKFTCNE=
+26106VUUY61662i12" style=3D"color:#fff"> klicken </a> oder an folgende Adre=
+sse schreiben: 792 Benson Street,
+Eau Claire, WI, Wisconsin, 54701 oder indem Sie <a href=3D"http://morphino.=
+click/6RCQXx816ViyK61eqizdmuzzq84ABCHXWPPSRDVMIS26106TBKP61662H12" style=3D=
+"color:#fff">hier klicken</a>
+</span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
 </table>
 
-<!-- Tracking Pixel -->
-<img src="http://37-58-63-18.cloud.leaseweb.net/track/3jyGwe10384cYPy76iddlwwscqn80IRYGOLVVTPWQMLD285239ZBLV430033M1" width="1" height="1" alt="">
+</a></body>
 
-</body>
+<br><br><img src=3D"http://morphino.click/track/3gogOn816Pmhe61sngjosvfml84=
+HYELQJDGIVHYLHP26106EXBA61662Z12">
+
 </html>
+
+--000000000000e08e2f0640516698--
